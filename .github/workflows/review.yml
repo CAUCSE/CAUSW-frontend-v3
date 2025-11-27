@@ -60,7 +60,7 @@ jobs:
             fi
           else  
             # Discord front-end 역할 ID
-            DISCORD_ROLE_ID="1351886402911998012"
+            DISCORD_ROLE_ID="1443460576444547134"
             
             # Discord webhook URL
             curl -X POST -H "Content-Type: application/json" -d '{
@@ -74,4 +74,3 @@ jobs:
               ]
             }' $DISCORD_WEBHOOK_URL
           fi
-          
