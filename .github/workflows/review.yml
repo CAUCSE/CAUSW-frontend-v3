@@ -74,3 +74,4 @@ jobs:
               ]
             }' $DISCORD_WEBHOOK_URL
           fi
+          
