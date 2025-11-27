@@ -7,6 +7,12 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up jq
+        run: sudo apt-get install jq
+        
       - name: Send Discord Notification
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
