@@ -1,0 +1,5 @@
+* @CAUCSE/2025-front-end
+
+# chore, hotfix 브랜치에 대해서는 리뷰어 지정 X
+chore_*
+hotfix_*
