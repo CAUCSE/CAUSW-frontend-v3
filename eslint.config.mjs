@@ -9,7 +9,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
-  fsdPlugin.configs['all'],
+  fsdPlugin.configs['flat/recommended'],
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
