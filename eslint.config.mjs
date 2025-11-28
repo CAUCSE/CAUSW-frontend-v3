@@ -8,8 +8,8 @@ import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  prettier,
   fsdPlugin.configs['flat/recommended'],
+  prettier,
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
