@@ -3,10 +3,12 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier/flat';
 import importPlugin from 'eslint-plugin-import';
+import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  fsdPlugin.configs['flat/recommended'],
   prettier,
   // Override default ignores of eslint-config-next.
   globalIgnores([

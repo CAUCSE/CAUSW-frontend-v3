@@ -32,6 +32,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@yh-kim/eslint-plugin-fsd": "^0.1.10",
     "eslint": "^9",
     "eslint-config-next": "16.0.4",
     "eslint-config-prettier": "^10.1.8",
