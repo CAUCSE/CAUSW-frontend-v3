@@ -1,20 +1,19 @@
 # 🚀 Pull Request
 
 ## ✨ Summary
+
 > 이번 PR에서 어떤 변화가 있었는지 한 줄 요약해주세요.
 
--
-
----
+- ***
 
 ## 📚 Details of Changes
+
 > 주요 변경 사항을 bullet로 정리해주세요.
 
-- 
-
----
+- ***
 
 ## 🎯 Related Issues
+
 > 연결된 이슈가 있다면 기재해주세요.
 
 - Closes #00
@@ -26,4 +25,5 @@
 ---
 
 ## 📎 Additional Notes
+
 -

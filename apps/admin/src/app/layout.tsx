@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { Geist, Geist_Mono } from 'next/font/google';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: '동문 네트워크',
-  description: '동문 네트워크 서비스',
+  title: '동문 네트워크 - 관리자',
+  description: '동문 네트워크 관리자 서비스',
 };
 
 export default function RootLayout({
@@ -24,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

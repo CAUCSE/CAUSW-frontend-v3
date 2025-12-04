@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div>
-      <h1>Hello World</h1>
+      <h1>동문 네트워크 - 관리자</h1>
     </div>
   );
 }

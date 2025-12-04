@@ -10,14 +10,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
   fsdPlugin.configs['flat/recommended'],
   prettier,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    '.next/**',
-    'out/**',
-    'build/**',
-    'next-env.d.ts',
-  ]),
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
   {
     plugins: {
       import: importPlugin,
@@ -27,15 +20,14 @@ const eslintConfig = defineConfig([
         'error',
         {
           groups: [
-            'builtin', // Node.js 내장 모듈
-            'external', // npm 패키지
-            'internal', // 내부 절대 경로
-            'parent', // 상위 디렉토리
-            'sibling', // 같은 디렉토리
-            'index', // 현재 디렉토리의 index
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
           ],
           pathGroups: [
-            // 1. Next.js, React 관련 import
             {
               pattern: 'react',
               group: 'external',
@@ -56,9 +48,15 @@ const eslintConfig = defineConfig([
               group: 'external',
               position: 'before',
             },
-            // 2. FSD 레이어 순서
+            // 모노레포 패키지
             {
-              pattern: '@/apps/**',
+              pattern: '@causw/**',
+              group: 'external',
+              position: 'after',
+            },
+            // FSD 레이어 순서
+            {
+              pattern: '@/app/**',
               group: 'internal',
               position: 'after',
             },
