@@ -10,10 +10,10 @@ importers:
     devDependencies:
       '@causw/eslint-config':
         specifier: workspace:*
-        version: link:packages/eslint-config
+        version: link:packages/config/eslint-config
       '@causw/prettier-config':
         specifier: workspace:*
-        version: link:packages/prettier-config
+        version: link:packages/config/prettier-config
       '@commitlint/cli':
         specifier: ^20.1.0
         version: 20.1.0(@types/node@20.19.25)(typescript@5.9.3)
@@ -68,13 +68,13 @@ importers:
     devDependencies:
       '@causw/eslint-config':
         specifier: workspace:*
-        version: link:../../packages/eslint-config
+        version: link:../../packages/config/eslint-config
       '@causw/prettier-config':
         specifier: workspace:*
-        version: link:../../packages/prettier-config
+        version: link:../../packages/config/prettier-config
       '@causw/typescript-config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/config/typescript-config
 
   apps/web:
     dependencies:
@@ -90,15 +90,15 @@ importers:
     devDependencies:
       '@causw/eslint-config':
         specifier: workspace:*
-        version: link:../../packages/eslint-config
+        version: link:../../packages/config/eslint-config
       '@causw/prettier-config':
         specifier: workspace:*
-        version: link:../../packages/prettier-config
+        version: link:../../packages/config/prettier-config
       '@causw/typescript-config':
         specifier: workspace:*
-        version: link:../../packages/typescript-config
+        version: link:../../packages/config/typescript-config
 
-  packages/eslint-config:
+  packages/config/eslint-config:
     dependencies:
       '@yh-kim/eslint-plugin-fsd':
         specifier: ^0.1.10
@@ -116,13 +116,15 @@ importers:
         specifier: ^2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1))
 
-  packages/prettier-config:
+  packages/config/prettier-config:
     dependencies:
       prettier-plugin-tailwindcss:
         specifier: ^0.7.1
         version: 0.7.2(prettier@3.7.4)
 
-  packages/typescript-config: {}
+  packages/config/typescript-config: {}
+
+  packages/ui: {}
 
 packages:
 
