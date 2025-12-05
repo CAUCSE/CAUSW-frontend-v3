@@ -124,7 +124,20 @@ importers:
 
   packages/config/typescript-config: {}
 
-  packages/ui: {}
+  packages/design-system/cds:
+    dependencies:
+      '@causw/components':
+        specifier: ^0.0.4
+        version: 0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/design-system':
+        specifier: ^0.0.6
+        version: 0.0.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/icons':
+        specifier: ^0.0.4
+        version: 0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/tokens':
+        specifier: ^0.0.4
+        version: 0.0.4
 
 packages:
 
@@ -198,6 +211,30 @@ packages:
   '@babel/types@7.28.5':
     resolution: {integrity: sha512-qQ5m48eI/MFLQ5PxQj4PFaprjyCTLI37ElWMmNs0K8Lk3dVeOdNpB3ks8jc7yM5CDmVC73eMVk/trk3fgmrUpA==}
     engines: {node: '>=6.9.0'}
+
+  '@causw/components@0.0.4':
+    resolution: {integrity: sha512-8HDgasxnQi+/IrMW5VLsbCsbdXjAmZxoCxoV3BwV+OxcjYKS76pVR6rTTuTbFvqrjlIMySh497u/3bDInFCytw==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+
+  '@causw/core@0.0.2':
+    resolution: {integrity: sha512-6+Hpdg/xnr598hsb7b/JzwkgIAoAo1wJwE0YLzTRbrylpL1tZh9hKkv4X7j6pdcE1Kf0cnrWkW3gE4SHxVYoqg==}
+
+  '@causw/design-system@0.0.6':
+    resolution: {integrity: sha512-TuZdM5M/iuVTpHR4O6NZkncOk6wQxihLCgUStXBO4QS+wukUQPXkF0vkvkRVCuYiuisqzMs3I4mubN7zy2jGBw==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+
+  '@causw/icons@0.0.4':
+    resolution: {integrity: sha512-0korxEFUXPecvt8LsrojLq7d4mfMM02A3xyNKXmrvC+a0o77zLo56TSkN3mdrSdO80RIs8dvWVWFCiiYNZIk/A==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
+
+  '@causw/tokens@0.0.4':
+    resolution: {integrity: sha512-9OclxjjEh5sedcaMlTF+XJp6wh4qWuT4d044ZJCrKjmXdQlgamYrRCOoxdu7Ww4FC0gH1B+o0FKVT7x9te277Q==}
 
   '@commitlint/cli@20.1.0':
     resolution: {integrity: sha512-pW5ujjrOovhq5RcYv5xCpb4GkZxkO2+GtOdBW2/qrr0Ll9tl3PX0aBBobGQl3mdZUbOBgwAexEQLeH6uxL0VYg==}
@@ -2626,6 +2663,31 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
+
+  '@causw/components@0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@causw/icons': 0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/tokens': 0.0.4
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  '@causw/core@0.0.2': {}
+
+  '@causw/design-system@0.0.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@causw/components': 0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/core': 0.0.2
+      '@causw/icons': 0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@causw/tokens': 0.0.4
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  '@causw/icons@0.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
+
+  '@causw/tokens@0.0.4': {}
 
   '@commitlint/cli@20.1.0(@types/node@20.19.25)(typescript@5.9.3)':
     dependencies:
