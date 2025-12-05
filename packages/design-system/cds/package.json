@@ -1,14 +1,14 @@
 {
-    "name": "@causw/cds",
-    "version": "0.0.0",
-    "private": true,
-    "main": "index.ts",
-    "type": "module",
-    "sideEffects": false,
-    "dependencies": {
-        "@causw/components": "^0.0.4",
-        "@causw/design-system": "^0.0.6",
-        "@causw/icons": "^0.0.4",
-        "@causw/tokens": "^0.0.4"
-    }
+  "name": "@causw/cds",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@causw/components": "^0.0.8",
+    "@causw/design-system": "^0.0.10",
+    "@causw/icons": "^0.0.8",
+    "@causw/tokens": "^0.0.8"
+  }
 }
