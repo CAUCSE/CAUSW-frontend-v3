@@ -11,12 +11,27 @@ importers:
       '@causw/eslint-config':
         specifier: workspace:*
         version: link:packages/eslint-config
+      '@causw/prettier-config':
+        specifier: workspace:*
+        version: link:packages/prettier-config
       '@commitlint/cli':
         specifier: ^20.1.0
         version: 20.1.0(@types/node@20.19.25)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^20.0.0
         version: 20.0.0
+      '@tailwindcss/postcss':
+        specifier: ^4
+        version: 4.1.17
+      '@types/node':
+        specifier: ^20
+        version: 20.19.25
+      '@types/react':
+        specifier: ^19
+        version: 19.2.7
+      '@types/react-dom':
+        specifier: ^19
+        version: 19.2.3(@types/react@19.2.7)
       eslint:
         specifier: ^9
         version: 9.39.1(jiti@2.6.1)
@@ -29,12 +44,15 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.7.4
-      prettier-plugin-tailwindcss:
-        specifier: ^0.7.1
-        version: 0.7.2(prettier@3.7.4)
+      tailwindcss:
+        specifier: ^4
+        version: 4.1.17
       turbo:
         specifier: ^2.3.0
         version: 2.6.2
+      typescript:
+        specifier: ^5
+        version: 5.9.3
 
   apps/admin:
     dependencies:
@@ -51,30 +69,12 @@ importers:
       '@causw/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@causw/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
       '@causw/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@tailwindcss/postcss':
-        specifier: ^4
-        version: 4.1.17
-      '@types/node':
-        specifier: ^20
-        version: 20.19.25
-      '@types/react':
-        specifier: ^19
-        version: 19.2.7
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.2.3(@types/react@19.2.7)
-      eslint:
-        specifier: ^9
-        version: 9.39.1(jiti@2.6.1)
-      tailwindcss:
-        specifier: ^4
-        version: 4.1.17
-      typescript:
-        specifier: ^5
-        version: 5.9.3
 
   apps/web:
     dependencies:
@@ -91,30 +91,12 @@ importers:
       '@causw/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@causw/prettier-config':
+        specifier: workspace:*
+        version: link:../../packages/prettier-config
       '@causw/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@tailwindcss/postcss':
-        specifier: ^4
-        version: 4.1.17
-      '@types/node':
-        specifier: ^20
-        version: 20.19.25
-      '@types/react':
-        specifier: ^19
-        version: 19.2.7
-      '@types/react-dom':
-        specifier: ^19
-        version: 19.2.3(@types/react@19.2.7)
-      eslint:
-        specifier: ^9
-        version: 9.39.1(jiti@2.6.1)
-      tailwindcss:
-        specifier: ^4
-        version: 4.1.17
-      typescript:
-        specifier: ^5
-        version: 5.9.3
 
   packages/eslint-config:
     dependencies:
@@ -133,6 +115,12 @@ importers:
       eslint-plugin-import:
         specifier: ^2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.48.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.1(jiti@2.6.1))
+
+  packages/prettier-config:
+    dependencies:
+      prettier-plugin-tailwindcss:
+        specifier: ^0.7.1
+        version: 0.7.2(prettier@3.7.4)
 
   packages/typescript-config: {}
 
