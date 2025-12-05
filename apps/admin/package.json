@@ -10,13 +10,14 @@
     "lint:fix": "eslint src --fix"
   },
   "dependencies": {
+    "@causw/cds": "workspace:*",
     "next": "16.0.4",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@causw/eslint-config": "workspace:*",
-    "@causw/typescript-config": "workspace:*",
-    "@causw/prettier-config": "workspace:*"
+    "@causw/prettier-config": "workspace:*",
+    "@causw/typescript-config": "workspace:*"
   }
 }
