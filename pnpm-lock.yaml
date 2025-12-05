@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@causw/eslint-config':
+        specifier: workspace:*
+        version: link:packages/eslint-config
       '@commitlint/cli':
         specifier: ^20.1.0
         version: 20.1.0(@types/node@20.19.25)(typescript@5.9.3)
       '@commitlint/config-conventional':
         specifier: ^20.0.0
         version: 20.0.0
+      eslint:
+        specifier: ^9
+        version: 9.39.1(jiti@2.6.1)
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -70,7 +76,7 @@ importers:
         specifier: ^5
         version: 5.9.3
 
-  apps/student:
+  apps/web:
     dependencies:
       next:
         specifier: 16.0.4

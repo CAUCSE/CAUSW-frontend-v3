@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "turbo dev",
-    "dev:student": "turbo dev --filter=@causw/student",
+    "dev:web": "turbo dev --filter=@causw/web",
     "dev:admin": "turbo dev --filter=@causw/admin",
     "build": "turbo build",
-    "build:student": "turbo build --filter=@causw/student",
+    "build:web": "turbo build --filter=@causw/web",
     "build:admin": "turbo build --filter=@causw/admin",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
