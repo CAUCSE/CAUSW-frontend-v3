@@ -200,6 +200,18 @@ importers:
         specifier: catalog:default
         version: 10.4.23(postcss@8.5.6)
 
+  packages/api-client:
+    devDependencies:
+      '@causw/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint-config
+      '@causw/prettier-config':
+        specifier: workspace:*
+        version: link:../config/prettier-config
+      '@causw/typescript-config':
+        specifier: workspace:*
+        version: link:../config/typescript-config
+
   packages/config/eslint-config:
     dependencies:
       '@yh-kim/eslint-plugin-fsd':
