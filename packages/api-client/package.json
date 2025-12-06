@@ -1,0 +1,19 @@
+{
+  "name": "@causw/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@causw/eslint-config": "workspace:*",
+    "@causw/typescript-config": "workspace:*"
+  }
+}
