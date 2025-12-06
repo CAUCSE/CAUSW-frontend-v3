@@ -1,53 +1,42 @@
 {
-  "name": "my-app",
+  "name": "causw-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "format": "prettier --check src",
-    "format:fix": "prettier --write src",
-    "prepare": "husky",
-    "lint-staged": "lint-staged"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.90.11",
-    "js-cookie": "^3.0.5",
-    "next": "16.0.4",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "react-error-boundary": "^6.0.0",
-    "react-hook-form": "^7.66.1",
-    "zod": "^4.1.13",
-    "zustand": "^5.0.8"
+    "dev": "turbo dev",
+    "dev:web": "turbo dev --filter=@causw/web",
+    "dev:admin": "turbo dev --filter=@causw/admin",
+    "build": "turbo build",
+    "build:web": "turbo build --filter=@causw/web",
+    "build:admin": "turbo build --filter=@causw/admin",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "format": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,json,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@causw/eslint-config": "workspace:*",
+    "@causw/prettier-config": "workspace:*",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@tailwindcss/postcss": "^4",
-    "@tanstack/react-query-devtools": "^5.91.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@yh-kim/eslint-plugin-fsd": "^0.1.10",
     "eslint": "^9",
-    "eslint-config-next": "16.0.4",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4",
+    "turbo": "^2.3.0",
     "typescript": "^5"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
+    "**/*.{js,jsx,ts,tsx}": [
       "eslint --cache --fix",
       "prettier --cache --write"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.15.0"
 }

@@ -1,0 +1,27 @@
+{
+  "name": "@causw/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
+  },
+  "dependencies": {
+    "@causw/cds": "workspace:*",
+    "@tanstack/react-query": "catalog:default",
+    "next": "catalog:default",
+    "react": "catalog:default",
+    "react-dom": "catalog:default",
+    "react-hook-form": "catalog:default",
+    "zod": "catalog:default",
+    "zustand": "catalog:default"
+  },
+  "devDependencies": {
+    "@causw/eslint-config": "workspace:*",
+    "@causw/prettier-config": "workspace:*",
+    "@causw/typescript-config": "workspace:*"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@causw/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "files": [
+    "*.mjs"
+  ],
+  "exports": {
+    "./next": "./next.mjs"
+  },
+  "dependencies": {
+    "@yh-kim/eslint-plugin-fsd": "^0.1.10",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0"
+  }
+}
