@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@causw/cds": "workspace:*",
+    "@tanstack/react-query": "catalog:default",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",

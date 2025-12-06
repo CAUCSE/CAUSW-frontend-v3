@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@tanstack/react-query':
+      specifier: ^5.0.00
+      version: 5.90.12
     next:
       specifier: 16.0.0
       version: 16.0.0
@@ -74,6 +77,9 @@ importers:
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
+      '@tanstack/react-query':
+        specifier: catalog:default
+        version: 5.90.12(react@19.2.0)
       next:
         specifier: catalog:default
         version: 16.0.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -102,6 +108,9 @@ importers:
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
+      '@tanstack/react-query':
+        specifier: catalog:default
+        version: 5.90.12(react@19.2.0)
       next:
         specifier: catalog:default
         version: 16.0.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -705,6 +714,14 @@ packages:
 
   '@tailwindcss/postcss@4.1.17':
     resolution: {integrity: sha512-+nKl9N9mN5uJ+M7dBOOCzINw94MPstNR/GtIhz1fpZysxL/4a+No64jCBD6CPN+bIHWFx3KWuu8XJRrj/572Dw==}
+
+  '@tanstack/query-core@5.90.12':
+    resolution: {integrity: sha512-T1/8t5DhV/SisWjDnaiU2drl6ySvsHj1bHBCWNXd+/T+Hh1cf6JodyEYMd5sgwm+b/mETT4EV3H+zCVczCU5hg==}
+
+  '@tanstack/react-query@5.90.12':
+    resolution: {integrity: sha512-graRZspg7EoEaw0a8faiUASCyJrqjKPdqJ9EwuDRUF9mEYJ1YPczI9H+/agJ0mOJkPCJDk0lsz5QTrLZ/jQ2rg==}
+    peerDependencies:
+      react: ^18 || ^19
 
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
@@ -3143,6 +3160,13 @@ snapshots:
       '@tailwindcss/oxide': 4.1.17
       postcss: 8.5.6
       tailwindcss: 4.1.17
+
+  '@tanstack/query-core@5.90.12': {}
+
+  '@tanstack/react-query@5.90.12(react@19.2.0)':
+    dependencies:
+      '@tanstack/query-core': 5.90.12
+      react: 19.2.0
 
   '@tybys/wasm-util@0.10.1':
     dependencies:
