@@ -4,3 +4,6 @@ packages:
   - "packages/config/*"
   - "packages/design-system/*"
 
+catalogs:
+  default:
+    zustand: ^5.0.0

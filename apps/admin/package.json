@@ -13,7 +13,8 @@
     "@causw/cds": "workspace:*",
     "next": "16.0.4",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "zustand": "catalog:default"
   },
   "devDependencies": {
     "@causw/eslint-config": "workspace:*",
