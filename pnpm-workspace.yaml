@@ -3,6 +3,7 @@ packages:
   - "packages/*"
   - "packages/config/*"
   - "packages/design-system/*"
+  - "packages/api-client/*"
 
 catalogs:
   default:
