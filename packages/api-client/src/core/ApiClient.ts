@@ -1,3 +1,4 @@
+import { ApiError } from '../errors/ApiError';
 import { InterceptorManager } from '../interceptors/InterceptorManager';
 import { ApiClientConfig, FetchOptions, InternalRequestConfig } from '../types';
 
@@ -12,16 +13,40 @@ export class ApiClient {
     this.baseUrl = config.baseUrl;
   }
 
+  /**
+   * body를 직렬화합니다.
+   * Content-Type이 application/json일 때만 JSON.stringify를 수행합니다.
+   */
+  private serializeBody(
+    body: unknown,
+    contentType: string,
+  ): BodyInit | null | undefined {
+    if (body === undefined || body === null) {
+      return body;
+    }
+
+    // application/json일 때만 stringify
+    if (contentType === 'application/json') {
+      return JSON.stringify(body);
+    }
+
+    // 그 외에는 그대로 반환 (FormData, Blob, string 등)
+    return body as BodyInit;
+  }
+
   private async request<T>(
     url: string,
     options: FetchOptions = {},
   ): Promise<T> {
+    // Content-Type: 사용자가 설정한 값 또는 기본값 (application/json)
+    const contentType = options.headers?.['Content-Type'] ?? 'application/json';
+
     let config: InternalRequestConfig = {
       url,
       options: {
         ...options,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentType,
           ...options.headers,
         },
       },
@@ -45,17 +70,20 @@ export class ApiClient {
       }
     }
 
-    let response: Response;
+    let promise: Promise<Response>;
     try {
-      response = await fetch(`${this.baseUrl}${config.url}`, config.options);
+      const response = await fetch(
+        `${this.baseUrl}${config.url}`,
+        config.options,
+      );
+      promise = Promise.resolve(response);
     } catch (error) {
-      throw error;
+      if (error instanceof TypeError) {
+        promise = Promise.reject(new ApiError(0, 'Network Error', error));
+      } else {
+        promise = Promise.reject(new ApiError(0, 'Unknown Error', error));
+      }
     }
-
-    // 응답 인터셉터 실행
-    // 초기 응답으로 시작하는 프로미스 체인을 생성.
-    // 각 인터셉터는 응답을 수정하거나 에러를 처리할 수 있음.
-    let promise = Promise.resolve(response);
 
     this.interceptors.response.iterate((interceptor) => {
       promise = promise.then(
@@ -69,14 +97,16 @@ export class ApiClient {
       );
     });
 
-    try {
-      response = await promise;
-    } catch (error) {
-      throw error;
-    }
+    const response = await promise;
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      let data: unknown;
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+      throw new ApiError(response.status, response.statusText, data);
     }
 
     // Handle 204 No Content
@@ -91,19 +121,23 @@ export class ApiClient {
     return this.request<T>(url, { ...options, method: 'GET' });
   }
 
-  post<T>(url: string, body: unknown, options?: FetchOptions) {
+  post<T>(url: string, body?: unknown, options?: FetchOptions) {
+    const contentType =
+      options?.headers?.['Content-Type'] ?? 'application/json';
     return this.request<T>(url, {
       ...options,
       method: 'POST',
-      body: JSON.stringify(body),
+      body: this.serializeBody(body, contentType),
     });
   }
 
-  put<T>(url: string, body: unknown, options?: FetchOptions) {
+  put<T>(url: string, body?: unknown, options?: FetchOptions) {
+    const contentType =
+      options?.headers?.['Content-Type'] ?? 'application/json';
     return this.request<T>(url, {
       ...options,
       method: 'PUT',
-      body: JSON.stringify(body),
+      body: this.serializeBody(body, contentType),
     });
   }
 
@@ -111,11 +145,13 @@ export class ApiClient {
     return this.request<T>(url, { ...options, method: 'DELETE' });
   }
 
-  patch<T>(url: string, body: unknown, options?: FetchOptions) {
+  patch<T>(url: string, body?: unknown, options?: FetchOptions) {
+    const contentType =
+      options?.headers?.['Content-Type'] ?? 'application/json';
     return this.request<T>(url, {
       ...options,
       method: 'PATCH',
-      body: JSON.stringify(body),
+      body: this.serializeBody(body, contentType),
     });
   }
 }
