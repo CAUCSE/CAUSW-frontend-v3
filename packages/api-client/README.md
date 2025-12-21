@@ -19,7 +19,7 @@ pnpm add @causw/api-client --filter <app-name>
 import { createApiClient } from '@causw/api-client';
 
 const client = createApiClient({
-  baseUrl: process.env.NEXT_PUBLIC_API_URL, // 기본값
+  baseUrl: process.env.NEXT_PUBLIC_API_URL,
 });
 
 // GET 요청
@@ -34,6 +34,27 @@ const createUser = async (userData: { name: string }) => {
   return newUser;
 };
 ```
+
+## Content-Type 처리
+
+- **기본값**: `application/json` (body가 자동으로 `JSON.stringify`됨)
+- **사용자 지정**: `headers['Content-Type']`을 직접 설정하면 해당 값 사용
+
+```typescript
+// JSON (기본값)
+await client.post('/api/users', { name: '홍길동' });
+
+// FormData (파일 업로드)
+const formData = new FormData();
+formData.append('file', imageFile);
+formData.append('metadata', JSON.stringify({ title: '프로필 사진' }));
+
+await client.post('/api/upload', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' },
+});
+```
+
+> **참고**: `multipart/form-data` 지정 시 body는 stringify되지 않고 그대로 전송됩니다.
 
 ## 인터셉터 (Interceptors)
 
@@ -79,13 +100,112 @@ client.interceptors.response.register(
 
 ## 에러 처리
 
-`ApiClient`는 응답 상태 코드가 200-299 범위를 벗어나면 에러를 발생시킵니다.
-`try-catch` 블록을 사용하여 에러를 처리할 수 있습니다.
+### 기본 에러 처리
+
+`ApiClient`는 응답 상태 코드가 200-299 범위를 벗어나면 `ApiError`를 발생시킵니다.
 
 ```typescript
+import { ApiError } from '@causw/api-client';
+
 try {
   await client.get('/error-endpoint');
 } catch (error) {
-  console.error('API 호출 실패:', error);
+  if (error instanceof ApiError) {
+    console.error('API Error:', error.status, error.statusText);
+    console.error('Error Data:', error.data);
+  } else {
+    console.error('Unknown Error:', error);
+  }
 }
 ```
+
+### 타입가드 사용
+
+`isApiClientError`와 `hasResponse` 타입가드를 사용하면 더 안전한 에러 처리가 가능합니다.
+
+```typescript
+import { isApiClientError, hasResponse } from '@causw/api-client';
+
+try {
+  await client.get('/users/123');
+} catch (error) {
+  // ApiError인지 확인
+  if (isApiClientError(error)) {
+    console.error('Status:', error.status);
+    console.error('Status Text:', error.statusText);
+    
+    // 응답 데이터가 있는지 확인
+    if (hasResponse(error)) {
+      console.error('Response Data:', error.data);
+    }
+  } else {
+    // 네트워크 에러 등 다른 에러
+    console.error('Unknown Error:', error);
+  }
+}
+```
+
+### 특정 타입의 에러 응답 처리
+
+`hasResponseOfType`을 사용하여 에러 응답의 타입을 체크할 수 있습니다.
+
+```typescript
+import { isApiClientError, hasResponseOfType } from '@causw/api-client';
+
+interface ErrorResponse {
+  message: string;
+  code: string;
+  details?: Record<string, string[]>;
+}
+
+try {
+  await client.post('/users', userData);
+} catch (error) {
+  if (isApiClientError(error) && hasResponseOfType<ErrorResponse>(error)) {
+    // error.data가 ErrorResponse 타입임을 보장
+    console.error('Error Message:', error.data.message);
+    console.error('Error Code:', error.data.code);
+    
+    if (error.data.details) {
+      console.error('Validation Errors:', error.data.details);
+    }
+  }
+}
+```
+
+### 커스텀 validator와 함께 사용
+
+```typescript
+function isErrorResponse(data: unknown): data is ErrorResponse {
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    'message' in data &&
+    'code' in data
+  );
+}
+
+try {
+  await client.post('/users', userData);
+} catch (error) {
+  if (isApiClientError(error) && hasResponseOfType(error, isErrorResponse)) {
+    // error.data가 ErrorResponse 타입임을 보장
+    console.error(error.data.message);
+  }
+}
+```
+
+## 타입가드 API
+
+### `isApiClientError(error: unknown): error is ApiError`
+
+에러가 `ApiError` 인스턴스인지 확인합니다.
+
+### `hasResponse(error: ApiError): boolean`
+
+`ApiError`에 응답 데이터(`data`)가 있는지 확인합니다.
+
+### `hasResponseOfType<T>(error: ApiError, validator?: (data: unknown) => data is T): boolean`
+
+`ApiError`의 응답 데이터가 특정 타입 `T`인지 확인합니다.
+선택적으로 `validator` 함수를 제공하여 런타임 타입 검증을 수행할 수 있습니다.
