@@ -71,18 +71,29 @@ export class ApiClient {
     }
 
     let promise: Promise<Response>;
+
+    // 타임아웃 설정 (기본 30초)
+    const timeout = config.options.timeout ?? 30000;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+
     try {
-      const response = await fetch(
-        `${this.baseUrl}${config.url}`,
-        config.options,
-      );
+      const response = await fetch(`${this.baseUrl}${config.url}`, {
+        ...config.options,
+        signal: controller.signal,
+      });
+
       promise = Promise.resolve(response);
     } catch (error) {
-      if (error instanceof TypeError) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        promise = Promise.reject(new ApiError(0, 'Request Timeout', error));
+      } else if (error instanceof TypeError) {
         promise = Promise.reject(new ApiError(0, 'Network Error', error));
       } else {
         promise = Promise.reject(new ApiError(0, 'Unknown Error', error));
       }
+    } finally {
+      clearTimeout(timeoutId);
     }
 
     this.interceptors.response.iterate((interceptor) => {
