@@ -1,6 +1,6 @@
 // InterceptorManager는 인터셉터를 등록하고 관리합니다.
 // 요청/응답 수명 주기 동안 실행될 핸들러들을 저장합니다.
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export class InterceptorManager<T> {
   private handlers: Array<{
     fulfilled: (value: T) => T | Promise<T>;
