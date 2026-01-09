@@ -1,0 +1,62 @@
+name: Discord PR Code Review Comment Notification
+on:
+  pull_request_review_comment:
+    types: [created]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          COMMENT_URL: ${{ github.event.comment.html_url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          DIFF_HUNK: ${{ github.event.comment.diff_hunk }}
+          FILE_PATH: ${{ github.event.comment.path }}
+        run: |
+          # Discord front-end 역할 ID
+          DISCORD_ROLE_ID="1351886402911998012"
+          
+          # 코멘트 내용 처리 (500자 제한)
+          COMMENT_PREVIEW=$(echo "$COMMENT_BODY" | head -c 500)
+          if [ ${#COMMENT_BODY} -gt 500 ]; then
+            COMMENT_PREVIEW="${COMMENT_PREVIEW}..."
+          fi
+          
+          # Diff context 간략히 표시 (마지막 5줄만)
+          DIFF_PREVIEW=$(echo "$DIFF_HUNK" | tail -n 5)
+          
+          # JSON payload 생성 Use jq for safety
+          jq -n \
+            --arg role_id "$DISCORD_ROLE_ID" \
+            --arg title "$PR_TITLE" \
+            --arg pr_url "$PR_URL" \
+            --arg pr_author "$PR_AUTHOR" \
+            --arg file_path "$FILE_PATH" \
+            --arg comment_author "$COMMENT_AUTHOR" \
+            --arg comment_url "$COMMENT_URL" \
+            --arg comment_body "$COMMENT_PREVIEW" \
+            --arg diff_hunk "$DIFF_PREVIEW" \
+            '{
+              content: ("<@&" + $role_id + "> **" + $pr_author + "**님에게 코드 리뷰 코멘트가 달렸습니다!"),
+              embeds: [{
+                title: $title,
+                url: $pr_url,
+                color: 16753920,
+                fields: [
+                  {name: "📁 파일", value: ("`" + $file_path + "`"), inline: false},
+                  {name: "💬 코멘트 작성자", value: $comment_author, inline: true},
+                  {name: "🔗 링크", value: ("[바로가기](" + $comment_url + ")"), inline: true},
+                  {name: "📝 코멘트 내용", value: $comment_body, inline: false},
+                  {name: "📄 코드 컨텍스트", value: ("```diff\n" + $diff_hunk + "\n```"), inline: false}
+                ]
+              }]
+            }' > payload.json
+          
+          # Discord webhook 전송
+          curl -H "Content-Type: application/json" -d @payload.json "$DISCORD_WEBHOOK_URL"

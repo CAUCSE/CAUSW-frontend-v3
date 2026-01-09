@@ -1,0 +1,54 @@
+name: Discord PR Comment Notification
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  notify:
+    # PR에 달린 코멘트만 처리
+    if: github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          COMMENT_URL: ${{ github.event.comment.html_url }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
+          PR_TITLE: ${{ github.event.issue.title }}
+          PR_URL: ${{ github.event.issue.html_url }}
+          PR_AUTHOR: ${{ github.event.issue.user.login }}
+        run: |
+          # Discord front-end 역할 ID
+          DISCORD_ROLE_ID="1351886402911998012"
+          
+          # 코멘트 내용 줄바꿈 처리 및 길이 제한 (200자)
+          COMMENT_PREVIEW=$(echo "$COMMENT_BODY" | head -c 200)
+          if [ ${#COMMENT_BODY} -gt 200 ]; then
+            COMMENT_PREVIEW="${COMMENT_PREVIEW}..."
+          fi
+          
+          # JSON payload 생성 Use jq for safety
+          jq -n \
+            --arg role_id "$DISCORD_ROLE_ID" \
+            --arg title "$PR_TITLE" \
+            --arg pr_url "$PR_URL" \
+            --arg pr_author "$PR_AUTHOR" \
+            --arg comment_author "$COMMENT_AUTHOR" \
+            --arg comment_url "$COMMENT_URL" \
+            --arg comment_body "$COMMENT_PREVIEW" \
+            '{
+              content: ("<@&" + $role_id + "> **" + $pr_author + "**님의 PR에 새로운 코멘트가 달렸습니다!"),
+              embeds: [{
+                title: $title,
+                url: $pr_url,
+                color: 5814783,
+                description: ("**작성자**: " + $comment_author + "\n\n**코멘트**:\n" + $comment_body),
+                fields: [
+                  {name: "링크", value: ("[코멘트 바로가기](" + $comment_url + ")")}
+                ]
+              }]
+            }' > payload.json
+          
+          # Discord webhook 전송
+          curl -H "Content-Type: application/json" -d @payload.json "$DISCORD_WEBHOOK_URL"
