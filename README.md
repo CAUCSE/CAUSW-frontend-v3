@@ -32,7 +32,7 @@ pnpm install
 pnpm dev
 
 # 재학생 앱만 실행 (localhost:3000)
-pnpm dev:student
+pnpm dev:web
 
 # 관리자 앱만 실행 (localhost:3001)
 pnpm dev:admin
@@ -45,7 +45,7 @@ pnpm dev:admin
 pnpm build
 
 # 특정 앱만 빌드
-pnpm build:student
+pnpm build:web
 pnpm build:admin
 ```
 
