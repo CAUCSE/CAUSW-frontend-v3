@@ -1,2 +1,185 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 @import "tailwindcss";
 @config "../../tailwind.config.ts";
+
+
+
+* {
+    letter-spacing: -0.02rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+
+    /* Title variants */
+    .typo-title-48-bold {
+        @apply font-sans text-6xl leading-normal font-bold;
+    }
+
+    .typo-title-32-bold {
+        @apply font-sans text-5xl leading-normal font-bold;
+    }
+
+    .typo-title-30-bold {
+        @apply font-sans text-4xl leading-normal font-bold;
+    }
+
+    .typo-title-24-bold {
+        @apply font-sans text-3xl leading-normal font-bold;
+    }
+
+    .typo-title-22-bold {
+        @apply font-sans text-2xl leading-normal font-bold;
+    }
+
+    /* Subtitle variants */
+    .typo-subtitle-20-bold {
+        @apply font-sans text-xl leading-normal font-bold;
+    }
+
+    .typo-subtitle-18-bold {
+        @apply font-sans text-lg leading-normal font-bold;
+    }
+
+    .typo-subtitle-16-bold {
+        @apply font-sans text-base leading-normal font-bold;
+    }
+
+    /* Body variants */
+    .typo-body-18-medium {
+        @apply font-sans text-lg leading-normal font-medium;
+    }
+
+    .typo-body-16-medium {
+        @apply font-sans text-base leading-normal font-medium;
+    }
+
+    .typo-body-16-regular {
+        @apply font-sans text-base leading-normal font-regular;
+    }
+
+    .typo-body-15-semibold {
+        @apply font-sans text-sm leading-normal font-semibold;
+    }
+
+    .typo-body-15-medium {
+        @apply font-sans text-sm leading-normal font-medium;
+    }
+
+    .typo-body-14-semibold {
+        @apply font-sans text-xs leading-normal font-semibold;
+    }
+
+    .typo-body-14-medium {
+        @apply font-sans text-xs leading-normal font-medium;
+    }
+
+    .typo-body-14-regular {
+        @apply font-sans text-xs leading-normal font-regular;
+    }
+
+    .typo-caption-12-semibold {
+        @apply font-sans text-2xs leading-normal font-semibold;
+    }
+
+    .typo-caption-12-medium {
+        @apply font-sans text-2xs leading-normal font-medium;
+    }
+
+    .typo-caption-12-regular {
+        @apply font-sans text-2xs leading-normal font-regular;
+    }
+}
+
+@theme {
+
+    --z-index-sticky: 250;
+    --z-index-dropdown: 500;
+    --z-index-bottomsheet: 600;
+    --z-index-modal: 1000;
+    --z-index-toast: 1500;
+
+    --animate-toast-hide: toast-hide 100ms ease-in forwards;
+    --animate-toast-slide-in: toast-slide-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    --animate-toast-swipe-out: toast-swipe-out 100ms ease-out forwards;
+
+    --animate-fade-in: fade-in 200ms ease-out;
+    --animate-fade-out: fade-out 200ms ease-in;
+    --animate-zoom-in: zoom-in 200ms ease-out;
+    --animate-zoom-out: zoom-out 200ms ease-in;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes fade-out {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes zoom-in {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes zoom-out {
+        from {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        to {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+
+    @keyframes toast-hide {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    @keyframes toast-slide-in {
+        from {
+            transform: translateY(100%);
+        }
+
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes toast-swipe-out {
+        from {
+            transform: translateY(var(--radix-toast-swipe-end-y));
+        }
+
+        to {
+            transform: translateY(100%);
+        }
+    }
+}
