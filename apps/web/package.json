@@ -22,6 +22,7 @@
   "devDependencies": {
     "@causw/eslint-config": "workspace:*",
     "@causw/prettier-config": "workspace:*",
-    "@causw/typescript-config": "workspace:*"
+    "@causw/typescript-config": "workspace:*",
+    "autoprefixer": "^10.4.23"
   }
 }

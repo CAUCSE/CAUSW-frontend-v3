@@ -6,9 +6,9 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@causw/components": "^0.0.8",
-    "@causw/design-system": "^0.0.10",
-    "@causw/icons": "^0.0.8",
-    "@causw/tokens": "^0.0.8"
+    "@causw/core": "^0.0.11",
+    "@causw/design-system": "^0.0.15",
+    "@causw/icons": "^0.0.9",
+    "@causw/tokens": "^0.0.12"
   }
 }
