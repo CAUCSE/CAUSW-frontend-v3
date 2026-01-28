@@ -80,6 +80,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@causw/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
@@ -117,6 +120,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@causw/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
@@ -154,6 +160,15 @@ importers:
       autoprefixer:
         specifier: ^10.4.23
         version: 10.4.23(postcss@8.5.6)
+
+  packages/api-client:
+    devDependencies:
+      '@causw/eslint-config':
+        specifier: workspace:*
+        version: link:../config/eslint-config
+      '@causw/typescript-config':
+        specifier: workspace:*
+        version: link:../config/typescript-config
 
   packages/config/eslint-config:
     dependencies:

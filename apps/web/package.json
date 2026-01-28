@@ -17,7 +17,8 @@
     "react-dom": "catalog:default",
     "react-hook-form": "catalog:default",
     "zod": "catalog:default",
-    "zustand": "catalog:default"
+    "zustand": "catalog:default",
+    "@causw/api-client": "workspace:*"
   },
   "devDependencies": {
     "@causw/eslint-config": "workspace:*",
