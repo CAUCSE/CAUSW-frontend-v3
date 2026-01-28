@@ -88,6 +88,9 @@ importers:
 
   apps/admin:
     dependencies:
+      '@causw/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
@@ -140,6 +143,9 @@ importers:
       '@capacitor/status-bar':
         specifier: ^7.0.4
         version: 7.0.4(@capacitor/core@7.4.2)
+      '@causw/api-client':
+        specifier: workspace:*
+        version: link:../../packages/api-client
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds

@@ -26,7 +26,8 @@
     "react-hook-form": "catalog:default",
     "tailwind-merge": "^3.4.0",
     "zod": "catalog:default",
-    "zustand": "catalog:default"
+    "zustand": "catalog:default",
+    "@causw/api-client": "workspace:*"
   },
   "devDependencies": {
     "@capacitor/android": "7.4.2",
