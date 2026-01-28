@@ -1,13 +1,28 @@
-export class ApiError extends Error {
-  public status: number;
-  public statusText: string;
-  public data: unknown;
+import { ApiResponse, InternalRequestConfig } from '../types';
 
-  constructor(status: number, statusText: string, data: unknown) {
-    super(`API Error: ${status} ${statusText}`);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export class ApiError<T = any> extends Error {
+  public config: InternalRequestConfig;
+  public code?: string;
+  public request?: any;
+  public response?: ApiResponse<T>;
+  public status?: number;
+  public data?: T;
+
+  constructor(
+    message: string,
+    config: InternalRequestConfig,
+    code?: string,
+    request?: any,
+    response?: ApiResponse<T>,
+  ) {
+    super(message);
     this.name = 'ApiError';
-    this.status = status;
-    this.statusText = statusText;
-    this.data = data;
+    this.config = config;
+    this.code = code;
+    this.request = request;
+    this.response = response;
+    this.status = response?.status;
+    this.data = response?.data;
   }
 }
