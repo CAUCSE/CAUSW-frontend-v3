@@ -12,3 +12,13 @@ export interface InternalRequestConfig {
 export interface ApiClientConfig {
   baseUrl: string;
 }
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface ApiResponse<T = any> {
+  data: T;
+  status: number;
+  statusText: string;
+  headers: Record<string, string>;
+  config: InternalRequestConfig;
+  request?: any;
+}
