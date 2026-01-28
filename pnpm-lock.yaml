@@ -158,6 +158,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       next:
         specifier: catalog:default
         version: 16.0.7(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -1793,6 +1799,12 @@ packages:
     resolution:
       {
         integrity: sha512-0dzKcwO+S8s2kuF5Z9oUWatQJj5Uq/iqphEtE3GQJVRRYm/tD1LglU2UnXi2A8jLq5umkGouOXOR9y0n613ZwQ==,
+      }
+
+  '@types/js-cookie@3.0.6':
+    resolution:
+      {
+        integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==,
       }
 
   '@types/json-schema@7.0.15':
@@ -3677,6 +3689,13 @@ packages:
         integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==,
       }
     hasBin: true
+
+  js-cookie@3.0.5:
+    resolution:
+      {
+        integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==,
+      }
+    engines: { node: '>=14' }
 
   js-tokens@4.0.0:
     resolution:
@@ -6614,6 +6633,7 @@ snapshots:
   '@types/fs-extra@8.1.5':
     dependencies:
       '@types/node': 20.19.30
+  '@types/js-cookie@3.0.6': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -7908,6 +7928,8 @@ snapshots:
       set-function-name: 2.0.2
 
   jiti@2.6.1: {}
+
+  js-cookie@3.0.5: {}
 
   js-tokens@4.0.0: {}
 

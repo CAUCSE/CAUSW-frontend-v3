@@ -19,6 +19,9 @@
     "@tanstack/react-query": "catalog:default",
     "capacitor-secure-storage-plugin": "0.12.0",
     "clsx": "^2.1.1",
+    "@causw/api-client": "workspace:*",
+    "@types/js-cookie": "^3.0.6",
+    "js-cookie": "^3.0.5",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
@@ -26,8 +29,7 @@
     "react-hook-form": "catalog:default",
     "tailwind-merge": "^3.4.0",
     "zod": "catalog:default",
-    "zustand": "catalog:default",
-    "@causw/api-client": "workspace:*"
+    "zustand": "catalog:default"
   },
   "devDependencies": {
     "@capacitor/android": "7.4.2",
