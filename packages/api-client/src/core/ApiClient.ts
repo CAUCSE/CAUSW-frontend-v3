@@ -1,6 +1,11 @@
 import { ApiError } from '../errors/ApiError';
 import { InterceptorManager } from '../interceptors/InterceptorManager';
-import { ApiClientConfig, FetchOptions, InternalRequestConfig } from '../types';
+import {
+  ApiClientConfig,
+  ApiResponse,
+  FetchOptions,
+  InternalRequestConfig,
+} from '../types';
 
 export class ApiClient {
   private baseUrl: string;
@@ -37,7 +42,7 @@ export class ApiClient {
   private async request<T>(
     url: string,
     options: FetchOptions = {},
-  ): Promise<T> {
+  ): Promise<ApiResponse<T>> {
     // Content-Type: 사용자가 설정한 값 또는 기본값 (application/json)
     const contentType = options.headers?.['Content-Type'] ?? 'application/json';
 
@@ -53,7 +58,6 @@ export class ApiClient {
     };
 
     // 요청 인터셉터 실행
-    // 요청이 전송되기 전에 설정을 수정하는 인터셉터 체인을 생성.
     const requestChain: Array<
       | ((
           config: InternalRequestConfig,
@@ -86,11 +90,11 @@ export class ApiClient {
       promise = Promise.resolve(response);
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
-        promise = Promise.reject(new ApiError(0, 'Request Timeout', error));
+        throw new ApiError('Request Timeout', config, 'ECONNABORTED', null);
       } else if (error instanceof TypeError) {
-        promise = Promise.reject(new ApiError(0, 'Network Error', error));
+        throw new ApiError('Network Error', config, 'ERR_NETWORK', null);
       } else {
-        promise = Promise.reject(new ApiError(0, 'Unknown Error', error));
+        throw new ApiError('Unknown Error', config, 'UNKNOWN', null);
       }
     } finally {
       clearTimeout(timeoutId);
@@ -110,22 +114,50 @@ export class ApiClient {
 
     const response = await promise;
 
-    if (!response.ok) {
-      let data: unknown;
-      try {
-        data = await response.json();
-      } catch {
-        data = null;
-      }
-      throw new ApiError(response.status, response.statusText, data);
-    }
+    // Parse Headers
+    const headers: Record<string, string> = {};
+    response.headers.forEach((value, key) => {
+      headers[key] = value;
+    });
+    /* eslint-disable @typescript-eslint/no-explicit-any */
+    let data: any;
 
     // Handle 204 No Content
     if (response.status === 204) {
-      return {} as T;
+      data = {};
+    } else {
+      try {
+        const text = await response.text();
+        try {
+          data = JSON.parse(text);
+        } catch {
+          data = text;
+        }
+      } catch {
+        data = null;
+      }
     }
 
-    return response.json();
+    // Construct ApiResponse
+    const apiResponse: ApiResponse<T> = {
+      data: data,
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+      config,
+    };
+
+    if (!response.ok) {
+      throw new ApiError(
+        `Request failed with status code ${response.status}`,
+        config,
+        response.status.toString(),
+        null,
+        apiResponse,
+      );
+    }
+
+    return apiResponse;
   }
 
   get<T>(url: string, options?: FetchOptions) {
