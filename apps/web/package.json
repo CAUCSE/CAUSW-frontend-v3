@@ -10,15 +10,17 @@
     "lint:fix": "eslint src --fix"
   },
   "dependencies": {
+    "@causw/api-client": "workspace:*",
     "@causw/cds": "workspace:*",
     "@tanstack/react-query": "catalog:default",
+    "@types/js-cookie": "^3.0.6",
+    "js-cookie": "^3.0.5",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
     "react-hook-form": "catalog:default",
     "zod": "catalog:default",
-    "zustand": "catalog:default",
-    "@causw/api-client": "workspace:*"
+    "zustand": "catalog:default"
   },
   "devDependencies": {
     "@causw/eslint-config": "workspace:*",
