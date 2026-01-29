@@ -9,6 +9,7 @@ import {
 
 export class ApiClient {
   private baseUrl: string;
+  private timeout: number;
   public interceptors = {
     request: new InterceptorManager<InternalRequestConfig>(),
     response: new InterceptorManager<Response>(),
@@ -16,6 +17,7 @@ export class ApiClient {
 
   constructor(config: ApiClientConfig) {
     this.baseUrl = config.baseUrl;
+    this.timeout = config.timeout ?? 30000;
   }
 
   /**
@@ -77,7 +79,7 @@ export class ApiClient {
     let promise: Promise<Response>;
 
     // 타임아웃 설정 (기본 30초)
-    const timeout = config.options.timeout ?? 30000;
+    const timeout = config.options.timeout ?? this.timeout;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
