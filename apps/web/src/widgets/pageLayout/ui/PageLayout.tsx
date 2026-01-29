@@ -4,10 +4,12 @@ import React from 'react';
 
 import type { NavKey } from '../model/types';
 
+import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
 
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const [active, setActive] = React.useState<NavKey>('home');
+  const [selected, setSelected] = React.useState<NavKey>('home');
 
   return (
     <div className="flex h-screen">
@@ -22,7 +24,10 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* Mobile BottomNav */}
-      <div className="xl:hidden">bottom nav</div>
+      <div className="xl:hidden">
+        {' '}
+        <BottomNav selected={selected} onSelectChange={setSelected} />
+      </div>
     </div>
   );
 }

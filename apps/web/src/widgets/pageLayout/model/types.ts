@@ -18,3 +18,8 @@ export type NavItem = {
   /** 빨간 점(읽지 않은 알림 등) */
   hasDot?: boolean;
 };
+export type BottomNavItem = {
+  key: Extract<NavKey, 'home' | 'community' | 'write' | 'directory'>;
+  label: string;
+  icon: React.ReactNode;
+};
