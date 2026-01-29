@@ -6,7 +6,7 @@ const accessKey = getStorageAccessKey();
 const refreshKey = getStorageRefreshKey();
 
 export const getClientATK = (): string => {
-  const atk = Cookies.get(refreshKey);
+  const atk = Cookies.get(accessKey);
   if (!atk) {
     return '';
   }
@@ -14,7 +14,7 @@ export const getClientATK = (): string => {
 };
 
 export const getClientRTK = (): string => {
-  const rtk = Cookies.get(accessKey);
+  const rtk = Cookies.get(refreshKey);
   if (!rtk) {
     return '';
   }
