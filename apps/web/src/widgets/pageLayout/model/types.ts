@@ -47,3 +47,8 @@ export type NavItem = {
   hasDot?: boolean;
 >>>>>>> 5392a88 (feat: add sidebar)
 };
+export type BottomNavItem = {
+  key: Extract<NavKey, 'home' | 'community' | 'write' | 'directory'>;
+  label: string;
+  icon: React.ReactNode;
+};
