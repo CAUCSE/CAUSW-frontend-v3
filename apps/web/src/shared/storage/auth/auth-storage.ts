@@ -5,55 +5,55 @@ import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
 const accessKey = getStorageAccessKey();
 const refreshKey = getStorageRefreshKey();
 
-export const getAccessToken = () => {
+export const getClientATK = () => {
   return Cookies.get(accessKey);
 };
 
-export const getRefreshToken = () => {
+export const getClientRTK = () => {
   return Cookies.get(refreshKey);
 };
 
-export const getNativeAccessToken = () => {
+export const getNativeATK = () => {
   // TODO: 네이티브 스토리지에서 토큰 가져오기
   return '';
 };
 
-export const getNativeRefreshToken = () => {
+export const getNativeRTK = () => {
   // TODO: 네이티브 스토리지에서 토큰 가져오기
   return '';
 };
 
-export const setAccessToken = (token: string) => {
+export const setClientATK = (token: string) => {
   Cookies.set(accessKey, token);
 };
 
-export const setRefreshToken = (token: string) => {
+export const setClientRTK = (token: string) => {
   Cookies.set(refreshKey, token);
 };
 
-export const setNativeAccessToken = () => {
+export const setNativeATK = () => {
   // TODO: 네이티브 스토리지에 토큰 저장하기
   return '';
 };
 
-export const setNativeRefreshToken = () => {
+export const setNativeRTK = () => {
   // TODO: 네이티브 스토리지에 토큰 저장하기
   return '';
 };
 
-export const removeAccessToken = () => {
+export const removeClientATK = () => {
   Cookies.remove(accessKey);
 };
 
-export const removeRefreshToken = () => {
+export const removeClientRTK = () => {
   Cookies.remove(refreshKey);
 };
 
-export const removeNativeAccessToken = () => {
+export const removeNativeATK = () => {
   // TODO: 네이티브 스토리지에서 토큰 삭제하기
   return '';
 };
-export const removeNativeRefreshToken = () => {
+export const removeNativeRTK = () => {
   // TODO: 네이티브 스토리지에서 토큰 삭제하기
   return '';
 };

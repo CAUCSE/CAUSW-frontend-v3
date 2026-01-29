@@ -9,26 +9,26 @@ import {
 const accessKey = getStorageAccessKey();
 const refreshKey = getStorageRefreshKey();
 
-export const getAccessToken = async () => {
+export const getServerATK = async () => {
   return (await cookies()).get(accessKey);
 };
 
-export const getRefreshToken = async () => {
+export const getServerRTK = async () => {
   return (await cookies()).get(refreshKey);
 };
 
-export const setAccessToken = async (token: string) => {
+export const setServerATK = async (token: string) => {
   (await cookies()).set(accessKey, token);
 };
 
-export const setRefreshToken = async (token: string) => {
+export const setServerRTK = async (token: string) => {
   (await cookies()).set(refreshKey, token);
 };
 
-export const removeAccessToken = async () => {
+export const removeServerATK = async () => {
   (await cookies()).delete(accessKey);
 };
 
-export const removeRefreshToken = async () => {
+export const removeServerRTK = async () => {
   (await cookies()).delete(refreshKey);
 };
