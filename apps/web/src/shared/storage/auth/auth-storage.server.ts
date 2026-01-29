@@ -9,12 +9,20 @@ import {
 const accessKey = getStorageAccessKey();
 const refreshKey = getStorageRefreshKey();
 
-export const getServerATK = async () => {
-  return (await cookies()).get(accessKey);
+export const getServerATK = async (): Promise<string> => {
+  const atk = (await cookies()).get(accessKey);
+  if (!atk) {
+    return '';
+  }
+  return atk.value;
 };
 
-export const getServerRTK = async () => {
-  return (await cookies()).get(refreshKey);
+export const getServerRTK = async (): Promise<string> => {
+  const rtk = (await cookies()).get(refreshKey);
+  if (!rtk) {
+    return '';
+  }
+  return rtk.value;
 };
 
 export const setServerATK = async (token: string) => {
