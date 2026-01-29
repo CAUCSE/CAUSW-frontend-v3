@@ -12,7 +12,7 @@ export class ApiClient {
   private timeout: number;
   public interceptors = {
     request: new InterceptorManager<InternalRequestConfig>(),
-    response: new InterceptorManager<Response>(),
+    response: new InterceptorManager<ApiResponse>(),
   };
 
   constructor(config: ApiClientConfig) {
@@ -41,7 +41,7 @@ export class ApiClient {
     return body as BodyInit;
   }
 
-  private async request<T>(
+  public async request<T>(
     url: string,
     options: FetchOptions = {},
   ): Promise<ApiResponse<T>> {
@@ -76,20 +76,17 @@ export class ApiClient {
       }
     }
 
-    let promise: Promise<Response>;
-
     // 타임아웃 설정 (기본 30초)
     const timeout = config.options.timeout ?? this.timeout;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
+    let response: Response;
     try {
-      const response = await fetch(`${this.baseUrl}${config.url}`, {
+      response = await fetch(`${this.baseUrl}${config.url}`, {
         ...config.options,
         signal: controller.signal,
       });
-
-      promise = Promise.resolve(response);
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') {
         throw new ApiError('Request Timeout', config, 'ECONNABORTED', null);
@@ -101,20 +98,6 @@ export class ApiClient {
     } finally {
       clearTimeout(timeoutId);
     }
-
-    this.interceptors.response.iterate((interceptor) => {
-      promise = promise.then(
-        (res) => interceptor.fulfilled(res),
-        (err) => {
-          if (interceptor.rejected) {
-            return interceptor.rejected(err);
-          }
-          throw err;
-        },
-      );
-    });
-
-    const response = await promise;
 
     // Parse Headers
     const headers: Record<string, string> = {};
@@ -149,17 +132,37 @@ export class ApiClient {
       config,
     };
 
-    if (!response.ok) {
-      throw new ApiError(
+    let promise: Promise<ApiResponse<T>>;
+
+    if (response.ok) {
+      promise = Promise.resolve(apiResponse);
+    } else {
+      const error = new ApiError(
         `Request failed with status code ${response.status}`,
         config,
         response.status.toString(),
         null,
         apiResponse,
       );
+      promise = Promise.reject(error);
     }
 
-    return apiResponse;
+    this.interceptors.response.iterate((interceptor) => {
+      promise = promise.then(
+        (res) =>
+          interceptor.fulfilled(res) as
+            | ApiResponse<T>
+            | Promise<ApiResponse<T>>,
+        (err) => {
+          if (interceptor.rejected) {
+            return interceptor.rejected(err);
+          }
+          throw err;
+        },
+      );
+    });
+
+    return await promise;
   }
 
   get<T>(url: string, options?: FetchOptions) {
