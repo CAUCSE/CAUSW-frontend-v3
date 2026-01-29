@@ -5,20 +5,28 @@ import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
 const accessKey = getStorageAccessKey();
 const refreshKey = getStorageRefreshKey();
 
-export const getClientATK = () => {
-  return Cookies.get(accessKey);
+export const getClientATK = (): string => {
+  const atk = Cookies.get(refreshKey);
+  if (!atk) {
+    return '';
+  }
+  return atk;
 };
 
-export const getClientRTK = () => {
-  return Cookies.get(refreshKey);
+export const getClientRTK = (): string => {
+  const rtk = Cookies.get(accessKey);
+  if (!rtk) {
+    return '';
+  }
+  return rtk;
 };
 
-export const getNativeATK = () => {
+export const getNativeATK = (): string => {
   // TODO: 네이티브 스토리지에서 토큰 가져오기
   return '';
 };
 
-export const getNativeRTK = () => {
+export const getNativeRTK = (): string => {
   // TODO: 네이티브 스토리지에서 토큰 가져오기
   return '';
 };
