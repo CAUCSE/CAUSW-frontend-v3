@@ -25,18 +25,18 @@ export const getServerRTK = async (): Promise<string> => {
   return rtk.value;
 };
 
-export const setServerATK = async (token: string) => {
+export const setServerATK = async (token: string): Promise<void> => {
   (await cookies()).set(accessKey, token);
 };
 
-export const setServerRTK = async (token: string) => {
+export const setServerRTK = async (token: string): Promise<void> => {
   (await cookies()).set(refreshKey, token);
 };
 
-export const removeServerATK = async () => {
+export const removeServerATK = async (): Promise<void> => {
   (await cookies()).delete(accessKey);
 };
 
-export const removeServerRTK = async () => {
+export const removeServerRTK = async (): Promise<void> => {
   (await cookies()).delete(refreshKey);
 };
