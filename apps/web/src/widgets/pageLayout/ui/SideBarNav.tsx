@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
+import { CountBadge, NotificationDot } from '@/shared';
+
 import {
   SIDEBAR_BOTTOM_ITEMS,
   SIDEBAR_ITEMS,
@@ -13,7 +15,6 @@ import {
 
 import { FooterProfile } from './FooterProfile';
 
-import { CountBadge, NotificationDot } from '@/shared';
 
 type Props = {
   selected?: SidebarKey;
