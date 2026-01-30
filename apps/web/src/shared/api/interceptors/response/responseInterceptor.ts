@@ -18,7 +18,6 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
     },
 
     async (error) => {
-      console.log('res interceptor 진입');
       if (!isApiError(error)) {
         throw error;
       }
