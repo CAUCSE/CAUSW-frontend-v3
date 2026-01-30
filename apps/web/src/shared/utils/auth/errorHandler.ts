@@ -17,7 +17,7 @@ export const isNoPermissionError = (errorCode: string) => {
   return noPermissionCode.includes(errorCode);
 };
 
-export const parseCustomErrorCode = (error: BaseApiError) => {
+export const parseCustomErrorCode = (error: BaseApiError): string => {
   if (!error.data) return '';
-  return error.data.code;
+  return error.data.code || '';
 };
