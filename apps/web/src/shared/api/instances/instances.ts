@@ -24,18 +24,42 @@ export class BaseApiClient {
   private client: ApiClient;
   private isRefreshing: boolean = false;
 
-  constructor(config: ApiClientConfig) {
-    this.client = createApiClient(config);
-  }
-
+  /** 원본 API Client 접근 로직 ( response wrapping 되지 않는, 토큰 관련 처리 없는 ) */
   public get internalClient() {
     return this.client;
+  }
+
+  /** Refresh Token 재발급을 위한 큐 */
+  private refreshQueue: {
+    resolve: (token: string) => void;
+    reject: () => void;
+  }[] = [];
+
+  constructor(config: ApiClientConfig) {
+    this.client = createApiClient(config);
   }
 
   public getIsRefreshing = () => this.isRefreshing;
   public setIsRefreshing = (value: boolean) => {
     this.isRefreshing = value;
   };
+
+  public addToRefreshQueue(callback: {
+    resolve: (token: string) => void;
+    reject: () => void;
+  }) {
+    this.refreshQueue.push(callback);
+  }
+
+  public processRefreshQueue(token: string) {
+    this.refreshQueue.forEach(({ resolve }) => resolve(token));
+    this.refreshQueue = [];
+  }
+
+  public rejectRefreshQueue() {
+    this.refreshQueue.forEach(({ reject }) => reject());
+    this.refreshQueue = [];
+  }
 
   public get = async <T>(
     url: string,
@@ -101,5 +125,5 @@ export class BaseApiClient {
 
 export const API = new BaseApiClient(baseConfig);
 
-setRequestInterceptors(API.internalClient);
-setResponseInterceptors(API.internalClient);
+setRequestInterceptors(API);
+setResponseInterceptors(API);
