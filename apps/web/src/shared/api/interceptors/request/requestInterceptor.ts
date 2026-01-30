@@ -1,10 +1,10 @@
-import { ApiClient } from '@causw/api-client';
-
 import { TokenManager } from '@/shared/storage/auth';
 import { isServer } from '@/shared/utils';
 
-export const setRequestInterceptors = (apiClient: ApiClient) => {
-  apiClient.interceptors.request.register(async (config) => {
+import { BaseApiClient } from '../../instances';
+
+export const setRequestInterceptors = (apiClient: BaseApiClient) => {
+  apiClient.internalClient.interceptors.request.register(async (config) => {
     const headers: Record<string, string> = {};
     let nextOptions: NextFetchRequestConfig = {};
 
