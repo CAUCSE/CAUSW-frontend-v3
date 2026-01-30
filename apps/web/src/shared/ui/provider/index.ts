@@ -1,1 +1,4 @@
-export * from './QueryErrorBoundary';
+export {
+  QueryErrorBoundary,
+  QueryProviderWithDevtools,
+} from './tanstack-query';

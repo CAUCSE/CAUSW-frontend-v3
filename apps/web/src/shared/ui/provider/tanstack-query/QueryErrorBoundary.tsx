@@ -8,7 +8,7 @@ import {
 
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
-import { ErrorView } from '../fallback/error/ErrorView';
+import { ErrorView } from '../../fallback/error/ErrorView';
 
 interface QueryErrorBoundaryProps extends Omit<
   ErrorBoundaryPropsWithComponent,
