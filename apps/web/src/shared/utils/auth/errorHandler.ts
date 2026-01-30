@@ -1,9 +1,10 @@
+import { ApiError } from '@causw/api-client';
+
 import {
   noATKCode,
   noPermissionCode,
   noRTKCode,
 } from '@/shared/constants/auth/errorCode';
-import { BaseApiError } from '@/shared/types/api/response';
 
 export const isAccessTokenError = (errorCode: string) => {
   return noATKCode.includes(errorCode);
@@ -17,7 +18,7 @@ export const isNoPermissionError = (errorCode: string) => {
   return noPermissionCode.includes(errorCode);
 };
 
-export const parseCustomErrorCode = (error: BaseApiError): string => {
+export const parseCustomErrorCode = (error: ApiError): string => {
   if (!error.data) return '';
   return error.data.code || '';
 };
