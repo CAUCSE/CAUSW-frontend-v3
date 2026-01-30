@@ -1,5 +1,4 @@
 import { ReactElement } from 'react';
-<<<<<<< HEAD
 //TODO: write 라우팅 주소 수정 필요
 export type SidebarKey =
   | 'home'
@@ -26,29 +25,4 @@ export type BottomNavItem = {
   label: string;
   icon: ReactElement;
   href: string;
-=======
-
-export type NavKey =
-  | 'home'
-  | 'community'
-  | 'write'
-  | 'directory'
-  | 'profile'
-  | 'about'
-  | 'notifications';
-
-export type NavItem = {
-  key: NavKey;
-  label: string;
-  icon: ReactElement;
-  /** 숫자 뱃지 */
-  badgeCount?: number;
-  /** 빨간 점(읽지 않은 알림 등) */
-  hasDot?: boolean;
->>>>>>> 5392a88 (feat: add sidebar)
-};
-export type BottomNavItem = {
-  key: Extract<NavKey, 'home' | 'community' | 'write' | 'directory'>;
-  label: string;
-  icon: React.ReactNode;
 };

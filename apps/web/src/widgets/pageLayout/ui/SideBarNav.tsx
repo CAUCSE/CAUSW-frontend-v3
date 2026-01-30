@@ -15,7 +15,6 @@ import {
 
 import { FooterProfile } from './FooterProfile';
 
-
 type Props = {
   selected?: SidebarKey;
   notificationCnt?: number;
