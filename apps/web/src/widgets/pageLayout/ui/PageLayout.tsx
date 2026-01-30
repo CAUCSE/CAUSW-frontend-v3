@@ -2,20 +2,43 @@
 
 import React from 'react';
 
-import type { NavKey } from '../model';
+import { usePathname } from 'next/navigation';
+
+import {
+  BOTTOM_NAV_ITEMS,
+  SIDEBAR_ITEMS,
+  SidebarKey,
+  type BottomNavKey,
+} from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
+function matchPathname(pathname: string, href: string) {
+  if (href === '/') return pathname === '/';
 
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function pickKeyByPath<T extends readonly { key: string; href: string }[]>(
+  items: T,
+  pathname: string,
+) {
+  const sorted = [...items].sort((a, b) => b.href.length - a.href.length);
+  return sorted.find((it) => matchPathname(pathname, it.href))?.key;
+}
 export function PageLayout({ children }: { children: React.ReactNode }) {
-  const [active, setActive] = React.useState<NavKey>('home');
-  const [selected, setSelected] = React.useState<NavKey>('home');
+  const pathname = usePathname();
+  const sidebarSelected = (pickKeyByPath(SIDEBAR_ITEMS, pathname) ??
+    'home') as SidebarKey;
+
+  const bottomSelected = (pickKeyByPath(BOTTOM_NAV_ITEMS, pathname) ??
+    'home') as BottomNavKey;
 
   return (
     <div className="flex h-screen">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
-        <SidebarNav selected={active} onSelectChange={setActive} />
+        <SidebarNav selected={sidebarSelected} />
       </div>
 
       {/* Content */}
@@ -23,10 +46,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      {/* Mobile BottomNav */}
-      <div className="md:hidden">
-        <BottomNav selected={selected} onSelectChange={setSelected} />
-      </div>
+      <BottomNav selected={bottomSelected} />
     </div>
   );
 }

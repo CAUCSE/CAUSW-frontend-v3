@@ -9,29 +9,64 @@ import {
   Setting,
 } from '@causw/cds';
 
-import type { BottomNavItem, NavItem } from './types';
+import { BottomNavItem, SidebarItem } from './types';
 
-export const MAIN_ITEMS: NavItem[] = [
-  { key: 'home', label: '홈', icon: <Home /> },
-  { key: 'community', label: '커뮤니티', icon: <Board size={18} /> },
-  { key: 'write', label: '글쓰기', icon: <Pen size={18} /> },
-  { key: 'directory', label: '동문수첩', icon: <Contacts size={18} /> },
-  { key: 'profile', label: '내 동문수첩', icon: <Book size={18} /> },
+export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
+  { key: 'home', label: '홈', icon: <Home />, href: '/home' },
+  {
+    key: 'board',
+    label: '커뮤니티',
+    icon: <Board size={18} />,
+    href: '/board',
+  },
+  //write 라우팅 주소 수정 필요
+  {
+    key: 'write',
+    label: '글쓰기',
+    icon: <Pen size={18} />,
+    href: '/board/write',
+  },
+  {
+    key: 'alumni-contacts',
+    label: '동문수첩',
+    icon: <Contacts size={18} />,
+    href: '/alumni-contacts',
+  },
+  {
+    key: 'profile',
+    label: '내 동문수첩',
+    icon: <Book size={18} />,
+    href: '/profile',
+  },
 ];
 
-export const BOTTOM_ITEMS: NavItem[] = [
-  { key: 'about', label: '크자회 소개', icon: <Question size={18} /> },
+export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
+  {
+    key: 'info',
+    label: '크자회 소개',
+    icon: <Question size={18} />,
+    href: '/info',
+  },
   {
     key: 'notifications',
     label: '알림',
     icon: <Bell size={18} />,
     hasNotification: true,
     badgeCount: 1,
-  } as const,
+    href: '/notification',
+  },
 ];
+
+export const SIDEBAR_ITEMS = [...SIDEBAR_MAIN_ITEMS, ...SIDEBAR_BOTTOM_ITEMS];
+
 export const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
-  { key: 'home', label: '홈', icon: <Home /> },
-  { key: 'community', label: '커뮤니티', icon: <Board /> },
-  { key: 'directory', label: '동문수첩', icon: <Contacts /> },
-  { key: 'setting', label: '내 정보', icon: <Setting /> },
-] as const;
+  { key: 'home', label: '홈', icon: <Home />, href: '/home' },
+  { key: 'board', label: '커뮤니티', icon: <Board />, href: '/board' },
+  {
+    key: 'alumni-contacts',
+    label: '동문수첩',
+    icon: <Contacts />,
+    href: '/alumni-contacts',
+  },
+  { key: 'setting', label: '내 정보', icon: <Setting />, href: '/setting' },
+];

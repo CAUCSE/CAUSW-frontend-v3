@@ -1,25 +1,28 @@
 import { ReactElement } from 'react';
 
-export type NavKey =
+export type SidebarKey =
   | 'home'
-  | 'community'
+  | 'board'
   | 'write'
-  | 'directory'
+  | 'alumni-contacts'
   | 'profile'
-  | 'about'
-  | 'notifications'
-  | 'setting';
+  | 'info'
+  | 'notifications';
 
-export type NavItem = {
-  key: NavKey;
+export type SidebarItem = {
+  key: SidebarKey;
   label: string;
   icon: ReactElement;
+  href: string;
   badgeCount?: number;
   hasNotification?: boolean;
 };
 
+export type BottomNavKey = 'home' | 'board' | 'alumni-contacts' | 'setting';
+
 export type BottomNavItem = {
-  key: Extract<NavKey, 'home' | 'community' | 'directory' | 'setting'>;
+  key: BottomNavKey;
   label: string;
-  icon: React.ReactNode;
+  icon: ReactElement;
+  href: string;
 };

@@ -1,21 +1,31 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Box, HStack, VStack, Flex, Sidebar } from '@causw/cds';
 
-import { MAIN_ITEMS, BOTTOM_ITEMS, NavKey } from '../model';
+import {
+  SIDEBAR_BOTTOM_ITEMS,
+  SIDEBAR_ITEMS,
+  SIDEBAR_MAIN_ITEMS,
+  SidebarKey,
+} from '../model';
 
 import { CountBadge, NotificationDot } from '@/shared';
 
 type Props = {
-  selected: NavKey;
-  onSelectChange: (key: NavKey) => void;
+  selected: SidebarKey;
 };
 
-export function SidebarNav({ selected, onSelectChange }: Props) {
+export function SidebarNav({ selected }: Props) {
+  const router = useRouter();
   return (
     <Sidebar
       selected={selected}
-      onSelectChange={(v) => onSelectChange(String(v) as NavKey)}
+      onSelectChange={(key) => {
+        const item = SIDEBAR_ITEMS.find((i) => i.key === key);
+        if (item) router.push(item.href);
+      }}
     >
       {/* HEADER */}
       <Sidebar.Header>
@@ -26,7 +36,7 @@ export function SidebarNav({ selected, onSelectChange }: Props) {
       <Sidebar.Content>
         <div className="flex h-full flex-col">
           <VStack gap="sm">
-            {MAIN_ITEMS.map((item) => (
+            {SIDEBAR_MAIN_ITEMS.map((item) => (
               <Sidebar.Item key={item.key} value={item.key} asChild>
                 <HStack className="gap-3.5">
                   <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
@@ -37,7 +47,7 @@ export function SidebarNav({ selected, onSelectChange }: Props) {
           </VStack>
 
           <VStack gap="sm" className="mt-auto">
-            {BOTTOM_ITEMS.map((item) => (
+            {SIDEBAR_BOTTOM_ITEMS.map((item) => (
               <Sidebar.Item key={item.key} value={item.key} asChild>
                 <HStack className="gap-3.5 pr-2">
                   {/* icon + dot */}

@@ -1,33 +1,25 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { BottomNavigation, mergeStyles } from '@causw/cds';
 
-import { BOTTOM_NAV_ITEMS, BottomNavItem, NavKey } from '../model';
+import { BOTTOM_NAV_ITEMS, BottomNavKey } from '../model';
 
 type Props = {
-  selected: NavKey;
-  onSelectChange: (key: NavKey) => void;
-  className?: string;
-  fixed?: boolean;
+  selected: BottomNavKey;
 };
 
-export function BottomNav({
-  selected,
-  onSelectChange,
-  className,
-  fixed = true,
-}: Props) {
+export function BottomNav({ selected }: Props) {
+  const router = useRouter();
   return (
-    <div
-      className={mergeStyles(
-        'xl:hidden',
-        fixed && 'fixed right-0 bottom-0 left-0',
-        className,
-      )}
-    >
+    <div className={mergeStyles('fixed right-0 bottom-0 left-0 md:hidden')}>
       <BottomNavigation
         selected={selected}
-        onSelectChange={(val) => onSelectChange(val as BottomNavItem['key'])}
+        onSelectChange={(key) => {
+          const item = BOTTOM_NAV_ITEMS.find((i) => i.key === key);
+          if (item) router.push(item.href);
+        }}
       >
         {BOTTOM_NAV_ITEMS.map((item) => (
           <BottomNavigation.Item key={item.key} value={item.key}>
