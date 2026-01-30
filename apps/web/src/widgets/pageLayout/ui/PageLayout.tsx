@@ -14,7 +14,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen">
       {/* Desktop Sidebar */}
-      <div className="hidden xl:block">
+      <div className="hidden md:block">
         <SidebarNav selected={active} onSelectChange={setActive} />
       </div>
 
@@ -24,7 +24,7 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* Mobile BottomNav */}
-      <div className="xl:hidden">
+      <div className="md:hidden">
         <BottomNav selected={selected} onSelectChange={setSelected} />
       </div>
     </div>
