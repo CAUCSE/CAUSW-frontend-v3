@@ -15,6 +15,7 @@
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
+    "react-error-boundary": "catalog:default",
     "react-hook-form": "catalog:default",
     "zod": "catalog:default",
     "zustand": "catalog:default"
