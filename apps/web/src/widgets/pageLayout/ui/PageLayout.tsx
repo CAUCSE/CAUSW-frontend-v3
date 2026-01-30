@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import type { NavKey } from '../model/types';
+import type { NavKey } from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
@@ -25,7 +25,6 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile BottomNav */}
       <div className="xl:hidden">
-        {' '}
         <BottomNav selected={selected} onSelectChange={setSelected} />
       </div>
     </div>

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   Bell,
   Board,
@@ -8,7 +6,7 @@ import {
   Home,
   Pen,
   Question,
-  Comment,
+  Setting,
 } from '@causw/cds';
 
 import type { BottomNavItem, NavItem } from './types';
@@ -29,11 +27,11 @@ export const BOTTOM_ITEMS: NavItem[] = [
     icon: <Bell size={18} />,
     hasDot: true,
     badgeCount: 1,
-  },
+  } as const,
 ];
 export const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
   { key: 'home', label: '홈', icon: <Home /> },
-  { key: 'community', label: '커뮤니티', icon: <Comment /> },
-  { key: 'write', label: '글쓰기', icon: <Pen /> },
+  { key: 'community', label: '커뮤니티', icon: <Board /> },
   { key: 'directory', label: '동문수첩', icon: <Contacts /> },
-];
+  { key: 'setting', label: '내 정보', icon: <Setting /> },
+] as const;

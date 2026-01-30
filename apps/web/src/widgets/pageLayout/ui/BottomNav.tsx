@@ -2,8 +2,7 @@
 
 import { BottomNavigation, mergeStyles } from '@causw/cds';
 
-import { BOTTOM_NAV_ITEMS } from '../model/navItems';
-import type { BottomNavItem, NavKey } from '../model/types';
+import { BOTTOM_NAV_ITEMS, BottomNavItem, NavKey } from '../model';
 
 type Props = {
   selected: NavKey;
@@ -12,22 +11,12 @@ type Props = {
   fixed?: boolean;
 };
 
-function isBottomNavKey(v: unknown): v is BottomNavItem['key'] {
-  return (
-    v === 'home' || v === 'community' || v === 'write' || v === 'directory'
-  );
-}
-
 export function BottomNav({
   selected,
   onSelectChange,
   className,
   fixed = true,
 }: Props) {
-  const handleSelectChange = (val: unknown) => {
-    if (isBottomNavKey(val)) onSelectChange(val);
-  };
-
   return (
     <div
       className={mergeStyles(
@@ -36,7 +25,10 @@ export function BottomNav({
         className,
       )}
     >
-      <BottomNavigation selected={selected} onSelectChange={handleSelectChange}>
+      <BottomNavigation
+        selected={selected}
+        onSelectChange={(val) => onSelectChange(val as BottomNavItem['key'])}
+      >
         {BOTTOM_NAV_ITEMS.map((item) => (
           <BottomNavigation.Item key={item.key} value={item.key}>
             <BottomNavigation.Icon>{item.icon}</BottomNavigation.Icon>

@@ -2,15 +2,9 @@
 
 import React from 'react';
 
-import { Box } from '@causw/cds';
-import { Float } from '@causw/cds';
-import { HStack } from '@causw/cds';
-import { VStack } from '@causw/cds';
-import { Flex } from '@causw/cds';
-import { Sidebar } from '@causw/cds';
+import { Box, Float, HStack, VStack, Flex, Sidebar } from '@causw/cds';
 
-import { MAIN_ITEMS, BOTTOM_ITEMS } from '../model/navItems';
-import type { NavKey } from '../model/types';
+import { MAIN_ITEMS, BOTTOM_ITEMS, NavKey } from '../model';
 
 type Props = {
   selected: NavKey;
@@ -83,10 +77,12 @@ export function SidebarNav({
 }
 
 function DefaultHeader() {
+  //이미지 로고 대체 예정
   return <span className="px-2.5 font-bold text-blue-500">크자회 Logo</span>;
 }
 
 function DefaultFooter() {
+  // 로그인 유저 정보로 대체 예정
   return (
     <Flex align="center" className="gap-3">
       <Box className="h-10 w-10 rounded-md bg-gray-200" />
