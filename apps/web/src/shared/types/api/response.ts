@@ -1,4 +1,4 @@
-import { ApiError, ApiResponse } from '@causw/api-client';
+import { ApiError } from '@causw/api-client';
 
 export interface DefaultErrorField {
   code?: string;
@@ -12,6 +12,3 @@ export interface DefaultResponseField<T> {
   message?: string;
   data?: T;
 }
-
-export type BaseApiError = ApiError<DefaultErrorField>;
-export type BaseApiResponse<T> = ApiResponse<DefaultResponseField<T>>;
