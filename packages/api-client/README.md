@@ -121,16 +121,16 @@ try {
 
 ### 타입가드 사용
 
-`isApiClientError`와 `hasResponse` 타입가드를 사용하면 더 안전한 에러 처리가 가능합니다.
+`isApiError`와 `hasResponse` 타입가드를 사용하면 더 안전한 에러 처리가 가능합니다.
 
 ```typescript
-import { isApiClientError, hasResponse } from '@causw/api-client';
+import { isApiError, hasResponse } from '@causw/api-client';
 
 try {
   await client.get('/users/123');
 } catch (error) {
   // ApiError인지 확인
-  if (isApiClientError(error)) {
+  if (isApiError(error)) {
     console.error('Status:', error.status);
     console.error('Status Text:', error.statusText);
     
@@ -150,7 +150,7 @@ try {
 `hasResponseOfType`을 사용하여 에러 응답의 타입을 체크할 수 있습니다.
 
 ```typescript
-import { isApiClientError, hasResponseOfType } from '@causw/api-client';
+import { isApiError, hasResponseOfType } from '@causw/api-client';
 
 interface ErrorResponse {
   message: string;
@@ -161,7 +161,7 @@ interface ErrorResponse {
 try {
   await client.post('/users', userData);
 } catch (error) {
-  if (isApiClientError(error) && hasResponseOfType<ErrorResponse>(error)) {
+  if (isApiError(error) && hasResponseOfType<ErrorResponse>(error)) {
     // error.data가 ErrorResponse 타입임을 보장
     console.error('Error Message:', error.data.message);
     console.error('Error Code:', error.data.code);
@@ -188,7 +188,7 @@ function isErrorResponse(data: unknown): data is ErrorResponse {
 try {
   await client.post('/users', userData);
 } catch (error) {
-  if (isApiClientError(error) && hasResponseOfType(error, isErrorResponse)) {
+  if (isApiError(error) && hasResponseOfType(error, isErrorResponse)) {
     // error.data가 ErrorResponse 타입임을 보장
     console.error(error.data.message);
   }
@@ -197,7 +197,7 @@ try {
 
 ## 타입가드 API
 
-### `isApiClientError(error: unknown): error is ApiError`
+### `isApiError(error: unknown): error is ApiError`
 
 에러가 `ApiError` 인스턴스인지 확인합니다.
 
