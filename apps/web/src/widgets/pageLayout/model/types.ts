@@ -15,7 +15,7 @@ export type NavItem = {
   label: string;
   icon: ReactElement;
   badgeCount?: number;
-  hasDot?: boolean;
+  hasNotification?: boolean;
 };
 
 export type BottomNavItem = {

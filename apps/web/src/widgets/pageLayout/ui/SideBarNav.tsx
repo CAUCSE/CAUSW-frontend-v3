@@ -1,31 +1,26 @@
 'use client';
 
-import React from 'react';
-
-import { Box, Float, HStack, VStack, Flex, Sidebar } from '@causw/cds';
+import { Box, HStack, VStack, Flex, Sidebar } from '@causw/cds';
 
 import { MAIN_ITEMS, BOTTOM_ITEMS, NavKey } from '../model';
+
+import { CountBadge, NotificationDot } from '@/shared';
 
 type Props = {
   selected: NavKey;
   onSelectChange: (key: NavKey) => void;
-  headerSlot?: React.ReactNode;
-  footerSlot?: React.ReactNode;
 };
 
-export function SidebarNav({
-  selected,
-  onSelectChange,
-  headerSlot,
-  footerSlot,
-}: Props) {
+export function SidebarNav({ selected, onSelectChange }: Props) {
   return (
     <Sidebar
       selected={selected}
       onSelectChange={(v) => onSelectChange(String(v) as NavKey)}
     >
       {/* HEADER */}
-      <Sidebar.Header>{headerSlot ?? <DefaultHeader />}</Sidebar.Header>
+      <Sidebar.Header>
+        <DefaultHeader />
+      </Sidebar.Header>
 
       {/* CONTENT */}
       <Sidebar.Content>
@@ -47,22 +42,14 @@ export function SidebarNav({
                 <HStack className="gap-3.5 pr-2">
                   {/* icon + dot */}
                   <div className="relative">
-                    {item.hasDot && (
-                      <Float floatType="absolute" top={-2} right={-2}>
-                        <div className="h-1 w-1 rounded-full bg-red-500" />
-                      </Float>
-                    )}
+                    <NotificationDot show={item.hasNotification} />
                     <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
                   </div>
 
                   <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
 
                   {/* badgeCount */}
-                  {typeof item.badgeCount === 'number' && (
-                    <Box className="ml-auto flex h-6 w-6 items-center justify-center rounded-sm bg-red-100 text-xs text-red-400">
-                      {item.badgeCount}
-                    </Box>
-                  )}
+                  <CountBadge count={item.badgeCount} />
                 </HStack>
               </Sidebar.Item>
             ))}
@@ -71,7 +58,9 @@ export function SidebarNav({
       </Sidebar.Content>
 
       {/* FOOTER */}
-      <Sidebar.Footer>{footerSlot ?? <DefaultFooter />}</Sidebar.Footer>
+      <Sidebar.Footer>
+        <DefaultFooter />
+      </Sidebar.Footer>
     </Sidebar>
   );
 }

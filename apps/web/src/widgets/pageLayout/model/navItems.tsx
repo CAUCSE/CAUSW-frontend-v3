@@ -25,7 +25,7 @@ export const BOTTOM_ITEMS: NavItem[] = [
     key: 'notifications',
     label: '알림',
     icon: <Bell size={18} />,
-    hasDot: true,
+    hasNotification: true,
     badgeCount: 1,
   } as const,
 ];
