@@ -13,3 +13,4 @@ catalogs:
     "@tanstack/react-query": ^5.0.0
     react-hook-form: ^7.0.0
     zod: ^3.0.00
+    react-error-boundary: ^6.1.0
