@@ -18,6 +18,9 @@ catalogs:
     react-dom:
       specifier: 19.2.1
       version: 19.2.1
+    react-error-boundary:
+      specifier: ^6.1.0
+      version: 6.1.0
     react-hook-form:
       specifier: ^7.0.0
       version: 7.68.0
@@ -154,7 +157,7 @@ importers:
         specifier: catalog:default
         version: 19.2.1(react@19.2.1)
       react-error-boundary:
-        specifier: ^6.1.0
+        specifier: catalog:default
         version: 6.1.0(react@19.2.1)
       react-hook-form:
         specifier: catalog:default
