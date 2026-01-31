@@ -1,7 +1,5 @@
 import { type FallbackProps } from 'react-error-boundary';
-
-import { Button, CTAButton, Spacer, Text, VStack } from '@causw/cds';
-
+import { Button, Spacer, Text, VStack } from '@causw/cds';
 import { WarningIcon } from '../../temp';
 
 interface ErrorViewProps extends FallbackProps {
