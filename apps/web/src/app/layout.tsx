@@ -1,6 +1,7 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
+
 import { QueryProviderWithDevtools } from '@/shared/ui';
 
 export const metadata: Metadata = {
