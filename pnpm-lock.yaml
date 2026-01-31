@@ -13,7 +13,7 @@ catalogs:
       specifier: ^5.0.0
       version: 5.91.3
     autoprefixer:
-      specifier: ^10.4.23
+      specifier: ^10.4.0
       version: 10.4.23
     next:
       specifier: 16.0.7
