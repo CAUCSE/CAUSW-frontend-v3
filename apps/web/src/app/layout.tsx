@@ -2,7 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
-import { QueryProviderWithDevtools } from '@/shared/ui';
+import { QueryProviderWithDevtools } from '@/shared';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',

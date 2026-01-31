@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { ErrorView } from '@/shared/ui';
+import { ErrorView } from '@/shared';
 
 export default function ErrorPage({
   error,
