@@ -1,8 +1,6 @@
 import { type FallbackProps } from 'react-error-boundary';
 
-import { Button, Spacer, Text, VStack } from '@causw/cds';
-
-import { WarningIcon } from '../../temp';
+import { Button, ErrorColored, Spacer, Text, VStack } from '@causw/cds';
 
 interface ErrorViewProps extends FallbackProps {
   errorMessage?: string;
@@ -19,7 +17,7 @@ export function ErrorView({
       gap="none"
       className="h-full w-full p-5"
     >
-      <WarningIcon className="text-red-500" />
+      <ErrorColored size={40} />
       <Spacer size={4} />
       <Text typography="subtitle-20-bold">
         {errorMessage || '문제가 발생했어요'}

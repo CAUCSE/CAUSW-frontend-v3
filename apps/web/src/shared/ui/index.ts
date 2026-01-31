@@ -3,5 +3,4 @@
 export * from './NotificationDot';
 export * from './CountBadge';
 export * from './provider';
-export * from './temp';
 export * from './fallback';
