@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { QUERY_STALE_TIME, QUERY_GC_TIME } from '@/shared/constants';
+
 export function QueryProviderWithDevtools({
   children,
 }: {
@@ -15,7 +17,8 @@ export function QueryProviderWithDevtools({
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000,
+            staleTime: QUERY_STALE_TIME.DEFAULT,
+            gcTime: QUERY_GC_TIME.DEFAULT,
             refetchOnWindowFocus: false,
           },
         },
