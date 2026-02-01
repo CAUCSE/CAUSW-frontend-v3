@@ -6,14 +6,12 @@ function matchPathname(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function pickSidebarKey(pathname: string): SidebarKey {
+export function pickSidebarKey(pathname: string): SidebarKey | undefined {
   const sorted = [...SIDEBAR_ITEMS].sort(
     (a, b) => b.href.length - a.href.length,
   );
-  const found = sorted.find((it) => matchPathname(pathname, it.href))?.key;
-  return (found ?? 'home') as SidebarKey;
+  return sorted.find((it) => matchPathname(pathname, it.href))?.key;
 }
-
 export function isBottomNavVisible(pathname: string) {
   return BOTTOM_NAV_ITEMS.some((it) => pathname === it.href);
 }

@@ -15,7 +15,6 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
   const sidebarSelected = pickSidebarKey(pathname);
   const showBottomNav = isBottomNavVisible(pathname);
   const bottomSelected = pickBottomNavKey(pathname);
-
   //테스트를 위한 하드 코딩 -> api연결 후 제거 필요
   const NOTIFICATION_CNT_FOR_TEST = 5;
 
