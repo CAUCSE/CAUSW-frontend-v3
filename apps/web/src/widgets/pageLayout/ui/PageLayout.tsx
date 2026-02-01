@@ -46,7 +46,9 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <BottomNav selected={bottomSelected} />
+      <div className="md:hidden">
+        <BottomNav selected={bottomSelected} />
+      </div>
     </div>
   );
 }
