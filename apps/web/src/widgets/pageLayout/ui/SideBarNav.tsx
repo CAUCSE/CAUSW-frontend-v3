@@ -47,7 +47,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
             ))}
           </VStack>
 
-          <VStack gap="sm" className="mt-auto">
+          <VStack gap="sm" className="mt-auto pt-2">
             {SIDEBAR_BOTTOM_ITEMS.map((item) => {
               const hasNotification = item.key === 'notifications';
               return (
