@@ -51,8 +51,6 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     key: 'notifications',
     label: '알림',
     icon: <Bell size={18} />,
-    hasNotification: true,
-    badgeCount: 1,
     href: '/notification',
   },
 ];

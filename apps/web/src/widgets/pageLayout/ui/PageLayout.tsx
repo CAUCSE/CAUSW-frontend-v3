@@ -34,11 +34,17 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
   const bottomSelected = (pickKeyByPath(BOTTOM_NAV_ITEMS, pathname) ??
     'home') as BottomNavKey;
 
+  //테스트를 위한 하드 코딩 -> api연결 후 제거 필요
+  const NOTIFICATION_CNT_FOR_TEST = 5;
+
   return (
     <div className="flex h-screen">
       {/* Desktop Sidebar */}
       <div className="hidden md:block">
-        <SidebarNav selected={sidebarSelected} />
+        <SidebarNav
+          selected={sidebarSelected}
+          notificationCnt={NOTIFICATION_CNT_FOR_TEST ?? 0}
+        />
       </div>
 
       {/* Content */}

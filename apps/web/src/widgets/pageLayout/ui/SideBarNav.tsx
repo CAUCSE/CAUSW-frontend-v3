@@ -15,9 +15,10 @@ import { CountBadge, NotificationDot } from '@/shared';
 
 type Props = {
   selected: SidebarKey;
+  notificationCnt?: number;
 };
 
-export function SidebarNav({ selected }: Props) {
+export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
   const router = useRouter();
   return (
     <Sidebar
@@ -47,22 +48,27 @@ export function SidebarNav({ selected }: Props) {
           </VStack>
 
           <VStack gap="sm" className="mt-auto">
-            {SIDEBAR_BOTTOM_ITEMS.map((item) => (
-              <Sidebar.Item key={item.key} value={item.key} asChild>
-                <HStack className="gap-3.5 pr-2">
-                  {/* icon + dot */}
-                  <div className="relative">
-                    <NotificationDot show={item.hasNotification} />
-                    <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
-                  </div>
+            {SIDEBAR_BOTTOM_ITEMS.map((item) => {
+              const hasNotification = item.key === 'notifications';
+              return (
+                <Sidebar.Item key={item.key} value={item.key} asChild>
+                  <HStack className="gap-3.5 pr-2">
+                    {/* icon + dot */}
+                    <div className="relative">
+                      {hasNotification && (
+                        <NotificationDot show={notificationCnt > 0} />
+                      )}
+                      <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
+                    </div>
 
-                  <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
+                    <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
 
-                  {/* badgeCount */}
-                  <CountBadge count={item.badgeCount} />
-                </HStack>
-              </Sidebar.Item>
-            ))}
+                    {/* badgeCount */}
+                    {hasNotification && <CountBadge count={notificationCnt} />}
+                  </HStack>
+                </Sidebar.Item>
+              );
+            })}
           </VStack>
         </div>
       </Sidebar.Content>
