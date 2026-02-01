@@ -1,5 +1,8 @@
 import * as Sentry from '@sentry/nextjs';
 
+export * from './types';
+export * from './lib';
+
 interface SentryInitProps {
   dsn: string | undefined;
   options?: Sentry.BrowserOptions | Sentry.NodeOptions;
@@ -12,8 +15,8 @@ export const initSentry = ({ dsn, options = {} }: SentryInitProps) => {
 
   const defaultOptions = {
     enabled: isProduction,
-    tracesSampleRate: isProduction ? 0.1 : 1.0,
-    enableLogs: isProduction ? false : true,
+    tracesSampleRate: 0.1,
+    enableLogs: !isProduction,
   };
 
   Sentry.init({
@@ -22,12 +25,3 @@ export const initSentry = ({ dsn, options = {} }: SentryInitProps) => {
     ...options,
   });
 };
-
-export const captureException = Sentry.captureException;
-
-export const withServerActionInstrumentation =
-  Sentry.withServerActionInstrumentation;
-
-export const captureRequestError = Sentry.captureRequestError;
-
-export const getTraceData = Sentry.getTraceData;

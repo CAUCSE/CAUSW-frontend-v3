@@ -1,4 +1,5 @@
 import { ApiResponse, isApiError } from '@causw/api-client';
+import { captureHttpError } from '@causw/logger';
 
 import { noATKCode } from '@/shared/constants/auth/errorCode';
 import { TokenManager } from '@/shared/storage/auth';
@@ -19,14 +20,22 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
     async (error) => {
       if (!isApiError(error)) {
+        const isSyntaxError =
+          error instanceof SyntaxError || error.name === 'SyntaxError';
+
+        if (!isSyntaxError) {
+          captureHttpError(error);
+        }
+
         throw error;
       }
+
       const errorCode = parseCustomErrorCode(error);
+      const originalRequest = error.config;
+      const status = error.status ?? 0;
 
       // Access Token 만료 시
       if (isAccessTokenError(errorCode)) {
-        const originalRequest = error.config;
-
         if (apiWrapper.getIsRefreshing()) {
           return new Promise((resolve, reject) => {
             apiWrapper.addToRefreshQueue({
@@ -84,6 +93,15 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
         } finally {
           apiWrapper.setIsRefreshing(false);
         }
+      }
+
+      const isClientError = status >= 400 && status < 500;
+
+      if (!isClientError) {
+        captureHttpError(error, {
+          url: originalRequest.url,
+          method: originalRequest.options.method,
+        });
       }
 
       throw error;
