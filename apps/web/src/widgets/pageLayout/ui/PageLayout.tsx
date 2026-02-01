@@ -4,35 +4,17 @@ import React from 'react';
 
 import { usePathname } from 'next/navigation';
 
-import {
-  BOTTOM_NAV_ITEMS,
-  SIDEBAR_ITEMS,
-  SidebarKey,
-  type BottomNavKey,
-} from '../model';
+import { isBottomNavVisible, pickBottomNavKey, pickSidebarKey } from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
-function matchPathname(pathname: string, href: string) {
-  if (href === '/') return pathname === '/';
 
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-function pickKeyByPath<T extends readonly { key: string; href: string }[]>(
-  items: T,
-  pathname: string,
-) {
-  const sorted = [...items].sort((a, b) => b.href.length - a.href.length);
-  return sorted.find((it) => matchPathname(pathname, it.href))?.key;
-}
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const sidebarSelected = (pickKeyByPath(SIDEBAR_ITEMS, pathname) ??
-    'home') as SidebarKey;
 
-  const bottomSelected = (pickKeyByPath(BOTTOM_NAV_ITEMS, pathname) ??
-    'home') as BottomNavKey;
+  const sidebarSelected = pickSidebarKey(pathname);
+  const showBottomNav = isBottomNavVisible(pathname);
+  const bottomSelected = pickBottomNavKey(pathname);
 
   //테스트를 위한 하드 코딩 -> api연결 후 제거 필요
   const NOTIFICATION_CNT_FOR_TEST = 5;
@@ -48,13 +30,18 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Content */}
-      <main className="flex-1 overflow-y-auto bg-gray-50 pb-14 xl:pb-0">
+      <main
+        className={`flex-1 overflow-y-auto bg-gray-50 ${showBottomNav ? 'pb-14 xl:pb-0' : 'pb-0'}`}
+      >
         {children}
       </main>
 
-      <div className="md:hidden">
-        <BottomNav selected={bottomSelected} />
-      </div>
+      {/* Mobile BottomNav */}
+      {showBottomNav && (
+        <div className="md:hidden">
+          <BottomNav selected={bottomSelected} />
+        </div>
+      )}
     </div>
   );
 }
