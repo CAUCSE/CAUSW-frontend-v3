@@ -1,5 +1,5 @@
-import { HomePage } from '@/_pages/home';
+import { NotificationPage } from '@/_pages/notification';
 
 export default function Home() {
-  return <HomePage />;
+  return <NotificationPage />;
 }

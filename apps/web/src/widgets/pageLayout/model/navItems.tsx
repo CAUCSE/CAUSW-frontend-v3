@@ -24,7 +24,7 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
     key: 'write',
     label: '글쓰기',
     icon: <Pen size={18} />,
-    href: '/board/write',
+    href: '/home',
   },
   {
     key: 'alumni-contacts',
