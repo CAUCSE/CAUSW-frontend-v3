@@ -15,11 +15,13 @@
     "@causw/logger": "workspace:*",
     "@tanstack/react-query": "catalog:default",
     "@types/js-cookie": "^3.0.6",
+    "import-in-the-middle": "^2.0.6",
     "js-cookie": "^3.0.5",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
     "react-hook-form": "catalog:default",
+    "require-in-the-middle": "^8.0.1",
     "zod": "catalog:default",
     "zustand": "catalog:default"
   },

@@ -1,8 +1,9 @@
 {
   "name": "@causw/logger",
   "version": "0.0.0",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "private": true,
+  "main": "./src/index.ts",
+  "type": "module",
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
@@ -10,5 +11,10 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.37.0"
+  },
+  "devDependencies": {
+    "@causw/eslint-config": "workspace:*",
+    "@causw/prettier-config": "workspace:*",
+    "@causw/typescript-config": "workspace:*"
   }
 }
