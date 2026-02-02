@@ -16,6 +16,14 @@ const eslintConfig = defineConfig([
       import: importPlugin,
     },
     rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'import/order': [
         'error',
         {
