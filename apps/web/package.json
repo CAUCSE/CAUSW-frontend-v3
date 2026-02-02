@@ -10,6 +10,8 @@
     "lint:fix": "eslint src --fix"
   },
   "dependencies": {
+    "@capacitor/cli": "7.4.2",
+    "@capacitor/core": "7.4.2",
     "@causw/cds": "workspace:*",
     "@tanstack/react-query": "catalog:default",
     "clsx": "^2.1.1",
