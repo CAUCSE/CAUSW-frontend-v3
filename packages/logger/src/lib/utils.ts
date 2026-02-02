@@ -1,19 +1,6 @@
-import { CustomApiError, SentryExtra, SentryLevel, SentryType } from '../types';
+import { isApiError } from '@causw/api-client';
 
-/**
- * 주어진 에러 객체가 `CustomApiError` (API 에러) 형식인지 확인하는 타입 가드입니다.
- * * @param error - 확인할 에러 객체 (unknown)
- * @returns `CustomApiError` 구조와 일치하면 `true`를 반환합니다.
- */
-export function isApiClientError(error: unknown): error is CustomApiError {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'status' in error &&
-    typeof (error as Record<string, unknown>).status === 'number'
-    // 필요하다면 여기서 config 구조도 체크 가능
-  );
-}
+import { SentryExtra, SentryFormat, SentryLevel, SentryType } from '../types';
 
 /**
  * 에러 객체를 분석하여 Sentry 포맷(Level, Tag, Extra)으로 변환합니다.
@@ -35,65 +22,46 @@ export function createSentryFormat({
   error: unknown;
   url?: string;
   method?: string;
-}): { type: SentryType; level: SentryLevel; extra: SentryExtra } {
+}): SentryFormat {
   let type: SentryType = 'network_error';
+  let level: SentryLevel = 'error';
   let extra: SentryExtra = {
     info: '서버 응답이 없습니다.',
     url: url || 'unknown',
     method: method || 'UNKNOWN',
   };
-  let level: SentryLevel = 'error';
 
-  if (isApiClientError(error)) {
-    const { status, data } = error;
+  if (!isApiError(error) || typeof error.status !== 'number') {
+    return { type, level, extra };
+  }
 
-    let errorCode: string | undefined;
-    let timeStamp: string | undefined;
-    let message: string | undefined;
+  const { status, code: errorCode, data } = error;
 
-    if (typeof data === 'object' && data !== null) {
-      const dataObj = data as Record<string, unknown>;
+  // TODO: timeStamp 추출 로직 구현 필요
+  // 현재는 구조가 불명확하여 undefined로 선언만 해둠
+  let timeStamp: string | undefined;
 
-      if ('code' in dataObj) {
-        errorCode = dataObj.code as string;
-      } else if ('errorCode' in dataObj) {
-        errorCode = dataObj.errorCode as string;
-      }
-
-      if ('timestamp' in dataObj) {
-        timeStamp = dataObj.timestamp as string;
-      } else if ('timeStamp' in dataObj) {
-        timeStamp = dataObj.timeStamp as string;
-      }
-
-      if ('message' in dataObj) {
-        message = dataObj.message as string;
-      }
-    }
-
-    if (status >= 500) {
-      type = 'server_error';
-      level = 'fatal';
-      extra = {
-        ...extra,
-        info: '서버 내부 오류 발생',
-        status,
-        errorCode,
-        timeStamp,
-        serverMessage: message,
-      };
-    } else {
-      type = 'unexpected_error';
-      level = 'warning';
-      extra = {
-        ...extra,
-        info: '클라이언트/요청 오류 발생',
-        status,
-        errorCode,
-        timeStamp,
-        data,
-      };
-    }
+  if (status >= 500) {
+    type = 'server_error';
+    level = 'fatal';
+    extra = {
+      ...extra,
+      info: '서버 내부 오류 발생',
+      status,
+      errorCode,
+      timeStamp,
+    };
+  } else {
+    type = 'unexpected_error';
+    level = 'warning';
+    extra = {
+      ...extra,
+      info: '예상치 못한 오류 발생',
+      status,
+      errorCode,
+      timeStamp,
+      data,
+    };
   }
 
   return {
