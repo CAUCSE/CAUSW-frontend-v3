@@ -1,5 +1,5 @@
 import { ApiResponse, isApiError } from '@causw/api-client';
-import { captureHttpError } from '@causw/logger';
+import { reportApiError } from '@causw/logger';
 
 import { noATKCode } from '@/shared/constants/auth/errorCode';
 import { TokenManager } from '@/shared/storage/auth';
@@ -24,7 +24,7 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
           error instanceof SyntaxError || error.name === 'SyntaxError';
 
         if (!isSyntaxError) {
-          captureHttpError(error);
+          reportApiError(error);
         }
 
         throw error;
@@ -98,7 +98,7 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
       const isClientError = status >= 400 && status < 500;
 
       if (!isClientError) {
-        captureHttpError(error, {
+        reportApiError(error, {
           url: originalRequest.url,
           method: originalRequest.options.method,
         });

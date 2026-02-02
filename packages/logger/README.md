@@ -54,7 +54,7 @@ initSentry({
 
 ## 사용법
 
-### 1. API 에러 캡처 (`captureHttpError`)
+### 1. API 에러 캡처 (`reportApiError`)
 
 API 요청 중 발생한 에러를 자동으로 파싱하여 적절한 레벨과 태그로 Sentry에 전송합니다.
 
@@ -62,13 +62,13 @@ API 요청 중 발생한 에러를 자동으로 파싱하여 적절한 레벨과
 - **400 대:** `warning` 레벨, `unexpected_error` 태그 (일반적인 클라이언트 에러는 무시될 수 있음)
 
 ```typescript
-import { captureHttpError } from '@causw/logger';
+import { reportApiError } from '@causw/logger';
 
 try {
   await api.get('/users/me');
 } catch (error) {
   // 에러 객체와 함께 (선택사항) URL, Method 정보를 넘길 수 있습니다.
-  captureHttpError(error, {
+  reportApiError(error, {
     url: '/users/me',
     method: 'GET',
   });

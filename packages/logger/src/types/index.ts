@@ -5,13 +5,8 @@ export type SentryExtra = {
   [key: string]: unknown;
 };
 
-export interface CustomApiError {
-  status: number;
-  data?: unknown;
-  config?: {
-    url?: string;
-    options?: {
-      method?: string;
-    };
-  };
+export interface SentryFormat {
+  type: SentryType;
+  level: SentryLevel;
+  extra: SentryExtra;
 }

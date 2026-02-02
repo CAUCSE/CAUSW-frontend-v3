@@ -1,6 +1,8 @@
 import * as Sentry from '@sentry/nextjs';
 
-import { CustomApiError, SentryExtra, SentryLevel } from '../types';
+import { isApiError } from '@causw/api-client';
+
+import { SentryExtra, SentryLevel } from '../types';
 
 import { createSentryFormat } from './utils';
 
@@ -52,12 +54,11 @@ export function captureSentry(
  * @param error - catch문에서 잡힌 에러 객체
  * @param config - (Optional) 에러 객체에 URL 정보가 없을 경우 수동으로 주입할 요청 정보
  */
-export function captureHttpError(
+export function reportApiError(
   error: unknown,
   config?: { url?: string; method?: string },
 ) {
-  const isObject = typeof error === 'object' && error !== null;
-  const apiError = isObject ? (error as CustomApiError) : undefined;
+  const apiError = isApiError(error) ? error : undefined;
 
   const url = config?.url || apiError?.config?.url || 'unknown';
   const method =
