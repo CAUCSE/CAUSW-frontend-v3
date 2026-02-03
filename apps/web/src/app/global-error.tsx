@@ -2,26 +2,31 @@
 
 import { useEffect } from 'react';
 
-import NextError from 'next/error';
-
 import { captureException } from '@causw/logger';
+
+import { ErrorView } from '@/shared';
 
 export default function GlobalError({
   error,
+  reset,
 }: {
   error: Error & { digest?: string };
+  reset: () => void;
 }) {
   useEffect(() => {
     captureException(error);
   }, [error]);
+
   return (
     <html>
       <body>
-        {/* `NextError` is the default Next.js error page component. Its type
-        definition requires a `statusCode` prop. However, since the App Router
-        does not expose status codes for errors, we simply pass 0 to render a
-        generic error message. */}
-        <NextError statusCode={0} />
+        <div className="flex h-screen w-full items-center justify-center">
+          <ErrorView
+            error={error}
+            resetErrorBoundary={reset}
+            errorMessage="치명적인 오류가 발생했습니다."
+          />
+        </div>
       </body>
     </html>
   );
