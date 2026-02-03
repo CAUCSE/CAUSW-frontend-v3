@@ -8,8 +8,10 @@ const config: CapacitorConfig = {
     //배포 시
     // url: 'https://www.causw.co.kr',
     // cleartext: false,
+
     //local 테스트 시
-    url: 'http://localhost:3000',
+    // url: 'http://localhost:3000', //ios
+    url: 'http://10.0.2.2:3000', //android
     cleartext: true,
   },
   ios: {
