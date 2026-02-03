@@ -24,6 +24,8 @@
     "zustand": "catalog:default"
   },
   "devDependencies": {
+    "@capacitor/android": "7.4.2",
+    "@capacitor/ios": "7.4.2",
     "@causw/eslint-config": "workspace:*",
     "@causw/prettier-config": "workspace:*",
     "@causw/typescript-config": "workspace:*",
