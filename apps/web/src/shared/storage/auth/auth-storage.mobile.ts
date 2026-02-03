@@ -1,10 +1,3 @@
-import Cookies from 'js-cookie';
-
-import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
-
-const accessKey = getStorageAccessKey();
-const refreshKey = getStorageRefreshKey();
-
 export const getNativeATK = (): string => {
   // TODO: 네이티브 스토리지에서 토큰 가져오기
   return '';
@@ -15,12 +8,12 @@ export const getNativeRTK = (): string => {
   return '';
 };
 
-export const setNativeATK = (token: string): void => {
+export const setNativeATK = (_token: string): void => {
   // TODO: 네이티브 스토리지에 토큰 저장하기
   return;
 };
 
-export const setNativeRTK = (token: string): void => {
+export const setNativeRTK = (_token: string): void => {
   // TODO: 네이티브 스토리지에 토큰 저장하기
   return;
 };

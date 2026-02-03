@@ -1,7 +1,6 @@
 import { ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
-import { noATKCode } from '@/shared/constants/auth/errorCode';
 import { TokenManager } from '@/shared/storage/auth';
 import {
   isAccessTokenError,
