@@ -9,7 +9,7 @@ const config: CapacitorConfig = {
     // url: 'https://www.causw.co.kr',
     // cleartext: false,
     //local 테스트 시
-    url: 'http://localhost:3001',
+    url: 'http://localhost:3000',
     cleartext: true,
   },
   ios: {
