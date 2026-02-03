@@ -146,12 +146,21 @@ importers:
       '@causw/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
+      '@capacitor/app':
+        specifier: ^7.1.1
+        version: 7.1.1(@capacitor/core@7.4.2)
       '@capacitor/cli':
         specifier: 7.4.2
         version: 7.4.2
       '@capacitor/core':
         specifier: 7.4.2
         version: 7.4.2
+      '@capacitor/push-notifications':
+        specifier: ^7.0.4
+        version: 7.0.4(@capacitor/core@7.4.2)
+      '@capacitor/status-bar':
+        specifier: ^7.0.4
+        version: 7.0.4(@capacitor/core@7.4.2)
       '@causw/cds':
         specifier: workspace:*
         version: link:../../packages/design-system/cds
@@ -453,11 +462,33 @@ packages:
 >>>>>>> 35126c4 (feat: fill capacitor.config.ts)
 =======
   '@capacitor/ios@7.4.2':
-    resolution: {integrity: sha512-Edd4aZ6IJi4O/7dJIsSIuuo6LXvVVP5V++0Vs1w5bWOGbGhWZXLF0lt0KGFgSUxTuyL6xURGUygkD6dCp35QAQ==}
+    resolution:
+      {
+        integrity: sha512-Edd4aZ6IJi4O/7dJIsSIuuo6LXvVVP5V++0Vs1w5bWOGbGhWZXLF0lt0KGFgSUxTuyL6xURGUygkD6dCp35QAQ==,
+      }
     peerDependencies:
       '@capacitor/core': ^7.4.0
 
+<<<<<<< HEAD
 >>>>>>> 9156d38 (feat: add ios project)
+=======
+  '@capacitor/push-notifications@7.0.4':
+    resolution:
+      {
+        integrity: sha512-ygTRlA9OiTNfwMZwk7/AUhtVb0/AoCDedsg5RLZUFs5g9abW0ePPzhLl4rSIYwp+4njNjXyIUsQvhnh344/HZA==,
+      }
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+
+  '@capacitor/status-bar@7.0.4':
+    resolution:
+      {
+        integrity: sha512-2BszlCqIlBZxHLjRyQbumKyuuisutkeJH+5eSKAEJKaDVJcfmAzr2v3MXWsRLrAHJFteLzRXkOlce5msSy28tQ==,
+      }
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
+
+>>>>>>> 2f233a8 (feat: add ios plugin)
   '@causw/core@0.0.15':
     resolution:
       {
@@ -5684,6 +5715,10 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.2
 
+  '@capacitor/app@7.1.1(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
+
   '@capacitor/cli@7.4.2':
     dependencies:
       '@ionic/cli-framework-output': 2.2.8
@@ -5711,6 +5746,14 @@ snapshots:
       tslib: 2.8.1
 
   '@capacitor/ios@7.4.2(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
+
+  '@capacitor/push-notifications@7.0.4(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
+
+  '@capacitor/status-bar@7.0.4(@capacitor/core@7.4.2)':
     dependencies:
       '@capacitor/core': 7.4.2
 
