@@ -9,6 +9,13 @@
     "./client": "./src/client.ts",
     "./config": "./src/config.ts"
   },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
   "dependencies": {
     "@sentry/nextjs": "^10.37.0",
     "@causw/api-client": "workspace:*"
