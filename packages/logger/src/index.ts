@@ -16,7 +16,7 @@ export const initSentry = ({ dsn, options = {} }: SentryInitProps) => {
   const defaultOptions = {
     enabled: isProduction,
     tracesSampleRate: 0.1,
-    enableLogs: !isProduction,
+    enableLogs: true,
   };
 
   Sentry.init({
