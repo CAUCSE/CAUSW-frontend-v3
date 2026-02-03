@@ -179,6 +179,9 @@ importers:
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
+      capacitor-secure-storage-plugin:
+        specifier: 0.12.0
+        version: 0.12.0(@capacitor/core@7.4.2)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

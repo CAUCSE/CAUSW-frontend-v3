@@ -93,6 +93,10 @@ SPEC REPOS:
     - PromisesObjC
     - SwiftKeychainWrapper
 
+SPEC REPOS:
+  trunk:
+    - SwiftKeychainWrapper
+
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../../../node_modules/.pnpm/@capacitor+ios@7.4.2_@capacitor+core@7.4.2/node_modules/@capacitor/ios"

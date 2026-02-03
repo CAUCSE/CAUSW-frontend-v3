@@ -21,6 +21,7 @@
     "@causw/api-client": "workspace:*",
     "@types/js-cookie": "^3.0.6",
     "js-cookie": "^3.0.5",
+    "capacitor-secure-storage-plugin": "0.12.0",
     "clsx": "^2.1.1",
     "next": "catalog:default",
     "react": "catalog:default",
