@@ -138,6 +138,9 @@ importers:
       '@tanstack/react-query':
         specifier: catalog:default
         version: 5.90.12(react@19.2.1)
+      capacitor-secure-storage-plugin:
+        specifier: 0.12.0
+        version: 0.12.0(@capacitor/core@7.4.2)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1576,6 +1579,11 @@ packages:
 
   caniuse-lite@1.0.30001765:
     resolution: {integrity: sha512-LWcNtSyZrakjECqmpP4qdg0MMGdN368D7X8XvvAqOcqMv0RxnlqVKZl2V6/mBR68oYMxOZPLw/gO7DuisMHUvQ==}
+
+  capacitor-secure-storage-plugin@0.12.0:
+    resolution: {integrity: sha512-98rljshpX5uXdxUNc78mhq+nJGsf/hiaE1MfAkDH4s+Gqn6a2/VkxT7Iet5TskAZkc38b85adLljO/eVcrrzdg==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -4873,6 +4881,10 @@ snapshots:
   callsites@3.1.0: {}
 
   caniuse-lite@1.0.30001765: {}
+
+  capacitor-secure-storage-plugin@0.12.0(@capacitor/core@7.4.2):
+    dependencies:
+      '@capacitor/core': 7.4.2
 
   chalk@4.1.2:
     dependencies:
