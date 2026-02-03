@@ -25,7 +25,6 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
       }}
     >
       <Flex align="center" className="gap-3">
-        {/* <Box className="h-10 w-10 rounded-md bg-gray-200" /> */}
         <Avatar size="sm" src={img} />
         <Box className="flex-1">
           <Box className="text-sm font-bold text-gray-700">{name}</Box>

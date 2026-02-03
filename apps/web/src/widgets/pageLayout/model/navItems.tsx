@@ -19,7 +19,7 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
     icon: <Board size={18} />,
     href: '/board',
   },
-  //write 라우팅 주소 수정 필요
+  //TODO: write 라우팅 주소 수정 필요
   {
     key: 'write',
     label: '글쓰기',

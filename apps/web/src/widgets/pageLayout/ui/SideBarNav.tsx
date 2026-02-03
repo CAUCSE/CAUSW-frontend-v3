@@ -78,6 +78,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
       {/* FOOTER */}
       <Sidebar.Footer>
         {/* 데이터 변경 필요 */}
+        {/* TODO: api 연결 후 onLogout 기능 구현 필요 */}
         <FooterProfile
           img={'https://avatars.githubusercontent.com/u/54893898?v=4'}
           name={'유지아'}
@@ -90,6 +91,8 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
 }
 
 function DefaultHeader() {
-  //이미지 로고 대체 예정
+  {
+    /* TODO: 이미지 로고 대체 예정 */
+  }
   return <span className="px-2.5 font-bold text-blue-500">크자회 Logo</span>;
 }
