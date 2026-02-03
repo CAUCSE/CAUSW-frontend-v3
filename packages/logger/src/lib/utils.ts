@@ -8,11 +8,6 @@ import { SentryExtra, SentryFormat, SentryLevel, SentryType } from '../types';
  * - **Server Error (500 이상)**: `fatal` 레벨 / `server_error` 태그
  * - **Client Error (400 대)**: `warning` 레벨 / `unexpected_error` 태그
  * - **그 외 (네트워크 등)**: `error` 레벨 / `network_error` 태그
- *
- * @param params.error - 발생한 에러 객체
- * @param params.url - (Optional) 에러가 발생한 API URL
- * @param params.method - (Optional) 에러가 발생한 HTTP Method
- * @returns Sentry 전송용 데이터 객체 (`type`, `level`, `extra`)
  */
 export function createSentryFormat({
   error,
@@ -27,7 +22,7 @@ export function createSentryFormat({
   let level: SentryLevel = 'error';
   let extra: SentryExtra = {
     info: '서버 응답이 없습니다.',
-    url: url || 'unknown',
+    url: url?.split('?')[0] || 'unknown',
     method: method || 'UNKNOWN',
   };
 
@@ -35,7 +30,7 @@ export function createSentryFormat({
     return { type, level, extra };
   }
 
-  const { status, code: errorCode, data } = error;
+  const { status, code: errorCode } = error;
 
   // TODO: timeStamp 추출 로직 구현 필요
   // 현재는 구조가 불명확하여 undefined로 선언만 해둠
@@ -60,7 +55,6 @@ export function createSentryFormat({
       status,
       errorCode,
       timeStamp,
-      data,
     };
   }
 
