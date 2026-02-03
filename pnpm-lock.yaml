@@ -424,6 +424,7 @@ packages:
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   '@capacitor/ios@7.4.2':
     resolution:
       {
@@ -450,6 +451,13 @@ packages:
 
 =======
 >>>>>>> 35126c4 (feat: fill capacitor.config.ts)
+=======
+  '@capacitor/ios@7.4.2':
+    resolution: {integrity: sha512-Edd4aZ6IJi4O/7dJIsSIuuo6LXvVVP5V++0Vs1w5bWOGbGhWZXLF0lt0KGFgSUxTuyL6xURGUygkD6dCp35QAQ==}
+    peerDependencies:
+      '@capacitor/core': ^7.4.0
+
+>>>>>>> 9156d38 (feat: add ios project)
   '@causw/core@0.0.15':
     resolution:
       {
@@ -5672,6 +5680,10 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
+  '@capacitor/android@7.4.2(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
+
   '@capacitor/cli@7.4.2':
     dependencies:
       '@ionic/cli-framework-output': 2.2.8
@@ -5697,6 +5709,10 @@ snapshots:
   '@capacitor/core@7.4.2':
     dependencies:
       tslib: 2.8.1
+
+  '@capacitor/ios@7.4.2(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
 
   '@causw/core@0.0.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
