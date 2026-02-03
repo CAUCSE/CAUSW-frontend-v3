@@ -107,22 +107,23 @@ captureRouterTransitionStart();
 
 ## 에러 처리 정책
 
-이 패키지는 에러 객체가 `CustomApiError` 인터페이스를 따른다고 가정하고 최적화되어 있습니다.
+이 패키지는 `@causw/api-client`의 `ApiError` 클래스를 기반으로 에러를 처리하고 Sentry에 전송하도록 최적화되어 있습니다. `ApiError` 객체는 다음과 같은 주요 속성을 포함합니다.
 
 ```typescript
-interface CustomApiError {
-  status: number;
-  data?: {
-    code?: string; // 에러 코드
-    message?: string; // 에러 메시지
-    timestamp?: string;
+class ApiError extends Error {
+  public status?: number; // HTTP 상태 코드 (예: 404, 500)
+  public data?: {
+    code?: string; // API에서 정의한 에러 코드
+    message?: string; // API에서 정의한 에러 메시지
+    // ... 외 추가 데이터
   };
+  // ... 외 다른 속성
 }
 ```
 
 - **Server Error (5xx):** `Fatal` 레벨로 기록되며, 즉시 대응이 필요한 에러로 간주합니다.
 - **Client Error (4xx):** `Warning` 레벨로 기록됩니다.
-- **Network Error:** 응답이 없는 경우 `network_error`로 기록됩니다.
+- **Network Error:** 응답이 없거나 `ApiError` 인스턴스가 아닌 경우 `network_error`로 기록됩니다.
 
 ## 파일 구조
 
