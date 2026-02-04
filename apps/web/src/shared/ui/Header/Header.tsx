@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+import { ChevronLeft } from '@causw/cds';
+
 import { splitVariantProps } from '@/shared/lib/splitVariantProps';
 
 import { header, headerKeys } from './Header.styles';
@@ -31,13 +33,14 @@ export function Header(props: HeaderProps) {
           aria-label="뒤로가기"
           className="flex items-center justify-center p-1"
         >
-          ←
+          <ChevronLeft
+            size="18"
+            color={variantProps.tone === 'light' ? 'white' : 'gray-700'}
+          />
         </button>
       )}
 
-      {title && (
-        <h1 className="text-base font-semibold text-gray-900">{title}</h1>
-      )}
+      {title && <h1 className="text-base font-semibold">{title}</h1>}
     </header>
   );
 }
