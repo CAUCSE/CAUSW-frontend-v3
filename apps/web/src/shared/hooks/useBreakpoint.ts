@@ -23,28 +23,31 @@ export const useBreakpoint = () => {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const mobileQuery = window.matchMedia(MEDIA_QUERIES.mobile);
-    const tabletQuery = window.matchMedia(MEDIA_QUERIES.tablet);
-    const desktopQuery = window.matchMedia(MEDIA_QUERIES.desktop);
+    const mediaQueryLists = {
+      mobile: window.matchMedia(MEDIA_QUERIES.mobile),
+      tablet: window.matchMedia(MEDIA_QUERIES.tablet),
+      desktop: window.matchMedia(MEDIA_QUERIES.desktop),
+    };
 
     const updateBreakpoint = () => {
       setBreakpoint({
-        isMobile: mobileQuery.matches,
-        isTablet: tabletQuery.matches,
-        isDesktop: desktopQuery.matches,
+        isMobile: mediaQueryLists.mobile.matches,
+        isTablet: mediaQueryLists.tablet.matches,
+        isDesktop: mediaQueryLists.desktop.matches,
       });
     };
 
     updateBreakpoint();
 
-    mobileQuery.addEventListener('change', updateBreakpoint);
-    tabletQuery.addEventListener('change', updateBreakpoint);
-    desktopQuery.addEventListener('change', updateBreakpoint);
+    const queries = Object.values(mediaQueryLists);
+    queries.forEach((query) =>
+      query.addEventListener('change', updateBreakpoint),
+    );
 
     return () => {
-      mobileQuery.removeEventListener('change', updateBreakpoint);
-      tabletQuery.removeEventListener('change', updateBreakpoint);
-      desktopQuery.removeEventListener('change', updateBreakpoint);
+      queries.forEach((query) =>
+        query.removeEventListener('change', updateBreakpoint),
+      );
     };
   }, []);
 
