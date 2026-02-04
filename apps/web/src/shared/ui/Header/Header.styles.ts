@@ -5,7 +5,7 @@ export const header = tv({
     'z-50',
     'flex items-center gap-2',
     'px-5 py-4',
-    'w-full max-w-[480px] mx-auto',
+    'w-full max-w-209 mx-auto',
   ],
 
   variants: {
@@ -17,13 +17,18 @@ export const header = tv({
     background: {
       transparent: 'bg-transparent',
       white: 'bg-white',
-      gray: 'bg-gray-50',
+    },
+
+    tone: {
+      dark: 'text-gray-700',
+      light: 'text-white',
     },
   },
 
   defaultVariants: {
     sticky: true,
     background: 'transparent',
+    tone: 'dark',
   },
 });
 
