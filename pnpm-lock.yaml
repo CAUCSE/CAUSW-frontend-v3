@@ -211,8 +211,8 @@ importers:
         specifier: ^0.0.15
         version: 0.0.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/icons':
-        specifier: ^0.0.9
-        version: 0.0.9(react@19.2.1)
+        specifier: ^1.0.0
+        version: 1.0.0(react@19.2.1)
       '@causw/tokens':
         specifier: ^0.0.12
         version: 0.0.12
@@ -301,6 +301,11 @@ packages:
 
   '@causw/icons@0.0.9':
     resolution: {integrity: sha512-FGshrNU0c3loVIw79F5CmTbhU62o3fW0m4OOvgLpUs8tw/41osbtw/6diAHEe5YTQoV6PmjhaX0MrlWwOCyn7w==}
+    peerDependencies:
+      react: '>=19'
+
+  '@causw/icons@1.0.0':
+    resolution: {integrity: sha512-4SIqsRcTb3kjSCdzEoinmAsJbmXydQWH2bzd6FmzJA6B8mb7YKOXhm1SDtlL/OSzEESS26YkETmKqhG/QR9+Bw==}
     peerDependencies:
       react: '>=19'
 
@@ -3274,6 +3279,11 @@ snapshots:
 
   '@causw/icons@0.0.9(react@19.2.1)':
     dependencies:
+      react: 19.2.1
+
+  '@causw/icons@1.0.0(react@19.2.1)':
+    dependencies:
+      '@causw/tokens': 0.0.12
       react: 19.2.1
 
   '@causw/tokens@0.0.12': {}
