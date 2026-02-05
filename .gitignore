@@ -42,4 +42,4 @@ next-env.d.ts
 .prettiercache
 
 # mcp
-.mcp.json
+mcp.json
