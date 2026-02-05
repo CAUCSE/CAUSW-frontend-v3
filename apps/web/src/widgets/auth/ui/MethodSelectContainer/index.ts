@@ -1,2 +1,1 @@
-export { AuthContainer } from './AuthContainer';
 export { MethodSelectContainer } from './MethodSelectContainer';
