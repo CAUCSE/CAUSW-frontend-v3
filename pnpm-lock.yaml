@@ -141,6 +141,9 @@ importers:
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
+      '@use-funnel/browser':
+        specifier: ^0.0.16
+        version: 0.0.16(react@19.2.1)
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
@@ -1333,6 +1336,16 @@ packages:
     resolution: {integrity: sha512-lrW200hZdbfRtztbygyaq/6jP6AKE8qQN2KvPcJ+x7wiD038YtnYtZ82IMNJ69GJibV7bwL3y9FgK+5w/pYt6g==}
     cpu: [x64]
     os: [win32]
+
+  '@use-funnel/browser@0.0.16':
+    resolution: {integrity: sha512-L3qOxT3aU82LVKcj14K6Z/qndCt1qV8XBfyK2zRNR/btD6787bznmuevwFwcPZnze9VkzsQAJlRHHsrPAByIKw==}
+    peerDependencies:
+      react: '>=16.8'
+
+  '@use-funnel/core@0.0.13':
+    resolution: {integrity: sha512-0cFqUs0Z5QWnTG5ua2FZloKyGn3KAbA9miaFOa6RAeBmm74lilyFk4ovLe/9g1W58ZZlR3+1wbjDzyAT9yIGig==}
+    peerDependencies:
+      react: '>=16.8'
 
   '@yh-kim/eslint-plugin-fsd@0.1.11':
     resolution: {integrity: sha512-60I2gY6lqaegbuqsNR29+sUZqvGYu1YNJGdqSoDJxmPEVva8czCZcD55icf6316Q4EcSpeqgol0YRTO85sdYEw==}
@@ -4283,6 +4296,15 @@ snapshots:
 
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
+
+  '@use-funnel/browser@0.0.16(react@19.2.1)':
+    dependencies:
+      '@use-funnel/core': 0.0.13(react@19.2.1)
+      react: 19.2.1
+
+  '@use-funnel/core@0.0.13(react@19.2.1)':
+    dependencies:
+      react: 19.2.1
 
   '@yh-kim/eslint-plugin-fsd@0.1.11(eslint@9.39.2(jiti@2.6.1))':
     dependencies:
