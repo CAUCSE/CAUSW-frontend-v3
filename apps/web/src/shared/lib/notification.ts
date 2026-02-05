@@ -13,13 +13,11 @@ export async function initNotification({
 }: InitNotificationOptions) {
   if (!isNative()) return;
 
-  const perm = await PushNotifications.checkPermissions();
+  let perm = await PushNotifications.checkPermissions();
   if (perm.receive === 'prompt') {
-    await PushNotifications.requestPermissions();
+    perm = await PushNotifications.requestPermissions();
   }
-
-  const perm2 = await PushNotifications.checkPermissions();
-  if (perm2.receive !== 'granted') return;
+  if (perm.receive !== 'granted') return;
 
   PushNotifications.addListener('registration', (t: Token) => {
     onToken(t.value);
