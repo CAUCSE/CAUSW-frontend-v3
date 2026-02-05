@@ -40,3 +40,6 @@ next-env.d.ts
 # cache
 .eslintcache
 .prettiercache
+
+# mcp
+.mcp.json
