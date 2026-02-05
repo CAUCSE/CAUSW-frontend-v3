@@ -63,13 +63,13 @@ export const SignInPage = () => {
         </CTAButton>
 
         <Flex justify="center" className="w-full">
-          <Link href="/find-id">
+          <Link href="/auth/find-id">
             <Text typography="body-15-semibold" textColor="gray-700">
               아이디/비번 찾기
             </Text>
           </Link>
           <Separator orientation="vertical" className="gray-300" />
-          <Link href="/sign-up">
+          <Link href="/auth/sign-up">
             <Text typography="body-15-semibold" textColor="gray-700">
               회원가입
             </Text>
