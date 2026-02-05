@@ -12,6 +12,7 @@
   "dependencies": {
     "@causw/api-client": "workspace:*",
     "@causw/cds": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-query": "catalog:default",
     "@types/js-cookie": "^3.0.6",
     "@use-funnel/browser": "^0.0.16",
