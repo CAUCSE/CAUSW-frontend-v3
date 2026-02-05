@@ -1,6 +1,6 @@
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
-import { isNative } from './isNative';
+import { isNative } from './capacitor/isNative';
 
 export interface KeyValueStorage {
   set(key: string, value: string): Promise<void>;
