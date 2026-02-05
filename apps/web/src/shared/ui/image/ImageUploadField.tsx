@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import { Close } from '@causw/icons';
+import { Close } from '@causw/cds';
 
 import { IMAGE_UPLOAD_RULES, ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
 import { ImageTypes } from '@/shared/types';

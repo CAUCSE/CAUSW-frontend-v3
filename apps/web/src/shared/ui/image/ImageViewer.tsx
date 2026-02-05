@@ -5,7 +5,7 @@ import * as React from 'react';
 import Image from 'next/image';
 
 // TODO: Download 아이콘 추가되면 Share -> Download로 변경
-import { Close, ChevronLeft, ChevronRight, Share } from '@causw/icons';
+import { Close, ChevronLeft, ChevronRight, Share } from '@causw/cds';
 
 import { ImageTypes } from '@/shared/types';
 import {
