@@ -1,9 +1,9 @@
 'use client';
 
-import { SignInPage } from '@/_pages/auth';
+import { SelectMethodPage } from '@/_pages/auth';
 
 const Page = () => {
-  return <SignInPage />;
+  return <SelectMethodPage />;
 };
 
 export default Page;

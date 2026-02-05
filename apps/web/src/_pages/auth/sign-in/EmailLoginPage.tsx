@@ -14,7 +14,7 @@ import { signInSchema, type SignInFormData } from '@/entities/auth';
 
 import { RHFInput } from '@/shared';
 
-export const SignInPage = () => {
+export const EmailLoginPage = () => {
   const methods = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     mode: 'onBlur',

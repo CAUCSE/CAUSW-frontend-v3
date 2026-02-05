@@ -1,1 +1,2 @@
-export { SignInPage } from './SignInPage';
+export { SelectMethodPage } from './SelectMethodPage';
+export { EmailLoginPage } from './EmailLoginPage';
