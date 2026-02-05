@@ -14,7 +14,7 @@ export const ImageSlider = ({
   if (images.length === 0) return null;
 
   return (
-    <div className="flex h-[13.75rem] gap-[0.6875rem] overflow-x-auto">
+    <div className="flex h-[13.75rem] gap-[0.6875rem] overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {images.map((image, index) => (
         <button
           key={index}
