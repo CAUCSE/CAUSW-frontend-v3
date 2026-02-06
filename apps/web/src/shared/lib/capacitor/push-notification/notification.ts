@@ -1,6 +1,6 @@
 import { PushNotifications, type Token } from '@capacitor/push-notifications';
 
-import { isNative } from '../isNative';
+import { isMobile } from '@/shared/utils';
 
 type InitNotificationOptions = {
   onToken: (token: string) => void;
@@ -13,7 +13,7 @@ export async function initNotification({
   onToken,
   onError,
 }: InitNotificationOptions) {
-  if (!isNative()) return;
+  if (!isMobile) return;
 
   //가드 : 한 번만 리스너 등록
   if (registered) return;
