@@ -10,5 +10,4 @@ reviewers:
 numberOfReviewers: 2
 useReviewGroups: false
 skipKeywords:
-  - chore
   - hotfix
