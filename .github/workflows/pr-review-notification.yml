@@ -5,6 +5,8 @@ on:
 
 jobs:
   notify:
+    # 봇이 작성한 리뷰는 알림 제외
+    if: github.event.review.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification

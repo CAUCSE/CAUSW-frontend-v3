@@ -5,8 +5,8 @@ on:
 
 jobs:
   notify:
-    # PR에 달린 코멘트만 처리
-    if: github.event.issue.pull_request
+    # PR에 달린 코멘트만 처리 (봇은 제외)
+    if: github.event.issue.pull_request && github.event.comment.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification

@@ -5,6 +5,8 @@ on:
 
 jobs:
   notify:
+    # 봇이 작성한 코멘트는 알림 제외
+    if: github.event.comment.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
