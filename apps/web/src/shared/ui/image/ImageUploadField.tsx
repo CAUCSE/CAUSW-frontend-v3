@@ -31,6 +31,17 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   const [previews, setPreviews] = React.useState<string[]>([]);
   const [files, setFiles] = React.useState<File[]>([]);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const previewsRef = React.useRef<string[]>([]);
+
+  // previewsRef를 최신 상태로 유지
+  previewsRef.current = previews;
+
+  // 언마운트 시 Object URL 해제 (메모리 누수 방지)
+  React.useEffect(() => {
+    return () => {
+      previewsRef.current.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, []);
 
   // ref로 openFilePicker 노출
   React.useImperativeHandle(ref, () => ({
