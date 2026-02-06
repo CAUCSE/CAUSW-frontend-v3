@@ -332,7 +332,8 @@ export const ImageViewer = ({
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `image-${currentIndex + 1}.jpg`;
+      const extension = blob.type.split('/')[1] || 'jpg';
+      link.download = `image-${currentIndex + 1}.${extension}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
