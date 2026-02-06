@@ -1,4 +1,4 @@
-name: Discord PR Comment Notification
+name: 디스코드 PR 코멘트 알림
 on:
   issue_comment:
     types: [created]
@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PR_REVIEW_WEBHOOK_URL }}
           COMMENT_URL: ${{ github.event.comment.html_url }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}

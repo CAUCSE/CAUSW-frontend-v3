@@ -1,4 +1,4 @@
-name: Discord PR Review Notification
+name: 디스코드 PR 리뷰 알림
 on:
   pull_request_review:
     types: [submitted]
@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PR_REVIEW_WEBHOOK_URL }}
           REVIEW_STATE: ${{ github.event.review.state }}
           REVIEW_BODY: ${{ github.event.review.body }}
           REVIEW_AUTHOR: ${{ github.event.review.user.login }}
