@@ -14,6 +14,8 @@ import {
   awsImageLoader,
 } from '@/shared/utils';
 
+const SLIDE_WIDTH_PERCENT = 100 / 3;
+
 export const ImageViewer = ({
   images,
   initialIndex = 0,
@@ -52,7 +54,7 @@ export const ImageViewer = ({
   const goToPrevious = React.useCallback(() => {
     if (images.length <= 1 || isTransitioning || isZoomed) return;
     setIsTransitioning(true);
-    setOffset(33.333);
+    setOffset(SLIDE_WIDTH_PERCENT);
     setTimeout(() => {
       setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
       setOffset(0);
@@ -63,7 +65,7 @@ export const ImageViewer = ({
   const goToNext = React.useCallback(() => {
     if (images.length <= 1 || isTransitioning || isZoomed) return;
     setIsTransitioning(true);
-    setOffset(-33.333);
+    setOffset(-SLIDE_WIDTH_PERCENT);
     setTimeout(() => {
       setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
       setOffset(0);
@@ -208,7 +210,7 @@ export const ImageViewer = ({
         const distance = currentX - touchStartX.current;
         const containerWidth =
           containerRef.current?.offsetWidth || window.innerWidth;
-        const percent = (distance / containerWidth) * 33.333;
+        const percent = (distance / containerWidth) * SLIDE_WIDTH_PERCENT;
         setOffset(Math.max(-40, Math.min(40, percent)));
       }
     }
@@ -246,7 +248,7 @@ export const ImageViewer = ({
       if (images.length > 1) {
         if (currentOffset < -threshold) {
           setIsTransitioning(true);
-          setOffset(-33.333);
+          setOffset(-SLIDE_WIDTH_PERCENT);
           setTimeout(() => {
             setCurrentIndex((prev) =>
               prev === images.length - 1 ? 0 : prev + 1,
@@ -257,7 +259,7 @@ export const ImageViewer = ({
           return;
         } else if (currentOffset > threshold) {
           setIsTransitioning(true);
-          setOffset(33.333);
+          setOffset(SLIDE_WIDTH_PERCENT);
           setTimeout(() => {
             setCurrentIndex((prev) =>
               prev === 0 ? images.length - 1 : prev - 1,
@@ -352,7 +354,7 @@ export const ImageViewer = ({
 
   const prevIndex = getIndex(-1);
   const nextIndex = getIndex(1);
-  const transform = `translateX(${-33.333 + offset}%)`;
+  const transform = `translateX(${-SLIDE_WIDTH_PERCENT + offset}%)`;
 
   // 버튼 공통 스타일
   const buttonClass =
@@ -421,7 +423,7 @@ export const ImageViewer = ({
               transform:
                 images.length > 1
                   ? isZoomed
-                    ? 'translateX(-33.333%)'
+                    ? `translateX(-${SLIDE_WIDTH_PERCENT}%)`
                     : transform
                   : 'translateX(0)',
             }}
