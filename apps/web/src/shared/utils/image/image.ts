@@ -14,8 +14,10 @@ interface ImageOptions {
 }
 
 // S3 URL을 CloudFront 경로로 변환
-const toCloudFrontPath = (src: string): { url: URL; matched: boolean } => {
-  if (!src) return { url: new URL('about:blank'), matched: false };
+const toCloudFrontPath = (
+  src: string,
+): { url: URL; matched: true } | { url: null; matched: false } => {
+  if (!src) return { url: null, matched: false };
 
   let matchedBucket: string | null = null;
   let imagePath = src;
@@ -32,7 +34,7 @@ const toCloudFrontPath = (src: string): { url: URL; matched: boolean } => {
   }
 
   if (!matchedBucket) {
-    return { url: new URL(src), matched: false };
+    return { url: null, matched: false };
   }
 
   if (!imagePath.startsWith('/')) {
