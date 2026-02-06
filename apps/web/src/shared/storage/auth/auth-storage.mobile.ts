@@ -1,35 +1,43 @@
-import Cookies from 'js-cookie';
+import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
-import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
+import { getNativeAccessKey, getNativeRefreshKey } from '@/shared/utils';
 
-const accessKey = getStorageAccessKey();
-const refreshKey = getStorageRefreshKey();
-
-export const getNativeATK = (): string => {
-  // TODO: 네이티브 스토리지에서 토큰 가져오기
-  return '';
+const accessNativeKey = getNativeAccessKey();
+const refreshNativeKey = getNativeRefreshKey();
+export const getNativeATK = async (): Promise<string> => {
+  try {
+    const { value } = await SecureStoragePlugin.get({
+      key: accessNativeKey,
+    });
+    return value ?? '';
+  } catch {
+    return '';
+  }
 };
 
-export const getNativeRTK = (): string => {
-  // TODO: 네이티브 스토리지에서 토큰 가져오기
-  return '';
+export const getNativeRTK = async (): Promise<string> => {
+  try {
+    const { value } = await SecureStoragePlugin.get({
+      key: refreshNativeKey,
+    });
+    return value ?? '';
+  } catch {
+    return '';
+  }
 };
 
-export const setNativeATK = (token: string): void => {
-  // TODO: 네이티브 스토리지에 토큰 저장하기
-  return;
+export const setNativeATK = async (token: string): Promise<void> => {
+  await SecureStoragePlugin.set({ key: accessNativeKey, value: token });
 };
 
-export const setNativeRTK = (token: string): void => {
-  // TODO: 네이티브 스토리지에 토큰 저장하기
-  return;
+export const setNativeRTK = async (token: string): Promise<void> => {
+  await SecureStoragePlugin.set({ key: refreshNativeKey, value: token });
 };
 
-export const removeNativeATK = (): void => {
-  // TODO: 네이티브 스토리지에서 토큰 삭제하기
-  return;
+export const removeNativeATK = async (): Promise<void> => {
+  await SecureStoragePlugin.remove({ key: accessNativeKey });
 };
-export const removeNativeRTK = (): void => {
-  // TODO: 네이티브 스토리지에서 토큰 삭제하기
-  return;
+
+export const removeNativeRTK = async (): Promise<void> => {
+  await SecureStoragePlugin.remove({ key: refreshNativeKey });
 };
