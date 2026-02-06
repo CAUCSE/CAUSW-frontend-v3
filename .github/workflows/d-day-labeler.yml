@@ -1,4 +1,4 @@
-name: D-n 라벨 업데이트 스케줄러
+name: D-n 라벨 업데이트 및 디스코드 알림 스케줄러
 
 on:
   schedule:
