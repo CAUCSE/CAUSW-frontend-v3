@@ -4,5 +4,5 @@ export * from './NotificationDot';
 export * from './CountBadge';
 export * from './provider';
 export * from './fallback';
-export * from './NotificationDot';
+export * from './StatusDot';
 export * from './CountBadge';

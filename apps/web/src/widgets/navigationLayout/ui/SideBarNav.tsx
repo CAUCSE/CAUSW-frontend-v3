@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
+import { CountBadge, StatusDot } from '@/shared';
+
 import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
 
 import { FooterProfile } from './FooterProfile';
@@ -43,12 +45,15 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
               return (
                 <Sidebar.Item key={item.key} value={item.key} asChild>
                   <Link href={item.href} className="block">
-                    {' '}
-                    <HStack className="cursor-pointer gap-3.5 pr-2">
+                    <HStack className="w-full cursor-pointer gap-3.5 pr-2">
                       {/* icon + dot */}
                       <div className="relative">
                         {hasNotification && (
-                          <NotificationDot show={notificationCnt > 0} />
+                          <StatusDot
+                            show={notificationCnt > 0}
+                            right={-2}
+                            top={-2}
+                          />
                         )}
                         <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
                       </div>
