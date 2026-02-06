@@ -1,2 +1,1 @@
-export * from './push-notification/notification';
-export * from './isNative';
+export * from './push-notification';
