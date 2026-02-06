@@ -336,8 +336,10 @@ export const ImageViewer = ({
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch {
-      // 폴백: 새 탭에서 열기
-      window.open(downloadUrl, '_blank');
+      // 폴백: 새 탭에서 열기 (XSS 방지를 위해 프로토콜 검증)
+      if (/^https?:\/\//.test(downloadUrl)) {
+        window.open(downloadUrl, '_blank');
+      }
     }
   };
 
