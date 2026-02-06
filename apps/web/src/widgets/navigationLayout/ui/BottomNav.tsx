@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { BottomNavigation } from '@causw/cds';
 
@@ -11,19 +11,14 @@ type Props = {
 };
 
 export function BottomNav({ selected }: Props) {
-  const router = useRouter();
   return (
-    <BottomNavigation
-      selected={selected}
-      onSelectChange={(key) => {
-        const item = BOTTOM_NAV_ITEMS.find((i) => i.key === key);
-        if (item) router.push(item.href);
-      }}
-    >
+    <BottomNavigation selected={selected}>
       {BOTTOM_NAV_ITEMS.map((item) => (
-        <BottomNavigation.Item key={item.key} value={item.key}>
-          <BottomNavigation.Icon>{item.icon}</BottomNavigation.Icon>
-          <BottomNavigation.Label>{item.label}</BottomNavigation.Label>
+        <BottomNavigation.Item key={item.key} value={item.key} asChild>
+          <Link href={item.href} className="block">
+            <BottomNavigation.Icon>{item.icon}</BottomNavigation.Icon>
+            <BottomNavigation.Label>{item.label}</BottomNavigation.Label>
+          </Link>
         </BottomNavigation.Item>
       ))}
     </BottomNavigation>

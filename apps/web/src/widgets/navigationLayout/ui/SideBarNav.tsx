@@ -1,17 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
-import { CountBadge, NotificationDot } from '@/shared';
-
-import {
-  SIDEBAR_BOTTOM_ITEMS,
-  SIDEBAR_ITEMS,
-  SIDEBAR_MAIN_ITEMS,
-  SidebarKey,
-} from '../model';
+import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
 
 import { FooterProfile } from './FooterProfile';
 
@@ -21,15 +14,8 @@ type Props = {
 };
 
 export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
-  const router = useRouter();
   return (
-    <Sidebar
-      selected={selected}
-      onSelectChange={(key) => {
-        const item = SIDEBAR_ITEMS.find((i) => i.key === key);
-        if (item) router.push(item.href);
-      }}
-    >
+    <Sidebar selected={selected}>
       {/* HEADER */}
       <Sidebar.Header>
         <DefaultHeader />
@@ -41,10 +27,12 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
           <VStack gap="sm">
             {SIDEBAR_MAIN_ITEMS.map((item) => (
               <Sidebar.Item key={item.key} value={item.key} asChild>
-                <HStack className="cursor-pointer gap-3.5">
-                  <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
-                  <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-                </HStack>
+                <Link href={item.href} className="block">
+                  <HStack className="cursor-pointer gap-3.5">
+                    <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
+                    <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
+                  </HStack>
+                </Link>
               </Sidebar.Item>
             ))}
           </VStack>
@@ -54,20 +42,25 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
               const hasNotification = item.key === 'notifications';
               return (
                 <Sidebar.Item key={item.key} value={item.key} asChild>
-                  <HStack className="cursor-pointer gap-3.5 pr-2">
-                    {/* icon + dot */}
-                    <div className="relative">
+                  <Link href={item.href} className="block">
+                    {' '}
+                    <HStack className="cursor-pointer gap-3.5 pr-2">
+                      {/* icon + dot */}
+                      <div className="relative">
+                        {hasNotification && (
+                          <NotificationDot show={notificationCnt > 0} />
+                        )}
+                        <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
+                      </div>
+
+                      <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
+
+                      {/* badgeCount */}
                       {hasNotification && (
-                        <NotificationDot show={notificationCnt > 0} />
+                        <CountBadge count={notificationCnt} />
                       )}
-                      <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
-                    </div>
-
-                    <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-
-                    {/* badgeCount */}
-                    {hasNotification && <CountBadge count={notificationCnt} />}
-                  </HStack>
+                    </HStack>
+                  </Link>
                 </Sidebar.Item>
               );
             })}
