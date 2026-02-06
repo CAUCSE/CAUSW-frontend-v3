@@ -4,11 +4,12 @@ import React from 'react';
 
 import { usePathname } from 'next/navigation';
 
+import { mergeStyles } from '@causw/cds';
+
 import { isBottomNavVisible, pickBottomNavKey, pickSidebarKey } from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
-
 export function PageLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
@@ -31,7 +32,10 @@ export function PageLayout({ children }: { children: React.ReactNode }) {
 
       {/* Content */}
       <main
-        className={`flex-1 overflow-y-auto bg-gray-50 ${showBottomNav ? 'pb-14 xl:pb-0' : 'pb-0'}`}
+        className={mergeStyles(
+          'flex-1 overflow-y-auto bg-gray-50',
+          showBottomNav ? 'pb-14 xl:pb-0' : 'pb-0',
+        )}
       >
         {children}
       </main>
