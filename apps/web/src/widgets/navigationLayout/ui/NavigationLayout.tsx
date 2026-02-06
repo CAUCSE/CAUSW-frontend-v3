@@ -10,7 +10,7 @@ import { isBottomNavVisible, pickBottomNavKey, pickSidebarKey } from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './SideBarNav';
-export function PageLayout({ children }: { children: React.ReactNode }) {
+export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const sidebarSelected = pickSidebarKey(pathname);

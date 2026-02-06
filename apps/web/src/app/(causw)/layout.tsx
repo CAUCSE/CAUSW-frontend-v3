@@ -1,7 +1,7 @@
 'use client';
 
-import { PageLayout } from '@/widgets/pageLayout/ui';
+import { NavigationLayout } from '@/widgets/navigationLayout';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <PageLayout>{children}</PageLayout>;
+  return <NavigationLayout>{children}</NavigationLayout>;
 }
