@@ -4,5 +4,4 @@ export const IMAGE_UPLOAD_RULES = {
   ALLOWED_EXTENSIONS: ['jpg', 'jpeg', 'png'],
 };
 
-export const ACCEPTED_IMAGE_TYPES =
-  'image/png, image/jpeg, image/jpg, image/PNG, image/JPEG, image/JPG';
+export const ACCEPTED_IMAGE_TYPES = 'image/png, image/jpeg';
