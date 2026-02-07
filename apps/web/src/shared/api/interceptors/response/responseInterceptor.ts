@@ -19,13 +19,7 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
     async (error) => {
       if (!isApiError(error)) {
-        const isSyntaxError =
-          error instanceof SyntaxError || error.name === 'SyntaxError';
-
-        if (!isSyntaxError) {
-          reportApiError(error);
-        }
-
+        reportApiError(error);
         throw error;
       }
 
