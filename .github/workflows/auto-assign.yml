@@ -1,0 +1,13 @@
+name: "Auto Assign Reviewer"
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  add-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "PR Reviewer Random Assignment"
+        uses: kentaro-m/auto-assign-action@v2.0.0
+        with:
+          configuration-path: ".github/auto_assign.yml" # 설정 파일 경로

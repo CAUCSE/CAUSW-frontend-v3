@@ -10,11 +10,15 @@
     "lint:fix": "eslint src --fix"
   },
   "dependencies": {
+    "@causw/api-client": "workspace:*",
     "@causw/cds": "workspace:*",
     "@tanstack/react-query": "catalog:default",
+    "@types/js-cookie": "^3.0.6",
+    "js-cookie": "^3.0.5",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
+    "react-error-boundary": "catalog:default",
     "react-hook-form": "catalog:default",
     "zod": "catalog:default",
     "zustand": "catalog:default"
@@ -23,6 +27,7 @@
     "@causw/eslint-config": "workspace:*",
     "@causw/prettier-config": "workspace:*",
     "@causw/typescript-config": "workspace:*",
-    "autoprefixer": "^10.4.23"
+    "@tanstack/react-query-devtools": "catalog:default",
+    "autoprefixer": "catalog:default"
   }
 }

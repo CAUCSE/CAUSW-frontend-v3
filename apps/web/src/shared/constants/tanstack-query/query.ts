@@ -1,0 +1,22 @@
+export const QUERY_TIME = {
+  SECOND: 1000,
+  MINUTE: 60 * 1000,
+  HOUR: 60 * 60 * 1000,
+  DAY: 24 * 60 * 60 * 1000,
+} as const;
+
+export const QUERY_STALE_TIME = {
+  NONE: 0,
+  SHORT: QUERY_TIME.MINUTE,
+  DEFAULT: QUERY_TIME.MINUTE * 5,
+  LONG: QUERY_TIME.HOUR,
+  INFINITY: Infinity,
+} as const;
+
+export const QUERY_GC_TIME = {
+  SHORT: QUERY_TIME.MINUTE * 5,
+  DEFAULT: QUERY_TIME.MINUTE * 10,
+  MEDIUM: QUERY_TIME.MINUTE * 30,
+  LONG: QUERY_TIME.HOUR,
+  INFINITY: Infinity,
+} as const;
