@@ -1,4 +1,4 @@
-name: "Auto Assign Reviewer"
+name: PR 리뷰어 2명 랜덤 지정
 on:
   pull_request:
     types: [opened, ready_for_review]
