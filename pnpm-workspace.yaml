@@ -4,6 +4,7 @@ packages:
   - 'packages/config/*'
   - 'packages/design-system/*'
   - 'packages/api-client/*'
+  - 'packages/logger/*'
 
 catalogs:
   default:

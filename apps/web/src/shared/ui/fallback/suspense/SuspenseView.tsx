@@ -1,15 +1,14 @@
 // 로딩 컴포넌트 위치
 
-import { VStack } from "@causw/cds";
+import { VStack } from '@causw/cds';
 
-
-import { Spinner } from "./temp/Spinner";
+import { Spinner } from './temp/Spinner';
 
 interface SuspenseViewProps {
   size?: number;
 }
 
-export function SuspenseView({ size = 30}: SuspenseViewProps) {
+export function SuspenseView({ size = 30 }: SuspenseViewProps) {
   return (
     <VStack
       align="center"
