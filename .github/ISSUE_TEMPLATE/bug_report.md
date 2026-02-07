@@ -10,13 +10,17 @@ labels: bug
 
 > 어떤 문제가 발생했는지 명확히 작성해주세요.
 
-- ***
+-
+
+---
 
 ## 🔍 Expected Behavior
 
 > 어떤 동작이 정상인가요?
 
-- ***
+-
+
+---
 
 ## 🧪 Reproduction Steps
 
@@ -32,7 +36,9 @@ labels: bug
 
 > 스크린샷, 콘솔 로그, 네트워크 로그가 있다면 첨부해주세요.
 
-- ***
+-
+
+---
 
 ## 💻 Environment
 

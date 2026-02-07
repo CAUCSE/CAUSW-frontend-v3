@@ -21,6 +21,7 @@ export const getClientRTK = (): string => {
   return rtk;
 };
 
+
 export const setClientATK = (token: string) => {
   Cookies.set(accessKey, token);
 };
@@ -28,6 +29,7 @@ export const setClientATK = (token: string) => {
 export const setClientRTK = (token: string) => {
   Cookies.set(refreshKey, token);
 };
+
 
 export const removeClientATK = () => {
   Cookies.remove(accessKey);
