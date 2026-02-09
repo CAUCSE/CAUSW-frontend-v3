@@ -1,9 +1,13 @@
+'use client';
+
 import { useForm, FormProvider } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
+
+import { useSignUpStepGuard } from '@/features/auth/model/guard';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
@@ -15,11 +19,19 @@ export type SignUpStep = {
   Info: Record<string, never>;
 };
 
-export const SignUpFunnel = () => {
+type SignUpFunnelProps = {
+  initialStep: keyof SignUpStep;
+};
+
+export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
+  const { allowInfoStep, syncInfoStepUrl } = useSignUpStepGuard({
+    initialStep,
+  });
+
   const funnel = useFunnel<SignUpStep>({
     id: 'sign-up',
     initial: {
-      step: 'Account',
+      step: initialStep,
       context: {},
     },
   });
@@ -54,7 +66,11 @@ export const SignUpFunnel = () => {
                   'password',
                   'passwordConfirm',
                 ]);
-                if (isValid) history.push('Info');
+                if (!isValid) return;
+
+                allowInfoStep();
+                syncInfoStepUrl();
+                history.push('Info');
               }}
             />
           )}
