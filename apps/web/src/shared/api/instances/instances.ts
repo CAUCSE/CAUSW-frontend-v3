@@ -5,6 +5,7 @@ import {
   FetchOptions,
 } from '@causw/api-client';
 
+import { BASE_URL } from '@/shared/storage';
 import { DefaultResponseField } from '@/shared/types/api/response';
 import { unwrapResponse } from '@/shared/utils/api';
 
@@ -14,7 +15,7 @@ import {
 } from '../interceptors';
 
 const baseConfig: ApiClientConfig = {
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || 'https://dev.causw.com/',
+  baseUrl: BASE_URL,
   timeout: 30000,
 };
 
