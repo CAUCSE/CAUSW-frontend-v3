@@ -1,17 +1,17 @@
-name: Discord PR Comment Notification
+name: 디스코드 PR 코멘트 알림
 on:
   issue_comment:
     types: [created]
 
 jobs:
   notify:
-    # PR에 달린 코멘트만 처리
-    if: github.event.issue.pull_request
+    # PR에 달린 코멘트만 처리 (봇은 제외)
+    if: github.event.issue.pull_request && github.event.comment.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PR_REVIEW_WEBHOOK_URL }}
           COMMENT_URL: ${{ github.event.comment.html_url }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}

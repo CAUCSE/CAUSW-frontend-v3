@@ -8,5 +8,6 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
     '../../packages/design-system/cds/node_modules/@causw/core/dist/**/*.{js,mjs}',
     '../../packages/design-system/cds/node_modules/@causw/tokens/dist/**/*.{js,mjs}',
+    '../../packages/design-system/cds/node_modules/@causw/icons/dist/**/*.{js,mjs,cjs}',
   ],
 } satisfies Config;

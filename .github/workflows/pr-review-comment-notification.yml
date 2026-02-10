@@ -1,15 +1,17 @@
-name: Discord PR Code Review Comment Notification
+name: 디스코드 PR 리뷰 알림 with 코드 컨텍스트
 on:
   pull_request_review_comment:
     types: [created]
 
 jobs:
   notify:
+    # 봇이 작성한 코멘트는 알림 제외
+    if: github.event.comment.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PR_REVIEW_WEBHOOK_URL }}
           COMMENT_BODY: ${{ github.event.comment.body }}
           COMMENT_AUTHOR: ${{ github.event.comment.user.login }}
           COMMENT_URL: ${{ github.event.comment.html_url }}
