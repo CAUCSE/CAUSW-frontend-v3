@@ -1,12 +1,7 @@
 import { tv } from 'tailwind-variants';
 
 export const header = tv({
-  base: [
-    'z-50',
-    'flex items-center gap-2',
-    'px-5 py-4',
-    'w-full max-w-209 mx-auto',
-  ],
+  base: ['z-sticky', 'flex items-center gap-2', 'px-5 py-4', 'w-full mx-auto'],
 
   variants: {
     sticky: {
