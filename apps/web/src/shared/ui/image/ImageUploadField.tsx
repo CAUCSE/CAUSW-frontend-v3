@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Close } from '@causw/cds';
 
 import { IMAGE_UPLOAD_RULES, ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
-import { ImageTypes } from '@/shared/types';
+import { ImageUploadFieldProps } from '@/shared/types';
 
 export interface ImageUploadFieldRef {
   openFilePicker: () => void;
@@ -22,10 +22,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     maxFiles = IMAGE_UPLOAD_RULES.MAX_FILE_COUNT,
     resetTrigger,
     showMainBadge = false,
-  }: Omit<
-    ImageTypes.UploadFieldProps<T>,
-    'label' | 'errorMessage' | 'children'
-  >,
+  }: Omit<ImageUploadFieldProps<T>, 'label' | 'errorMessage' | 'children'>,
   ref: React.ForwardedRef<ImageUploadFieldRef>,
 ) => {
   const [previews, setPreviews] = React.useState<string[]>([]);
@@ -162,7 +159,7 @@ export const ImageUploadField = React.forwardRef(ImageUploadFieldInner) as <
   T extends FieldValues,
 >(
   props: Omit<
-    ImageTypes.UploadFieldProps<T>,
+    ImageUploadFieldProps<T>,
     'label' | 'errorMessage' | 'children'
   > & {
     ref?: React.ForwardedRef<ImageUploadFieldRef>;

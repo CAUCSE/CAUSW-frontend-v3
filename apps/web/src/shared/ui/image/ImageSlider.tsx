@@ -5,12 +5,12 @@ import * as React from 'react';
 import Image from 'next/image';
 
 import { getOptimizedImageUrl, awsImageLoader } from '@/shared/lib';
-import { ImageTypes } from '@/shared/types';
+import { ImageSliderProps } from '@/shared/types';
 
 export const ImageSlider = ({
   images,
   onImageClick,
-}: ImageTypes.SliderProps) => {
+}: ImageSliderProps) => {
   if (images.length === 0) return null;
 
   return (

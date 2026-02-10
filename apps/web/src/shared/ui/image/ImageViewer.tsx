@@ -12,7 +12,7 @@ import {
   getDownloadImageUrl,
   awsImageLoader,
 } from '@/shared/lib';
-import { ImageTypes } from '@/shared/types';
+import { ImageViewerProps } from '@/shared/types';
 
 const SLIDE_WIDTH_PERCENT = 100 / 3;
 
@@ -20,7 +20,7 @@ export const ImageViewer = ({
   images,
   initialIndex = 0,
   onClose,
-}: ImageTypes.ViewerProps) => {
+}: ImageViewerProps) => {
   const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
 
   // 줌 상태
