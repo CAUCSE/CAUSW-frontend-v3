@@ -2,9 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { ChevronLeft } from '@causw/cds';
-
-import { splitVariantProps } from '@/shared/lib/splitVariantProps';
+import { ChevronLeft, splitVariantProps } from '@causw/cds';
 
 import { header, headerKeys } from './Header.styles';
 import type { HeaderProps } from './Header.types';
@@ -31,10 +29,10 @@ export function Header(props: HeaderProps) {
           type="button"
           onClick={handleBackClick}
           aria-label="뒤로가기"
-          className="flex items-center justify-center p-1"
+          className="flex cursor-pointer items-center justify-center rounded-md p-2 transition-colors hover:bg-black/5 active:bg-black/10"
         >
           <ChevronLeft
-            size="18"
+            size="md"
             color={variantProps.tone === 'light' ? 'white' : 'gray-700'}
           />
         </button>
