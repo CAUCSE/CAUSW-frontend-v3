@@ -1,1 +1,5 @@
-export type { ImageTypes } from './image';
+export type {
+  ImageViewerProps,
+  ImageSliderProps,
+  ImageUploadFieldProps,
+} from './image';
