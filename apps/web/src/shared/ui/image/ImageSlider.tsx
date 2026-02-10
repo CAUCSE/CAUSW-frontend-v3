@@ -4,8 +4,8 @@ import * as React from 'react';
 
 import Image from 'next/image';
 
+import { getOptimizedImageUrl, awsImageLoader } from '@/shared/lib';
 import { ImageTypes } from '@/shared/types';
-import { getOptimizedImageUrl, awsImageLoader } from '@/shared/utils';
 
 export const ImageSlider = ({
   images,
