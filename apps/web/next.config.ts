@@ -1,7 +1,9 @@
 import type { NextConfig } from 'next';
 
+import { withSentryConfig } from '@causw/logger/config';
+
 const nextConfig: NextConfig = {
-  // 필요시 추가
+  transpilePackages: ['@causw/logger'],
 };
 
-export default nextConfig;
+export default withSentryConfig<NextConfig>(nextConfig, 'causw');

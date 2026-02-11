@@ -1,0 +1,28 @@
+{
+  "name": "@causw/logger",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./config": "./src/config.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@sentry/nextjs": "^10.37.0",
+    "@causw/api-client": "workspace:*"
+  },
+  "devDependencies": {
+    "@causw/eslint-config": "workspace:*",
+    "@causw/prettier-config": "workspace:*",
+    "@causw/typescript-config": "workspace:*"
+  }
+}

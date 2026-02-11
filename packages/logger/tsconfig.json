@@ -1,0 +1,8 @@
+{
+  "extends": "@causw/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
