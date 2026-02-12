@@ -1,6 +1,6 @@
 import { tv } from 'tailwind-variants';
 
-export const header = tv({
+export const actionHeader = tv({
   base: ['z-sticky', 'flex items-center gap-2', 'px-5 py-4', 'w-full mx-auto'],
 
   variants: {
@@ -27,4 +27,4 @@ export const header = tv({
   },
 });
 
-export const headerKeys = header.variantKeys;
+export const actionHeaderVariantKeys = actionHeader.variantKeys;
