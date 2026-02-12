@@ -33,10 +33,10 @@ export function BackButton({
     <button
       type="button"
       onClick={handleClick}
-      className={`flex cursor-pointer items-center gap-2 rounded-md px-5 py-3 transition-colors ${interactionClass} `}
+      className={`flex cursor-pointer items-center gap-2 rounded-md px-5 py-4 transition-colors ${interactionClass} `}
     >
       <ChevronLeft size="18" color={iconColor} />
-      <span className="text-sm font-medium">{label}</span>
+      <span className="typo-subtitle-16-bold">{label}</span>
     </button>
   );
 }

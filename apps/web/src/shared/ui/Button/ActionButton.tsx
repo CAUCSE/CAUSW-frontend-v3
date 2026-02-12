@@ -21,7 +21,7 @@ export function ActionButton({
   return (
     <button
       type="button"
-      className={`flex cursor-pointer items-center justify-center rounded-md px-5 py-3 transition-colors ${interactionClass} ${className} `}
+      className={`typo-subtitle-16-bold flex cursor-pointer items-center justify-center rounded-md px-5 py-4 transition-colors ${interactionClass} ${className} `}
       {...props}
     >
       {children}
