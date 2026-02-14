@@ -22,7 +22,7 @@ export const TermsBottomSheet = ({
 }: TermsBottomSheetProps) => {
   return (
     <BottomSheet headerAlign="left" open={open} onOpenChange={onOpenChange}>
-      <BottomSheet.Header title="제목" />
+      <BottomSheet.Header className="hidden" title="제목" />
 
       <BottomSheet.Content>
         <VStack className="gap-10">
