@@ -6,10 +6,12 @@ import Image from 'next/image';
 
 import { Close, ChevronLeft, ChevronRight } from '@causw/cds';
 
-import { getOriginalImageUrl, awsImageLoader } from '@/shared/lib';
+import { getOriginalImageUrl, awsImageLoader, saveImage } from '@/shared/lib';
 import { ImageViewerProps } from '@/shared/types';
 
 const SLIDE_WIDTH_PERCENT = 100 / 3;
+const LONG_PRESS_DURATION = 500;
+const LONG_PRESS_MOVE_THRESHOLD = 10;
 
 export const ImageViewer = ({
   images,
@@ -44,6 +46,13 @@ export const ImageViewer = ({
   const initialPinchZoom = React.useRef<number>(1);
   const [isPinching, setIsPinching] = React.useState(false);
 
+  // long-press 상태
+  const longPressTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const longPressTouchStartRef = React.useRef({ x: 0, y: 0 });
+  const longPressTriggeredRef = React.useRef(false);
+
   const isZoomed = zoomLevel > 1;
 
   const goToPrevious = React.useCallback(() => {
@@ -68,6 +77,26 @@ export const ImageViewer = ({
     }, 300);
   }, [images.length, isTransitioning, isZoomed]);
 
+  // long-press 헬퍼
+  const cancelLongPress = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  };
+
+  const handleLongPressSave = async () => {
+    cancelLongPress();
+    longPressTriggeredRef.current = true;
+    navigator.vibrate?.(50);
+
+    try {
+      await saveImage(images[currentIndex], currentIndex);
+    } catch {
+      // 사용자가 공유 시트를 취소한 경우 등
+    }
+  };
+
   // 열릴 때 상태 초기화
   React.useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -82,6 +111,7 @@ export const ImageViewer = ({
 
     return () => {
       document.body.style.overflow = '';
+      cancelLongPress();
     };
   }, [initialIndex]);
 
@@ -146,6 +176,7 @@ export const ImageViewer = ({
 
     // 두 손가락 핀치 줌
     if (e.touches.length === 2) {
+      cancelLongPress();
       initialPinchDistance.current = getTouchDistance(e.touches);
       initialPinchZoom.current = zoomLevel;
       setIsPinching(true);
@@ -155,6 +186,16 @@ export const ImageViewer = ({
 
     // 한 손가락 터치
     if (e.touches.length === 1) {
+      longPressTriggeredRef.current = false;
+      longPressTouchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+      longPressTimerRef.current = setTimeout(
+        handleLongPressSave,
+        LONG_PRESS_DURATION,
+      );
+
       if (isZoomed) {
         setIsPanning(true);
         panStartRef.current = {
@@ -171,6 +212,15 @@ export const ImageViewer = ({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (isTransitioning) return;
+
+    // long-press 이동 감지
+    if (longPressTimerRef.current && e.touches.length === 1) {
+      const dx = e.touches[0].clientX - longPressTouchStartRef.current.x;
+      const dy = e.touches[0].clientY - longPressTouchStartRef.current.y;
+      if (Math.hypot(dx, dy) > LONG_PRESS_MOVE_THRESHOLD) {
+        cancelLongPress();
+      }
+    }
 
     // 핀치 줌
     if (e.touches.length === 2 && initialPinchDistance.current !== null) {
@@ -212,6 +262,16 @@ export const ImageViewer = ({
   };
 
   const handleTouchEnd = () => {
+    cancelLongPress();
+
+    // long-press 트리거 후 후속 처리 스킵
+    if (longPressTriggeredRef.current) {
+      longPressTriggeredRef.current = false;
+      setIsPanning(false);
+      setIsDragging(false);
+      return;
+    }
+
     // 핀치 줌 종료
     if (initialPinchDistance.current !== null || isPinching) {
       initialPinchDistance.current = null;
