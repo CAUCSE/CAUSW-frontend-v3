@@ -31,7 +31,7 @@ export class TokenManager {
     if (isServer) {
       return await getServerATK();
     } else if (isMobile) {
-      return getNativeATK();
+      return await getNativeATK();
     } else {
       return getClientATK();
     }
@@ -41,7 +41,7 @@ export class TokenManager {
     if (isServer) {
       return await setServerATK(token);
     } else if (isMobile) {
-      setNativeATK(token);
+      return await setNativeATK(token);
     } else {
       return setClientATK(token);
     }
@@ -51,7 +51,7 @@ export class TokenManager {
     if (isServer) {
       await removeServerATK();
     } else if (isMobile) {
-      removeNativeATK();
+      await removeNativeATK();
     } else {
       removeClientATK();
     }
@@ -62,7 +62,7 @@ export class TokenManager {
     if (isServer) {
       return await getServerRTK();
     } else if (isMobile) {
-      return getNativeRTK();
+      return await getNativeRTK();
     } else {
       return getClientRTK();
     }
@@ -72,7 +72,7 @@ export class TokenManager {
     if (isServer) {
       await setServerRTK(token);
     } else if (isMobile) {
-      setNativeRTK(token);
+      await setNativeRTK(token);
     } else {
       setClientRTK(token);
     }
@@ -82,7 +82,7 @@ export class TokenManager {
     if (isServer) {
       await removeServerRTK();
     } else if (isMobile) {
-      removeNativeRTK();
+      await removeNativeRTK();
     } else {
       removeClientRTK();
     }

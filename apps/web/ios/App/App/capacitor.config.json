@@ -1,0 +1,35 @@
+{
+	"appId": "kr.co.causw",
+	"appName": "크자회(CCSSAA)",
+	"webDir": "out",
+	"server": {
+		"url": "http://localhost:3000",
+		"cleartext": true
+	},
+	"ios": {
+		"contentInset": "never",
+		"scrollEnabled": true,
+		"allowsLinkPreview": false,
+		"handleApplicationNotifications": false
+	},
+	"plugins": {
+		"StatusBar": {
+			"style": "LIGHT_CONTENT",
+			"backgroundColor": "#ffffff",
+			"overlaysWebView": false
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"alert"
+			]
+		}
+	},
+	"packageClassList": [
+		"AppPlugin",
+		"PushNotificationsPlugin",
+		"StatusBarPlugin",
+		"SecureStoragePlugin"
+	]
+}

@@ -1,5 +1,3 @@
-import { ApiError } from '@causw/api-client';
-
 export interface DefaultErrorField {
   code?: string;
   message?: string;
