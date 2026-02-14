@@ -4,7 +4,7 @@ android {
     namespace "kr.co.causw"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "kr.co.causw"
+        applicationId "kr.co.causwv2.twa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
