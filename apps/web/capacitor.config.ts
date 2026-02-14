@@ -10,7 +10,7 @@ const config: CapacitorConfig = {
     // cleartext: false,
 
     //local 테스트 시
-    url: 'http://localhost:3000', //ios
+    url: 'http://localhost:3000/setting', //ios
     //url: 'http://10.0.2.2:3000', //android
     cleartext: true,
   },
