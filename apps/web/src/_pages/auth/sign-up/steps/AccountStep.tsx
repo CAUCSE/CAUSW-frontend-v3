@@ -1,11 +1,25 @@
 'use client';
 
+import { useFormContext, useWatch } from 'react-hook-form';
+
 import { Text, CTAButton, VStack } from '@causw/cds';
+
+import { accountSchema, type SignUpFormData } from '@/entities/auth';
 
 import { RHFInput } from '@/shared';
 
 export const AccountStep = ({ onNext }: { onNext: () => void }) => {
-  // No internal useForm, relying on parent FormProvider
+  const { control } = useFormContext<SignUpFormData>();
+  const [email = '', password = '', passwordConfirm = ''] = useWatch({
+    control,
+    name: ['email', 'password', 'passwordConfirm'],
+  });
+
+  const isNextEnabled = accountSchema.safeParse({
+    email,
+    password,
+    passwordConfirm,
+  }).success;
 
   return (
     <VStack className="w-full gap-7">
@@ -49,6 +63,7 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
       <CTAButton
         color="dark"
         fullWidth
+        disabled={!isNextEnabled}
         onClick={onNext}
         className="mt-16 md:mt-10"
       >

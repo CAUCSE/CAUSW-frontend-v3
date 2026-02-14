@@ -1,14 +1,25 @@
 'use client';
 
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Text, CTAButton, VStack, Spacer } from '@causw/cds';
+
+import { infoSchema, type SignUpFormData } from '@/entities/auth';
 
 import { useBreakpoint, RHFInput } from '@/shared';
 
 export const InfoStep = ({ onNext }: { onNext: () => void }) => {
   const { isMobileSize, isTabletSize, isDesktopSize } = useBreakpoint();
-  const { setValue } = useFormContext();
+  const { control, setValue } = useFormContext<SignUpFormData>();
+  const [name = '', phoneNumber = '', nickname = ''] = useWatch({
+    control,
+    name: ['name', 'phoneNumber', 'nickname'],
+  });
+  const isNextEnabled = infoSchema.safeParse({
+    name,
+    phoneNumber,
+    nickname,
+  }).success;
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, '');
@@ -70,7 +81,12 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
       {isTabletSize && <Spacer size={10} />}
       {isDesktopSize && <Spacer size={10} />}
 
-      <CTAButton color="dark" fullWidth onClick={onNext}>
+      <CTAButton
+        color="dark"
+        fullWidth
+        disabled={!isNextEnabled}
+        onClick={onNext}
+      >
         다음
       </CTAButton>
     </VStack>
