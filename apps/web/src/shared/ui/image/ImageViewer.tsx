@@ -4,14 +4,9 @@ import * as React from 'react';
 
 import Image from 'next/image';
 
-// TODO: Download 아이콘 추가되면 Share -> Download로 변경
-import { Close, ChevronLeft, ChevronRight, Share } from '@causw/cds';
+import { Close, ChevronLeft, ChevronRight } from '@causw/cds';
 
-import {
-  getOriginalImageUrl,
-  getDownloadImageUrl,
-  awsImageLoader,
-} from '@/shared/lib';
+import { getOriginalImageUrl, awsImageLoader } from '@/shared/lib';
 import { ImageViewerProps } from '@/shared/types';
 
 const SLIDE_WIDTH_PERCENT = 100 / 3;
@@ -321,31 +316,6 @@ export const ImageViewer = ({
     lastTapRef.current = now;
   };
 
-  // 다운로드 핸들러
-  const handleDownload = async () => {
-    const currentImage = images[currentIndex];
-    const downloadUrl = getDownloadImageUrl(currentImage);
-
-    try {
-      const response = await fetch(downloadUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      const extension = blob.type.split('/')[1] || 'jpg';
-      link.download = `image-${currentIndex + 1}.${extension}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch {
-      // 폴백: 새 탭에서 열기 (XSS 방지를 위해 프로토콜 검증)
-      if (/^https?:\/\//.test(downloadUrl)) {
-        window.open(downloadUrl, '_blank');
-      }
-    }
-  };
-
   if (images.length === 0) return null;
 
   const getIndex = (indexOffset: number) => {
@@ -373,15 +343,6 @@ export const ImageViewer = ({
         aria-label="닫기"
       >
         <Close className="h-[1.125rem] w-[1.125rem] md:h-6 md:w-6" />
-      </button>
-
-      {/* 다운로드 버튼 - 우상단 (닫기 버튼과 대칭) */}
-      <button
-        onClick={handleDownload}
-        className={`absolute top-16 right-4 z-50 h-8 w-8 md:top-11 md:right-11 md:h-11 md:w-11 ${buttonClass}`}
-        aria-label="이미지 다운로드"
-      >
-        <Share className="h-[1.125rem] w-[1.125rem] md:h-6 md:w-6" />
       </button>
 
       {/* 메인 콘텐츠 */}
