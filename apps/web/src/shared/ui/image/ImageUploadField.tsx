@@ -6,7 +6,7 @@ import { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
-import { Close } from '@causw/cds';
+import { CloseFilled } from '@causw/cds';
 
 import { IMAGE_UPLOAD_RULES, ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
 import { ImageUploadFieldProps } from '@/shared/types';
@@ -134,10 +134,10 @@ const ImageUploadFieldInner = <T extends FieldValues>(
             <button
               type="button"
               onClick={() => handleRemove(index)}
-              className="absolute top-[0.375rem] right-[0.375rem] flex h-[1.25rem] w-[1.25rem] items-center justify-center rounded-full bg-[#D9D9D9]"
+              className="absolute top-[0.375rem] right-[0.375rem] flex h-5 w-5 items-center justify-center"
               aria-label="이미지 삭제"
             >
-              <Close className="h-[0.625rem] w-[0.625rem] text-gray-600" />
+              <CloseFilled size={18} color="gray-600" />
             </button>
 
             {/* 대표 사진 배지 */}
