@@ -2,11 +2,16 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
+import { getTraceData } from '@causw/logger';
+
 import { QueryProviderWithDevtools } from '@/shared';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',
   description: '동문 네트워크 서비스',
+  other: {
+    ...getTraceData(), // Sentry 오류 로그 추적
+  },
 };
 
 export default function RootLayout({

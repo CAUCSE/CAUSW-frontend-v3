@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">크자회(CCSSAA)</string>
+    <string name="title_activity_main">크자회(CCSSAA)</string>
+    <string name="package_name">kr.co.causw</string>
+    <string name="custom_url_scheme">kr.co.causw</string>
+</resources>
