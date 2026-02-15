@@ -9,7 +9,6 @@ import { Close, ChevronLeft, ChevronRight } from '@causw/cds';
 import { getOriginalImageUrl, awsImageLoader, saveImage } from '@/shared/lib';
 import { ImageViewerProps } from '@/shared/types';
 
-const SLIDE_WIDTH_PERCENT = 100 / 3;
 const LONG_PRESS_DURATION = 500;
 const LONG_PRESS_MOVE_THRESHOLD = 10;
 
@@ -54,28 +53,24 @@ export const ImageViewer = ({
   const longPressTriggeredRef = React.useRef(false);
 
   const isZoomed = zoomLevel > 1;
+  const slidePercent = images.length > 0 ? 100 / images.length : 100;
 
   const goToPrevious = React.useCallback(() => {
-    if (images.length <= 1 || isTransitioning || isZoomed) return;
+    if (currentIndex === 0 || isTransitioning || isZoomed) return;
     setIsTransitioning(true);
-    setOffset(SLIDE_WIDTH_PERCENT);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-      setOffset(0);
-      setIsTransitioning(false);
-    }, 300);
-  }, [images.length, isTransitioning, isZoomed]);
+    setCurrentIndex((prev) => prev - 1);
+    setOffset(0);
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [currentIndex, isTransitioning, isZoomed]);
 
   const goToNext = React.useCallback(() => {
-    if (images.length <= 1 || isTransitioning || isZoomed) return;
+    if (currentIndex === images.length - 1 || isTransitioning || isZoomed)
+      return;
     setIsTransitioning(true);
-    setOffset(-SLIDE_WIDTH_PERCENT);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-      setOffset(0);
-      setIsTransitioning(false);
-    }, 300);
-  }, [images.length, isTransitioning, isZoomed]);
+    setCurrentIndex((prev) => prev + 1);
+    setOffset(0);
+    setTimeout(() => setIsTransitioning(false), 300);
+  }, [currentIndex, images.length, isTransitioning, isZoomed]);
 
   // long-press 헬퍼
   const cancelLongPress = () => {
@@ -255,8 +250,8 @@ export const ImageViewer = ({
         const distance = currentX - touchStartX.current;
         const containerWidth =
           containerRef.current?.offsetWidth || window.innerWidth;
-        const percent = (distance / containerWidth) * SLIDE_WIDTH_PERCENT;
-        setOffset(Math.max(-40, Math.min(40, percent)));
+        const percent = (distance / containerWidth) * slidePercent;
+        setOffset(Math.max(-slidePercent, Math.min(slidePercent, percent)));
       }
     }
   };
@@ -298,30 +293,23 @@ export const ImageViewer = ({
 
       const currentOffset = offset;
       touchStartX.current = null;
-      const threshold = 10;
+      const snapThreshold = slidePercent * 0.15;
 
       if (images.length > 1) {
-        if (currentOffset < -threshold) {
+        if (
+          currentOffset < -snapThreshold &&
+          currentIndex < images.length - 1
+        ) {
           setIsTransitioning(true);
-          setOffset(-SLIDE_WIDTH_PERCENT);
-          setTimeout(() => {
-            setCurrentIndex((prev) =>
-              prev === images.length - 1 ? 0 : prev + 1,
-            );
-            setOffset(0);
-            setIsTransitioning(false);
-          }, 300);
+          setCurrentIndex((prev) => prev + 1);
+          setOffset(0);
+          setTimeout(() => setIsTransitioning(false), 300);
           return;
-        } else if (currentOffset > threshold) {
+        } else if (currentOffset > snapThreshold && currentIndex > 0) {
           setIsTransitioning(true);
-          setOffset(SLIDE_WIDTH_PERCENT);
-          setTimeout(() => {
-            setCurrentIndex((prev) =>
-              prev === 0 ? images.length - 1 : prev - 1,
-            );
-            setOffset(0);
-            setIsTransitioning(false);
-          }, 300);
+          setCurrentIndex((prev) => prev - 1);
+          setOffset(0);
+          setTimeout(() => setIsTransitioning(false), 300);
           return;
         }
       }
@@ -378,14 +366,9 @@ export const ImageViewer = ({
 
   if (images.length === 0) return null;
 
-  const getIndex = (indexOffset: number) => {
-    const len = images.length;
-    return (((currentIndex + indexOffset) % len) + len) % len;
-  };
-
-  const prevIndex = getIndex(-1);
-  const nextIndex = getIndex(1);
-  const transform = `translateX(${-SLIDE_WIDTH_PERCENT + offset}%)`;
+  const trackTransform = isZoomed
+    ? `translateX(-${currentIndex * slidePercent}%)`
+    : `translateX(${-currentIndex * slidePercent + offset}%)`;
 
   // 버튼 공통 스타일
   const buttonClass =
@@ -408,7 +391,7 @@ export const ImageViewer = ({
       {/* 메인 콘텐츠 */}
       <div className="relative z-10 flex h-full w-full items-center">
         {/* 이전 버튼 - 데스크탑만, 좌측 중앙 */}
-        {images.length > 1 && !isZoomed && (
+        {images.length > 1 && !isZoomed && currentIndex > 0 && (
           <button
             onClick={goToPrevious}
             className={`absolute top-1/2 left-11 z-20 hidden h-11 w-11 -translate-y-1/2 md:flex ${buttonClass}`}
@@ -441,89 +424,55 @@ export const ImageViewer = ({
                 : ''
             }`}
             style={{
-              width: images.length > 1 ? '300%' : '100%',
-              transform:
-                images.length > 1
-                  ? isZoomed
-                    ? `translateX(-${SLIDE_WIDTH_PERCENT}%)`
-                    : transform
-                  : 'translateX(0)',
+              width: `${images.length * 100}%`,
+              transform: trackTransform,
             }}
           >
-            {/* 이전 이미지 */}
-            {images.length > 1 && (
-              <div className="flex h-full w-1/3 items-center justify-center p-4 md:p-8">
+            {images.map((img, i) => {
+              const isCurrent = i === currentIndex;
+              return (
                 <div
-                  className="relative"
-                  style={{ maxWidth: '90vw', maxHeight: '85vh' }}
+                  key={img}
+                  className="flex h-full items-center justify-center p-4 md:p-8"
+                  style={{ width: `${slidePercent}%` }}
                 >
-                  <Image
-                    loader={awsImageLoader}
-                    src={getOriginalImageUrl(images[prevIndex])}
-                    alt="이전 이미지"
-                    width={1200}
-                    height={800}
-                    className="h-auto max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl"
-                  />
+                  <div
+                    ref={isCurrent ? imageContainerRef : undefined}
+                    className={`relative ${
+                      isCurrent && !isPanning && !isPinching
+                        ? 'transition-transform duration-200'
+                        : ''
+                    }`}
+                    style={{
+                      maxWidth: isCurrent && isZoomed ? 'none' : '90vw',
+                      maxHeight: isCurrent && isZoomed ? 'none' : '85vh',
+                      transform: isCurrent
+                        ? `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`
+                        : undefined,
+                    }}
+                  >
+                    <Image
+                      loader={awsImageLoader}
+                      src={getOriginalImageUrl(img)}
+                      alt={`이미지 ${i + 1}`}
+                      width={1200}
+                      height={800}
+                      className={`h-auto max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl${isCurrent ? 'select-none' : ''}`}
+                      draggable={false}
+                      priority={isCurrent}
+                      loading={
+                        Math.abs(i - currentIndex) <= 1 ? 'eager' : 'lazy'
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {/* 현재 이미지 */}
-            <div
-              ref={imageContainerRef}
-              className={`flex h-full items-center justify-center p-4 md:p-8 ${
-                images.length > 1 ? 'w-1/3' : 'w-full'
-              }`}
-            >
-              <div
-                className={`relative ${
-                  !isPanning && !isPinching
-                    ? 'transition-transform duration-200'
-                    : ''
-                }`}
-                style={{
-                  maxWidth: isZoomed ? 'none' : '90vw',
-                  maxHeight: isZoomed ? 'none' : '85vh',
-                  transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
-                }}
-              >
-                <Image
-                  loader={awsImageLoader}
-                  src={getOriginalImageUrl(images[currentIndex])}
-                  alt="현재 이미지"
-                  width={1200}
-                  height={800}
-                  className="h-auto max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl select-none"
-                  draggable={false}
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* 다음 이미지 */}
-            {images.length > 1 && (
-              <div className="flex h-full w-1/3 items-center justify-center p-4 md:p-8">
-                <div
-                  className="relative"
-                  style={{ maxWidth: '90vw', maxHeight: '85vh' }}
-                >
-                  <Image
-                    loader={awsImageLoader}
-                    src={getOriginalImageUrl(images[nextIndex])}
-                    alt="다음 이미지"
-                    width={1200}
-                    height={800}
-                    className="h-auto max-h-[85vh] w-auto rounded-lg object-contain shadow-2xl"
-                  />
-                </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
 
         {/* 다음 버튼 - 데스크탑만, 우측 중앙 */}
-        {images.length > 1 && !isZoomed && (
+        {images.length > 1 && !isZoomed && currentIndex < images.length - 1 && (
           <button
             onClick={goToNext}
             className={`absolute top-1/2 right-11 z-20 hidden h-11 w-11 -translate-y-1/2 md:flex ${buttonClass}`}
