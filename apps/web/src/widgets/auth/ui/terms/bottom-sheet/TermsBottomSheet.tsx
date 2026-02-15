@@ -1,6 +1,6 @@
 import { BottomSheet } from '@causw/cds';
 
-import { UseTermsContent } from '../content/UseTermsContent';
+import { TermsContent } from '../content/TermsContent';
 
 interface TermsBottomSheetProps {
   open: boolean;
@@ -15,7 +15,7 @@ export const TermsBottomSheet = ({
     <BottomSheet headerAlign="left" open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Header className="hidden" title="이용 약관 동의 여부" />
       <BottomSheet.Content>
-        <UseTermsContent />
+        <TermsContent />
       </BottomSheet.Content>
     </BottomSheet>
   );

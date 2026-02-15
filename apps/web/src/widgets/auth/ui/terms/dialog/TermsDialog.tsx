@@ -1,6 +1,6 @@
 import { Dialog } from '@causw/cds';
 
-import { UseTermsContent } from '../content/UseTermsContent';
+import { TermsContent } from '../content/TermsContent';
 
 interface TermsDialogProps {
   open: boolean;
@@ -15,7 +15,7 @@ export const TermsDialog = ({ open, onOpenChange }: TermsDialogProps) => {
           className="sr-only"
           title="이용 약관 동의 여부"
         ></Dialog.Title>
-        <UseTermsContent />
+        <TermsContent />
       </Dialog.Content>
     </Dialog>
   );
