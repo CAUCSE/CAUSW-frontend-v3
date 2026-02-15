@@ -2,7 +2,7 @@
 
 import { Text, VStack } from '@causw/cds';
 
-import { AuthContainer, EnrollmentStepper } from '@/widgets/auth';
+import { AuthContainer, EnrollmentStepContainer } from '@/widgets/auth';
 
 import { type EnrollmentStatus, type EnrollmentAction } from '@/entities/auth';
 
@@ -54,7 +54,7 @@ export const EnrollmentVerificationPage = ({
         </VStack>
 
         {/* 스텝 카드 영역 */}
-        <EnrollmentStepper
+        <EnrollmentStepContainer
           status={status}
           rejectedReason={rejectedReason}
           actionHandlers={actionHandlers}
