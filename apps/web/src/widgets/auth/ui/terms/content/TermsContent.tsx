@@ -13,7 +13,11 @@ import { useTermsAgreementStore } from '@/entities/auth';
 
 // TODO: 보기 약관 내용 채우기
 
-export const TermsContent = () => {
+interface TermsContentProps {
+  onComplete?: () => void;
+}
+
+export const TermsContent = ({ onComplete }: TermsContentProps) => {
   const serviceTermsAgreed = useTermsAgreementStore(
     (state) => state.serviceTermsAgreed,
   );
@@ -81,6 +85,7 @@ export const TermsContent = () => {
 
   const handleCompleteClick = () => {
     if (!isAllRequiredTermsAgreed) return;
+    onComplete?.();
     reset();
   };
 
