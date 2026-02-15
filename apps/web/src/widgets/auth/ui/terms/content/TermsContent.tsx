@@ -9,7 +9,7 @@ import {
   HStack,
 } from '@causw/cds';
 
-import { useTermsAgreementStore } from '@/features/auth';
+import { useTermsAgreementStore } from '@/entities/auth';
 
 // TODO: 보기 약관 내용 채우기
 
