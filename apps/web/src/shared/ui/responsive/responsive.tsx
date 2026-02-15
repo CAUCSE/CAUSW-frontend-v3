@@ -16,7 +16,7 @@ interface ResponsiveProps extends ComponentProps<'div'> {
 }
 
 /** < md 에서만 보이게 */
-export function IsMobile({ className, ...props }: ResponsiveProps) {
+export function MobileOnly({ className, ...props }: ResponsiveProps) {
   return (
     <Primitive.div
       className={mergeStyles('block md:hidden', className)}
@@ -26,7 +26,7 @@ export function IsMobile({ className, ...props }: ResponsiveProps) {
 }
 
 /** >= md 에서만 보이게 */
-export function IsDesktop({ className, ...props }: ResponsiveProps) {
+export function DesktopOnly({ className, ...props }: ResponsiveProps) {
   return (
     <Primitive.div
       className={mergeStyles('hidden md:block', className)}
