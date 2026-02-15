@@ -1,15 +1,21 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Text, CTAButton, VStack, Spacer } from '@causw/cds';
+
+import { TermsBottomSheet, TermsDialog } from '@/widgets/auth';
 
 import { infoSchema, type SignUpFormData } from '@/entities/auth';
 
 import { useBreakpoint, RHFInput } from '@/shared';
 
+// TODO: bottom-sheet, dialog 렌더링 충돌 이슈 핸들링
+
 export const InfoStep = ({ onNext }: { onNext: () => void }) => {
-  const { isMobileSize, isTabletSize, isDesktopSize } = useBreakpoint();
+  const { isMobileSize } = useBreakpoint();
   const { control, setValue } = useFormContext<SignUpFormData>();
   const [name = '', phoneNumber = '', nickname = ''] = useWatch({
     control,
@@ -20,6 +26,12 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
     phoneNumber,
     nickname,
   }).success;
+
+  const [termsOpen, setTermsOpen] = useState(false);
+  const handleTermsComplete = () => {
+    setTermsOpen(false);
+    onNext();
+  };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, '');
@@ -76,19 +88,28 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
         typography="body-16-regular"
       />
 
-      {!isDesktopSize && !isTabletSize && !isMobileSize && <Spacer size={10} />}
+      {!isMobileSize && <Spacer size={10} />}
       {isMobileSize && <Spacer size={16} />}
-      {isTabletSize && <Spacer size={10} />}
-      {isDesktopSize && <Spacer size={10} />}
 
       <CTAButton
         color="dark"
         fullWidth
         disabled={!isNextEnabled}
-        onClick={onNext}
+        onClick={() => setTermsOpen(true)}
       >
         다음
       </CTAButton>
+
+      <TermsBottomSheet
+        open={termsOpen && isMobileSize}
+        onOpenChange={setTermsOpen}
+        onComplete={handleTermsComplete}
+      />
+      <TermsDialog
+        open={termsOpen && !isMobileSize}
+        onOpenChange={setTermsOpen}
+        onComplete={handleTermsComplete}
+      />
     </VStack>
   );
 };
