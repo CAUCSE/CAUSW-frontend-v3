@@ -11,7 +11,7 @@ export const AuthContainer = ({ children }: AuthContainerProps) => {
         <Flex
           gap="none"
           justify="start"
-          className="min-h-screen w-full max-w-[37.5rem] flex-col px-5 py-4 md:px-8 md:py-20"
+          className="min-h-screen w-full flex-col px-5 py-4 md:max-w-[37.5rem] md:px-8 md:py-20"
         >
           {children}
         </Flex>
