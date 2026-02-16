@@ -3,7 +3,7 @@ import Capacitor
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
-
+  // TODO: 어느 정도 개발이 되면 필요한 log찍는 코드 빼고 print문 제거하기
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self
         
+        //이 문장이 있어야 'didRegisterForRemoteNotifications~~'가 호출됨 
+        application.registerForRemoteNotifications()
         DispatchQueue.main.async {
                    guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController else {
                        return
@@ -49,19 +51,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
            completionHandler()
        }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        
+        print("📍 APNs 등록 성공! 토큰 생성 시작...")
         Messaging.messaging().apnsToken = deviceToken
         Messaging.messaging().token(completion: { (token, error) in
             if let error = error {
                 NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+            print("FCM 토큰 에러: \(error)\(error.localizedDescription)")
             } else if let token = token {
                 NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+            print("FCM 토큰: \(token)")
             }
         })
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-       
+       print("❌ APNs 등록 실패: \(error.localizedDescription)")
       NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
     }
     func applicationWillResignActive(_ application: UIApplication) {
