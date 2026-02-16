@@ -1,8 +1,7 @@
 import UIKit
 import Capacitor
-// TODO : firbase +푸시알람 추가 후 주석 풀기 ; 아직 연결 안되서 주석처리
-// import FirebaseCore
-// import FirebaseMessaging
+import FirebaseCore
+import FirebaseMessaging
 import UserNotifications
 
 @UIApplicationMain
@@ -12,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        // FirebaseApp.configure()
+        FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self
         
         DispatchQueue.main.async {
@@ -26,40 +25,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
                }
         return true
     }
-    // func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             
-    //         //  알림이 잘 왔는지 확인하는 로그
-    //         let userInfo = notification.request.content.userInfo
+            //  알림이 잘 왔는지 확인하는 로그
+            let userInfo = notification.request.content.userInfo
         
-    //         // Firebase Messaging에 알림 정보를 전달합니다.
-    //         Messaging.messaging().appDidReceiveMessage(userInfo)
+            // Firebase Messaging에 알림 정보를 전달합니다.
+            Messaging.messaging().appDidReceiveMessage(userInfo)
             
-    //         // 알림을 화면에 표시합니다.
-    //         completionHandler([.alert, .sound, .badge])
-    //     }
-    // 사용자가 알림을 탭했을 때 호출됩니다.
-    //    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+            // 알림을 화면에 표시합니다.
+            completionHandler([.alert, .sound, .badge])
+        }
+    //사용자가 알림을 탭했을 때 호출됩니다.
+       func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
            
-    //        //  알림 탭 액션 로그
-    //        let userInfo = response.notification.request.content.userInfo
+           //  알림 탭 액션 로그
+           let userInfo = response.notification.request.content.userInfo
          
            
-    //        // Firebase Messaging에 알림 정보를 전달합니다.
-    //        Messaging.messaging().appDidReceiveMessage(userInfo)
+           // Firebase Messaging에 알림 정보를 전달합니다.
+           Messaging.messaging().appDidReceiveMessage(userInfo)
            
-    //        completionHandler()
-    //    }
-    // func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+           completionHandler()
+       }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
-    //     Messaging.messaging().apnsToken = deviceToken
-    //     Messaging.messaging().token(completion: { (token, error) in
-    //         if let error = error {
-    //             NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
-    //         } else if let token = token {
-    //             NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
-    //         }
-    //     })
-    // }
+        Messaging.messaging().apnsToken = deviceToken
+        Messaging.messaging().token(completion: { (token, error) in
+            if let error = error {
+                NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+            } else if let token = token {
+                NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: token)
+            }
+        })
+    }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
        
