@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 
-import { COPY, ROUTES } from '@/shared/constants';
+import { COPY, ROUTES } from '@/shared';
 //TODO : 알림 내용 수정 api 연결 & 알림 띄우기 여부 api 연결
 
 export function HomeNotificationCard() {
