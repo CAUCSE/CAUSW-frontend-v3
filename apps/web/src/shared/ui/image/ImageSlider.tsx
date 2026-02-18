@@ -7,10 +7,7 @@ import Image from 'next/image';
 import { getOptimizedImageUrl, awsImageLoader } from '@/shared/lib';
 import { ImageSliderProps } from '@/shared/types';
 
-export const ImageSlider = ({
-  images,
-  onImageClick,
-}: ImageSliderProps) => {
+export const ImageSlider = ({ images, onImageClick }: ImageSliderProps) => {
   if (images.length === 0) return null;
 
   return (
