@@ -1,7 +1,8 @@
-﻿import { MyCommentsPage } from '@/_pages/setting';
+﻿import { MyFeedPage } from '@/_pages/setting';
 
 type SearchParams = {
   view?: string;
+  mode?: string;
 };
 
 const Page = async ({
@@ -11,7 +12,7 @@ const Page = async ({
 }) => {
   const resolvedSearchParams = await searchParams;
 
-  return <MyCommentsPage searchParams={resolvedSearchParams} />;
+  return <MyFeedPage searchParams={resolvedSearchParams} />;
 };
 
 export default Page;
