@@ -1,17 +1,9 @@
-﻿export type ActivityType = 'my-posts' | 'my-comments' | 'favorites';
-export type ActivityMode = 'list' | 'empty';
+﻿import { PostCardItem } from '@/entities/post';
 
-export type ActivityPost = {
-  id: number;
-  author: string;
-  timeAgo: string;
-  content: string;
-  likeCount: number;
-  commentCount: number;
-  imageCount?: number;
-};
+export type ActivityType = 'my-posts' | 'my-comments' | 'favorites';
+export type ActivityMode = 'list' | 'empty';
 
 export type MyActivityFeed = {
   emptyMessage: string;
-  posts: ActivityPost[];
+  posts: PostCardItem[];
 };

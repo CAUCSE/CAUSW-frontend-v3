@@ -1,11 +1,8 @@
-﻿import {
-  ActivityMode,
-  ActivityPost,
-  ActivityType,
-  MyActivityFeed,
-} from '../model';
+﻿import { PostCardItem } from '@/entities/post';
 
-const LIST_POSTS: ActivityPost[] = [
+import { ActivityMode, ActivityType, MyActivityFeed } from '../model';
+
+const LIST_POSTS: PostCardItem[] = [
   {
     id: 1,
     author: '가나다',
