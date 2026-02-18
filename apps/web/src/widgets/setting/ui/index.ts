@@ -1,2 +1,1 @@
-﻿export * from './ActivityFeedWidget';
-export * from './MyActivityFeed';
+﻿export * from './MyActivityFeed';
