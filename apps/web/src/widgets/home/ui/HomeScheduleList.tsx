@@ -5,7 +5,9 @@ import Link from 'next/link';
 
 // TODO: 일정 지났을떄 계산 여부 체크 -> 색 변경 연결(api)
 // TODO : SCHEDULE_ITEMS 타입 정의
-// TODO : SCHEDULE_ITEMS data 없을 떄 캘린더 아이콘 색 추가 후 변경
+// TODO : SCHEDULE_ITEMS data 없을 떄 캘린더 아이콘 색 추가 후 변경//TODO : ArrowRIght 아이콘 적용되면 ArrowDown 아이콘 추가
+//TODO : 더미 데이터 삭제
+//TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
 import {
   ArrowDown,
   CaldendarIconColored,
@@ -17,9 +19,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { Calendar } from './Calendar';
-
-import { COPY, ROUTES } from '@/shared';
+import { COPY, ROUTES, Calendar, CalendarEvent } from '@/shared';
 
 interface ScheduleItem {
   id: number;
@@ -60,13 +60,62 @@ const SCHEDULE_ITEMS: ScheduleItem[] = [
   },
 ];
 
+const CALENDAR_EVENTS: CalendarEvent[] = [
+  // Holidays
+  {
+    id: 'h1',
+    title: '개천절',
+    startDate: '2025-10-03',
+    type: 'holiday',
+  },
+  {
+    id: 'h2',
+    title: '한글날',
+    startDate: '2025-10-09',
+    type: 'holiday',
+  },
+  // Schedule Items converted
+  {
+    id: 1,
+    title: '소프트 챌린저스ㅇㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇ ㄴㄴㅇㄹㄴㅇㄹㅇㄹㄴㅇㄹㄴㅇ',
+    startDate: '2025-10-10',
+    endDate: '2025-10-24',
+    type: 'event',
+  },
+  {
+    id: 2,
+    title: '중간고사',
+    startDate: '2025-10-10',
+    endDate: '2025-10-24',
+    type: 'event',
+  },
+  {
+    id: 3,
+    title: '총모꼬지',
+    startDate: '2025-10-26',
+    type: 'event',
+  },
+  {
+    id: 4,
+    title: '크자회의 날',
+    startDate: '2025-10-31',
+    type: 'event',
+  },
+];
+
 export function HomeScheduleList() {
   return (
     <VStack>
       {/* Desktop Calendar */}
       <Flex className="hidden flex-col gap-2 md:flex">
         <CalendarTitle typography="title-22-bold" />
-        <Calendar />
+        <Calendar
+          events={CALENDAR_EVENTS}
+          enableHover={true}
+          onEventClick={(event: CalendarEvent) => {
+            console.log('이벤트 클릭:', event.title);
+          }}
+        />
       </Flex>
 
       <VStack className="gap-5 rounded-2xl bg-white p-5">
