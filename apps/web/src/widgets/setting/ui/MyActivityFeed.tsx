@@ -5,13 +5,9 @@ import { Tab } from '@causw/cds';
 import { PostCard, PostCardItem } from '@/entities/post';
 import { ActivityMode, ActivityType } from '@/entities/setting';
 
-import { ActionHeader, NoDataView } from '@/shared';
+import { ACTIVITY_TABS } from '../model';
 
-const TABS: Array<{ key: ActivityType; label: string }> = [
-  { key: 'my-posts', label: '내가 쓴 글' },
-  { key: 'my-comments', label: '댓글 단 글' },
-  { key: 'favorites', label: '찜한 글' },
-];
+import { ActionHeader, NoDataView } from '@/shared';
 
 type Props = {
   activeTab: ActivityType;
@@ -51,7 +47,7 @@ export const MyActivityFeed = ({
             onValueChange={(value) => onTabChange(value as ActivityType)}
           >
             <Tab.List>
-              {TABS.map((tab) => (
+              {ACTIVITY_TABS.map((tab) => (
                 <Tab.TabItem key={tab.key} value={tab.key}>
                   {tab.label}
                 </Tab.TabItem>

@@ -1,16 +1,12 @@
 ﻿import { useSuspenseQueries } from '@tanstack/react-query';
 
-import {
-  ActivityMode,
-  ActivityType,
-  getMyActivityFeed,
-} from '@/entities/setting';
+import { ActivityMode, getMyActivityFeed } from '@/entities/setting';
 
-const ACTIVITY_TABS: ActivityType[] = ['my-posts', 'my-comments', 'favorites'];
+import { ACTIVITY_TAB_KEYS } from './tabs';
 
 export const useMyActivityFeeds = (mode: ActivityMode) => {
   const results = useSuspenseQueries({
-    queries: ACTIVITY_TABS.map((activityType) => ({
+    queries: ACTIVITY_TAB_KEYS.map((activityType) => ({
       queryKey: ['setting', 'activity-feed', activityType, mode],
       queryFn: () => getMyActivityFeed(activityType, mode),
     })),
