@@ -1,2 +1,2 @@
-﻿export * from './ActivityModalWidget';
-export * from './MyActivityModalView';
+﻿export * from './ActivityFeedWidget';
+export * from './MyActivityFeed';

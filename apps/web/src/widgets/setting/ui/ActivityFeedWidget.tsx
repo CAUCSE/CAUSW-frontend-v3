@@ -13,7 +13,7 @@ import {
   useMyActivityFeeds,
 } from '../model';
 
-import { MyActivityModalView } from './MyActivityModalView';
+import { MyActivityFeed } from './MyActivityFeed';
 
 import { QueryErrorBoundary, SuspenseView } from '@/shared';
 
@@ -32,7 +32,7 @@ const ActivityContent = ({
   const currentFeed = activityFeeds[activeTab];
 
   return (
-    <MyActivityModalView
+    <MyActivityFeed
       activeTab={activeTab}
       mode={mode}
       posts={currentFeed.posts}
