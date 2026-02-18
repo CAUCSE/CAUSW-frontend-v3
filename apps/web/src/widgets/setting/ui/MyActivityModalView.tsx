@@ -1,9 +1,11 @@
 ﻿'use client';
 
-import { ChevronLeft, CommentColored } from '@causw/cds';
+import { CommentColored } from '@causw/cds';
 
 import { PostCard, PostCardItem } from '@/entities/post';
 import { ActivityMode, ActivityType } from '@/entities/setting';
+
+import { ActionHeader } from '@/shared';
 
 const TABS: Array<{ key: ActivityType; label: string }> = [
   { key: 'my-posts', label: '내가 쓴 글' },
@@ -31,18 +33,16 @@ export const MyActivityModalView = ({
   return (
     <div>
       <div className="mx-auto w-full pb-6 md:px-8 md:pt-6">
-        {/* TODO: 이전 버튼 구현되면 변경 */}
-        <header className="flex items-center px-5 py-4">
-          <button
-            type="button"
-            className="inline-flex items-center gap-3 text-gray-700"
-            aria-label="뒤로"
-            onClick={onBack}
-          >
-            <ChevronLeft size={18} color="gray-700" />
-            <span className="typo-subtitle-16-bold">뒤로</span>
-          </button>
-        </header>
+        <ActionHeader
+          isSticky={false}
+          background="transparent"
+          buttonColor="gray"
+        >
+          <ActionHeader.BackButton onClick={onBack}>
+            뒤로
+          </ActionHeader.BackButton>
+          <div />
+        </ActionHeader>
 
         <section className="px-5 py-2">
           <div className="flex gap-2">
