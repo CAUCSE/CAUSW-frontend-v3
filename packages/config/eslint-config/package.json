@@ -11,7 +11,7 @@
   "dependencies": {
     "@yh-kim/eslint-plugin-fsd": "^0.1.10",
     "eslint": "^9",
-    "eslint-config-next": "16.0.4",
+    "eslint-config-next": "16.1.5",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0"
   }
