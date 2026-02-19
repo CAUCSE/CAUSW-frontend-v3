@@ -4,10 +4,10 @@ import { useState } from 'react';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities';
 import {
+  BlockUserDialog,
   CommentAction,
   CommentActionMenu,
   ReportFlow,
-  useReportComment,
 } from '@/features';
 
 interface ReplyItemProps {
@@ -26,16 +26,24 @@ export const ReplyItem = ({
   onReply,
 }: ReplyItemProps) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isBlockOpen, setIsBlockOpen] = useState(false);
 
-  const { submitReport } = useReportComment(reply.id);
+  const submitReport = () => {};
+  const submitBlock = () => {};
 
   const handleAction = (action: CommentAction) => {
-    if (action === 'report') {
-      setIsReportOpen(true);
-    } else if (action === 'delete') {
-      console.log(`대댓글 ${reply.id} 삭제`);
-    } else if (action === 'block') {
-      console.log(`대댓글 ${reply.id} 작성자 차단`);
+    switch (action) {
+      case 'report':
+        setIsReportOpen(true);
+        break;
+      case 'block':
+        setIsBlockOpen(true);
+        break;
+      case 'delete':
+        console.log('댓글 삭제');
+        break;
+      default:
+        console.log(action);
     }
   };
 
@@ -69,6 +77,12 @@ export const ReplyItem = ({
         open={isReportOpen}
         setOpen={setIsReportOpen}
         onSubmitReport={submitReport}
+      />
+
+      <BlockUserDialog
+        open={isBlockOpen}
+        setOpen={setIsBlockOpen}
+        onSubmitBlock={submitBlock}
       />
     </>
   );

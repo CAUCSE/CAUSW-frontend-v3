@@ -11,7 +11,7 @@ interface ReportFlowProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   // TODO: API 연동 시 파라미터 구조 변경
-  onSubmitReport: (reason: ReportReason) => Promise<void>;
+  onSubmitReport: () => void;
 }
 
 export const ReportFlow = ({
@@ -27,8 +27,8 @@ export const ReportFlow = ({
   const goConfirm = () => setIsConfirm(true);
   const handleBackToSelect = () => setIsConfirm(false);
 
-  const handleConfirm = async () => {
-    await onSubmitReport(reason);
+  const handleConfirm = () => {
+    onSubmitReport();
     setIsConfirm(false);
     setOpen(false);
   };

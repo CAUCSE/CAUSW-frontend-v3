@@ -19,10 +19,10 @@ export const ReportConfirmDialog = ({
     <Dialog open={open} onOpenChange={onClose}>
       <Dialog.Content
         maxWidth={420}
-        className="w-[min(312px,calc(100%-32px))] p-4 pt-8 md:w-105"
+        className="w-[min(312px,calc(100%-32px))] px-0 py-4 pt-8 md:w-105"
       >
         <Stack gap="xl">
-          <Stack className="gap-3 px-4">
+          <Stack className="gap-3 px-8">
             <Dialog.Title>
               <Text typography="subtitle-18-bold" textColor="gray-800">
                 {title}
@@ -39,7 +39,7 @@ export const ReportConfirmDialog = ({
           </Stack>
 
           <Dialog.Footer>
-            <HStack gap="sm">
+            <HStack gap="sm" className="px-4">
               <CTAButton color="light" fullWidth onClick={onClose}>
                 취소
               </CTAButton>

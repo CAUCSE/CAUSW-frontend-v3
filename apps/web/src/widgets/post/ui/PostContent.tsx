@@ -8,7 +8,6 @@ import {
   PostAction,
   PostActionMenu,
   ReportFlow,
-  useReportPost,
 } from '@/features';
 
 interface PostContentProps {
@@ -27,7 +26,8 @@ export const PostContent = ({
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
-  const { submitReport } = useReportPost(postId);
+  const submitReport = () => {};
+  const submitBlock = () => {};
 
   const handleAction = (action: PostAction) => {
     switch (action) {
@@ -37,6 +37,11 @@ export const PostContent = ({
       case 'block':
         setIsBlockOpen(true);
         break;
+      case 'delete':
+        console.log('게시글 삭제');
+        break;
+      case 'edit':
+        console.log('게시글 수정');
       default:
         console.log(action);
     }
@@ -80,7 +85,11 @@ export const PostContent = ({
         onSubmitReport={submitReport}
       />
 
-      <BlockUserDialog open={isBlockOpen} setOpen={setIsBlockOpen} userId={3} />
+      <BlockUserDialog
+        open={isBlockOpen}
+        setOpen={setIsBlockOpen}
+        onSubmitBlock={submitBlock}
+      />
     </Stack>
   );
 };
