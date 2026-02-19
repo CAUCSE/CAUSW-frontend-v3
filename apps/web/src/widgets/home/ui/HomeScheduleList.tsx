@@ -5,7 +5,6 @@ import Link from 'next/link';
 
 // TODO: 일정 지났을떄 계산 여부 체크 -> 색 변경 연결(api)
 // TODO : SCHEDULE_ITEMS 타입 정의
-// TODO : SCHEDULE_ITEMS data 없을 떄 캘린더 아이콘 색 추가 후 변경//TODO : ArrowRIght 아이콘 적용되면 ArrowDown 아이콘 추가
 //TODO : 더미 데이터 삭제
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
 import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';

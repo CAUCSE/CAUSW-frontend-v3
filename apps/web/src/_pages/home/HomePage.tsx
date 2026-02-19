@@ -16,7 +16,7 @@ import {
 //TODO : 졸업생 정보
 export function HomePage() {
   const newNotification = true;
-  const isAlumni = true;
+  const isAlumni = false;
   return (
     <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 w-full gap-2 px-4 pb-[2.125rem]">
       {/* Mobile Header */}

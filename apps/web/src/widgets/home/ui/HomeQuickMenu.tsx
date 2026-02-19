@@ -3,13 +3,13 @@ import { Fragment } from 'react';
 import Link from 'next/link';
 
 import {
+  CafeteriaColored,
   FlagColored,
   HStack,
   LockerColored,
   Separator,
   Text,
 } from '@causw/cds';
-import { Board } from '@causw/cds';
 
 import { COPY, EXTERNAL_ROUTES, ROUTES } from '@/shared';
 
@@ -23,7 +23,7 @@ const QUICK_MENU_ITEMS = [
   },
   {
     label: COPY.QUICK_MENU_CAFETERIA,
-    icon: <Board size={24} />,
+    icon: <CafeteriaColored size={24} />,
     href: EXTERNAL_ROUTES.CAU_CAFETERIA,
   },
   {
