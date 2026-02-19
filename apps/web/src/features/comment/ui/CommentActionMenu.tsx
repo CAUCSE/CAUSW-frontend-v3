@@ -32,7 +32,7 @@ export const CommentActionMenu = ({
     >
       <Stack gap="none" className="divide-y divide-gray-100 py-1 break-keep">
         {isMine ? (
-          // Case A: 내가 쓴 글 (수정/삭제)
+          // 내가 쓴 글 (삭제)
           <>
             <button
               onClick={() => handleMenuAction('delete')}
@@ -44,7 +44,7 @@ export const CommentActionMenu = ({
             </button>
           </>
         ) : (
-          // Case B: 남이 쓴 글 (신고/차단)
+          // 남이 쓴 글 (신고/차단)
           <>
             <button
               onClick={() => handleMenuAction('report')}

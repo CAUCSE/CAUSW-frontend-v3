@@ -1,5 +1,6 @@
 import { Menu, Stack, Text } from '@causw/cds';
 
+import { PostAction } from '@/entities';
 import { DropdownMenu } from '@/shared';
 
 interface PostActionMenuProps {
@@ -8,6 +9,7 @@ interface PostActionMenuProps {
   isOpen: boolean;
   onToggle: (id: string | number) => void;
   onClose: () => void;
+  onAction: (action: PostAction) => void;
 }
 
 export const PostActionMenu = ({
@@ -16,11 +18,11 @@ export const PostActionMenu = ({
   isOpen,
   onToggle,
   onClose,
+  onAction,
 }: PostActionMenuProps) => {
-  const handleMenuAction = (action: string) => {
-    // TODO: 실제 수정/삭제/신고/차단 로직 연결
-    console.log(`선택된 액션: ${action}`);
-    onClose(); // 액션 후 메뉴 닫기
+  const handleMenuAction = (action: PostAction) => {
+    onAction(action);
+    onClose();
   };
 
   return (
@@ -32,7 +34,6 @@ export const PostActionMenu = ({
     >
       <Stack gap="none" className="divide-y divide-gray-100 py-1 break-keep">
         {isMine ? (
-          // Case A: 내가 쓴 글 (수정/삭제)
           <>
             <button
               onClick={() => handleMenuAction('edit')}
@@ -52,7 +53,6 @@ export const PostActionMenu = ({
             </button>
           </>
         ) : (
-          // Case B: 남이 쓴 글 (신고/차단)
           <>
             <button
               onClick={() => handleMenuAction('report')}

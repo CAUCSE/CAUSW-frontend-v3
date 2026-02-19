@@ -2,12 +2,11 @@ import { useRef, useState } from 'react';
 
 import { Stack } from '@causw/cds';
 
-import { PostCommentList } from './PostCommentList';
-import { PostViewer } from './PostViewer';
+import { CommentList } from './CommentList';
+import { PostContent } from './PostContent';
 
 import { ReplyTarget } from '@/entities';
-import { CommentInput } from '@/features';
-
+import { CommentForm } from '@/features';
 
 const DUMMY_COMMENTS = [
   {
@@ -37,7 +36,7 @@ const DUMMY_COMMENTS = [
   },
 ];
 
-export const PostDetailContent = () => {
+export const PostDetailSection = () => {
   const [activeMenuId, setActiveMenuId] = useState<number | string | null>(
     null,
   );
@@ -60,20 +59,20 @@ export const PostDetailContent = () => {
     <>
       <Stack
         gap="none"
-        className="h-full overflow-scroll [&::-webkit-scrollbar]:hidden"
+        className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
         }}
       >
-        <PostViewer
+        <PostContent
           postId="post-header" // TODO: id 로직 검토
           activeMenuId={activeMenuId}
           onToggleMenu={toggleMenu}
           onCloseMenu={closeMenu}
         />
 
-        <PostCommentList
+        <CommentList
           comments={DUMMY_COMMENTS}
           activeMenuId={activeMenuId}
           onToggleMenu={toggleMenu}
@@ -82,7 +81,7 @@ export const PostDetailContent = () => {
         />
       </Stack>
 
-      <CommentInput
+      <CommentForm
         replyTarget={replyTarget}
         onCancelReply={() => setReplyTarget(null)}
         inputRef={inputRef}

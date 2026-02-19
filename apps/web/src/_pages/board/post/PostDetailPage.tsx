@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 
 import { useBreakpoint } from '@/shared';
-import { PostDetailContent } from '@/widgets';
+import { PostDetailSection } from '@/widgets';
 
 export const PostDetailPage = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ export const PostDetailPage = () => {
         </ActionHeader.BackButton>
       </ActionHeader>
 
-      <PostDetailContent />
+      <PostDetailSection />
     </div>
   );
 };

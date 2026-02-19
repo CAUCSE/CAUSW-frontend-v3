@@ -1,0 +1,36 @@
+import { Close, HStack, Stack, Text } from '@causw/cds';
+
+import { ReplyTarget } from '@/entities';
+
+interface ReplyPreviewProps {
+  replyTarget: ReplyTarget;
+  onCancel: () => void;
+}
+
+export const ReplyPreview = ({ replyTarget, onCancel }: ReplyPreviewProps) => {
+  if (!replyTarget) return null;
+
+  return (
+    <HStack
+      gap="none"
+      align="start"
+      className="border-t border-gray-200 px-4 pt-3"
+    >
+      <Stack gap="none" className="w-full">
+        <Text typography="body-15-regular" textColor="gray-400">
+          {replyTarget.author}님에게 답글을 남기는 중
+        </Text>
+        <Text
+          typography="body-15-regular"
+          textColor="gray-800"
+          className="truncate"
+        >
+          {replyTarget.content}
+        </Text>
+      </Stack>
+      <button onClick={onCancel} className="cursor-pointer">
+        <Close size={16} color="gray-400" />
+      </button>
+    </HStack>
+  );
+};
