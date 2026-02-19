@@ -1,6 +1,7 @@
 import { ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
+import { useAuthStore } from '@/shared/model';
 import { TokenManager } from '@/shared/storage/auth';
 import {
   isAccessTokenError,
@@ -81,7 +82,10 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
           apiWrapper.rejectRefreshQueue();
           await TokenManager.removeAccessToken();
           await TokenManager.removeRefreshToken();
-          // TODO: 라우팅 로직
+          useAuthStore.getState().setAuthError({
+            code: 'token-expired',
+            message: '토큰이 만료되었습니다. 다시 로그인해주세요.',
+          });
           throw refreshError;
         } finally {
           apiWrapper.setIsRefreshing(false);
