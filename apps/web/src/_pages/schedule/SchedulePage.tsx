@@ -2,25 +2,16 @@
 //TODO : api 연결 후에 ScheduleListCard shared로 분리 + Home에 있는 거 까지 혹은 listcard로 분리
 //TODO : 곧 다가올 목록이 단순이 upcoming만의 분기가 아닐수도 남은 일정 + 곧 바로 남은 일정
 //TODO : empty state 아이콘 변경 (디자인 시스템에 추가)
-import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import {
-  CaldendarIconColored,
-  Flex,
-  mergeStyles,
-  Tab,
-  Text,
-  VStack,
-} from '@causw/cds';
+import { Text, VStack } from '@causw/cds';
 
-import { ScheduleItem, TAB_OPTIONS } from '@/widgets/schedule';
+import { ScheduleItem, ScheduleListWidget } from '@/widgets/schedule';
 
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 
-import { ActionCard, EmptyStateView } from '@/shared';
-import { COPY, ROUTES } from '@/shared';
+import { COPY } from '@/shared';
 import { Calendar, CalendarEvent } from '@/widgets';
 
 //더미
@@ -129,15 +120,6 @@ const CALENDAR_EVENTS: CalendarEvent[] = [
 
 export function SchedulePage() {
   const router = useRouter();
-  const [selectedTab, setSelectedTab] = useState('전체');
-
-  // 필터링 로직
-  const filteredItems = SCHEDULE_ITEMS.filter(
-    (item) => selectedTab === '전체' || item.tag === selectedTab,
-  );
-
-  const upcomingItems = filteredItems.filter((item) => item.isUpcoming);
-  const pastItems = filteredItems.filter((item) => !item.isUpcoming);
 
   return (
     <VStack className="max-w-laptop w-full">
@@ -164,77 +146,7 @@ export function SchedulePage() {
             className="tablet:py-20 tablet:px-4"
           />
 
-          <Tab.Root
-            variant="chip"
-            value={selectedTab}
-            onValueChange={(val) => setSelectedTab(val)}
-          >
-            <Tab.List className="scrollbar-hide overflow-x-auto">
-              {TAB_OPTIONS.map((opt) => (
-                <Tab.TabItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </Tab.TabItem>
-              ))}
-            </Tab.List>
-          </Tab.Root>
-
-          {/* Schedule Lists */}
-          <Flex className="desktop:flex-row desktop:gap-10 flex-col gap-6">
-            {/* Upcoming Schedules */}
-            <VStack className="flex-1 gap-3">
-              <Text typography="subtitle-16-bold">곧 다가올 일정</Text>
-              <VStack className="gap-3">
-                {upcomingItems.length > 0 ? (
-                  upcomingItems.map((item) => (
-                    <ActionCard
-                      key={item.id}
-                      link={item.link}
-                      title={item.title}
-                      icon={<CaldendarIconColored size={24} />}
-                      iconBgClass={
-                        item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'
-                      }
-                      descriptions={[item.date, item.tag]}
-                      size="md"
-                      className={mergeStyles(
-                        'rounded-xl border border-gray-100 bg-white p-4',
-                        item.link ? 'cursor-pointer' : 'cursor-default',
-                      )}
-                    />
-                  ))
-                ) : (
-                  <EmptyStateView message="다가올 일정이 없어요" />
-                )}
-              </VStack>
-            </VStack>
-
-            {/* Past Schedules */}
-            <VStack className="flex-1 gap-3">
-              <Text typography="subtitle-16-bold">끝난 일정</Text>
-              <VStack className="gap-3">
-                {pastItems.length > 0 ? (
-                  pastItems.map((item) => (
-                    <ActionCard
-                      key={item.id}
-                      link={item.link ? ROUTES.SCHEDULE : undefined}
-                      title={item.title}
-                      icon={<CaldendarIconColored size={24} />}
-                      iconBgClass={
-                        item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'
-                      }
-                      descriptions={[item.date, item.tag]}
-                      className={mergeStyles(
-                        'rounded-xl border border-gray-100 bg-white p-4',
-                        item.link ? 'cursor-pointer' : 'cursor-default',
-                      )}
-                    />
-                  ))
-                ) : (
-                  <EmptyStateView message="지난 일정이 없어요" />
-                )}
-              </VStack>
-            </VStack>
-          </Flex>
+          <ScheduleListWidget items={SCHEDULE_ITEMS} />
         </VStack>
       </VStack>
     </VStack>
