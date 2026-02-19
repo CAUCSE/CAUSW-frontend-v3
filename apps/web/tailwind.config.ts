@@ -12,6 +12,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'blue-gradient': 'linear-gradient(to bottom, #98CDFF 0%, #3786FF 100%)',
+      },
       screens: {
         tablet: '768px',
         desktop: '1200px',

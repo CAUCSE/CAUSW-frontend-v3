@@ -1,39 +1,29 @@
 'use client';
-
-import { useState } from 'react';
-
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-
 //TODO : api 연결 후에 ScheduleListCard shared로 분리 + Home에 있는 거 까지 혹은 listcard로 분리
 //TODO : 곧 다가올 목록이 단순이 upcoming만의 분기가 아닐수도 남은 일정 + 곧 바로 남은 일정
 //TODO : empty state 아이콘 변경 (디자인 시스템에 추가)
+import { useState } from 'react';
+
+import { useRouter } from 'next/navigation';
+
 import {
   CaldendarIconColored,
-  ChevronRight,
   Flex,
-  HStack,
   mergeStyles,
-  Separator,
   Tab,
   Text,
   VStack,
 } from '@causw/cds';
 
+import { ScheduleItem, TAB_OPTIONS } from '@/widgets/schedule';
+
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 
+import { ActionCard, EmptyStateView } from '@/shared';
 import { COPY, ROUTES } from '@/shared';
 import { Calendar, CalendarEvent } from '@/widgets';
 
-interface ScheduleItem {
-  id: number;
-  title: string;
-  date: string;
-  tag: string;
-  isUpcoming?: boolean;
-  link: string;
-}
-
+//더미
 const SCHEDULE_ITEMS: ScheduleItem[] = [
   {
     id: 1,
@@ -137,14 +127,6 @@ const CALENDAR_EVENTS: CalendarEvent[] = [
   },
 ];
 
-const TAB_OPTIONS = [
-  { value: '전체', label: '전체' },
-  { value: '집행부', label: '집행부' },
-  { value: '학사', label: '학사' },
-  { value: '학부', label: '학부' },
-  { value: '크자회', label: '크자회' },
-] as const;
-
 export function SchedulePage() {
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('전체');
@@ -173,7 +155,6 @@ export function SchedulePage() {
         </VStack>
 
         <VStack className="desktop:gap-10 gap-6">
-          {/* Full Width Calendar */}
           <Calendar
             events={CALENDAR_EVENTS}
             enableHover={true}
@@ -205,10 +186,24 @@ export function SchedulePage() {
               <VStack className="gap-3">
                 {upcomingItems.length > 0 ? (
                   upcomingItems.map((item) => (
-                    <ScheduleListCard key={item.id} item={item} />
+                    <ActionCard
+                      key={item.id}
+                      link={item.link}
+                      title={item.title}
+                      icon={<CaldendarIconColored size={24} />}
+                      iconBgClass={
+                        item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'
+                      }
+                      descriptions={[item.date, item.tag]}
+                      size="md"
+                      className={mergeStyles(
+                        'rounded-xl border border-gray-100 bg-white p-4',
+                        item.link ? 'cursor-pointer' : 'cursor-default',
+                      )}
+                    />
                   ))
                 ) : (
-                  <EmptyState message="다가올 일정이 없어요" />
+                  <EmptyStateView message="다가올 일정이 없어요" />
                 )}
               </VStack>
             </VStack>
@@ -219,76 +214,29 @@ export function SchedulePage() {
               <VStack className="gap-3">
                 {pastItems.length > 0 ? (
                   pastItems.map((item) => (
-                    <ScheduleListCard key={item.id} item={item} />
+                    <ActionCard
+                      key={item.id}
+                      link={item.link ? ROUTES.SCHEDULE : undefined}
+                      title={item.title}
+                      icon={<CaldendarIconColored size={24} />}
+                      iconBgClass={
+                        item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'
+                      }
+                      descriptions={[item.date, item.tag]}
+                      className={mergeStyles(
+                        'rounded-xl border border-gray-100 bg-white p-4',
+                        item.link ? 'cursor-pointer' : 'cursor-default',
+                      )}
+                    />
                   ))
                 ) : (
-                  <EmptyState message="지난 일정이 없어요" />
+                  <EmptyStateView message="지난 일정이 없어요" />
                 )}
               </VStack>
             </VStack>
           </Flex>
         </VStack>
       </VStack>
-    </VStack>
-  );
-}
-
-function ScheduleListCard({ item }: { item: ScheduleItem }) {
-  return (
-    <Link href={ROUTES.SCHEDULE}>
-      <HStack
-        className={mergeStyles(
-          'items-center justify-between gap-5 rounded-xl border border-gray-100 bg-white p-4 transition-colors',
-          // 링크가 있을 때만 호버 효과 적용
-          item.link
-            ? 'cursor-pointer hover:border-blue-200 hover:bg-blue-50/30'
-            : 'cursor-default',
-        )}
-      >
-        <HStack className="flex-1 items-center gap-4">
-          <div
-            className={mergeStyles(
-              `flex h-12 w-12 shrink-0 items-center justify-center rounded-[0.75rem] ${
-                item.isUpcoming
-                  ? 'bg-linear-to-b from-[#98CDFF] to-[#3786FF]'
-                  : 'bg-gray-100'
-              }`,
-            )}
-          >
-            <CaldendarIconColored size={24} />
-          </div>
-          <VStack className="justify-center gap-1">
-            <Text typography="subtitle-16-bold">{item.title}</Text>
-            <HStack className="gap-1 text-sm text-gray-400">
-              <Text typography="body-14-medium" textColor="gray-400">
-                {item.date}
-              </Text>
-              <Separator
-                className="h-2 shrink-0 self-center bg-gray-200"
-                orientation="vertical"
-              />
-              <Text typography="body-14-regular" textColor="gray-400">
-                {item.tag}
-              </Text>
-            </HStack>
-          </VStack>
-        </HStack>
-        {item.link && (
-          <ChevronRight size={14} className="shrink-0 text-gray-400" />
-        )}
-      </HStack>
-    </Link>
-  );
-}
-
-function EmptyState({ message }: { message: string }) {
-  return (
-    <VStack className="items-center justify-center gap-4 rounded-xl bg-gray-50 py-5">
-      <CaldendarIconColored size={48} className="gray-800 grayscale" />
-
-      <Text typography="body-14-medium" textColor="gray-400">
-        {message}
-      </Text>
     </VStack>
   );
 }

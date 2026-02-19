@@ -8,18 +8,9 @@ import Link from 'next/link';
 // TODO : SCHEDULE_ITEMS data 없을 떄 캘린더 아이콘 색 추가 후 변경//TODO : ArrowRIght 아이콘 적용되면 ArrowDown 아이콘 추가
 //TODO : 더미 데이터 삭제
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
-import {
-  CaldendarIconColored,
-  ChevronRight,
-  Flex,
-  HStack,
-  mergeStyles,
-  Separator,
-  Text,
-  VStack,
-} from '@causw/cds';
+import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';
 
-import { COPY, ROUTES } from '@/shared';
+import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
 import { Calendar, CalendarEvent } from '@/widgets';
 interface ScheduleItem {
   id: number;
@@ -27,6 +18,7 @@ interface ScheduleItem {
   date: string;
   tag: string;
   isUpcoming: boolean;
+  link: string;
 }
 
 const SCHEDULE_ITEMS: ScheduleItem[] = [
@@ -36,6 +28,7 @@ const SCHEDULE_ITEMS: ScheduleItem[] = [
     date: '10/10 - 10/24',
     tag: '집행부',
     isUpcoming: false,
+    link: '',
   },
   {
     id: 2,
@@ -43,6 +36,7 @@ const SCHEDULE_ITEMS: ScheduleItem[] = [
     date: '10/10 - 10/24',
     tag: '학사',
     isUpcoming: true,
+    link: 'd',
   },
   {
     id: 3,
@@ -50,6 +44,7 @@ const SCHEDULE_ITEMS: ScheduleItem[] = [
     date: '10/26',
     tag: '집행부',
     isUpcoming: false,
+    link: 'd',
   },
   {
     id: 4,
@@ -57,6 +52,7 @@ const SCHEDULE_ITEMS: ScheduleItem[] = [
     date: '10/31',
     tag: '크자회',
     isUpcoming: false,
+    link: 'd',
   },
 ];
 
@@ -126,48 +122,20 @@ export function HomeScheduleList() {
 
           {SCHEDULE_ITEMS.length > 0 ? (
             SCHEDULE_ITEMS.map((item) => (
-              <Link key={item.id} href={ROUTES.SCHEDULE}>
-                <HStack className="items-center justify-between gap-5 rounded-xl">
-                  <HStack className="flex-1 items-center gap-5">
-                    <div
-                      className={mergeStyles(
-                        `flex h-10 w-10 items-center justify-center rounded-[0.75rem] ${
-                          item.isUpcoming
-                            ? 'bg-linear-to-b from-[#98CDFF] to-[#3786FF]'
-                            : 'bg-blue-100'
-                        }`,
-                      )}
-                    >
-                      <CaldendarIconColored size={24} />
-                    </div>
-                    <VStack className="justify-center gap-0.5">
-                      <Text typography="subtitle-16-bold">{item.title}</Text>
-                      <HStack className="gap-1 text-sm text-gray-400">
-                        <Text typography="body-14-regular" textColor="gray-400">
-                          {item.date}
-                        </Text>
-                        <Separator
-                          className="h-2 shrink-0 self-center"
-                          orientation="vertical"
-                        />
-                        <Text typography="body-14-regular" textColor="gray-400">
-                          {item.tag}
-                        </Text>
-                      </HStack>
-                    </VStack>
-                  </HStack>
-
-                  <ChevronRight size={16} className="shrink-0 text-gray-400" />
-                </HStack>
-              </Link>
+              <ActionCard
+                key={item.id}
+                link={item.link}
+                title={item.title}
+                icon={<CaldendarIconColored size={24} />}
+                iconBgClass={
+                  item.isUpcoming ? 'bg-blue-gradient' : 'bg-blue-100'
+                }
+                descriptions={[item.date, item.tag]}
+                size="sm"
+              />
             ))
           ) : (
-            <VStack className="items-center justify-center gap-4 py-5">
-              <CaldendarIconColored size={48} />
-              <Text typography="body-14-medium" textColor="gray-400">
-                {COPY.EMPTY_SCHEDULE}
-              </Text>
-            </VStack>
+            <EmptyStateView message={COPY.EMPTY_SCHEDULE} />
           )}
         </VStack>
 

@@ -1,18 +1,15 @@
 import Link from 'next/link';
 
 import {
-  ChevronRight,
   Flex,
   HeartColored,
-  HStack,
   //ScholarColored,
-  Separator,
   Text,
   VStack,
 } from '@causw/cds';
 import { Bell } from '@causw/cds'; // Placeholder
 
-import { COPY, ROUTES } from '@/shared';
+import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
 //TODO : 경조사 종류에 따라 아이콘 분기
 //TODO : 데이터 없을떄 bell 아이콘 디자인 시스템에서 추가되면 수정
 const CEREMONY_ITEMS = [
@@ -21,36 +18,42 @@ const CEREMONY_ITEMS = [
     title: '홍길동(21학번) 졸업식',
     date: '10/10 - 10/24',
     type: '경사',
+    link: 'd',
   },
   {
     id: 2,
     title: '김영희(19학번) 결혼식',
     date: '10/10 - 10/24',
     type: '경사',
+    link: 'd',
   },
   {
     id: 3,
     title: '이철수(20학번) 개업식',
     date: '10/12 - 10/24',
     type: '경사',
+    link: 'd',
   },
   {
     id: 4,
     title: '박민수(18학번) 칠순 잔치',
     date: '10/15 - 10/24',
     type: '경사',
+    link: 'd',
   },
   {
     id: 5,
     title: '최지우(22학번) 졸업 전시회',
     date: '10/18 - 10/24',
     type: '행사',
+    link: 'd',
   },
   {
     id: 6,
-    title: '정수민(19학번) 결혼식',
+    title: '정수민(19학번)d 결혼식',
     date: '10/20 - 10/24',
     type: '경사',
+    link: 'd',
   },
 ];
 
@@ -68,47 +71,21 @@ export function HomeCeremonyList() {
         </Text>
 
         {isEmpty ? (
-          <VStack className="w-full items-center gap-4 py-5">
-            <Bell size={52} className="text-gray-300" />
-
-            <Text typography="body-14-medium" textColor="gray-400">
-              {COPY.EMPTY_CEREMONY}
-            </Text>
-          </VStack>
+          <EmptyStateView
+            message={COPY.EMPTY_CEREMONY}
+            icon={<Bell size={50} />}
+          />
         ) : (
           <VStack className="w-full gap-5">
-            {CEREMONY_ITEMS.slice(0, 6).map((item, index) => (
-              <Link
+            {CEREMONY_ITEMS.slice(0, 6).map((item) => (
+              <ActionCard
                 key={item.id}
-                href={`${ROUTES.CEREMONY}/${item.id}`}
-                className={`w-full ${index >= 4 ? 'tablet:flex hidden' : 'flex'}`}
-              >
-                <HStack className="w-full items-center justify-between gap-5">
-                  <HStack className="flex-1 items-center gap-5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-[#F5F6F8]">
-                      <HeartColored size={20} className="text-[#FFC100]" />
-                    </div>
-                    <VStack className="flex-1 justify-center gap-0.5 overflow-hidden">
-                      <Text typography="subtitle-16-bold" className="truncate">
-                        {item.title}
-                      </Text>
-                      <HStack className="items-center gap-1 text-sm">
-                        <Text typography="body-14-regular" textColor="gray-400">
-                          {item.date}
-                        </Text>
-                        <Separator
-                          orientation="vertical"
-                          className="h-2 bg-gray-200"
-                        />
-                        <Text typography="body-14-regular" textColor="gray-400">
-                          {item.type}
-                        </Text>
-                      </HStack>
-                    </VStack>
-                  </HStack>
-                  <ChevronRight size={16} className="shrink-0" />
-                </HStack>
-              </Link>
+                link={item.link}
+                title={item.title}
+                icon={<HeartColored size={20} className="text-[#FFC100]" />}
+                descriptions={[item.date, item.type]}
+                size="sm"
+              />
             ))}
           </VStack>
         )}
