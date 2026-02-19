@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
-import { QueryProviderWithDevtools } from '@/shared';
+import { GlobalRoutingProvider, QueryProviderWithDevtools } from '@/shared';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',
@@ -22,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`antialiased`}>
-        <QueryProviderWithDevtools>{children}</QueryProviderWithDevtools>
+        <QueryProviderWithDevtools>
+          <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+        </QueryProviderWithDevtools>
       </body>
     </html>
   );
