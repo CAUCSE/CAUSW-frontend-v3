@@ -10,7 +10,7 @@ export type CalendarProps = CDSCalendarProps;
 export function Calendar(props: CalendarProps) {
   return (
     <div className="calendar-fix">
-      <CDSCalendar className="calendar-root !py-4 !shadow-none" {...props} />
+      <CDSCalendar className="calendar-root py-4! shadow-none!" {...props} />
 
       <style jsx global>{`
         /* wrapper padding (className으로도 안 먹을 때 대비) */
