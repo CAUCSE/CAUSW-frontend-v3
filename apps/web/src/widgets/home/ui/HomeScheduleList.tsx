@@ -117,7 +117,6 @@ export function HomeScheduleList() {
           }}
         />
       </Flex>
-
       <VStack className="gap-5 rounded-2xl bg-white p-5">
         <VStack className="gap-5">
           <CalendarTitle
@@ -177,7 +176,7 @@ export function HomeScheduleList() {
           className="flex w-full items-center justify-center rounded-[0.75rem] bg-blue-100 px-4 py-3.5"
         >
           <Text typography="body-15-semibold" textColor="blue-700">
-            {COPY.ENTRIE_SCHEDULE}
+            {COPY.ENTIRE_SCHEDULE}
           </Text>
         </Link>
       </VStack>

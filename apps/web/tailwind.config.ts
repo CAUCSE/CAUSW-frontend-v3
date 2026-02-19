@@ -18,6 +18,7 @@ export default {
       },
       maxWidth: {
         desktop: '1200px',
+        laptop: '900px',
       },
     },
   },

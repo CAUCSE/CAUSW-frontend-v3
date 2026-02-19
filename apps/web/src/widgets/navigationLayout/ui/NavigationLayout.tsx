@@ -33,12 +33,14 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       {/* Content */}
       <main
         className={mergeStyles(
-          'flex-1 overflow-y-auto bg-gray-50',
+          'flex-1 overflow-y-auto bg-gray-100',
           showBottomNav ? 'tablet:mb-0 mb-14' : 'mb-0',
-          'flex w-full justify-center',
+          'flex w-full items-center justify-center',
         )}
       >
-        <div className="max-w-desktop desktop:px-0 w-full">{children}</div>
+        <div className="mx-auto flex h-full w-full flex-col items-center">
+          {children}
+        </div>
       </main>
 
       {/* Mobile BottomNav */}
