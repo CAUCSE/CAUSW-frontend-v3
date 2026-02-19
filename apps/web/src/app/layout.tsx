@@ -2,6 +2,7 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 
+import { Toaster } from '@causw/cds';
 import { getTraceData } from '@causw/logger';
 
 import { GlobalRoutingProvider, QueryProviderWithDevtools } from '@/shared';
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`antialiased`}>
         <QueryProviderWithDevtools>
+          <Toaster />
           <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
         </QueryProviderWithDevtools>
       </body>
