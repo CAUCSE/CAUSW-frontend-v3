@@ -17,16 +17,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         //이 문장이 있어야 'didRegisterForRemoteNotifications~~'가 호출됨 
         application.registerForRemoteNotifications()
         DispatchQueue.main.async {
-                   guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController else {
-                       return
-                   }
-
-                   if let webView = bridgeViewController.webView {
-                       webView.allowsBackForwardNavigationGestures = true
-                   }
-               }
+            guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController else {
+                return
+            }
+            
+            if let webView = bridgeViewController.webView {
+                webView.allowsBackForwardNavigationGestures = true
+                
+                // 1. [수정] 스크롤 뷰가 자동으로 Safe Area 인셋을 계산하도록 설정 (가장 중요)
+                // .never를 .always 또는 .automatic으로 변경하면 시스템이 Safe Area만큼 여백을 줍니다.
+                webView.scrollView.contentInsetAdjustmentBehavior = .never
+                
+                // 2. [추가] 웹뷰의 프레임 자체를 Safe Area에 맞추기 (선택 사항)
+                // Capacitor는 기본적으로 전체 화면을 잡으므로, 강제로 Safe Area에 맞추고 싶다면 아래 로직을 사용합니다.
+                if let window = self.window {
+                    let safeAreaInsets = window.safeAreaInsets
+                    
+                    window.backgroundColor = .white
+                    bridgeViewController.view.backgroundColor = .white
+                    let newFrame = CGRect(
+                        x: safeAreaInsets.left,
+                        y: safeAreaInsets.top,
+                        width: window.frame.width - safeAreaInsets.left - safeAreaInsets.right,
+                        height: window.frame.height - safeAreaInsets.top - safeAreaInsets.bottom
+                    )
+                    webView.frame = newFrame
+                }
+                
+                // 3. 배경색 설정 (Safe Area 밖의 여백 색상을 결정함)
+                webView.isOpaque = true // 투명하게 하면 뒤의 빈 공간이 보일 수 있으므로 배경색을 주는 것이 깔끔합니다.
+                webView.backgroundColor = .white
+                // 혹은 앱의 주 테마 색상
+                webView.scrollView.backgroundColor = .white
+                
+            }
+        }
         return true
     }
+    
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             
             //  알림이 잘 왔는지 확인하는 로그
