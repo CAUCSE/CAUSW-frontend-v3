@@ -4,11 +4,11 @@ import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
-import { CountBadge, StatusDot } from '@/shared';
-
 import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
 
 import { FooterProfile } from './FooterProfile';
+
+import { CountBadge, StatusDot } from '@/shared';
 
 type Props = {
   selected?: SidebarKey;
