@@ -8,7 +8,6 @@ import { PostContent } from './PostContent';
 import { ReplyTarget } from '@/entities';
 import { CommentForm } from '@/features';
 
-
 const DUMMY_COMMENTS = [
   {
     id: 1,
