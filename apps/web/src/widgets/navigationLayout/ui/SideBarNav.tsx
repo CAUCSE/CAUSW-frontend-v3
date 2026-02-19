@@ -30,7 +30,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
             {SIDEBAR_MAIN_ITEMS.map((item) => (
               <Sidebar.Item key={item.key} value={item.key} asChild>
                 <Link href={item.href} className="block">
-                  <HStack className="cursor-pointer gap-3.5">
+                  <HStack className="cursor-pointer items-center gap-3.5">
                     <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
                     <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
                   </HStack>

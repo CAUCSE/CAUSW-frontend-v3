@@ -23,7 +23,7 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen">
       {/* Desktop Sidebar */}
-      <div className="hidden md:block">
+      <div className="tablet:block hidden">
         <SidebarNav
           selected={sidebarSelected}
           notificationCnt={NOTIFICATION_CNT_FOR_TEST ?? 0}
@@ -34,15 +34,16 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       <main
         className={mergeStyles(
           'flex-1 overflow-y-auto bg-gray-50',
-          showBottomNav ? 'pb-14 xl:pb-0' : 'pb-0',
+          showBottomNav ? 'tablet:mb-0 mb-14' : 'mb-0',
+          'flex w-full justify-center',
         )}
       >
-        {children}
+        <div className="max-w-desktop desktop:px-0 w-full">{children}</div>
       </main>
 
       {/* Mobile BottomNav */}
       {showBottomNav && (
-        <div className="md:hidden">
+        <div className="tablet:hidden">
           <BottomNav selected={bottomSelected} />
         </div>
       )}

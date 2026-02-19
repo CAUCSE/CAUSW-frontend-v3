@@ -1,10 +1,51 @@
+import { VStack } from '@causw/cds';
+
+import {
+  HomeCeremonyList,
+  HomeCeremonyBanner,
+  HomeGreeting,
+  HomeHeader,
+  HomeNotificationCard,
+  HomeQuickMenu,
+  HomeScheduleList,
+} from '@/widgets/home';
+
+//TODO : 새 알림 api 연동 -> header statusdot & newNotification 교체
+//TODO : 학식 메뉴 아이콘 교체
+//TODO : 해당 페이지 나오면 상세 페이지들 주소 수정
 export function HomePage() {
+  const newNotification = true;
   return (
-    <div>
-      <h1>home page </h1>
-      <h2>글쓰기 페이지도 라우팅 주소도 /home으로 되어있습니다.</h2>
-      <h2>widget/NavigationLayout/model/navItems</h2>
-      <h2>Todo list에 작성해둠</h2>
-    </div>
+    // pb-[2.125rem] pb-[80px]
+    <VStack className="tablet:gap-8 tablet:px-8 tablet:pt-12 laptop:gap-6 gap-2 px-4 pb-[2.125rem]">
+      {/* Mobile Header */}
+      <div className="tablet:hidden sticky top-0 z-10">
+        <HomeHeader />
+      </div>
+
+      {/* Desktop Greeting */}
+      <div className="tablet:block hidden">
+        <HomeGreeting />
+      </div>
+
+      <VStack className="desktop:gap-6 gap-4">
+        {newNotification && <HomeNotificationCard />}
+
+        <div className="desktop:grid-cols-2 desktop:gap-x-6 desktop:gap-y-8 grid w-full grid-cols-1 gap-4">
+          <HomeQuickMenu />
+
+          <div className="desktop:block hidden">
+            <HomeCeremonyBanner />
+          </div>
+
+          <HomeScheduleList />
+
+          <div className="desktop:hidden">
+            <HomeCeremonyBanner />
+          </div>
+          <HomeCeremonyList />
+        </div>
+      </VStack>
+    </VStack>
   );
 }

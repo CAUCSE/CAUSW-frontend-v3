@@ -59,11 +59,11 @@ export function HomeCeremonyList() {
 
   return (
     <VStack className="gap-2">
-      <Flex className="hidden flex-col gap-2 md:flex">
+      <Flex className="desktop:flex hidden flex-col gap-2">
         <Text typography="title-22-bold">{COPY.HOME_CEREMONY_TITLE}</Text>
       </Flex>
       <VStack className="w-full gap-5 rounded-[16px] bg-white p-5">
-        <Text typography="subtitle-18-bold" className="md:hidden">
+        <Text typography="subtitle-18-bold" className="desktop:hidden">
           {COPY.HOME_CEREMONY_TITLE}
         </Text>
 
@@ -81,7 +81,7 @@ export function HomeCeremonyList() {
               <Link
                 key={item.id}
                 href={`${ROUTES.CEREMONY}/${item.id}`}
-                className={`w-full ${index >= 4 ? 'hidden md:flex' : 'flex'}`}
+                className={`w-full ${index >= 4 ? 'tablet:flex hidden' : 'flex'}`}
               >
                 <HStack className="w-full items-center justify-between gap-5">
                   <HStack className="flex-1 items-center gap-5">

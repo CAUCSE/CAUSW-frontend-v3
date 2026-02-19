@@ -8,7 +8,7 @@ import { ROUTES, StatusDot } from '@/shared';
 export function HomeHeader() {
   const newNotification = true;
   return (
-    <HStack className="w-full justify-between px-5 py-2">
+    <HStack className="w-full justify-between px-1 py-2">
       <Text typography="subtitle-18-bold" color="gray-400">
         크자회 Logo
       </Text>

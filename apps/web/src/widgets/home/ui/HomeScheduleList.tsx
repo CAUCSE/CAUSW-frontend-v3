@@ -107,7 +107,7 @@ export function HomeScheduleList() {
   return (
     <VStack>
       {/* Desktop Calendar */}
-      <Flex className="hidden flex-col gap-2 md:flex">
+      <Flex className="desktop:flex hidden flex-col gap-2">
         <CalendarTitle typography="title-22-bold" />
         <Calendar
           events={CALENDAR_EVENTS}
@@ -120,7 +120,10 @@ export function HomeScheduleList() {
 
       <VStack className="gap-5 rounded-2xl bg-white p-5">
         <VStack className="gap-5">
-          <CalendarTitle typography="subtitle-18-bold" className="md:hidden" />
+          <CalendarTitle
+            typography="subtitle-18-bold"
+            className="desktop:hidden"
+          />
 
           {SCHEDULE_ITEMS.length > 0 ? (
             SCHEDULE_ITEMS.map((item) => (
