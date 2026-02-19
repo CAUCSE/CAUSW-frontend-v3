@@ -8,6 +8,13 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
+    private var didDetachWebViewConstraints = false
+    private var safeAreaRecalcWorkItem: DispatchWorkItem?
+
+    private struct SafeAreaSnapshot: Equatable {
+        let size: CGSize
+        let origin: CGPoint
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -16,17 +23,144 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         
         //이 문장이 있어야 'didRegisterForRemoteNotifications~~'가 호출됨 
         application.registerForRemoteNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDeviceOrientationDidChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleDidBecomeActive),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         DispatchQueue.main.async {
-                   guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController else {
-                       return
-                   }
-
-                   if let webView = bridgeViewController.webView {
-                       webView.allowsBackForwardNavigationGestures = true
-                   }
-               }
+            self.configureBridgeWebView()
+            self.startSafeAreaRecalculationCycle()
+        }
         return true
     }
+
+    @objc private func handleDeviceOrientationDidChange() {
+        let orientation = UIDevice.current.orientation
+        if isUnsupportedUpsideDownEvent(orientation) {
+            return
+        }
+        startSafeAreaRecalculationCycle()
+    }
+
+    @objc private func handleDidBecomeActive() {
+        startSafeAreaRecalculationCycle()
+    }
+
+    private func configureBridgeWebView() {
+        guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
+              let webView = bridgeViewController.webView else {
+            return
+        }
+
+        window?.backgroundColor = .white
+        bridgeViewController.view.backgroundColor = .white
+        webView.allowsBackForwardNavigationGestures = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.isOpaque = true
+        webView.backgroundColor = .white
+        webView.scrollView.backgroundColor = .white
+        webView.translatesAutoresizingMaskIntoConstraints = true
+        webView.autoresizingMask = []
+        webView.alpha = 0
+
+        if !didDetachWebViewConstraints {
+            detachWebViewConstraints(webView)
+            didDetachWebViewConstraints = true
+        }
+    }
+
+    private func startSafeAreaRecalculationCycle() {
+        safeAreaRecalcWorkItem?.cancel()
+        setBridgeWebViewVisible(false)
+        recalculateSafeAreaUntilStable(remainingAttempts: 40, lastSnapshot: nil, stableCount: 0)
+    }
+
+    private func recalculateSafeAreaUntilStable(
+        remainingAttempts: Int,
+        lastSnapshot: SafeAreaSnapshot?,
+        stableCount: Int
+    ) {
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
+                  let webView = bridgeViewController.webView else {
+                return
+            }
+
+            bridgeViewController.view.layoutIfNeeded()
+            let safeFrameInBridge = bridgeViewController.view.safeAreaLayoutGuide.layoutFrame
+
+            let hasValidBounds = safeFrameInBridge.width > 0 && safeFrameInBridge.height > 0
+            let snapshot = SafeAreaSnapshot(
+                size: safeFrameInBridge.size,
+                origin: safeFrameInBridge.origin
+            )
+
+            let nextStableCount = (snapshot == lastSnapshot) ? (stableCount + 1) : 1
+            if hasValidBounds && nextStableCount >= 3 {
+                webView.frame = safeFrameInBridge
+                self.setBridgeWebViewVisible(true)
+                return
+            }
+
+            if remainingAttempts <= 0 {
+                if hasValidBounds {
+                    webView.frame = safeFrameInBridge
+                }
+                self.setBridgeWebViewVisible(true)
+                return
+            }
+
+            self.recalculateSafeAreaUntilStable(
+                remainingAttempts: remainingAttempts - 1,
+                lastSnapshot: snapshot,
+                stableCount: nextStableCount
+            )
+        }
+
+        safeAreaRecalcWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06, execute: workItem)
+    }
+
+    private func isUnsupportedUpsideDownEvent(_ orientation: UIDeviceOrientation) -> Bool {
+        guard orientation == .portraitUpsideDown else { return false }
+        guard UIDevice.current.userInterfaceIdiom == .phone else { return false }
+        return !isInterfaceOrientationSupported("UIInterfaceOrientationPortraitUpsideDown")
+    }
+
+    private func isInterfaceOrientationSupported(_ orientationValue: String) -> Bool {
+        guard let values = Bundle.main.object(forInfoDictionaryKey: "UISupportedInterfaceOrientations") as? [String] else {
+            return true
+        }
+        return values.contains(orientationValue)
+    }
+
+    private func setBridgeWebViewVisible(_ visible: Bool) {
+        guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
+              let webView = bridgeViewController.webView else {
+            return
+        }
+        webView.alpha = visible ? 1 : 0
+    }
+
+    private func detachWebViewConstraints(_ webView: UIView) {
+        guard let superview = webView.superview else { return }
+        let relatedConstraints = superview.constraints.filter { constraint in
+            (constraint.firstItem as? UIView) == webView || (constraint.secondItem as? UIView) == webView
+        }
+        NSLayoutConstraint.deactivate(relatedConstraints)
+    }
+    
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
             
             //  알림이 잘 왔는지 확인하는 로그
@@ -88,6 +222,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        safeAreaRecalcWorkItem?.cancel()
+        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.removeObserver(self)
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
