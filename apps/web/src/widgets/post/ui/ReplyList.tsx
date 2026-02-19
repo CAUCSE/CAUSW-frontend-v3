@@ -1,5 +1,6 @@
-import { Comment, CommentCard, ReplyTarget } from '@/entities';
-import { CommentActionMenu } from '@/features';
+import { ReplyItem } from './ReplyItem';
+
+import { Comment, ReplyTarget } from '@/entities';
 
 interface ReplyListProps {
   replies: Comment[];
@@ -21,28 +22,13 @@ export const ReplyList = ({
   return (
     <div className="flex flex-col bg-gray-50/50">
       {replies.map((reply) => (
-        <CommentCard
+        <ReplyItem
           key={reply.id}
-          isReply
-          author={reply.author}
-          content={reply.content}
-          time={reply.time}
-          onReplyClick={() =>
-            onReply({
-              id: reply.id,
-              author: reply.author,
-              content: reply.content,
-            })
-          }
-          menuSlot={
-            <CommentActionMenu
-              id={reply.id}
-              isMine={false}
-              isOpen={activeMenuId === reply.id}
-              onToggle={onToggleMenu}
-              onClose={onCloseMenu}
-            />
-          }
+          reply={reply}
+          activeMenuId={activeMenuId}
+          onToggleMenu={onToggleMenu}
+          onCloseMenu={onCloseMenu}
+          onReply={onReply}
         />
       ))}
     </div>

@@ -23,7 +23,6 @@ export const CommentCard = ({
 }: CommentCardProps) => {
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
-      {/* 댓글 헤더: 작성자 및 메뉴 */}
       <HStack align={isBlocked ? 'center' : 'start'} className="gap-3">
         <Avatar size="xs" className="my-1" />
 
@@ -46,7 +45,6 @@ export const CommentCard = ({
                   </Text>
                 </HStack>
 
-                {/* ✅ 댓글 메뉴 버튼 및 드롭다운 */}
                 {menuSlot}
               </HStack>
               <Text
@@ -58,12 +56,10 @@ export const CommentCard = ({
               </Text>
             </Stack>
 
-            {/* 댓글 하단 정보: 시간, 답글달기, 좋아요 */}
             <HStack align="center" justify="between">
               <button
                 type="button"
                 onClick={onReplyClick}
-                // onClick={() => onReply({ id, author, content })}
                 className="cursor-pointer"
               >
                 <Text typography="body-14-medium" textColor="gray-400">

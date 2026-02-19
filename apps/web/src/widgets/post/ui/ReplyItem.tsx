@@ -2,10 +2,6 @@
 
 import { useState } from 'react';
 
-import { Stack } from '@causw/cds';
-
-import { ReplyList } from './ReplyList';
-
 import { Comment, CommentCard, ReplyTarget } from '@/entities';
 import {
   CommentAction,
@@ -14,53 +10,54 @@ import {
   useReportComment,
 } from '@/features';
 
-interface CommentItemProps {
-  comment: Comment;
+interface ReplyItemProps {
+  reply: Comment;
   activeMenuId: number | string | null;
   onToggleMenu: (id: number | string) => void;
   onCloseMenu: () => void;
   onReply: (target: ReplyTarget) => void;
 }
 
-export const CommentItem = ({
-  comment,
+export const ReplyItem = ({
+  reply,
   activeMenuId,
   onToggleMenu,
   onCloseMenu,
   onReply,
-}: CommentItemProps) => {
+}: ReplyItemProps) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
-  const { submitReport } = useReportComment(comment.id);
+
+  const { submitReport } = useReportComment(reply.id);
 
   const handleAction = (action: CommentAction) => {
     if (action === 'report') {
       setIsReportOpen(true);
     } else if (action === 'delete') {
-      console.log('삭제 API 호출');
+      console.log(`대댓글 ${reply.id} 삭제`);
     } else if (action === 'block') {
-      console.log('차단 API 호출');
+      console.log(`대댓글 ${reply.id} 작성자 차단`);
     }
   };
 
   return (
-    <Stack gap="none" key={comment.id}>
+    <>
       <CommentCard
-        {...comment}
-        author={comment.author}
-        content={comment.content}
-        time={comment.time}
+        isReply
+        author={reply.author}
+        content={reply.content}
+        time={reply.time}
         onReplyClick={() =>
           onReply({
-            id: comment.id,
-            author: comment.author,
-            content: comment.content,
+            id: reply.id,
+            author: reply.author,
+            content: reply.content,
           })
         }
         menuSlot={
           <CommentActionMenu
-            id={comment.id}
+            id={reply.id}
             isMine={false}
-            isOpen={activeMenuId === comment.id}
+            isOpen={activeMenuId === reply.id}
             onToggle={onToggleMenu}
             onClose={onCloseMenu}
             onAction={handleAction}
@@ -68,19 +65,11 @@ export const CommentItem = ({
         }
       />
 
-      <ReplyList
-        replies={comment.replies}
-        activeMenuId={activeMenuId}
-        onToggleMenu={onToggleMenu}
-        onCloseMenu={onCloseMenu}
-        onReply={onReply}
-      />
-
       <ReportFlow
         open={isReportOpen}
         setOpen={setIsReportOpen}
         onSubmitReport={submitReport}
       />
-    </Stack>
+    </>
   );
 };

@@ -1,5 +1,7 @@
 import { Menu, Stack, Text } from '@causw/cds';
 
+import { CommentAction } from '../model';
+
 import { DropdownMenu } from '@/shared';
 
 interface CommentActionMenuProps {
@@ -8,6 +10,7 @@ interface CommentActionMenuProps {
   isOpen: boolean;
   onToggle: (id: string | number) => void;
   onClose: () => void;
+  onAction: (action: CommentAction) => void;
 }
 
 export const CommentActionMenu = ({
@@ -16,10 +19,10 @@ export const CommentActionMenu = ({
   isOpen,
   onToggle,
   onClose,
+  onAction,
 }: CommentActionMenuProps) => {
-  const handleMenuAction = (action: string) => {
-    // TODO: 메뉴 액션에 따른 API 호출 (예: deleteComment(id))
-    console.log(`댓글 ${id}번 액션: ${action}`);
+  const handleMenuAction = (action: CommentAction) => {
+    onAction(action);
     onClose();
   };
 

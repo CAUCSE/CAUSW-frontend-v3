@@ -1,6 +1,7 @@
 import { Menu, Stack, Text } from '@causw/cds';
 
-import { PostAction } from '@/entities';
+import { PostAction } from '../model';
+
 import { DropdownMenu } from '@/shared';
 
 interface PostActionMenuProps {

@@ -2,16 +2,14 @@ import { useState } from 'react';
 
 import { HStack, Stack } from '@causw/cds';
 
-import { ReportFlow } from '@/features/post/ui/ReportFlow';
-
+import { PostBody, PostHeader, PostReactions, PostVote } from '@/entities';
 import {
+  BlockUserDialog,
   PostAction,
-  PostBody,
-  PostHeader,
-  PostReactions,
-  PostVote,
-} from '@/entities';
-import { BlockUserDialog, PostActionMenu } from '@/features';
+  PostActionMenu,
+  ReportFlow,
+  useReportPost,
+} from '@/features';
 
 interface PostContentProps {
   postId: number | string;
@@ -28,6 +26,8 @@ export const PostContent = ({
 }: PostContentProps) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
+
+  const { submitReport } = useReportPost(postId);
 
   const handleAction = (action: PostAction) => {
     switch (action) {
@@ -75,9 +75,9 @@ export const PostContent = ({
       />
 
       <ReportFlow
-        postId={postId}
         open={isReportOpen}
         setOpen={setIsReportOpen}
+        onSubmitReport={submitReport}
       />
 
       <BlockUserDialog open={isBlockOpen} setOpen={setIsBlockOpen} userId={3} />
