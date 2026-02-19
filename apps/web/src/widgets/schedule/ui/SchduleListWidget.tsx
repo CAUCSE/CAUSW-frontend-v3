@@ -30,7 +30,7 @@ export function ScheduleListWidget({ items }: ScheduleListWidgetProps) {
   const pastItems = filteredItems.filter((item) => !item.isUpcoming);
 
   return (
-    <VStack className="desktop:gap-10 gap-6">
+    <VStack className="gap-6">
       <Tab.Root
         variant="chip"
         value={selectedTab}

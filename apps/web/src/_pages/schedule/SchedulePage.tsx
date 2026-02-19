@@ -121,24 +121,24 @@ export function SchedulePage() {
   const router = useRouter();
 
   return (
-    <VStack className="max-w-laptop w-full">
+    <VStack className="max-w-laptop w-full gap-2">
       <ActionHeader title={COPY.BACK} className="pt-6">
         <ActionHeader.BackButton onClick={() => router.back()}>
           {COPY.BACK}
         </ActionHeader.BackButton>
       </ActionHeader>
 
-      <VStack className="tablet:px-12 desktop:gap-10 tablet:pt-6 w-full gap-3 px-4 pb-40">
+      <VStack className="tablet:px-12 w-full gap-3 px-4 pb-40">
         <VStack className="gap-2">
           <Text typography="title-24-bold" textColor="gray-900">
             {COPY.MONTHLY_SCHEDULE_TITLE}
           </Text>
         </VStack>
 
-        <VStack className="desktop:gap-10 gap-6">
+        <VStack className="gap-6">
           <Calendar
             events={CALENDAR_EVENTS}
-            className="tablet:py-20 tablet:px-4"
+            className="tablet:py-20 tablet:px-4 shadow-none!"
           />
 
           <ScheduleListWidget items={SCHEDULE_ITEMS} />
