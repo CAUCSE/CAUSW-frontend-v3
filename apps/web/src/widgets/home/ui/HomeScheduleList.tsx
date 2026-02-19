@@ -19,8 +19,8 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { COPY, ROUTES, Calendar, CalendarEvent } from '@/shared';
-
+import { COPY, ROUTES } from '@/shared';
+import { Calendar, CalendarEvent } from '@/widgets';
 interface ScheduleItem {
   id: number;
   title: string;
