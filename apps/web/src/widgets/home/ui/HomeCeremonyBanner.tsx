@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { HStack, Text, VStack, ArrowDown } from '@causw/cds';
+import { HStack, Text, VStack, ChevronRight } from '@causw/cds';
 
 import EnvelopeIcon from '../assets/envelope.svg';
 
@@ -9,7 +9,7 @@ import { COPY } from '@/shared';
 
 //TODO : 경조사 신청 페이지 수정 with ROUTES
 //TODO : ArrowDown 아이콘 -> ArrowRight 아이콘으로 변경
-//TODO : ArrowRight 아이콘 색상 디자인시스템(#ffefef) 변경되면 흰색인지 확인
+//TODO : ArrowRight 아이콘 색상&제목 디자인시스템(#ffefef) 변경되면 흰색인지 확인
 export function HomeCeremonyBanner() {
   return (
     <Link href="/ceremony/apply" className="w-full">
@@ -29,7 +29,7 @@ export function HomeCeremonyBanner() {
 
         <HStack className="items-center gap-5">
           <Image src={EnvelopeIcon} alt="Envelope" width={80} height={80} />
-          <ArrowDown className="inline-block rotate-270" color="white" />
+          <ChevronRight size={16} className="shrink-0 text-gray-400" />
         </HStack>
       </div>
     </Link>

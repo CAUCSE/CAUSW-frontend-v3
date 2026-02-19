@@ -8,4 +8,7 @@ export const COPY = Object.freeze({
   ENTRIE_SCHEDULE: '일정 전체보기',
   CEREMONY_REGISTER: '경조사 신청하기',
   CEREMONY_REGISTER_DESCRIPTION: `결혼, 장례, 졸업, 행사소식 등\n전체 알림을 보내보세요!`,
+  CEREMONY_VIEW_ALL: '경조사 전체보기',
+  EMPTY_CEREMONY: '곧 다가올 경조사가 없어요',
+  HOME_CEREMONY_TITLE: '곧 다가올 경조사',
 } as const);

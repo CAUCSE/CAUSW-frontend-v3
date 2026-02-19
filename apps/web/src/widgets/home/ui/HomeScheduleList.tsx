@@ -9,8 +9,8 @@ import Link from 'next/link';
 //TODO : 더미 데이터 삭제
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
 import {
-  ArrowDown,
   CaldendarIconColored,
+  ChevronRight,
   Flex,
   HStack,
   mergeStyles,
@@ -155,7 +155,7 @@ export function HomeScheduleList() {
                     </VStack>
                   </HStack>
 
-                  <ArrowDown className="inline-block rotate-270" />
+                  <ChevronRight size={16} className="shrink-0 text-gray-400" />
                 </HStack>
               </Link>
             ))

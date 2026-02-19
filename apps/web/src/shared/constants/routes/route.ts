@@ -2,6 +2,7 @@ export const ROUTES = Object.freeze({
   NOTIFICATION: '/notification',
   LOCKER: '/locker',
   SCHEDULE: '/schedule',
+  CEREMONY: '/ceremony',
 } as const);
 
 export const EXTERNAL_ROUTES = Object.freeze({
