@@ -5,6 +5,8 @@ import type { ReactNode } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
+import { toast } from '@causw/cds';
+
 import { useAuthStore } from '@/shared/model';
 
 type ProviderProps = {
@@ -21,7 +23,7 @@ export function GlobalRoutingProvider({ children }: ProviderProps) {
     if (!authError) return;
 
     if (authError.code === 'token-expired') {
-      alert(authError.message);
+      toast.error(authError.message);
 
       // TODO: 로그인 시 callbackUrl 활용한 라우팅 추가
       const callbackUrl = encodeURIComponent(pathname ?? '/');
