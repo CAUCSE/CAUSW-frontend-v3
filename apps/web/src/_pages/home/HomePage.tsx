@@ -18,7 +18,7 @@ export function HomePage() {
   const newNotification = true;
   const isAlumni = true;
   return (
-    <VStack className="tablet:gap-8 tablet:px-8 tablet:pt-12 laptop:gap-6 gap-2 px-4 pb-[2.125rem]">
+    <VStack className="tablet:gap-8 tablet:px-8 tablet:pt-12 desktop:gap-6 gap-2 px-4 pb-[2.125rem]">
       {/* Mobile Header */}
       <div className="tablet:hidden sticky top-0 z-10">
         <HomeHeader />
