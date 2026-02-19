@@ -11,7 +11,6 @@ import {
 } from '@/widgets/home';
 
 //TODO : 새 알림 api 연동 -> header statusdot & newNotification 교체
-//TODO : 학식 메뉴 아이콘 교체
 //TODO : 해당 페이지 나오면 상세 페이지들 주소 수정
 //TODO : 졸업생 정보
 export function HomePage() {

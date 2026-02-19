@@ -19,7 +19,6 @@ interface ActionCardProps {
   /** 'sm'은 h-10(40px), 'md'는 h-12(48px) */
   size?: 'sm' | 'md';
   link?: string;
-
   /** 외부 컨테이너 추가 스타일 (border, padding 등) */
   className?: string;
   rightElement?: ReactNode;
@@ -41,14 +40,13 @@ export function ActionCard({
     <HStack
       className={mergeStyles(
         'w-full items-center justify-between transition-colors',
-        isMd ? 'gap-4' : 'gap-5', // 스케줄 상세는 gap-4, 나머지는 gap-5
+        isMd ? 'gap-4' : 'gap-5',
         className,
       )}
     >
       <HStack
         className={mergeStyles('flex-1 items-center', isMd ? 'gap-4' : 'gap-5')}
       >
-        {/* 아이콘 박스: sm(h-10), md(h-12) 분기 */}
         <div
           className={mergeStyles(
             'flex shrink-0 items-center justify-center rounded-[0.75rem]',
@@ -59,7 +57,6 @@ export function ActionCard({
           {icon}
         </div>
 
-        {/* 텍스트 영역: md일 때만 gap-1, 나머지는 gap-0.5 */}
         <VStack
           className={mergeStyles(
             'flex-1 justify-center overflow-hidden',
@@ -100,10 +97,10 @@ export function ActionCard({
         {rightElement
           ? rightElement
           : link && <ChevronRight size={14} className="text-gray-400" />}
-      </div>{' '}
+      </div>
     </HStack>
   );
-
+  //TODO : link가 어떻게 올지 모르곘음 api후에 수정
   if (!link || link === '') return CardContent;
 
   return (

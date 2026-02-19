@@ -1,6 +1,5 @@
 'use client';
-//TODO : api 연결 후에 ScheduleListCard shared로 분리 + Home에 있는 거 까지 혹은 listcard로 분리
-//TODO : 곧 다가올 목록이 단순이 upcoming만의 분기가 아닐수도 남은 일정 + 곧 바로 남은 일정
+//TODO : 곧 다가올 목록이 단순이 upcoming만의 분기
 //TODO : empty state 아이콘 변경 (디자인 시스템에 추가)
 
 import { useRouter } from 'next/navigation';
@@ -123,9 +122,9 @@ export function SchedulePage() {
 
   return (
     <VStack className="max-w-laptop w-full">
-      <ActionHeader title="뒤로" className="pt-6">
+      <ActionHeader title={COPY.BACK} className="pt-6">
         <ActionHeader.BackButton onClick={() => router.back()}>
-          뒤로
+          {COPY.BACK}
         </ActionHeader.BackButton>
       </ActionHeader>
 
@@ -139,10 +138,6 @@ export function SchedulePage() {
         <VStack className="desktop:gap-10 gap-6">
           <Calendar
             events={CALENDAR_EVENTS}
-            enableHover={true}
-            onEventClick={(event: CalendarEvent) => {
-              console.log('이벤트 클릭:', event.title);
-            }}
             className="tablet:py-20 tablet:px-4"
           />
 

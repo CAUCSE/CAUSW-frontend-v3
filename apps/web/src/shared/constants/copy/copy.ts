@@ -12,4 +12,9 @@ export const COPY = Object.freeze({
   EMPTY_CEREMONY: '곧 다가올 경조사가 없어요',
   HOME_CEREMONY_TITLE: '곧 다가올 경조사',
   MONTHLY_SCHEDULE_TITLE: '이 달의 주요 일정',
+  BACK: '뒤로',
+  UPCOMING_SCHEDULE: '다가올 일정',
+  EMPTY_UPCOMING_SCHEDULE: '다가올 일정이 없어요',
+  PAST_SCHEDULE: '끝난 일정',
+  EMPTY_PAST_SCHEDULE: '지난 일정이 없어요',
 } as const);

@@ -13,7 +13,7 @@ import {
 
 import { ScheduleItem, TAB_OPTIONS } from '../model';
 
-import { ActionCard, EmptyStateView } from '@/shared';
+import { ActionCard, COPY, EmptyStateView } from '@/shared';
 
 interface ScheduleListWidgetProps {
   items: ScheduleItem[];
@@ -47,14 +47,14 @@ export function ScheduleListWidget({ items }: ScheduleListWidgetProps) {
 
       <Flex className="desktop:flex-row desktop:gap-10 flex-col gap-6">
         <ScheduleSection
-          title="곧 다가올 일정"
+          title={COPY.UPCOMING_SCHEDULE}
           items={upcomingItems}
-          emptyMessage="다가올 일정이 없어요"
+          emptyMessage={COPY.EMPTY_UPCOMING_SCHEDULE}
         />
         <ScheduleSection
-          title="끝난 일정"
+          title={COPY.PAST_SCHEDULE}
           items={pastItems}
-          emptyMessage="지난 일정이 없어요"
+          emptyMessage={COPY.EMPTY_PAST_SCHEDULE}
         />
       </Flex>
     </VStack>

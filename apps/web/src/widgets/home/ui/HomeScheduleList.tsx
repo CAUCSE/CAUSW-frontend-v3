@@ -7,6 +7,7 @@ import Link from 'next/link';
 // TODO : SCHEDULE_ITEMS 타입 정의
 //TODO : 더미 데이터 삭제
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
+//TODO : 캘린더 클릭 헨들러
 import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';
 
 import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
@@ -104,13 +105,7 @@ export function HomeScheduleList() {
       {/* Desktop Calendar */}
       <Flex className="desktop:flex hidden flex-col gap-2">
         <CalendarTitle typography="title-22-bold" />
-        <Calendar
-          events={CALENDAR_EVENTS}
-          enableHover={true}
-          onEventClick={(event: CalendarEvent) => {
-            console.log('이벤트 클릭:', event.title);
-          }}
-        />
+        <Calendar events={CALENDAR_EVENTS} />
       </Flex>
       <VStack className="gap-5 rounded-2xl bg-white p-5">
         <VStack className="gap-5">
