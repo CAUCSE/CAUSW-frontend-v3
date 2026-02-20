@@ -20,7 +20,7 @@ export function GlobalRoutingProvider({ children }: ProviderProps) {
   useEffect(() => {
     if (!authError) return;
 
-    if (authError.code === 'token-expired') {
+    if (authError.errorType === 'token-expired') {
       alert(authError.message);
 
       // TODO: 로그인 시 callbackUrl 활용한 라우팅 추가
