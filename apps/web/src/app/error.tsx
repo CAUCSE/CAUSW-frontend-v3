@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
+import { AuthError } from '@/shared/model';
+
 import { ErrorView } from '@/shared';
 
 export default function ErrorPage({
@@ -16,7 +18,10 @@ export default function ErrorPage({
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    console.error(error);
+    if (error instanceof AuthError) {
+      return;
+    }
+    reportError(error);
   }, [error]);
 
   const handleReset = () => {
