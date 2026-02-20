@@ -2,10 +2,20 @@ import { create } from 'zustand';
 
 type AuthErrorType = 'token-expired' | 'no-permission';
 
-type AuthError = {
-  code: AuthErrorType;
+export class AuthError extends Error {
+  errorType: AuthErrorType;
   message: string;
-};
+
+  constructor(
+    errorType: AuthErrorType,
+    message: string,
+    options?: ErrorOptions,
+  ) {
+    super(message, options);
+    this.errorType = errorType;
+    this.message = message;
+  }
+}
 
 type AuthStore = {
   authError: AuthError | null;
