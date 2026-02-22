@@ -107,7 +107,16 @@ export const CeremonyCreateDialog = ({
     setCustomCategory('');
   };
 
-  const isValid = ceremonyType !== '';
+  const resolvedCategory = isCustom ? customCategory.trim() : category;
+
+  const isValid =
+    ceremonyType !== '' &&
+    resolvedCategory !== '' &&
+    relationship !== '' &&
+    startDate !== undefined &&
+    notifyAll &&
+    phone.trim() !== '' &&
+    relatedLink.trim() !== '';
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
