@@ -11,3 +11,4 @@ export * from './StatusDot';
 export * from './CountBadge';
 export * from './EmptyStateView';
 export * from './ActionCard';
+export * from './ActionHeader';

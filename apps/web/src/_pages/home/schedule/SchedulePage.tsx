@@ -6,13 +6,9 @@ import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
-import { ScheduleItem } from '@/widgets/home/model';
-import { ScheduleListWidget } from '@/widgets/home/ui/schedule';
-
-import { ActionHeader } from '@/shared/ui/ActionHeader';
-
-import { COPY } from '@/shared';
-import { Calendar, CalendarEvent } from '@/widgets';
+import { COPY, ActionHeader } from '@/shared';
+import { Calendar, CalendarEvent, ScheduleListWidget } from '@/widgets';
+import { ScheduleItem } from '@/widgets';
 
 //더미
 const SCHEDULE_ITEMS: ScheduleItem[] = [
