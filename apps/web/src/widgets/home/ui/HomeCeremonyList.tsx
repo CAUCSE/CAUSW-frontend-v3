@@ -6,8 +6,8 @@ import {
   //ScholarColored,
   Text,
   VStack,
+  Bell,
 } from '@causw/cds';
-import { Bell } from '@causw/cds';
 
 import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
 //TODO : 경조사 종류에 따라 아이콘 분기

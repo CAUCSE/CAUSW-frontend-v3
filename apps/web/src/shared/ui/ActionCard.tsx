@@ -101,7 +101,7 @@ export function ActionCard({
     </HStack>
   );
   //TODO : link가 어떻게 올지 모르곘음 api후에 수정
-  if (!link || link === '') return CardContent;
+  if (!link) return CardContent;
 
   return (
     <Link href={link} className={mergeStyles('w-full', !isMd && 'block')}>

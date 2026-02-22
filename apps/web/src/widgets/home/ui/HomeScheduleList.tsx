@@ -5,9 +5,9 @@ import Link from 'next/link';
 
 // TODO: 일정 지났을떄 계산 여부 체크 -> 색 변경 연결(api)
 // TODO : SCHEDULE_ITEMS 타입 정의
-//TODO : 더미 데이터 삭제
+//TODO : 더미 데이터 삭제 {new Date().getMonth() + 1}
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
-//TODO : 캘린더 클릭 헨들러
+
 import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';
 
 import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
