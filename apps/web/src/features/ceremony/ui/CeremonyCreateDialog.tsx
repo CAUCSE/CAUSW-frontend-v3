@@ -325,7 +325,7 @@ export const CeremonyCreateDialog = ({
     resolvedCategory !== '' &&
     isRelationshipValid &&
     startDate.trim() !== '' &&
-    notifyAll &&
+    (notifyAll || admissionYears.length > 0) &&
     phone.trim() !== '' &&
     relatedLink.trim() !== '';
 
