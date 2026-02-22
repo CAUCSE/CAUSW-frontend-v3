@@ -9,6 +9,5 @@ export * from './responsive';
 export * from './emphasis';
 export * from './StatusDot';
 export * from './CountBadge';
-export * from './EmptyStateView';
 export * from './EventCard';
 export * from './ActionHeader';

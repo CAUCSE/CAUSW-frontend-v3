@@ -11,9 +11,10 @@ import {
   VStack,
 } from '@causw/cds';
 
+//TODO : empty icon변경 after 디자인 시스템 수정
 import { TAB_OPTIONS, ScheduleItem } from '../../model';
 
-import { EventCard, COPY, EmptyStateView } from '@/shared';
+import { EventCard, COPY, NoDataView } from '@/shared';
 
 interface ScheduleListWidgetProps {
   items: ScheduleItem[];
@@ -89,7 +90,10 @@ function ScheduleSection({
             />
           ))
         ) : (
-          <EmptyStateView message={emptyMessage} />
+          <NoDataView
+            message={emptyMessage}
+            icon={<CaldendarIconColored size={48} />}
+          />
         )}
       </VStack>
     </VStack>
