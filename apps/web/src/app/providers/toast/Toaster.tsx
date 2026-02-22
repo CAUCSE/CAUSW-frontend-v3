@@ -4,13 +4,12 @@ import {
   ErrorColored,
   LoadingColored,
   SuccessColored,
-  toast,
   Toast,
   ToastProvider,
   ToastViewport,
 } from '@causw/cds';
 
-import { ToastType, useToastStore } from '@/shared/lib/toast';
+import { toast, ToastType, useToastStore } from '@/shared/lib/toast';
 
 const Icons = {
   success: () => <SuccessColored size={20} />,
@@ -39,7 +38,7 @@ export const Toaster = () => {
             message={t.message}
             icon={iconToRender}
             variant="default"
-            duration={t.duration || 3000}
+            duration={t.duration ?? 3000}
             onOpenChange={(open) => {
               if (!open) toast.dismiss(t.id);
             }}

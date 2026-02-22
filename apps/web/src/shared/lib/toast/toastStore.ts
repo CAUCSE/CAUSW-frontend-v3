@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from 'react';
 
 const MAX_TOAST = 3;
+const DEFAULT_LOADING_DURATION = 100000;
 
 export type ToastType = 'default' | 'success' | 'error' | 'loading';
 
@@ -64,7 +65,7 @@ export const toast = Object.assign(toastRoot, {
   loading: (message: string, options?: ToastOptions) =>
     dispatch(message, 'loading', {
       ...options,
-      duration: options?.duration ?? 100000,
+      duration: options?.duration ?? DEFAULT_LOADING_DURATION,
     }),
   dismiss: (id: string) => {
     memoryState = memoryState.filter((t) => t.id !== id);
