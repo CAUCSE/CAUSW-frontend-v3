@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 import {
   Button,
@@ -24,6 +24,7 @@ import {
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 import type { CeremonyType } from '@/shared/types';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
+import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui/image';
 
 const CEREMONY_TYPES: CeremonyType[] = ['경사', '조사'];
 
@@ -117,6 +118,21 @@ const ALUMNI_RELATIONS = [
   '딸',
 ] as const;
 
+const DAUM_POSTCODE_SCRIPT =
+  '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+
+const loadDaumPostcode = (): Promise<void> =>
+  new Promise((resolve) => {
+    if ((window as unknown as Record<string, unknown>).daum) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = DAUM_POSTCODE_SCRIPT;
+    script.onload = () => resolve();
+    document.head.appendChild(script);
+  });
+
 interface FormSectionProps {
   title: string;
   optional?: boolean;
@@ -167,15 +183,39 @@ export const CeremonyCreateDialog = ({
   const onEndTimeChange = useFormattedInput(formatTime, setEndTime);
   const [notifyAll, setNotifyAll] = useState(false);
   const [content, setContent] = useState('');
-  const [postalCode] = useState('');
-  const [address] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [address, setAddress] = useState('');
+  const [showPostcode, setShowPostcode] = useState(false);
+  const postcodeRef = useRef<HTMLDivElement>(null);
   const [detailAddress, setDetailAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [relatedLink, setRelatedLink] = useState('');
   const [admissionYears, setAdmissionYears] = useState<string[]>([]);
   const [showAdmissionYearModal, setShowAdmissionYearModal] = useState(false);
   const [admissionYearInput, setAdmissionYearInput] = useState('');
+  const [, setPhotoFiles] = useState<File[]>([]);
+  const [photoResetTrigger, setPhotoResetTrigger] = useState(false);
+  const imageUploadRef = useRef<ImageUploadFieldRef>(null);
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
+
+  // 다음 우편번호 embed
+  useEffect(() => {
+    if (!showPostcode) return;
+    loadDaumPostcode().then(() => {
+      const container = postcodeRef.current;
+      if (!container) return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      new (window as any).daum.Postcode({
+        oncomplete: (data: { zonecode: string; address: string }) => {
+          setPostalCode(data.zonecode);
+          setAddress(data.address);
+          setShowPostcode(false);
+        },
+        width: '100%',
+        height: '100%',
+      }).embed(container);
+    });
+  }, [showPostcode]);
 
   const isCustom = category === CUSTOM_VALUE;
   const categoryOptions = ceremonyType ? CATEGORY_MAP[ceremonyType] : [];
@@ -224,11 +264,15 @@ export const CeremonyCreateDialog = ({
     setHasTime(false);
     setNotifyAll(false);
     setContent('');
+    setPostalCode('');
+    setAddress('');
     setDetailAddress('');
     setPhone('');
     setRelatedLink('');
     setAdmissionYears([]);
     setAdmissionYearInput('');
+    setPhotoFiles([]);
+    setPhotoResetTrigger((prev) => !prev);
   };
 
   const handleAddAdmissionYear = () => {
@@ -243,6 +287,10 @@ export const CeremonyCreateDialog = ({
   const handleRemoveAdmissionYear = (year: string) => {
     setAdmissionYears((prev) => prev.filter((y) => y !== year));
   };
+
+  const handleSetPhotoFiles = useCallback((_name: string, value: unknown) => {
+    setPhotoFiles(value as File[]);
+  }, []);
 
   const handleCloseAttempt = () => {
     setShowCloseConfirm(true);
@@ -587,16 +635,29 @@ export const CeremonyCreateDialog = ({
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="텍스트를 적어주세요."
                   resize={false}
+                  maxLength={500}
                 />
-                <TextArea.Footer className="mt-8 flex items-end justify-between">
-                  <Button size="md" color="gray">
-                    <Camera size={16} color="gray-600" />
-                    사진첨부
-                  </Button>
-                  <span className="typo-body-16-regular text-gray-400">
-                    {content.length}/500
-                  </span>
-                </TextArea.Footer>
+                <div className="mt-8 flex flex-col gap-4">
+                  <ImageUploadField
+                    ref={imageUploadRef}
+                    name="photos"
+                    setValue={handleSetPhotoFiles as never}
+                    resetTrigger={photoResetTrigger}
+                  />
+                  <div className="flex items-end justify-between">
+                    <Button
+                      size="md"
+                      color="gray"
+                      onClick={() => imageUploadRef.current?.openFilePicker()}
+                    >
+                      <Camera size={16} color="gray-600" />
+                      사진첨부
+                    </Button>
+                    <span className="typo-body-16-regular text-gray-400">
+                      {content.length}/500
+                    </span>
+                  </div>
+                </div>
               </TextArea>
             </FormSection>
 
@@ -612,10 +673,20 @@ export const CeremonyCreateDialog = ({
                       className="rounded-xl bg-gray-200"
                     />
                   </Field>
-                  <CTAButton color="dark" className="w-[7.5rem] shrink-0">
+                  <CTAButton
+                    color="dark"
+                    className="w-[7.5rem] shrink-0"
+                    onClick={() => setShowPostcode(true)}
+                  >
                     우편번호 찾기
                   </CTAButton>
                 </div>
+                {showPostcode && (
+                  <div
+                    ref={postcodeRef}
+                    className="h-[25rem] w-full overflow-hidden rounded-xl border border-gray-200"
+                  />
+                )}
                 <Field>
                   <TextInput
                     value={address}
