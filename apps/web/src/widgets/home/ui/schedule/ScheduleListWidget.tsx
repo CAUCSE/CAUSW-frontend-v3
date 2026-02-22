@@ -13,7 +13,7 @@ import {
 
 import { TAB_OPTIONS, ScheduleItem } from '../../model';
 
-import { ActionCard, COPY, EmptyStateView } from '@/shared';
+import { EventCard, COPY, EmptyStateView } from '@/shared';
 
 interface ScheduleListWidgetProps {
   items: ScheduleItem[];
@@ -76,7 +76,7 @@ function ScheduleSection({
       <VStack className="gap-3">
         {items.length > 0 ? (
           items.map((item) => (
-            <ActionCard
+            <EventCard
               key={item.id}
               link={item.link || undefined}
               title={item.title}

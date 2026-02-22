@@ -9,7 +9,7 @@ import {
   Bell,
 } from '@causw/cds';
 
-import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
+import { EventCard, COPY, EmptyStateView, ROUTES } from '@/shared';
 //TODO : 경조사 종류에 따라 아이콘 분기
 //TODO : 데이터 없을떄 bell 아이콘 디자인 시스템에서 추가되면 수정
 const CEREMONY_ITEMS = [
@@ -78,7 +78,7 @@ export function HomeCeremonyList() {
         ) : (
           <VStack className="w-full gap-5">
             {CEREMONY_ITEMS.slice(0, 6).map((item) => (
-              <ActionCard
+              <EventCard
                 key={item.id}
                 link={item.link}
                 title={item.title}

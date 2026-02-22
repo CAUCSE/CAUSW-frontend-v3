@@ -10,7 +10,7 @@ import Link from 'next/link';
 
 import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';
 
-import { ActionCard, COPY, EmptyStateView, ROUTES } from '@/shared';
+import { EventCard, COPY, EmptyStateView, ROUTES } from '@/shared';
 import { Calendar, CalendarEvent } from '@/widgets';
 interface ScheduleItem {
   id: number;
@@ -116,7 +116,7 @@ export function HomeScheduleList() {
 
           {SCHEDULE_ITEMS.length > 0 ? (
             SCHEDULE_ITEMS.map((item) => (
-              <ActionCard
+              <EventCard
                 key={item.id}
                 link={item.link}
                 title={item.title}

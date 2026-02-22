@@ -11,7 +11,7 @@ import {
   ChevronRight,
 } from '@causw/cds';
 
-interface ActionCardProps {
+interface EventCardProps {
   title: string;
   descriptions: ReactNode[];
   icon: ReactNode;
@@ -21,7 +21,7 @@ interface ActionCardProps {
   rightElement?: ReactNode;
 }
 
-export function ActionCard({
+export function EventCard({
   title,
   descriptions,
   icon,
@@ -29,7 +29,7 @@ export function ActionCard({
   link,
   className,
   rightElement,
-}: ActionCardProps) {
+}: EventCardProps) {
   const CardContent = (
     <HStack
       className={mergeStyles(
