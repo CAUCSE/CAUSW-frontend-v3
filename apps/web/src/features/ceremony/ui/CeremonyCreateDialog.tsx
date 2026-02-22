@@ -741,6 +741,7 @@ export const CeremonyCreateDialog = ({
         }}
       >
         <Modal.Content className="!rounded-[1.25rem] !pt-4">
+          <Modal.Title className="sr-only">학번 추가하기</Modal.Title>
           <div className="flex w-full flex-col gap-8 px-4">
             <div className="flex flex-col gap-2">
               <div className="px-1">
