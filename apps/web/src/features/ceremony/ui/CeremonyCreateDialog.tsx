@@ -11,6 +11,7 @@ import {
   Dialog,
   Field,
   HStack,
+  Modal,
   Plus,
   Tab,
   TextArea,
@@ -97,6 +98,7 @@ export const CeremonyCreateDialog = ({
   const [detailAddress, setDetailAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [relatedLink, setRelatedLink] = useState('');
+  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
 
   const isCustom = category === CUSTOM_VALUE;
   const categoryOptions = ceremonyType ? CATEGORY_MAP[ceremonyType] : [];
@@ -105,6 +107,39 @@ export const CeremonyCreateDialog = ({
     setCeremonyType(type);
     setCategory('');
     setCustomCategory('');
+  };
+
+  const resetForm = () => {
+    setCeremonyType('');
+    setCategory('');
+    setCustomCategory('');
+    setRelationship('');
+    setStartDate(undefined);
+    setHasEndDate(false);
+    setHasTime(false);
+    setNotifyAll(false);
+    setContent('');
+    setDetailAddress('');
+    setPhone('');
+    setRelatedLink('');
+  };
+
+  const handleCloseAttempt = () => {
+    setShowCloseConfirm(true);
+  };
+
+  const handleConfirmClose = () => {
+    setShowCloseConfirm(false);
+    resetForm();
+    onOpenChange(false);
+  };
+
+  const handleDialogOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      handleCloseAttempt();
+      return;
+    }
+    onOpenChange(nextOpen);
   };
 
   const resolvedCategory = isCustom ? customCategory.trim() : category;
@@ -119,13 +154,13 @@ export const CeremonyCreateDialog = ({
     relatedLink.trim() !== '';
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <Dialog.Content
         fullscreen={isMobileSize}
         className="flex flex-col overflow-hidden bg-gray-100 p-0 md:max-w-[35.5rem] md:rounded-2xl"
       >
         <ActionHeader background="gray" isSticky={false}>
-          <ActionHeader.BackButton onClick={() => onOpenChange(false)}>
+          <ActionHeader.BackButton onClick={handleCloseAttempt}>
             뒤로
           </ActionHeader.BackButton>
           <ActionHeader.ActionButton
@@ -331,6 +366,22 @@ export const CeremonyCreateDialog = ({
           </div>
         </div>
       </Dialog.Content>
+
+      <Modal open={showCloseConfirm} onOpenChange={setShowCloseConfirm}>
+        <Modal.Content>
+          <Modal.Title textAlign="center">작성을 그만두시겠어요?</Modal.Title>
+          <Modal.Footer>
+            <Modal.Close asChild>
+              <CTAButton color="light" fullWidth>
+                취소
+              </CTAButton>
+            </Modal.Close>
+            <Modal.ActionButton color="dark" onClick={handleConfirmClose}>
+              나가기
+            </Modal.ActionButton>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </Dialog>
   );
 };
