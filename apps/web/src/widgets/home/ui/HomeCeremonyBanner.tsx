@@ -27,6 +27,7 @@ export function HomeCeremonyBanner() {
         </VStack>
 
         <HStack className="items-center gap-5">
+          {/* TODO : 아이콘 디자인 시스템에서 추가되면 수정 */}
           <Image src={EnvelopeIcon} alt="Envelope" width={80} height={80} />
           <ChevronRight size={16} className="shrink-0 text-gray-400" />
         </HStack>
