@@ -5,4 +5,11 @@ export type {
   CeremonyItem,
   CeremonyListData,
   CeremonyFilterType,
+  CeremonyTypeApi,
+  CeremonyCategoryApi,
+  RelationType,
+  FamilyRelation,
+  AlumniRelation,
+  CeremonyCreateRequest,
+  CeremonyDetailResponse,
 } from './ceremony';
