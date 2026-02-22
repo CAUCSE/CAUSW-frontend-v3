@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { FloatingActionButton, HStack, Plus, Tab } from '@causw/cds';
 
+import { CeremonyCreateDialog } from '@/features/ceremony/ui';
+
 import {
   CeremonyEmptyView,
   CeremonyFilterChips,
@@ -143,6 +145,7 @@ const CeremonySection = ({
 
 export const CeremonyPage = () => {
   const [filter, setFilter] = useState<CeremonyFilterType>('전체');
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const ongoingItems = filterItems(MOCK_ONGOING, filter);
   const upcomingItems = filterItems(MOCK_UPCOMING, filter);
@@ -197,13 +200,21 @@ export const CeremonyPage = () => {
       </Tab>
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">
-        <FloatingActionButton className="bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]">
+        <FloatingActionButton
+          className="bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
+          onClick={() => setIsCreateOpen(true)}
+        >
           <HStack gap="xs" className="items-center">
             <Plus size={20} className="fill-gray-500" />
             <p>경조사 신청</p>
           </HStack>
         </FloatingActionButton>
       </div>
+
+      <CeremonyCreateDialog
+        open={isCreateOpen}
+        onOpenChange={setIsCreateOpen}
+      />
     </div>
   );
 };
