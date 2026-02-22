@@ -55,6 +55,32 @@ const CATEGORY_MAP: Record<CeremonyType, CategoryOption[]> = {
 
 const RELATIONSHIP_OPTIONS = ['본인', '가족', '동문소식 대신 전달'] as const;
 
+const FAMILY_RELATIONS = [
+  '배우자',
+  '부',
+  '모',
+  '장인',
+  '장모',
+  '아들',
+  '딸',
+  '형제',
+  '자매',
+  '남매',
+  '조부',
+  '조모',
+] as const;
+
+const ALUMNI_RELATIONS = [
+  '동문 본인',
+  '배우자',
+  '부',
+  '모',
+  '장인',
+  '장모',
+  '아들',
+  '딸',
+] as const;
+
 interface FormSectionProps {
   title: string;
   optional?: boolean;
@@ -88,6 +114,10 @@ export const CeremonyCreateDialog = ({
   const [category, setCategory] = useState('');
   const [customCategory, setCustomCategory] = useState('');
   const [relationship, setRelationship] = useState('');
+  const [familyRelation, setFamilyRelation] = useState('');
+  const [alumniName, setAlumniName] = useState('');
+  const [alumniAdmissionYear, setAlumniAdmissionYear] = useState('');
+  const [alumniRelation, setAlumniRelation] = useState('');
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [hasEndDate, setHasEndDate] = useState(false);
   const [hasTime, setHasTime] = useState(false);
@@ -109,11 +139,23 @@ export const CeremonyCreateDialog = ({
     setCustomCategory('');
   };
 
+  const handleRelationshipChange = (value: string) => {
+    setRelationship(value);
+    setFamilyRelation('');
+    setAlumniName('');
+    setAlumniAdmissionYear('');
+    setAlumniRelation('');
+  };
+
   const resetForm = () => {
     setCeremonyType('');
     setCategory('');
     setCustomCategory('');
     setRelationship('');
+    setFamilyRelation('');
+    setAlumniName('');
+    setAlumniAdmissionYear('');
+    setAlumniRelation('');
     setStartDate(undefined);
     setHasEndDate(false);
     setHasTime(false);
@@ -144,10 +186,18 @@ export const CeremonyCreateDialog = ({
 
   const resolvedCategory = isCustom ? customCategory.trim() : category;
 
+  const isRelationshipValid =
+    relationship === '본인' ||
+    (relationship === '가족' && familyRelation !== '') ||
+    (relationship === '동문소식 대신 전달' &&
+      alumniName.trim() !== '' &&
+      alumniAdmissionYear.trim() !== '' &&
+      alumniRelation !== '');
+
   const isValid =
     ceremonyType !== '' &&
     resolvedCategory !== '' &&
-    relationship !== '' &&
+    isRelationshipValid &&
     startDate !== undefined &&
     notifyAll &&
     phone.trim() !== '' &&
@@ -238,7 +288,7 @@ export const CeremonyCreateDialog = ({
               <Tab
                 variant="chip"
                 value={relationship}
-                onValueChange={setRelationship}
+                onValueChange={handleRelationshipChange}
               >
                 <Tab.List>
                   {RELATIONSHIP_OPTIONS.map((opt) => (
@@ -249,6 +299,86 @@ export const CeremonyCreateDialog = ({
                 </Tab.List>
               </Tab>
             </FormSection>
+
+            {/* 상세 관계 - 가족 */}
+            {relationship === '가족' && (
+              <FormSection title="상세 관계">
+                <Tab
+                  variant="chip"
+                  value={familyRelation}
+                  onValueChange={setFamilyRelation}
+                >
+                  <div className="flex flex-col gap-2">
+                    <Tab.List>
+                      {FAMILY_RELATIONS.slice(0, 6).map((rel) => (
+                        <Tab.TabItem key={rel} value={rel}>
+                          {rel}
+                        </Tab.TabItem>
+                      ))}
+                    </Tab.List>
+                    <Tab.List>
+                      {FAMILY_RELATIONS.slice(6).map((rel) => (
+                        <Tab.TabItem key={rel} value={rel}>
+                          {rel}
+                        </Tab.TabItem>
+                      ))}
+                    </Tab.List>
+                  </div>
+                </Tab>
+              </FormSection>
+            )}
+
+            {/* 동문소식 대신 전달 - 대상 성함 + 관계 */}
+            {relationship === '동문소식 대신 전달' && (
+              <>
+                <FormSection title="대상 성함">
+                  <Field>
+                    <TextInput
+                      value={alumniName}
+                      onChange={(e) => setAlumniName(e.target.value)}
+                      placeholder="대상 성함을 입력해주세요."
+                      className="rounded-xl bg-white"
+                    />
+                  </Field>
+                </FormSection>
+
+                <FormSection title="동문 학번 (입학년도)">
+                  <Field>
+                    <TextInput
+                      value={alumniAdmissionYear}
+                      onChange={(e) => setAlumniAdmissionYear(e.target.value)}
+                      placeholder="동문 학번을 입력해주세요."
+                      className="rounded-xl bg-white"
+                    />
+                  </Field>
+                </FormSection>
+
+                <FormSection title="대상과의 관계">
+                  <Tab
+                    variant="chip"
+                    value={alumniRelation}
+                    onValueChange={setAlumniRelation}
+                  >
+                    <div className="flex flex-col gap-2">
+                      <Tab.List>
+                        {ALUMNI_RELATIONS.slice(0, 4).map((rel) => (
+                          <Tab.TabItem key={rel} value={rel}>
+                            {rel}
+                          </Tab.TabItem>
+                        ))}
+                      </Tab.List>
+                      <Tab.List>
+                        {ALUMNI_RELATIONS.slice(4).map((rel) => (
+                          <Tab.TabItem key={rel} value={rel}>
+                            {rel}
+                          </Tab.TabItem>
+                        ))}
+                      </Tab.List>
+                    </div>
+                  </Tab>
+                </FormSection>
+              </>
+            )}
 
             {/* 경조사 기간 */}
             <FormSection title="경조사 기간">
