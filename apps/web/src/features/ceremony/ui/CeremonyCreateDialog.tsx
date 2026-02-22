@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import {
   Button,
   CTAButton,
+  CalendarIcon,
   Camera,
   Checkbox,
-  DatePicker,
   Dialog,
   Field,
   HStack,
@@ -52,6 +52,40 @@ const CATEGORY_MAP: Record<CeremonyType, CategoryOption[]> = {
   경사: HAPPY_CATEGORIES,
   조사: SAD_CATEGORIES,
 };
+
+const formatDate = (value: string) => {
+  const digits = value.replace(/\D/g, '').slice(0, 8);
+  if (digits.length <= 4) return digits;
+  if (digits.length <= 6) return `${digits.slice(0, 4)}-${digits.slice(4)}`;
+  return `${digits.slice(0, 4)}-${digits.slice(4, 6)}-${digits.slice(6)}`;
+};
+
+const formatTime = (value: string) => {
+  const digits = value.replace(/\D/g, '').slice(0, 4);
+  if (digits.length <= 2) return digits;
+  return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+};
+
+const useFormattedInput = (
+  formatter: (v: string) => string,
+  setter: (v: string) => void,
+) =>
+  useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const input = e.target;
+      const raw = input.value;
+      const cursor = input.selectionStart ?? raw.length;
+      const formatted = formatter(raw);
+      setter(formatted);
+
+      const diff = formatted.length - raw.length;
+      requestAnimationFrame(() => {
+        const pos = cursor + diff;
+        input.setSelectionRange(pos, pos);
+      });
+    },
+    [formatter, setter],
+  );
 
 const RELATIONSHIP_OPTIONS = ['본인', '가족', '동문소식 대신 전달'] as const;
 
@@ -118,9 +152,17 @@ export const CeremonyCreateDialog = ({
   const [alumniName, setAlumniName] = useState('');
   const [alumniAdmissionYear, setAlumniAdmissionYear] = useState('');
   const [alumniRelation, setAlumniRelation] = useState('');
-  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [hasEndDate, setHasEndDate] = useState(false);
   const [hasTime, setHasTime] = useState(false);
+
+  const onStartDateChange = useFormattedInput(formatDate, setStartDate);
+  const onEndDateChange = useFormattedInput(formatDate, setEndDate);
+  const onStartTimeChange = useFormattedInput(formatTime, setStartTime);
+  const onEndTimeChange = useFormattedInput(formatTime, setEndTime);
   const [notifyAll, setNotifyAll] = useState(false);
   const [content, setContent] = useState('');
   const [postalCode] = useState('');
@@ -147,6 +189,19 @@ export const CeremonyCreateDialog = ({
     setAlumniRelation('');
   };
 
+  const handleEndDateToggle = (checked: boolean) => {
+    setHasEndDate(checked);
+    if (!checked) setEndDate('');
+  };
+
+  const handleTimeToggle = (checked: boolean) => {
+    setHasTime(checked);
+    if (!checked) {
+      setStartTime('');
+      setEndTime('');
+    }
+  };
+
   const resetForm = () => {
     setCeremonyType('');
     setCategory('');
@@ -156,7 +211,10 @@ export const CeremonyCreateDialog = ({
     setAlumniName('');
     setAlumniAdmissionYear('');
     setAlumniRelation('');
-    setStartDate(undefined);
+    setStartDate('');
+    setEndDate('');
+    setStartTime('');
+    setEndTime('');
     setHasEndDate(false);
     setHasTime(false);
     setNotifyAll(false);
@@ -198,7 +256,7 @@ export const CeremonyCreateDialog = ({
     ceremonyType !== '' &&
     resolvedCategory !== '' &&
     isRelationshipValid &&
-    startDate !== undefined &&
+    startDate.trim() !== '' &&
     notifyAll &&
     phone.trim() !== '' &&
     relatedLink.trim() !== '';
@@ -383,17 +441,82 @@ export const CeremonyCreateDialog = ({
             {/* 경조사 기간 */}
             <FormSection title="경조사 기간">
               <div className="flex flex-col gap-3">
-                <DatePicker
-                  variant="white"
-                  value={startDate}
-                  onValueChange={setStartDate}
-                  placeholder="날짜 선택"
-                />
-                <Toggle checked={hasEndDate} onCheckedChange={setHasEndDate}>
+                {/* 시작 행 */}
+                <div className="flex items-center gap-2">
+                  <Field className="min-w-0 flex-1">
+                    <TextInput
+                      value={startDate}
+                      onChange={onStartDateChange}
+                      placeholder="연도-월-일"
+                      maxLength={10}
+                      inputMode="numeric"
+                      rightIcon={<CalendarIcon size={20} color="gray-400" />}
+                      className="rounded-xl bg-white"
+                    />
+                  </Field>
+                  {(hasEndDate || hasTime) && (
+                    <>
+                      <span className="w-2 shrink-0 border-t border-gray-300" />
+                      <Field className="min-w-0 flex-1">
+                        {hasTime ? (
+                          <TextInput
+                            value={startTime}
+                            onChange={onStartTimeChange}
+                            placeholder="시간"
+                            maxLength={5}
+                            inputMode="numeric"
+                            className="rounded-xl bg-white"
+                          />
+                        ) : (
+                          <TextInput
+                            value={endDate}
+                            onChange={onEndDateChange}
+                            placeholder="연도-월-일"
+                            maxLength={10}
+                            inputMode="numeric"
+                            className="rounded-xl bg-white"
+                          />
+                        )}
+                      </Field>
+                    </>
+                  )}
+                </div>
+
+                {/* 종료 행 (종료일 + 시간 모두 ON일 때만) */}
+                {hasEndDate && hasTime && (
+                  <div className="flex items-center gap-2">
+                    <Field className="min-w-0 flex-1">
+                      <TextInput
+                        value={endDate}
+                        onChange={onEndDateChange}
+                        placeholder="연도-월-일"
+                        maxLength={10}
+                        inputMode="numeric"
+                        className="rounded-xl bg-white"
+                      />
+                    </Field>
+                    <span className="w-2 shrink-0 border-t border-gray-300" />
+                    <Field className="min-w-0 flex-1">
+                      <TextInput
+                        value={endTime}
+                        onChange={onEndTimeChange}
+                        placeholder="시간"
+                        maxLength={5}
+                        inputMode="numeric"
+                        className="rounded-xl bg-white"
+                      />
+                    </Field>
+                  </div>
+                )}
+
+                <Toggle
+                  checked={hasEndDate}
+                  onCheckedChange={handleEndDateToggle}
+                >
                   <Toggle.Switch />
                   <Toggle.Label>종료일</Toggle.Label>
                 </Toggle>
-                <Toggle checked={hasTime} onCheckedChange={setHasTime}>
+                <Toggle checked={hasTime} onCheckedChange={handleTimeToggle}>
                   <Toggle.Switch />
                   <Toggle.Label>시간 포함</Toggle.Label>
                 </Toggle>
