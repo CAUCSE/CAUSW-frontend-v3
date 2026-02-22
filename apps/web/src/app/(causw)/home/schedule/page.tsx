@@ -1,5 +1,5 @@
 import { SchedulePage } from '@/_pages/schedule';
 
-export default function Schedule() {
+export default function Page() {
   return <SchedulePage />;
 }

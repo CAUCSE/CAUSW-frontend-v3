@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { ScheduleItem, TAB_OPTIONS } from '../model';
+import { TAB_OPTIONS, ScheduleItem } from '../../model';
 
 import { ActionCard, COPY, EmptyStateView } from '@/shared';
 

@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
-import { ScheduleItem, ScheduleListWidget } from '@/widgets/schedule';
+import { ScheduleItem } from '@/widgets/home/model';
+import { ScheduleListWidget } from '@/widgets/home/ui/schedule';
 
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 

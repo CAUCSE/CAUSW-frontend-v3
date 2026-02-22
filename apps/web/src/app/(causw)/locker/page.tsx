@@ -1,5 +1,5 @@
 import { LockerListPage } from '@/_pages/locker';
 
-export default function Locker() {
+export default function Page() {
   return <LockerListPage />;
 }

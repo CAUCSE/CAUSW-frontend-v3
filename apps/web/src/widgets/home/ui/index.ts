@@ -5,3 +5,4 @@ export * from './HomeHeader';
 export * from './HomeNotificationCard';
 export * from './HomeQuickMenu';
 export * from './HomeScheduleList';
+export * from './schedule';
