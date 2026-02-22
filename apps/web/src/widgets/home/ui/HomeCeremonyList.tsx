@@ -82,9 +82,8 @@ export function HomeCeremonyList() {
                 key={item.id}
                 link={item.link}
                 title={item.title}
-                icon={<HeartColored size={20} className="text-[#FFC100]" />}
+                icon={<HeartColored size={24} />}
                 descriptions={[item.date, item.type]}
-                size="sm"
               />
             ))}
           </VStack>

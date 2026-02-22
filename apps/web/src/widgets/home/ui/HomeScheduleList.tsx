@@ -125,7 +125,6 @@ export function HomeScheduleList() {
                   item.isUpcoming ? 'bg-blue-gradient' : 'bg-blue-100'
                 }
                 descriptions={[item.date, item.tag]}
-                size="sm"
               />
             ))
           ) : (

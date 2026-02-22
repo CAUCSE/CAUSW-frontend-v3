@@ -83,12 +83,8 @@ function ScheduleSection({
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'}
               descriptions={[item.date, item.tag]}
-              size="md"
               className={mergeStyles(
                 'rounded-xl border border-gray-100 bg-white p-4',
-                item.link
-                  ? 'cursor-pointer hover:border-blue-200 hover:bg-blue-50/30'
-                  : 'cursor-default',
               )}
             />
           ))

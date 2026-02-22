@@ -16,10 +16,7 @@ interface ActionCardProps {
   descriptions: ReactNode[];
   icon: ReactNode;
   iconBgClass?: string;
-  /** 'sm'은 h-10(40px), 'md'는 h-12(48px) */
-  size?: 'sm' | 'md';
   link?: string;
-  /** 외부 컨테이너 추가 스타일 (border, padding 등) */
   className?: string;
   rightElement?: ReactNode;
 }
@@ -29,54 +26,36 @@ export function ActionCard({
   descriptions,
   icon,
   iconBgClass = 'bg-gray-100',
-  size = 'sm',
   link,
   className,
   rightElement,
 }: ActionCardProps) {
-  const isMd = size === 'md';
-
   const CardContent = (
     <HStack
       className={mergeStyles(
-        'w-full items-center justify-between transition-colors',
-        isMd ? 'gap-4' : 'gap-5',
+        'w-full items-center justify-between gap-5 transition-colors',
         className,
       )}
     >
-      <HStack
-        className={mergeStyles('flex-1 items-center', isMd ? 'gap-4' : 'gap-5')}
-      >
+      <HStack className="flex-1 items-center gap-5">
         <div
           className={mergeStyles(
-            'flex shrink-0 items-center justify-center rounded-[0.75rem]',
-            isMd ? 'h-12 w-12' : 'h-10 w-10',
+            'flex h-10 w-10 shrink-0 items-center justify-center rounded-[0.75rem]',
             iconBgClass,
           )}
         >
           {icon}
         </div>
 
-        <VStack
-          className={mergeStyles(
-            'flex-1 justify-center overflow-hidden',
-            isMd ? 'gap-1' : 'gap-0.5',
-          )}
-        >
-          <Text
-            typography="subtitle-16-bold"
-            className="truncate text-gray-900"
-          >
+        <VStack className={'flex-1 justify-center gap-0 overflow-hidden'}>
+          <Text typography="subtitle-16-bold" className="truncate">
             {title}
           </Text>
           <HStack className="items-center gap-1 text-sm text-gray-400">
             {descriptions.map((desc, idx) => (
               <React.Fragment key={idx}>
                 {typeof desc === 'string' ? (
-                  <Text
-                    typography={isMd ? 'body-14-medium' : 'body-14-regular'}
-                    textColor="gray-400"
-                  >
+                  <Text typography="body-14-regular" textColor="gray-400">
                     {desc}
                   </Text>
                 ) : (
@@ -104,7 +83,7 @@ export function ActionCard({
   if (!link) return CardContent;
 
   return (
-    <Link href={link} className={mergeStyles('w-full', !isMd && 'block')}>
+    <Link href={link} className="w-full cursor-pointer">
       {CardContent}
     </Link>
   );
