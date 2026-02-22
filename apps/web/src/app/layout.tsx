@@ -4,6 +4,8 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
+import { Toaster } from './providers/toast';
+
 import { QueryProviderWithDevtools } from '@/shared';
 
 export const metadata: Metadata = {
@@ -22,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`antialiased`}>
-        <QueryProviderWithDevtools>{children}</QueryProviderWithDevtools>
+        <QueryProviderWithDevtools>
+          <Toaster />
+
+          {children}
+        </QueryProviderWithDevtools>
       </body>
     </html>
   );
