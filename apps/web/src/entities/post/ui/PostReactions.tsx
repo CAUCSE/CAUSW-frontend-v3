@@ -1,45 +1,26 @@
-import { Chip, Heart, HStack, Share } from '@causw/cds';
+import { Button, Heart, HStack } from '@causw/cds';
 
 interface PostReactionsProps {
-  liked: boolean;
+  active: boolean;
   likeCount: number;
   onLikeClick: () => void;
-  onShareClick: () => void;
 }
 
 export const PostReactions = ({
-  liked,
+  active,
   likeCount,
   onLikeClick,
-  onShareClick,
 }: PostReactionsProps) => {
   return (
     <HStack gap="sm">
-      <Chip
-        asChild
-        color="lightgray"
-        size="sm"
-        onClick={onLikeClick}
-        className={`rounded-sm px-3 py-2 ${liked && 'bg-red-100 text-red-400'}`}
-      >
-        <HStack as="button" gap="sm" align="center" className="gap-1.5">
-          <Heart size={16} color={liked ? 'red-400' : 'gray-300'} />
-          <span>좋아요</span>
-          <span>{likeCount}</span>
-        </HStack>
-      </Chip>
-      <Chip
-        asChild
-        color="lightgray"
-        size="sm"
-        onClick={onShareClick}
-        className="rounded-sm px-3 py-2"
-      >
-        <HStack as="button" gap="sm" align="center" className="gap-1.5">
-          <Share size={16} />
-          <span>공유하기</span>
-        </HStack>
-      </Chip>
+      <Button color={active ? 'red' : 'gray'} onClick={onLikeClick}>
+        <Heart size={16} color={active ? 'red-400' : 'gray-300'} />
+        좋아요 {likeCount}
+      </Button>
+      {/* TODO: 공유하기 기능 상세 스펙 구체화 후 활성화
+      <Button color="gray" onClick={onShareClick}>
+        <Share size={16} /> 공유하기
+      </Button> */}
     </HStack>
   );
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { HStack, Stack } from '@causw/cds';
+import { HStack, VStack } from '@causw/cds';
 
 import { ReportFlow } from '@/widgets/report';
 
@@ -22,6 +22,19 @@ export const PostContent = ({
 }: PostContentProps) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(3);
+
+  const handleLikeClick = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeCount((prev) => prev - 1);
+    } else {
+      setIsLiked(true);
+      setLikeCount((prev) => prev + 1);
+    }
+  };
 
   const submitReport = () => {};
   const submitBlock = () => {};
@@ -45,8 +58,8 @@ export const PostContent = ({
   };
 
   return (
-    <Stack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
-      <Stack gap="sm">
+    <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
+      <VStack gap="sm">
         <HStack as="header" align="center" justify="between">
           <PostHeader />
           <PostActionMenu
@@ -59,7 +72,7 @@ export const PostContent = ({
           />
         </HStack>
         <PostBody />
-      </Stack>
+      </VStack>
 
       <PostVote
         options={[
@@ -70,10 +83,9 @@ export const PostContent = ({
       />
 
       <PostReactions
-        liked={true}
-        likeCount={3}
-        onLikeClick={() => {}}
-        onShareClick={() => {}}
+        active={isLiked}
+        likeCount={likeCount}
+        onLikeClick={handleLikeClick}
       />
 
       <ReportFlow
@@ -87,6 +99,6 @@ export const PostContent = ({
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}
       />
-    </Stack>
+    </VStack>
   );
 };
