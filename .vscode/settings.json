@@ -4,6 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "todo-tree.filtering.excludeGlobs": ["**/node_modules/**"],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
