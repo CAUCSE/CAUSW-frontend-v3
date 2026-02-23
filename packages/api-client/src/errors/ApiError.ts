@@ -15,8 +15,9 @@ export class ApiError<T = any> extends Error {
     code?: string,
     request?: any,
     response?: ApiResponse<T>,
+    options?: ErrorOptions,
   ) {
-    super(message);
+    super(message, options);
     this.name = 'ApiError';
     this.config = config;
     this.code = code;
