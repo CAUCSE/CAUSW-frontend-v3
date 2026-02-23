@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { toast } from '@/shared/lib/toast';
+import { toast } from '@/shared/model';
 
 // TODO : capacitor 앱 테스트를 위한 임시 버튼 생성 -> 해당 페이지 생성 후에 삭제 필요
 export default function Home() {

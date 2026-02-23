@@ -4,9 +4,7 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
-import { Toaster } from './providers/toast';
-
-import { QueryProviderWithDevtools } from '@/shared';
+import { QueryProviderWithDevtools, Toaster } from '@/shared';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',

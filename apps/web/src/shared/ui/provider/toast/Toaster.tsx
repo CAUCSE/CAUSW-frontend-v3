@@ -9,7 +9,7 @@ import {
   ToastViewport,
 } from '@causw/cds';
 
-import { toast, ToastType, useToastStore } from '@/shared/lib/toast';
+import { toast, ToastType, useToastStore } from '@/shared/model/toast';
 
 const Icons = {
   success: () => <SuccessColored size={20} />,
