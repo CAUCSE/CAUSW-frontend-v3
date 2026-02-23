@@ -112,6 +112,50 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  // App Router page 규칙
+  {
+    files: ['**/src/app/**/page.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ExportDefaultDeclaration > ArrowFunctionExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > FunctionExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > FunctionDeclaration[id.name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > Identifier[name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > CallExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > ClassDeclaration[id.name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > ClassExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;
