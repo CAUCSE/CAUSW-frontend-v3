@@ -6,13 +6,13 @@ const config: CapacitorConfig = {
   webDir: 'out',
   server: {
     //배포 시
-    // url: 'https://www.causw.co.kr',
-    // cleartext: false,
+    url: 'https://causw-v3-web-dev.vercel.app',
+    cleartext: false,
 
     //local 테스트 시
-    url: 'http://localhost:3000', //ios
+    //url: 'http://localhost:3000/setting', //ios
     //url: 'http://10.0.2.2:3000', //android
-    cleartext: true,
+    //cleartext: true,
   },
   ios: {
     contentInset: 'never',
@@ -24,7 +24,7 @@ const config: CapacitorConfig = {
     StatusBar: {
       style: 'LIGHT_CONTENT',
       backgroundColor: '#ffffff',
-      overlaysWebView: false,
+      overlaysWebView: true,
     },
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert'],

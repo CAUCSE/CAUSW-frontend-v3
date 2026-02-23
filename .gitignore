@@ -8,7 +8,6 @@ coverage
 
 # next.js
 .next/
-out/
 
 # production
 build
@@ -40,3 +39,6 @@ next-env.d.ts
 # cache
 .eslintcache
 .prettiercache
+
+# mcp
+mcp.json

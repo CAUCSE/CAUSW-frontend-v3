@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <h1>동문 네트워크 - 재학생</h1>
       <button
-        onClick={() => router.push('./home')}
+        onClick={() => router.push('./setting')}
         className="h-30 w-60 rounded-xl bg-yellow-300"
       >
         /home으로 이동
