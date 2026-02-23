@@ -28,7 +28,10 @@ export const ReplyPreview = ({ replyTarget, onCancel }: ReplyPreviewProps) => {
           {replyTarget.content}
         </Text>
       </Stack>
-      <button onClick={onCancel} className="cursor-pointer">
+      <button
+        onClick={onCancel}
+        className="cursor-pointer transition-opacity hover:opacity-70"
+      >
         <Close size={16} color="gray-400" />
       </button>
     </HStack>

@@ -25,6 +25,19 @@ export const ReplyItem = ({
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+  const handleLikeClick = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeCount((prev) => prev - 1);
+    } else {
+      setIsLiked(true);
+      setLikeCount((prev) => prev + 1);
+    }
+  };
+
   const submitReport = () => {};
   const submitBlock = () => {};
 
@@ -51,6 +64,9 @@ export const ReplyItem = ({
         author={reply.author}
         content={reply.content}
         time={reply.time}
+        isLiked={isLiked}
+        likeCount={likeCount}
+        onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
             id: reply.id,

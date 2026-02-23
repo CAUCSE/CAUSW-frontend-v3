@@ -27,7 +27,7 @@ export const PostActionMenu = ({
   return (
     <Dropdown open={isOpen} onOpenChange={() => onToggle(id)}>
       <Dropdown.Trigger asChild>
-        <button>
+        <button className="translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100">
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>

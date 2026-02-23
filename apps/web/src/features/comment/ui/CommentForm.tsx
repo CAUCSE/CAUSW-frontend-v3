@@ -4,9 +4,7 @@ import { Checkbox, HStack, Stack, Text } from '@causw/cds';
 
 import { useCommentForm } from '../model';
 
-import { ReplyPreview } from './ReplyPreview';
-
-import { ReplyTarget } from '@/entities';
+import { ReplyPreview, ReplyTarget } from '@/entities';
 
 interface CommentFormProps {
   replyTarget: ReplyTarget;

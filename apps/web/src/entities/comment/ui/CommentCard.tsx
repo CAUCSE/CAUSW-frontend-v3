@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Avatar, Heart, HStack, Stack, Text } from '@causw/cds';
+import { Avatar, Heart, HStack, VStack, Text } from '@causw/cds';
 
 interface CommentCardProps {
   author: string;
@@ -10,6 +10,9 @@ interface CommentCardProps {
   isReply?: boolean;
   menuSlot?: ReactNode;
   onReplyClick?: () => void;
+  isLiked?: boolean;
+  likeCount?: number;
+  onLikeClick?: () => void;
 }
 
 export const CommentCard = ({
@@ -20,6 +23,9 @@ export const CommentCard = ({
   isReply,
   menuSlot,
   onReplyClick,
+  isLiked = false,
+  likeCount = 0,
+  onLikeClick,
 }: CommentCardProps) => {
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
@@ -33,8 +39,8 @@ export const CommentCard = ({
           </Text>
         ) : (
           // 차단되지 않은 경우
-          <Stack className="w-full gap-3">
-            <Stack gap="none">
+          <VStack className="w-full gap-3">
+            <VStack gap="none">
               <HStack align="center" justify="between">
                 <HStack gap="sm" align="center">
                   <Text typography="body-15-semibold" textColor="gray-800">
@@ -54,27 +60,35 @@ export const CommentCard = ({
               >
                 {content}
               </Text>
-            </Stack>
+            </VStack>
 
             <HStack align="center" justify="between">
               <button
                 type="button"
                 onClick={onReplyClick}
-                className="cursor-pointer"
+                className="cursor-pointer transition-opacity hover:opacity-70"
               >
                 <Text typography="body-14-medium" textColor="gray-400">
                   답글달기
                 </Text>
               </button>
 
-              <HStack as="button" align="center" className="gap-1.5">
-                <Heart size={16} color="gray-200" />
-                <Text typography="body-14-medium" textColor="gray-400">
-                  {3}
+              <HStack
+                as="button"
+                align="center"
+                onClick={onLikeClick}
+                className="translate-x-1 cursor-pointer gap-1.5 px-1 transition-opacity hover:opacity-70"
+              >
+                <Heart size={16} color={isLiked ? 'red-400' : 'gray-200'} />
+                <Text
+                  typography="body-14-medium"
+                  textColor={isLiked ? 'red-400' : 'gray-400'}
+                >
+                  {likeCount}
                 </Text>
               </HStack>
             </HStack>
-          </Stack>
+          </VStack>
         )}
       </HStack>
     </article>
