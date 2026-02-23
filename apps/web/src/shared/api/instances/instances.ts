@@ -6,7 +6,7 @@ import {
 } from '@causw/api-client';
 
 import { BASE_URL } from '@/shared/storage';
-import { DefaultResponseField } from '@/shared/types/api/response';
+import { DefaultResponseField } from '@/shared/types';
 import { unwrapResponse } from '@/shared/utils/api';
 
 import {

@@ -2,38 +2,11 @@ import { Fragment } from 'react';
 
 import Link from 'next/link';
 
-import {
-  CafeteriaColored,
-  FlagColored,
-  HStack,
-  LockerColored,
-  Separator,
-  Text,
-} from '@causw/cds';
+import { HStack, Separator, Text } from '@causw/cds';
 
-import { COPY, EXTERNAL_ROUTES, ROUTES } from '@/shared';
+import { QUICK_MENU_ITEMS } from '@/shared/constants';
 
-//TODO : 학식 메뉴 아이콘 바꾸기
-
-const QUICK_MENU_ITEMS = [
-  {
-    label: COPY.QUICK_MENU_MEETINGROOM,
-    icon: <FlagColored size={24} />,
-    href: EXTERNAL_ROUTES.CAU_MEETINGROOM,
-  },
-  {
-    label: COPY.QUICK_MENU_CAFETERIA,
-    icon: <CafeteriaColored size={24} />,
-    href: EXTERNAL_ROUTES.CAU_CAFETERIA,
-  },
-  {
-    label: COPY.QUICK_MENU_LOCKER,
-    icon: <LockerColored size={24} />,
-    href: ROUTES.LOCKER,
-  },
-];
-
-export function HomeQuickMenu() {
+export function QuickMenu() {
   return (
     <HStack className="w-full items-center justify-around rounded-2xl bg-white px-8 py-5">
       {QUICK_MENU_ITEMS.map((item, index) => (

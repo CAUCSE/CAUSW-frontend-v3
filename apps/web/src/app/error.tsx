@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { ErrorView } from '@/shared';
+import { ErrorView } from '@/shared/ui';
 
 export default function ErrorPage({
   error,

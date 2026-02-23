@@ -1,14 +1,17 @@
 import { VStack } from '@causw/cds';
 
+import { CalendarEventListPreview } from '@/widgets/calendar';
 import {
-  HomeCeremonyList,
-  HomeCeremonyBanner,
-  HomeGreeting,
-  HomeHeader,
-  HomeNotificationCard,
-  HomeQuickMenu,
-  HomeScheduleList,
-} from '@/widgets/home';
+  CeremonyListPreview,
+  CeremonyRegisterBanner,
+} from '@/widgets/ceremony';
+import {
+  NotificationHeader,
+  NotificationPopupCard,
+} from '@/widgets/notification';
+import { UserGreeting } from '@/widgets/user';
+
+import { QuickMenu } from '@/shared/ui';
 
 //TODO : 새 알림 api 연동 -> header statusdot & newNotification 교체
 //TODO : 해당 페이지 나오면 상세 페이지들 주소 수정
@@ -20,38 +23,38 @@ export function HomePage() {
     <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 w-full gap-2 px-4 pb-[2.125rem]">
       {/* Mobile Header */}
       <div className="tablet:hidden sticky top-0 z-10">
-        <HomeHeader />
+        <NotificationHeader />
       </div>
 
       {/* Desktop Greeting */}
       <div className="tablet:block hidden">
-        <HomeGreeting />
+        <UserGreeting />
       </div>
 
       <VStack className="desktop:gap-6 gap-4">
-        {newNotification && <HomeNotificationCard />}
+        {newNotification && <NotificationPopupCard />}
 
         {isAlumni && (
           <div className="desktop:block hidden">
-            <HomeCeremonyBanner />
+            <CeremonyRegisterBanner />
           </div>
         )}
 
         <div className="desktop:grid-cols-2 desktop:gap-x-6 desktop:gap-y-8 grid w-full grid-cols-1 gap-4">
-          {!isAlumni && <HomeQuickMenu />}
+          {!isAlumni && <QuickMenu />}
 
           {!isAlumni && (
             <div className="desktop:block hidden">
-              <HomeCeremonyBanner />
+              <CeremonyRegisterBanner />
             </div>
           )}
 
-          <HomeScheduleList />
+          <CalendarEventListPreview />
 
           <div className="desktop:hidden">
-            <HomeCeremonyBanner />
+            <CeremonyRegisterBanner />
           </div>
-          <HomeCeremonyList />
+          <CeremonyListPreview />
         </div>
       </VStack>
     </VStack>

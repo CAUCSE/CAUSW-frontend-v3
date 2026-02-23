@@ -2,10 +2,12 @@ import Link from 'next/link';
 
 import { Bell, HStack, Text } from '@causw/cds';
 
-import { ROUTES, StatusDot } from '@/shared';
-//TODO : 새로운 알림 api 정보 필요
-//TODO : 로고 변경
-export function HomeHeader() {
+import { ROUTES } from '@/shared/constants';
+import { StatusDot } from '@/shared/ui';
+
+export function NotificationHeader() {
+  //TODO : 새로운 알림 api 정보 필요
+  //TODO : 로고 변경
   const newNotification = true;
   return (
     <HStack className="w-full justify-between px-1 py-2">

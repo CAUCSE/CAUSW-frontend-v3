@@ -5,12 +5,18 @@ import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
-import { COPY, ActionHeader } from '@/shared';
-import { Calendar, CalendarEvent, ScheduleListWidget } from '@/widgets';
-import { ScheduleItem } from '@/widgets';
+import {
+  Calendar,
+  CalendarEvent,
+  CalendarEventItem,
+  CalendarEventList,
+} from '@/widgets/calendar';
+
+import { COPY } from '@/shared/constants';
+import { ActionHeader } from '@/shared/ui';
 
 //더미
-const SCHEDULE_ITEMS: ScheduleItem[] = [
+const SCHEDULE_ITEMS: CalendarEventItem[] = [
   {
     id: 1,
     title: '소프트 챌린저스',
@@ -137,7 +143,7 @@ export function SchedulePage() {
             className="tablet:py-20 tablet:px-4 shadow-none!"
           />
 
-          <ScheduleListWidget items={SCHEDULE_ITEMS} />
+          <CalendarEventList items={SCHEDULE_ITEMS} />
         </VStack>
       </VStack>
     </VStack>

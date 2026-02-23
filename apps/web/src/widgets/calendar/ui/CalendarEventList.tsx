@@ -12,16 +12,15 @@ import {
   VStack,
 } from '@causw/cds';
 
-//TODO : empty icon변경 after 디자인 시스템 수정
-import { TAB_OPTIONS, ScheduleItem } from '../../model';
+import { COPY } from '@/shared/constants';
+import { EventCard, NoDataView } from '@/shared/ui';
 
-import { EventCard, COPY, NoDataView } from '@/shared';
-
-interface ScheduleListWidgetProps {
-  items: ScheduleItem[];
+import { CalendarEventItem, TAB_OPTIONS } from '../model';
+interface CalendarEventListWidgetProps {
+  items: CalendarEventItem[];
 }
 
-export function ScheduleListWidget({ items }: ScheduleListWidgetProps) {
+export function CalendarEventList({ items }: CalendarEventListWidgetProps) {
   const [selectedTab, setSelectedTab] = useState('전체');
 
   const filteredItems = items.filter(
@@ -69,7 +68,7 @@ function ScheduleSection({
   emptyMessage,
 }: {
   title: string;
-  items: ScheduleItem[];
+  items: CalendarEventItem[];
   emptyMessage: string;
 }) {
   return (

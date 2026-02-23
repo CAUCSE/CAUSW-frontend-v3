@@ -10,8 +10,8 @@ import { TermsBottomSheet, TermsDialog } from '@/widgets/auth';
 
 import { infoSchema, type SignUpFormData } from '@/entities/auth';
 
-import { useBreakpoint, RHFInput } from '@/shared';
-
+import { useBreakpoint } from '@/shared/hooks';
+import { RHFInput } from '@/shared/ui';
 // TODO: bottom-sheet, dialog 렌더링 충돌 이슈 핸들링
 
 export const InfoStep = ({ onNext }: { onNext: () => void }) => {

@@ -5,7 +5,7 @@ import { SuccessColored } from '@causw/cds';
 
 import type { StepCardData } from '@/entities/auth';
 
-import { HighlightText } from '@/shared';
+import { HighlightText } from '@/shared/ui';
 
 interface EnrollmentStepCardProps extends StepCardData {
   onAction?: () => void;

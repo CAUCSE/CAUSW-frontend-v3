@@ -1,4 +1,4 @@
-import { getOriginalImageUrl } from '@/shared/lib/cloudfront';
+import { getOriginalImageUrl } from '@/shared/lib';
 
 export const saveImage = async (
   imageUrl: string,

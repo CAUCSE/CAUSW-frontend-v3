@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
-import { QueryProviderWithDevtools } from '@/shared';
+import { QueryProviderWithDevtools } from '@/shared/ui';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',

@@ -5,10 +5,10 @@ import Link from 'next/link';
 
 import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 
-import { COPY, ROUTES } from '@/shared';
+import { COPY, ROUTES } from '@/shared/constants';
 //TODO : 알림 내용 수정 api 연결 & 알림 띄우기 여부 api 연결
 
-export function HomeNotificationCard() {
+export function NotificationPopupCard() {
   const [isVisible, setIsVisible] = useState(true); //api 연결 후 수정
 
   if (!isVisible) return null;

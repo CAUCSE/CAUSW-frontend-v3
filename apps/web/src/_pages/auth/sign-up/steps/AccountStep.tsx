@@ -6,7 +6,7 @@ import { Text, CTAButton, VStack } from '@causw/cds';
 
 import { accountSchema, type SignUpFormData } from '@/entities/auth';
 
-import { RHFInput } from '@/shared';
+import { RHFInput } from '@/shared/ui';
 
 export const AccountStep = ({ onNext }: { onNext: () => void }) => {
   const { control } = useFormContext<SignUpFormData>();

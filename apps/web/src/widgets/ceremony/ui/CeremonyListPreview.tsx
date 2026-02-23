@@ -9,7 +9,8 @@ import {
   BellGrayColored,
 } from '@causw/cds';
 
-import { EventCard, COPY, ROUTES, NoDataView } from '@/shared';
+import { COPY, ROUTES } from '@/shared/constants';
+import { EventCard, NoDataView } from '@/shared/ui';
 //TODO : 경조사 종류에 따라 아이콘 분기
 const CEREMONY_ITEMS = [
   {
@@ -56,7 +57,7 @@ const CEREMONY_ITEMS = [
   },
 ];
 
-export function HomeCeremonyList() {
+export function CeremonyListPreview() {
   const isEmpty = CEREMONY_ITEMS.length === 0;
 
   return (

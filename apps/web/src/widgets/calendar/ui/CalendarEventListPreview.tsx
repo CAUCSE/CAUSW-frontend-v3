@@ -16,8 +16,11 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { EventCard, COPY, ROUTES, NoDataView } from '@/shared';
-import { Calendar, CalendarEvent } from '@/widgets';
+import { Calendar, CalendarEvent } from '@/widgets/calendar';
+
+import { COPY, ROUTES } from '@/shared/constants';
+import { EventCard, NoDataView } from '@/shared/ui';
+
 interface ScheduleItem {
   id: number;
   title: string;
@@ -105,7 +108,7 @@ const CALENDAR_EVENTS: CalendarEvent[] = [
   },
 ];
 
-export function HomeScheduleList() {
+export function CalendarEventListPreview() {
   return (
     <VStack>
       {/* Desktop Calendar */}

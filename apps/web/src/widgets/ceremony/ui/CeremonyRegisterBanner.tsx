@@ -8,11 +8,11 @@ import {
   EnvelopeColored,
 } from '@causw/cds';
 
-import { COPY } from '@/shared';
+import { COPY } from '@/shared/constants';
 
 //TODO : 경조사 신청 페이지 수정 with ROUTES
 
-export function HomeCeremonyBanner() {
+export function CeremonyRegisterBanner() {
   return (
     <Link href="/ceremony/apply" className="w-full">
       <div className="flex w-full items-center justify-between rounded-[1rem] bg-linear-to-r from-[#3786FF] to-[#98CDFF] py-[1.125rem] pr-3 pl-5">
