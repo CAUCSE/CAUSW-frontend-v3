@@ -1,4 +1,4 @@
-import { REPORT_OPTIONS } from './constants';
+import { REPORT_OPTIONS } from '../config/constants';
 
 export type ReportReason = keyof typeof REPORT_OPTIONS;
 

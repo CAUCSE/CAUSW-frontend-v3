@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 
-import { REPORT_OPTIONS, ReportReason } from '../model';
+import { REPORT_OPTIONS } from '../config';
+import { ReportReason } from '../model';
 
 import { ReportConfirmDialog } from './ReportConfirmDialog';
 import { ReportModal } from './ReportModal';
