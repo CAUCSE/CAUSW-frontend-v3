@@ -88,12 +88,35 @@ export class ApiClient {
         signal: controller.signal,
       });
     } catch (error) {
+      const errorOptions = { cause: error };
+
       if (error instanceof DOMException && error.name === 'AbortError') {
-        throw new ApiError('Request Timeout', config, 'ECONNABORTED', null);
+        throw new ApiError(
+          'Request Timeout',
+          config,
+          'ECONNABORTED',
+          null,
+          undefined,
+          errorOptions,
+        );
       } else if (error instanceof TypeError) {
-        throw new ApiError('Network Error', config, 'ERR_NETWORK', null);
+        throw new ApiError(
+          'Network Error',
+          config,
+          'ERR_NETWORK',
+          null,
+          undefined,
+          errorOptions,
+        );
       } else {
-        throw new ApiError('Unknown Error', config, 'UNKNOWN', null);
+        throw new ApiError(
+          'Unknown Error',
+          config,
+          'UNKNOWN',
+          null,
+          undefined,
+          errorOptions,
+        );
       }
     } finally {
       clearTimeout(timeoutId);
@@ -143,6 +166,7 @@ export class ApiClient {
         response.status.toString(),
         null,
         apiResponse,
+        { cause: apiResponse },
       );
       promise = Promise.reject(error);
     }

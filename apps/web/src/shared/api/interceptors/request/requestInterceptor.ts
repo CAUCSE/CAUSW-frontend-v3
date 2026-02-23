@@ -1,3 +1,4 @@
+import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage/auth';
 import { isServer } from '@/shared/utils';
 
@@ -8,8 +9,20 @@ export const setRequestInterceptors = (apiClient: BaseApiClient) => {
     const headers: Record<string, string> = {};
     let nextOptions: NextFetchRequestConfig = {};
 
-    // 토큰 주입
+    const refreshToken = await TokenManager.getRefreshToken();
     const accessToken = await TokenManager.getAccessToken();
+
+    if (!refreshToken && !accessToken) {
+      // TODO: 토큰 활용하지 않는 api의 경우 public 경로로 분리하여 분기 로직 추가
+      const newError = new AuthError(
+        'token-expired',
+        '토큰이 만료되었습니다. 다시 로그인해주세요.',
+      );
+      useAuthStore.getState().setAuthError(newError);
+      throw newError;
+    }
+
+    // 토큰 주입
     if (accessToken) {
       headers.Authorization = `Bearer ${accessToken}`;
     }
