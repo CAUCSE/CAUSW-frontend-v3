@@ -31,7 +31,10 @@ export const PostActionMenu = ({
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
-      <Dropdown.Content align="end">
+      <Dropdown.Content
+        align="end"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {isMine ? (
           <>
             <Dropdown.Item

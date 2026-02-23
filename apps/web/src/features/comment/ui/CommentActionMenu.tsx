@@ -31,7 +31,10 @@ export const CommentActionMenu = ({
           <Menu size={20} color="gray-500" />
         </button>
       </Dropdown.Trigger>
-      <Dropdown.Content align="end">
+      <Dropdown.Content
+        align="end"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {isMine ? (
           <>
             <Dropdown.Item
