@@ -78,7 +78,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
         {/* 데이터 변경 필요 */}
         {/* TODO: api 연결 후 onLogout 기능 구현 필요 */}
         <FooterProfile
-          img={'https://avatars.githubusercontent.com/u/54893898?v=4'}
+          img={''}
           name={'유지아'}
           email={'djdkwnl@cau.ac.kr'}
           onLogout={() => {}}
