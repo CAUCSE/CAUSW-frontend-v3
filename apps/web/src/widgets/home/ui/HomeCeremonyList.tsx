@@ -6,12 +6,11 @@ import {
   //ScholarColored,
   Text,
   VStack,
-  Bell,
+  BellGrayColored,
 } from '@causw/cds';
 
 import { EventCard, COPY, ROUTES, NoDataView } from '@/shared';
 //TODO : 경조사 종류에 따라 아이콘 분기
-//TODO : 데이터 없을떄 bell 아이콘 디자인 시스템에서 추가되면 수정
 const CEREMONY_ITEMS = [
   {
     id: 1,
@@ -71,7 +70,10 @@ export function HomeCeremonyList() {
         </Text>
 
         {isEmpty ? (
-          <NoDataView message={COPY.EMPTY_CEREMONY} icon={<Bell size={50} />} />
+          <NoDataView
+            message={COPY.EMPTY_CEREMONY}
+            icon={<BellGrayColored size={52} />}
+          />
         ) : (
           <VStack className="w-full gap-5">
             {CEREMONY_ITEMS.slice(0, 6).map((item) => (

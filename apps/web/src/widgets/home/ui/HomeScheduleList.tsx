@@ -8,7 +8,13 @@ import Link from 'next/link';
 //TODO : 더미 데이터 삭제 {new Date().getMonth() + 1}
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
 //TODO : NoDataView ui확인
-import { CaldendarIconColored, Flex, Text, VStack } from '@causw/cds';
+import {
+  CaldendarIconColored,
+  CalendarGrayColored,
+  Flex,
+  Text,
+  VStack,
+} from '@causw/cds';
 
 import { EventCard, COPY, ROUTES, NoDataView } from '@/shared';
 import { Calendar, CalendarEvent } from '@/widgets';
@@ -22,38 +28,38 @@ interface ScheduleItem {
 }
 
 const SCHEDULE_ITEMS: ScheduleItem[] = [
-  // {
-  //   id: 1,
-  //   title: '소프트 챌린저스',
-  //   date: '10/10 - 10/24',
-  //   tag: '집행부',
-  //   isUpcoming: false,
-  //   link: '',
-  // },
-  // {
-  //   id: 2,
-  //   title: '2학기 중간고사 기간',
-  //   date: '10/10 - 10/24',
-  //   tag: '학사',
-  //   isUpcoming: true,
-  //   link: 'd',
-  // },
-  // {
-  //   id: 3,
-  //   title: '총모꼬지',
-  //   date: '10/26',
-  //   tag: '집행부',
-  //   isUpcoming: false,
-  //   link: 'd',
-  // },
-  // {
-  //   id: 4,
-  //   title: '크자회의 날',
-  //   date: '10/31',
-  //   tag: '크자회',
-  //   isUpcoming: false,
-  //   link: 'd',
-  // },
+  {
+    id: 1,
+    title: '소프트 챌린저스',
+    date: '10/10 - 10/24',
+    tag: '집행부',
+    isUpcoming: false,
+    link: '',
+  },
+  {
+    id: 2,
+    title: '2학기 중간고사 기간',
+    date: '10/10 - 10/24',
+    tag: '학사',
+    isUpcoming: true,
+    link: 'd',
+  },
+  {
+    id: 3,
+    title: '총모꼬지',
+    date: '10/26',
+    tag: '집행부',
+    isUpcoming: false,
+    link: 'd',
+  },
+  {
+    id: 4,
+    title: '크자회의 날',
+    date: '10/31',
+    tag: '크자회',
+    isUpcoming: false,
+    link: 'd',
+  },
 ];
 
 const CALENDAR_EVENTS: CalendarEvent[] = [
@@ -130,7 +136,7 @@ export function HomeScheduleList() {
           ) : (
             <NoDataView
               message={COPY.EMPTY_SCHEDULE}
-              icon={<CaldendarIconColored size={48} />}
+              icon={<CalendarGrayColored size={48} />}
             />
           )}
         </VStack>

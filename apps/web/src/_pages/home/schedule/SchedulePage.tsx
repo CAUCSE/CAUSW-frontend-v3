@@ -1,6 +1,5 @@
 'use client';
 //TODO : 곧 다가올 목록이 단순이 upcoming만의 분기
-//TODO : empty state 아이콘 변경 (디자인 시스템에 추가)
 
 import { useRouter } from 'next/navigation';
 

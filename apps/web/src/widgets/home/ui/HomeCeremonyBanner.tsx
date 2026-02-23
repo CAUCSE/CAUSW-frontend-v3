@@ -1,9 +1,12 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { HStack, Text, VStack, ChevronRight } from '@causw/cds';
-
-import EnvelopeIcon from '../assets/envelope.svg';
+import {
+  HStack,
+  Text,
+  VStack,
+  ChevronRight,
+  EnvelopeColored,
+} from '@causw/cds';
 
 import { COPY } from '@/shared';
 
@@ -27,9 +30,9 @@ export function HomeCeremonyBanner() {
         </VStack>
 
         <HStack className="items-center gap-5">
-          {/* TODO : 아이콘 디자인 시스템에서 추가되면 수정 */}
-          <Image src={EnvelopeIcon} alt="Envelope" width={80} height={80} />
-          <ChevronRight size={16} className="shrink-0 text-gray-400" />
+          {/* TODO : 아이콘 디자인 시스템에서 js style 수정되면 확인필요 */}
+          <EnvelopeColored size={80} className="shrink-0" />
+          <ChevronRight size={16} color="white" className="shrink-0" />
         </HStack>
       </div>
     </Link>

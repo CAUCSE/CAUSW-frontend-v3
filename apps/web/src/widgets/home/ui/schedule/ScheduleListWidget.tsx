@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import {
   CaldendarIconColored,
+  CalendarGrayColored,
   Flex,
   mergeStyles,
   Tab,
@@ -92,7 +93,7 @@ function ScheduleSection({
         ) : (
           <NoDataView
             message={emptyMessage}
-            icon={<CaldendarIconColored size={48} />}
+            icon={<CalendarGrayColored size={48} />}
           />
         )}
       </VStack>
