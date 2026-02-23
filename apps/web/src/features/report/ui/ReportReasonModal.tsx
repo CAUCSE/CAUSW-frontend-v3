@@ -5,17 +5,17 @@ import {
   CTAButton,
   Dialog,
   HStack,
-  Stack,
   Text,
+  VStack,
 } from '@causw/cds';
 
 import { ReportReason } from '../model';
 
-import { ReportReasonSelect } from './ReportReasonSelect';
+import { ReasonSelectRadio } from './ReasonSelectRadio';
 
 import { useBreakpoint } from '@/shared';
 
-interface ReportModalProps {
+interface ReportReasonModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   reason: ReportReason;
@@ -23,13 +23,13 @@ interface ReportModalProps {
   onSubmit: () => void;
 }
 
-export const ReportModal = ({
+export const ReportReasonModal = ({
   open,
   setOpen,
   reason,
   setReason,
   onSubmit,
-}: ReportModalProps) => {
+}: ReportReasonModalProps) => {
   const { isMobileSize } = useBreakpoint();
 
   const handleClose = () => setOpen(false);
@@ -37,11 +37,11 @@ export const ReportModal = ({
   if (isMobileSize)
     return (
       <BottomSheet open={open} onOpenChange={setOpen}>
-        <BottomSheet.Content>
+        <BottomSheet.Content aria-describedby={undefined}>
           {/* TODO: BottomSheet Title 분리 필요 */}
           <BottomSheet.Header title="신고 사유 선택" />
           <BottomSheet.Body className="my-6">
-            <ReportReasonSelect value={reason} onChange={setReason} />
+            <ReasonSelectRadio value={reason} onChange={setReason} />
           </BottomSheet.Body>
           <BottomSheet.Footer>
             <HStack gap="sm">
@@ -59,16 +59,16 @@ export const ReportModal = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Dialog.Content width={420} className="pt-8">
-        <Stack gap="xl">
-          <Stack gap="lg">
+      <Dialog.Content width={420} className="pt-8" aria-describedby={undefined}>
+        <VStack gap="xl">
+          <VStack gap="lg">
             <Dialog.Title>
               <Text typography="subtitle-18-bold" textColor="gray-800">
                 신고 사유 선택
               </Text>
             </Dialog.Title>
-            <ReportReasonSelect value={reason} onChange={setReason} />
-          </Stack>
+            <ReasonSelectRadio value={reason} onChange={setReason} />
+          </VStack>
           <Dialog.Footer>
             <HStack gap="sm">
               <CTAButton onClick={handleClose} color="light" fullWidth>
@@ -79,7 +79,7 @@ export const ReportModal = ({
               </CTAButton>
             </HStack>
           </Dialog.Footer>
-        </Stack>
+        </VStack>
       </Dialog.Content>
     </Dialog>
   );

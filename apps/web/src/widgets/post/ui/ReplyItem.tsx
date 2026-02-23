@@ -2,13 +2,10 @@
 
 import { useState } from 'react';
 
+import { ReportFlow } from '@/widgets/report';
+
 import { Comment, CommentCard, ReplyTarget } from '@/entities';
-import {
-  BlockUserDialog,
-  CommentAction,
-  CommentActionMenu,
-  ReportFlow,
-} from '@/features';
+import { BlockUserModal, CommentAction, CommentActionMenu } from '@/features';
 
 interface ReplyItemProps {
   reply: Comment;
@@ -79,7 +76,7 @@ export const ReplyItem = ({
         onSubmitReport={submitReport}
       />
 
-      <BlockUserDialog
+      <BlockUserModal
         open={isBlockOpen}
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}

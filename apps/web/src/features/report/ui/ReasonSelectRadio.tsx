@@ -3,15 +3,15 @@ import { Radio, RadioGroup } from '@causw/cds';
 import { REPORT_OPTIONS } from '../config';
 import { ReportReason } from '../model';
 
-interface ReportReasonSelectProps {
+interface ReasonSelectRadioProps {
   value: ReportReason;
   onChange: (value: ReportReason) => void;
 }
 
-export const ReportReasonSelect = ({
+export const ReasonSelectRadio = ({
   value,
   onChange,
-}: ReportReasonSelectProps) => {
+}: ReasonSelectRadioProps) => {
   return (
     <RadioGroup
       name="report-reason"

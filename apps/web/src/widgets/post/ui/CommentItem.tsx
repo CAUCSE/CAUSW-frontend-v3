@@ -4,15 +4,12 @@ import { useState } from 'react';
 
 import { Stack } from '@causw/cds';
 
+import { ReportFlow } from '@/widgets/report';
+
 import { ReplyList } from './ReplyList';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities';
-import {
-  BlockUserDialog,
-  CommentAction,
-  CommentActionMenu,
-  ReportFlow,
-} from '@/features';
+import { BlockUserModal, CommentAction, CommentActionMenu } from '@/features';
 
 interface CommentItemProps {
   comment: Comment;
@@ -91,7 +88,7 @@ export const CommentItem = ({
         onSubmitReport={submitReport}
       />
 
-      <BlockUserDialog
+      <BlockUserModal
         open={isBlockOpen}
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}

@@ -1,1 +1,1 @@
-export * from './BlockUserDialog';
+export * from './BlockUserModal';

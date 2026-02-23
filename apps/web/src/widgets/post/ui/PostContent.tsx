@@ -2,13 +2,10 @@ import { useState } from 'react';
 
 import { HStack, Stack } from '@causw/cds';
 
+import { ReportFlow } from '@/widgets/report';
+
 import { PostBody, PostHeader, PostReactions, PostVote } from '@/entities';
-import {
-  BlockUserDialog,
-  PostAction,
-  PostActionMenu,
-  ReportFlow,
-} from '@/features';
+import { BlockUserModal, PostAction, PostActionMenu } from '@/features';
 
 interface PostContentProps {
   postId: number | string;
@@ -85,7 +82,7 @@ export const PostContent = ({
         onSubmitReport={submitReport}
       />
 
-      <BlockUserDialog
+      <BlockUserModal
         open={isBlockOpen}
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}

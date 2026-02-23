@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 
-import { REPORT_OPTIONS } from '../config';
-import { ReportReason } from '../model';
-
-import { ReportConfirmDialog } from './ReportConfirmDialog';
-import { ReportModal } from './ReportModal';
+import {
+  REPORT_OPTIONS,
+  ReportConfirmModal,
+  ReportReason,
+  ReportReasonModal,
+} from '@/features/report';
 
 interface ReportFlowProps {
   open: boolean;
@@ -41,25 +42,21 @@ export const ReportFlow = ({
 
   return (
     <>
-      {!isConfirm && (
-        <ReportModal
-          open={open}
-          setOpen={handleClose}
-          reason={reason}
-          setReason={setReason}
-          onSubmit={goConfirm}
-        />
-      )}
+      <ReportReasonModal
+        open={open && !isConfirm}
+        setOpen={handleClose}
+        reason={reason}
+        setReason={setReason}
+        onSubmit={goConfirm}
+      />
 
-      {isConfirm && (
-        <ReportConfirmDialog
-          open
-          title={option.confirm.title}
-          description={option.confirm.description}
-          onClose={handleBackToSelect}
-          onConfirm={handleConfirm}
-        />
-      )}
+      <ReportConfirmModal
+        open={open && isConfirm}
+        title={option.confirm.title}
+        description={option.confirm.description}
+        onClose={handleBackToSelect}
+        onConfirm={handleConfirm}
+      />
     </>
   );
 };
