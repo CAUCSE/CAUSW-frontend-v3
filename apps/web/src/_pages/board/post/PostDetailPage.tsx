@@ -2,10 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 
+import { PostDetailSection } from '@/widgets/post';
+
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 
 import { useBreakpoint } from '@/shared';
-import { PostDetailSection } from '@/widgets';
 
 export const PostDetailPage = () => {
   const router = useRouter();

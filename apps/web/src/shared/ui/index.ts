@@ -6,4 +6,3 @@ export * from './provider';
 export * from './fallback';
 export * from './StatusDot';
 export * from './CountBadge';
-export * from './DropdownMenu';

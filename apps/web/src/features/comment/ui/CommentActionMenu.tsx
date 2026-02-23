@@ -1,8 +1,6 @@
-import { Menu, Stack, Text } from '@causw/cds';
+import { Dropdown, Menu } from '@causw/cds';
 
 import { CommentAction } from '../model';
-
-import { DropdownMenu } from '@/shared';
 
 interface CommentActionMenuProps {
   id: string | number;
@@ -27,47 +25,42 @@ export const CommentActionMenu = ({
   };
 
   return (
-    <DropdownMenu
-      isOpen={isOpen}
-      onClose={onClose}
-      onToggle={() => onToggle(id)}
-      trigger={<Menu size={20} color="gray-500" />}
-    >
-      <Stack gap="none" className="divide-y divide-gray-100 py-1 break-keep">
+    <Dropdown open={isOpen} onOpenChange={() => onToggle(id)}>
+      <Dropdown.Trigger asChild>
+        <button className="cursor-pointer">
+          <Menu size={20} color="gray-500" />
+        </button>
+      </Dropdown.Trigger>
+      <Dropdown.Content align="end">
         {isMine ? (
-          // 내가 쓴 글 (삭제)
           <>
-            <button
+            <Dropdown.Item
+              color="red"
               onClick={() => handleMenuAction('delete')}
-              className="cursor-pointer px-10 py-2.5"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
-              <Text typography="subtitle-16-bold" textColor="red-400">
-                삭제하기
-              </Text>
-            </button>
+              삭제하기
+            </Dropdown.Item>
           </>
         ) : (
-          // 남이 쓴 글 (신고/차단)
           <>
-            <button
+            <Dropdown.Item
               onClick={() => handleMenuAction('report')}
-              className="cursor-pointer px-10 py-2.5"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
-              <Text typography="subtitle-16-bold" textColor="gray-800">
-                신고하기
-              </Text>
-            </button>
-            <button
+              신고하기
+            </Dropdown.Item>
+
+            <Dropdown.Item
+              color="red"
               onClick={() => handleMenuAction('block')}
-              className="cursor-pointer px-10 py-2.5"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
-              <Text typography="subtitle-16-bold" textColor="red-400">
-                차단하기
-              </Text>
-            </button>
+              차단하기
+            </Dropdown.Item>
           </>
         )}
-      </Stack>
-    </DropdownMenu>
+      </Dropdown.Content>
+    </Dropdown>
   );
 };
