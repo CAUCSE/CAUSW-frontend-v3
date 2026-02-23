@@ -3,6 +3,7 @@ import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier/flat';
 import importPlugin from 'eslint-plugin-import';
+import checkFile from 'eslint-plugin-check-file';
 import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 
 const eslintConfig = defineConfig([
@@ -14,6 +15,7 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       import: importPlugin,
+      'check-file': checkFile,
     },
     rules: {
       '@typescript-eslint/no-unused-vars': [
@@ -100,6 +102,12 @@ const eslintConfig = defineConfig([
             order: 'asc',
             caseInsensitive: true,
           },
+        },
+      ],
+      'check-file/folder-naming-convention': [
+        'error',
+        {
+          '**/': 'KEBAB_CASE',
         },
       ],
     },
