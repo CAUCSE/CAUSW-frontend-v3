@@ -43,9 +43,17 @@ export const PostBody = ({
           as="p"
           typography="body-16-regular"
           textColor="gray-800"
-          className={`whitespace-pre-wrap ${
-            isCollapsed ? `line-clamp-${maxLines}` : ''
-          }`}
+          className="whitespace-pre-wrap"
+          style={
+            isCollapsed
+              ? {
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: maxLines,
+                  overflow: 'hidden',
+                }
+              : undefined
+          }
         >
           {content}
         </Text>
