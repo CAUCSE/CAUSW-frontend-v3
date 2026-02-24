@@ -57,21 +57,7 @@ export const CeremonyCreateDialog = ({
         fullscreen={isMobileSize}
         className="overflow-hidden bg-gray-100 p-0 md:h-[calc(100vh-12.5rem)] md:w-full md:max-w-[43.75rem] md:rounded-[1rem]"
       >
-        <Dialog.Title
-          style={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            padding: 0,
-            margin: -1,
-            overflow: 'hidden',
-            clip: 'rect(0,0,0,0)',
-            whiteSpace: 'nowrap',
-            borderWidth: 0,
-          }}
-        >
-          경조사 등록 신청
-        </Dialog.Title>
+        <Dialog.Title className="sr-only">경조사 등록 신청</Dialog.Title>
         <div className="absolute inset-0 flex flex-col overflow-clip md:px-4 md:py-6">
           <ActionHeader
             background="gray"
