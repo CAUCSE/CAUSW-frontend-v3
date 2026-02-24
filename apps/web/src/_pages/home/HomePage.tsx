@@ -1,4 +1,4 @@
-import { VStack } from '@causw/cds';
+import { mergeStyles, VStack } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
 import {
@@ -34,27 +34,32 @@ export function HomePage() {
       <VStack className="desktop:gap-6 gap-4">
         {newNotification && <NotificationPopupCard />}
 
-        {isAlumni && (
-          <div className="desktop:block hidden">
-            <CeremonyRegisterBanner />
-          </div>
-        )}
-
         <div className="desktop:grid-cols-2 desktop:gap-x-6 desktop:gap-y-8 grid w-full grid-cols-1 gap-4">
-          {!isAlumni && <QuickMenu />}
-
-          {!isAlumni && (
-            <div className="desktop:block hidden">
+          {isAlumni && (
+            <div className="desktop:col-span-2 desktop:order-1 order-15">
               <CeremonyRegisterBanner />
             </div>
           )}
+          {!isAlumni && <QuickMenu />}
 
-          <CalendarEventListPreview />
-
-          <div className="desktop:hidden">
-            <CeremonyRegisterBanner />
+          {!isAlumni && (
+            <div
+              className={mergeStyles(
+                'order-15',
+                'desktop:order-2',
+                'desktop:col-start-2',
+              )}
+            >
+              <CeremonyRegisterBanner />
+            </div>
+          )}
+          <div className="order-10">
+            <CalendarEventListPreview />
           </div>
-          <CeremonyListPreview />
+
+          <div className="order-20">
+            <CeremonyListPreview />
+          </div>
         </div>
       </VStack>
     </VStack>
