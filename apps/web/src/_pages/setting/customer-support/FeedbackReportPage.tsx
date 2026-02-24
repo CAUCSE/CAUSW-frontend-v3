@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Camera, ChevronLeft, Close, CloseFilled } from '@causw/cds';
@@ -160,10 +161,13 @@ export function FeedbackReportPage() {
                         key={photo.id}
                         className="relative h-25 w-25 shrink-0 rounded-sm bg-gray-200"
                       >
-                        <img
+                        <Image
                           src={photo.previewUrl}
                           alt={photo.file.name}
-                          className="h-full w-full rounded-sm object-cover"
+                          fill
+                          sizes="100px"
+                          unoptimized
+                          className="rounded-sm object-cover"
                         />
                         <button
                           type="button"
