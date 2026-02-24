@@ -1,0 +1,1 @@
+export { GlobalRoutingProvider } from './GlobalRoutingProvider';

@@ -1,0 +1,1 @@
+export { TermsDialog } from './TermsDialog';

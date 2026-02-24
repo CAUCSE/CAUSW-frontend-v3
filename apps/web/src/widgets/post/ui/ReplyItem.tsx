@@ -1,0 +1,104 @@
+'use client';
+
+import { useState } from 'react';
+
+import { ReportFlow } from '@/widgets/report';
+
+import { BlockUserModal } from '@/features/block';
+import { CommentAction, CommentActionMenu } from '@/features/comment';
+
+import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+
+interface ReplyItemProps {
+  reply: Comment;
+  activeMenuId: number | string | null;
+  onToggleMenu: (id: number | string) => void;
+  onCloseMenu: () => void;
+  onReply: (target: ReplyTarget) => void;
+}
+
+export const ReplyItem = ({
+  reply,
+  activeMenuId,
+  onToggleMenu,
+  onCloseMenu,
+  onReply,
+}: ReplyItemProps) => {
+  const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isBlockOpen, setIsBlockOpen] = useState(false);
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
+  const handleLikeClick = () => {
+    if (isLiked) {
+      setIsLiked(false);
+      setLikeCount((prev) => prev - 1);
+    } else {
+      setIsLiked(true);
+      setLikeCount((prev) => prev + 1);
+    }
+  };
+
+  const submitReport = () => {};
+  const submitBlock = () => {};
+
+  const handleAction = (action: CommentAction) => {
+    switch (action) {
+      case 'report':
+        setIsReportOpen(true);
+        break;
+      case 'block':
+        setIsBlockOpen(true);
+        break;
+      case 'delete':
+        console.log('댓글 삭제');
+        break;
+      default:
+        console.log(action);
+    }
+  };
+
+  return (
+    <>
+      <CommentCard
+        isReply
+        author={reply.author}
+        content={reply.content}
+        time={reply.time}
+        isLiked={isLiked}
+        likeCount={likeCount}
+        onLikeClick={handleLikeClick}
+        onReplyClick={() =>
+          onReply({
+            id: reply.id,
+            author: reply.author,
+            content: reply.content,
+          })
+        }
+        menuSlot={
+          <CommentActionMenu
+            id={reply.id}
+            isMine={false}
+            isOpen={activeMenuId === reply.id}
+            onToggle={onToggleMenu}
+            onClose={onCloseMenu}
+            onAction={handleAction}
+          />
+        }
+      />
+
+      <ReportFlow
+        open={isReportOpen}
+        setOpen={setIsReportOpen}
+        onSubmitReport={submitReport}
+      />
+
+      <BlockUserModal
+        open={isBlockOpen}
+        setOpen={setIsBlockOpen}
+        onSubmitBlock={submitBlock}
+      />
+    </>
+  );
+};

@@ -1,6 +1,0 @@
-framework module CapacitorSecureStoragePlugin {
-  umbrella header "CapacitorSecureStoragePlugin-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { ErrorView } from '@/shared';
+import { captureSentry } from '@causw/logger';
+
+import { AuthError } from '@/shared/model';
+import { ErrorView } from '@/shared/ui';
 
 export default function ErrorPage({
   error,
@@ -16,7 +19,13 @@ export default function ErrorPage({
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    console.error(error);
+    if (error instanceof AuthError) {
+      return;
+    }
+    captureSentry(error, 'unexpected_error', {
+      info: '루트 레이아웃에서 에러 발생',
+      digest: error.digest,
+    });
   }, [error]);
 
   const handleReset = () => {

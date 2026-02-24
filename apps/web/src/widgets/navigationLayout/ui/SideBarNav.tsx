@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
-import { CountBadge, StatusDot } from '@/shared';
+import { CountBadge, StatusDot } from '@/shared/ui';
 
 import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
 
@@ -30,7 +30,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
             {SIDEBAR_MAIN_ITEMS.map((item) => (
               <Sidebar.Item key={item.key} value={item.key} asChild>
                 <Link href={item.href} className="block">
-                  <HStack className="cursor-pointer gap-3.5">
+                  <HStack className="cursor-pointer items-center gap-3.5">
                     <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
                     <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
                   </HStack>
@@ -78,7 +78,7 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
         {/* 데이터 변경 필요 */}
         {/* TODO: api 연결 후 onLogout 기능 구현 필요 */}
         <FooterProfile
-          img={'https://avatars.githubusercontent.com/u/54893898?v=4'}
+          img={''}
           name={'유지아'}
           email={'djdkwnl@cau.ac.kr'}
           onLogout={() => {}}
