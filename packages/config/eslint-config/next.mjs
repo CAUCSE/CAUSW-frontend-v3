@@ -107,7 +107,11 @@ const eslintConfig = defineConfig([
       'check-file/folder-naming-convention': [
         'error',
         {
-          '**/': 'KEBAB_CASE',
+          'src/app/**/': 'NEXT_JS_APP_ROUTER_CASE',
+          'src/!(app)/**/': 'KEBAB_CASE',
+        },
+        {
+          ignoreWords: ['_pages'],
         },
       ],
     },
