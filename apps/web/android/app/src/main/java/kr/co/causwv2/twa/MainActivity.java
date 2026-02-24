@@ -1,7 +1,7 @@
 //TODO: 기능 구현 완료되면 필요한 로그 빼고 삭제하기
 //TODO : 로그인 연결 후 알림 창 알림 잘 뜨는지 확인
 //TODO : 취소 버튼 눌러서 앱 종료 deprecated된거 확인하기
-package kr.co.causwv3.twa;
+package kr.co.causwv2.twa;
 
 import android.os.Bundle;
 import android.os.Handler;

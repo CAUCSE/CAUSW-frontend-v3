@@ -3,7 +3,7 @@ import { Avatar, HStack, OfficialColored, Text } from '@causw/cds';
 export const PostHeader = () => {
   return (
     <HStack gap="sm" align="center" className="gap-2.5">
-      <Avatar size="sm" />
+      <Avatar size="40" />
       <HStack gap="sm" align="center">
         <HStack gap="xs" align="center">
           <Text typography="subtitle-16-bold" textColor="gray-800">
