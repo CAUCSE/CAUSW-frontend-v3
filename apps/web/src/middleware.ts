@@ -5,7 +5,7 @@ import { TokenManager } from './shared/storage';
 
 export async function middleware(request: NextRequest) {
   // TODO: 실제 경로 맞춰서 세분화
-  const privateRoutes = ['/home', '/board', '/contacts', '/user'];
+  const privateRoutes = ['/home', '/feed', '/contacts', '/user'];
   const accessToken = await TokenManager.getAccessToken();
 
   if (!accessToken) {
