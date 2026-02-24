@@ -5,8 +5,7 @@ import { VStack } from '@causw/cds';
 import { ReportFlow } from '@/widgets/report';
 
 import { BlockUserModal } from '@/features/block';
-import { PostHeader } from '@/features/post';
-import { usePostMenuAction } from '@/features/post/model/hooks/usePostMenuActions';
+import { PostHeader, usePostMenuActions } from '@/features/post';
 
 import { PostBody, PostReactions, PostVote } from '@/entities/post';
 
@@ -23,7 +22,7 @@ export const PostContent = ({ postId }: PostContentProps) => {
     handleAction: handleMenuAction,
     submitReport,
     submitBlock,
-  } = usePostMenuAction(postId);
+  } = usePostMenuActions(postId);
 
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(3);

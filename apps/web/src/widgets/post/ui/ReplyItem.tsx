@@ -11,19 +11,10 @@ import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
 
 interface ReplyItemProps {
   reply: Comment;
-  activeMenuId: number | string | null;
-  onToggleMenu: (id: number | string) => void;
-  onCloseMenu: () => void;
   onReply: (target: ReplyTarget) => void;
 }
 
-export const ReplyItem = ({
-  reply,
-  activeMenuId,
-  onToggleMenu,
-  onCloseMenu,
-  onReply,
-}: ReplyItemProps) => {
+export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
@@ -76,16 +67,7 @@ export const ReplyItem = ({
             content: reply.content,
           })
         }
-        menuSlot={
-          <CommentActionMenu
-            id={reply.id}
-            isMine={false}
-            isOpen={activeMenuId === reply.id}
-            onToggle={onToggleMenu}
-            onClose={onCloseMenu}
-            onAction={handleAction}
-          />
-        }
+        menuSlot={<CommentActionMenu isMine={false} onAction={handleAction} />}
       />
 
       <ReportFlow

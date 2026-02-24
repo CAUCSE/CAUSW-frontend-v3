@@ -1,14 +1,12 @@
-'use client';
-
 import { useState } from 'react';
 
-import { PostAction } from '../types';
+import { CommentAction } from '../types';
 
-export const usePostMenuActions = (postId?: string | number) => {
+export const useCommentMenuActions = (commentId: string | number) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
-  const handleAction = (action: PostAction) => {
+  const handleAction = (action: CommentAction) => {
     switch (action) {
       case 'report':
         setIsReportOpen(true);
@@ -17,12 +15,7 @@ export const usePostMenuActions = (postId?: string | number) => {
         setIsBlockOpen(true);
         break;
       case 'delete':
-        // TODO: 게시글 삭제 API 호출 로직
-        console.log(`id ${postId} 게시글 삭제`);
-        break;
-      case 'edit':
-        // TODO: 게시글 수정 로직
-        console.log(`id ${postId} 게시글 수정`);
+        console.log(`id ${commentId} 댓글 삭제 API 호출`);
         break;
       default:
         console.log(action);
@@ -30,14 +23,12 @@ export const usePostMenuActions = (postId?: string | number) => {
   };
 
   const submitReport = () => {
-    // TODO: 신고 API 호출
-    console.log('신고 제출');
+    console.log(`${commentId}번 댓글 신고 제출`);
     setIsReportOpen(false);
   };
 
   const submitBlock = () => {
-    // TODO: 차단 API 호출
-    console.log('차단 제출');
+    console.log(`${commentId}번 댓글 작성자 차단`);
     setIsBlockOpen(false);
   };
 
