@@ -32,7 +32,7 @@ export const CommentCard = ({
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
       <HStack align={isBlocked ? 'center' : 'start'} className="gap-3">
-        <Avatar size="36" className="my-1" />
+        <Avatar size="36" className="my-1 shrink-0" />
 
         {isBlocked ? (
           // 차단된 사용자의 댓글
