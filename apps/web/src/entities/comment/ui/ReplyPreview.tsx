@@ -1,6 +1,6 @@
 import { Close, HStack, Stack, Text } from '@causw/cds';
 
-import { ReplyTarget } from '@/entities';
+import { ReplyTarget } from '../model';
 
 interface ReplyPreviewProps {
   replyTarget: ReplyTarget;
