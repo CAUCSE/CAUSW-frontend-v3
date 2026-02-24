@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-import { TokenManager } from './shared/storage/auth';
+import { TokenManager } from './shared/storage';
 
 export async function middleware(request: NextRequest) {
   // TODO: 실제 경로 맞춰서 세분화

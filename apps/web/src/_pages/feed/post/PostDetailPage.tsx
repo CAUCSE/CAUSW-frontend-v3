@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { PostDetailSection } from '@/widgets/post';
 
 import { useBreakpoint } from '@/shared/hooks';
-import { ActionHeader } from '@/shared/ui/ActionHeader';
+import { ActionHeader } from '@/shared/ui';
 
 export const PostDetailPage = () => {
   const router = useRouter();
