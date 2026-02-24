@@ -7,7 +7,7 @@ import {
 
 import { BASE_URL } from '@/shared/storage';
 import { DefaultResponseField } from '@/shared/types';
-import { unwrapResponse } from '@/shared/utils/api';
+import { unwrapResponse } from '@/shared/utils';
 
 import {
   setRequestInterceptors,
