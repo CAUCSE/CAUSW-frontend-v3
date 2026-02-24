@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { ReportFlow } from '@/widgets/report';
 
 import { BlockUserModal } from '@/features/block';
-import { CommentAction, CommentActionMenu } from '@/features/comment';
+import { CommentActionMenu, useCommentMenuActions } from '@/features/comment';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
 
@@ -15,8 +15,15 @@ interface ReplyItemProps {
 }
 
 export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
+  const {
+    isReportOpen,
+    setIsReportOpen,
+    isBlockOpen,
+    setIsBlockOpen,
+    handleAction: handleMenuAction,
+    submitReport,
+    submitBlock,
+  } = useCommentMenuActions(reply.id);
 
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -28,25 +35,6 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
     } else {
       setIsLiked(true);
       setLikeCount((prev) => prev + 1);
-    }
-  };
-
-  const submitReport = () => {};
-  const submitBlock = () => {};
-
-  const handleAction = (action: CommentAction) => {
-    switch (action) {
-      case 'report':
-        setIsReportOpen(true);
-        break;
-      case 'block':
-        setIsBlockOpen(true);
-        break;
-      case 'delete':
-        console.log('댓글 삭제');
-        break;
-      default:
-        console.log(action);
     }
   };
 
@@ -67,7 +55,9 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
             content: reply.content,
           })
         }
-        menuSlot={<CommentActionMenu isMine={false} onAction={handleAction} />}
+        menuSlot={
+          <CommentActionMenu isMine={false} onAction={handleMenuAction} />
+        }
       />
 
       <ReportFlow
