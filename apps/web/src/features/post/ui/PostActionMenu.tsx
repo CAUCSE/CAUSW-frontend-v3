@@ -1,33 +1,28 @@
+'use client';
+
+import { useState } from 'react';
+
 import { Dropdown, Menu } from '@causw/cds';
 
 import { PostAction } from '../model';
 
 interface PostActionMenuProps {
-  id: string | number;
   isMine: boolean;
-  isOpen: boolean;
-  onToggle: (id: string | number) => void;
-  onClose: () => void;
   onAction: (action: PostAction) => void;
 }
 
-export const PostActionMenu = ({
-  id,
-  isMine,
-  isOpen,
-  onToggle,
-  onClose,
-  onAction,
-}: PostActionMenuProps) => {
+export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleMenuAction = (action: PostAction) => {
     onAction(action);
-    onClose();
+    setIsOpen(false);
   };
 
   return (
-    <Dropdown open={isOpen} onOpenChange={() => onToggle(id)}>
+    <Dropdown open={isOpen} onOpenChange={setIsOpen}>
       <Dropdown.Trigger asChild>
-        <button className="translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100">
+        <button className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100">
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
