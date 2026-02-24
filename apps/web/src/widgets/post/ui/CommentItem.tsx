@@ -6,10 +6,12 @@ import { Stack } from '@causw/cds';
 
 import { ReportFlow } from '@/widgets/report';
 
-import { ReplyList } from './ReplyList';
+import { BlockUserModal } from '@/features/block';
+import { CommentAction, CommentActionMenu } from '@/features/comment';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities';
-import { BlockUserModal, CommentAction, CommentActionMenu } from '@/features';
+import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+
+import { ReplyList } from './ReplyList';
 
 interface CommentItemProps {
   comment: Comment;

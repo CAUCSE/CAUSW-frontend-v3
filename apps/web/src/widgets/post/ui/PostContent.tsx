@@ -4,8 +4,10 @@ import { HStack, VStack } from '@causw/cds';
 
 import { ReportFlow } from '@/widgets/report';
 
-import { PostBody, PostHeader, PostReactions, PostVote } from '@/entities';
-import { BlockUserModal, PostAction, PostActionMenu } from '@/features';
+import { BlockUserModal } from '@/features/block';
+import { PostAction, PostActionMenu } from '@/features/post';
+
+import { PostBody, PostHeader, PostReactions, PostVote } from '@/entities/post';
 
 interface PostContentProps {
   postId: number | string;

@@ -1,6 +1,6 @@
-import { ReplyItem } from './ReplyItem';
+import { Comment, ReplyTarget } from '@/entities/comment';
 
-import { Comment, ReplyTarget } from '@/entities';
+import { ReplyItem } from './ReplyItem';
 
 interface ReplyListProps {
   replies: Comment[];

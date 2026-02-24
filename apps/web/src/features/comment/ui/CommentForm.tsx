@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 import { Checkbox, HStack, Stack, Text } from '@causw/cds';
 
-import { useCommentForm } from '../model';
+import { ReplyPreview, ReplyTarget } from '@/entities/comment';
 
-import { ReplyPreview, ReplyTarget } from '@/entities';
+import { useCommentForm } from '../model';
 
 interface CommentFormProps {
   replyTarget: ReplyTarget;

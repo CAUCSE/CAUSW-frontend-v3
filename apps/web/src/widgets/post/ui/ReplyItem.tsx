@@ -4,8 +4,10 @@ import { useState } from 'react';
 
 import { ReportFlow } from '@/widgets/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities';
-import { BlockUserModal, CommentAction, CommentActionMenu } from '@/features';
+import { BlockUserModal } from '@/features/block';
+import { CommentAction, CommentActionMenu } from '@/features/comment';
+
+import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
 
 interface ReplyItemProps {
   reply: Comment;

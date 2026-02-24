@@ -2,11 +2,12 @@ import { useRef, useState } from 'react';
 
 import { Stack } from '@causw/cds';
 
+import { CommentForm } from '@/features/comment';
+
+import { ReplyTarget } from '@/entities/comment';
+
 import { CommentList } from './CommentList';
 import { PostContent } from './PostContent';
-
-import { ReplyTarget } from '@/entities';
-import { CommentForm } from '@/features';
 
 const DUMMY_COMMENTS = [
   {
