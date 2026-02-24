@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 import { Avatar, Heart, HStack, VStack, Text } from '@causw/cds';
 
+import { IconCountButton } from '@/shared/ui';
+
 interface CommentCardProps {
   author: string;
   content: string;
@@ -73,20 +75,12 @@ export const CommentCard = ({
                 </Text>
               </button>
 
-              <HStack
-                as="button"
-                align="center"
+              <IconCountButton
+                icon={<Heart />}
+                count={likeCount}
+                active={isLiked}
                 onClick={onLikeClick}
-                className="translate-x-1 cursor-pointer gap-1.5 px-1 transition-opacity hover:opacity-70"
-              >
-                <Heart size={16} color={isLiked ? 'red-400' : 'gray-200'} />
-                <Text
-                  typography="body-14-medium"
-                  textColor={isLiked ? 'red-400' : 'gray-400'}
-                >
-                  {likeCount}
-                </Text>
-              </HStack>
+              />
             </HStack>
           </VStack>
         )}

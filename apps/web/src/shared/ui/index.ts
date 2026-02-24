@@ -12,3 +12,4 @@ export * from './CountBadge';
 export * from './EventCard';
 export * from './action-header';
 export * from './QuickMenu';
+export * from './IconCountButton';
