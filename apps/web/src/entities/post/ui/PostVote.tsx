@@ -1,6 +1,6 @@
 import { RatioChart } from '@causw/cds';
 
-import { VoteOption } from '../model';
+import { formatVoteStatus, VoteOption } from '../model';
 
 interface PostVoteProps {
   options: VoteOption[];
@@ -18,7 +18,7 @@ export const PostVote = ({ options, endTime }: PostVoteProps) => {
           count={opt.count}
         />
       ))}
-      <RatioChart.Footer endTime={endTime} />
+      <RatioChart.Footer endTime={formatVoteStatus(endTime)} />
     </RatioChart.Root>
   );
 };

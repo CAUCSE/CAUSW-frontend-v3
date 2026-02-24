@@ -1,5 +1,7 @@
 import { Avatar, Flex, HStack, OfficialColored, Text } from '@causw/cds';
 
+import { formatRelativeTime } from '@/shared/lib';
+
 import { PostAction } from '../model';
 
 import { PostActionMenu } from './PostActionMenu';
@@ -41,7 +43,7 @@ export const PostHeader = ({
           </HStack>
 
           <Text typography="body-16-regular" textColor="gray-500">
-            {createdAt}
+            {formatRelativeTime(createdAt)}
           </Text>
         </HStack>
       </HStack>
