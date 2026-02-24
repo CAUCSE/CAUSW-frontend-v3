@@ -1,4 +1,4 @@
-export function FeedPage() {
+export function BoardPage() {
   return (
     <div>
       <h1>community</h1>

@@ -1,4 +1,4 @@
-import { PostDetailPage } from '@/_pages/feed';
+import { PostDetailPage } from '@/_pages/board';
 
 const Page = () => {
   return <PostDetailPage />;
