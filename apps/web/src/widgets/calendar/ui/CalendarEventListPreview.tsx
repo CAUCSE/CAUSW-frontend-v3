@@ -7,16 +7,17 @@ import Link from 'next/link';
 // TODO : SCHEDULE_ITEMS 타입 정의
 //TODO : 더미 데이터 삭제 {new Date().getMonth() + 1}
 //TODO : 기간 길때 글자 잘리는 거 디자인 시스템 수정 후 확인
-//TODO : NoDataView ui확인
+//TODO : NoDataView ui확인필요 (NoDataView 일반화 해주신다고 했음)
 import {
   CaldendarIconColored,
+  Calendar,
   CalendarGrayColored,
   Flex,
   Text,
   VStack,
 } from '@causw/cds';
 
-import { Calendar, CalendarEvent } from '@/widgets/calendar';
+import { CalendarEvent } from '@/widgets/calendar';
 
 import { COPY, ROUTES } from '@/shared/constants';
 import { EventCard, NoDataView } from '@/shared/ui';
@@ -114,6 +115,7 @@ export function CalendarEventListPreview() {
       {/* Desktop Calendar */}
       <Flex className="desktop:flex hidden flex-col gap-2">
         <CalendarTitle typography="title-22-bold" />
+        {/* TODO : 달력 UI 확인 사항 (홈페이지/일정 상세 ui 다른 부분 ; v3말고 cds에서 수정 필요)- 이전달/다음달 버튼 px 다른거 & py 값 다른거 & 바깥 shadow 없어야 함 */}
         <Calendar events={CALENDAR_EVENTS} />
       </Flex>
       <VStack className="gap-5 rounded-2xl bg-white p-5">

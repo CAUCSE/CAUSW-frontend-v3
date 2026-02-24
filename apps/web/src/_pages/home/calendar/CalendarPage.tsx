@@ -3,10 +3,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Text, VStack } from '@causw/cds';
+import { Calendar, Text, VStack } from '@causw/cds';
 
 import {
-  Calendar,
   CalendarEvent,
   CalendarEventItem,
   CalendarEventList,
@@ -119,7 +118,7 @@ const CALENDAR_EVENTS: CalendarEvent[] = [
   },
 ];
 
-export function SchedulePage() {
+export function CalendarPage() {
   const router = useRouter();
 
   return (
