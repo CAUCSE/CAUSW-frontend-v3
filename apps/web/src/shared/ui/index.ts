@@ -10,5 +10,5 @@ export * from './emphasis';
 export * from './StatusDot';
 export * from './CountBadge';
 export * from './EventCard';
-export * from './ActionHeader';
+export * from './action-header';
 export * from './QuickMenu';
