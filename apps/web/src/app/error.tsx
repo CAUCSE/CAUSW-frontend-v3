@@ -7,8 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { captureSentry } from '@causw/logger';
 
 import { AuthError } from '@/shared/model';
-
-import { ErrorView } from '@/shared';
+import { ErrorView } from '@/shared/ui';
 
 export default function ErrorPage({
   error,

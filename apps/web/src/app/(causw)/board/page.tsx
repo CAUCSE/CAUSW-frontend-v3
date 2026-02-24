@@ -1,5 +1,5 @@
 import { BoardPage } from '@/_pages/board';
 
-export default function Home() {
+export default function Page() {
   return <BoardPage />;
 }

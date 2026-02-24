@@ -8,7 +8,7 @@ import {
   GlobalRoutingProvider,
   QueryProviderWithDevtools,
   Toaster,
-} from '@/shared';
+} from '@/shared/ui';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',

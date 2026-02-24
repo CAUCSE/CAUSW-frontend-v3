@@ -1,6 +1,6 @@
 import { ApiResponse } from '@causw/api-client';
 
-import { DefaultResponseField } from '@/shared/types/api/response';
+import { DefaultResponseField } from '@/shared/types';
 
 /**
  * API 응답(ApiResponse)에서 백엔드 공통 래퍼(DefaultResponseField)를 벗겨내고

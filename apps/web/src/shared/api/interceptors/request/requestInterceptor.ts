@@ -1,5 +1,5 @@
 import { useAuthStore, AuthError } from '@/shared/model';
-import { TokenManager } from '@/shared/storage/auth';
+import { TokenManager } from '@/shared/storage';
 import { isServer } from '@/shared/utils';
 
 import { BaseApiClient } from '../../instances';

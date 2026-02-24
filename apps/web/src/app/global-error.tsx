@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { captureException } from '@causw/logger';
 
-import { ErrorView } from '@/shared';
+import { ErrorView } from '@/shared/ui';
 
 export default function GlobalError({
   error,

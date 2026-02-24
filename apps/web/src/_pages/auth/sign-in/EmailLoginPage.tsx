@@ -12,7 +12,7 @@ import { AuthContainer } from '@/widgets/auth';
 
 import { signInSchema, type SignInFormData } from '@/entities/auth';
 
-import { RHFInput } from '@/shared';
+import { RHFInput } from '@/shared/ui';
 
 export const EmailLoginPage = () => {
   const methods = useForm<SignInFormData>({

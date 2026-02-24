@@ -2,7 +2,7 @@ import { ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
-import { TokenManager } from '@/shared/storage/auth';
+import { TokenManager } from '@/shared/storage';
 import {
   isAccessTokenError,
   parseCustomErrorCode,
