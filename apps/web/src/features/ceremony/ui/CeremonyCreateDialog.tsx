@@ -149,7 +149,7 @@ export const CeremonyCreateDialog = ({
                             form.setCustomCategory(e.target.value)
                           }
                           placeholder={`${form.ceremonyType}를 입력해주세요.`}
-                          className="rounded-xl border-2 border-gray-600 bg-white"
+                          className="rounded-xl bg-white"
                         />
                       </Field>
                     )}
