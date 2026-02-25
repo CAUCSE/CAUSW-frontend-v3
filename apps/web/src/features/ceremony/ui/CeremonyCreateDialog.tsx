@@ -160,12 +160,12 @@ export const CeremonyCreateDialog = ({
                 <DateTimeSection
                   startDate={form.startDate}
                   endDate={form.endDate}
+                  setStartDate={form.setStartDate}
+                  setEndDate={form.setEndDate}
                   startTime={form.startTime}
                   endTime={form.endTime}
                   hasEndDate={form.hasEndDate}
                   hasTime={form.hasTime}
-                  onStartDateChange={form.onStartDateChange}
-                  onEndDateChange={form.onEndDateChange}
                   onStartTimeChange={form.onStartTimeChange}
                   onEndTimeChange={form.onEndTimeChange}
                   handleEndDateToggle={form.handleEndDateToggle}

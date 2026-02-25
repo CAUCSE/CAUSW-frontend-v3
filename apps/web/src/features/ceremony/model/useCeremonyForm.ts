@@ -8,7 +8,7 @@ import type { ImageUploadFieldRef } from '@/shared/ui/image';
 
 import { CUSTOM_VALUE, CATEGORY_MAP } from '../config';
 
-import { formatDate, formatTime } from './formatters';
+import { formatTime } from './formatters';
 import { useFormattedInput } from './useFormattedInput';
 
 export interface CeremonyFormReturn {
@@ -36,14 +36,14 @@ export interface CeremonyFormReturn {
   handleRelationshipChange: (v: string) => void;
 
   // DateTime
-  startDate: string;
-  endDate: string;
+  startDate: Date | undefined;
+  endDate: Date | undefined;
+  setStartDate: (v: Date | undefined) => void;
+  setEndDate: (v: Date | undefined) => void;
   startTime: string;
   endTime: string;
   hasEndDate: boolean;
   hasTime: boolean;
-  onStartDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onEndDateChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onStartTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onEndTimeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleEndDateToggle: (checked: boolean) => void;
@@ -108,15 +108,13 @@ export const useCeremonyForm = (): CeremonyFormReturn => {
   const [alumniRelation, setAlumniRelation] = useState('');
 
   // --- DateTime ---
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [hasEndDate, setHasEndDate] = useState(false);
   const [hasTime, setHasTime] = useState(false);
 
-  const onStartDateChange = useFormattedInput(formatDate, setStartDate);
-  const onEndDateChange = useFormattedInput(formatDate, setEndDate);
   const onStartTimeChange = useFormattedInput(formatTime, setStartTime);
   const onEndTimeChange = useFormattedInput(formatTime, setEndTime);
 
@@ -187,7 +185,7 @@ export const useCeremonyForm = (): CeremonyFormReturn => {
 
   const handleEndDateToggle = (checked: boolean) => {
     setHasEndDate(checked);
-    if (!checked) setEndDate('');
+    if (!checked) setEndDate(undefined);
   };
 
   const handleTimeToggle = (checked: boolean) => {
@@ -224,8 +222,8 @@ export const useCeremonyForm = (): CeremonyFormReturn => {
     setAlumniName('');
     setAlumniAdmissionYear('');
     setAlumniRelation('');
-    setStartDate('');
-    setEndDate('');
+    setStartDate(undefined);
+    setEndDate(undefined);
     setStartTime('');
     setEndTime('');
     setHasEndDate(false);
@@ -257,7 +255,7 @@ export const useCeremonyForm = (): CeremonyFormReturn => {
     ceremonyType !== '' &&
     resolvedCategory !== '' &&
     isRelationshipValid &&
-    startDate.trim() !== '' &&
+    startDate !== undefined &&
     (notifyAll || admissionYears.length > 0);
 
   return {
@@ -284,12 +282,12 @@ export const useCeremonyForm = (): CeremonyFormReturn => {
 
     startDate,
     endDate,
+    setStartDate,
+    setEndDate,
     startTime,
     endTime,
     hasEndDate,
     hasTime,
-    onStartDateChange,
-    onEndDateChange,
     onStartTimeChange,
     onEndTimeChange,
     handleEndDateToggle,

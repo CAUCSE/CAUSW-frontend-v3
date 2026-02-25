@@ -1,4 +1,4 @@
-import { CalendarIcon, Field, TextInput, Toggle } from '@causw/cds';
+import { DatePicker, Field, TextInput, Toggle } from '@causw/cds';
 
 import { FormSection } from '@/shared/ui/FormSection';
 
@@ -8,12 +8,12 @@ type Props = Pick<
   CeremonyFormReturn,
   | 'startDate'
   | 'endDate'
+  | 'setStartDate'
+  | 'setEndDate'
   | 'startTime'
   | 'endTime'
   | 'hasEndDate'
   | 'hasTime'
-  | 'onStartDateChange'
-  | 'onEndDateChange'
   | 'onStartTimeChange'
   | 'onEndTimeChange'
   | 'handleEndDateToggle'
@@ -23,12 +23,12 @@ type Props = Pick<
 export const DateTimeSection = ({
   startDate,
   endDate,
+  setStartDate,
+  setEndDate,
   startTime,
   endTime,
   hasEndDate,
   hasTime,
-  onStartDateChange,
-  onEndDateChange,
   onStartTimeChange,
   onEndTimeChange,
   handleEndDateToggle,
@@ -38,41 +38,42 @@ export const DateTimeSection = ({
     <div className="flex flex-col gap-3">
       {/* 시작 행 */}
       <div className="flex items-center gap-2">
-        <Field className="min-w-0 flex-1">
-          <TextInput
+        <div className="min-w-0 flex-1">
+          <DatePicker
             value={startDate}
-            onChange={onStartDateChange}
+            onValueChange={setStartDate}
             placeholder="연도-월-일"
-            maxLength={10}
-            inputMode="numeric"
-            rightIcon={<CalendarIcon size={20} color="gray-400" />}
-            className="rounded-xl bg-white"
+            dateFormat="yyyy-MM-dd"
+            className="w-full rounded-xl bg-white"
+            contentClassName="z-modal"
           />
-        </Field>
+        </div>
         {(hasEndDate || hasTime) && (
           <>
             <span className="w-2 shrink-0 border-t border-gray-300" />
-            <Field className="min-w-0 flex-1">
+            <div className="min-w-0 flex-1">
               {hasTime ? (
-                <TextInput
-                  value={startTime}
-                  onChange={onStartTimeChange}
-                  placeholder="시간"
-                  maxLength={5}
-                  inputMode="numeric"
-                  className="rounded-xl bg-white"
-                />
+                <Field>
+                  <TextInput
+                    value={startTime}
+                    onChange={onStartTimeChange}
+                    placeholder="시간"
+                    maxLength={5}
+                    inputMode="numeric"
+                    className="rounded-xl bg-white"
+                  />
+                </Field>
               ) : (
-                <TextInput
+                <DatePicker
                   value={endDate}
-                  onChange={onEndDateChange}
+                  onValueChange={setEndDate}
                   placeholder="연도-월-일"
-                  maxLength={10}
-                  inputMode="numeric"
-                  className="rounded-xl bg-white"
+                  dateFormat="yyyy-MM-dd"
+                  className="w-full rounded-xl bg-white"
+                  contentClassName="z-modal"
                 />
               )}
-            </Field>
+            </div>
           </>
         )}
       </div>
@@ -80,16 +81,16 @@ export const DateTimeSection = ({
       {/* 종료 행 (종료일 + 시간 모두 ON일 때만) */}
       {hasEndDate && hasTime && (
         <div className="flex items-center gap-2">
-          <Field className="min-w-0 flex-1">
-            <TextInput
+          <div className="min-w-0 flex-1">
+            <DatePicker
               value={endDate}
-              onChange={onEndDateChange}
+              onValueChange={setEndDate}
               placeholder="연도-월-일"
-              maxLength={10}
-              inputMode="numeric"
-              className="rounded-xl bg-white"
+              dateFormat="yyyy-MM-dd"
+              className="w-full rounded-xl bg-white"
+              contentClassName="z-modal"
             />
-          </Field>
+          </div>
           <span className="w-2 shrink-0 border-t border-gray-300" />
           <Field className="min-w-0 flex-1">
             <TextInput
