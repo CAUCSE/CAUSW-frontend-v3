@@ -4,10 +4,9 @@ import { FormProvider, Controller, useFormContext } from 'react-hook-form';
 
 import { Dialog, Field, HStack, Tab, TextInput } from '@causw/cds';
 
-import type { CeremonyFormData } from '@/entities/ceremony';
+import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
 
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
-import type { CeremonyType } from '@/shared/types';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 import { FormSection } from '@/shared/ui/FormSection';
 

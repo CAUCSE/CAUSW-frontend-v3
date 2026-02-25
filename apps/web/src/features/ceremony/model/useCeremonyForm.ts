@@ -10,10 +10,9 @@ import {
   ceremonyFormSchema,
   CEREMONY_FORM_DEFAULT_VALUES,
 } from '@/entities/ceremony';
-import type { CeremonyFormData } from '@/entities/ceremony';
+import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
 
 import { loadDaumPostcode } from '@/shared/lib/daum-postcode';
-import type { CeremonyType } from '@/shared/types';
 import type { ImageUploadFieldRef } from '@/shared/ui/image';
 
 import { CUSTOM_VALUE, CATEGORY_MAP } from '../config';

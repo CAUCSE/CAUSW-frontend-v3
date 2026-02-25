@@ -2,7 +2,7 @@
 
 import { Tab } from '@causw/cds';
 
-import type { CeremonyFilterType } from '@/shared/types';
+import type { CeremonyFilterType } from '../model';
 
 const FILTERS: CeremonyFilterType[] = ['전체', '경사', '조사'];
 

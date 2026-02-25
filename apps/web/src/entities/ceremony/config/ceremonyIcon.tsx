@@ -8,7 +8,7 @@ import {
   BellColored,
 } from '@causw/cds';
 
-import type { CeremonyCategory } from '@/shared/types';
+import type { CeremonyCategory } from '../model';
 
 const CEREMONY_ICON_MAP: Record<string, React.ReactNode> = {
   결혼식: <HeartColored size={24} />,

@@ -2,7 +2,7 @@ import { ChevronRight } from '@causw/cds';
 
 import { getCeremonyIcon } from '@/entities/ceremony/config';
 
-import type { CeremonyItem } from '@/shared/types';
+import type { CeremonyItem } from '../model';
 
 interface CeremonyListItemProps {
   item: CeremonyItem;

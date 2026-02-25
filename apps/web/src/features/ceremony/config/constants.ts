@@ -1,4 +1,4 @@
-import type { CeremonyType } from '@/shared/types';
+import type { CeremonyType } from '@/entities/ceremony';
 
 import type { CategoryOption } from './types';
 

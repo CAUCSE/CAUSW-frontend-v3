@@ -7,9 +7,9 @@ import { BellColored } from '@causw/cds';
 
 import { CeremonyCreateDialog } from '@/features/ceremony/ui';
 
+import type { CeremonyFilterType, CeremonyItem } from '@/entities/ceremony';
 import { CeremonyFilterChips, CeremonyListItem } from '@/entities/ceremony/ui';
 
-import type { CeremonyFilterType, CeremonyItem } from '@/shared/types';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
 import { NoDataView } from '@/shared/ui/fallback';
 
