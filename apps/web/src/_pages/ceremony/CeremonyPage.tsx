@@ -3,17 +3,15 @@
 import { useState } from 'react';
 
 import { FloatingActionButton, HStack, Plus, Tab } from '@causw/cds';
+import { BellColored } from '@causw/cds';
 
 import { CeremonyCreateDialog } from '@/features/ceremony/ui';
 
-import {
-  CeremonyEmptyView,
-  CeremonyFilterChips,
-  CeremonyListItem,
-} from '@/entities/ceremony/ui';
+import { CeremonyFilterChips, CeremonyListItem } from '@/entities/ceremony/ui';
 
 import type { CeremonyFilterType, CeremonyItem } from '@/shared/types';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
+import { NoDataView } from '@/shared/ui/fallback';
 
 // TODO: API 연결 시 제거
 const MOCK_UPCOMING: CeremonyItem[] = [
@@ -136,7 +134,10 @@ const CeremonySection = ({
   <div className="flex flex-col gap-2 px-5">
     <h3 className="typo-subtitle-16-bold text-gray-700">{title}</h3>
     {items.length === 0 ? (
-      <CeremonyEmptyView message={emptyMessage} />
+      <NoDataView
+        message={emptyMessage}
+        icon={<BellColored size={52} className="opacity-50 grayscale" />}
+      />
     ) : (
       items.map((item) => <CeremonyListItem key={item.id} item={item} />)
     )}
