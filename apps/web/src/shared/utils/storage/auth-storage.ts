@@ -1,9 +1,9 @@
 export const getStorageAccessKey = () => {
-  return 'CAUSW_ACCESS_TOKEN';
+  return 'access_token';
 };
 
 export const getStorageRefreshKey = () => {
-  return 'CAUSW_REFRESH_TOKEN';
+  return 'refresh_token';
 };
-export const getNativeAccessKey = () => 'CAUSW_NATIVE_ACCESS_TOKEN';
-export const getNativeRefreshKey = () => 'CAUSW_NATIVE_REFRESH_TOKEN';
+export const getNativeAccessKey = () => 'access_token';
+export const getNativeRefreshKey = () => 'refresh_token';

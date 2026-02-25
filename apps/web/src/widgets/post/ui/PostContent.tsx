@@ -1,32 +1,31 @@
 import { useState } from 'react';
 
-import { HStack, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
 import { ReportFlow } from '@/widgets/report';
 
 import { BlockUserModal } from '@/features/block';
-import { PostAction, PostActionMenu } from '@/features/post';
+import { PostHeader, usePostMenuActions } from '@/features/post';
 
-import { PostBody, PostHeader, PostReactions, PostVote } from '@/entities/post';
+import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
 
 interface PostContentProps {
-  postId: number | string;
-  activeMenuId: number | string | null;
-  onToggleMenu: (id: string | number) => void;
-  onCloseMenu: () => void;
+  postId: string | number;
 }
 
-export const PostContent = ({
-  postId,
-  activeMenuId,
-  onToggleMenu,
-  onCloseMenu,
-}: PostContentProps) => {
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
+export const PostContent = ({ postId }: PostContentProps) => {
+  const {
+    isReportOpen,
+    setIsReportOpen,
+    isBlockOpen,
+    setIsBlockOpen,
+    handleAction: handleMenuAction,
+    submitReport,
+    submitBlock,
+  } = usePostMenuActions(postId);
 
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(3);
+  const [likeCount, setLikeCount] = useState(MOCK_POST.likeCount);
 
   const handleLikeClick = () => {
     if (isLiked) {
@@ -38,51 +37,26 @@ export const PostContent = ({
     }
   };
 
-  const submitReport = () => {};
-  const submitBlock = () => {};
-
-  const handleAction = (action: PostAction) => {
-    switch (action) {
-      case 'report':
-        setIsReportOpen(true);
-        break;
-      case 'block':
-        setIsBlockOpen(true);
-        break;
-      case 'delete':
-        console.log('게시글 삭제');
-        break;
-      case 'edit':
-        console.log('게시글 수정');
-      default:
-        console.log(action);
-    }
-  };
-
   return (
     <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
       <VStack gap="sm">
-        <HStack as="header" align="center" justify="between">
-          <PostHeader />
-          <PostActionMenu
-            id={postId}
-            isMine={false}
-            isOpen={activeMenuId === 'post-header'}
-            onToggle={onToggleMenu}
-            onClose={onCloseMenu}
-            onAction={handleAction}
-          />
-        </HStack>
-        <PostBody />
+        <PostHeader
+          authorName={MOCK_POST.author.name}
+          createdAt={MOCK_POST.createdAt}
+          avatarUrl={MOCK_POST.author.profileImage}
+          isOfficial={MOCK_POST.author.isOfficial}
+          isMine={false}
+          onAction={handleMenuAction}
+        />
+        <PostBody content={MOCK_POST.content} images={MOCK_POST.images} />
       </VStack>
 
-      <PostVote
-        options={[
-          { value: 'option1', label: '짬뽕', count: 0 },
-          { value: 'option2', label: '짜장면', count: 0 },
-        ]}
-        endTime="72시간 후 종료"
-      />
+      {MOCK_POST.vote && (
+        <PostVote
+          options={MOCK_POST.vote.options}
+          endTime={MOCK_POST.vote.endTime}
+        />
+      )}
 
       <PostReactions
         active={isLiked}

@@ -9,11 +9,11 @@ import {
   VStack,
 } from '@causw/cds';
 
+import { useBreakpoint } from '@/shared/hooks';
+
 import { ReportReason } from '../model';
 
 import { ReasonSelectRadio } from './ReasonSelectRadio';
-
-import { useBreakpoint } from '@/shared';
 
 interface ReportReasonModalProps {
   open: boolean;

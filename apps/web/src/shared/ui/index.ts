@@ -11,5 +11,6 @@ export * from './StatusDot';
 export * from './CountBadge';
 export * from './ActionHeader';
 export * from './EventCard';
-export * from './ActionHeader';
+export * from './action-header';
 export * from './QuickMenu';
+export * from './IconCountButton';

@@ -30,7 +30,7 @@ export const ReplyPreview = ({ replyTarget, onCancel }: ReplyPreviewProps) => {
       </Stack>
       <button
         onClick={onCancel}
-        className="cursor-pointer transition-opacity hover:opacity-70"
+        className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
       >
         <Close size={16} color="gray-400" />
       </button>

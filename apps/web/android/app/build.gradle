@@ -4,10 +4,10 @@ android {
     namespace "kr.co.causw"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "kr.co.causwv3.twa"
+        applicationId "kr.co.causwv2.twa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 13
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

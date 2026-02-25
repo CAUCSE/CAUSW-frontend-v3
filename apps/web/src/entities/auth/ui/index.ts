@@ -1,1 +1,1 @@
-export * from './EnrollmentStepCard';
+export * from './enrollment-step-card';
