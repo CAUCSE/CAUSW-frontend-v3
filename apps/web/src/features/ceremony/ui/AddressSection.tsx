@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { CTAButton, Field, TextInput } from '@causw/cds';
+import { CTAButton, Flex, Field, TextInput, VStack } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
@@ -25,8 +25,8 @@ export const AddressSection = ({
 
   return (
     <FormSection title="주소" optional>
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-2">
+      <VStack gap="sm">
+        <Flex gap="sm">
           <Field className="flex-1">
             <TextInput
               value={postalCode}
@@ -42,7 +42,7 @@ export const AddressSection = ({
           >
             우편번호 찾기
           </CTAButton>
-        </div>
+        </Flex>
         {showPostcode && (
           <div
             ref={postcodeRef}
@@ -64,7 +64,7 @@ export const AddressSection = ({
             className="rounded-xl bg-white"
           />
         </Field>
-      </div>
+      </VStack>
     </FormSection>
   );
 };

@@ -1,3 +1,5 @@
+import { HStack, Text, VStack } from '@causw/cds';
+
 interface FormSectionProps {
   title: string;
   optional?: boolean;
@@ -9,13 +11,17 @@ export const FormSection = ({
   optional,
   children,
 }: FormSectionProps) => (
-  <div className="flex flex-col gap-2">
-    <div className="flex items-center gap-1 px-1">
-      <span className="typo-subtitle-16-bold text-gray-700">{title}</span>
+  <VStack gap="sm">
+    <HStack gap="xs" align="center" className="px-1">
+      <Text typography="subtitle-16-bold" textColor="gray-700">
+        {title}
+      </Text>
       {optional && (
-        <span className="typo-subtitle-16-bold text-gray-400">(선택)</span>
+        <Text typography="subtitle-16-bold" textColor="gray-400">
+          (선택)
+        </Text>
       )}
-    </div>
+    </HStack>
     {children}
-  </div>
+  </VStack>
 );
