@@ -5,27 +5,25 @@ import { useState } from 'react';
 import { ReportFlow } from '@/widgets/report';
 
 import { BlockUserModal } from '@/features/block';
-import { CommentAction, CommentActionMenu } from '@/features/comment';
+import { CommentActionMenu, useCommentMenuActions } from '@/features/comment';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
 
 interface ReplyItemProps {
   reply: Comment;
-  activeMenuId: number | string | null;
-  onToggleMenu: (id: number | string) => void;
-  onCloseMenu: () => void;
   onReply: (target: ReplyTarget) => void;
 }
 
-export const ReplyItem = ({
-  reply,
-  activeMenuId,
-  onToggleMenu,
-  onCloseMenu,
-  onReply,
-}: ReplyItemProps) => {
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
+export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
+  const {
+    isReportOpen,
+    setIsReportOpen,
+    isBlockOpen,
+    setIsBlockOpen,
+    handleAction: handleMenuAction,
+    submitReport,
+    submitBlock,
+  } = useCommentMenuActions(reply.id);
 
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
@@ -37,25 +35,6 @@ export const ReplyItem = ({
     } else {
       setIsLiked(true);
       setLikeCount((prev) => prev + 1);
-    }
-  };
-
-  const submitReport = () => {};
-  const submitBlock = () => {};
-
-  const handleAction = (action: CommentAction) => {
-    switch (action) {
-      case 'report':
-        setIsReportOpen(true);
-        break;
-      case 'block':
-        setIsBlockOpen(true);
-        break;
-      case 'delete':
-        console.log('댓글 삭제');
-        break;
-      default:
-        console.log(action);
     }
   };
 
@@ -77,14 +56,7 @@ export const ReplyItem = ({
           })
         }
         menuSlot={
-          <CommentActionMenu
-            id={reply.id}
-            isMine={false}
-            isOpen={activeMenuId === reply.id}
-            onToggle={onToggleMenu}
-            onClose={onCloseMenu}
-            onAction={handleAction}
-          />
+          <CommentActionMenu isMine={false} onAction={handleMenuAction} />
         }
       />
 

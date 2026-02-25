@@ -14,10 +14,10 @@ import { BottomNavItem, SidebarItem } from './types';
 export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
   { key: 'home', label: '홈', icon: <Home />, href: '/home' },
   {
-    key: 'board',
+    key: 'feed',
     label: '커뮤니티',
     icon: <Board size={18} />,
-    href: '/board',
+    href: '/feed',
   },
   //TODO: write 라우팅 주소 수정 필요
   {
@@ -59,7 +59,7 @@ export const SIDEBAR_ITEMS = [...SIDEBAR_MAIN_ITEMS, ...SIDEBAR_BOTTOM_ITEMS];
 
 export const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
   { key: 'home', label: '홈', icon: <Home />, href: '/home' },
-  { key: 'board', label: '커뮤니티', icon: <Board />, href: '/board' },
+  { key: 'feed', label: '커뮤니티', icon: <Board />, href: '/feed' },
   {
     key: 'alumni-contacts',
     label: '동문수첩',

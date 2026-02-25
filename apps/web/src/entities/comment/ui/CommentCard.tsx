@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 import { Avatar, Heart, HStack, VStack, Text } from '@causw/cds';
 
+import { IconCountButton } from '@/shared/ui';
+
 interface CommentCardProps {
   author: string;
   content: string;
@@ -30,7 +32,7 @@ export const CommentCard = ({
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
       <HStack align={isBlocked ? 'center' : 'start'} className="gap-3">
-        <Avatar size="36" className="my-1" />
+        <Avatar size="36" className="my-1 shrink-0" />
 
         {isBlocked ? (
           // 차단된 사용자의 댓글
@@ -66,27 +68,19 @@ export const CommentCard = ({
               <button
                 type="button"
                 onClick={onReplyClick}
-                className="cursor-pointer transition-opacity hover:opacity-70"
+                className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
               >
                 <Text typography="body-14-medium" textColor="gray-400">
                   답글달기
                 </Text>
               </button>
 
-              <HStack
-                as="button"
-                align="center"
+              <IconCountButton
+                icon={<Heart />}
+                count={likeCount}
+                active={isLiked}
                 onClick={onLikeClick}
-                className="translate-x-1 cursor-pointer gap-1.5 px-1 transition-opacity hover:opacity-70"
-              >
-                <Heart size={16} color={isLiked ? 'red-400' : 'gray-200'} />
-                <Text
-                  typography="body-14-medium"
-                  textColor={isLiked ? 'red-400' : 'gray-400'}
-                >
-                  {likeCount}
-                </Text>
-              </HStack>
+              />
             </HStack>
           </VStack>
         )}
