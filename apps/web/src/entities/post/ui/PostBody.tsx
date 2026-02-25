@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+
 import { Text, VStack } from '@causw/cds';
 
 import { PostImage } from './PostImage';
@@ -36,10 +40,24 @@ export const PostBody = ({
   onExpand,
   showExpandButton = false,
 }: PostBodyProps) => {
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+
+    if (isCollapsed) {
+      const hasOverflow = el.scrollHeight > el.clientHeight + 1;
+      setIsOverflowing(hasOverflow);
+    }
+  }, [content, isCollapsed, maxLines]);
+
   return (
     <VStack gap="md">
       <VStack gap="sm" align="start">
         <Text
+          ref={textRef}
           as="p"
           typography="body-16-regular"
           textColor="gray-800"
@@ -58,7 +76,7 @@ export const PostBody = ({
           {content}
         </Text>
 
-        {showExpandButton && isCollapsed && (
+        {showExpandButton && isCollapsed && isOverflowing && (
           <button onClick={onExpand} className="cursor-pointer">
             <Text typography="body-14-regular" textColor="gray-400">
               더보기
