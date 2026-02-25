@@ -1,6 +1,6 @@
 import { cloneElement, ReactElement } from 'react';
 
-import { HStack, MonoIconProps, Text } from '@causw/cds';
+import { HStack, mergeStyles, MonoIconProps, Text } from '@causw/cds';
 
 interface IconCountButtonProps {
   icon: ReactElement<MonoIconProps>;
@@ -30,7 +30,12 @@ export const IconCountButton = ({
       as="button"
       align="center"
       onClick={disabled ? undefined : onClick}
-      className={`w-fit gap-1.5 transition-opacity ${disabled ? 'cursor-default' : 'cursor-pointer hover:opacity-70'} `}
+      className={mergeStyles(
+        'w-fit gap-1.5 transition-opacity',
+        disabled
+          ? 'cursor-default'
+          : 'cursor-pointer hover:opacity-70 active:opacity-70',
+      )}
     >
       {renderedIcon}
 

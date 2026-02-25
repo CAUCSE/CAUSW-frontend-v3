@@ -68,7 +68,7 @@ export const CommentCard = ({
               <button
                 type="button"
                 onClick={onReplyClick}
-                className="cursor-pointer transition-opacity hover:opacity-70"
+                className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
               >
                 <Text typography="body-14-medium" textColor="gray-400">
                   답글달기

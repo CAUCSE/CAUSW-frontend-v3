@@ -25,7 +25,7 @@ export const CommentActionMenu = ({
   return (
     <Dropdown open={isOpen} onOpenChange={setIsOpen}>
       <Dropdown.Trigger asChild>
-        <button className="translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100">
+        <button className="translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100">
           <Menu size={20} color="gray-500" />
         </button>
       </Dropdown.Trigger>

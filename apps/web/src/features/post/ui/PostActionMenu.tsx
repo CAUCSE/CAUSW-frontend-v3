@@ -22,7 +22,7 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
   return (
     <Dropdown open={isOpen} onOpenChange={setIsOpen}>
       <Dropdown.Trigger asChild>
-        <button className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100">
+        <button className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100">
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
