@@ -3,6 +3,7 @@
 import { useForm, FormProvider } from 'react-hook-form';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -10,13 +11,13 @@ import { Text, CTAButton, Flex, VStack, Separator } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
+import { useSignInMutation } from '@/features/auth';
+
 import { SigninRequestDto, signInSchema } from '@/entities/auth';
 
-import { RHFInput } from '@/shared/ui';
-import { useSignInMutation } from '@/features/auth';
 import { toast } from '@/shared/model';
-import { useRouter } from 'next/navigation';
 import { TokenManager } from '@/shared/storage';
+import { RHFInput } from '@/shared/ui';
 import { extractErrorMessage } from '@/shared/utils';
 
 export const EmailLoginPage = () => {
@@ -40,12 +41,12 @@ export const EmailLoginPage = () => {
     },
     onError: (error) => {
       toast.error(extractErrorMessage(error, '로그인에 실패했습니다.'));
-    }
+    },
   });
 
   const onSubmit = (data: SigninRequestDto) => {
     console.log('Sign In Data:', data);
-    signInMutation.mutate(data)
+    signInMutation.mutate(data);
   };
 
   return (
