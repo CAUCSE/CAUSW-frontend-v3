@@ -1,24 +1,24 @@
 'use client';
 
-import { FormProvider, Controller, useFormContext } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
-import { Dialog, Field, HStack, Tab, TextInput } from '@causw/cds';
-
-import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
+import { Dialog } from '@causw/cds';
 
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 import { ActionHeader } from '@/shared/ui/ActionHeader';
-import { FormSection } from '@/shared/ui/FormSection';
 
-import { CEREMONY_TYPES, CATEGORY_MAP, CUSTOM_VALUE } from '../config';
 import { useCeremonyForm } from '../model';
 
 import { AddressSection } from './AddressSection';
 import { AdmissionYearSection } from './AdmissionYearSection';
+import { CategorySection } from './CategorySection';
 import { CloseConfirmModal } from './CloseConfirmModal';
+import { ContactSection } from './ContactSection';
 import { ContentSection } from './ContentSection';
 import { DateTimeSection } from './DateTimeSection';
+import { LinkSection } from './LinkSection';
 import { RelationshipSection } from './RelationshipSection';
+import { TypeSection } from './TypeSection';
 
 interface CeremonyCreateDialogProps {
   open: boolean;
@@ -143,125 +143,5 @@ export const CeremonyCreateDialog = ({
         />
       </Dialog>
     </FormProvider>
-  );
-};
-
-// --- 분류 섹션 ---
-const TypeSection = ({
-  onTypeChange,
-}: {
-  onTypeChange: (type: CeremonyType) => void;
-}) => {
-  const { control } = useFormContext<CeremonyFormData>();
-
-  return (
-    <FormSection title="분류">
-      <Controller
-        control={control}
-        name="ceremonyType"
-        render={({ field }) => (
-          <Tab
-            variant="chip"
-            value={field.value}
-            onValueChange={(v) => onTypeChange(v as CeremonyType)}
-          >
-            <Tab.List>
-              {CEREMONY_TYPES.map((type) => (
-                <Tab.TabItem key={type} value={type}>
-                  {type}
-                </Tab.TabItem>
-              ))}
-            </Tab.List>
-          </Tab>
-        )}
-      />
-    </FormSection>
-  );
-};
-
-// --- 상세 분류 섹션 ---
-const CategorySection = () => {
-  const { control, register, watch } = useFormContext<CeremonyFormData>();
-  const ceremonyType = watch('ceremonyType');
-  const category = watch('category');
-
-  if (!ceremonyType) return null;
-
-  const categoryOptions = CATEGORY_MAP[ceremonyType as CeremonyType] ?? [];
-  const isCustom = category === CUSTOM_VALUE;
-
-  return (
-    <FormSection title="상세 분류">
-      <Controller
-        control={control}
-        name="category"
-        render={({ field }) => (
-          <Tab
-            variant="chip"
-            value={field.value}
-            onValueChange={field.onChange}
-          >
-            <Tab.List className="flex-wrap">
-              {categoryOptions.map((opt) => (
-                <Tab.TabItem key={opt.value} value={opt.value}>
-                  {opt.emoji ? (
-                    <HStack gap="xs" className="items-center">
-                      <span>{opt.emoji}</span>
-                      <span>{opt.value}</span>
-                    </HStack>
-                  ) : (
-                    (opt.label ?? opt.value)
-                  )}
-                </Tab.TabItem>
-              ))}
-            </Tab.List>
-          </Tab>
-        )}
-      />
-
-      {isCustom && (
-        <Field>
-          <TextInput
-            {...register('customCategory')}
-            placeholder={`${ceremonyType}를 입력해주세요.`}
-            className="rounded-xl bg-white"
-          />
-        </Field>
-      )}
-    </FormSection>
-  );
-};
-
-// --- 문의 섹션 ---
-const ContactSection = () => {
-  const { register } = useFormContext<CeremonyFormData>();
-
-  return (
-    <FormSection title="문의" optional>
-      <Field>
-        <TextInput
-          {...register('phone')}
-          placeholder="연락 가능한 전화번호를 입력해주세요."
-          className="rounded-xl bg-white"
-        />
-      </Field>
-    </FormSection>
-  );
-};
-
-// --- 관련 링크 섹션 ---
-const LinkSection = () => {
-  const { register } = useFormContext<CeremonyFormData>();
-
-  return (
-    <FormSection title="관련 링크" optional>
-      <Field>
-        <TextInput
-          {...register('relatedLink')}
-          placeholder="URL을 입력해주세요."
-          className="rounded-xl bg-white"
-        />
-      </Field>
-    </FormSection>
   );
 };
