@@ -1,5 +1,5 @@
 export * from './tanstack-query';
-export * from './auth';
+export * from './error';
 export * from './image';
 export * from './breakpoints';
 export * from './copy';
