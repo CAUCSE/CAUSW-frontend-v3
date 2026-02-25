@@ -12,6 +12,7 @@ import type {
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 export const useSignUpMutation = (
   options?: Omit<
@@ -21,8 +22,8 @@ export const useSignUpMutation = (
 ) => {
   return useMutation({
     mutationFn: (data: SignupRequestDto) => signup(data),
-    onError: () => {
-      toast.error('회원가입에 실패했습니다.');
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '회원가입에 실패했습니다.'));
     },
     ...options,
   });
@@ -36,6 +37,9 @@ export const useSignInMutation = (
 ) => {
   return useMutation({
     mutationFn: (data: SigninRequestDto) => signin(data),
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '로그인에 실패했습니다.'));
+    },
     ...options,
   });
 };
@@ -48,8 +52,8 @@ export const useSignOutMutation = (
 ) => {
   return useMutation({
     mutationFn: (data: SignoutRequestDto) => signout(data),
-    onError: () => {
-      toast.error('로그아웃에 실패했습니다.');
+    onError: (error: Error) => {
+      toast.error(extractErrorMessage(error, '로그아웃에 실패했습니다.'));
     },
     ...options,
   });
