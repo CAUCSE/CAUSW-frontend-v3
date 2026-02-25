@@ -8,20 +8,25 @@ import { FormSection } from '@/shared/ui/FormSection';
 
 import { formatTime } from '../model';
 
-interface DateTimeSectionProps {
-  onEndDateToggle: (checked: boolean) => void;
-  onTimeToggle: (checked: boolean) => void;
-}
-
-export const DateTimeSection = ({
-  onEndDateToggle,
-  onTimeToggle,
-}: DateTimeSectionProps) => {
+export const DateTimeSection = () => {
   const { control, setValue } = useFormContext<CeremonyFormData>();
   const [hasEndDate, hasTime] = useWatch({
     control,
     name: ['hasEndDate', 'hasTime'],
   });
+
+  const handleEndDateToggle = (checked: boolean) => {
+    setValue('hasEndDate', checked);
+    if (!checked) setValue('endDate', undefined);
+  };
+
+  const handleTimeToggle = (checked: boolean) => {
+    setValue('hasTime', checked);
+    if (!checked) {
+      setValue('startTime', '');
+      setValue('endTime', '');
+    }
+  };
 
   const handleTimeChange =
     (field: 'startTime' | 'endTime') =>
@@ -131,11 +136,11 @@ export const DateTimeSection = ({
           </div>
         )}
 
-        <Toggle checked={hasEndDate} onCheckedChange={onEndDateToggle}>
+        <Toggle checked={hasEndDate} onCheckedChange={handleEndDateToggle}>
           <Toggle.Switch />
           <Toggle.Label>종료일</Toggle.Label>
         </Toggle>
-        <Toggle checked={hasTime} onCheckedChange={onTimeToggle}>
+        <Toggle checked={hasTime} onCheckedChange={handleTimeToggle}>
           <Toggle.Switch />
           <Toggle.Label>시간 포함</Toggle.Label>
         </Toggle>

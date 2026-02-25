@@ -96,34 +96,16 @@ export const CeremonyCreateDialog = ({
                   />
 
                   {/* 경조사 기간 */}
-                  <DateTimeSection
-                    onEndDateToggle={form.handleEndDateToggle}
-                    onTimeToggle={form.handleTimeToggle}
-                  />
+                  <DateTimeSection />
 
                   {/* 학번 설정 */}
-                  <AdmissionYearSection
-                    showAdmissionYearModal={form.showAdmissionYearModal}
-                    setShowAdmissionYearModal={form.setShowAdmissionYearModal}
-                    admissionYearInput={form.admissionYearInput}
-                    setAdmissionYearInput={form.setAdmissionYearInput}
-                    handleAddAdmissionYear={form.handleAddAdmissionYear}
-                    handleRemoveAdmissionYear={form.handleRemoveAdmissionYear}
-                  />
+                  <AdmissionYearSection />
 
                   {/* 내용 (선택) */}
-                  <ContentSection
-                    imageUploadRef={form.imageUploadRef}
-                    handleSetPhotoFiles={form.handleSetPhotoFiles}
-                    photoResetTrigger={form.photoResetTrigger}
-                  />
+                  <ContentSection />
 
                   {/* 주소 (선택) */}
-                  <AddressSection
-                    showPostcode={form.showPostcode}
-                    postcodeRef={form.postcodeRef}
-                    setShowPostcode={form.setShowPostcode}
-                  />
+                  <AddressSection />
 
                   {/* 문의 */}
                   <ContactSection />

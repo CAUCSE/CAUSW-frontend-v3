@@ -6,18 +6,12 @@ import type { CeremonyFormData } from '@/entities/ceremony';
 
 import { FormSection } from '@/shared/ui/FormSection';
 
-interface AddressSectionProps {
-  showPostcode: boolean;
-  postcodeRef: React.RefObject<HTMLDivElement | null>;
-  setShowPostcode: (v: boolean) => void;
-}
+import { useDaumPostcode } from '../model/useDaumPostcode';
 
-export const AddressSection = ({
-  showPostcode,
-  postcodeRef,
-  setShowPostcode,
-}: AddressSectionProps) => {
-  const { control, register } = useFormContext<CeremonyFormData>();
+export const AddressSection = () => {
+  const { control, register, setValue } = useFormContext<CeremonyFormData>();
+  const { showPostcode, postcodeRef, setShowPostcode } =
+    useDaumPostcode(setValue);
   const [postalCode, address] = useWatch({
     control,
     name: ['postalCode', 'address'],

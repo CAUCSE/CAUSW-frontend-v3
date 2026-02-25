@@ -6,20 +6,13 @@ import type { CeremonyFormData } from '@/entities/ceremony';
 
 import { FormSection } from '@/shared/ui/FormSection';
 import { ImageUploadField } from '@/shared/ui/image';
-import type { ImageUploadFieldRef } from '@/shared/ui/image';
 
-interface ContentSectionProps {
-  imageUploadRef: React.RefObject<ImageUploadFieldRef | null>;
-  handleSetPhotoFiles: (name: string, value: unknown) => void;
-  photoResetTrigger: boolean;
-}
+import { useImageUpload } from '../model/useImageUpload';
 
-export const ContentSection = ({
-  imageUploadRef,
-  handleSetPhotoFiles,
-  photoResetTrigger,
-}: ContentSectionProps) => {
+export const ContentSection = () => {
   const { control } = useFormContext<CeremonyFormData>();
+  const { imageUploadRef, handleSetPhotoFiles, photoResetTrigger } =
+    useImageUpload();
   const content = useWatch({ control, name: 'content' });
 
   return (

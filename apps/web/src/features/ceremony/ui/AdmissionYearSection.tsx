@@ -15,24 +15,19 @@ import type { CeremonyFormData } from '@/entities/ceremony';
 
 import { FormSection } from '@/shared/ui/FormSection';
 
-interface AdmissionYearSectionProps {
-  showAdmissionYearModal: boolean;
-  setShowAdmissionYearModal: (v: boolean) => void;
-  admissionYearInput: string;
-  setAdmissionYearInput: (v: string) => void;
-  handleAddAdmissionYear: () => void;
-  handleRemoveAdmissionYear: (year: string) => void;
-}
+import { useAdmissionYear } from '../model/useAdmissionYear';
 
-export const AdmissionYearSection = ({
-  showAdmissionYearModal,
-  setShowAdmissionYearModal,
-  admissionYearInput,
-  setAdmissionYearInput,
-  handleAddAdmissionYear,
-  handleRemoveAdmissionYear,
-}: AdmissionYearSectionProps) => {
-  const { control } = useFormContext<CeremonyFormData>();
+export const AdmissionYearSection = () => {
+  const { control, getValues, setValue } = useFormContext<CeremonyFormData>();
+  const {
+    showAdmissionYearModal,
+    setShowAdmissionYearModal,
+    admissionYearInput,
+    setAdmissionYearInput,
+    handleAddAdmissionYear,
+    handleRemoveAdmissionYear,
+  } = useAdmissionYear(getValues, setValue);
+
   const [notifyAll, admissionYears] = useWatch({
     control,
     name: ['notifyAll', 'admissionYears'],
