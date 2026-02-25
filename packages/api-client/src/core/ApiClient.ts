@@ -10,6 +10,8 @@ import {
 export class ApiClient {
   private baseUrl: string;
   private timeout: number;
+  private credentials?: RequestCredentials;
+
   public interceptors = {
     request: new InterceptorManager<InternalRequestConfig>(),
     response: new InterceptorManager<ApiResponse>(),
@@ -18,6 +20,7 @@ export class ApiClient {
   constructor(config: ApiClientConfig) {
     this.baseUrl = config.baseUrl;
     this.timeout = config.timeout ?? 30000;
+    this.credentials = config.credentials;
   }
 
   /**
@@ -51,6 +54,7 @@ export class ApiClient {
     let config: InternalRequestConfig = {
       url,
       options: {
+        credentials: this.credentials,
         ...options,
         headers: {
           'Content-Type': contentType,

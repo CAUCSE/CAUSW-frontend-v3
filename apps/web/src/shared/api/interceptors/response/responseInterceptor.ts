@@ -54,25 +54,16 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
         try {
           apiWrapper.setIsRefreshing(true);
 
-          const refreshToken = await TokenManager.getRefreshToken();
-          if (!refreshToken) {
-            throw new Error('No Context RefreshToken');
-          }
+          const newAccessToken = await TokenManager.refreshAccessToken();
+          
 
-          // TODO: refresh 토큰 넣어서 재발급 api 호출
+          await TokenManager.setAccessToken(newAccessToken);
+          await TokenManager.setRefreshToken();
 
-          const newAtk = '';
-          const newRtk = '';
-
-          await TokenManager.setAccessToken(newAtk);
-          if (newRtk) {
-            await TokenManager.setRefreshToken(newRtk);
-          }
-
-          apiWrapper.processRefreshQueue(newAtk);
+          apiWrapper.processRefreshQueue(newAccessToken);
 
           if (originalRequest.options.headers) {
-            originalRequest.options.headers.Authorization = `Bearer ${newAtk}`;
+            originalRequest.options.headers.Authorization = `Bearer ${newAccessToken}`;
           }
           return internalClient.request(
             originalRequest.url,

@@ -17,6 +17,7 @@ import {
 const baseConfig: ApiClientConfig = {
   baseUrl: BASE_URL,
   timeout: 30000,
+  credentials: 'include',
 };
 
 export class BaseApiClient {
@@ -60,10 +61,7 @@ export class BaseApiClient {
     this.refreshQueue = [];
   }
 
-  public get = async <T>(
-    url: string,
-    options?: FetchOptions,
-  ): Promise<DefaultResponseField<T>> => {
+  public get = async <T>(url: string, options?: FetchOptions): Promise<T> => {
     const response = await this.client.get<DefaultResponseField<T>>(
       url,
       options,
@@ -75,7 +73,7 @@ export class BaseApiClient {
     url: string,
     body?: unknown,
     options?: FetchOptions,
-  ): Promise<DefaultResponseField<T>> => {
+  ): Promise<T> => {
     const response = await this.client.post<DefaultResponseField<T>>(
       url,
       body,
@@ -88,7 +86,7 @@ export class BaseApiClient {
     url: string,
     body?: unknown,
     options?: FetchOptions,
-  ): Promise<DefaultResponseField<T>> => {
+  ): Promise<T> => {
     const response = await this.client.put<DefaultResponseField<T>>(
       url,
       body,
@@ -100,7 +98,7 @@ export class BaseApiClient {
   public delete = async <T>(
     url: string,
     options?: FetchOptions,
-  ): Promise<DefaultResponseField<T>> => {
+  ): Promise<T> => {
     const response = await this.client.delete<DefaultResponseField<T>>(
       url,
       options,
@@ -112,7 +110,7 @@ export class BaseApiClient {
     url: string,
     body?: unknown,
     options?: FetchOptions,
-  ): Promise<DefaultResponseField<T>> => {
+  ): Promise<T> => {
     const response = await this.client.patch<DefaultResponseField<T>>(
       url,
       body,

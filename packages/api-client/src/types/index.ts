@@ -19,6 +19,7 @@ export interface InternalRequestConfig {
 export interface ApiClientConfig {
   baseUrl: string;
   timeout?: number;
+  credentials?: RequestCredentials;
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

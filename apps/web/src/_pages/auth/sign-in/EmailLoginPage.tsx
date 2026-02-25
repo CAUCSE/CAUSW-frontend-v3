@@ -3,31 +3,50 @@
 import { useForm, FormProvider } from 'react-hook-form';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Text, CTAButton, Flex, VStack, Checkbox, Separator } from '@causw/cds';
+import { Text, CTAButton, Flex, VStack, Separator } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { signInSchema, type SignInFormData } from '@/entities/auth';
+import { useSignInMutation } from '@/features/auth';
 
+import { SigninRequestDto, signInSchema } from '@/entities/auth';
+
+import { toast } from '@/shared/model';
+import { TokenManager } from '@/shared/storage';
 import { RHFInput } from '@/shared/ui';
+import { extractErrorMessage } from '@/shared/utils';
 
 export const EmailLoginPage = () => {
-  const methods = useForm<SignInFormData>({
+  const router = useRouter();
+  const methods = useForm<SigninRequestDto>({
     resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
   });
 
-  const onSubmit = (data: SignInFormData) => {
+  const signInMutation = useSignInMutation({
+    onSuccess: (res) => {
+      toast.success('로그인에 성공했습니다.');
+      TokenManager.setAccessToken(res.accessToken);
+      TokenManager.setRefreshToken();
+      // TODO: 현재 인증 상태에 따른 redirect 로직 추가
+      router.push('/home');
+    },
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '로그인에 실패했습니다.'));
+    },
+  });
+
+  const onSubmit = (data: SigninRequestDto) => {
     console.log('Sign In Data:', data);
-    // TODO: Implement sign in logic
+    signInMutation.mutate(data);
   };
 
   return (
@@ -64,7 +83,7 @@ export const EmailLoginPage = () => {
             typography="body-16-regular"
           />
 
-          <Checkbox className="w-fit" {...methods.register('rememberMe')}>
+          {/* <Checkbox className="w-fit" {...methods.register('rememberMe')}>
             <Checkbox.Indicator />
             <Checkbox.Label
               as="span"
@@ -73,7 +92,7 @@ export const EmailLoginPage = () => {
             >
               로그인 상태 유지
             </Checkbox.Label>
-          </Checkbox>
+          </Checkbox> */}
 
           <CTAButton color="dark" fullWidth type="submit">
             로그인
