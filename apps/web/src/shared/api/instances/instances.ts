@@ -17,6 +17,7 @@ import {
 const baseConfig: ApiClientConfig = {
   baseUrl: BASE_URL,
   timeout: 30000,
+  credentials: 'include',
 };
 
 export class BaseApiClient {
