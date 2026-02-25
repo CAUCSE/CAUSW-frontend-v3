@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
 import { useForm, useWatch } from 'react-hook-form';
 
@@ -12,10 +12,9 @@ import {
 } from '@/entities/ceremony';
 import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
 
-import { loadDaumPostcode } from '@/shared/lib/daum-postcode';
-import type { ImageUploadFieldRef } from '@/shared/ui/image';
-
-import { CUSTOM_VALUE, CATEGORY_MAP } from '../config';
+import { useAdmissionYear } from './useAdmissionYear';
+import { useDaumPostcode } from './useDaumPostcode';
+import { useImageUpload } from './useImageUpload';
 
 export const useCeremonyForm = () => {
   const methods = useForm<CeremonyFormData>({
@@ -26,31 +25,16 @@ export const useCeremonyForm = () => {
 
   const { control, setValue, getValues, reset } = methods;
 
-  // --- 비폼 UI 상태 ---
+  // --- 비폼 UI 상태 (서브 훅) ---
+  const postcode = useDaumPostcode(setValue);
+  const admissionYear = useAdmissionYear(getValues, setValue);
+  const imageUpload = useImageUpload();
+
+  // --- 닫기 확인 ---
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
-  const [showAdmissionYearModal, setShowAdmissionYearModal] = useState(false);
-  const [admissionYearInput, setAdmissionYearInput] = useState('');
-  const [showPostcode, setShowPostcode] = useState(false);
-  const [photoResetTrigger, setPhotoResetTrigger] = useState(false);
-  const [, setPhotoFiles] = useState<File[]>([]);
-  const imageUploadRef = useRef<ImageUploadFieldRef>(null);
-  const postcodeRef = useRef<HTMLDivElement>(null);
 
   // --- Watch ---
   const watchedValues = useWatch({ control });
-
-  const ceremonyType = watchedValues.ceremonyType ?? '';
-  const category = watchedValues.category ?? '';
-  const customCategory = watchedValues.customCategory ?? '';
-
-  // --- Derived ---
-  const isCustom = category === CUSTOM_VALUE;
-  const categoryOptions = ceremonyType
-    ? CATEGORY_MAP[ceremonyType as CeremonyType]
-    : [];
-  const resolvedCategory = isCustom ? customCategory.trim() : category;
-
-  // --- Validation ---
   const isValid = ceremonyFormSchema.safeParse(watchedValues).success;
 
   // --- Handlers ---
@@ -83,65 +67,18 @@ export const useCeremonyForm = () => {
     }
   };
 
-  const handleAddAdmissionYear = () => {
-    const trimmed = admissionYearInput.trim();
-    const current = getValues('admissionYears');
-    if (trimmed && !current.includes(trimmed)) {
-      setValue('admissionYears', [...current, trimmed]);
-    }
-    setAdmissionYearInput('');
-    setShowAdmissionYearModal(false);
-  };
-
-  const handleRemoveAdmissionYear = (year: string) => {
-    const current = getValues('admissionYears');
-    setValue(
-      'admissionYears',
-      current.filter((y) => y !== year),
-    );
-  };
-
-  const handleSetPhotoFiles = useCallback((_name: string, value: unknown) => {
-    setPhotoFiles(value as File[]);
-  }, []);
-
-  // --- Daum Postcode embed ---
-  useEffect(() => {
-    if (!showPostcode) return;
-    loadDaumPostcode().then(() => {
-      const container = postcodeRef.current;
-      if (!container) return;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Daum Postcode SDK has no type definitions
-      new (window as any).daum.Postcode({
-        oncomplete: (data: { zonecode: string; address: string }) => {
-          setValue('postalCode', data.zonecode);
-          setValue('address', data.address);
-          setShowPostcode(false);
-        },
-        width: '100%',
-        height: '100%',
-      }).embed(container);
-    });
-  }, [showPostcode, setValue]);
-
-  // --- Reset ---
+  // --- 폼 초기화 ---
   const resetForm = () => {
     reset(CEREMONY_FORM_DEFAULT_VALUES);
     setShowCloseConfirm(false);
-    setShowAdmissionYearModal(false);
-    setAdmissionYearInput('');
-    setShowPostcode(false);
-    setPhotoFiles([]);
-    setPhotoResetTrigger((prev) => !prev);
+    postcode.setShowPostcode(false);
+    admissionYear.setShowAdmissionYearModal(false);
+    admissionYear.setAdmissionYearInput('');
+    imageUpload.resetImageUpload();
   };
 
   return {
     methods,
-
-    // Derived
-    isCustom,
-    categoryOptions,
-    resolvedCategory,
     isValid,
 
     // Handlers
@@ -149,24 +86,17 @@ export const useCeremonyForm = () => {
     handleRelationshipChange,
     handleEndDateToggle,
     handleTimeToggle,
-    handleAddAdmissionYear,
-    handleRemoveAdmissionYear,
-    handleSetPhotoFiles,
 
-    // 비폼 UI state
+    // 닫기 확인
     showCloseConfirm,
     setShowCloseConfirm,
-    showAdmissionYearModal,
-    setShowAdmissionYearModal,
-    admissionYearInput,
-    setAdmissionYearInput,
-    showPostcode,
-    setShowPostcode,
-    photoResetTrigger,
-    imageUploadRef,
-    postcodeRef,
 
-    // Actions
+    // 비폼 UI 상태 (서브 훅 위임)
+    ...postcode,
+    ...admissionYear,
+    ...imageUpload,
+
+    // 폼 초기화
     resetForm,
   };
 };
