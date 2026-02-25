@@ -35,7 +35,7 @@ export const EmailLoginPage = () => {
     onSuccess: (res) => {
       toast.success('로그인에 성공했습니다.');
       TokenManager.setAccessToken(res.accessToken);
-      // refreshToken은 백엔드에서 헤더(HttpOnly)로 전달하여 브라우저에 저장되므로 직접 설정하지 않음
+      TokenManager.setRefreshToken();
       // TODO: 현재 인증 상태에 따른 redirect 로직 추가
       router.push('/home');
     },
