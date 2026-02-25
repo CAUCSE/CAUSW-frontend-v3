@@ -8,12 +8,14 @@ import { DefaultResponseField } from '@/shared/types';
  */
 export const unwrapResponse = <T>(
   response: ApiResponse<DefaultResponseField<T>>,
-): DefaultResponseField<T> => {
+): T => {
   if (response.status === 204) {
-    return {} as DefaultResponseField<T>;
+    return {} as T;
   }
 
-  const { message, code, data } = response.data;
+  if (!response.data.data) {
+    throw new Error('응답 데이터가 없습니다.');
+  }
 
-  return { message, code, data };
+  return response.data.data;
 };
