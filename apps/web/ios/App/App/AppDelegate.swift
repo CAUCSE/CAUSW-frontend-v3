@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
     private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
-    private let googleClientId = "1079571986006-lm19q7c395k7mvabrkq8vr64ci9qvb5i.apps.googleusercontent.com"
+    private let googleClientId = "1086770319771-cnj8h70c5lc29ljijcaif27cnb93lq1e.apps.googleusercontent.com"
     private var pendingAppleRequestId: String?
 
     private struct SafeAreaSnapshot: Equatable {
