@@ -1,7 +1,6 @@
 'use client';
 
-import { Text, CTAButton, Flex } from '@causw/cds';
-import { SuccessColored } from '@causw/cds';
+import { Text, CTAButton, Flex, Check, HStack, mergeStyles } from '@causw/cds';
 
 import type { StepCardData } from '@/entities/auth';
 
@@ -9,7 +8,108 @@ import { HighlightText } from '@/shared/ui';
 
 interface EnrollmentStepCardProps extends StepCardData {
   onAction?: () => void;
+  rejectReason?: string;
 }
+
+const EnrollmentStepCardHeader = ({
+  stepNumber,
+  title,
+  statusLabel,
+  state,
+}: Pick<EnrollmentStepCardProps, 'stepNumber' | 'title' | 'statusLabel' | 'state'>) => {
+  const isLocked = state === 'locked';
+  const isCompleted = state === 'completed';
+
+  return (
+    <HStack gap="sm" align="center" className="w-full">
+      <Flex
+        className={mergeStyles(
+          'size-8 shrink-0 items-center justify-center rounded-full',
+          isLocked ? 'bg-gray-100' : 'bg-blue-100'
+        )}
+      >
+        {isCompleted ? (
+          <Check className="fill-none" size={12} color="blue-700" />
+        ) : (
+          <Text
+            typography="subtitle-16-bold"
+            textColor={isLocked ? 'gray-400' : 'blue-700'}
+          >
+            {stepNumber}
+          </Text>
+        )}
+      </Flex>
+      <Text
+        typography="subtitle-16-bold"
+        textColor={isLocked ? 'gray-400' : 'gray-700'}
+        className="flex-1"
+      >
+        {title}
+      </Text>
+      {statusLabel && (
+        <Text
+          typography="subtitle-16-bold"
+          textColor={isCompleted ? 'blue-700' : isLocked ? 'gray-400' : 'blue-700'}
+        >
+          {statusLabel}
+        </Text>
+      )}
+    </HStack>
+  );
+};
+
+const EnrollmentStepBody = ({
+  state,
+  description,
+  highlightText,
+  rejectedReason,
+}: Pick<EnrollmentStepCardProps, 'state' | 'description' | 'highlightText' | 'rejectedReason'>) => {
+  if (state !== 'active' || !description) return null;
+
+  return (
+    <div className="px-2">
+      {highlightText ? (
+        <HighlightText
+          text={description}
+          highlight={highlightText}
+          typography="body-15-medium"
+          textColor="gray-500"
+          highlightColor="blue-700"
+        />
+      ) : (
+        <Text
+          typography="body-15-medium"
+          textColor="gray-500"
+          className="leading-relaxed whitespace-pre-wrap"
+        >
+          {description}
+        </Text>
+      )}
+      {rejectedReason && (
+        <Text
+          typography="body-15-medium"
+          className="leading-relaxed text-[#FD5C5F]"
+        >
+          ({rejectedReason})
+        </Text>
+      )}
+    </div>
+  );
+};
+
+const EnrollmentStepActionButton = ({
+  state,
+  buttonLabel,
+  onAction,
+}: Pick<EnrollmentStepCardProps, 'state' | 'buttonLabel' | 'onAction'>) => {
+  if (state !== 'active' || !buttonLabel) return null;
+
+  return (
+    <CTAButton color="blue" fullWidth onClick={onAction}>
+      {buttonLabel}
+    </CTAButton>
+  );
+};
 
 export const EnrollmentStepCard = ({
   stepNumber,
@@ -22,111 +122,27 @@ export const EnrollmentStepCard = ({
   buttonLabel,
   onAction,
 }: EnrollmentStepCardProps) => {
-  if (state === 'completed') {
-    return (
-      <div className="flex items-center justify-between overflow-hidden rounded-lg bg-white p-4">
-        <Flex gap="sm" align="center" className="flex-1">
-          <div className="flex size-8 shrink-0 items-center justify-center">
-            {/* TODO: 아이콘 변경 */}
-            <SuccessColored size={32} />
-          </div>
-          <Text
-            typography="subtitle-16-bold"
-            textColor="gray-700"
-            className="flex-1"
-          >
-            {title}
-          </Text>
-        </Flex>
-        <Text typography="subtitle-16-bold" textColor="blue-700">
-          완료
-        </Text>
-      </div>
-    );
-  }
-
-  if (state === 'locked') {
-    return (
-      <div className="flex flex-col items-start overflow-hidden rounded-lg bg-white p-4">
-        <Flex gap="sm" align="center" className="h-8">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
-            <Text typography="subtitle-16-bold" textColor="blue-700">
-              {stepNumber}
-            </Text>
-          </div>
-          <Text
-            typography="subtitle-16-bold"
-            textColor="gray-700"
-            className="flex-1"
-          >
-            {title}
-          </Text>
-        </Flex>
-      </div>
-    );
-  }
-
-  // active state
   return (
-    <div className="flex flex-col gap-4 overflow-hidden rounded-lg border-2 border-blue-700 bg-white p-4">
-      {/* 헤더 */}
-      <Flex gap="sm" align="center" className="w-full">
-        <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-100">
-          <Text typography="subtitle-16-bold" textColor="blue-700">
-            {stepNumber}
-          </Text>
-        </div>
-        <Text
-          typography="subtitle-16-bold"
-          textColor="gray-700"
-          className="flex-1"
-        >
-          {title}
-        </Text>
-        {statusLabel && (
-          <Text typography="subtitle-16-bold" textColor="blue-700">
-            {statusLabel}
-          </Text>
-        )}
-      </Flex>
+    <div className={mergeStyles('flex flex-col gap-4 p-4 bg-white overflow-hidden rounded-lg', state === 'active' && 'border-2 border-blue-700')}>
+      <EnrollmentStepCardHeader
+        stepNumber={stepNumber}
+        title={title}
+        state={state}
+        statusLabel={statusLabel}
+      />
 
-      {/* 설명 텍스트 */}
-      {description && (
-        <div className="px-2">
-          {highlightText ? (
-            <HighlightText
-              text={description}
-              highlight={highlightText}
-              typography="body-15-medium"
-              textColor="gray-500"
-              highlightColor="blue-700"
-            />
-          ) : (
-            <Text
-              typography="body-15-medium"
-              textColor="gray-500"
-              className="leading-relaxed whitespace-pre-wrap"
-            >
-              {description}
-            </Text>
-          )}
-          {rejectedReason && (
-            <Text
-              typography="body-15-medium"
-              className="leading-relaxed text-[#FD5C5F]"
-            >
-              ({rejectedReason})
-            </Text>
-          )}
-        </div>
-      )}
+      <EnrollmentStepBody
+        state={state}
+        description={description}
+        highlightText={highlightText}
+        rejectedReason={rejectedReason}
+      />
 
-      {/* 액션 버튼 */}
-      {buttonLabel && (
-        <CTAButton color="light" fullWidth onClick={onAction}>
-          {buttonLabel}
-        </CTAButton>
-      )}
+      <EnrollmentStepActionButton
+        state={state}
+        buttonLabel={buttonLabel}
+        onAction={onAction}
+      />
     </div>
   );
 };
