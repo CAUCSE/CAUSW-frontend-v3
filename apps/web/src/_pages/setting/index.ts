@@ -1,1 +1,2 @@
-export * from './SettingPage';
+﻿export * from './SettingPage';
+export * from './MyFeedPage';

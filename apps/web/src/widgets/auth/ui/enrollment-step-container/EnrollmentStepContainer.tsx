@@ -6,8 +6,9 @@ import {
   type EnrollmentStatus,
   type EnrollmentAction,
   getEnrollmentStepsByStatus,
-  EnrollmentStepCard,
 } from '@/entities/auth';
+
+import { EnrollmentStepCard } from '../enrollment-step-card';
 
 interface EnrollmentStepperProps {
   status: EnrollmentStatus;
@@ -34,6 +35,8 @@ export const EnrollmentStepContainer = ({
           key={step.stepNumber}
           {...step}
           onAction={step.action ? actionHandlers[step.action] : undefined}
+          rejectedReason={rejectedReason}
+          statusLabel={step.statusLabel}
         />
       ))}
     </VStack>

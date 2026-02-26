@@ -1,6 +1,6 @@
 'use client';
 
-import { VStack } from '@causw/cds';
+import { VStack, Flex } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
 import {
@@ -22,43 +22,45 @@ export function HomePage() {
   const newNotification = true;
   const isAlumni = true;
   return (
-    <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 w-full gap-2 px-4 pb-[2.125rem]">
-      {/* Mobile Header */}
-      <div className="tablet:hidden sticky top-0 z-10">
-        <NotificationHeader />
-      </div>
+    <Flex justify="center" align="center" className="w-full">
+      <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 w-full gap-2 px-4 pb-[2.125rem]">
+        {/* Mobile Header */}
+        <div className="tablet:hidden sticky top-0 z-10">
+          <NotificationHeader />
+        </div>
 
-      {/* Desktop Greeting */}
-      <div className="tablet:block hidden">
-        <UserGreeting />
-      </div>
+        {/* Desktop Greeting */}
+        <div className="tablet:block hidden">
+          <UserGreeting />
+        </div>
 
-      <VStack className="desktop:gap-6 gap-4">
-        {newNotification && <NotificationPopupCard />}
+        <VStack className="desktop:gap-6 gap-4">
+          {newNotification && <NotificationPopupCard />}
 
-        {isAlumni && (
-          <div className="desktop:block hidden">
-            <CeremonyRegisterBanner />
-          </div>
-        )}
-
-        <div className="desktop:grid-cols-2 desktop:gap-x-6 desktop:gap-y-8 grid w-full grid-cols-1 gap-4">
-          {!isAlumni && <QuickMenu />}
-
-          {!isAlumni && (
+          {isAlumni && (
             <div className="desktop:block hidden">
               <CeremonyRegisterBanner />
             </div>
           )}
 
-          <CalendarEventListPreview />
+          <div className="desktop:grid-cols-2 desktop:gap-x-6 desktop:gap-y-8 grid w-full grid-cols-1 gap-4">
+            {!isAlumni && <QuickMenu />}
 
-          <div className="desktop:hidden">
-            <CeremonyRegisterBanner />
+            {!isAlumni && (
+              <div className="desktop:block hidden">
+                <CeremonyRegisterBanner />
+              </div>
+            )}
+
+            <CalendarEventListPreview />
+
+            <div className="desktop:hidden">
+              <CeremonyRegisterBanner />
+            </div>
+            <CeremonyListPreview />
           </div>
-          <CeremonyListPreview />
-        </div>
+        </VStack>
       </VStack>
-    </VStack>
+    </Flex>
   );
 }

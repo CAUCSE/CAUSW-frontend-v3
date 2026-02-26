@@ -16,6 +16,7 @@ export const ENROLLMENT_STEP_CONFIG: Record<EnrollmentStatus, StepCardData[]> =
         stepNumber: 1,
         title: '회원가입',
         state: 'completed',
+        statusLabel: '완료',
       },
       {
         stepNumber: 2,
@@ -39,11 +40,13 @@ export const ENROLLMENT_STEP_CONFIG: Record<EnrollmentStatus, StepCardData[]> =
         stepNumber: 1,
         title: '회원가입',
         state: 'completed',
+        statusLabel: '완료',
       },
       {
         stepNumber: 2,
         title: '재학정보 제출',
         state: 'completed',
+        statusLabel: '완료',
       },
       {
         stepNumber: 3,
@@ -62,11 +65,13 @@ export const ENROLLMENT_STEP_CONFIG: Record<EnrollmentStatus, StepCardData[]> =
         stepNumber: 1,
         title: '회원가입',
         state: 'completed',
+        statusLabel: '완료',
       },
       {
         stepNumber: 2,
         title: '재학정보 제출',
         state: 'completed',
+        statusLabel: '완료',
       },
       {
         stepNumber: 3,
@@ -76,24 +81,6 @@ export const ENROLLMENT_STEP_CONFIG: Record<EnrollmentStatus, StepCardData[]> =
         description: '아래 사유로 반려되었어요.\n',
         buttonLabel: '다시 제출하기',
         action: 'resubmit',
-      },
-    ],
-
-    COMPLETED: [
-      {
-        stepNumber: 1,
-        title: '회원가입',
-        state: 'completed',
-      },
-      {
-        stepNumber: 2,
-        title: '재학정보 제출',
-        state: 'completed',
-      },
-      {
-        stepNumber: 3,
-        title: '재학정보 심사',
-        state: 'completed',
       },
     ],
   } as const);

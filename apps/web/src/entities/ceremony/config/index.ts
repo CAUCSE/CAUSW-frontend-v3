@@ -1,0 +1,1 @@
+export { getCeremonyIcon } from './ceremonyIcon';

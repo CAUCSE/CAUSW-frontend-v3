@@ -31,7 +31,9 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   const previewsRef = React.useRef<string[]>([]);
 
   // previewsRef를 최신 상태로 유지
-  previewsRef.current = previews;
+  React.useEffect(() => {
+    previewsRef.current = previews;
+  }, [previews]);
 
   // 언마운트 시 Object URL 해제 (메모리 누수 방지)
   React.useEffect(() => {
@@ -56,7 +58,11 @@ const ImageUploadFieldInner = <T extends FieldValues>(
 
   // files 변경 시 form에 반영
   React.useEffect(() => {
-    setValue(name, files as Parameters<typeof setValue>[1]);
+    setValue(name, files as Parameters<typeof setValue>[1], {
+      shouldValidate: files.length > 0, // 초기 렌더링 시에는 검증 생략
+      shouldDirty: true,
+      shouldTouch: true,
+    });
   }, [files, name, setValue]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
