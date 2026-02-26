@@ -27,7 +27,7 @@ export const AppleLoginButton = ({
     <button
       type="button"
       {...props}
-      className={`typo-body-15-semibold h-[54px] w-full rounded-md bg-[#000000] px-6 text-white transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 ${className || ''} `
+      className={`typo-body-15-semibold h-[54px] w-full cursor-pointer rounded-md bg-[#000000] px-6 text-white transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50 ${className || ''} `
         .trim()
         .replace(/\s+/g, ' ')}
     >
