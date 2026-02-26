@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { GoogleLogo } from '@causw/cds';
+
 import { useOAuthCallback } from '@/features/auth';
 import { useGoogleLoginMutation } from '@/features/auth/model/mutations';
 
@@ -60,24 +62,7 @@ export const GoogleCallbackPage = () => {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-4">
       <div className="flex h-[72px] w-[72px] items-center justify-center rounded-[24px] border border-gray-200 bg-white shadow-md">
-        <svg width="32" height="32" viewBox="0 0 48 48" aria-hidden="true">
-          <path
-            fill="#EA4335"
-            d="M24 9.5c3.6 0 6.1 1.6 7.5 2.9l5.1-5.1C33.3 4.1 29 2.4 24 2.4 15.2 2.4 7.7 7.4 4.1 14.7l6.2 4.8C12 13.6 17.6 9.5 24 9.5z"
-          />
-          <path
-            fill="#4285F4"
-            d="M46.1 24.6c0-1.6-.1-2.7-.4-3.9H24v7.5h12.7c-.3 2-1.7 5-4.9 7.1l6 4.6c3.5-3.2 4.3-7.9 4.3-13.3z"
-          />
-          <path
-            fill="#34A853"
-            d="M10.3 28.1c-0.5-1.4-0.8-2.8-0.8-4.6s.3-3.2.8-4.6l-6.2-4.8C2.6 17 1.8 20 1.8 23.5c0 3.5.8 6.5 2.3 9.4l6.2-4.8z"
-          />
-          <path
-            fill="#FBBC05"
-            d="M24 44.6c6.5 0 12-2.1 16-5.7l-6-4.6c-1.6 1.1-3.9 2-7.9 2-6.4 0-11.9-4.1-13.7-9.8l-6.3 4.9C9.6 39.5 16.9 44.6 24 44.6z"
-          />
-        </svg>
+        <GoogleLogo size={32} />
       </div>
       <p className="typo-body-14-medium text-gray-400">잠시만 기다려 주세요</p>
     </div>

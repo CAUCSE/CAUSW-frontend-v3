@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { AppleLogo } from '@causw/cds';
+
 import { useOAuthCallback } from '@/features/auth';
 import { useAppleLoginMutation } from '@/features/auth/model/mutations';
 
@@ -59,8 +61,8 @@ export const AppleCallbackPage = () => {
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-4">
-      <div className="flex h-[72px] w-[72px] items-center justify-center rounded-[24px] bg-black text-white shadow-md">
-        <span className="typo-body-16-semibold"></span>
+      <div className="flex h-[72px] w-[72px] items-center justify-center rounded-[24px] border border-gray-200 bg-white shadow-md">
+        <AppleLogo />
       </div>
       <p className="typo-body-14-medium text-gray-400">잠시만 기다려 주세요</p>
     </div>
