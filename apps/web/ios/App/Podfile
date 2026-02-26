@@ -23,6 +23,7 @@ target 'App' do
   pod 'Firebase/Messaging'
   pod 'KakaoSDKAuth'
   pod 'KakaoSDKUser'
+  pod 'GoogleSignIn'
 end
 
 post_install do |installer|

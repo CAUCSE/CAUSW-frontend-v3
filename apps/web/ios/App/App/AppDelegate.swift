@@ -7,6 +7,7 @@ import WebKit
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
+import GoogleSignIn
   // TODO: 어느 정도 개발이 되면 필요한 log찍는 코드 빼고 print문 제거하기
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, WKScriptMessageHandler {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
     private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
+    private let googleClientId = "1079571986006-lm19q7c395k7mvabrkq8vr64ci9qvb5i.apps.googleusercontent.com"
 
     private struct SafeAreaSnapshot: Equatable {
         let size: CGSize
@@ -194,7 +196,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
 
-        if provider != "kakao" {
+        switch provider {
+        case "kakao":
+            loginWithKakao(requestId: requestId)
+        case "google":
+            loginWithGoogle(requestId: requestId)
+        default:
             dispatchSocialLoginResult(
                 provider: provider,
                 requestId: requestId,
@@ -202,10 +209,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 errorCode: "UNSUPPORTED_PROVIDER",
                 message: "Unsupported provider on iOS bridge."
             )
-            return
         }
-
-        loginWithKakao(requestId: requestId)
     }
 
     private func loginWithKakao(requestId: String) {
@@ -246,6 +250,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UserApi.shared.loginWithKakaoTalk(completion: completion)
         } else {
             UserApi.shared.loginWithKakaoAccount(completion: completion)
+        }
+    }
+
+    private func loginWithGoogle(requestId: String) {
+        guard !googleClientId.isEmpty else {
+            dispatchSocialLoginResult(
+                provider: "google",
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "GOOGLE_CLIENT_ID_MISSING",
+                message: "Google client id is missing."
+            )
+            return
+        }
+
+        guard let rootViewController = window?.rootViewController else {
+            dispatchSocialLoginResult(
+                provider: "google",
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "PRESENTING_VIEW_CONTROLLER_MISSING",
+                message: "Unable to find presenting view controller."
+            )
+            return
+        }
+
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: googleClientId)
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
+            guard let self else { return }
+
+            if let error {
+                self.dispatchSocialLoginResult(
+                    provider: "google",
+                    requestId: requestId,
+                    accessToken: nil,
+                    errorCode: "GOOGLE_LOGIN_FAILED",
+                    message: error.localizedDescription
+                )
+                return
+            }
+
+            guard let accessToken = result?.user.accessToken.tokenString,
+                  !accessToken.isEmpty else {
+                self.dispatchSocialLoginResult(
+                    provider: "google",
+                    requestId: requestId,
+                    accessToken: nil,
+                    errorCode: "EMPTY_ACCESS_TOKEN",
+                    message: "Google access token is empty."
+                )
+                return
+            }
+
+            self.dispatchSocialLoginResult(
+                provider: "google",
+                requestId: requestId,
+                accessToken: accessToken,
+                errorCode: nil,
+                message: nil
+            )
         }
     }
 
@@ -361,6 +426,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if GIDSignIn.sharedInstance.handle(url) {
+            return true
+        }
+
         if AuthApi.isKakaoTalkLoginUrl(url) {
             return AuthController.handleOpenUrl(url: url)
         }
