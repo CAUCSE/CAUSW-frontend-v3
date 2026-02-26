@@ -29,7 +29,7 @@ export const AppleLoginButton = ({
     url.searchParams.set('client_id', serviceId);
     url.searchParams.set('redirect_uri', resolvedRedirectUri);
     url.searchParams.set('response_type', 'code');
-    url.searchParams.set('response_mode', 'query');
+    url.searchParams.set('response_mode', 'form_post');
     url.searchParams.set('scope', 'name email');
     if (state) url.searchParams.set('state', state);
 
