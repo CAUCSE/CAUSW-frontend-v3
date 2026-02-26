@@ -1,3 +1,5 @@
+'use client';
+
 import { VStack } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
