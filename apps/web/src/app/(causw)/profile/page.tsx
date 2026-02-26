@@ -1,5 +1,5 @@
 import { ProfilePage } from '@/_pages/profile';
 
-export default function Home() {
+export default function Page() {
   return <ProfilePage />;
 }

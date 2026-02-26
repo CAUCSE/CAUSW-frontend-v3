@@ -5,7 +5,7 @@ import { FormProvider } from 'react-hook-form';
 import { Dialog } from '@causw/cds';
 
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
-import { ActionHeader } from '@/shared/ui/ActionHeader';
+import { ActionHeader } from '@/shared/ui';
 
 import { useCeremonyForm } from '../model';
 

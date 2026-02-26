@@ -1,5 +1,5 @@
 import { AlumniContactsPage } from '@/_pages/alumni-contacts';
 
-export default function Home() {
+export default function Page() {
   return <AlumniContactsPage />;
 }

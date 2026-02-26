@@ -1,6 +1,6 @@
 import { ApiResponse } from '@causw/api-client';
 
-import { DefaultResponseField } from '@/shared/types/api/response';
+import { DefaultResponseField } from '@/shared/types';
 
 /**
  * API 응답(ApiResponse)에서 백엔드 공통 래퍼(DefaultResponseField)를 벗겨내고
@@ -8,12 +8,14 @@ import { DefaultResponseField } from '@/shared/types/api/response';
  */
 export const unwrapResponse = <T>(
   response: ApiResponse<DefaultResponseField<T>>,
-): DefaultResponseField<T> => {
+): T => {
   if (response.status === 204) {
-    return {} as DefaultResponseField<T>;
+    return {} as T;
   }
 
-  const { message, code, data } = response.data;
+  if (!response.data.data) {
+    throw new Error('응답 데이터가 없습니다.');
+  }
 
-  return { message, code, data };
+  return response.data.data;
 };

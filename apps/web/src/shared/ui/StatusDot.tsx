@@ -1,4 +1,4 @@
-import { Float } from '@causw/cds';
+import { Float, mergeStyles } from '@causw/cds';
 
 type DotProps = {
   show?: boolean;
@@ -6,9 +6,17 @@ type DotProps = {
   right?: number;
   left?: number;
   bottom?: number;
+  className?: string;
 };
 
-export function StatusDot({ show, top = -2, right, left, bottom }: DotProps) {
+export function StatusDot({
+  show,
+  top = -2,
+  right,
+  left,
+  bottom,
+  className,
+}: DotProps) {
   if (!show) return null;
 
   return (
@@ -19,7 +27,9 @@ export function StatusDot({ show, top = -2, right, left, bottom }: DotProps) {
       left={left}
       bottom={bottom}
     >
-      <div className="h-1 w-1 rounded-full bg-red-500" />
+      <div
+        className={mergeStyles('rounded-full', 'h-1 w-1 bg-red-500', className)}
+      />
     </Float>
   );
 }

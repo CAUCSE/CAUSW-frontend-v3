@@ -1,6 +1,6 @@
 import { Flex } from '@causw/cds';
 
-import { SuspenseView } from '@/shared/ui/fallback/suspense';
+import { SuspenseView } from '@/shared/ui';
 
 export default function Loading() {
   return (

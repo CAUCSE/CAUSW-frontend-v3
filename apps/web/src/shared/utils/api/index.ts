@@ -1,1 +1,2 @@
-export { unwrapResponse } from './unwrapper';
+export * from './unwrapper';
+export * from './errorParser';

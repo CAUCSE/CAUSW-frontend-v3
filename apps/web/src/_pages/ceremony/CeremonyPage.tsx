@@ -16,7 +16,7 @@ import {
 import type { CeremonyFilterType } from '@/entities/ceremony';
 import { filterItems } from '@/entities/ceremony';
 
-import { ActionHeader } from '@/shared/ui/ActionHeader';
+import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyPage = () => {
   const [filter, setFilter] = useState<CeremonyFilterType>('전체');
