@@ -6,7 +6,16 @@ import { Text, CTAButton, VStack } from '@causw/cds';
 
 import { MethodSelectContainer } from '@/widgets/auth';
 
-import { KakaoLoginButton, AppleLoginButton } from '@/features/auth';
+import {
+  AppleLoginButton,
+  GoogleLoginButton,
+  KakaoLoginButton,
+} from '@/features/auth';
+
+import {
+  APPLE_SERVICE_ID,
+  GOOGLE_CLIENT_ID,
+} from '@/shared/storage';
 
 export const SelectMethodPage = () => {
   const router = useRouter();
@@ -43,7 +52,17 @@ export const SelectMethodPage = () => {
             redirectUri="/auth/sign-in/kakao"
           />
 
-          <AppleLoginButton onClick={() => console.log('Apple login')} />
+          <AppleLoginButton
+            onClick={() => console.log('Apple login')}
+            serviceId={APPLE_SERVICE_ID}
+            redirectUri={'/auth/sign-in/apple'}
+          />
+
+          <GoogleLoginButton
+            onClick={() => console.log('Google login')}
+            clientId={GOOGLE_CLIENT_ID}
+            redirectUri={'/auth/sign-in/google'}
+          />
 
           <CTAButton
             color="white"
