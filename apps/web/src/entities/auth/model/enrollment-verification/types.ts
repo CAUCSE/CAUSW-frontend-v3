@@ -8,13 +8,8 @@
  * - `AWAITING_SUBMIT`: 재학정보 제출 대기 (회원가입 완료, 서류 미제출)
  * - `PENDING`: 관리자 심사 처리 중
  * - `REJECTED`: 관리자 심사 반려됨
- * - `COMPLETED`: 재학인증 완료
  */
-export type EnrollmentStatus =
-  | 'AWAITING_SUBMIT'
-  | 'PENDING'
-  | 'REJECTED'
-  | 'COMPLETED';
+export type EnrollmentStatus = 'AWAITING_SUBMIT' | 'PENDING' | 'REJECTED';
 
 /**
  * 개별 스텝의 시각적 상태
