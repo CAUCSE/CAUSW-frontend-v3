@@ -1,6 +1,16 @@
+'use client';
+
 import type { ComponentProps } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
+
+import { appleNativeLogin } from '@/features/auth/api';
+
+import { toast } from '@/shared/model';
+import { extractErrorMessage, isMobile } from '@/shared/utils';
+import { requestNativeSocialLogin } from '@/shared/utils/auth';
 
 type AppleLoginButtonProps = ComponentProps<'button'> & {
   serviceId?: string;
@@ -16,8 +26,33 @@ export const AppleLoginButton = ({
   state,
   ...props
 }: AppleLoginButtonProps) => {
+  const router = useRouter();
+
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
+
+    if (e.defaultPrevented) return;
+    if (isMobile) {
+      const handleMobileLogin = async () => {
+        const loadingToastId = String(toast.loading('apple 로그인 중...'));
+        try {
+          const nativeAccessToken = await requestNativeSocialLogin('apple');
+          await appleNativeLogin({ accessToken: nativeAccessToken });
+          toast.dismiss(loadingToastId);
+          toast.success('로그인되었습니다.');
+          router.replace('/home');
+        } catch (error) {
+          toast.dismiss(loadingToastId);
+          toast.error(
+            extractErrorMessage(error, '소셜 로그인에 실패했습니다. 다시 시도해 주세요.'),
+          );
+          router.replace('/auth/sign-in');
+        }
+      };
+
+      handleMobileLogin();
+      return;
+    }
 
     if (!serviceId || !redirectUri) return;
 
