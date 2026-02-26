@@ -1,0 +1,42 @@
+'use client';
+
+import { useState } from 'react';
+
+import type { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+
+import type { CeremonyFormData } from '@/entities/ceremony';
+
+export const useAdmissionYear = (
+  getValues: UseFormGetValues<CeremonyFormData>,
+  setValue: UseFormSetValue<CeremonyFormData>,
+) => {
+  const [showAdmissionYearModal, setShowAdmissionYearModal] = useState(false);
+  const [admissionYearInput, setAdmissionYearInput] = useState('');
+
+  const handleAddAdmissionYear = () => {
+    const trimmed = admissionYearInput.trim();
+    const current = getValues('admissionYears');
+    if (trimmed && !current.includes(trimmed)) {
+      setValue('admissionYears', [...current, trimmed]);
+    }
+    setAdmissionYearInput('');
+    setShowAdmissionYearModal(false);
+  };
+
+  const handleRemoveAdmissionYear = (year: string) => {
+    const current = getValues('admissionYears');
+    setValue(
+      'admissionYears',
+      current.filter((y) => y !== year),
+    );
+  };
+
+  return {
+    showAdmissionYearModal,
+    setShowAdmissionYearModal,
+    admissionYearInput,
+    setAdmissionYearInput,
+    handleAddAdmissionYear,
+    handleRemoveAdmissionYear,
+  };
+};
