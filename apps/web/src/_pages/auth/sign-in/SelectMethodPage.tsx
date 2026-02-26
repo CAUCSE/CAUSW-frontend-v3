@@ -53,7 +53,7 @@ export const SelectMethodPage = () => {
           <AppleLoginButton
             onClick={() => console.log('Apple login')}
             serviceId={APPLE_SERVICE_ID}
-            redirectUri={'/auth/sign-in/apple'}
+            redirectUri={'/auth/sign-in/apple/callback'}
           />
 
           <GoogleLoginButton
