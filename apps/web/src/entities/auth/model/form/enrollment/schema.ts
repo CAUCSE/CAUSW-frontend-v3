@@ -17,7 +17,7 @@ export const enrollmentVerificationSchema = z.object({
     .max(500, '증빙서류 내용은 500자 이내로 입력해주세요.')
     .optional(),
   images: z
-    .array(z.any())
+    .array(z.instanceof(File))
     .max(3, '이미지는 최대 3장까지 첨부할 수 있습니다.')
     .optional(),
 });
