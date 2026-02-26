@@ -3,13 +3,19 @@ import Capacitor
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import WebKit
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
   // TODO: 어느 정도 개발이 되면 필요한 log찍는 코드 빼고 print문 제거하기
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, WKScriptMessageHandler {
 
     var window: UIWindow?
     private var didDetachWebViewConstraints = false
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
+    private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
+    private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
 
     private struct SafeAreaSnapshot: Equatable {
         let size: CGSize
@@ -18,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        KakaoSDK.initSDK(appKey: kakaoNativeAppKey)
         FirebaseApp.configure()
         UNUserNotificationCenter.current().delegate = self
         
@@ -71,10 +78,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         webView.translatesAutoresizingMaskIntoConstraints = true
         webView.autoresizingMask = []
         webView.alpha = 0
+        registerSocialLoginMessageHandlers(on: webView)
 
         if !didDetachWebViewConstraints {
             detachWebViewConstraints(webView)
             didDetachWebViewConstraints = true
+        }
+    }
+
+    private func registerSocialLoginMessageHandlers(on webView: WKWebView) {
+        let userContentController = webView.configuration.userContentController
+        for handlerName in socialLoginMessageHandlerNames {
+            userContentController.removeScriptMessageHandler(forName: handlerName)
+            userContentController.add(self, name: handlerName)
         }
     }
 
@@ -159,6 +175,123 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         NSLayoutConstraint.deactivate(relatedConstraints)
     }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard socialLoginMessageHandlerNames.contains(message.name) else { return }
+        guard let body = message.body as? [String: Any] else { return }
+
+        let provider = body["provider"] as? String
+        let requestId = body["requestId"] as? String
+
+        guard let provider, let requestId else {
+            dispatchSocialLoginResult(
+                provider: "kakao",
+                requestId: requestId ?? "",
+                accessToken: nil,
+                errorCode: "INVALID_PAYLOAD",
+                message: "Missing provider or requestId."
+            )
+            return
+        }
+
+        if provider != "kakao" {
+            dispatchSocialLoginResult(
+                provider: provider,
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "UNSUPPORTED_PROVIDER",
+                message: "Unsupported provider on iOS bridge."
+            )
+            return
+        }
+
+        loginWithKakao(requestId: requestId)
+    }
+
+    private func loginWithKakao(requestId: String) {
+        let completion: (OAuthToken?, Error?) -> Void = { [weak self] token, error in
+            guard let self else { return }
+            if let error {
+                self.dispatchSocialLoginResult(
+                    provider: "kakao",
+                    requestId: requestId,
+                    accessToken: nil,
+                    errorCode: "KAKAO_LOGIN_FAILED",
+                    message: error.localizedDescription
+                )
+                return
+            }
+
+            guard let accessToken = token?.accessToken, !accessToken.isEmpty else {
+                self.dispatchSocialLoginResult(
+                    provider: "kakao",
+                    requestId: requestId,
+                    accessToken: nil,
+                    errorCode: "EMPTY_ACCESS_TOKEN",
+                    message: "Kakao access token is empty."
+                )
+                return
+            }
+
+            self.dispatchSocialLoginResult(
+                provider: "kakao",
+                requestId: requestId,
+                accessToken: accessToken,
+                errorCode: nil,
+                message: nil
+            )
+        }
+
+        if UserApi.isKakaoTalkLoginAvailable() {
+            UserApi.shared.loginWithKakaoTalk(completion: completion)
+        } else {
+            UserApi.shared.loginWithKakaoAccount(completion: completion)
+        }
+    }
+
+    private func dispatchSocialLoginResult(
+        provider: String,
+        requestId: String,
+        accessToken: String?,
+        errorCode: String?,
+        message: String?
+    ) {
+        guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
+              let webView = bridgeViewController.webView else {
+            return
+        }
+
+        var payload: [String: Any] = [
+            "provider": provider,
+            "requestId": requestId
+        ]
+
+        if let accessToken {
+            payload["accessToken"] = accessToken
+        }
+        if let errorCode {
+            payload["errorCode"] = errorCode
+        }
+        if let message {
+            payload["message"] = message
+        }
+
+        guard JSONSerialization.isValidJSONObject(payload),
+              let data = try? JSONSerialization.data(withJSONObject: payload),
+              let jsonString = String(data: data, encoding: .utf8) else {
+            return
+        }
+
+        let callbackScript =
+            "window.__CAUSW_ON_NATIVE_SOCIAL_LOGIN__ && window.__CAUSW_ON_NATIVE_SOCIAL_LOGIN__(\(jsonString));"
+        let eventScript =
+            "window.dispatchEvent(new CustomEvent('causw:social-login-result', { detail: \(jsonString) }));"
+
+        DispatchQueue.main.async {
+            webView.evaluateJavaScript(callbackScript, completionHandler: nil)
+            webView.evaluateJavaScript(eventScript, completionHandler: nil)
+        }
+    }
     
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -228,6 +361,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if AuthApi.isKakaoTalkLoginUrl(url) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+
         // Called when the app was launched with a url. Feel free to add additional processing here,
         // but if you want the App API to support tracking app url opens, make sure to keep this call
         return ApplicationDelegateProxy.shared.application(app, open: url, options: options)

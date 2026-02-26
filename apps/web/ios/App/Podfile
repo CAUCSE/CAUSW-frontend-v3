@@ -21,6 +21,8 @@ target 'App' do
   capacitor_pods
   # Add your Pods here
   pod 'Firebase/Messaging'
+  pod 'KakaoSDKAuth'
+  pod 'KakaoSDKUser'
 end
 
 post_install do |installer|
