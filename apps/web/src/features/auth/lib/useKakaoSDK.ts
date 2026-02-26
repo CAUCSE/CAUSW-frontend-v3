@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from 'react';
 
-import { KAKAO_JS_KEY, KAKAO_SDK_URL } from '@/shared/storage';
+import { KAKAO_JS_KEY } from '@/shared/storage';
 
 declare global {
   interface Window {
     Kakao: typeof Kakao;
   }
 }
+
+const KAKAO_SDK_URL = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js';
 
 /**
  * 카카오 JS SDK를 동적으로 로드하고 초기화하는 hook.
