@@ -4,7 +4,7 @@ import { Field, HStack, Tab, TextInput } from '@causw/cds';
 
 import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 
 import { CATEGORY_MAP, CUSTOM_VALUE } from '../config';
 

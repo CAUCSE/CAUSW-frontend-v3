@@ -220,6 +220,9 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: catalog:default
         version: 5.91.3(@tanstack/react-query@5.90.12(react@19.2.1))(react@19.2.1)
+      '@types/kakao-js-sdk':
+        specifier: ^1.39.5
+        version: 1.39.5
       autoprefixer:
         specifier: catalog:default
         version: 10.4.23(postcss@8.5.6)
@@ -265,14 +268,14 @@ importers:
   packages/design-system/cds:
     dependencies:
       '@causw/core':
-        specifier: ^0.0.23
-        version: 0.0.23(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.25
+        version: 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/design-system':
-        specifier: ^0.0.27
-        version: 0.0.27(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.29
+        version: 0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/icons':
-        specifier: ^1.0.5
-        version: 1.0.5(react@19.2.1)
+        specifier: ^1.0.7
+        version: 1.0.7(react@19.2.1)
       '@causw/tokens':
         specifier: ^0.0.13
         version: 0.0.13
@@ -408,17 +411,17 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
-  '@causw/core@0.0.23':
-    resolution: {integrity: sha512-2SlblLDq2oTgngbkyr12/HRUw0xfHR8wGlFRTURbBvzGrdZDDvb5GkCAFMdFic1JyupYT4PBKtw0AxaPyFTlQg==}
+  '@causw/core@0.0.25':
+    resolution: {integrity: sha512-SOczQaZ27l8U5KB51xh+Q03WgVkqqTYn38gL8Z9jHEyRWBsnGlB/zarbOAxfVbWpu2zI6YyWiUFux6aulb9W7A==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
 
-  '@causw/design-system@0.0.27':
-    resolution: {integrity: sha512-qa8rt6cV/WtD5gzULaAbj1KuIEdnIeGB9gDIew1DnMY3eKc6y8o/2+HNu/ZnEuhCYeoEmbNZj2ruNCIbPLMmXQ==}
+  '@causw/design-system@0.0.29':
+    resolution: {integrity: sha512-t0NWx9ma5H9Y5wOI+LQTfQNt9d0XIqronadMd7p4hIn2ZVcNQLzP0KQH/CNV1SR7I93eoIvophDvFweGzG/rxA==}
 
-  '@causw/icons@1.0.5':
-    resolution: {integrity: sha512-ChTpP2yni+XCqm+JmWa9uh3XLFOcw/xT7EenJ0yu43fUFHNbXdbFTpOD7XqKNThFJ3ygWJ8jfT3g1mkeDCXJhg==}
+  '@causw/icons@1.0.7':
+    resolution: {integrity: sha512-oCnNyhvbXG7H96L/izhIwefa/H6PHHO4o0LBaV7ajiiSDJvLht5VlmIayAUOTJ9CWZGhdZwFJicR0aMTcuU8gg==}
     peerDependencies:
       react: '>=19'
 
@@ -1819,14 +1822,17 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
+  '@types/kakao-js-sdk@1.39.5':
+    resolution: {integrity: sha512-+u+sfAq2ZcBM4yF3zE/FDxaNq85DeLkKh8K6jP9GQwGdbIJ/IGwoAQEfkbG5tL5XHOP30b3KeHmxDFG2n1E96Q==}
+
   '@types/mysql@2.15.27':
     resolution: {integrity: sha512-YfWiV16IY0OeBfBCk8+hXKmdTKrKlwKN1MNKAPBu5JYxLwBEZl7QzeEpGnlZb3VMGJrrGmB84gXiH+ofs/TezA==}
 
   '@types/node@20.19.30':
     resolution: {integrity: sha512-WJtwWJu7UdlvzEAUm484QNg5eAoq5QR08KDNx7g45Usrs2NtOPiX8ugDqmKdXkyL03rBqU5dYNYVQetEpBHq2g==}
 
-  '@types/node@25.3.0':
-    resolution: {integrity: sha512-4K3bqJpXpqfg2XKGK9bpDTc6xO/xoUP/RBWS7AtRMug6zZFaRekiLzjVtAoZMquxoAbzBvy5nxQ7veS5eYzf8A==}
+  '@types/node@25.3.1':
+    resolution: {integrity: sha512-hj9YIJimBCipHVfHKRMnvmHg+wfhKc0o4mTtXh9pKBjC8TLJzz0nzGmLi5UJsYAUgSvXFHgb0V2oY10DUFtImw==}
 
   '@types/pg-pool@2.0.7':
     resolution: {integrity: sha512-U4CwmGVQcbEuqpyju8/ptOKg6gEC+Tqsvj2xS9o1g71bUh8twxnC6ZL5rZKCsGN0iyH0CwgUyc9VR5owNQF9Ng==}
@@ -4627,9 +4633,9 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.2
 
-  '@causw/core@0.0.23(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/core@0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
-      '@causw/icons': 1.0.5(react@19.2.1)
+      '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
       '@radix-ui/react-dialog': 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@radix-ui/react-dropdown-menu': 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -4649,10 +4655,10 @@ snapshots:
       - '@types/react-dom'
       - tailwindcss
 
-  '@causw/design-system@0.0.27(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/design-system@0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
-      '@causw/core': 0.0.23(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
-      '@causw/icons': 1.0.5(react@19.2.1)
+      '@causw/core': 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+      '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
     transitivePeerDependencies:
       - '@types/react'
@@ -4661,7 +4667,7 @@ snapshots:
       - react-dom
       - tailwindcss
 
-  '@causw/icons@1.0.5(react@19.2.1)':
+  '@causw/icons@1.0.7(react@19.2.1)':
     dependencies:
       '@causw/tokens': 0.0.13
       react: 19.2.1
@@ -6159,6 +6165,8 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
+  '@types/kakao-js-sdk@1.39.5': {}
+
   '@types/mysql@2.15.27':
     dependencies:
       '@types/node': 20.19.30
@@ -6167,7 +6175,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@25.3.0':
+  '@types/node@25.3.1':
     dependencies:
       undici-types: 7.18.2
 
@@ -7710,7 +7718,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 25.3.0
+      '@types/node': 25.3.1
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

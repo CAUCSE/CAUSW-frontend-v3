@@ -4,7 +4,7 @@ import { CTAButton, Flex, Field, TextInput, VStack } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 
 import { useDaumPostcode } from '../model/useDaumPostcode';
 

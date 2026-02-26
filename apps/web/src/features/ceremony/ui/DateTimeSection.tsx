@@ -4,7 +4,7 @@ import { DatePicker, Field, TextInput, Toggle } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 
 import { formatTime } from '../model';
 

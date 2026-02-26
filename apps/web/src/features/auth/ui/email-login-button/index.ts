@@ -1,0 +1,1 @@
+export { EmailLoginButton } from './EmailLoginButton';

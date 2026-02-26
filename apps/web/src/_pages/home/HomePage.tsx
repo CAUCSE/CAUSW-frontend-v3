@@ -1,4 +1,6 @@
-import { Flex, VStack } from '@causw/cds';
+'use client';
+
+import { VStack, Flex } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
 import {

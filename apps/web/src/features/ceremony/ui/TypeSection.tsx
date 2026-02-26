@@ -4,7 +4,7 @@ import { Tab } from '@causw/cds';
 
 import type { CeremonyFormData, CeremonyType } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 
 import { CEREMONY_TYPES } from '../config';
 

@@ -4,7 +4,7 @@ import { Button, Camera, TextArea } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 import { ImageUploadField } from '@/shared/ui/image';
 
 import { useImageUpload } from '../model/useImageUpload';

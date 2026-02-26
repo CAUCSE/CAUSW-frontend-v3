@@ -13,7 +13,7 @@ import {
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
-import { FormSection } from '@/shared/ui/FormSection';
+import { FormSection } from '@/shared/ui/form-section';
 
 import { useAdmissionYear } from '../model/useAdmissionYear';
 

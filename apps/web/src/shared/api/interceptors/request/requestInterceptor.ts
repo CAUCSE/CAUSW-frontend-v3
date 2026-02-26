@@ -1,6 +1,7 @@
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
 import { isServer } from '@/shared/utils';
+import { isPublicEndpoint } from '@/shared/utils/auth';
 
 import { BaseApiClient } from '../../instances';
 
@@ -12,8 +13,9 @@ export const setRequestInterceptors = (apiClient: BaseApiClient) => {
     const refreshToken = await TokenManager.getRefreshToken();
     const accessToken = await TokenManager.getAccessToken();
 
-    if (!refreshToken && !accessToken) {
-      // TODO: 토큰 활용하지 않는 api의 경우 public 경로로 분리하여 분기 로직 추가
+    const isPublic = isPublicEndpoint(config.url, config.options.method);
+
+    if (!refreshToken && !accessToken && !isPublic) {
       const newError = new AuthError(
         'token-expired',
         '토큰이 만료되었습니다. 다시 로그인해주세요.',
