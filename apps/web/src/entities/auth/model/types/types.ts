@@ -38,6 +38,11 @@ export interface KakaoLoginRequestDto {
   code: string;
 }
 
+export interface KakaoNativeLoginRequestDto {
+  /** Native SDK에서 받은 카카오 액세스 토큰 */
+  accessToken: string;
+}
+
 /** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
 export interface KakaoLoginResponseDto {
   accessToken: string;
@@ -51,6 +56,11 @@ export interface AppleLoginRequestDto {
   code: string;
 }
 
+export interface AppleNativeLoginRequestDto {
+  /** Native SDK에서 받은 Apple 액세스 토큰 */
+  accessToken: string;
+}
+
 /** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
 export interface AppleLoginResponseDto {
   accessToken: string;
@@ -62,6 +72,11 @@ export interface AppleLoginResponseDto {
 export interface GoogleLoginRequestDto {
   /** Google OAuth 인가 코드 */
   code: string;
+}
+
+export interface GoogleNativeLoginRequestDto {
+  /** Native SDK에서 받은 Google 액세스 토큰 */
+  accessToken: string;
 }
 
 /** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
