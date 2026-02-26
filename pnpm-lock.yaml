@@ -268,14 +268,14 @@ importers:
   packages/design-system/cds:
     dependencies:
       '@causw/core':
-        specifier: ^0.0.24
-        version: 0.0.24(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.25
+        version: 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/design-system':
-        specifier: ^0.0.28
-        version: 0.0.28(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.29
+        version: 0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/icons':
-        specifier: ^1.0.6
-        version: 1.0.6(react@19.2.1)
+        specifier: ^1.0.7
+        version: 1.0.7(react@19.2.1)
       '@causw/tokens':
         specifier: ^0.0.13
         version: 0.0.13
@@ -411,17 +411,17 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
-  '@causw/core@0.0.24':
-    resolution: {integrity: sha512-LigrYY433oTWjT23em/n1IHqBwkjnDHt4Ois0Eb7mEuNWkaBPPBC5FOvHJLAyPhv8u7+DTP67DMlwIF+oounqQ==}
+  '@causw/core@0.0.25':
+    resolution: {integrity: sha512-SOczQaZ27l8U5KB51xh+Q03WgVkqqTYn38gL8Z9jHEyRWBsnGlB/zarbOAxfVbWpu2zI6YyWiUFux6aulb9W7A==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
 
-  '@causw/design-system@0.0.28':
-    resolution: {integrity: sha512-pVzyox374V4wV5HQL5AkekHv1oBQzemtWngcPLpkSBKQsVB1eb1hCNoEyNsk6Wdt7ttEFCK7AE41N8ylBkBh8w==}
+  '@causw/design-system@0.0.29':
+    resolution: {integrity: sha512-t0NWx9ma5H9Y5wOI+LQTfQNt9d0XIqronadMd7p4hIn2ZVcNQLzP0KQH/CNV1SR7I93eoIvophDvFweGzG/rxA==}
 
-  '@causw/icons@1.0.6':
-    resolution: {integrity: sha512-Wmi8L8gX2GPTRbvMVYxH8UigggPOe2OGSqJdPz1NQTl0XzEjWiTZCCqhpKDhs3YGFe9GdFqtUV3aNxjRBRPRXg==}
+  '@causw/icons@1.0.7':
+    resolution: {integrity: sha512-oCnNyhvbXG7H96L/izhIwefa/H6PHHO4o0LBaV7ajiiSDJvLht5VlmIayAUOTJ9CWZGhdZwFJicR0aMTcuU8gg==}
     peerDependencies:
       react: '>=19'
 
@@ -4633,9 +4633,9 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.2
 
-  '@causw/core@0.0.24(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/core@0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
-      '@causw/icons': 1.0.6(react@19.2.1)
+      '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
       '@radix-ui/react-dialog': 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       '@radix-ui/react-dropdown-menu': 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
@@ -4655,10 +4655,10 @@ snapshots:
       - '@types/react-dom'
       - tailwindcss
 
-  '@causw/design-system@0.0.28(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/design-system@0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
-      '@causw/core': 0.0.24(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
-      '@causw/icons': 1.0.6(react@19.2.1)
+      '@causw/core': 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+      '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
     transitivePeerDependencies:
       - '@types/react'
@@ -4667,7 +4667,7 @@ snapshots:
       - react-dom
       - tailwindcss
 
-  '@causw/icons@1.0.6(react@19.2.1)':
+  '@causw/icons@1.0.7(react@19.2.1)':
     dependencies:
       '@causw/tokens': 0.0.13
       react: 19.2.1
