@@ -53,10 +53,74 @@ const createRequestId = () =>
   `social_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 
 const normalizeErrorMessage = (payload: NativeSocialLoginResult) => {
-  if (payload.message) return payload.message;
-  if (payload.errorCode)
-    return `Native social login failed: ${payload.errorCode}`;
-  return 'Native social login failed';
+  const errorCode = payload.errorCode ?? '';
+  const rawMessage = payload.message ?? '';
+  const normalized = `${errorCode} ${rawMessage}`.toLowerCase();
+
+  if (
+    normalized.includes('cancel') ||
+    normalized.includes('canceled') ||
+    normalized.includes('cancelled') ||
+    normalized.includes('user_cancel') ||
+    normalized.includes('user canceled') ||
+    normalized.includes('사용자 취소') ||
+    normalized.includes('취소')
+  ) {
+    return '로그인이 취소되었습니다.';
+  }
+
+  if (normalized.includes('10:') || normalized.includes('developer_error')) {
+    return '구글 로그인 설정이 올바르지 않습니다. 잠시 후 다시 시도해 주세요.';
+  }
+
+  if (normalized.includes('timeout')) {
+    return '로그인 시간이 초과되었습니다. 다시 시도해 주세요.';
+  }
+
+  if (
+    normalized.includes('network') ||
+    normalized.includes('offline') ||
+    normalized.includes('connection')
+  ) {
+    return '네트워크 연결이 불안정합니다. 다시 시도해 주세요.';
+  }
+
+  if (errorCode === 'UNSUPPORTED_PROVIDER') {
+    return '지원하지 않는 로그인 방식입니다.';
+  }
+
+  if (errorCode === 'INVALID_PAYLOAD') {
+    return '로그인 요청 형식이 올바르지 않습니다. 다시 시도해 주세요.';
+  }
+
+  if (errorCode === 'GOOGLE_CLIENT_ID_MISSING') {
+    return '구글 로그인 설정값이 누락되었습니다. 관리자에게 문의해 주세요.';
+  }
+
+  if (errorCode === 'PRESENTING_VIEW_CONTROLLER_MISSING') {
+    return '로그인 화면을 표시할 수 없습니다. 앱을 다시 실행해 주세요.';
+  }
+
+  if (errorCode === 'APPLE_LOGIN_UNAVAILABLE') {
+    return '현재 기기에서는 Apple 로그인을 사용할 수 없습니다.';
+  }
+
+  if (
+    errorCode === 'KAKAO_LOGIN_FAILED' ||
+    errorCode === 'GOOGLE_LOGIN_FAILED' ||
+    errorCode === 'APPLE_LOGIN_FAILED'
+  ) {
+    return '소셜 로그인에 실패했습니다. 다시 시도해 주세요.';
+  }
+
+  if (
+    errorCode === 'EMPTY_ACCESS_TOKEN' ||
+    errorCode === 'APPLE_CREDENTIAL_MISSING'
+  ) {
+    return '로그인 정보를 가져오지 못했습니다. 다시 시도해 주세요.';
+  }
+
+  return '소셜 로그인에 실패했습니다. 다시 시도해 주세요.';
 };
 
 const resolveFromPayload = (payload: NativeSocialLoginResult) => {
@@ -130,7 +194,7 @@ export const requestNativeSocialLogin = (
 ) =>
   new Promise<string>((resolve, reject) => {
     if (!isMobile) {
-      reject(new Error('Native social login is only available on mobile.'));
+      reject(new Error('모바일 환경에서만 소셜 로그인을 사용할 수 있습니다.'));
       return;
     }
 
@@ -141,7 +205,7 @@ export const requestNativeSocialLogin = (
 
     const timer = setTimeout(() => {
       pendingRequests.delete(requestId);
-      reject(new Error('Native social login request timed out.'));
+      reject(new Error('로그인 시간이 초과되었습니다. 다시 시도해 주세요.'));
     }, timeoutMs);
 
     pendingRequests.set(requestId, {
@@ -155,6 +219,8 @@ export const requestNativeSocialLogin = (
     if (!sent) {
       clearTimeout(timer);
       pendingRequests.delete(requestId);
-      reject(new Error('Native social bridge is not available.'));
+      reject(
+        new Error('앱 로그인 연결에 실패했습니다. 앱을 다시 실행해 주세요.'),
+      );
     }
   });
