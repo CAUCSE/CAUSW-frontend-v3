@@ -8,6 +8,3 @@
 
 /** JS SDK 초기화용 JavaScript 키 (브라우저 공개 가능) */
 export const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY ?? '';
-
-/** 카카오 JS SDK CDN URL */
-export const KAKAO_SDK_URL = process.env.NEXT_PUBLIC_KAKAO_SDK_URL || '';

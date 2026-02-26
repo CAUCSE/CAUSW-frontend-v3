@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { KakaoBadge, KakaoErrorView } from '@/widgets/auth';
+import { KakaoBadge } from '@/widgets/auth';
 
-import { useKakaoCallback } from '@/features/auth';
+import { useOAuthCallback } from '@/features/auth';
 import { useKakaoLoginMutation } from '@/features/auth/model/mutations';
 
 import { toast } from '@/shared/model';
@@ -16,8 +16,6 @@ import { extractErrorMessage } from '@/shared/utils';
 export const KakaoCallbackPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const { mutateAsync: loginWithKakaoCode } = useKakaoLoginMutation({
     onError: () => {}, // onError는 아래 useKakaoCallback에서 처리
   });
@@ -31,7 +29,7 @@ export const KakaoCallbackPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useKakaoCallback({
+  useOAuthCallback({
     onSuccess: async (kakaoCode) => {
       const toastId = String(toast.loading('카카오 로그인 중...'));
 
@@ -44,29 +42,26 @@ export const KakaoCallbackPage = () => {
         router.replace('/home');
       } catch (err) {
         toast.dismiss(toastId);
-        throw err;
+        toast.error(
+          extractErrorMessage(
+            err,
+            '카카오 로그인에 실패했습니다. 다시 시도해 주세요.',
+          ),
+        );
+        router.replace('/auth/sign-in');
       }
     },
     onError: (err) => {
-      setErrorMessage(
+      toast.error(
         extractErrorMessage(
           err,
           '카카오 로그인에 실패했습니다. 다시 시도해 주세요.',
         ),
       );
+      router.replace('/auth/sign-in');
     },
-    removeCodeFromUrl: false,
+    removeCodeFromUrl: true,
   });
-
-  // 오류 발생 시
-  if (errorMessage) {
-    return (
-      <KakaoErrorView
-        message={errorMessage}
-        onRetry={() => router.replace('/auth/sign-in')}
-      />
-    );
-  }
 
   // 로딩 중: 토스트가 메시지 담당, 화면엔 카카오 배지 + 안내 문구 노출
   return (
