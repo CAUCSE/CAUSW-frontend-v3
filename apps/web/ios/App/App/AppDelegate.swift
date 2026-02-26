@@ -4,13 +4,14 @@ import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
 import WebKit
+import AuthenticationServices
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 import GoogleSignIn
   // TODO: 어느 정도 개발이 되면 필요한 log찍는 코드 빼고 print문 제거하기
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, WKScriptMessageHandler {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, WKScriptMessageHandler, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
 
     var window: UIWindow?
     private var didDetachWebViewConstraints = false
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
     private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
     private let googleClientId = "1079571986006-lm19q7c395k7mvabrkq8vr64ci9qvb5i.apps.googleusercontent.com"
+    private var pendingAppleRequestId: String?
 
     private struct SafeAreaSnapshot: Equatable {
         let size: CGSize
@@ -201,6 +203,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             loginWithKakao(requestId: requestId)
         case "google":
             loginWithGoogle(requestId: requestId)
+        case "apple":
+            loginWithApple(requestId: requestId)
         default:
             dispatchSocialLoginResult(
                 provider: provider,
@@ -312,6 +316,84 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 message: nil
             )
         }
+    }
+
+    private func loginWithApple(requestId: String) {
+        if #available(iOS 13.0, *) {
+            pendingAppleRequestId = requestId
+
+            let provider = ASAuthorizationAppleIDProvider()
+            let request = provider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+
+            let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+            authorizationController.delegate = self
+            authorizationController.presentationContextProvider = self
+            authorizationController.performRequests()
+            return
+        }
+
+        dispatchSocialLoginResult(
+            provider: "apple",
+            requestId: requestId,
+            accessToken: nil,
+            errorCode: "APPLE_LOGIN_UNAVAILABLE",
+            message: "Apple login requires iOS 13 or later."
+        )
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let requestId = pendingAppleRequestId else { return }
+        pendingAppleRequestId = nil
+
+        guard let appleCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            dispatchSocialLoginResult(
+                provider: "apple",
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "APPLE_CREDENTIAL_MISSING",
+                message: "Apple credential is missing."
+            )
+            return
+        }
+
+        guard let identityTokenData = appleCredential.identityToken,
+              let identityToken = String(data: identityTokenData, encoding: .utf8),
+              !identityToken.isEmpty else {
+            dispatchSocialLoginResult(
+                provider: "apple",
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "EMPTY_ACCESS_TOKEN",
+                message: "Apple identity token is empty."
+            )
+            return
+        }
+
+        dispatchSocialLoginResult(
+            provider: "apple",
+            requestId: requestId,
+            accessToken: identityToken,
+            errorCode: nil,
+            message: nil
+        )
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        guard let requestId = pendingAppleRequestId else { return }
+        pendingAppleRequestId = nil
+
+        dispatchSocialLoginResult(
+            provider: "apple",
+            requestId: requestId,
+            accessToken: nil,
+            errorCode: "APPLE_LOGIN_FAILED",
+            message: error.localizedDescription
+        )
+    }
+
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return window ?? ASPresentationAnchor()
     }
 
     private func dispatchSocialLoginResult(
