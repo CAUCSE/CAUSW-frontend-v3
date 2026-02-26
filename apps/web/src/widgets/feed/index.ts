@@ -1,2 +1,2 @@
-// @/widgets/board
-// 게시판 관련 위젯
+﻿// @/widgets/board
+// 게시판 관련 화면 조합
