@@ -34,7 +34,7 @@ export const EnrollmentStepContainer = ({
           key={step.stepNumber}
           {...step}
           onAction={step.action ? actionHandlers[step.action] : undefined}
-          rejectReason={rejectedReason}
+          rejectedReason={rejectedReason}
           statusLabel={step.statusLabel}
         />
       ))}

@@ -8,7 +8,7 @@ import { HighlightText } from '@/shared/ui';
 
 interface EnrollmentStepCardProps extends StepCardData {
   onAction?: () => void;
-  rejectReason?: string;
+  rejectedReason?: string;
 }
 
 const EnrollmentStepCardHeader = ({
@@ -16,7 +16,10 @@ const EnrollmentStepCardHeader = ({
   title,
   statusLabel,
   state,
-}: Pick<EnrollmentStepCardProps, 'stepNumber' | 'title' | 'statusLabel' | 'state'>) => {
+}: Pick<
+  EnrollmentStepCardProps,
+  'stepNumber' | 'title' | 'statusLabel' | 'state'
+>) => {
   const isLocked = state === 'locked';
   const isCompleted = state === 'completed';
 
@@ -25,7 +28,7 @@ const EnrollmentStepCardHeader = ({
       <Flex
         className={mergeStyles(
           'size-8 shrink-0 items-center justify-center rounded-full',
-          isLocked ? 'bg-gray-100' : 'bg-blue-100'
+          isLocked ? 'bg-gray-100' : 'bg-blue-100',
         )}
       >
         {isCompleted ? (
@@ -49,7 +52,9 @@ const EnrollmentStepCardHeader = ({
       {statusLabel && (
         <Text
           typography="subtitle-16-bold"
-          textColor={isCompleted ? 'blue-700' : isLocked ? 'gray-400' : 'blue-700'}
+          textColor={
+            isCompleted ? 'blue-700' : isLocked ? 'gray-400' : 'blue-700'
+          }
         >
           {statusLabel}
         </Text>
@@ -63,7 +68,10 @@ const EnrollmentStepBody = ({
   description,
   highlightText,
   rejectedReason,
-}: Pick<EnrollmentStepCardProps, 'state' | 'description' | 'highlightText' | 'rejectedReason'>) => {
+}: Pick<
+  EnrollmentStepCardProps,
+  'state' | 'description' | 'highlightText' | 'rejectedReason'
+>) => {
   if (state !== 'active' || !description) return null;
 
   return (
@@ -123,7 +131,12 @@ export const EnrollmentStepCard = ({
   onAction,
 }: EnrollmentStepCardProps) => {
   return (
-    <div className={mergeStyles('flex flex-col gap-4 p-4 bg-white overflow-hidden rounded-lg', state === 'active' && 'border-2 border-blue-700')}>
+    <div
+      className={mergeStyles(
+        'flex flex-col gap-4 overflow-hidden rounded-lg bg-white p-4',
+        state === 'active' && 'border-2 border-blue-700',
+      )}
+    >
       <EnrollmentStepCardHeader
         stepNumber={stepNumber}
         title={title}
