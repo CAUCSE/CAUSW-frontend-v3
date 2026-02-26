@@ -3,4 +3,6 @@ export { MethodSelectContainer } from './method-select-container';
 export { EnrollmentStepContainer } from './enrollment-step-container';
 export { EnrollmentVerificationDialog } from './enrollment-verification-dialog';
 export * from './enrollment-verification-form';
+export * from './enrollment-step-card';
+export * from './enrollment-step-card-header';
 export * from './terms';

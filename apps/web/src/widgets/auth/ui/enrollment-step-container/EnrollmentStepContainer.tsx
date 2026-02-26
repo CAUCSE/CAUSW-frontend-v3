@@ -6,8 +6,9 @@ import {
   type EnrollmentStatus,
   type EnrollmentAction,
   getEnrollmentStepsByStatus,
-  EnrollmentStepCard,
 } from '@/entities/auth';
+
+import { EnrollmentStepCard } from '../enrollment-step-card';
 
 interface EnrollmentStepperProps {
   status: EnrollmentStatus;
