@@ -3,6 +3,7 @@
 //TODO : 취소 버튼 눌러서 앱 종료 deprecated된거 확인하기
 package kr.co.causwv2.twa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log; // ⭐️ 추가
@@ -19,6 +20,11 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowCompat;
 
 import com.getcapacitor.BridgeActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.messaging.FirebaseMessaging; // ⭐️ 추가
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.common.KakaoSdk;
@@ -35,9 +41,14 @@ public class MainActivity extends BridgeActivity {
 
     private boolean backPressedOnce = false;
     private static final int BACK_PRESS_TIMEOUT = 2000;
+    private static final int RC_GOOGLE_SIGN_IN = 9001;
     private static final String TAG = "FCM_TEST"; // ⭐️ 로그 필터용 태그
     private static final String SOCIAL_LOGIN_TAG = "SOCIAL_LOGIN";
     private static final String KAKAO_NATIVE_APP_KEY = "4535709d7c684cff31a42bb2b522eed9";
+    private static final String GOOGLE_WEB_CLIENT_ID =
+        "1086770319771-hp040om1msg7r4o25u895b1pos47jkjt.apps.googleusercontent.com";
+    private String pendingGoogleRequestId = null;
+    private GoogleSignInClient googleSignInClient = null;
 
     private final Runnable resetBackPress = new Runnable() {
         @Override
@@ -93,6 +104,7 @@ public class MainActivity extends BridgeActivity {
     }
 
     private void handleSocialLoginRequest(String payloadJson) {
+        Log.d(SOCIAL_LOGIN_TAG, "Bridge request received. payload=" + payloadJson);
         final JSONObject payload;
         try {
             payload = new JSONObject(payloadJson);
@@ -115,18 +127,23 @@ public class MainActivity extends BridgeActivity {
             return;
         }
 
-        if (!"kakao".equals(provider)) {
-            dispatchSocialLoginResult(
-                provider,
-                requestId,
-                null,
-                "UNSUPPORTED_PROVIDER",
-                "Unsupported provider on Android bridge."
-            );
+        if ("kakao".equals(provider)) {
+            loginWithKakao(requestId);
             return;
         }
 
-        loginWithKakao(requestId);
+        if ("google".equals(provider)) {
+            loginWithGoogle(requestId);
+            return;
+        }
+
+        dispatchSocialLoginResult(
+            provider,
+            requestId,
+            null,
+            "UNSUPPORTED_PROVIDER",
+            "Unsupported provider on Android bridge."
+        );
     }
 
     private void loginWithKakao(String requestId) {
@@ -162,6 +179,121 @@ public class MainActivity extends BridgeActivity {
         UserApiClient.getInstance().loginWithKakaoAccount(this, callback);
     }
 
+    private void loginWithGoogle(String requestId) {
+        Log.d(SOCIAL_LOGIN_TAG, "Google login requested. requestId=" + requestId);
+        if (GOOGLE_WEB_CLIENT_ID == null || GOOGLE_WEB_CLIENT_ID.isEmpty()) {
+            dispatchSocialLoginResult(
+                "google",
+                requestId,
+                null,
+                "GOOGLE_CLIENT_ID_MISSING",
+                "Google web client id is missing."
+            );
+            return;
+        }
+
+        GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken(GOOGLE_WEB_CLIENT_ID)
+            .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, options);
+        pendingGoogleRequestId = requestId;
+
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
+            Log.d(
+                SOCIAL_LOGIN_TAG,
+                "Google signOut completed. success="
+                    + task.isSuccessful()
+                    + ", requestId="
+                    + requestId
+            );
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            Log.d(SOCIAL_LOGIN_TAG, "Launching Google sign-in intent. requestId=" + requestId);
+            startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(
+            SOCIAL_LOGIN_TAG,
+            "onActivityResult called. requestCode="
+                + requestCode
+                + ", resultCode="
+                + resultCode
+                + ", hasData="
+                + (data != null)
+        );
+
+        if (requestCode != RC_GOOGLE_SIGN_IN) {
+            return;
+        }
+
+        String requestId = pendingGoogleRequestId != null ? pendingGoogleRequestId : "";
+        pendingGoogleRequestId = null;
+
+        try {
+            GoogleSignInAccount account =
+                GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
+            String idToken = account != null ? account.getIdToken() : null;
+
+            if (idToken == null || idToken.isEmpty()) {
+                dispatchSocialLoginResult(
+                    "google",
+                    requestId,
+                    null,
+                    "EMPTY_ACCESS_TOKEN",
+                    "Google id token is empty."
+                );
+                return;
+            }
+
+            dispatchSocialLoginResult("google", requestId, idToken, null, null);
+        } catch (ApiException e) {
+            Log.e(
+                SOCIAL_LOGIN_TAG,
+                "Google login failed. statusCode="
+                    + e.getStatusCode()
+                    + ", message="
+                    + e.getMessage()
+                    + ", packageName="
+                    + getPackageName()
+                    + ", webClientId="
+                    + GOOGLE_WEB_CLIENT_ID
+                    + ", requestId="
+                    + requestId,
+                e
+            );
+            dispatchSocialLoginResult(
+                "google",
+                requestId,
+                null,
+                "GOOGLE_LOGIN_FAILED",
+                e.getStatusCode() + ": " + e.getMessage()
+            );
+        } catch (Exception e) {
+            Log.e(
+                SOCIAL_LOGIN_TAG,
+                "Google login failed with unexpected error. packageName="
+                    + getPackageName()
+                    + ", webClientId="
+                    + GOOGLE_WEB_CLIENT_ID
+                    + ", requestId="
+                    + requestId,
+                e
+            );
+            dispatchSocialLoginResult(
+                "google",
+                requestId,
+                null,
+                "GOOGLE_LOGIN_FAILED",
+                e.getMessage()
+            );
+        }
+    }
+
     private void dispatchSocialLoginResult(
         String provider,
         String requestId,
@@ -173,6 +305,30 @@ public class MainActivity extends BridgeActivity {
             WebView webView = getBridge() != null ? getBridge().getWebView() : null;
             if (webView == null) {
                 return;
+            }
+
+            if (accessToken != null && !accessToken.isEmpty()) {
+                Log.d(
+                    SOCIAL_LOGIN_TAG,
+                    "Social login success. provider="
+                        + provider
+                        + ", requestId="
+                        + requestId
+                        + ", accessToken="
+                        + accessToken
+                );
+            } else if (errorCode != null) {
+                Log.e(
+                    SOCIAL_LOGIN_TAG,
+                    "Social login failed. provider="
+                        + provider
+                        + ", requestId="
+                        + requestId
+                        + ", errorCode="
+                        + errorCode
+                        + ", message="
+                        + message
+                );
             }
 
             JSONObject payload = new JSONObject();
