@@ -27,7 +27,7 @@ export const DocumentSection = () => {
           className="leading-relaxed whitespace-pre-wrap"
         >
           서류를 제출하여{' '}
-          <span className="text-[#4f98ff]">중앙대학교 소프트웨어대학</span>에
+          <span className="text-blue-500">중앙대학교 소프트웨어대학</span>에
           재적 또는 졸업하였음을 관리자에게 승인을 받아야 해요.
           <br />
           <Text typography="caption-12-regular" textColor="gray-400">
