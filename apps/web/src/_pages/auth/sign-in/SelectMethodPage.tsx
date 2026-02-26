@@ -2,20 +2,18 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Text, CTAButton, VStack } from '@causw/cds';
+import { Text, VStack } from '@causw/cds';
 
 import { MethodSelectContainer } from '@/widgets/auth';
 
 import {
   AppleLoginButton,
+  EmailLoginButton,
   GoogleLoginButton,
   KakaoLoginButton,
 } from '@/features/auth';
 
-import {
-  APPLE_SERVICE_ID,
-  GOOGLE_CLIENT_ID,
-} from '@/shared/storage';
+import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/storage';
 
 export const SelectMethodPage = () => {
   const router = useRouter();
@@ -64,13 +62,9 @@ export const SelectMethodPage = () => {
             redirectUri={'/auth/sign-in/google'}
           />
 
-          <CTAButton
-            color="white"
-            fullWidth
+          <EmailLoginButton
             onClick={() => router.push('/auth/sign-in/email')}
-          >
-            이메일로 시작하기
-          </CTAButton>
+          />
         </VStack>
       </VStack>
     </MethodSelectContainer>
