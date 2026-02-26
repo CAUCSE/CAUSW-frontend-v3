@@ -17,7 +17,7 @@ export const KakaoCallbackPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { mutateAsync: loginWithKakaoCode } = useKakaoLoginMutation({
-    onError: () => {}, // onError는 아래 useKakaoCallback에서 처리
+    onError: () => {},
   });
 
   // URL에 code가 없으면 로그인 선택 화면으로 즉시 리다이렉트
