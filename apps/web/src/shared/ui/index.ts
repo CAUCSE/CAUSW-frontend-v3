@@ -9,7 +9,6 @@ export * from './responsive';
 export * from './emphasis';
 export * from './StatusDot';
 export * from './CountBadge';
-export * from './ActionHeader';
 export * from './EventCard';
 export * from './action-header';
 export * from './QuickMenu';

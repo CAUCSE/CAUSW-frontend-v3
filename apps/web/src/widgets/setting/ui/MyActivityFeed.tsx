@@ -5,9 +5,9 @@ import { Tab } from '@causw/cds';
 import { PostCard, PostCardItem } from '@/entities/post';
 import { ActivityMode, ActivityType } from '@/entities/setting';
 
-import { ACTIVITY_TABS } from '../model';
+import { ActionHeader, NoDataView } from '@/shared/ui';
 
-import { ActionHeader, NoDataView } from '@/shared';
+import { ACTIVITY_TABS } from '../model';
 
 type Props = {
   activeTab: ActivityType;

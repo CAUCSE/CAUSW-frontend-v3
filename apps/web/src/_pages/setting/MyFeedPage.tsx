@@ -14,7 +14,8 @@ import {
 
 import { ActivityMode, ActivityType } from '@/entities/setting';
 
-import { QueryErrorBoundary, SuspenseView } from '@/shared';
+import { SuspenseView } from '@/shared/ui';
+import { QueryErrorBoundary } from '@/shared/ui/provider';
 
 type SearchParams = {
   view?: string;
