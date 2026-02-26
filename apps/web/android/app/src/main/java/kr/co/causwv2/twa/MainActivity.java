@@ -8,8 +8,10 @@ import android.os.Handler;
 import android.util.Log; // ⭐️ 추가
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
+
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,12 +20,24 @@ import androidx.core.view.WindowCompat;
 
 import com.getcapacitor.BridgeActivity;
 import com.google.firebase.messaging.FirebaseMessaging; // ⭐️ 추가
+import com.kakao.sdk.auth.model.OAuthToken;
+import com.kakao.sdk.common.KakaoSdk;
+import com.kakao.sdk.common.util.Utility;
+import com.kakao.sdk.user.UserApiClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function2;
 
 public class MainActivity extends BridgeActivity {
 
     private boolean backPressedOnce = false;
     private static final int BACK_PRESS_TIMEOUT = 2000;
     private static final String TAG = "FCM_TEST"; // ⭐️ 로그 필터용 태그
+    private static final String SOCIAL_LOGIN_TAG = "SOCIAL_LOGIN";
+    private static final String KAKAO_NATIVE_APP_KEY = "4535709d7c684cff31a42bb2b522eed9";
 
     private final Runnable resetBackPress = new Runnable() {
         @Override
@@ -43,6 +57,8 @@ public class MainActivity extends BridgeActivity {
         controller.setAppearanceLightStatusBars(true); // 상태바 아이콘 검정색
         controller.setAppearanceLightNavigationBars(true); // 네비게이션바(홈버튼) 아이콘 검정색
         setupNativeSafeAreaInsets();
+        KakaoSdk.init(this, KAKAO_NATIVE_APP_KEY);
+        Log.d(SOCIAL_LOGIN_TAG, "Kakao key hash: " + Utility.INSTANCE.getKeyHash(this));
 
         // ⭐️ FCM 토큰을 가져와서 로그에 출력하는 코드
         FirebaseMessaging.getInstance().getToken()
@@ -63,7 +79,127 @@ public class MainActivity extends BridgeActivity {
         WebView webView = getBridge().getWebView();
         if (webView != null) {
             webView.getSettings().setTextZoom(100);
+            SocialLoginBridge bridge = new SocialLoginBridge();
+            webView.addJavascriptInterface(bridge, "AndroidSocialLogin");
+            webView.addJavascriptInterface(bridge, "CauswSocialLoginBridge");
         }
+    }
+
+    private final class SocialLoginBridge {
+        @JavascriptInterface
+        public void requestSocialLogin(String payloadJson) {
+            runOnUiThread(() -> handleSocialLoginRequest(payloadJson));
+        }
+    }
+
+    private void handleSocialLoginRequest(String payloadJson) {
+        final JSONObject payload;
+        try {
+            payload = new JSONObject(payloadJson);
+        } catch (JSONException e) {
+            dispatchSocialLoginResult("kakao", "", null, "INVALID_PAYLOAD", "Invalid JSON payload.");
+            return;
+        }
+
+        String provider = payload.optString("provider", "");
+        String requestId = payload.optString("requestId", "");
+
+        if (provider.isEmpty() || requestId.isEmpty()) {
+            dispatchSocialLoginResult(
+                "kakao",
+                requestId,
+                null,
+                "INVALID_PAYLOAD",
+                "Missing provider or requestId."
+            );
+            return;
+        }
+
+        if (!"kakao".equals(provider)) {
+            dispatchSocialLoginResult(
+                provider,
+                requestId,
+                null,
+                "UNSUPPORTED_PROVIDER",
+                "Unsupported provider on Android bridge."
+            );
+            return;
+        }
+
+        loginWithKakao(requestId);
+    }
+
+    private void loginWithKakao(String requestId) {
+        Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
+            if (error != null) {
+                dispatchSocialLoginResult(
+                    "kakao",
+                    requestId,
+                    null,
+                    "KAKAO_LOGIN_FAILED",
+                    error.getMessage()
+                );
+                return Unit.INSTANCE;
+            }
+
+            String accessToken = token != null ? token.getAccessToken() : null;
+            if (accessToken == null || accessToken.isEmpty()) {
+                dispatchSocialLoginResult(
+                    "kakao",
+                    requestId,
+                    null,
+                    "EMPTY_ACCESS_TOKEN",
+                    "Kakao access token is empty."
+                );
+                return Unit.INSTANCE;
+            }
+
+            dispatchSocialLoginResult("kakao", requestId, accessToken, null, null);
+            return Unit.INSTANCE;
+        };
+
+        // 계정 로그인 경로로 고정: 카카오톡 앱 SSO 자동 로그인 분기를 사용하지 않음.
+        UserApiClient.getInstance().loginWithKakaoAccount(this, callback);
+    }
+
+    private void dispatchSocialLoginResult(
+        String provider,
+        String requestId,
+        String accessToken,
+        String errorCode,
+        String message
+    ) {
+        runOnUiThread(() -> {
+            WebView webView = getBridge() != null ? getBridge().getWebView() : null;
+            if (webView == null) {
+                return;
+            }
+
+            JSONObject payload = new JSONObject();
+            try {
+                payload.put("provider", provider);
+                payload.put("requestId", requestId);
+                if (accessToken != null) payload.put("accessToken", accessToken);
+                if (errorCode != null) payload.put("errorCode", errorCode);
+                if (message != null) payload.put("message", message);
+            } catch (JSONException e) {
+                Log.e(SOCIAL_LOGIN_TAG, "Failed to build social login payload", e);
+                return;
+            }
+
+            String payloadLiteral = payload.toString();
+            String callbackScript =
+                "window.__CAUSW_ON_NATIVE_SOCIAL_LOGIN__ && window.__CAUSW_ON_NATIVE_SOCIAL_LOGIN__("
+                    + payloadLiteral
+                    + ");";
+            String eventScript =
+                "window.dispatchEvent(new CustomEvent('causw:social-login-result', { detail: "
+                    + payloadLiteral
+                    + " }));";
+
+            webView.evaluateJavascript(callbackScript, null);
+            webView.evaluateJavascript(eventScript, null);
+        });
     }
 
     private void setupNativeSafeAreaInsets() {
