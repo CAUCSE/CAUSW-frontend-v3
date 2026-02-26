@@ -32,3 +32,16 @@ export interface SignoutRequestDto {
 export interface SignoutResponseDto {
   data: string;
 }
+
+export interface KakaoLoginRequestDto {
+  /** 카카오 OAuth 인가 코드 */
+  code: string;
+}
+
+/** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
+export interface KakaoLoginResponseDto {
+  accessToken: string;
+  name: string;
+  email: string;
+  profileImgUrl: string;
+}

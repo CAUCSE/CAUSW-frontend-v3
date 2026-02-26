@@ -38,7 +38,10 @@ export const SelectMethodPage = () => {
         </VStack>
 
         <VStack className="w-full gap-3">
-          <KakaoLoginButton onClick={() => console.log('Kakao login')} />
+          <KakaoLoginButton
+            onClick={() => console.log('Kakao login')}
+            redirectUri="/auth/sign-in/kakao"
+          />
 
           <AppleLoginButton onClick={() => console.log('Apple login')} />
 
