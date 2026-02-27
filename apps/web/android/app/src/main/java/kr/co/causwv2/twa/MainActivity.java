@@ -19,6 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowCompat;
 
+import kr.co.causw.R;
+
 import com.getcapacitor.BridgeActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -44,9 +46,8 @@ public class MainActivity extends BridgeActivity {
     private static final int RC_GOOGLE_SIGN_IN = 9001;
     private static final String TAG = "FCM_TEST"; // ⭐️ 로그 필터용 태그
     private static final String SOCIAL_LOGIN_TAG = "SOCIAL_LOGIN";
-    private static final String KAKAO_NATIVE_APP_KEY = "4535709d7c684cff31a42bb2b522eed9";
-    private static final String GOOGLE_WEB_CLIENT_ID =
-        "1086770319771-hp040om1msg7r4o25u895b1pos47jkjt.apps.googleusercontent.com";
+    private String kakaoNativeAppKey;
+    private String googleWebClientId;
     private String pendingGoogleRequestId = null;
     private GoogleSignInClient googleSignInClient = null;
 
@@ -68,7 +69,9 @@ public class MainActivity extends BridgeActivity {
         controller.setAppearanceLightStatusBars(true); // 상태바 아이콘 검정색
         controller.setAppearanceLightNavigationBars(true); // 네비게이션바(홈버튼) 아이콘 검정색
         setupNativeSafeAreaInsets();
-        KakaoSdk.init(this, KAKAO_NATIVE_APP_KEY);
+        kakaoNativeAppKey = getString(R.string.kakao_native_app_key);
+        googleWebClientId = getString(R.string.google_web_client_id);
+        KakaoSdk.init(this, kakaoNativeAppKey);
         Log.d(SOCIAL_LOGIN_TAG, "Kakao key hash: " + Utility.INSTANCE.getKeyHash(this));
 
         // ⭐️ FCM 토큰을 가져와서 로그에 출력하는 코드
@@ -181,7 +184,7 @@ public class MainActivity extends BridgeActivity {
 
     private void loginWithGoogle(String requestId) {
         Log.d(SOCIAL_LOGIN_TAG, "Google login requested. requestId=" + requestId);
-        if (GOOGLE_WEB_CLIENT_ID == null || GOOGLE_WEB_CLIENT_ID.isEmpty()) {
+        if (googleWebClientId == null || googleWebClientId.isEmpty()) {
             dispatchSocialLoginResult(
                 "google",
                 requestId,
@@ -194,7 +197,7 @@ public class MainActivity extends BridgeActivity {
 
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(GOOGLE_WEB_CLIENT_ID)
+            .requestIdToken(googleWebClientId)
             .build();
 
         googleSignInClient = GoogleSignIn.getClient(this, options);
@@ -261,7 +264,7 @@ public class MainActivity extends BridgeActivity {
                     + ", packageName="
                     + getPackageName()
                     + ", webClientId="
-                    + GOOGLE_WEB_CLIENT_ID
+                    + googleWebClientId
                     + ", requestId="
                     + requestId,
                 e
@@ -279,7 +282,7 @@ public class MainActivity extends BridgeActivity {
                 "Google login failed with unexpected error. packageName="
                     + getPackageName()
                     + ", webClientId="
-                    + GOOGLE_WEB_CLIENT_ID
+                    + googleWebClientId
                     + ", requestId="
                     + requestId,
                 e
