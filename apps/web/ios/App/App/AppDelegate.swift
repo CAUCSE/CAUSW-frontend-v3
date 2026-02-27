@@ -18,8 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
     private var webViewSafeAreaConstraints: [NSLayoutConstraint] = []
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
-    private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
-    private let googleClientId = "1086770319771-cnj8h70c5lc29ljijcaif27cnb93lq1e.apps.googleusercontent.com"
+    private var kakaoNativeAppKey: String {
+        infoPlistString(forKey: "CAUSWKakaoNativeAppKey")
+    }
+    private var googleClientId: String {
+        infoPlistString(forKey: "CAUSWGoogleClientID")
+    }
     private var pendingAppleRequestId: String?
 
     private struct SafeAreaSnapshot: Equatable {
@@ -170,6 +174,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return true
         }
         return values.contains(orientationValue)
+    }
+
+    private func infoPlistString(forKey key: String) -> String {
+        if let value = Bundle.main.object(forInfoDictionaryKey: key) as? String,
+           !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return value
+        }
+        return ""
     }
 
     private func setBridgeWebViewVisible(_ visible: Bool) {
