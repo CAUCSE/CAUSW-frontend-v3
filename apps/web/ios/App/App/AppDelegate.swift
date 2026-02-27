@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     private var didDetachWebViewConstraints = false
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
+    private var webViewSafeAreaConstraints: [NSLayoutConstraint] = []
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
     private let kakaoNativeAppKey = "4535709d7c684cff31a42bb2b522eed9"
     private let googleClientId = "1086770319771-cnj8h70c5lc29ljijcaif27cnb93lq1e.apps.googleusercontent.com"
@@ -46,6 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleWillEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         DispatchQueue.main.async {
             self.configureBridgeWebView()
@@ -66,6 +73,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         startSafeAreaRecalculationCycle()
     }
 
+    @objc private func handleWillEnterForeground() {
+        startSafeAreaRecalculationCycle()
+    }
+
     private func configureBridgeWebView() {
         guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
               let webView = bridgeViewController.webView else {
@@ -79,15 +90,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         webView.isOpaque = true
         webView.backgroundColor = .white
         webView.scrollView.backgroundColor = .white
-        webView.translatesAutoresizingMaskIntoConstraints = true
+        webView.translatesAutoresizingMaskIntoConstraints = false
         webView.autoresizingMask = []
-        webView.alpha = 0
+        webView.alpha = 1
         registerSocialLoginMessageHandlers(on: webView)
 
         if !didDetachWebViewConstraints {
             detachWebViewConstraints(webView)
             didDetachWebViewConstraints = true
         }
+        installSafeAreaConstraintsIfNeeded(webView)
     }
 
     private func registerSocialLoginMessageHandlers(on webView: WKWebView) {
@@ -100,7 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     private func startSafeAreaRecalculationCycle() {
         safeAreaRecalcWorkItem?.cancel()
-        setBridgeWebViewVisible(false)
         recalculateSafeAreaUntilStable(remainingAttempts: 40, lastSnapshot: nil, stableCount: 0)
     }
 
@@ -117,25 +128,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
 
             bridgeViewController.view.layoutIfNeeded()
-            let safeFrameInBridge = bridgeViewController.view.safeAreaLayoutGuide.layoutFrame
-
-            let hasValidBounds = safeFrameInBridge.width > 0 && safeFrameInBridge.height > 0
+            installSafeAreaConstraintsIfNeeded(webView)
+            let hasValidBounds = bridgeViewController.view.bounds.width > 0
+                && bridgeViewController.view.bounds.height > 0
+            let insets = bridgeViewController.view.safeAreaInsets
             let snapshot = SafeAreaSnapshot(
-                size: safeFrameInBridge.size,
-                origin: safeFrameInBridge.origin
+                size: CGSize(width: insets.left + insets.right, height: insets.top + insets.bottom),
+                origin: .zero
             )
 
             let nextStableCount = (snapshot == lastSnapshot) ? (stableCount + 1) : 1
             if hasValidBounds && nextStableCount >= 3 {
-                webView.frame = safeFrameInBridge
                 self.setBridgeWebViewVisible(true)
                 return
             }
 
             if remainingAttempts <= 0 {
-                if hasValidBounds {
-                    webView.frame = safeFrameInBridge
-                }
                 self.setBridgeWebViewVisible(true)
                 return
             }
@@ -178,6 +186,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             (constraint.firstItem as? UIView) == webView || (constraint.secondItem as? UIView) == webView
         }
         NSLayoutConstraint.deactivate(relatedConstraints)
+    }
+
+    private func installSafeAreaConstraintsIfNeeded(_ webView: UIView) {
+        if !webViewSafeAreaConstraints.isEmpty {
+            return
+        }
+        guard let superview = webView.superview else { return }
+        let guide = superview.safeAreaLayoutGuide
+        webViewSafeAreaConstraints = [
+            webView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: guide.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(webViewSafeAreaConstraints)
     }
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -435,6 +458,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             "window.dispatchEvent(new CustomEvent('causw:social-login-result', { detail: \(jsonString) }));"
 
         DispatchQueue.main.async {
+            self.startSafeAreaRecalculationCycle()
             webView.evaluateJavaScript(callbackScript, completionHandler: nil)
             webView.evaluateJavaScript(eventScript, completionHandler: nil)
         }
@@ -508,6 +532,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        startSafeAreaRecalculationCycle()
         if GIDSignIn.sharedInstance.handle(url) {
             return true
         }
