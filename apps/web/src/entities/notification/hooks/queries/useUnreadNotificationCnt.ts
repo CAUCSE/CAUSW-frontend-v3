@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getNotificationUnreadCnt } from '../../api';
 import { notificationQueryKey } from '../../config';
 
-export const useNotificationUnreadCnt = () => {
+export const useUnreadNotificationCnt = () => {
   return useQuery({
     queryKey: notificationQueryKey.unreadCounts(),
     queryFn: getNotificationUnreadCnt,
