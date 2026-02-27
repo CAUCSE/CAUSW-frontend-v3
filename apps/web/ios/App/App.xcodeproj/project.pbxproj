@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A2B3C4D5E6F708190A1B2C3 /* SafeAreaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */; };
+		1A2B3C4D5E6F708190A1B2C5 /* SocialLoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */; };
+		1A2B3C4D5E6F708190A1B2C7 /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		3515E6052F43597300AAD691 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3515E6042F43597300AAD691 /* GoogleService-Info.plist */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaManager.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginCoordinator.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationHandler.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		3515E6042F43597300AAD691 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		35CBE91B2F435363005E2157 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
@@ -80,6 +86,9 @@
 				35CBE91B2F435363005E2157 /* App.entitlements */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
+				1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */,
+				1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */,
+				1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -216,6 +225,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C3 /* SafeAreaManager.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C5 /* SocialLoginCoordinator.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C7 /* PushNotificationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
