@@ -186,6 +186,17 @@ final class SocialLoginCoordinator {
             return;
         }
 
+        if ("apple".equals(provider)) {
+            dispatcher.dispatch(
+                "apple",
+                requestId,
+                null,
+                "APPLE_LOGIN_UNSUPPORTED",
+                "Apple login is not supported on Android."
+            );
+            return;
+        }
+
         dispatcher.dispatch(
             provider,
             requestId,
