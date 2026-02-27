@@ -207,6 +207,14 @@ final class SocialLoginCoordinator {
     }
 
     private void loginWithKakao(String requestId) {
+        if (UserApiClient.getInstance().isKakaoTalkLoginAvailable(activity)) {
+            loginWithKakaoTalk(requestId);
+        } else {
+            loginWithKakaoAccount(requestId, false);
+        }
+    }
+
+    private void loginWithKakaoTalk(String requestId) {
         Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
             if (error != null) {
                 if (isKakaoLoginCancelled(error)) {
@@ -216,6 +224,40 @@ final class SocialLoginCoordinator {
                         null,
                         "KAKAO_LOGIN_CANCELLED",
                         "Kakao login cancelled."
+                    );
+                    return Unit.INSTANCE;
+                }
+                // KakaoTalk 앱에 로그인 정보가 없거나 인증 실패 시 계정 로그인으로 fallback
+                activity.runOnUiThread(() -> loginWithKakaoAccount(requestId, true));
+                return Unit.INSTANCE;
+            }
+
+            return handleKakaoToken(requestId, token);
+        };
+
+        UserApiClient.getInstance().loginWithKakaoTalk(activity, callback);
+    }
+
+    private void loginWithKakaoAccount(String requestId, boolean fallbackFromTalk) {
+        Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
+            if (error != null) {
+                if (isKakaoLoginCancelled(error)) {
+                    dispatcher.dispatch(
+                        "kakao",
+                        requestId,
+                        null,
+                        "KAKAO_LOGIN_CANCELLED",
+                        "Kakao login cancelled."
+                    );
+                    return Unit.INSTANCE;
+                }
+                if (fallbackFromTalk && isKakaoTalkAccountNotConnected(error)) {
+                    dispatcher.dispatch(
+                        "kakao",
+                        requestId,
+                        null,
+                        "KAKAO_LOGIN_ACCOUNT_REQUIRED",
+                        "KakaoTalk account is not connected. Please log in with Kakao account."
                     );
                     return Unit.INSTANCE;
                 }
@@ -229,23 +271,27 @@ final class SocialLoginCoordinator {
                 return Unit.INSTANCE;
             }
 
-            String accessToken = token != null ? token.getAccessToken() : null;
-            if (accessToken == null || accessToken.isEmpty()) {
-                dispatcher.dispatch(
-                    "kakao",
-                    requestId,
-                    null,
-                    "EMPTY_ACCESS_TOKEN",
-                    "Kakao access token is empty."
-                );
-                return Unit.INSTANCE;
-            }
-
-            dispatcher.dispatch("kakao", requestId, accessToken, null, null);
-            return Unit.INSTANCE;
+            return handleKakaoToken(requestId, token);
         };
 
         UserApiClient.getInstance().loginWithKakaoAccount(activity, callback);
+    }
+
+    private Unit handleKakaoToken(String requestId, OAuthToken token) {
+        String accessToken = token != null ? token.getAccessToken() : null;
+        if (accessToken == null || accessToken.isEmpty()) {
+            dispatcher.dispatch(
+                "kakao",
+                requestId,
+                null,
+                "EMPTY_ACCESS_TOKEN",
+                "Kakao access token is empty."
+            );
+            return Unit.INSTANCE;
+        }
+
+        dispatcher.dispatch("kakao", requestId, accessToken, null, null);
+        return Unit.INSTANCE;
     }
 
     private void loginWithGoogle(String requestId) {
@@ -290,5 +336,15 @@ final class SocialLoginCoordinator {
         }
         String message = error.getMessage();
         return message != null && message.toLowerCase().contains("cancel");
+    }
+
+    private boolean isKakaoTalkAccountNotConnected(Throwable error) {
+        String message = error.getMessage();
+        if (message == null) {
+            return false;
+        }
+        String normalized = message.toLowerCase();
+        return normalized.contains("not connected to kakao account")
+            || normalized.contains("not connected");
     }
 }
