@@ -14,4 +14,8 @@ export const phoneNumberSchema = z
   .max(13, '올바른 전화번호 형식이 아닙니다.')
   .regex(/^010-\d{4}-\d{4}$/, '010-XXXX-XXXX 형식이어야 합니다.');
 
-export const nicknameSchema = z.string().min(1, '닉네임을 입력해주세요.');
+export const nicknameSchema = z
+  .string()
+  .min(2, '닉네임은 2자 이상이어야 합니다.')
+  .max(8, '닉네임은 8자 이하여야 합니다.')
+  .regex(/^[가-힣a-zA-Z0-9_]+$/, '한글, 영문, 숫자, _만 사용할 수 있습니다.');
