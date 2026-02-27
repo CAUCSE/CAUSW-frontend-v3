@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
-import { useNotificationUnreadCnt } from '@/entities/notification';
+import { useUnreadNotificationCnt } from '@/entities/notification';
 
 import { CountBadge, QueryErrorBoundary, StatusDot } from '@/shared/ui';
 
@@ -110,7 +110,7 @@ function SidebarMenuItem({
   );
 }
 function NotificationSidebarItem({ item }: { item: SidebarItem }) {
-  const { data } = useNotificationUnreadCnt();
+  const { data } = useUnreadNotificationCnt();
 
   const notificationCount = data?.notificationLogCount ?? 0;
   const unreadCnt = notificationCount > 9 ? '9+' : notificationCount;

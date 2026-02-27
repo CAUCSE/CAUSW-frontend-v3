@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { Bell, ErrorColored, HStack, Text } from '@causw/cds';
 
-import { useNotificationUnreadCnt } from '@/entities/notification';
+import { useUnreadNotificationCnt } from '@/entities/notification';
 
 import { ROUTES } from '@/shared/constants';
 import { StatusDot, QueryErrorBoundary } from '@/shared/ui';
@@ -32,7 +32,7 @@ export function NotificationMobileHeader() {
 }
 
 function NotificationBell() {
-  const { data } = useNotificationUnreadCnt();
+  const { data } = useUnreadNotificationCnt();
   const hasUnreadNotification = (data?.notificationLogCount ?? 0) > 0;
 
   return (

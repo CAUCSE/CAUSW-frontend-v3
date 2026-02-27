@@ -1,2 +1,2 @@
-export * from './useNotificationUnreadCnt';
-export * from './useNotificationLatest';
+export * from './useUnreadNotificationCnt';
+export * from './useLatestNotification';

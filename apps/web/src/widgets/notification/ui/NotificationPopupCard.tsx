@@ -8,7 +8,7 @@ import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 import {
   getNotificationPopupLink,
   NOTIFICATION_TYPE_MAP,
-  useNotificationLatest,
+  useLatestNotification,
 } from '@/entities/notification';
 
 import { COPY } from '@/shared/constants';
@@ -18,7 +18,7 @@ import { QueryErrorBoundary } from '@/shared/ui';
 //TODO : 페이지 모두 구현된 후 링크 주소 잘 가는 지 확인 필요
 export function NotificationPopupCard() {
   const [isClosed, setIsClosed] = useState(false);
-  const { data, isLoading } = useNotificationLatest();
+  const { data, isLoading } = useLatestNotification();
   if (isLoading) return null;
   if (!data || data.isRead) return null;
   if (isClosed) return null;
