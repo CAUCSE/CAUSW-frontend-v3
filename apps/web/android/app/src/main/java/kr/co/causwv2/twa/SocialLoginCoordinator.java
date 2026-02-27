@@ -11,6 +11,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.auth.api.signin.GoogleSignInStatusCodes;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.kakao.sdk.common.model.ClientError;
+import com.kakao.sdk.common.model.ClientErrorCause;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 
@@ -58,6 +62,17 @@ final class SocialLoginCoordinator {
         String requestId = pendingGoogleRequestId != null ? pendingGoogleRequestId : "";
         pendingGoogleRequestId = null;
 
+        if (resultCode == Activity.RESULT_CANCELED) {
+            dispatcher.dispatch(
+                "google",
+                requestId,
+                null,
+                "GOOGLE_LOGIN_CANCELLED",
+                "Google login cancelled."
+            );
+            return true;
+        }
+
         try {
             GoogleSignInAccount account =
                 GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
@@ -76,6 +91,17 @@ final class SocialLoginCoordinator {
 
             dispatcher.dispatch("google", requestId, idToken, null, null);
         } catch (ApiException e) {
+            if (e.getStatusCode() == GoogleSignInStatusCodes.SIGN_IN_CANCELLED
+                || e.getStatusCode() == CommonStatusCodes.CANCELED) {
+                dispatcher.dispatch(
+                    "google",
+                    requestId,
+                    null,
+                    "GOOGLE_LOGIN_CANCELLED",
+                    "Google login cancelled."
+                );
+                return true;
+            }
             Log.e(
                 TAG,
                 "Google login failed. statusCode="
@@ -172,6 +198,16 @@ final class SocialLoginCoordinator {
     private void loginWithKakao(String requestId) {
         Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
             if (error != null) {
+                if (isKakaoLoginCancelled(error)) {
+                    dispatcher.dispatch(
+                        "kakao",
+                        requestId,
+                        null,
+                        "KAKAO_LOGIN_CANCELLED",
+                        "Kakao login cancelled."
+                    );
+                    return Unit.INSTANCE;
+                }
                 dispatcher.dispatch(
                     "kakao",
                     requestId,
@@ -234,5 +270,14 @@ final class SocialLoginCoordinator {
             Log.d(TAG, "Launching Google sign-in intent. requestId=" + requestId);
             activity.startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
         });
+    }
+
+    private boolean isKakaoLoginCancelled(Throwable error) {
+        if (error instanceof ClientError) {
+            ClientError clientError = (ClientError) error;
+            return clientError.getReason() == ClientErrorCause.Cancelled;
+        }
+        String message = error.getMessage();
+        return message != null && message.toLowerCase().contains("cancel");
     }
 }
