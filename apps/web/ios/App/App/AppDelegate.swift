@@ -184,6 +184,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         return ""
     }
 
+    private func isKakaoLoginCancelled(_ error: Error) -> Bool {
+        if let sdkError = error as? SdkError, sdkError.isClientFailed {
+            return sdkError.getClientError().reason == .Cancelled
+        }
+        let nsError = error as NSError
+        if nsError.code == ASWebAuthenticationSessionError.canceledLogin.rawValue {
+            return true
+        }
+        return nsError.localizedDescription.lowercased().contains("cancel")
+    }
+
+    private func isAppleLoginCancelled(_ error: Error) -> Bool {
+        if let authError = error as? ASAuthorizationError {
+            return authError.code == .canceled
+        }
+        let nsError = error as NSError
+        return nsError.domain == ASAuthorizationError.errorDomain
+            && nsError.code == ASAuthorizationError.canceled.rawValue
+    }
+
     private func setBridgeWebViewVisible(_ visible: Bool) {
         guard let bridgeViewController = self.window?.rootViewController as? CAPBridgeViewController,
               let webView = bridgeViewController.webView else {
@@ -255,6 +275,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let completion: (OAuthToken?, Error?) -> Void = { [weak self] token, error in
             guard let self else { return }
             if let error {
+                if self.isKakaoLoginCancelled(error) {
+                    self.dispatchSocialLoginResult(
+                        provider: "kakao",
+                        requestId: requestId,
+                        accessToken: nil,
+                        errorCode: "KAKAO_LOGIN_CANCELLED",
+                        message: "Kakao login cancelled."
+                    )
+                    return
+                }
                 self.dispatchSocialLoginResult(
                     provider: "kakao",
                     requestId: requestId,
@@ -417,6 +447,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         guard let requestId = pendingAppleRequestId else { return }
         pendingAppleRequestId = nil
+
+        if isAppleLoginCancelled(error) {
+            dispatchSocialLoginResult(
+                provider: "apple",
+                requestId: requestId,
+                accessToken: nil,
+                errorCode: "APPLE_LOGIN_CANCELLED",
+                message: "Apple login cancelled."
+            )
+            return
+        }
 
         dispatchSocialLoginResult(
             provider: "apple",
