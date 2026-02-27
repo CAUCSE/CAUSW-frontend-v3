@@ -6,14 +6,16 @@ import Link from 'next/link';
 import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 
 import {
+  getNotificationPopupLink,
   NOTIFICATION_TYPE_MAP,
   useNotificationLatest,
 } from '@/entities/notification';
 
-import { COPY, ROUTES } from '@/shared/constants';
+import { COPY } from '@/shared/constants';
 import { QueryErrorBoundary } from '@/shared/ui';
 //TODO : 알림 팝업 삭제 event에 대해서 기획 나오면 수정
 //TODO : 알림 팝업 내용 확인 with 기획/be ; 지금꺼는 임의로
+//TODO : 페이지 모두 구현된 후 링크 주소 잘 가는 지 확인 필요
 export function NotificationPopupCard() {
   const [isClosed, setIsClosed] = useState(false);
   const { data, isLoading } = useNotificationLatest();
@@ -25,7 +27,7 @@ export function NotificationPopupCard() {
     <QueryErrorBoundary FallbackComponent={() => null}>
       <HStack className="w-full items-start justify-between rounded-2xl bg-white px-6 py-4">
         <Link
-          href={ROUTES.NOTIFICATION}
+          href={getNotificationPopupLink(data)}
           className="flex flex-1 items-center gap-5"
         >
           <SpeakerColored size={26} />

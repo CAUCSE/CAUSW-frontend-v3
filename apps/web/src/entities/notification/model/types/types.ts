@@ -5,8 +5,7 @@ export interface NotificationLatestResponse {
   notificationLogId: string;
   title: string;
   body: string;
-  // TODO : type 나오면 수정
-  noticeType: string;
+  noticeType: NotificationType;
   targetId: string;
   targetParentId: string;
   isRead: boolean;
