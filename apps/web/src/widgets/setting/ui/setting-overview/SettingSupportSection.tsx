@@ -18,7 +18,7 @@ type SettingSupportSectionProps = {
 };
 
 const ROW_BUTTON_CLASS =
-  'flex w-full items-center gap-3.5 rounded-md p-2 text-left transition-colors hover:bg-gray-50 active:bg-gray-100';
+  'flex cursor-pointer w-full items-center gap-3.5 rounded-md p-2 text-left transition-colors hover:bg-gray-50 active:bg-gray-100';
 
 const SUPPORT_ICON_MAP: Record<SettingSupportMenuItem['id'], ReactNode> = {
   notices: <SpeakerColored />,
