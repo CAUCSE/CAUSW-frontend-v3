@@ -1,3 +1,4 @@
+'use client';
 import { VStack } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
@@ -6,16 +7,16 @@ import {
   CeremonyRegisterBanner,
 } from '@/widgets/ceremony';
 import {
-  NotificationHeader,
+  NotificationMobileHeader,
   NotificationPopupCard,
 } from '@/widgets/notification';
 import { UserGreeting } from '@/widgets/user';
 
 import { QuickMenu } from '@/shared/ui';
 
-//TODO : 새 알림 api 연동 -> header statusdot & newNotification 교체
 //TODO : 해당 페이지 나오면 상세 페이지들 주소 수정
 //TODO : 졸업생 정보
+
 export function HomePage() {
   const newNotification = true;
   const isAlumni = true;
@@ -23,7 +24,7 @@ export function HomePage() {
     <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 w-full gap-2 px-4 pb-[2.125rem]">
       {/* Mobile Header */}
       <div className="tablet:hidden sticky top-0 z-10">
-        <NotificationHeader />
+        <NotificationMobileHeader />
       </div>
 
       {/* Desktop Greeting */}
