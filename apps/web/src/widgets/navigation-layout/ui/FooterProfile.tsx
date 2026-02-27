@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { Box, Flex, Dropdown, Menu, Avatar } from '@causw/cds';
 
@@ -13,12 +13,16 @@ type Props = {
 
 export function FooterProfile({ img, name, email, onLogout }: Props) {
   const router = useRouter();
+  const pathname = usePathname();
+  const isSettingRoute = pathname?.startsWith('/setting');
 
   return (
     <div
       role="button"
       tabIndex={0}
-      className="w-full cursor-pointer text-left select-none"
+      className={`w-full cursor-pointer rounded-md px-2.5 py-2 text-left transition-colors select-none hover:bg-gray-50 active:bg-gray-100 ${
+        isSettingRoute ? 'bg-gray-50' : ''
+      }`}
       onClick={() => router.push('/setting')}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') router.push('/setting');
@@ -35,8 +39,8 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
             <button
               type="button"
               aria-label="menu"
+              className="cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-200 active:bg-gray-300"
               onClick={(e) => e.stopPropagation()}
-              className="cursor-pointer"
             >
               <Menu active size={20} />
             </button>
