@@ -62,3 +62,31 @@ export const formatRelativeTime = (time: string | Date) => {
 
   return formatDateYMD(time);
 };
+
+/**
+ * "YYYY-MM-DD" 형식을 "YY/MM/DD" 형식으로 변환합니다.
+ * 예: "2026-03-22" -> "2026/03/22")
+ */
+export const formatToYearMonthDay = (dateString?: string | null) => {
+  if (!dateString) return '';
+  const parts = dateString.split('-');
+  if (parts.length !== 3) return dateString;
+
+  const [year, month, day] = parts;
+
+  // 연도 2자리로 하고 싶으면 year -> year.slice(2)
+  return `${year}/${month}/${day}`;
+};
+
+/**
+ * "YYYY-MM-DD" 형식을 "MM/DD" 형식으로 변환합니다.
+ * 예: "2026-03-22" -> "03/22"
+ */
+export const formatToMonthDay = (dateString?: string | null) => {
+  if (!dateString) return '';
+  const parts = dateString.split('-');
+  if (parts.length !== 3) return dateString;
+
+  const [, month, day] = parts;
+  return `${month}/${day}`;
+};

@@ -1,65 +1,60 @@
+'use client';
+
 import Link from 'next/link';
 
-import {
-  Flex,
-  HeartColored,
-  //ScholarColored,
-  Text,
-  VStack,
-  BellGrayColored,
-} from '@causw/cds';
+import { Flex, HeartColored, Text, VStack, BellGrayColored } from '@causw/cds';
+
+import { useUpcomingCeremonies } from '@/entities/ceremony';
 
 import { COPY, ROUTES } from '@/shared/constants';
-import { EventCard, NoDataView } from '@/shared/ui';
-//TODO : 경조사 종류에 따라 아이콘 분기
-const CEREMONY_ITEMS = [
-  {
-    id: 1,
-    title: '홍길동(21학번) 졸업식',
-    date: '10/10 - 10/24',
-    type: '경사',
-    link: 'd',
-  },
-  {
-    id: 2,
-    title: '김영희(19학번) 결혼식',
-    date: '10/10 - 10/24',
-    type: '경사',
-    link: 'd',
-  },
-  {
-    id: 3,
-    title: '이철수(20학번) 개업식',
-    date: '10/12 - 10/24',
-    type: '경사',
-    link: 'd',
-  },
-  {
-    id: 4,
-    title: '박민수(18학번) 칠순 잔치',
-    date: '10/15 - 10/24',
-    type: '경사',
-    link: 'd',
-  },
-  {
-    id: 5,
-    title: '최지우(22학번) 졸업 전시회',
-    date: '10/18 - 10/24',
-    type: '행사',
-    link: 'd',
-  },
-  {
-    id: 6,
-    title: '정수민(19학번)d 결혼식',
-    date: '10/20 - 10/24',
-    type: '경사',
-    link: 'd',
-  },
-];
+import { formatToMonthDay } from '@/shared/lib';
+import {
+  ErrorView,
+  EventCard,
+  NoDataView,
+  QueryErrorBoundary,
+} from '@/shared/ui';
+
+function CeremonyListContent() {
+  const { data } = useUpcomingCeremonies();
+  const ceremonies = data?.content || [];
+
+  const isEmpty = ceremonies.length === 0;
+
+  if (isEmpty) {
+    return (
+      <NoDataView
+        message={COPY.EMPTY_CEREMONY}
+        icon={<BellGrayColored size={52} />}
+      />
+    );
+  }
+
+  // 모바일은 최대 4개, 데스크탑은 최대 6개까지 표시
+  return (
+    <VStack className="w-full gap-5">
+      {ceremonies.slice(0, 6).map((item, index) => (
+        <div
+          key={item.id}
+          className={index >= 4 ? 'desktop:block hidden' : 'block'}
+        >
+          <EventCard
+            // TODO: 페이지 만들어지면 링크 맞는 지 확인
+            link={`${ROUTES.CEREMONY}/${item.id}`}
+            title={item.title}
+            icon={<HeartColored size={24} />}
+            descriptions={[
+              `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`,
+              item.category || item.type,
+            ]}
+          />
+        </div>
+      ))}
+    </VStack>
+  );
+}
 
 export function CeremonyListPreview() {
-  const isEmpty = CEREMONY_ITEMS.length === 0;
-
   return (
     <VStack className="gap-2">
       <Flex className="desktop:flex hidden flex-col gap-2">
@@ -70,24 +65,9 @@ export function CeremonyListPreview() {
           {COPY.HOME_CEREMONY_TITLE}
         </Text>
 
-        {isEmpty ? (
-          <NoDataView
-            message={COPY.EMPTY_CEREMONY}
-            icon={<BellGrayColored size={52} />}
-          />
-        ) : (
-          <VStack className="w-full gap-5">
-            {CEREMONY_ITEMS.slice(0, 6).map((item) => (
-              <EventCard
-                key={item.id}
-                link={item.link}
-                title={item.title}
-                icon={<HeartColored size={24} />}
-                descriptions={[item.date, item.type]}
-              />
-            ))}
-          </VStack>
-        )}
+        <QueryErrorBoundary FallbackComponent={ErrorView}>
+          <CeremonyListContent />
+        </QueryErrorBoundary>
 
         <Link
           href={ROUTES.CEREMONY}
