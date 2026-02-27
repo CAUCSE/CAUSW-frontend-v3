@@ -10,6 +10,7 @@ import {
   VStack,
 } from '@causw/cds';
 
+import { SETTING_OVERVIEW_TITLES } from '../../config';
 import type { SettingAccountMenuItem } from '../../model';
 import { SETTING_ACCOUNT_MENU_ITEMS } from '../../model';
 
@@ -36,7 +37,7 @@ export const SettingAccountSection = ({
       className="flex h-full w-full rounded-lg bg-white px-4 py-5"
     >
       <Text typography="subtitle-18-bold" className="px-2">
-        계정
+        {SETTING_OVERVIEW_TITLES.account}
       </Text>
       {SETTING_ACCOUNT_MENU_ITEMS.map((item) => (
         <button

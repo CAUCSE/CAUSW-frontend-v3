@@ -9,6 +9,7 @@ import {
   VStack,
 } from '@causw/cds';
 
+import { SETTING_OVERVIEW_TITLES } from '../../config';
 import type { SettingSupportMenuItem } from '../../model';
 import { SETTING_SUPPORT_MENU_ITEMS } from '../../model';
 
@@ -34,7 +35,7 @@ export const SettingSupportSection = ({
       className="flex h-full w-full rounded-lg bg-white px-4 py-5"
     >
       <Text typography="subtitle-18-bold" className="px-2">
-        고객지원
+        {SETTING_OVERVIEW_TITLES.support}
       </Text>
       {SETTING_SUPPORT_MENU_ITEMS.map((item) => (
         <button

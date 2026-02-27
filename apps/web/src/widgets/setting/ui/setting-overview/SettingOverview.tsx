@@ -1,4 +1,4 @@
-import { Flex, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
 import { SettingAccountSection } from './SettingAccountSection';
 import { SettingActivitySection } from './SettingActivitySection';
@@ -12,18 +12,12 @@ type SettingOverviewProps = {
 
 export const SettingOverview = ({ onNavigate }: SettingOverviewProps) => {
   return (
-    <Flex justify="center">
-      <VStack
-        align="center"
-        gap="md"
-        className="w-full max-w-[900px] px-5 py-8 md:px-8 md:py-10"
-      >
-        <SettingProfileImageSection onNavigate={onNavigate} />
-        <SettingProfileEditButton onNavigate={onNavigate} />
-        <SettingActivitySection onNavigate={onNavigate} />
-        <SettingAccountSection onNavigate={onNavigate} />
-        <SettingSupportSection onNavigate={onNavigate} />
-      </VStack>
-    </Flex>
+    <VStack align="center" gap="md" className="w-full">
+      <SettingProfileImageSection onNavigate={onNavigate} />
+      <SettingProfileEditButton onNavigate={onNavigate} />
+      <SettingActivitySection onNavigate={onNavigate} />
+      <SettingAccountSection onNavigate={onNavigate} />
+      <SettingSupportSection onNavigate={onNavigate} />
+    </VStack>
   );
 };

@@ -4,6 +4,8 @@ import { ProfileImageEditButton } from '@/features/setting';
 
 import { ProfileIdentity } from '@/entities/setting';
 
+import { SETTING_PROFILE_IDENTITY } from '../../config';
+
 type SettingProfileImageSectionProps = {
   onNavigate: (href: string) => void;
 };
@@ -16,9 +18,9 @@ export const SettingProfileImageSection = ({
       <ProfileImageEditButton onNavigate={onNavigate} />
 
       <ProfileIdentity
-        name="이름"
-        primaryInfo="이메일"
-        secondaryInfo="이메일"
+        name={SETTING_PROFILE_IDENTITY.name}
+        primaryInfo={SETTING_PROFILE_IDENTITY.primaryInfo}
+        secondaryInfo={SETTING_PROFILE_IDENTITY.secondaryInfo}
       />
     </VStack>
   );
