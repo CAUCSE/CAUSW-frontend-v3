@@ -4,18 +4,24 @@ import Link from 'next/link';
 
 import { HStack, VStack, Sidebar } from '@causw/cds';
 
-import { CountBadge, StatusDot } from '@/shared/ui';
+import { useNotificationUnreadCnt } from '@/entities/notification';
 
-import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
+import { CountBadge, QueryErrorBoundary, StatusDot } from '@/shared/ui';
+
+import {
+  SIDEBAR_BOTTOM_ITEMS,
+  SIDEBAR_MAIN_ITEMS,
+  SidebarItem,
+  SidebarKey,
+} from '../model';
 
 import { FooterProfile } from './FooterProfile';
 
-type Props = {
+type SidebarNavProps = {
   selected?: SidebarKey;
-  notificationCnt?: number;
 };
 
-export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
+export function SidebarNav({ selected }: SidebarNavProps) {
   return (
     <Sidebar selected={selected}>
       {/* HEADER */}
@@ -28,46 +34,29 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
         <div className="flex h-full flex-col">
           <VStack gap="sm">
             {SIDEBAR_MAIN_ITEMS.map((item) => (
-              <Sidebar.Item key={item.key} value={item.key} asChild>
-                <Link href={item.href} className="block">
-                  <HStack className="cursor-pointer items-center gap-3.5">
-                    <Sidebar.ItemIcon>{item.icon}</Sidebar.ItemIcon>
-                    <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-                  </HStack>
-                </Link>
-              </Sidebar.Item>
+              <SidebarMenuItem item={item} key={item.key} />
             ))}
           </VStack>
 
           <VStack gap="sm" className="mt-auto pt-2">
             {SIDEBAR_BOTTOM_ITEMS.map((item) => {
-              const hasNotification = item.key === 'notifications';
-              return (
-                <Sidebar.Item key={item.key} value={item.key} asChild>
-                  <Link href={item.href} className="block">
-                    <HStack className="w-full cursor-pointer gap-3.5 pr-2">
-                      {/* icon + dot */}
-                      <div className="relative">
-                        {hasNotification && (
-                          <StatusDot
-                            show={notificationCnt > 0}
-                            right={-2}
-                            top={-2}
-                          />
-                        )}
-                        <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
-                      </div>
-
-                      <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-
-                      {/* badgeCount */}
-                      {hasNotification && (
-                        <CountBadge count={notificationCnt} />
-                      )}
-                    </HStack>
-                  </Link>
-                </Sidebar.Item>
-              );
+              if (item.key === 'notifications') {
+                return (
+                  <QueryErrorBoundary
+                    key={item.key}
+                    FallbackComponent={() => (
+                      <SidebarMenuItem
+                        item={item}
+                        showDot={true}
+                        badgeCount="!"
+                      />
+                    )}
+                  >
+                    <NotificationSidebarItem item={item} />
+                  </QueryErrorBoundary>
+                );
+              }
+              return <SidebarMenuItem item={item} key={item.key} />;
             })}
           </VStack>
         </div>
@@ -89,8 +78,48 @@ export function SidebarNav({ selected, notificationCnt = 0 }: Props) {
 }
 
 function DefaultHeader() {
-  {
-    /* TODO: 이미지 로고 대체 예정 */
-  }
+  /* TODO: 이미지 로고 대체 예정 */
+
   return <span className="px-2.5 font-bold text-blue-500">크자회 Logo</span>;
+}
+
+function SidebarMenuItem({
+  item,
+  showDot = false,
+  badgeCount = 0,
+}: {
+  item: SidebarItem;
+  showDot?: boolean;
+  badgeCount?: number | string;
+}) {
+  return (
+    <Sidebar.Item value={item.key} asChild>
+      <Link href={item.href} className="block pr-2">
+        <HStack className="w-full cursor-pointer items-center gap-3.5">
+          <div className="relative">
+            {showDot && <StatusDot show={true} right={-2} top={-2} />}
+            <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
+          </div>
+
+          <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
+
+          {!!badgeCount && <CountBadge count={badgeCount} />}
+        </HStack>
+      </Link>
+    </Sidebar.Item>
+  );
+}
+function NotificationSidebarItem({ item }: { item: SidebarItem }) {
+  const { data } = useNotificationUnreadCnt();
+
+  const notificationCount = data?.notificationLogCount ?? 0;
+  const unreadCnt = notificationCount > 9 ? '9+' : notificationCount;
+
+  return (
+    <SidebarMenuItem
+      item={item}
+      showDot={notificationCount > 0}
+      badgeCount={unreadCnt}
+    />
+  );
 }
