@@ -1,1 +1,2 @@
-﻿export * from './MyActivityFeed';
+export * from './MyActivityFeed';
+export * from './setting-overview';
