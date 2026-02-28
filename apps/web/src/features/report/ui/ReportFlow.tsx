@@ -2,12 +2,10 @@
 
 import { useState } from 'react';
 
-import {
-  REPORT_OPTIONS,
-  ReportConfirmModal,
-  ReportReason,
-  ReportReasonModal,
-} from '@/features/report';
+import { REPORT_OPTIONS, ReportReason } from '@/features/report';
+
+import { ReportConfirmModal } from './ReportConfirmModal';
+import { ReportReasonModal } from './ReportReasonModal';
 
 interface ReportFlowProps {
   open: boolean;

@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 
-import { ReportFlow } from '@/widgets/report';
-
 import { BlockUserModal } from '@/features/block';
-import { CommentActionMenu, useCommentMenuActions } from '@/features/comment';
+import { useCommentMenuActions } from '@/features/comment';
+import { ReportFlow } from '@/features/report';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+
+import { CommentActionMenu } from './CommentActionMenu';
 
 interface ReplyItemProps {
   reply: Comment;

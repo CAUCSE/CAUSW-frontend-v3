@@ -4,13 +4,14 @@ import { useState } from 'react';
 
 import { Stack } from '@causw/cds';
 
-import { ReportFlow } from '@/widgets/report';
-
 import { BlockUserModal } from '@/features/block';
-import { CommentActionMenu, useCommentMenuActions } from '@/features/comment';
+import { ReportFlow } from '@/features/report';
 
 import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
 
+import { useCommentMenuActions } from '../model';
+
+import { CommentActionMenu } from './CommentActionMenu';
 import { ReplyList } from './ReplyList';
 
 interface CommentItemProps {

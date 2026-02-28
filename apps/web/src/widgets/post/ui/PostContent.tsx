@@ -2,10 +2,9 @@ import { useState } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { ReportFlow } from '@/widgets/report';
-
 import { BlockUserModal } from '@/features/block';
 import { PostHeader, usePostMenuActions } from '@/features/post';
+import { ReportFlow } from '@/features/report';
 
 import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
 
