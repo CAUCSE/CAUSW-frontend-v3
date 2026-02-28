@@ -39,7 +39,7 @@ function CeremonyListContent() {
           className={index >= 4 ? 'desktop:block hidden' : 'block'}
         >
           <EventCard
-            // TODO: 페이지 만들어지면 링크 맞는 지 확인
+            // TODO: 페이지 만들어지면 링크 맞는 지 확인 - 기획/be 개발 협의 필요 (관련 링크가 어떻게 만들어지는지)
             link={`${ROUTES.CEREMONY}/${item.id}`}
             title={item.title}
             icon={getCeremonyIcon(item.category)}
