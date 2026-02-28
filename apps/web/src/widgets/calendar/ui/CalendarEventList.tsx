@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   CaldendarIconColored,
+  Calendar,
   CalendarGrayColored,
   Flex,
   mergeStyles,
@@ -12,53 +13,84 @@ import {
   VStack,
 } from '@causw/cds';
 
+import {
+  CALENDAR_EVENTS_TYPE_MAP,
+  CalendarScheduleItem,
+  transformToCalendarEvents,
+  useCalendarMonth,
+  useCalendarSchedules,
+} from '@/entities/calendar';
+
 import { COPY } from '@/shared/constants';
-import { EventCard, NoDataView } from '@/shared/ui';
+import { checkIsUpcoming, formatDateRangeDash } from '@/shared/lib';
+import {
+  ErrorView,
+  EventCard,
+  NoDataView,
+  QueryErrorBoundary,
+} from '@/shared/ui';
 
-import { CalendarEventItem, TAB_OPTIONS } from '../model';
-interface CalendarEventListWidgetProps {
-  items: CalendarEventItem[];
-}
+import { TAB_OPTIONS } from '../model';
 
-export function CalendarEventList({ items }: CalendarEventListWidgetProps) {
-  const [selectedTab, setSelectedTab] = useState('전체');
+export function CalendarEventList() {
+  const [selectedTab, setSelectedTab] = useState('ALL');
 
-  const filteredItems = items.filter(
-    (item) => selectedTab === '전체' || item.tag === selectedTab,
-  );
-  //TODO : ui용 삭제 예정
-  const upcomingItems = filteredItems.filter((item) => item.isUpcoming);
-  const pastItems = filteredItems.filter((item) => !item.isUpcoming);
+  const { viewMonth, setViewMonth, scheduleApiParams } = useCalendarMonth();
 
+  const { data: schedulesItems = [] } = useCalendarSchedules(scheduleApiParams);
+
+  const { upcomingItems, pastItems } = useMemo(() => {
+    const tabFiltered = schedulesItems.filter(
+      (item) => selectedTab === 'ALL' || item.type === selectedTab,
+    );
+
+    return {
+      upcomingItems: tabFiltered.filter((item) => checkIsUpcoming(item.end)),
+      pastItems: tabFiltered.filter((item) => !checkIsUpcoming(item.end)),
+    };
+  }, [schedulesItems, selectedTab]);
   return (
-    <VStack className="gap-6">
-      <Tab.Root
-        variant="chip"
-        value={selectedTab}
-        onValueChange={setSelectedTab}
-      >
-        <Tab.List className="scrollbar-hide overflow-x-auto">
-          {TAB_OPTIONS.map((opt) => (
-            <Tab.TabItem key={opt.value} value={opt.value}>
-              {opt.label}
-            </Tab.TabItem>
-          ))}
-        </Tab.List>
-      </Tab.Root>
+    <QueryErrorBoundary FallbackComponent={ErrorView}>
+      <VStack className="gap-6">
+        <Calendar
+          events={transformToCalendarEvents(schedulesItems)}
+          defaultMonth={viewMonth}
+          onPrevMonth={setViewMonth}
+          onNextMonth={setViewMonth}
+        />
 
-      <Flex className="desktop:flex-row desktop:gap-10 flex-col gap-6">
-        <ScheduleSection
-          title={COPY.UPCOMING_SCHEDULE}
-          items={upcomingItems}
-          emptyMessage={COPY.EMPTY_UPCOMING_SCHEDULE}
-        />
-        <ScheduleSection
-          title={COPY.PAST_SCHEDULE}
-          items={pastItems}
-          emptyMessage={COPY.EMPTY_PAST_SCHEDULE}
-        />
-      </Flex>
-    </VStack>
+        <VStack className="gap-6">
+          <Tab.Root
+            variant="chip"
+            value={selectedTab}
+            onValueChange={setSelectedTab}
+          >
+            <Tab.List className="scrollbar-hide overflow-x-auto">
+              {TAB_OPTIONS.map((opt) => (
+                <Tab.TabItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </Tab.TabItem>
+              ))}
+            </Tab.List>
+          </Tab.Root>
+
+          <Flex className="desktop:flex-row desktop:gap-10 flex-col gap-6">
+            <ScheduleSection
+              title={COPY.UPCOMING_SCHEDULE}
+              items={upcomingItems}
+              emptyMessage={COPY.EMPTY_UPCOMING_SCHEDULE}
+              isUpcomingSection={true}
+            />
+            <ScheduleSection
+              title={COPY.PAST_SCHEDULE}
+              items={pastItems}
+              emptyMessage={COPY.EMPTY_PAST_SCHEDULE}
+              isUpcomingSection={false}
+            />
+          </Flex>
+        </VStack>
+      </VStack>
+    </QueryErrorBoundary>
   );
 }
 
@@ -66,10 +98,12 @@ function ScheduleSection({
   title,
   items,
   emptyMessage,
+  isUpcomingSection,
 }: {
   title: string;
-  items: CalendarEventItem[];
+  items: CalendarScheduleItem[];
   emptyMessage: string;
+  isUpcomingSection: boolean;
 }) {
   return (
     <VStack className="flex-1 gap-3">
@@ -82,8 +116,15 @@ function ScheduleSection({
               link={item.link || undefined}
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
-              iconBgClass={item.isUpcoming ? 'bg-blue-gradient' : 'bg-gray-100'}
-              descriptions={[item.date, item.tag]}
+              iconBgClass={
+                isUpcomingSection ? 'bg-blue-gradient' : 'bg-gray-100'
+              }
+              descriptions={[
+                formatDateRangeDash(item.start, item.end),
+                CALENDAR_EVENTS_TYPE_MAP[
+                  item.type as keyof typeof CALENDAR_EVENTS_TYPE_MAP
+                ],
+              ]}
               className={mergeStyles(
                 'rounded-xl border border-gray-100 bg-white p-4',
               )}
