@@ -268,11 +268,11 @@ importers:
   packages/design-system/cds:
     dependencies:
       '@causw/core':
-        specifier: ^0.0.25
-        version: 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.26
+        version: 0.0.26(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/design-system':
-        specifier: ^0.0.29
-        version: 0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+        specifier: ^0.0.30
+        version: 0.0.30(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/icons':
         specifier: ^1.0.7
         version: 1.0.7(react@19.2.1)
@@ -411,14 +411,14 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
 
-  '@causw/core@0.0.25':
-    resolution: {integrity: sha512-SOczQaZ27l8U5KB51xh+Q03WgVkqqTYn38gL8Z9jHEyRWBsnGlB/zarbOAxfVbWpu2zI6YyWiUFux6aulb9W7A==}
+  '@causw/core@0.0.26':
+    resolution: {integrity: sha512-L2q78h0t3dUTU3bSehO8B7hk7+O7iF41/phaCc6g1lD+pkjbcAIHY6lQbZMPWYrJWFCQ+kk8yQ7PeZOEvw2ULQ==}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
 
-  '@causw/design-system@0.0.29':
-    resolution: {integrity: sha512-t0NWx9ma5H9Y5wOI+LQTfQNt9d0XIqronadMd7p4hIn2ZVcNQLzP0KQH/CNV1SR7I93eoIvophDvFweGzG/rxA==}
+  '@causw/design-system@0.0.30':
+    resolution: {integrity: sha512-hA3b0iRjrCvpN5QJWW6gsmKJJxlqy/zQPZrJQdNG3ZvkeOzpraflRlSESFqUoVx4cTqJQPlEwQF5S9BsxC5UaQ==}
 
   '@causw/icons@1.0.7':
     resolution: {integrity: sha512-oCnNyhvbXG7H96L/izhIwefa/H6PHHO4o0LBaV7ajiiSDJvLht5VlmIayAUOTJ9CWZGhdZwFJicR0aMTcuU8gg==}
@@ -1831,8 +1831,8 @@ packages:
   '@types/node@20.19.30':
     resolution: {integrity: sha512-WJtwWJu7UdlvzEAUm484QNg5eAoq5QR08KDNx7g45Usrs2NtOPiX8ugDqmKdXkyL03rBqU5dYNYVQetEpBHq2g==}
 
-  '@types/node@25.3.1':
-    resolution: {integrity: sha512-hj9YIJimBCipHVfHKRMnvmHg+wfhKc0o4mTtXh9pKBjC8TLJzz0nzGmLi5UJsYAUgSvXFHgb0V2oY10DUFtImw==}
+  '@types/node@25.3.2':
+    resolution: {integrity: sha512-RpV6r/ij22zRRdyBPcxDeKAzH43phWVKEjL2iksqo1Vz3CuBUrgmPpPhALKiRfU7OMCmeeO9vECBMsV0hMTG8Q==}
 
   '@types/pg-pool@2.0.7':
     resolution: {integrity: sha512-U4CwmGVQcbEuqpyju8/ptOKg6gEC+Tqsvj2xS9o1g71bUh8twxnC6ZL5rZKCsGN0iyH0CwgUyc9VR5owNQF9Ng==}
@@ -2529,8 +2529,8 @@ packages:
     resolution: {integrity: sha512-LgQMM4WXU3QI+SYgEc2liRgznaD5ojbmY3sb8LxyguVkIg5FxdpTkvk72te2R38/TGKxH634oLxXRGY6d7AP+Q==}
     engines: {node: '>=10.13.0'}
 
-  enhanced-resolve@5.19.0:
-    resolution: {integrity: sha512-phv3E1Xl4tQOShqSte26C7Fl84EwUdZsyOuSSk9qtAGyyQs2s3jJzComh+Abf4g187lUUAvH+H26omrqia2aGg==}
+  enhanced-resolve@5.20.0:
+    resolution: {integrity: sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ==}
     engines: {node: '>=10.13.0'}
 
   env-paths@2.2.1:
@@ -4633,7 +4633,7 @@ snapshots:
     dependencies:
       '@capacitor/core': 7.4.2
 
-  '@causw/core@0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/core@0.0.26(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
       '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
@@ -4655,9 +4655,9 @@ snapshots:
       - '@types/react-dom'
       - tailwindcss
 
-  '@causw/design-system@0.0.29(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
+  '@causw/design-system@0.0.30(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)':
     dependencies:
-      '@causw/core': 0.0.25(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
+      '@causw/core': 0.0.26(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(tailwindcss@4.1.18)
       '@causw/icons': 1.0.7(react@19.2.1)
       '@causw/tokens': 0.0.13
     transitivePeerDependencies:
@@ -6175,7 +6175,7 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
-  '@types/node@25.3.1':
+  '@types/node@25.3.2':
     dependencies:
       undici-types: 7.18.2
 
@@ -6897,7 +6897,7 @@ snapshots:
       graceful-fs: 4.2.11
       tapable: 2.3.0
 
-  enhanced-resolve@5.19.0:
+  enhanced-resolve@5.20.0:
     dependencies:
       graceful-fs: 4.2.11
       tapable: 2.3.0
@@ -7718,7 +7718,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 25.3.1
+      '@types/node': 25.3.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -8914,7 +8914,7 @@ snapshots:
       acorn-import-phases: 1.0.4(acorn@8.16.0)
       browserslist: 4.28.1
       chrome-trace-event: 1.0.4
-      enhanced-resolve: 5.19.0
+      enhanced-resolve: 5.20.0
       es-module-lexer: 2.0.0
       eslint-scope: 5.1.1
       events: 3.3.0
