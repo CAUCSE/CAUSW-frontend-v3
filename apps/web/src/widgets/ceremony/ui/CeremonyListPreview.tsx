@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 
-import { Flex, HeartColored, Text, VStack, BellGrayColored } from '@causw/cds';
+import { Flex, Text, VStack, BellGrayColored } from '@causw/cds';
 
-import { useUpcomingCeremonies } from '@/entities/ceremony';
+import { useUpcomingCeremonies, getCeremonyIcon } from '@/entities/ceremony';
 
 import { COPY, ROUTES } from '@/shared/constants';
 import { formatToMonthDay } from '@/shared/lib';
@@ -42,7 +42,7 @@ function CeremonyListContent() {
             // TODO: 페이지 만들어지면 링크 맞는 지 확인
             link={`${ROUTES.CEREMONY}/${item.id}`}
             title={item.title}
-            icon={<HeartColored size={24} />}
+            icon={getCeremonyIcon(item.category)}
             descriptions={[
               `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`,
               item.category || item.type,
