@@ -90,3 +90,30 @@ export const formatToMonthDay = (dateString?: string | null) => {
   const [, month, day] = parts;
   return `${month}/${day}`;
 };
+
+export const checkIsUpcoming = (endDateStr: string) => {
+  return new Date(endDateStr) >= new Date();
+};
+
+export const formatDateRangeDash = (start: string, end: string) => {
+  const s = new Date(start);
+  const e = new Date(end);
+  const sStr = `${s.getMonth() + 1}/${s.getDate()}`;
+  const eStr = `${e.getMonth() + 1}/${e.getDate()}`;
+  return sStr === eStr ? sStr : `${sStr} - ${eStr}`;
+};
+/**
+ * 날짜를 API 전송용 ISO 형식으로 변환합니다.
+ * @param date Date 객체
+ * @param type 'start' (00:00:00) 또는 'end' (23:59:59)
+ * @returns "YYYY-MM-DDTHH:mm:ss.SSS"
+ */
+export const formatToISOWithTime = (date: Date, type: 'start' | 'end') => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  const time = type === 'start' ? '00:00:00.000' : '23:59:59.999';
+
+  return `${year}-${month}-${day}T${time}`;
+};
