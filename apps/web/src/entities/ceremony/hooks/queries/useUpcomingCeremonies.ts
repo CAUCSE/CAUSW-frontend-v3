@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getUpcomingCeremonies } from '../../api';
 import { ceremonyQueryKey } from '../../config';
-import { CeremonyType } from '../../model';
+import { CeremonyTypeApi } from '../../model';
 
 export const useUpcomingCeremonies = (
-  type: CeremonyType = 'all',
+  type: CeremonyTypeApi = 'ALL',
   pageNum: number = 0,
 ) => {
   return useQuery({
