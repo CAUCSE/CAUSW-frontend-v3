@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0D2AD08246B73104638ADC05 /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CA2243E493AF8C70A1BB1D /* Pods_App.framework */; };
+		1A2B3C4D5E6F708190A1B2C3 /* SafeAreaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */; };
+		1A2B3C4D5E6F708190A1B2C5 /* SocialLoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */; };
+		1A2B3C4D5E6F708190A1B2C7 /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		35048BA22F53C7EA0017D0F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		35048BA62F53C7EA0017D0F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaManager.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginCoordinator.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationHandler.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		35048BB12F53C7EA0017D0F9 /* AppDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35048BB22F53C7EA0017D0F9 /* AppDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppDev-Info.plist"; path = "/Users/syj/Desktop/CODING/V3/apps/web/ios/App/AppDev-Info.plist"; sourceTree = "<absolute>"; };
@@ -133,6 +139,9 @@
 				3584765E2F53E2FF00B7704C /* Config */,
 				35CBE91B2F435363005E2157 /* App.entitlements */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
+				1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */,
+				1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */,
+				1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -383,6 +392,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C3 /* SafeAreaManager.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C5 /* SocialLoginCoordinator.swift in Sources */,
+				1A2B3C4D5E6F708190A1B2C7 /* PushNotificationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

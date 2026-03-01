@@ -14,6 +14,7 @@ import {
 } from '@/features/auth';
 
 import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/storage';
+import { isAndroid } from '@/shared/utils';
 
 export const SelectMethodPage = () => {
   const router = useRouter();
@@ -50,11 +51,13 @@ export const SelectMethodPage = () => {
             redirectUri="/auth/sign-in/kakao"
           />
 
-          <AppleLoginButton
-            onClick={() => console.log('Apple login')}
-            serviceId={APPLE_SERVICE_ID}
-            redirectUri={'/auth/sign-in/apple/callback'}
-          />
+          {!isAndroid && (
+            <AppleLoginButton
+              onClick={() => console.log('Apple login')}
+              serviceId={APPLE_SERVICE_ID}
+              redirectUri={'/auth/sign-in/apple/callback'}
+            />
+          )}
 
           <GoogleLoginButton
             onClick={() => console.log('Google login')}

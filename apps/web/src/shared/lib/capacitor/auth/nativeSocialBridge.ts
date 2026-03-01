@@ -1,4 +1,4 @@
-import { isMobile } from '@/shared/utils';
+import { isAndroid, isMobile } from '@/shared/utils';
 
 export type SocialProvider = 'kakao' | 'apple' | 'google';
 
@@ -105,6 +105,14 @@ const normalizeErrorMessage = (payload: NativeSocialLoginResult) => {
     return '현재 기기에서는 Apple 로그인을 사용할 수 없습니다.';
   }
 
+  if (errorCode === 'APPLE_LOGIN_UNSUPPORTED') {
+    return '현재 기기에서는 Apple 로그인을 사용할 수 없습니다.';
+  }
+
+  if (errorCode === 'KAKAO_LOGIN_ACCOUNT_REQUIRED') {
+    return '카카오톡 계정이 연결되어 있지 않습니다. 카카오 계정으로 로그인해 주세요.';
+  }
+
   if (
     errorCode === 'KAKAO_LOGIN_FAILED' ||
     errorCode === 'GOOGLE_LOGIN_FAILED' ||
@@ -188,6 +196,13 @@ const sendToNativeBridge = (payload: NativeSocialLoginRequest): boolean => {
   return false;
 };
 
+const validateProvider = (provider: SocialProvider) => {
+  if (provider === 'apple' && isAndroid) {
+    return '현재 기기에서는 Apple 로그인을 사용할 수 없습니다.';
+  }
+  return null;
+};
+
 export const requestNativeSocialLogin = (
   provider: SocialProvider,
   timeoutMs = DEFAULT_TIMEOUT_MS,
@@ -195,6 +210,12 @@ export const requestNativeSocialLogin = (
   new Promise<string>((resolve, reject) => {
     if (!isMobile) {
       reject(new Error('모바일 환경에서만 소셜 로그인을 사용할 수 있습니다.'));
+      return;
+    }
+
+    const validationError = validateProvider(provider);
+    if (validationError) {
+      reject(new Error(validationError));
       return;
     }
 

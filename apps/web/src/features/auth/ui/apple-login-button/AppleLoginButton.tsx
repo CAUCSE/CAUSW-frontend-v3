@@ -8,9 +8,9 @@ import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
 
 import { appleNativeLogin } from '@/features/auth/api';
 
+import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
 import { extractErrorMessage, isMobile } from '@/shared/utils';
-import { requestNativeSocialLogin } from '@/shared/utils/auth';
 
 type AppleLoginButtonProps = ComponentProps<'button'> & {
   serviceId?: string;
@@ -44,7 +44,10 @@ export const AppleLoginButton = ({
         } catch (error) {
           toast.dismiss(loadingToastId);
           toast.error(
-            extractErrorMessage(error, '소셜 로그인에 실패했습니다. 다시 시도해 주세요.'),
+            extractErrorMessage(
+              error,
+              '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
+            ),
           );
           router.replace('/auth/sign-in');
         }
