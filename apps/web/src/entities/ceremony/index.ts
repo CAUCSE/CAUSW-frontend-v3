@@ -7,6 +7,7 @@ export {
   CeremonyListItem,
   CeremonyFilterChips,
   MyCeremonyFilterChips,
+  CeremonyInfoRow,
 } from './ui';
 export { ceremonyFormSchema, CEREMONY_FORM_DEFAULT_VALUES } from './model';
 export type { CeremonyFormData } from './model';
