@@ -7,11 +7,9 @@ import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 
 import {
   getNotificationPopupLink,
-  NOTIFICATION_TYPE_MAP,
   useLatestNotification,
 } from '@/entities/notification';
 
-import { COPY } from '@/shared/constants';
 import { QueryErrorBoundary } from '@/shared/ui';
 //TODO : 알림 팝업 삭제 event에 대해서 기획 나오면 수정
 //TODO : 알림 팝업 내용 확인 with 기획/be ; 지금꺼는 임의로
@@ -32,11 +30,9 @@ export function NotificationPopupCard() {
         >
           <SpeakerColored size={26} />
           <VStack className="items-start gap-0">
-            <Text typography="subtitle-16-bold">
-              {COPY.NEW_NOTIFICATION_TITLE}
-            </Text>
+            <Text typography="subtitle-16-bold">{data.title}</Text>
             <Text typography="body-14-regular" textColor="gray-400">
-              {NOTIFICATION_TYPE_MAP[data.noticeType]} - {data.title}
+              {data.body}
             </Text>
           </VStack>
         </Link>
