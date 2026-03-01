@@ -1,1 +1,1 @@
-export * from './FeedWritePage';
+export * from './PostWritePage';
