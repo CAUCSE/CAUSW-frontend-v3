@@ -1,4 +1,8 @@
+import { useRef } from 'react';
+
 import { Dialog, Flex } from '@causw/cds';
+
+import { ImageUploadFieldRef } from '@/shared/ui';
 
 import { PostWriteBody } from './PostWriteBody';
 import { PostWriteFooter } from './PostWriteFooter';
@@ -20,6 +24,8 @@ export const PostWriteForm = ({
   content,
   setContent,
 }: PostWriteFormProps) => {
+  const imageUploadRef = useRef<ImageUploadFieldRef>(null);
+
   return (
     <Flex gap="none" direction="column">
       <PostWriteHeader isSubmitActive={isSubmitActive} onBack={onClose} />
@@ -30,10 +36,13 @@ export const PostWriteForm = ({
         selectedCategory={selectedCategory}
         content={content}
         setContent={setContent}
+        imageUploadRef={imageUploadRef}
       />
 
       <Dialog.Footer>
-        <PostWriteFooter />
+        <PostWriteFooter
+          onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
+        />
       </Dialog.Footer>
     </Flex>
   );

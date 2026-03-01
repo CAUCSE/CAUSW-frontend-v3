@@ -1,10 +1,13 @@
-import { ArrowDown, Chip, TextArea } from '@causw/cds';
+import { ArrowDown, Box, Chip, TextArea } from '@causw/cds';
+
+import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
 interface PostWriteBodyProps {
   onSelectorClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   selectedCategory: string | null;
   content: string;
   setContent: (content: string) => void;
+  imageUploadRef: React.RefObject<ImageUploadFieldRef | null>;
 }
 
 export const PostWriteBody = ({
@@ -12,6 +15,7 @@ export const PostWriteBody = ({
   selectedCategory,
   content,
   setContent,
+  imageUploadRef,
 }: PostWriteBodyProps) => {
   return (
     <>
@@ -39,6 +43,15 @@ export const PostWriteBody = ({
           }}
         />
       </TextArea>
+
+      <Box className="m-5 mb-0">
+        <ImageUploadField
+          ref={imageUploadRef}
+          name="images"
+          setValue={() => {}}
+          showMainBadge
+        />
+      </Box>
     </>
   );
 };

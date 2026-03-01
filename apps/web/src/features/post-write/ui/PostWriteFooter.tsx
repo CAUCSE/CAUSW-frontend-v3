@@ -1,10 +1,14 @@
 import { Button, Camera, Checkbox, HStack, Vote } from '@causw/cds';
 
-export const PostWriteFooter = () => {
+interface PostWriteFooterProps {
+  onClickPhoto: () => void;
+}
+
+export const PostWriteFooter = ({ onClickPhoto }: PostWriteFooterProps) => {
   return (
     <HStack justify="between" className="shrink-0 p-5">
       <HStack className="gap-1.75">
-        <Button className="text-gray-500">
+        <Button onClick={onClickPhoto} className="text-gray-500">
           <Camera active size={16} />
           사진첨부
         </Button>
