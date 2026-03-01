@@ -14,4 +14,6 @@ export type {
   AlumniRelation,
   CeremonyCreateRequest,
   CeremonyDetailResponse,
+  MyCeremonyStateFilter,
 } from './types';
+export { MY_CEREMONY_STATE_MAP } from './types';

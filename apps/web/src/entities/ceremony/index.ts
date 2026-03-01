@@ -2,8 +2,12 @@
 // 경조사 관련 엔티티
 
 export { getCeremonyIcon } from './config';
-export { filterItems } from './lib';
-export { CeremonyListItem, CeremonyFilterChips } from './ui';
+export { filterItems, filterByState } from './lib';
+export {
+  CeremonyListItem,
+  CeremonyFilterChips,
+  MyCeremonyFilterChips,
+} from './ui';
 export { ceremonyFormSchema, CEREMONY_FORM_DEFAULT_VALUES } from './model';
 export type { CeremonyFormData } from './model';
 export type {
@@ -20,4 +24,6 @@ export type {
   AlumniRelation,
   CeremonyCreateRequest,
   CeremonyDetailResponse,
+  MyCeremonyStateFilter,
 } from './model';
+export { MY_CEREMONY_STATE_MAP } from './model';
