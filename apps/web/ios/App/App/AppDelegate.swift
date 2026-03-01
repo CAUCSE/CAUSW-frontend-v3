@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         webView.translatesAutoresizingMaskIntoConstraints = true
         webView.autoresizingMask = []
         webView.alpha = 0
-        // registerSocialLoginMessageHandlers(on: webView)
+        registerSocialLoginMessageHandlers(on: webView)
 
         if !didDetachWebViewConstraints {
             detachWebViewConstraints(webView)
