@@ -1,5 +1,5 @@
 import type { CeremonyItem, MyCeremonyStateFilter } from '../model';
-import { MY_CEREMONY_STATE_MAP } from '../model/types/types';
+import { MY_CEREMONY_STATE_MAP } from '../model/types';
 
 export const filterByState = (
   items: CeremonyItem[],
