@@ -15,7 +15,7 @@ import { ReportReason } from '../model';
 
 import { ReasonSelectRadio } from './ReasonSelectRadio';
 
-interface ReportReasonModalProps {
+interface ReportReasonSelectorProps {
   open: boolean;
   setOpen: (open: boolean) => void;
   reason: ReportReason;
@@ -23,13 +23,13 @@ interface ReportReasonModalProps {
   onSubmit: () => void;
 }
 
-export const ReportReasonModal = ({
+export const ReportReasonSelector = ({
   open,
   setOpen,
   reason,
   setReason,
   onSubmit,
-}: ReportReasonModalProps) => {
+}: ReportReasonSelectorProps) => {
   const { isMobileSize } = useBreakpoint();
 
   const handleClose = () => setOpen(false);

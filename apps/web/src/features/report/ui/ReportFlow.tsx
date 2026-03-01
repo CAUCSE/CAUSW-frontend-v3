@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { REPORT_OPTIONS, ReportReason } from '@/features/report';
 
 import { ReportConfirmModal } from './ReportConfirmModal';
-import { ReportReasonModal } from './ReportReasonModal';
+import { ReportReasonSelector } from './ReportReasonSelector';
 
 interface ReportFlowProps {
   open: boolean;
@@ -40,7 +40,7 @@ export const ReportFlow = ({
 
   return (
     <>
-      <ReportReasonModal
+      <ReportReasonSelector
         open={open && !isConfirm}
         setOpen={handleClose}
         reason={reason}
