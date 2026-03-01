@@ -8,26 +8,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    private lazy var safeAreaManager = SafeAreaManager(
-        bridgeViewControllerProvider: { [weak self] in
-            self?.window?.rootViewController as? CAPBridgeViewController
-        }
-    )
+    private lazy var safeAreaManager: SafeAreaManager = {
+        SafeAreaManager(bridgeViewControllerProvider: { [weak self] in
+            self?.bridgeViewController()
+        })
+    }()
 
-    private lazy var socialLoginCoordinator = SocialLoginCoordinator(
-        kakaoNativeAppKeyProvider: { [weak self] in
-            self?.infoPlistString(forKey: "CAUSWKakaoNativeAppKey") ?? ""
-        },
-        googleClientIdProvider: { [weak self] in
-            self?.infoPlistString(forKey: "CAUSWGoogleClientID") ?? ""
-        },
-        windowProvider: { [weak self] in
-            self?.window
-        },
-        webViewProvider: { [weak self] in
-            (self?.window?.rootViewController as? CAPBridgeViewController)?.webView
-        }
-    )
+    private lazy var socialLoginCoordinator: SocialLoginCoordinator = {
+        SocialLoginCoordinator(
+            kakaoNativeAppKeyProvider: { [weak self] in
+                self?.infoPlistString(forKey: "CAUSWKakaoNativeAppKey") ?? ""
+            },
+            googleClientIdProvider: { [weak self] in
+                self?.infoPlistString(forKey: "CAUSWGoogleClientID") ?? ""
+            },
+            windowProvider: { [weak self] in
+                self?.window
+            },
+            webViewProvider: { [weak self] in
+                self?.bridgeViewController()?.webView
+            }
+        )
+    }()
 
     private let pushNotificationHandler = PushNotificationHandler()
 
@@ -84,8 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         safeAreaManager.startSafeAreaRecalculationCycle()
     }
 
+    private func bridgeViewController() -> CAPBridgeViewController? {
+        window?.rootViewController as? CAPBridgeViewController
+    }
+
     private func configureBridgeWebView() {
-        guard let bridgeViewController = window?.rootViewController as? CAPBridgeViewController,
+        guard let bridgeViewController = bridgeViewController(),
               bridgeViewController.webView != nil else {
             return
         }

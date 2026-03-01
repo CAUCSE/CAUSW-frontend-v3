@@ -13,6 +13,9 @@
 		1A2B3C4D5E6F708190A1B2C7 /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		35048BA22F53C7EA0017D0F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
+		35048BB32F53C7EA0017D0F9 /* SafeAreaManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C4 /* SafeAreaManager.swift */; };
+		35048BB42F53C7EA0017D0F9 /* SocialLoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C6 /* SocialLoginCoordinator.swift */; };
+		35048BB52F53C7EA0017D0F9 /* PushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */; };
 		35048BA62F53C7EA0017D0F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		35048BA72F53C7EA0017D0F9 /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		35048BA82F53C7EA0017D0F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
@@ -37,7 +40,7 @@
 		1A2B3C4D5E6F708190A1B2C8 /* PushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationHandler.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		35048BB12F53C7EA0017D0F9 /* AppDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		35048BB22F53C7EA0017D0F9 /* AppDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AppDev-Info.plist"; path = "/Users/syj/Desktop/CODING/V3/apps/web/ios/App/AppDev-Info.plist"; sourceTree = "<absolute>"; };
+		35048BB22F53C7EA0017D0F9 /* AppDev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AppDev-Info.plist"; sourceTree = "<group>"; };
 		358476612F53E32500B7704C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		358476632F53E34E00B7704C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		358476682F53E4BE00B7704C /* capacitor.config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
@@ -384,6 +387,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				35048BA22F53C7EA0017D0F9 /* AppDelegate.swift in Sources */,
+				35048BB32F53C7EA0017D0F9 /* SafeAreaManager.swift in Sources */,
+				35048BB42F53C7EA0017D0F9 /* SocialLoginCoordinator.swift in Sources */,
+				35048BB52F53C7EA0017D0F9 /* PushNotificationHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
