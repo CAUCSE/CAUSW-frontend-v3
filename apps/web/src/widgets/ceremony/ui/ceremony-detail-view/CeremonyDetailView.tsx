@@ -10,6 +10,8 @@ import {
 
 import { formatDateWithTime } from '@/shared/lib';
 
+import { KakaoMap } from './KakaoMap';
+
 interface CeremonyDetailViewProps {
   detail: CeremonyDetailResponse;
 }
@@ -120,12 +122,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
                 {detailedAddress}
               </Text>
             )}
-            {/* 카카오 지도 placeholder */}
-            <div className="flex h-48 items-center justify-center rounded-xl bg-gray-100">
-              <Text typography="body-14-regular" textColor="gray-400">
-                카카오 지도 (추후 연동 예정)
-              </Text>
-            </div>
+            <KakaoMap address={address} />
           </VStack>
         </VStack>
       )}
