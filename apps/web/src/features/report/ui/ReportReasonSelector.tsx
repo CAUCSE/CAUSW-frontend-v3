@@ -17,7 +17,7 @@ import { ReasonSelectRadio } from './ReasonSelectRadio';
 
 interface ReportReasonSelectorProps {
   open: boolean;
-  setOpen: (open: boolean) => void;
+  onOpenChange: (open: boolean) => void;
   reason: ReportReason;
   setReason: (value: ReportReason) => void;
   onSubmit: () => void;
@@ -25,18 +25,18 @@ interface ReportReasonSelectorProps {
 
 export const ReportReasonSelector = ({
   open,
-  setOpen,
+  onOpenChange,
   reason,
   setReason,
   onSubmit,
 }: ReportReasonSelectorProps) => {
   const { isMobileSize } = useBreakpoint();
 
-  const handleClose = () => setOpen(false);
+  const handleClose = () => onOpenChange(false);
 
   if (isMobileSize)
     return (
-      <BottomSheet open={open} onOpenChange={setOpen}>
+      <BottomSheet open={open} onOpenChange={onOpenChange}>
         <BottomSheet.Content aria-describedby={undefined}>
           {/* TODO: BottomSheet Title 분리 필요 */}
           <BottomSheet.Header title="신고 사유 선택" />
@@ -58,7 +58,7 @@ export const ReportReasonSelector = ({
     );
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <Dialog.Content width={420} className="pt-8" aria-describedby={undefined}>
         <VStack gap="xl">
           <VStack gap="lg">

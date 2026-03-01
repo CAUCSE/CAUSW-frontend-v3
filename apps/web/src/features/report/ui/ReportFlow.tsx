@@ -42,7 +42,7 @@ export const ReportFlow = ({
     <>
       <ReportReasonSelector
         open={open && !isConfirm}
-        setOpen={handleClose}
+        onOpenChange={handleClose}
         reason={reason}
         setReason={setReason}
         onSubmit={goConfirm}
