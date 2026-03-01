@@ -1,4 +1,4 @@
-import type { CeremonyItem } from '@/entities/ceremony';
+import type { CeremonyDetailResponse, CeremonyItem } from '@/entities/ceremony';
 
 // TODO: API 연결 시 제거
 export const MOCK_ONGOING: CeremonyItem[] = [
@@ -147,3 +147,29 @@ export const MOCK_MY_CEREMONIES: CeremonyItem[] = [
     state: 'AWAIT',
   },
 ];
+
+// TODO: API 연결 시 제거
+export const MOCK_CEREMONY_DETAIL: CeremonyDetailResponse = {
+  id: '1',
+  title: '김철수(21학번) 딸 결혼식',
+  type: '경사',
+  category: '결혼식',
+  startDate: '2025-12-24',
+  endDate: '2025-12-25',
+  startTime: '10:00:00',
+  endTime: '23:59:00',
+  applicant: '홍길동',
+  subject: '김철수 딸',
+  content:
+    '안녕하세요 21학번 김철수 소식 대신 전달합니다.\n김철수의 딸 김옥순이 결혼합니다.\n신랑 이순신, 신부 김옥순 축하해주세요!',
+  attachedImageUrlList: [],
+  address: '서울특별시 동작구 흑석로 84',
+  postalAddress: '06974',
+  detailedAddress: '중앙대학교 310관',
+  contact: '010-1234-5678',
+  link: null,
+  isSetAll: true,
+  targetAdmissionYears: [],
+  state: null,
+  note: null,
+};
