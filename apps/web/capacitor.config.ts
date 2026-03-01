@@ -5,7 +5,7 @@ type DeviceEnv = 'ios' | 'android';
 
 const env: Env = (process.env.APP_ENV as Env) || 'local-dev'; // dev | prod | local
 const deviceEnv: DeviceEnv = (process.env.DEVICE_ENV as DeviceEnv) || 'ios'; // ios | android
-
+const isDevFlavor = env === 'dev' || env === 'local-dev';
 // local-dev : 백엔드 서버(localhost:3000에서 연결된 백엔드 서버), 로컬 프론트엔드 서버, dev 앱 설정
 // local-prod : 백엔드 서버(localhost:3000에서 연결된 백엔드 서버), 로컬 프론트엔드 서버, prod 앱 설정
 // dev : 개발계 백엔드 서버, 배포된 프론트엔드 개발계 서버, dev 앱 설정
@@ -69,6 +69,9 @@ const config: CapacitorConfig = {
     scrollEnabled: true,
     allowsLinkPreview: false,
     handleApplicationNotifications: false,
+  },
+  android: {
+    flavor: isDevFlavor ? 'dev' : 'prod',
   },
   plugins: {
     StatusBar: {
