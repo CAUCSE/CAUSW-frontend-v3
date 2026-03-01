@@ -37,10 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         KakaoSDK.initSDK(appKey: infoPlistString(forKey: "CAUSWKakaoNativeAppKey"))
         FirebaseApp.configure()
-        UNUserNotificationCenter.current().delegate = self
-        
-        //이 문장이 있어야 'didRegisterForRemoteNotifications~~'가 호출됨 
-        application.registerForRemoteNotifications()
+        pushNotificationHandler.configure(application: application)
         
         print("✅ Running bundle id:", Bundle.main.bundleIdentifier ?? "nil")
         print("✅ Display name:", Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") ?? "nil")
@@ -92,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               bridgeViewController.webView != nil else {
             return
         }
-        print("🌐 WebView current URL:", webView.url?.absoluteString ?? "nil")
+        print("🌐 WebView current URL:", bridgeViewController.webView?.url?.absoluteString ?? "nil")
         window?.backgroundColor = .white
         safeAreaManager.configureBridgeWebViewAppearance()
         socialLoginCoordinator.registerMessageHandlers()
