@@ -123,7 +123,7 @@ function ScheduleSection({
                 formatDateRangeDash(item.start, item.end),
                 CALENDAR_EVENTS_TYPE_MAP[
                   item.type as keyof typeof CALENDAR_EVENTS_TYPE_MAP
-                ],
+                ] ?? item.type,
               ]}
               className={mergeStyles(
                 'rounded-xl border border-gray-100 bg-white p-4',
