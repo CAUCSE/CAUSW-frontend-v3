@@ -1,7 +1,5 @@
 import { PostDetailPage } from '@/_pages/feed';
 
-const Page = () => {
+export default function Page() {
   return <PostDetailPage />;
-};
-
-export default Page;
+}

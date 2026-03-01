@@ -163,7 +163,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ['**/\\(\\.\\)write/**'],
+    files: ['**/\\(\\.\\)feed/**'],
     rules: {
       'check-file/folder-naming-convention': 'off',
     },
