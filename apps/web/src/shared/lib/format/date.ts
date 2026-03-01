@@ -17,26 +17,6 @@ export const formatDateYMD = (time: string | Date) => {
     .replace(/\.$/, '');
 };
 
-/**
- * 날짜를 상대 시간 형식으로 변환합니다.
- *
- * 과거:
- * - 1분 미만: "방금 전"
- * - 1시간 미만: "N분 전"
- * - 24시간 미만: "N시간 전"
- *
- * 미래:
- * - 1분 미만: "잠시 후"
- * - 1시간 미만: "N분 후"
- * - 24시간 미만: "N시간 후"
- *
- * 24시간 이상:
- * - 과거: `YYYY.MM.DD`
- * - 미래: `YYYY.MM.DD`
- *
- * @param time ISO 문자열 또는 Date 객체
- * @returns 상대 시간 또는 날짜 문자열
- */
 const ALL_DAY_TIMES = ['00:00:00', '23:59:00'];
 
 const isAllDayTime = (time: string) => ALL_DAY_TIMES.includes(time);
@@ -63,6 +43,26 @@ export const formatDateWithTime = (
   return `${date} / ${formattedTime}`;
 };
 
+/**
+ * 날짜를 상대 시간 형식으로 변환합니다.
+ *
+ * 과거:
+ * - 1분 미만: "방금 전"
+ * - 1시간 미만: "N분 전"
+ * - 24시간 미만: "N시간 전"
+ *
+ * 미래:
+ * - 1분 미만: "잠시 후"
+ * - 1시간 미만: "N분 후"
+ * - 24시간 미만: "N시간 후"
+ *
+ * 24시간 이상:
+ * - 과거: `YYYY.MM.DD`
+ * - 미래: `YYYY.MM.DD`
+ *
+ * @param time ISO 문자열 또는 Date 객체
+ * @returns 상대 시간 또는 날짜 문자열
+ */
 export const formatRelativeTime = (time: string | Date) => {
   const now = new Date();
   const date = new Date(time);
