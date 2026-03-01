@@ -47,6 +47,10 @@ export const CeremonyPage = () => {
   const endedItems = filterItems(MOCK_ENDED, filter);
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
+  const handleItemClick = (id: string) => {
+    router.push(`/ceremony/${id}`);
+  };
+
   return (
     <div className="relative flex min-h-screen flex-col bg-gray-100">
       <ActionHeader background="gray">
@@ -63,6 +67,7 @@ export const CeremonyPage = () => {
         myStateFilter={myStateFilter}
         onMyStateFilterChange={setMyStateFilter}
         myItems={myItems}
+        onItemClick={handleItemClick}
       />
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">
