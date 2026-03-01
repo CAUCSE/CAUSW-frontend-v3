@@ -1,7 +1,10 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
-import { CeremonyTypeApi, CeremonyUpcomingResponseDto } from '../model/types';
+import {
+  CeremonyTypeApi,
+  CeremonyUpcomingResponseDto,
+} from '../model/types/types';
 
 import { formatUpcomingCeremoniesParams } from './formatter';
 
