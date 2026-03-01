@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">크자회(CCSSAA)</string>
-    <string name="title_activity_main">크자회(CCSSAA)</string>
     <string name="package_name">kr.co.causw</string>
     <string name="custom_url_scheme">kr.co.causw</string>
     <string name="kakao_native_app_key">4535709d7c684cff31a42bb2b522eed9</string>

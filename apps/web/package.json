@@ -7,7 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "sync:ios:dev": "APP_ENV=dev DEVICE_ENV=ios npx cap sync ios",
+    "sync:ios:prod": "APP_ENV=prod DEVICE_ENV=ios npx cap sync ios",
+    "sync:android:dev": "APP_ENV=dev DEVICE_ENV=android npx cap sync android",
+    "sync:android:prod": "APP_ENV=prod DEVICE_ENV=android npx cap sync android",
+    "sync:ios:local-dev": "APP_ENV=local-dev DEVICE_ENV=ios npx cap sync ios",
+    "sync:ios:local-prod": "APP_ENV=local-prod DEVICE_ENV=ios npx cap sync ios",
+    "sync:android:local-dev": "APP_ENV=local-dev DEVICE_ENV=android npx cap sync android",
+    "sync:android:local-prod": "APP_ENV=local-prod DEVICE_ENV=android npx cap sync android"
   },
   "dependencies": {
     "@capacitor/app": "^7.1.1",

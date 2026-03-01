@@ -7,7 +7,7 @@ android {
         applicationId "kr.co.causwv2.twa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 14
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -16,6 +16,36 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+    signingConfigs {
+        release {
+            storeFile file(localProperties.getProperty('storeFile'))
+            storePassword localProperties.getProperty('storePassword')
+            keyAlias localProperties.getProperty('keyAlias')
+            keyPassword localProperties.getProperty('keyPassword')
+        }
+    }
+    flavorDimensions "env"
+
+   productFlavors {
+        dev {
+            dimension "env"
+            applicationIdSuffix ".dev"              // => kr.co.causwv2.twa.dev
+            versionNameSuffix "-dev"                // => 1.0-dev
+            manifestPlaceholders = [appLabel: "DEV-크자회"]
+        }
+        prod {
+            dimension "env"
+            manifestPlaceholders = [appLabel: "크자회(CCSSAA)"]
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -48,11 +78,5 @@ dependencies {
 
 apply from: 'capacitor.build.gradle'
 
-try {
-    def servicesJSON = file('google-services.json')
-    if (servicesJSON.text) {
-        apply plugin: 'com.google.gms.google-services'
-    }
-} catch(Exception e) {
-    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
-}
+
+apply plugin: 'com.google.gms.google-services'
