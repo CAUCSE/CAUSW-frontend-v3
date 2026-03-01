@@ -1,8 +1,12 @@
-import { useRef } from 'react';
+'use client';
 
-import { Dialog, Flex } from '@causw/cds';
+import { useMemo, useRef, useState } from 'react';
 
-import { ImageUploadFieldRef } from '@/shared/ui';
+import { Box, Dialog, VStack } from '@causw/cds';
+
+import { VoteWriteValue } from '@/entities/post';
+
+import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
 import { PostWriteBody } from './PostWriteBody';
 import { PostWriteFooter } from './PostWriteFooter';
@@ -16,6 +20,16 @@ interface PostWriteFormProps {
   content: string;
   setContent: (content: string) => void;
 }
+
+const createEmptyPoll = (): VoteWriteValue => ({
+  options: [
+    { id: crypto.randomUUID(), value: '' },
+    { id: crypto.randomUUID(), value: '' },
+  ],
+  endTime: new Date(),
+  allowMultiple: false,
+});
+
 export const PostWriteForm = ({
   isSubmitActive,
   onClose,
@@ -26,9 +40,24 @@ export const PostWriteForm = ({
 }: PostWriteFormProps) => {
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
 
+  const [vote, setVote] = useState<VoteWriteValue | null>(null);
+
+  const isVoteValid = useMemo(() => {
+    if (!vote) return true;
+
+    const validOptionsCount = vote.options.filter(
+      (opt) => opt.value.trim().length > 0,
+    ).length;
+
+    return validOptionsCount >= 2;
+  }, [vote]);
+
   return (
-    <Flex gap="none" direction="column">
-      <PostWriteHeader isSubmitActive={isSubmitActive} onBack={onClose} />
+    <VStack gap="none" className="h-full">
+      <PostWriteHeader
+        isSubmitActive={isSubmitActive && isVoteValid}
+        onBack={onClose}
+      />
 
       <Dialog.Title className="sr-only">게시글 작성</Dialog.Title>
       <PostWriteBody
@@ -36,14 +65,29 @@ export const PostWriteForm = ({
         selectedCategory={selectedCategory}
         content={content}
         setContent={setContent}
-        imageUploadRef={imageUploadRef}
+        vote={vote}
+        setVote={setVote}
       />
+
+      <Box className="m-5 mb-0">
+        <ImageUploadField
+          ref={imageUploadRef}
+          name="images"
+          setValue={() => {}}
+          showMainBadge
+        />
+      </Box>
 
       <Dialog.Footer>
         <PostWriteFooter
           onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
+          onClickVote={() => {
+            if (!vote) {
+              setVote(createEmptyPoll());
+            }
+          }}
         />
       </Dialog.Footer>
-    </Flex>
+    </VStack>
   );
 };
