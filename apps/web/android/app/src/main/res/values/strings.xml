@@ -4,4 +4,6 @@
     <string name="title_activity_main">크자회(CCSSAA)</string>
     <string name="package_name">kr.co.causw</string>
     <string name="custom_url_scheme">kr.co.causw</string>
+    <string name="kakao_native_app_key">4535709d7c684cff31a42bb2b522eed9</string>
+    <string name="google_web_client_id">1086770319771-hp040om1msg7r4o25u895b1pos47jkjt.apps.googleusercontent.com</string>
 </resources>
