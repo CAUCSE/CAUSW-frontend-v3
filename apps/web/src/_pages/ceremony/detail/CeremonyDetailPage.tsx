@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { CeremonyDetailView } from '@/widgets/ceremony';
 
-import { MOCK_CEREMONY_DETAIL } from '@/features/ceremony/config/mockData';
+import { MOCK_CEREMONY_DETAIL } from '@/features/ceremony';
 
 import { ActionHeader } from '@/shared/ui';
 
