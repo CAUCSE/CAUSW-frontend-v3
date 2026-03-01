@@ -13,10 +13,14 @@ import {
   MOCK_ONGOING,
   MOCK_UPCOMING,
   MOCK_ENDED,
+  MOCK_MY_CEREMONIES,
 } from '@/features/ceremony/config/mockData';
 
-import type { CeremonyFilterType } from '@/entities/ceremony';
-import { filterItems } from '@/entities/ceremony';
+import type {
+  CeremonyFilterType,
+  MyCeremonyStateFilter,
+} from '@/entities/ceremony';
+import { filterItems, filterByState } from '@/entities/ceremony';
 
 import { ActionHeader } from '@/shared/ui';
 
@@ -28,6 +32,8 @@ export const CeremonyPage = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(
     () => searchParams.get('create') === 'true',
   );
+  const [myStateFilter, setMyStateFilter] =
+    useState<MyCeremonyStateFilter>('등록 완료');
 
   const handleOpenChange = (open: boolean) => {
     setIsCreateOpen(open);
@@ -39,6 +45,7 @@ export const CeremonyPage = () => {
   const ongoingItems = filterItems(MOCK_ONGOING, filter);
   const upcomingItems = filterItems(MOCK_UPCOMING, filter);
   const endedItems = filterItems(MOCK_ENDED, filter);
+  const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
   return (
     <div className="relative flex min-h-screen flex-col bg-gray-100">
@@ -53,6 +60,9 @@ export const CeremonyPage = () => {
         ongoingItems={ongoingItems}
         upcomingItems={upcomingItems}
         endedItems={endedItems}
+        myStateFilter={myStateFilter}
+        onMyStateFilterChange={setMyStateFilter}
+        myItems={myItems}
       />
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">
