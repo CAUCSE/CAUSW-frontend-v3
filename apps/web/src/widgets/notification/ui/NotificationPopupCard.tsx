@@ -36,12 +36,7 @@ export function NotificationPopupCard() {
               {COPY.NEW_NOTIFICATION_TITLE}
             </Text>
             <Text typography="body-14-regular" textColor="gray-400">
-              {
-                NOTIFICATION_TYPE_MAP[
-                  data.noticeType as keyof typeof NOTIFICATION_TYPE_MAP
-                ]
-              }{' '}
-              - {data.title}
+              {NOTIFICATION_TYPE_MAP[data.noticeType]} - {data.title}
             </Text>
           </VStack>
         </Link>
