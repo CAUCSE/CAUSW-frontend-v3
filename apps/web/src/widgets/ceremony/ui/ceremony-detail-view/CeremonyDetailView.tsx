@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Text, VStack } from '@causw/cds';
+import { Button, Text } from '@causw/cds';
 
 import {
   getCeremonyIcon,
@@ -47,11 +47,12 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
     }
   };
 
+  // CDS Stack의 gap prop은 프리셋(xs~xl)에 없는 값이라 div 사용
   return (
-    <VStack gap={20} className="px-5 pt-4 pb-10">
+    <div className="flex flex-col gap-[1.375rem] px-5">
       {/* 타이틀 행 */}
-      <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white">
+      <div className="flex items-center gap-[0.75rem]">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-[0.75rem] bg-white">
           {getCeremonyIcon(category)}
         </div>
         <Text typography="subtitle-18-bold" textColor="gray-700">
@@ -60,7 +61,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
       </div>
 
       {/* 정보 카드 */}
-      <VStack gap={20} className="rounded-2xl bg-white p-5">
+      <div className="flex flex-col gap-[1.25rem] rounded-[1rem] bg-white p-5">
         <CeremonyInfoRow label="경조사 분류" value={type} />
         {showApplicant && <CeremonyInfoRow label="신청자" value={applicant} />}
         <CeremonyInfoRow label="대상자" value={subject} />
@@ -74,11 +75,11 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
             value={formatDateWithTime(endDate, endTime)}
           />
         )}
-      </VStack>
+      </div>
 
       {/* 내용 섹션 */}
       {content && (
-        <VStack gap={8}>
+        <div className="flex flex-col gap-[0.5rem]">
           <Text
             typography="subtitle-16-bold"
             textColor="gray-700"
@@ -86,7 +87,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
           >
             내용
           </Text>
-          <div className="rounded-xl bg-white p-5">
+          <div className="rounded-[0.75rem] bg-white p-5">
             <Text
               typography="body-16-regular"
               textColor="gray-700"
@@ -95,12 +96,12 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
               {content}
             </Text>
           </div>
-        </VStack>
+        </div>
       )}
 
       {/* 주소 섹션 */}
       {address && (
-        <VStack gap={8}>
+        <div className="flex flex-col gap-[0.5rem]">
           <Text
             typography="subtitle-16-bold"
             textColor="gray-700"
@@ -108,28 +109,31 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
           >
             주소
           </Text>
-          <VStack gap={16} className="rounded-xl bg-white p-5">
-            <div className="flex items-center justify-between">
-              <Text typography="subtitle-16-bold" textColor="gray-700">
-                {address}
-              </Text>
-              <Button size="sm" color="gray" onClick={handleCopyAddress}>
-                주소 복사
-              </Button>
+          <div className="flex flex-col gap-[1rem] rounded-[0.75rem] bg-white p-5">
+            {/* 주소 텍스트 + 상세주소 그룹 (gap: 2px) */}
+            <div className="flex flex-col gap-[0.125rem]">
+              <div className="flex items-center justify-between gap-[0.25rem]">
+                <Text typography="subtitle-16-bold" textColor="gray-700">
+                  {address}
+                </Text>
+                <Button size="sm" color="gray" onClick={handleCopyAddress}>
+                  주소 복사
+                </Button>
+              </div>
+              {detailedAddress && (
+                <Text typography="body-16-regular" textColor="gray-700">
+                  {detailedAddress}
+                </Text>
+              )}
             </div>
-            {detailedAddress && (
-              <Text typography="body-16-regular" textColor="gray-500">
-                {detailedAddress}
-              </Text>
-            )}
-            <KakaoMap address={address} />
-          </VStack>
-        </VStack>
+            <KakaoMap address={address} className="h-40 rounded-[0.5rem]" />
+          </div>
+        </div>
       )}
 
       {/* 문의 섹션 */}
       {contact && (
-        <VStack gap={8}>
+        <div className="flex flex-col gap-[0.5rem]">
           <Text
             typography="subtitle-16-bold"
             textColor="gray-700"
@@ -137,7 +141,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
           >
             문의
           </Text>
-          <div className="flex items-center justify-between rounded-xl bg-white p-5">
+          <div className="flex items-center justify-between rounded-[0.75rem] bg-white p-5">
             <Text typography="body-16-regular" textColor="gray-700">
               {contact}
             </Text>
@@ -145,8 +149,8 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
               전화 걸기
             </Button>
           </div>
-        </VStack>
+        </div>
       )}
-    </VStack>
+    </div>
   );
 };
