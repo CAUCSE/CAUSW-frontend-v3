@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Text } from '@causw/cds';
+import { Button, Text, SuccessColored } from '@causw/cds';
 
 import {
   getCeremonyIcon,
@@ -9,6 +9,7 @@ import {
 } from '@/entities/ceremony';
 
 import { formatDateWithTime } from '@/shared/lib';
+import { toast } from '@/shared/model/toast';
 
 import { KakaoMap } from './KakaoMap';
 
@@ -38,6 +39,9 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
   const handleCopyAddress = async () => {
     if (address) {
       await navigator.clipboard.writeText(address);
+      toast.success('주소가 복사되었습니다.', {
+        icon: <SuccessColored size={20} />,
+      });
     }
   };
 
