@@ -170,6 +170,6 @@ export const MOCK_CEREMONY_DETAIL: CeremonyDetailResponse = {
   link: null,
   isSetAll: true,
   targetAdmissionYears: [],
-  state: null,
+  state: 'AWAIT',
   note: null,
 };
