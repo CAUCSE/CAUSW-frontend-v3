@@ -34,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         //이 문장이 있어야 'didRegisterForRemoteNotifications~~'가 호출됨 
         application.registerForRemoteNotifications()
+        
+        print("✅ Running bundle id:", Bundle.main.bundleIdentifier ?? "nil")
+        print("✅ Display name:", Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") ?? "nil")
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleDeviceOrientationDidChange),
@@ -71,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
               let webView = bridgeViewController.webView else {
             return
         }
-
+        print("🌐 WebView current URL:", webView.url?.absoluteString ?? "nil")
         window?.backgroundColor = .white
         bridgeViewController.view.backgroundColor = .white
         webView.allowsBackForwardNavigationGestures = true
@@ -82,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         webView.translatesAutoresizingMaskIntoConstraints = true
         webView.autoresizingMask = []
         webView.alpha = 0
-        registerSocialLoginMessageHandlers(on: webView)
+        // registerSocialLoginMessageHandlers(on: webView)
 
         if !didDetachWebViewConstraints {
             detachWebViewConstraints(webView)

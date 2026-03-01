@@ -1,12 +1,14 @@
 import type { CapacitorConfig } from '@capacitor/cli';
-
+const env = process.env.APP_ENV; // dev | prod
+const isDev = env === 'dev';
 const config: CapacitorConfig = {
-  appId: 'kr.co.causw',
-  appName: '크자회(CCSSAA)',
+  appId: 'kr.co.causw', // 여기 값으로 Xcode Bundle ID가 자동 변경되진 않음(이미 만든 뒤라서)
+  appName: '크자회(CCSSAA)', // 마찬가지
   webDir: 'out',
   server: {
-    //배포 시
-    url: 'https://causw-v3-web-dev.vercel.app',
+    url: isDev
+      ? 'https://causw-v3-web-dev.vercel.app/'
+      : 'https://causw-v3-web.vercel.app/',
     cleartext: false,
 
     //local 테스트 시
