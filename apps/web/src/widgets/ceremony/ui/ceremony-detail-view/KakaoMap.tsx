@@ -113,13 +113,15 @@ export const KakaoMap = ({ address, className }: KakaoMapProps) => {
   }
 
   return (
-    <div className={`relative overflow-hidden rounded-xl ${className ?? ''}`}>
+    <div
+      className={`relative overflow-hidden ${className ?? 'h-40 rounded-[0.5rem]'}`}
+    >
       {isLoading && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-200">
           <Spinner />
         </div>
       )}
-      <div ref={mapRef} className="h-48 w-full" />
+      <div ref={mapRef} className="h-full w-full" />
     </div>
   );
 };
