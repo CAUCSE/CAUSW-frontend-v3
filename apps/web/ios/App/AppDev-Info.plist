@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CAUSWAppEnvironment</key>
+	<string>dev</string>
+	<key>CAUSWGoogleClientID</key>
+	<string>1086770319771-cnj8h70c5lc29ljijcaif27cnb93lq1e.apps.googleusercontent.com</string>
+	<key>CAUSWKakaoNativeAppKey</key>
+	<string>4535709d7c684cff31a42bb2b522eed9</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
