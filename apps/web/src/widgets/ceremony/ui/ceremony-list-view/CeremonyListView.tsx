@@ -21,6 +21,7 @@ interface CeremonyListViewProps {
   myStateFilter: MyCeremonyStateFilter;
   onMyStateFilterChange: (filter: MyCeremonyStateFilter) => void;
   myItems: CeremonyItem[];
+  onItemClick?: (id: string) => void;
 }
 
 export const CeremonyListView = ({
@@ -32,6 +33,7 @@ export const CeremonyListView = ({
   myStateFilter,
   onMyStateFilterChange,
   myItems,
+  onItemClick,
 }: CeremonyListViewProps) => (
   <Tab variant="underline" defaultValue="all">
     <Tab.List className="bg-gray-100 px-5">
@@ -50,16 +52,22 @@ export const CeremonyListView = ({
         title="진행 중인 경조사"
         items={ongoingItems}
         emptyMessage="진행 중인 경조사가 없어요"
+        onItemClick={onItemClick}
       />
 
       <CeremonySection
         title="곧 다가올 경조사"
         items={upcomingItems}
         emptyMessage="곧 다가올 경조사가 없어요"
+        onItemClick={onItemClick}
       />
 
       {endedItems.length > 0 && (
-        <CeremonySection title="끝난 경조사" items={endedItems} />
+        <CeremonySection
+          title="끝난 경조사"
+          items={endedItems}
+          onItemClick={onItemClick}
+        />
       )}
     </Tab.Content>
 
@@ -68,6 +76,7 @@ export const CeremonyListView = ({
         stateFilter={myStateFilter}
         onStateFilterChange={onMyStateFilterChange}
         items={myItems}
+        onItemClick={onItemClick}
       />
     </Tab.Content>
   </Tab>

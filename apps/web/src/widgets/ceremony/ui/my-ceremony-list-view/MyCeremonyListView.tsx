@@ -11,12 +11,14 @@ interface MyCeremonyListViewProps {
   stateFilter: MyCeremonyStateFilter;
   onStateFilterChange: (filter: MyCeremonyStateFilter) => void;
   items: CeremonyItem[];
+  onItemClick?: (id: string) => void;
 }
 
 export const MyCeremonyListView = ({
   stateFilter,
   onStateFilterChange,
   items,
+  onItemClick,
 }: MyCeremonyListViewProps) => (
   <>
     <MyCeremonyFilterChips
@@ -31,7 +33,13 @@ export const MyCeremonyListView = ({
           icon={<BellColored size={52} className="opacity-50 grayscale" />}
         />
       ) : (
-        items.map((item) => <CeremonyListItem key={item.id} item={item} />)
+        items.map((item) => (
+          <CeremonyListItem
+            key={item.id}
+            item={item}
+            onClick={() => onItemClick?.(item.id)}
+          />
+        ))
       )}
     </div>
   </>

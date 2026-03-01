@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
 import { CeremonyListView } from '@/widgets/ceremony';
@@ -23,6 +25,7 @@ import { filterItems, filterByState } from '@/entities/ceremony';
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyPage = () => {
+  const router = useRouter();
   const [filter, setFilter] = useState<CeremonyFilterType>('전체');
   const [myStateFilter, setMyStateFilter] =
     useState<MyCeremonyStateFilter>('등록 완료');
@@ -32,6 +35,10 @@ export const CeremonyPage = () => {
   const upcomingItems = filterItems(MOCK_UPCOMING, filter);
   const endedItems = filterItems(MOCK_ENDED, filter);
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
+
+  const handleItemClick = (id: string) => {
+    router.push(`/ceremony/${id}`);
+  };
 
   return (
     <div className="relative flex min-h-screen flex-col bg-gray-100">
@@ -49,6 +56,7 @@ export const CeremonyPage = () => {
         myStateFilter={myStateFilter}
         onMyStateFilterChange={setMyStateFilter}
         myItems={myItems}
+        onItemClick={handleItemClick}
       />
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">
