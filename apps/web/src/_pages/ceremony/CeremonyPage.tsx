@@ -8,13 +8,13 @@ import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
 import { CeremonyListView } from '@/widgets/ceremony';
 
-import { CeremonyCreateDialog } from '@/features/ceremony';
 import {
+  CeremonyCreateDialog,
   MOCK_ONGOING,
   MOCK_UPCOMING,
   MOCK_ENDED,
   MOCK_MY_CEREMONIES,
-} from '@/features/ceremony/config/mockData';
+} from '@/features/ceremony';
 
 import type {
   CeremonyFilterType,
