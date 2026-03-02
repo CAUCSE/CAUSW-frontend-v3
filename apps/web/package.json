@@ -51,6 +51,12 @@
     "@causw/typescript-config": "workspace:*",
     "@tanstack/react-query-devtools": "catalog:default",
     "@types/kakao-js-sdk": "^1.39.5",
-    "autoprefixer": "catalog:default"
+    "autoprefixer": "catalog:default",
+    "msw": "^2.12.10"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }
