@@ -10,6 +10,8 @@ import {
   Toaster,
 } from '@/shared/ui';
 
+import { MSWComponent } from './_mock';
+
 export const metadata: Metadata = {
   title: '동문 네트워크',
   description: '동문 네트워크 서비스',
@@ -26,10 +28,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`antialiased`}>
-        <QueryProviderWithDevtools>
-          <Toaster />
-          <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
-        </QueryProviderWithDevtools>
+        <MSWComponent>
+          <QueryProviderWithDevtools>
+            <Toaster />
+            <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+          </QueryProviderWithDevtools>
+        </MSWComponent>
       </body>
     </html>
   );
