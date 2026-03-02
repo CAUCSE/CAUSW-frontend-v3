@@ -8,10 +8,10 @@ import {
 
 import { mswHttp } from '@/shared/lib';
 
-const BASE_URL = '/api/v2/auth';
+const AUTH_API_PREFIX = '/api/v2/auth';
 
 export const postHandler = [
-  mswHttp.post<SignupResponseDto>(`${BASE_URL}/signup`, () => {
+  mswHttp.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {
     return HttpResponse.json(
       {
         code: '201',
@@ -28,7 +28,7 @@ export const postHandler = [
       },
     );
   }),
-  mswHttp.post<SigninResponseDto>(`${BASE_URL}/login`, () => {
+  mswHttp.post<SigninResponseDto>(`${AUTH_API_PREFIX}/login`, () => {
     return HttpResponse.json(
       {
         code: '201',
@@ -43,7 +43,7 @@ export const postHandler = [
       { status: 201 },
     );
   }),
-  mswHttp.post<SignoutResponseDto>(`${BASE_URL}/logout`, () => {
+  mswHttp.post<SignoutResponseDto>(`${AUTH_API_PREFIX}/logout`, () => {
     return HttpResponse.json(
       {
         code: '204',
