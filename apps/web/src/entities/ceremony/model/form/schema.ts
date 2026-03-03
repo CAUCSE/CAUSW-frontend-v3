@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { phoneNumberSchema } from '@/shared/model/form';
+
 export const ceremonyFormSchema = z
   .object({
     ceremonyType: z.enum(['경사', '조사', '']),
@@ -26,7 +28,7 @@ export const ceremonyFormSchema = z
     postalCode: z.string(),
     address: z.string(),
     detailAddress: z.string(),
-    phone: z.string(),
+    phone: z.union([z.literal(''), phoneNumberSchema]),
     relatedLink: z.string(),
   })
   .superRefine((data, ctx) => {
