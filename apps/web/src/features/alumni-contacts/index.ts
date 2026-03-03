@@ -1,5 +1,7 @@
 export {
   AlumniContactsSearchInput,
   AlumniContactsSortFilterSelect,
-  AlumniContactsAcademicFilterModalTrigger,
+  AlumniContactsAdmissionYearFilterSelect,
+  AlumniContactsAcademicStatusFilterButton,
+  AlumniContactsAcademicFilterSheetModalTrigger,
 } from './ui';
