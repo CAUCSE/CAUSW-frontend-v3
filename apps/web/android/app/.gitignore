@@ -1,3 +1,5 @@
 /build/*
 !/build/.npmkeep
 /causwsign.keystore
+/dev/
+/prod/
