@@ -2,6 +2,8 @@
 
 import { PropsWithChildren, Suspense, use } from 'react';
 
+import { ENVIRONMENT } from '@/shared/config';
+
 declare global {
   interface ImportMeta {
     hot?: {
@@ -11,7 +13,7 @@ declare global {
 }
 
 const startMockWorkerPromise =
-  process.env.NODE_ENV === 'development' && typeof window !== 'undefined'
+  ENVIRONMENT === 'development' && typeof window !== 'undefined'
     ? import('./browser').then(async ({ worker }) => {
         await worker.start({
           onUnhandledRequest(request, print) {

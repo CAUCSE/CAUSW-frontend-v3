@@ -5,7 +5,7 @@ import {
   FetchOptions,
 } from '@causw/api-client';
 
-import { BASE_URL } from '@/shared/storage';
+import { BASE_URL } from '@/shared/config';
 import { DefaultResponseField } from '@/shared/types';
 import { unwrapResponse } from '@/shared/utils';
 

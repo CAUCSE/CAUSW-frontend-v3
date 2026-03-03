@@ -6,8 +6,8 @@ import {
   type DefaultBodyType,
 } from 'msw';
 
-import { BASE_URL } from '../../storage';
-import { DefaultResponseField } from '../../types';
+import { BASE_URL } from '@/shared/config';
+import { DefaultResponseField } from '@/shared/types';
 
 type MswResolver<T, U extends DefaultBodyType> = HttpResponseResolver<
   PathParams,
