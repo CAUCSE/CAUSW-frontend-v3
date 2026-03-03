@@ -1,3 +1,5 @@
-export { AlumniContactsSearchInput } from './alumni-contacts-seacrh-input';
+export { AlumniContactsSearchInput } from './alumni-contacts-search-input';
 export { AlumniContactsSortFilterSelect } from './alumni-contacts-sort-filter-select';
-export { AlumniContactsAcademicFilterModalTrigger } from './alumni-contacts-academic-filter-modal-trigger';
+export { AlumniContactsAdmissionYearFilterSelect } from './alumni-contacts-admission-year-filter-select';
+export { AlumniContactsAcademicStatusFilterButton } from './alumni-contacts-academic-status-filter-button';
+export { AlumniContactsAcademicFilterSheetModalTrigger } from './alumni-contacts-academic-filter-sheet-modal-trigger';
