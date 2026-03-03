@@ -24,14 +24,18 @@ export const AlumniContactsSortFilterSelect = () => {
       value={value}
       onValueChange={handleValueChange}
     >
-      <Select.Trigger className="typo-body-15-medium px-3 py-1.5 text-gray-700 [&_svg]:size-3.5 [&_svg]:text-gray-400">
+      <Select.Trigger className="typo-body-15-medium cursor-pointer px-3 py-1.5 text-gray-700 [&_svg]:size-3.5 [&_svg]:fill-current [&_svg]:text-gray-400">
         <Select.Value
           placeholder={ALUMNI_CONTACTS_SORT_FILTER_OPTION.UPDATED_AT_DESC.label}
         />
       </Select.Trigger>
       <Select.Content>
         {Object.values(ALUMNI_CONTACTS_SORT_FILTER_OPTION).map((option) => (
-          <Select.Item key={option.value} value={option.value}>
+          <Select.Item
+            key={option.value}
+            value={option.value}
+            className="cursor-pointer"
+          >
             <Text typography="body-16-regular">{option.label}</Text>
           </Select.Item>
         ))}
