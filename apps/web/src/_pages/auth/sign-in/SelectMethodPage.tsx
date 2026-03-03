@@ -13,7 +13,7 @@ import {
   KakaoLoginButton,
 } from '@/features/auth';
 
-import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/storage';
+import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/config';
 import { isAndroid } from '@/shared/utils';
 
 export const SelectMethodPage = () => {

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { ENVIRONMENT } from '@/shared/config';
 import { QUERY_STALE_TIME, QUERY_GC_TIME } from '@/shared/constants';
 
 export function QueryProviderWithDevtools({
@@ -28,9 +29,7 @@ export function QueryProviderWithDevtools({
   return (
     <QueryClientProvider client={client}>
       {children}
-      <ReactQueryDevtools
-        initialIsOpen={process.env.NODE_ENV === 'development'}
-      />
+      <ReactQueryDevtools initialIsOpen={ENVIRONMENT === 'development'} />
     </QueryClientProvider>
   );
 }

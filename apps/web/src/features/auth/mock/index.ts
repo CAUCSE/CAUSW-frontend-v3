@@ -1,0 +1,1 @@
+export { authHandler } from './handler';
