@@ -1,0 +1,1 @@
+export { AlumniContactsSearchInput } from './AlumniContactsSearchInput';
