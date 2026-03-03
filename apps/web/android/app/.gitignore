@@ -1,5 +1,3 @@
 /build/*
 !/build/.npmkeep
 /causwsign.keystore
-/dev/google-services.json
-/prod/google-services.json
