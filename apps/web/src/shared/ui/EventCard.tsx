@@ -16,7 +16,7 @@ interface EventCardProps {
   descriptions: ReactNode[];
   icon: ReactNode;
   iconBgClass?: string;
-  link?: string;
+  targetLink: string | null;
   className?: string;
   rightElement?: ReactNode;
 }
@@ -26,7 +26,7 @@ export function EventCard({
   descriptions,
   icon,
   iconBgClass = 'bg-gray-100',
-  link,
+  targetLink,
   className,
   rightElement,
 }: EventCardProps) {
@@ -75,15 +75,19 @@ export function EventCard({
       <div className="flex shrink-0 items-center justify-center">
         {rightElement
           ? rightElement
-          : link && <ChevronRight size={14} className="text-gray-400" />}
+          : targetLink && <ChevronRight size={14} className="text-gray-400" />}
       </div>
     </HStack>
   );
-  //TODO : link가 어떻게 올지 모르곘음 api후에 수정
-  if (!link) return CardContent;
+
+  if (!targetLink) return CardContent;
 
   return (
-    <Link href={link} className="w-full cursor-pointer">
+    // TODO : 어떤 게시글인지 확인해서 링크 수정 필요
+    <Link
+      href={`/board/boardId/${targetLink}`}
+      className="w-full cursor-pointer"
+    >
       {CardContent}
     </Link>
   );

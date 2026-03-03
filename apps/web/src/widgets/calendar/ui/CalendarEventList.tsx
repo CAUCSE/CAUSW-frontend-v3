@@ -113,7 +113,7 @@ function ScheduleSection({
           items.map((item) => (
             <EventCard
               key={item.id}
-              link={item.link || undefined}
+              targetLink={item.targetPostId}
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={

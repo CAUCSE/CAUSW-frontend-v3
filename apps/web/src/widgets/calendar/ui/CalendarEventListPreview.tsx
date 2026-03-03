@@ -70,6 +70,7 @@ export function CalendarEventListPreview() {
                       item.type as keyof typeof CALENDAR_EVENTS_TYPE_MAP
                     ],
                   ]}
+                  targetLink={item.targetPostId}
                 />
               );
             })

@@ -4,7 +4,7 @@ export interface CalendarScheduleItem {
   type: string;
   start: string;
   end: string;
-  link?: string;
+  targetPostId: string | null;
 }
 
 export interface CalendarScheduleResponse {

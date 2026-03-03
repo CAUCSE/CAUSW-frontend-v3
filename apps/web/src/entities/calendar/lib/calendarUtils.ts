@@ -6,5 +6,6 @@ export const transformToCalendarEvents = (items: CalendarScheduleItem[]) => {
     startDate: item.start.split('T')[0],
     endDate: item.end.split('T')[0],
     type: (item.type === 'HOLIDAY' ? 'holiday' : 'event') as CalendarEventype,
+    targetPostId: item.targetPostId,
   }));
 };
