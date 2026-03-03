@@ -47,7 +47,8 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
 
   const handleCall = () => {
     if (contact) {
-      window.location.href = `tel:${contact}`;
+      const sanitizedContact = contact.replace(/[^0-9+]/g, '');
+      window.location.href = `tel:${sanitizedContact}`;
     }
   };
 
