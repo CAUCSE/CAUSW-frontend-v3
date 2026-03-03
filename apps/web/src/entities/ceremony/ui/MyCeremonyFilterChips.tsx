@@ -4,7 +4,7 @@ import { Tab } from '@causw/cds';
 
 import type { MyCeremonyStateFilter } from '../model';
 
-const FILTERS: MyCeremonyStateFilter[] = [
+const MY_CEREMONY_STATE_FILTERS: MyCeremonyStateFilter[] = [
   '등록 완료',
   '등록 거부',
   '등록 대기중',
@@ -25,7 +25,7 @@ export const MyCeremonyFilterChips = ({
     onValueChange={(v) => onChange(v as MyCeremonyStateFilter)}
   >
     <Tab.List className="px-5">
-      {FILTERS.map((filter) => (
+      {MY_CEREMONY_STATE_FILTERS.map((filter) => (
         <Tab.TabItem key={filter} value={filter}>
           {filter}
         </Tab.TabItem>
