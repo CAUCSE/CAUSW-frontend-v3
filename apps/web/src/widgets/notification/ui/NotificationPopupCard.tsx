@@ -11,8 +11,7 @@ import {
 } from '@/entities/notification';
 
 import { QueryErrorBoundary } from '@/shared/ui';
-//TODO : 알림 팝업 삭제 event에 대해서 기획 나오면 수정
-//TODO : 알림 팝업 내용 확인 with 기획/be ; 지금꺼는 임의로
+//TODO : 알림 팝업 삭제 -> 읽음 처리로 변경 api 나오면 추가 필요
 //TODO : 페이지 모두 구현된 후 링크 주소 잘 가는 지 확인 필요
 export function NotificationPopupCard() {
   const [isClosed, setIsClosed] = useState(false);
