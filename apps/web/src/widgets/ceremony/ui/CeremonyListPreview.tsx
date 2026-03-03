@@ -39,7 +39,6 @@ function CeremonyListContent() {
           className={index >= 4 ? 'desktop:block hidden' : 'block'}
         >
           <EventCard
-            // TODO: 주소 api 추가 필요 ->api 수정 후 값 변경
             targetLink={`${ROUTES.CEREMONY}/${item.id}`}
             title={item.title}
             icon={getCeremonyIcon(item.category)}
