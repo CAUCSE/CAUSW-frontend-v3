@@ -1,0 +1,1 @@
+export { AlumniContactsAcademicFilterModalTrigger } from './AlumniContactsAcademicFilterModalTrigger';
