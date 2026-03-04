@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Spinner } from '@causw/cds';
 
+import { KAKAO_JS_KEY } from '@/shared/config';
 import { loadKakaoMapSDK } from '@/shared/lib';
-import { KAKAO_JS_KEY } from '@/shared/storage';
 
 interface KakaoMapProps {
   address: string;
