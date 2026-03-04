@@ -1,32 +1,12 @@
 'use client';
 
-import { ChangeEvent, useCallback } from 'react';
-
-import { useShallow } from 'zustand/shallow';
-
 import { Search, TextInput } from '@causw/cds';
 
-import { useAlumniContactsFilterStore } from '@/entities/alumni-contacts';
+import { useAlumniContactsSearchInput } from '@/features/alumni-contacts/model';
 
 export const AlumniContactsSearchInput = () => {
-  const { keyword, setKeyword } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      keyword: state.keyword,
-      setKeyword: state.setKeyword,
-    })),
-  );
-
-  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
-    element?.focus();
-  }, []);
-
-  const handleTextInputChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setKeyword(value);
-    },
-    [setKeyword],
-  );
+  const { keyword, handleInitialFocus, handleTextInputChange } =
+    useAlumniContactsSearchInput();
 
   return (
     <TextInput

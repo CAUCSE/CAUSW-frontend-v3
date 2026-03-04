@@ -1,0 +1,1 @@
+export { useAlumniContactsSearchInput } from './hooks';
