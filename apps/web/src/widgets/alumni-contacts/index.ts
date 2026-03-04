@@ -1,1 +1,1 @@
-export { AlumniContactsAcademicFilterSheetModal } from './ui';
+export { AlumniContactsFilterGroup } from './ui';
