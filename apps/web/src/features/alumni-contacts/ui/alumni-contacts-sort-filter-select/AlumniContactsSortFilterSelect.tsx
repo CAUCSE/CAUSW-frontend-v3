@@ -1,28 +1,37 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback } from 'react';
+
+import { useShallow } from 'zustand/shallow';
 
 import { Select, Text } from '@causw/cds';
 
 import {
   ALUMNI_CONTACTS_SORT_FILTER_OPTION,
   AlumniContactsSortFilterOption,
+  useAlumniContactsFilterStore,
 } from '@/entities/alumni-contacts';
 
 export const AlumniContactsSortFilterSelect = () => {
-  const [value, setValue] = useState<AlumniContactsSortFilterOption>(
-    ALUMNI_CONTACTS_SORT_FILTER_OPTION.UPDATED_AT_DESC.value,
+  const { sortType, setSortType } = useAlumniContactsFilterStore(
+    useShallow((state) => ({
+      sortType: state.sortType,
+      setSortType: state.setSortType,
+    })),
   );
 
-  const handleValueChange = (value: AlumniContactsSortFilterOption) => {
-    setValue(value);
-  };
+  const handleSelectChange = useCallback(
+    (value: string) => {
+      setSortType(value as AlumniContactsSortFilterOption);
+    },
+    [setSortType],
+  );
 
   return (
     <Select
       defaultValue={ALUMNI_CONTACTS_SORT_FILTER_OPTION.UPDATED_AT_DESC.value}
-      value={value}
-      onValueChange={handleValueChange}
+      value={sortType ?? ''}
+      onValueChange={handleSelectChange}
     >
       <Select.Trigger className="typo-body-15-medium cursor-pointer px-3 py-1.5 text-gray-700 [&_svg]:size-3.5 [&_svg]:fill-current [&_svg]:text-gray-400">
         <Select.Value
