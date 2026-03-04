@@ -27,9 +27,9 @@ export const AlumniContactsFilterGroup = () => {
   return (
     <HStack className="items-center">
       <AlumniContactsSortFilterSelect />
-      <div className="h-3 w-px bg-gray-300" />
+      <div className="h-3 w-px shrink-0 bg-gray-300" />
       {filterActive ? (
-        <HStack gap="sm">
+        <HStack gap="sm" className="overflow-x-auto">
           <>
             {admissionYearFilterActive && (
               // 무조건 number임
