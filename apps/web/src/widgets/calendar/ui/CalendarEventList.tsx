@@ -113,7 +113,8 @@ function ScheduleSection({
           items.map((item) => (
             <EventCard
               key={item.id}
-              targetLink={item.targetPostId}
+              // TODO : target link 실제 주소에 맞게 수정
+              link={`/board/boardId/${item.targetPostId}`}
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={

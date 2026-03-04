@@ -70,7 +70,8 @@ export function CalendarEventListPreview() {
                       item.type as keyof typeof CALENDAR_EVENTS_TYPE_MAP
                     ],
                   ]}
-                  targetLink={item.targetPostId}
+                  // TODO : target link 실제 주소에 맞게 수정
+                  link={`/board/boardId/${item.targetPostId}`}
                 />
               );
             })

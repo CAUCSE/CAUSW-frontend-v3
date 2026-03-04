@@ -39,7 +39,8 @@ function CeremonyListContent() {
           className={index >= 4 ? 'desktop:block hidden' : 'block'}
         >
           <EventCard
-            targetLink={`${ROUTES.CEREMONY}/${item.id}`}
+            // TODO : target link 실제 주소에 맞게 수정
+            link={`${ROUTES.CEREMONY}/${item.id}`}
             title={item.title}
             icon={getCeremonyIcon(item.category)}
             descriptions={[
