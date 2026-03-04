@@ -1,1 +1,1 @@
-export { AlumniContactsAcademicFilterSheetModal } from './alumni-contacts-academic-filter-sheet-modal';
+export { AlumniContactsFilterGroup } from './alumni-contacts-filter-group';

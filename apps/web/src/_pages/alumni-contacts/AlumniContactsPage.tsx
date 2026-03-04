@@ -1,11 +1,8 @@
-import { HStack, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { AlumniContactsAcademicFilterSheetModal } from '@/widgets/alumni-contacts/ui/alumni-contacts-academic-filter-sheet-modal';
+import { AlumniContactsFilterGroup } from '@/widgets/alumni-contacts';
 
-import {
-  AlumniContactsSearchInput,
-  AlumniContactsSortFilterSelect,
-} from '@/features/alumni-contacts';
+import { AlumniContactsSearchInput } from '@/features/alumni-contacts';
 
 export function AlumniContactsPage() {
   return (
@@ -13,11 +10,7 @@ export function AlumniContactsPage() {
       <div className="w-full xl:w-225">
         <VStack className="gap-3">
           <AlumniContactsSearchInput />
-          <HStack className="items-center">
-            <AlumniContactsSortFilterSelect />
-            <div className="h-3 w-px bg-gray-300" />
-            <AlumniContactsAcademicFilterSheetModal />
-          </HStack>
+          <AlumniContactsFilterGroup />
         </VStack>
       </div>
     </div>
