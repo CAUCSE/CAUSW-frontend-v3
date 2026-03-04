@@ -1,1 +1,4 @@
-export { useAlumniContactsSearchInput } from './hooks';
+export {
+  useAlumniContactsSearchInput,
+  useAlumniContactsAcademicStatusFilterButton,
+} from './hooks';

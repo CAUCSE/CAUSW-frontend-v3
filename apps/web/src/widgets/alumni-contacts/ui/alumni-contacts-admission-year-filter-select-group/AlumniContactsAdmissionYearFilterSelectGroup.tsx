@@ -1,56 +1,29 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { HStack } from '@causw/cds';
+
+import { useAlumniContactsAdmissionYearFilterSelectGroup } from '@/widgets/alumni-contacts/model';
 
 import { AlumniContactsAdmissionYearFilterSelect } from '@/features/alumni-contacts';
 
-import { useAlumniContactsAcademicFilterSheetModalContext } from '@/entities/alumni-contacts';
-
-const ADMISSION_YEAR_SELECT_GROUPS = {
-  MIN: 1972,
-  MAX: new Date().getFullYear(),
-};
+import { ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER } from '@/entities/alumni-contacts';
 
 export const AlumniContactsAdmissionYearFilterSelectGroup = () => {
+  const { MIN: MIN_ADMISSION_YEAR, MAX: MAX_ADMISSION_YEAR } =
+    ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER;
   const {
+    startAdmissionYears,
+    endAdmissionYears,
     startAdmissionYear,
-    endAdmissionYear,
+    adjustedEndAdmissionYear,
     setStartAdmissionYear,
     setEndAdmissionYear,
-  } = useAlumniContactsAcademicFilterSheetModalContext();
-
-  const startAdmissionYears = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    return Array.from(
-      { length: currentYear - 1972 + 1 },
-      (_, index) => currentYear - index,
-    );
-  }, []);
-
-  const endAdmissionYears = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    return Array.from(
-      { length: currentYear - (startAdmissionYear ?? 1972) + 1 },
-      (_, index) => currentYear - index,
-    );
-  }, [startAdmissionYear]);
-
-  const adjustedEndAdmissionYear = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    const currentStartAdmissionYear = startAdmissionYear ?? 1972;
-    const currentEndAdmissionYear = endAdmissionYear ?? currentYear;
-
-    return currentEndAdmissionYear > currentStartAdmissionYear
-      ? currentEndAdmissionYear
-      : currentStartAdmissionYear;
-  }, [startAdmissionYear, endAdmissionYear]);
+  } = useAlumniContactsAdmissionYearFilterSelectGroup();
 
   return (
     <HStack className="items-center" gap="sm">
       <AlumniContactsAdmissionYearFilterSelect
-        defaultValue={ADMISSION_YEAR_SELECT_GROUPS.MIN.toString()}
+        defaultValue={MIN_ADMISSION_YEAR.toString()}
         admissionYears={startAdmissionYears}
         value={startAdmissionYear?.toString() ?? ''}
         onValueChange={(value) => {
@@ -59,7 +32,7 @@ export const AlumniContactsAdmissionYearFilterSelectGroup = () => {
       />
       <div className="h-px w-2 bg-gray-300" />
       <AlumniContactsAdmissionYearFilterSelect
-        defaultValue={ADMISSION_YEAR_SELECT_GROUPS.MAX.toString()}
+        defaultValue={MAX_ADMISSION_YEAR.toString()}
         admissionYears={endAdmissionYears}
         value={adjustedEndAdmissionYear.toString()}
         onValueChange={(value) => {
