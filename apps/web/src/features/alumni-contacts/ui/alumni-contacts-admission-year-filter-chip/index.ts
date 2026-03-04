@@ -1,0 +1,1 @@
+export { AlumniContactsAdmissionYearFilterChip } from './AlumniContactsAdmissionYearFilterChip';

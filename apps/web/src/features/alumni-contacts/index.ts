@@ -4,4 +4,6 @@ export {
   AlumniContactsAdmissionYearFilterSelect,
   AlumniContactsAcademicStatusFilterButton,
   AlumniContactsAcademicFilterSheetModalTrigger,
+  AlumniContactsAcademicStatusFilterChip,
+  AlumniContactsAdmissionYearFilterChip,
 } from './ui';
