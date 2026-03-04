@@ -6,4 +6,5 @@ export {
   AlumniContactsAcademicFilterSheetModalTrigger,
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
+  MyAlumniContactsButton,
 } from './ui';
