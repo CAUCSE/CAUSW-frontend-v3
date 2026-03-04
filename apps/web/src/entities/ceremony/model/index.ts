@@ -16,4 +16,3 @@ export type {
   CeremonyDetailResponse,
   MyCeremonyStateFilter,
 } from './types';
-export { MY_CEREMONY_STATE_MAP } from './types';

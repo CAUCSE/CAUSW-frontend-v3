@@ -27,4 +27,4 @@ export type {
   CeremonyDetailResponse,
   MyCeremonyStateFilter,
 } from './model';
-export { MY_CEREMONY_STATE_MAP } from './model';
+export { MY_CEREMONY_STATE_MAP } from './config';
