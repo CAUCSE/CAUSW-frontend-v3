@@ -1,21 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
+import { useResetAlumniContactsFilter } from '@/entities/alumni-contacts';
+
 import { useAuthStore } from '@/shared/model';
 
-type ProviderProps = {
-  children: ReactNode;
-};
-
-export function GlobalRoutingProvider({ children }: ProviderProps) {
+export function GlobalRoutingProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const authError = useAuthStore((state) => state.authError);
   const clearAuthError = useAuthStore((state) => state.clearAuthError);
+  useResetAlumniContactsFilter();
 
   useEffect(() => {
     if (!authError) return;
