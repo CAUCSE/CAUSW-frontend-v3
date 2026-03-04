@@ -33,7 +33,7 @@ export const AlumniContactsSortFilterSelect = () => {
       value={sortType ?? ''}
       onValueChange={handleSelectChange}
     >
-      <Select.Trigger className="typo-body-15-medium cursor-pointer px-3 py-1.5 text-gray-700 [&_svg]:size-3.5 [&_svg]:fill-current [&_svg]:text-gray-400">
+      <Select.Trigger className="typo-body-15-medium shrink-0 cursor-pointer px-3 py-1.5 text-gray-700 [&_svg]:size-3.5 [&_svg]:fill-current [&_svg]:text-gray-400">
         <Select.Value
           placeholder={ALUMNI_CONTACTS_SORT_FILTER_OPTION.UPDATED_AT_DESC.label}
         />
