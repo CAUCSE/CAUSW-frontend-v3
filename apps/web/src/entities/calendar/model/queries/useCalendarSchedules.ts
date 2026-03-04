@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { CalendarScheduleParams } from '..';
 import { getCalendarSchedules } from '../../api';
 import { calendarQueryKeys } from '../../config';
-import { CalendarScheduleParams } from '../../model';
 
 export const useCalendarSchedules = (params: CalendarScheduleParams = {}) => {
   return useQuery({
