@@ -4,3 +4,9 @@ export {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
   type AlumniContactsAcademicStatusFilterOption,
 } from './config';
+export {
+  useAlumniContactsFilterStore,
+  AlumniContactsAcademicFilterSheetModalContext,
+  useAlumniContactsAcademicFilterSheetModalContext,
+} from './model';
+export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
