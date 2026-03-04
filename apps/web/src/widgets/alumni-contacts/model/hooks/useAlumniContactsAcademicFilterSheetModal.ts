@@ -7,6 +7,7 @@ import { useShallow } from 'zustand/shallow';
 import {
   useAlumniContactsFilterStore,
   useAlumniContactsAcademicFilterSheetModalContext,
+  ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
 } from '@/entities/alumni-contacts';
 
 interface useAlumniContactsAcademicFilterSheetModalProps {
@@ -16,6 +17,8 @@ interface useAlumniContactsAcademicFilterSheetModalProps {
 export const useAlumniContactsAcademicFilterSheetModal = ({
   setIsOpen,
 }: useAlumniContactsAcademicFilterSheetModalProps) => {
+  const { MIN: MIN_ADMISSION_YEAR, MAX: MAX_ADMISSION_YEAR } =
+    ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER;
   const { startAdmissionYear, endAdmissionYear, academicStatus, initialize } =
     useAlumniContactsAcademicFilterSheetModalContext();
 
@@ -58,11 +61,13 @@ export const useAlumniContactsAcademicFilterSheetModal = ({
   );
 
   const handleApply = useCallback(() => {
-    setAdmissionYearStart(startAdmissionYear);
-    setAdmissionYearEnd(endAdmissionYear);
+    setAdmissionYearStart(startAdmissionYear ?? MIN_ADMISSION_YEAR);
+    setAdmissionYearEnd(endAdmissionYear ?? MAX_ADMISSION_YEAR);
     setAcademicStatus(academicStatus);
     handleOpenChange(false);
   }, [
+    MIN_ADMISSION_YEAR,
+    MAX_ADMISSION_YEAR,
     startAdmissionYear,
     endAdmissionYear,
     academicStatus,
