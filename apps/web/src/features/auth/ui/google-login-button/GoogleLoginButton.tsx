@@ -1,6 +1,16 @@
+'use client';
+
 import type { ComponentProps } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
+
+import { googleNativeLogin } from '@/features/auth/api';
+
+import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
+import { toast } from '@/shared/model';
+import { extractErrorMessage, isMobile } from '@/shared/utils';
 
 type GoogleLoginButtonProps = ComponentProps<'button'> & {
   clientId?: string;
@@ -18,8 +28,36 @@ export const GoogleLoginButton = ({
   scope = 'openid email profile',
   ...props
 }: GoogleLoginButtonProps) => {
+  const router = useRouter();
+
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
+
+    if (e.defaultPrevented) return;
+    if (isMobile) {
+      const handleMobileLogin = async () => {
+        const loadingToastId = String(toast.loading('google 로그인 중...'));
+        try {
+          const nativeAccessToken = await requestNativeSocialLogin('google');
+          await googleNativeLogin({ accessToken: nativeAccessToken });
+          toast.dismiss(loadingToastId);
+          toast.success('로그인되었습니다.');
+          router.replace('/home');
+        } catch (error) {
+          toast.dismiss(loadingToastId);
+          toast.error(
+            extractErrorMessage(
+              error,
+              '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
+            ),
+          );
+          router.replace('/auth/sign-in');
+        }
+      };
+
+      handleMobileLogin();
+      return;
+    }
 
     if (!clientId || !redirectUri) return;
 

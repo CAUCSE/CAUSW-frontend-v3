@@ -6,5 +6,4 @@
  */
 
 /** Google OAuth Client ID (브라우저 공개 가능) */
-export const GOOGLE_CLIENT_ID =
-  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? '';
+export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? '';

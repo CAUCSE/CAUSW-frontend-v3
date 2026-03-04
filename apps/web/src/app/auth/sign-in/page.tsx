@@ -1,5 +1,3 @@
-'use client';
-
 import { SelectMethodPage } from '@/_pages/auth';
 
 const Page = () => {
