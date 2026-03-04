@@ -1,16 +1,12 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
-import { useShallow } from 'zustand/shallow';
+import { useAlumniContactsAcademicFilterSheetModal } from '@/widgets/alumni-contacts/model';
 
 import { AlumniContactsAcademicFilterSheetModalTrigger } from '@/features/alumni-contacts';
 
-import {
-  AlumniContactsAcademicFilterSheetModalProvider,
-  useAlumniContactsAcademicFilterSheetModalContext,
-  useAlumniContactsFilterStore,
-} from '@/entities/alumni-contacts';
+import { AlumniContactsAcademicFilterSheetModalProvider } from '@/entities/alumni-contacts';
 
 import { useBreakpoint } from '@/shared/hooks';
 
@@ -24,61 +20,8 @@ interface SheetModalProps {
 
 const SheetModal = ({ isOpen, setIsOpen }: SheetModalProps) => {
   const { isMobileSize } = useBreakpoint();
-  const { startAdmissionYear, endAdmissionYear, academicStatus, initialize } =
-    useAlumniContactsAcademicFilterSheetModalContext();
-
-  const {
-    currentStartAdmissionYear,
-    currentEndAdmissionYear,
-    currentAcademicStatus,
-    setAdmissionYearStart,
-    setAdmissionYearEnd,
-    setAcademicStatus,
-  } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      currentStartAdmissionYear: state.admissionYearStart,
-      currentEndAdmissionYear: state.admissionYearEnd,
-      currentAcademicStatus: state.academicStatus,
-      setAdmissionYearStart: state.setAdmissionYearStart,
-      setAdmissionYearEnd: state.setAdmissionYearEnd,
-      setAcademicStatus: state.setAcademicStatus,
-    })),
-  );
-
-  const handleOpenChange = useCallback(
-    (open: boolean) => {
-      if (open) {
-        initialize(
-          currentStartAdmissionYear,
-          currentEndAdmissionYear,
-          currentAcademicStatus,
-        );
-      }
-      setIsOpen(open);
-    },
-    [
-      setIsOpen,
-      initialize,
-      currentStartAdmissionYear,
-      currentEndAdmissionYear,
-      currentAcademicStatus,
-    ],
-  );
-
-  const handleApply = useCallback(() => {
-    setAdmissionYearStart(startAdmissionYear);
-    setAdmissionYearEnd(endAdmissionYear);
-    setAcademicStatus(academicStatus);
-    handleOpenChange(false);
-  }, [
-    startAdmissionYear,
-    endAdmissionYear,
-    academicStatus,
-    handleOpenChange,
-    setAdmissionYearStart,
-    setAdmissionYearEnd,
-    setAcademicStatus,
-  ]);
+  const { handleOpenChange, handleApply } =
+    useAlumniContactsAcademicFilterSheetModal({ setIsOpen });
 
   if (isMobileSize) {
     return (

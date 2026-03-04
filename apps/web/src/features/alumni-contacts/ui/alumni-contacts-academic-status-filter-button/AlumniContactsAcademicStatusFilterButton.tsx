@@ -1,12 +1,11 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
-
 import { Button, Chip } from '@causw/cds';
+
+import { useAlumniContactsAcademicStatusFilterButton } from '@/features/alumni-contacts/model';
 
 import {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
-  useAlumniContactsAcademicFilterSheetModalContext,
   type AlumniContactsAcademicStatusFilterOption,
 } from '@/entities/alumni-contacts';
 
@@ -17,20 +16,8 @@ interface AlumniContactsAcademicStatusFilterButtonProps {
 export const AlumniContactsAcademicStatusFilterButton = ({
   status,
 }: AlumniContactsAcademicStatusFilterButtonProps) => {
-  const { academicStatus, setAcademicStatus } =
-    useAlumniContactsAcademicFilterSheetModalContext();
-
-  const isSelected = useMemo(() => {
-    return (academicStatus ?? []).includes(status);
-  }, [academicStatus, status]);
-
-  const handleClick = useCallback(() => {
-    const currentAcademicStatus = academicStatus ?? [];
-    const newAcademicStatus = isSelected
-      ? currentAcademicStatus.filter((s) => s !== status)
-      : [...currentAcademicStatus, status];
-    setAcademicStatus(newAcademicStatus);
-  }, [isSelected, academicStatus, status, setAcademicStatus]);
+  const { isSelected, handleClick } =
+    useAlumniContactsAcademicStatusFilterButton({ status });
 
   return (
     <Button className="h-fit w-fit rounded-md p-0">

@@ -1,10 +1,8 @@
 'use client';
 
-import { useCallback, useMemo } from 'react';
-
-import { useShallow } from 'zustand/shallow';
-
 import { HStack } from '@causw/cds';
+
+import { useAlumniContactsFilterGroup } from '@/widgets/alumni-contacts/model';
 
 import {
   AlumniContactsAcademicStatusFilterChip,
@@ -12,59 +10,19 @@ import {
   AlumniContactsSortFilterSelect,
 } from '@/features/alumni-contacts';
 
-import {
-  AlumniContactsAcademicStatusFilterOption,
-  useAlumniContactsFilterStore,
-} from '@/entities/alumni-contacts';
-
 import { AlumniContactsAcademicFilterSheetModal } from '../alumni-contacts-academic-filter-sheet-modal';
 
 export const AlumniContactsFilterGroup = () => {
   const {
+    filterActive,
+    admissionYearFilterActive,
+    academicStatusFilterActive,
     admissionYearStart,
     admissionYearEnd,
     academicStatus,
-    setAdmissionYearStart,
-    setAdmissionYearEnd,
-    setAcademicStatus,
-  } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      admissionYearStart: state.admissionYearStart,
-      admissionYearEnd: state.admissionYearEnd,
-      academicStatus: state.academicStatus,
-      setAdmissionYearStart: state.setAdmissionYearStart,
-      setAdmissionYearEnd: state.setAdmissionYearEnd,
-      setAcademicStatus: state.setAcademicStatus,
-    })),
-  );
-
-  const admissionYearFilterActive = useMemo(() => {
-    return admissionYearStart !== null && admissionYearEnd !== null;
-  }, [admissionYearStart, admissionYearEnd]);
-
-  const academicStatusFilterActive = useMemo(() => {
-    return academicStatus !== null && academicStatus.length > 0;
-  }, [academicStatus]);
-
-  const filterActive = useMemo(() => {
-    return academicStatusFilterActive || admissionYearFilterActive;
-  }, [academicStatusFilterActive, admissionYearFilterActive]);
-
-  const handleAcademicStatusFilterChipClick = useCallback(
-    (status: AlumniContactsAcademicStatusFilterOption) => {
-      const currentAcademicStatus = academicStatus ?? [];
-      const newAcademicStatus = currentAcademicStatus.filter(
-        (s) => s !== status,
-      );
-      setAcademicStatus(newAcademicStatus);
-    },
-    [academicStatus, setAcademicStatus],
-  );
-
-  const handleAdmissionYearFilterChipClick = useCallback(() => {
-    setAdmissionYearStart(null);
-    setAdmissionYearEnd(null);
-  }, [setAdmissionYearStart, setAdmissionYearEnd]);
+    handleAcademicStatusFilterChipClick,
+    handleAdmissionYearFilterChipClick,
+  } = useAlumniContactsFilterGroup();
 
   return (
     <HStack className="items-center">
@@ -78,7 +36,7 @@ export const AlumniContactsFilterGroup = () => {
               <AlumniContactsAdmissionYearFilterChip
                 admissionYearStart={admissionYearStart ?? 0}
                 admissionYearEnd={admissionYearEnd ?? 0}
-                onClick={() => handleAdmissionYearFilterChipClick()}
+                onClick={handleAdmissionYearFilterChipClick}
               />
             )}
             {academicStatusFilterActive &&
