@@ -54,9 +54,9 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
 
   // CDS Stack의 gap prop은 프리셋(xs~xl)에 없는 값이라 div 사용
   return (
-    <div className="flex flex-col gap-[1.375rem] px-5">
+    <div className="flex flex-col gap-[1.375rem] px-5 pt-[0.5rem] pb-5">
       {/* 타이틀 행 */}
-      <div className="flex items-center gap-[0.75rem]">
+      <div className="flex items-start gap-[0.75rem]">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-[0.75rem] bg-white">
           {getCeremonyIcon(category)}
         </div>
@@ -71,7 +71,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
         {showApplicant && <CeremonyInfoRow label="신청자" value={applicant} />}
         <CeremonyInfoRow label="대상자" value={subject} />
         <CeremonyInfoRow
-          label="시작 기간"
+          label={endDate ? '시작 기간' : '기간'}
           value={formatDateWithTime(startDate, startTime)}
         />
         {endDate && (
