@@ -1,4 +1,4 @@
-import { KAKAO_JS_KEY } from '@/shared/storage';
+import { KAKAO_JS_KEY } from '@/shared/config';
 
 declare global {
   interface Window {
