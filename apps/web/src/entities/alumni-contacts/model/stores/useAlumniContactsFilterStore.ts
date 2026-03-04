@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 import {
   AlumniContactsAcademicStatusFilterOption,
@@ -27,15 +28,23 @@ type UseAlumniContactsFilterSlice = UseAlumniContactsFilterState &
   UseAlumniContactsFilterActions;
 
 export const useAlumniContactsFilterStore =
-  create<UseAlumniContactsFilterSlice>()((set) => ({
-    keyword: null,
-    admissionYearStart: null,
-    admissionYearEnd: null,
-    academicStatus: null,
-    sortType: null,
-    setKeyword: (keyword) => set({ keyword }),
-    setAdmissionYearStart: (admissionYearStart) => set({ admissionYearStart }),
-    setAdmissionYearEnd: (admissionYearEnd) => set({ admissionYearEnd }),
-    setAcademicStatus: (academicStatus) => set({ academicStatus }),
-    setSortType: (sortType) => set({ sortType }),
-  }));
+  create<UseAlumniContactsFilterSlice>()(
+    persist(
+      (set) => ({
+        keyword: null,
+        admissionYearStart: null,
+        admissionYearEnd: null,
+        academicStatus: null,
+        sortType: null,
+        setKeyword: (keyword) => set({ keyword }),
+        setAdmissionYearStart: (admissionYearStart) =>
+          set({ admissionYearStart }),
+        setAdmissionYearEnd: (admissionYearEnd) => set({ admissionYearEnd }),
+        setAcademicStatus: (academicStatus) => set({ academicStatus }),
+        setSortType: (sortType) => set({ sortType }),
+      }),
+      {
+        name: 'alumni-contacts-filter',
+      },
+    ),
+  );
