@@ -22,6 +22,7 @@ interface UseAlumniContactsFilterActions {
     academicStatus: AlumniContactsAcademicStatusFilterOption[] | null,
   ) => void;
   setSortType: (sortType: AlumniContactsSortFilterOption | null) => void;
+  reset: () => void;
 }
 
 type UseAlumniContactsFilterSlice = UseAlumniContactsFilterState &
@@ -42,6 +43,14 @@ export const useAlumniContactsFilterStore =
         setAdmissionYearEnd: (admissionYearEnd) => set({ admissionYearEnd }),
         setAcademicStatus: (academicStatus) => set({ academicStatus }),
         setSortType: (sortType) => set({ sortType }),
+        reset: () =>
+          set({
+            keyword: null,
+            admissionYearStart: null,
+            admissionYearEnd: null,
+            academicStatus: null,
+            sortType: null,
+          }),
       }),
       {
         name: 'alumni-contacts-filter',

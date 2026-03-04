@@ -9,5 +9,6 @@ export {
   useAlumniContactsFilterStore,
   AlumniContactsAcademicFilterSheetModalContext,
   useAlumniContactsAcademicFilterSheetModalContext,
+  useResetAlumniContactsFilter,
 } from './model';
 export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
