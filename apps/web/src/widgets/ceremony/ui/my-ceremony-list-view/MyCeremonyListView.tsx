@@ -1,6 +1,6 @@
 'use client';
 
-import { BellColored } from '@causw/cds';
+import { BellGrayColored } from '@causw/cds';
 
 import type { CeremonyItem, MyCeremonyStateFilter } from '@/entities/ceremony';
 import { CeremonyListItem, MyCeremonyFilterChips } from '@/entities/ceremony';
@@ -30,7 +30,8 @@ export const MyCeremonyListView = ({
       {items.length === 0 ? (
         <NoDataView
           message="해당하는 경조사가 없어요"
-          icon={<BellColored size={52} className="opacity-50 grayscale" />}
+          icon={<BellGrayColored size={52} />}
+          className="rounded-[0.75rem] bg-white px-0 py-[3.5rem]"
         />
       ) : (
         items.map((item) => (

@@ -1,4 +1,4 @@
-import { BellColored } from '@causw/cds';
+import { BellGrayColored } from '@causw/cds';
 
 import type { CeremonyItem } from '@/entities/ceremony';
 import { CeremonyListItem } from '@/entities/ceremony';
@@ -23,7 +23,8 @@ export const CeremonySection = ({
     {items.length === 0 ? (
       <NoDataView
         message={emptyMessage}
-        icon={<BellColored size={52} className="opacity-50 grayscale" />}
+        icon={<BellGrayColored size={52} />}
+        className="rounded-[0.75rem] bg-white px-0 py-[3.5rem]"
       />
     ) : (
       items.map((item) => (
