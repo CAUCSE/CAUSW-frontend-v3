@@ -1,4 +1,4 @@
-import { CeremonyTypeApi } from '../model/types/types';
+import { CeremonyTypeApi } from '../model/types';
 
 export const formatUpcomingCeremoniesParams = (
   type: CeremonyTypeApi = 'ALL',
