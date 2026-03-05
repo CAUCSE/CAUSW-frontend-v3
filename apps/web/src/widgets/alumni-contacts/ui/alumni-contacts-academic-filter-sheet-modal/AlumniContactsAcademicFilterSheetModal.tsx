@@ -51,10 +51,10 @@ export const AlumniContactsAcademicFilterSheetModal = () => {
 
   return (
     <>
-      <AlumniContactsAcademicFilterSheetModalTrigger
-        onClick={handleTriggerClick}
-      />
       <AlumniContactsAcademicFilterSheetModalProvider>
+        <AlumniContactsAcademicFilterSheetModalTrigger
+          onClick={handleTriggerClick}
+        />
         <SheetModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </AlumniContactsAcademicFilterSheetModalProvider>
     </>
