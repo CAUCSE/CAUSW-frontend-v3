@@ -9,7 +9,7 @@ import { mergeStyles } from '@causw/cds';
 import { isBottomNavVisible, pickBottomNavKey, pickSidebarKey } from '../model';
 
 import { BottomNav } from './BottomNav';
-import { SidebarNav } from './SideBarNav';
+import { SidebarNav } from './sidebar';
 export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 

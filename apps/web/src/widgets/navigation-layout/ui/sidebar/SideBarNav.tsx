@@ -1,21 +1,19 @@
 'use client';
 
-import Link from 'next/link';
+import { VStack, Sidebar } from '@causw/cds';
 
-import { HStack, VStack, Sidebar } from '@causw/cds';
-
-import { useUnreadNotificationCnt } from '@/entities/notification';
-
-import { CountBadge, QueryErrorBoundary, StatusDot } from '@/shared/ui';
+import { QueryErrorBoundary } from '@/shared/ui';
 
 import {
   SIDEBAR_BOTTOM_ITEMS,
   SIDEBAR_MAIN_ITEMS,
-  SidebarItem,
   SidebarKey,
-} from '../model';
+} from '../../model';
+import { FooterProfile } from '../FooterProfile';
 
-import { FooterProfile } from './FooterProfile';
+import { NotificationItem } from './NotificationItem';
+import { SideBarHeader } from './SidebarHeader';
+import { SidebarMenuItem } from './SidebarMenuItem';
 
 type SidebarNavProps = {
   selected?: SidebarKey;
@@ -26,7 +24,7 @@ export function SidebarNav({ selected }: SidebarNavProps) {
     <Sidebar selected={selected}>
       {/* HEADER */}
       <Sidebar.Header>
-        <DefaultHeader />
+        <SideBarHeader />
       </Sidebar.Header>
 
       {/* CONTENT */}
@@ -52,7 +50,7 @@ export function SidebarNav({ selected }: SidebarNavProps) {
                       />
                     )}
                   >
-                    <NotificationSidebarItem item={item} />
+                    <NotificationItem item={item} />
                   </QueryErrorBoundary>
                 );
               }
@@ -74,52 +72,5 @@ export function SidebarNav({ selected }: SidebarNavProps) {
         />
       </Sidebar.Footer>
     </Sidebar>
-  );
-}
-
-function DefaultHeader() {
-  /* TODO: 이미지 로고 대체 예정 */
-
-  return <span className="px-2.5 font-bold text-blue-500">크자회 Logo</span>;
-}
-
-function SidebarMenuItem({
-  item,
-  showDot = false,
-  badgeCount = 0,
-}: {
-  item: SidebarItem;
-  showDot?: boolean;
-  badgeCount?: number | string;
-}) {
-  return (
-    <Sidebar.Item value={item.key} asChild>
-      <Link href={item.href} className="block pr-2">
-        <HStack className="w-full cursor-pointer items-center gap-3.5">
-          <div className="relative">
-            {showDot && <StatusDot show={true} right={-2} top={-2} />}
-            <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
-          </div>
-
-          <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-
-          {!!badgeCount && <CountBadge count={badgeCount} />}
-        </HStack>
-      </Link>
-    </Sidebar.Item>
-  );
-}
-function NotificationSidebarItem({ item }: { item: SidebarItem }) {
-  const { data } = useUnreadNotificationCnt();
-
-  const notificationCount = data?.notificationLogCount ?? 0;
-  const unreadCnt = notificationCount > 9 ? '9+' : notificationCount;
-
-  return (
-    <SidebarMenuItem
-      item={item}
-      showDot={notificationCount > 0}
-      badgeCount={unreadCnt}
-    />
   );
 }
