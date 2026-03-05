@@ -7,8 +7,8 @@ import {
   CaldendarIconColored,
   Calendar,
   CalendarGrayColored,
+  CTAButton,
   Flex,
-  Text,
   VStack,
 } from '@causw/cds';
 
@@ -82,14 +82,10 @@ export function CalendarEventListPreview() {
             />
           )}
         </VStack>
-
-        <Link
-          href={ROUTES.SCHEDULE}
-          className="flex w-full items-center justify-center rounded-[0.75rem] bg-blue-100 px-4 py-3.5"
-        >
-          <Text typography="body-15-semibold" textColor="blue-700">
+        <Link href={ROUTES.SCHEDULE} className="w-full">
+          <CTAButton fullWidth color="blue" className="bg-blue-100">
             {COPY.ENTIRE_SCHEDULE}
-          </Text>
+          </CTAButton>
         </Link>
       </VStack>
     </VStack>

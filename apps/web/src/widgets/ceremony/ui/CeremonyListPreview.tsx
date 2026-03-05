@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { Flex, Text, VStack, BellGrayColored } from '@causw/cds';
+import { Flex, Text, VStack, BellGrayColored, CTAButton } from '@causw/cds';
 
 import { useUpcomingCeremonies, getCeremonyIcon } from '@/entities/ceremony';
 
@@ -68,14 +68,10 @@ export function CeremonyListPreview() {
         <QueryErrorBoundary FallbackComponent={ErrorView}>
           <CeremonyListContent />
         </QueryErrorBoundary>
-
-        <Link
-          href={ROUTES.CEREMONY}
-          className="flex w-full items-center justify-center rounded-[0.75rem] bg-blue-100 px-2 py-[0.875rem]"
-        >
-          <Text typography="body-15-semibold" textColor="blue-700">
+        <Link href={ROUTES.CEREMONY} className="w-full">
+          <CTAButton fullWidth color="blue" className="bg-blue-100">
             {COPY.CEREMONY_VIEW_ALL}
-          </Text>
+          </CTAButton>
         </Link>
       </VStack>
     </VStack>
