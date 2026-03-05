@@ -10,6 +10,8 @@ import {
   AlumniContactsSortFilterSelect,
 } from '@/features/alumni-contacts';
 
+import { AlumniContactsAcademicFilterSheetModalProvider } from '@/entities/alumni-contacts';
+
 import { AlumniContactsAcademicFilterSheetModal } from '../alumni-contacts-academic-filter-sheet-modal';
 
 export const AlumniContactsFilterGroup = () => {
@@ -50,7 +52,9 @@ export const AlumniContactsFilterGroup = () => {
           </>
         </HStack>
       ) : (
-        <AlumniContactsAcademicFilterSheetModal />
+        <AlumniContactsAcademicFilterSheetModalProvider>
+          <AlumniContactsAcademicFilterSheetModal />
+        </AlumniContactsAcademicFilterSheetModalProvider>
       )}
     </HStack>
   );
