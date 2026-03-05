@@ -13,8 +13,8 @@ export function CalendarPage() {
   const router = useRouter();
 
   return (
-    <VStack className="max-w-laptop mx-auto w-full gap-2">
-      <ActionHeader title={COPY.BACK} className="pt-6">
+    <VStack className="max-w-laptop a mx-auto w-full gap-2">
+      <ActionHeader title={COPY.BACK} className="tablet:mt-6 tablet:mx-6 pt-4">
         <ActionHeader.BackButton onClick={() => router.back()}>
           {COPY.BACK}
         </ActionHeader.BackButton>
