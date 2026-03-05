@@ -1,5 +1,5 @@
 import { API } from '@/shared/api';
-import { formatToISOWithTime } from '@/shared/lib';
+import { withQuery } from '@/shared/utils';
 
 import {
   CalendarScheduleResponse,
@@ -7,22 +7,14 @@ import {
   CalendarScheduleParams,
 } from '../model';
 
+import { formatCalendarParams } from './formatter';
+
 export const getCalendarSchedules = async (
   params: CalendarScheduleParams,
 ): Promise<CalendarScheduleItem[]> => {
-  const query = new URLSearchParams();
+  const queryString = formatCalendarParams(params);
+  const url = withQuery('/api/v2/schedules', queryString);
 
-  if (params.from) {
-    query.append('from', formatToISOWithTime(params.from, 'start'));
-  }
-  if (params.to) {
-    query.append('to', formatToISOWithTime(params.to, 'end'));
-  }
-  params.types?.forEach((t) => query.append('types', t));
-
-  const response = await API.get<CalendarScheduleResponse>(
-    `/api/v2/schedules?${query.toString()}`,
-  );
-
+  const response = await API.get<CalendarScheduleResponse>(url);
   return response.data ?? [];
 };
