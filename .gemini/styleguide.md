@@ -15,7 +15,7 @@
 | Variables & Parameters & Functions | **camelCase**                           | `newUser`, `fetchData()`               |
 | Classes & Components               | **PascalCase**                          | `User`, `EmptyList.tsx`                |
 | Constants                          | **UPPER_SNAKE_CASE**                    | `const MAX_LIMIT = 100;`               |
-| File Names                         | **Component → Pascal / Folder → camel** | `src/components/EmptyList.tsx`         |
+| File Names                         | **Component → Pascal / Folder → kebab-case** | `src/components/EmptyList.tsx`         |
 | Type & Interface                   | **PascalCase (Interface-oriented)**     | `interface UserData { name: string; }` |
 
 ### **2. Function Writing Principles**
