@@ -11,8 +11,8 @@ import {
 } from '@causw/cds';
 
 import { SETTING_OVERVIEW_TITLES } from '../../config';
+import { SETTING_ACCOUNT_MENU_ITEMS } from '../../config';
 import type { SettingAccountMenuItem } from '../../model';
-import { SETTING_ACCOUNT_MENU_ITEMS } from '../../model';
 
 type SettingAccountSectionProps = {
   onNavigate: (href: string) => void;

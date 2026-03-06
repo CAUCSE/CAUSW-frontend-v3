@@ -12,7 +12,7 @@ import {
 
 import type { ActivityType } from '@/entities/setting';
 
-import { SETTING_ACTIVITY_ITEMS } from '../../model';
+import { SETTING_ACTIVITY_ITEMS } from '../../config';
 
 type SettingActivitySectionProps = {
   onNavigate: (href: string) => void;

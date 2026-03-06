@@ -10,8 +10,8 @@ import {
 } from '@causw/cds';
 
 import { SETTING_OVERVIEW_TITLES } from '../../config';
+import { SETTING_SUPPORT_MENU_ITEMS } from '../../config';
 import type { SettingSupportMenuItem } from '../../model';
-import { SETTING_SUPPORT_MENU_ITEMS } from '../../model';
 
 type SettingSupportSectionProps = {
   onNavigate: (href: string) => void;
