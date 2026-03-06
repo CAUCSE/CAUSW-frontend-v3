@@ -9,20 +9,16 @@ import {
   usePastCeremoniesQuery,
 } from '@/entities/ceremony';
 
-import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
+import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui/fallback';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
 
 import { CeremonySection } from './CeremonySection';
 
-interface SectionContentProps {
-  type: CeremonyFilterTypeApi;
-  onItemClick?: (id: string) => void;
-}
-
-const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
-  const { data, fetchNextPage, hasNextPage } = useOngoingCeremoniesQuery(type);
-
+const useFetchNextOnScroll = (
+  fetchNextPage: () => void,
+  hasNextPage: boolean,
+) => {
   const handleIntersect = useCallback<IntersectionObserverCallback>(
     (entries) => {
       if (entries[0]?.isIntersecting && hasNextPage) {
@@ -31,10 +27,17 @@ const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
     },
     [fetchNextPage, hasNextPage],
   );
+  return useInfiniteScroll({ intersectionCallback: handleIntersect });
+};
 
-  const { targetRef } = useInfiniteScroll({
-    intersectionCallback: handleIntersect,
-  });
+interface SectionContentProps {
+  type: CeremonyFilterTypeApi;
+  onItemClick?: (id: string) => void;
+}
+
+const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
+  const { data, fetchNextPage, hasNextPage } = useOngoingCeremoniesQuery(type);
+  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
 
   return (
     <>
@@ -51,19 +54,7 @@ const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
 
 const UpcomingContent = ({ type, onItemClick }: SectionContentProps) => {
   const { data, fetchNextPage, hasNextPage } = useUpcomingCeremoniesQuery(type);
-
-  const handleIntersect = useCallback<IntersectionObserverCallback>(
-    (entries) => {
-      if (entries[0]?.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage],
-  );
-
-  const { targetRef } = useInfiniteScroll({
-    intersectionCallback: handleIntersect,
-  });
+  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
 
   return (
     <>
@@ -80,19 +71,7 @@ const UpcomingContent = ({ type, onItemClick }: SectionContentProps) => {
 
 const PastContent = ({ type, onItemClick }: SectionContentProps) => {
   const { data, fetchNextPage, hasNextPage } = usePastCeremoniesQuery(type);
-
-  const handleIntersect = useCallback<IntersectionObserverCallback>(
-    (entries) => {
-      if (entries[0]?.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage],
-  );
-
-  const { targetRef } = useInfiniteScroll({
-    intersectionCallback: handleIntersect,
-  });
+  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
 
   if (data.items.length === 0) return null;
 
