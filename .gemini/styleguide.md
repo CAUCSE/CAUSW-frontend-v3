@@ -27,48 +27,41 @@
 
 ### **3. Project Architecture**
 
-- Use FSD (feature slice design) Architecture
-- App, Widget, Entity, Shared layers
-  - Without Feature layer, Entity layer role includes Feature layer
+- Use FSD (Feature-Sliced Design) Architecture
+- App, _Pages, Widget, Feature, Entity, Shared layers
 
 ```
 ** current project architecture **
 .
 └── src/
-    ├── app ( app + pages )/
-    │   ├── (causw): Pages after login (authentication & authorization applied)
-    │   └── auth: Pages before login (authentication & authorization not applied)
-    ├── entities: Business data, various logic, etc./
-    │   └── Each domain name ex) board, comment/
-    │       ├── **api: Asynchronous data fetching logic with axios, fetch/
-    │       │   ├── get.ts
-    │       │   ├── post.ts
-    │       │   ├── put.ts
-    │       │   └── delete.ts
-    │       ├── **ui: UI elements that go inside **board/
-    │       │   ├── boardContent.tsx
-    │       │   └── boardHeader.tsx
-    │       ├── **model: Custom hooks, global state, helper functions/
-    │       │   ├── hooks: Custom hooks & store inside widget
-    │       │   ├── store: Global state for board
-    │       │   └── utils
-    │       └── **config: Constants, types, query keys/
-    │           ├── types: Types inside widget
-    │           └── queryKey: Query keys
-    ├── widgets: Collection of each entity's UIs or simple UI without logic/
-    │   └── Each domain name ex: board/ui/boardList.tsx/
-    │       ├── ui: UI elements that go inside board/
-    │       │   └── borderList.tsx
-    │       └── config: Types, constants/
-    │           └── type
-    └── shared/
-        ├── @types: Service-wide types
-        ├── hooks: Service-wide custom hooks & store
-        ├── utils: Utility functions needed service-wide
-        └── config: Constants used service-wide (ex. axiosInstance, etc.) /
-            ├── axiosInstance.ts
-            └── Constants
+    ├── app: Next.js routing configuration (layout, page, api routes)/
+    │   ├── (causw): Routing for pages after login
+    │   └── auth: Routing for pages before login
+    ├── _pages: Actual page-level components composing widgets and features/
+    │   └── Each page name ex) home, auth, setting
+    ├── widgets: Complex composite components combining features and entities/
+    │   └── Each widget ex) board, navigation-layout/
+    │       ├── ui: Reusable composite UI components
+    │       └── config: Widget-level configurations
+    ├── features: User interactions and business actions/
+    │   └── Each feature name ex) auth, comment/
+    │       ├── ui: Interactive UI components (e.g., login buttons, editors)
+    │       ├── model: Business logic for actions (hooks, handlers)
+    │       └── api: Action-specific API calls
+    ├── entities: Business data, domain logic, and pure representation UI/
+    │   └── Each domain name ex) board, user/
+    │       ├── api: Asynchronous data fetching logic
+    │       ├── model: Custom hooks, global state for the domain
+    │       ├── ui: Pure UI elements representing the domain entity
+    │       └── config: Constants, types, query keys
+    └── shared: Core reusable elements service-wide/
+        ├── ui: UI design system components
+        ├── lib: Third-party library integrations
+        ├── hooks: Service-wide hooks
+        ├── utils: Service-wide utilities
+        └── config: Global configurations
 ```
+
 
 ### **4. Import Convention**
 
