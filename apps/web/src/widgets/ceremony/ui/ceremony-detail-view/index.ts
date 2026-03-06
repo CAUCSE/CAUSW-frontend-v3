@@ -1,0 +1,1 @@
+export { CeremonyDetailView } from './CeremonyDetailView';

@@ -1,0 +1,1 @@
+export { CeremonyDetailPage } from './CeremonyDetailPage';

@@ -44,6 +44,9 @@ export interface CeremonyListData {
 /** 경조사 필터 탭 타입 */
 export type CeremonyFilterType = '전체' | '경사' | '조사';
 
+/** 내 경조사 상태 필터 */
+export type MyCeremonyStateFilter = '등록 완료' | '등록 거부' | '등록 대기중';
+
 export type CeremonyTypeApi = 'CELEBRATION' | 'CONDOLENCE';
 
 export type CeremonyCategoryApi = 'ETC' | string;
