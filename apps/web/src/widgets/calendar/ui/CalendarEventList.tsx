@@ -132,10 +132,12 @@ function ScheduleSection({
             />
           ))
         ) : (
-          <NoDataView
-            message={emptyMessage}
-            icon={<CalendarGrayColored size={48} />}
-          />
+          <NoDataView>
+            <NoDataView.Icon>
+              <CalendarGrayColored size={48} />
+            </NoDataView.Icon>
+            <NoDataView.Message>{emptyMessage}</NoDataView.Message>
+          </NoDataView>
         )}
       </VStack>
     </VStack>

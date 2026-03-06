@@ -70,6 +70,32 @@ export function CeremonyListPreview() {
         </QueryErrorBoundary>
         <Link href={ROUTES.CEREMONY} className="w-full">
           <CTAButton fullWidth color="blue" className="bg-blue-100">
+        {isEmpty ? (
+          <NoDataView>
+            <NoDataView.Icon>
+              <BellGrayColored size={52} />
+            </NoDataView.Icon>
+            <NoDataView.Message>{COPY.EMPTY_CEREMONY}</NoDataView.Message>
+          </NoDataView>
+        ) : (
+          <VStack className="w-full gap-5">
+            {CEREMONY_ITEMS.slice(0, 6).map((item) => (
+              <EventCard
+                key={item.id}
+                link={item.link}
+                title={item.title}
+                icon={<HeartColored size={24} />}
+                descriptions={[item.date, item.type]}
+              />
+            ))}
+          </VStack>
+        )}
+
+        <Link
+          href={ROUTES.CEREMONY}
+          className="flex w-full items-center justify-center rounded-[0.75rem] bg-blue-100 px-2 py-[0.875rem]"
+        >
+          <Text typography="body-15-semibold" textColor="blue-700">
             {COPY.CEREMONY_VIEW_ALL}
           </CTAButton>
         </Link>

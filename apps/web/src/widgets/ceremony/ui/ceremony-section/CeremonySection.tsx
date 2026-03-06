@@ -21,11 +21,12 @@ export const CeremonySection = ({
   <div className="flex flex-col gap-2 px-5">
     <h3 className="typo-subtitle-16-bold text-gray-700">{title}</h3>
     {items.length === 0 ? (
-      <NoDataView
-        message={emptyMessage}
-        icon={<BellGrayColored size={52} />}
-        className="rounded-[0.75rem] bg-white px-0 py-[3.5rem]"
-      />
+      <NoDataView className="rounded-3 bg-white px-0 py-13.5">
+        <NoDataView.Icon>
+          <BellGrayColored size={52} />
+        </NoDataView.Icon>
+        <NoDataView.Message>{emptyMessage}</NoDataView.Message>
+      </NoDataView>
     ) : (
       items.map((item) => (
         <CeremonyListItem
