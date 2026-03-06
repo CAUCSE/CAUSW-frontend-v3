@@ -23,8 +23,8 @@ export interface CeremonyItem {
   category: CeremonyCategory;
   startDate: string;
   endDate: string;
-  startTime: string;
-  endTime: string;
+  startTime: string | null;
+  endTime: string | null;
   state: CeremonyState;
 }
 
