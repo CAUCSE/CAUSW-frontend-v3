@@ -1,6 +1,9 @@
 import { API } from '@/shared/api';
 
-import { NotificationLatestResponse, NotificationUnreadCntResponse } from '..';
+import {
+  NotificationLatestResponse,
+  NotificationUnreadCntResponse,
+} from '../model/types';
 
 export const getNotificationUnreadCnt =
   async (): Promise<NotificationUnreadCntResponse> => {
