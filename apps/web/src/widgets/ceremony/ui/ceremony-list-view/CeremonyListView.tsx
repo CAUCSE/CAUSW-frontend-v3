@@ -1,5 +1,7 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
 import { Tab } from '@causw/cds';
 
 import type {
@@ -10,12 +12,33 @@ import type {
 } from '@/entities/ceremony';
 import { CeremonyFilterChips, FILTER_TYPE_API_MAP } from '@/entities/ceremony';
 
-import {
-  OngoingCeremonySection,
-  UpcomingCeremonySection,
-  PastCeremonySection,
-} from '../ceremony-section';
+import { SuspenseView } from '@/shared/ui/fallback';
+
 import { MyCeremonyListView } from '../my-ceremony-list-view';
+
+const OngoingCeremonySection = dynamic(
+  () =>
+    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
+      default: mod.OngoingCeremonySection,
+    })),
+  { ssr: false, loading: () => <SuspenseView /> },
+);
+
+const UpcomingCeremonySection = dynamic(
+  () =>
+    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
+      default: mod.UpcomingCeremonySection,
+    })),
+  { ssr: false, loading: () => <SuspenseView /> },
+);
+
+const PastCeremonySection = dynamic(
+  () =>
+    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
+      default: mod.PastCeremonySection,
+    })),
+  { ssr: false, loading: () => <SuspenseView /> },
+);
 
 interface CeremonyListViewProps {
   filter: CeremonyFilterType;
