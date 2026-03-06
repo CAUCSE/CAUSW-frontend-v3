@@ -100,5 +100,5 @@ import { Component } from '../ui';
 
 ### **5. Design System**
 
-- Use Shadcn UI components whenever possible if they are supported.
-- Use utility functions like cn, clsx for conditional styling with tailwindcss.
+- Use @causw/cds components whenever possible.
+- Use utility functions like mergeStyles, cn, clsx for conditional styling with tailwindcss.
