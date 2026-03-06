@@ -12,10 +12,20 @@ import {
 import { ceremonyQueryKey } from '../../config';
 import type { CeremonyFilterTypeApi, CeremonyPageResponse } from '../types';
 
-const selectCeremonyPages = (data: { pages: CeremonyPageResponse[] }) => ({
-  items: data.pages.flatMap((page) => page.content),
-  hasNext: data.pages[data.pages.length - 1]?.hasNext ?? false,
-});
+const selectCeremonyPages = (data: { pages: CeremonyPageResponse[] }) => {
+  const allItems = data.pages.flatMap((page) => page.content);
+  const seen = new Set<string>();
+  const items = allItems.filter((item) => {
+    if (seen.has(item.id)) return false;
+    seen.add(item.id);
+    return true;
+  });
+
+  return {
+    items,
+    hasNext: data.pages[data.pages.length - 1]?.hasNext ?? false,
+  };
+};
 
 const getNextPage = (lastPage: CeremonyPageResponse) =>
   lastPage.hasNext ? lastPage.currentPage + 1 : undefined;
