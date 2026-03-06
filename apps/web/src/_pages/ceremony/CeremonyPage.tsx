@@ -8,19 +8,13 @@ import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
 import { CeremonyListView } from '@/widgets/ceremony';
 
-import {
-  CeremonyCreateDialog,
-  MOCK_ONGOING,
-  MOCK_UPCOMING,
-  MOCK_ENDED,
-  MOCK_MY_CEREMONIES,
-} from '@/features/ceremony';
+import { CeremonyCreateDialog, MOCK_MY_CEREMONIES } from '@/features/ceremony';
 
 import type {
   CeremonyFilterType,
   MyCeremonyStateFilter,
 } from '@/entities/ceremony';
-import { filterItems, filterByState } from '@/entities/ceremony';
+import { filterByState } from '@/entities/ceremony';
 
 import { ActionHeader } from '@/shared/ui';
 
@@ -31,9 +25,6 @@ export const CeremonyPage = () => {
     useState<MyCeremonyStateFilter>('등록 완료');
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
-  const ongoingItems = filterItems(MOCK_ONGOING, filter);
-  const upcomingItems = filterItems(MOCK_UPCOMING, filter);
-  const endedItems = filterItems(MOCK_ENDED, filter);
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
   const handleItemClick = (id: string) => {
@@ -50,9 +41,6 @@ export const CeremonyPage = () => {
       <CeremonyListView
         filter={filter}
         onFilterChange={setFilter}
-        ongoingItems={ongoingItems}
-        upcomingItems={upcomingItems}
-        endedItems={endedItems}
         myStateFilter={myStateFilter}
         onMyStateFilterChange={setMyStateFilter}
         myItems={myItems}

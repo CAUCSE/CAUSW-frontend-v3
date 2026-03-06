@@ -9,7 +9,8 @@ interface CeremonyListItemProps {
   onClick?: () => void;
 }
 
-const isAllDay = (time: string) => time === '00:00:00' || time === '23:59:00';
+const ALL_DAY_TIMES = ['00:00:00', '23:59:00', '00:00', '23:59'];
+const isAllDay = (time: string) => ALL_DAY_TIMES.includes(time);
 
 const formatDateRange = (
   startDate: string,
