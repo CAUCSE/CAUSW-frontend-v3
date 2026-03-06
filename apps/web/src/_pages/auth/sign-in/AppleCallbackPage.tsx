@@ -32,8 +32,8 @@ export const AppleCallbackPage = () => {
     onSuccess: async (appleCode) => {
       const toastId = String(toast.loading('Apple 로그인 중...'));
       try {
-        const response = await loginWithAppleCode({ code: appleCode });
-        console.info('[Apple Login] atk:', response.accessToken);
+        console.info('[Apple Login] code:', appleCode);
+        await loginWithAppleCode({ code: appleCode });
         toast.dismiss(toastId);
         toast.success('로그인되었습니다.');
         router.replace('/home');
