@@ -12,10 +12,4 @@ export {
   CATEGORY_API_MAP,
   RELATIONSHIP_API_MAP,
 } from './constants';
-export {
-  MOCK_ONGOING,
-  MOCK_UPCOMING,
-  MOCK_ENDED,
-  MOCK_MY_CEREMONIES,
-  MOCK_CEREMONY_DETAIL,
-} from './mockData';
+export { MOCK_MY_CEREMONIES, MOCK_CEREMONY_DETAIL } from './mockData';
