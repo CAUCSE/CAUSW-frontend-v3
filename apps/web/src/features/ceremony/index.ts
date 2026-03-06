@@ -3,7 +3,11 @@
 
 export { createCeremony } from './api';
 export { CeremonyCreateDialog } from './ui';
-export { toCreateCeremonyDto, useImageUpload } from './model';
+export {
+  toCreateCeremonyDto,
+  useCreateCeremonyMutation,
+  useImageUpload,
+} from './model';
 export {
   MOCK_ONGOING,
   MOCK_UPCOMING,

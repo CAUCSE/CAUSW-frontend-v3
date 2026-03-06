@@ -33,5 +33,10 @@ export type {
   CeremonyDetailResponse,
   MyCeremonyStateFilter,
 } from './model';
+export {
+  useOngoingCeremoniesQuery,
+  useUpcomingCeremoniesQuery,
+  usePastCeremoniesQuery,
+} from './model';
 export { MY_CEREMONY_STATE_MAP, FILTER_TYPE_API_MAP } from './config';
 export { ceremonyQueryKey } from './config';

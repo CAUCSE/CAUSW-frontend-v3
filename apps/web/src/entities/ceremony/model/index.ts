@@ -17,3 +17,8 @@ export type {
   CeremonyDetailResponse,
   MyCeremonyStateFilter,
 } from './types';
+export {
+  useOngoingCeremoniesQuery,
+  useUpcomingCeremoniesQuery,
+  usePastCeremoniesQuery,
+} from './queries';
