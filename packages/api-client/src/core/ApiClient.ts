@@ -35,6 +35,10 @@ export class ApiClient {
       return body;
     }
 
+    if (body instanceof FormData) {
+      return body;
+    }
+
     // application/json일 때만 stringify
     if (contentType === 'application/json') {
       return JSON.stringify(body);
@@ -51,15 +55,21 @@ export class ApiClient {
     // Content-Type: 사용자가 설정한 값 또는 기본값 (application/json)
     const contentType = options.headers?.['Content-Type'] ?? 'application/json';
 
+    const requestHeaders: Record<string, string> = {
+      'Content-Type': contentType,
+      ...options.headers,
+    };
+
+    if (options.body instanceof FormData) {
+      delete requestHeaders['Content-Type'];
+    }
+
     let config: InternalRequestConfig = {
       url,
       options: {
         credentials: this.credentials,
         ...options,
-        headers: {
-          'Content-Type': contentType,
-          ...options.headers,
-        },
+        headers: requestHeaders,
       },
     };
 

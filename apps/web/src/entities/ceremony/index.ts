@@ -1,6 +1,11 @@
 // @/entities/ceremony
 // 경조사 관련 엔티티
 
+export {
+  getOngoingCeremonies,
+  getUpcomingCeremonies,
+  getPastCeremonies,
+} from './api';
 export { getCeremonyIcon } from './config';
 export { filterItems, filterByState } from './lib';
 export {
