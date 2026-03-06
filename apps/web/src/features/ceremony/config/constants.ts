@@ -1,4 +1,9 @@
-import type { CeremonyType } from '@/entities/ceremony';
+import type {
+  CeremonyType,
+  CeremonyTypeApi,
+  CeremonyCategoryApi,
+  RelationType,
+} from '@/entities/ceremony';
 
 import type { CategoryOption } from './types';
 
@@ -57,3 +62,27 @@ export const ALUMNI_RELATIONS = [
   '아들',
   '딸',
 ] as const;
+
+/** 경조사 분류 API 매핑 */
+export const CEREMONY_TYPE_API_MAP: Record<CeremonyType, CeremonyTypeApi> = {
+  경사: 'CELEBRATION',
+  조사: 'CONDOLENCE',
+};
+
+/** 카테고리 API 매핑 */
+export const CATEGORY_API_MAP: Record<string, CeremonyCategoryApi> = {
+  결혼식: 'MARRIAGE',
+  돌잔치: 'FIRST_BIRTHDAY',
+  개업: 'OPENING',
+  생신잔치: 'BIRTHDAY',
+  장례식: 'FUNERAL',
+  사고: 'ACCIDENT',
+  투병: 'ILLNESS',
+};
+
+/** 관계 API 매핑 */
+export const RELATIONSHIP_API_MAP: Record<string, RelationType> = {
+  본인: 'ME',
+  가족: 'FAMILY',
+  '동문소식 대신 전달': 'INSTEAD',
+};

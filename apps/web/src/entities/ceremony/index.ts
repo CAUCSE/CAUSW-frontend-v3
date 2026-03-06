@@ -16,8 +16,9 @@ export type {
   CeremonyType,
   CeremonyCategory,
   CeremonyItem,
-  CeremonyListData,
+  CeremonyPageResponse,
   CeremonyFilterType,
+  CeremonyFilterTypeApi,
   CeremonyTypeApi,
   CeremonyCategoryApi,
   RelationType,
@@ -27,4 +28,5 @@ export type {
   CeremonyDetailResponse,
   MyCeremonyStateFilter,
 } from './model';
-export { MY_CEREMONY_STATE_MAP } from './config';
+export { MY_CEREMONY_STATE_MAP, FILTER_TYPE_API_MAP } from './config';
+export { ceremonyQueryKey } from './config';
