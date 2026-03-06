@@ -7,7 +7,12 @@ import { Dialog } from '@causw/cds';
 import { useBreakpoint } from '@/shared/hooks/useBreakpoint';
 import { ActionHeader } from '@/shared/ui';
 
-import { useCeremonyForm } from '../model';
+import {
+  useCeremonyForm,
+  useCreateCeremonyMutation,
+  useImageUpload,
+  toCreateCeremonyDto,
+} from '../model';
 
 import { AddressSection } from './AddressSection';
 import { AdmissionYearSection } from './AdmissionYearSection';
@@ -31,6 +36,8 @@ export const CeremonyCreateDialog = ({
 }: CeremonyCreateDialogProps) => {
   const { isMobileSize } = useBreakpoint();
   const form = useCeremonyForm();
+  const imageUpload = useImageUpload();
+  const mutation = useCreateCeremonyMutation();
 
   const handleCloseAttempt = () => {
     form.setShowCloseConfirm(true);
@@ -39,6 +46,7 @@ export const CeremonyCreateDialog = ({
   const handleConfirmClose = () => {
     form.setShowCloseConfirm(false);
     form.resetForm();
+    imageUpload.resetImageUpload();
     onOpenChange(false);
   };
 
@@ -49,6 +57,24 @@ export const CeremonyCreateDialog = ({
     }
     onOpenChange(nextOpen);
   };
+
+  const handleSubmit = () => {
+    const formValues = form.methods.getValues();
+    const dto = toCreateCeremonyDto(formValues);
+
+    mutation.mutate(
+      { dto, imageFiles: imageUpload.photoFiles },
+      {
+        onSuccess: () => {
+          form.resetForm();
+          imageUpload.resetImageUpload();
+          onOpenChange(false);
+        },
+      },
+    );
+  };
+
+  const canSubmit = form.isValid && !mutation.isPending;
 
   return (
     <FormProvider {...form.methods}>
@@ -68,8 +94,9 @@ export const CeremonyCreateDialog = ({
                 뒤로
               </ActionHeader.BackButton>
               <ActionHeader.ActionButton
-                disabled={!form.isValid}
-                className={form.isValid ? '' : '!text-gray-300'}
+                disabled={!canSubmit}
+                className={canSubmit ? '' : '!text-gray-300'}
+                onClick={handleSubmit}
               >
                 신청하기
               </ActionHeader.ActionButton>
@@ -84,33 +111,20 @@ export const CeremonyCreateDialog = ({
                 </div>
 
                 <div className="flex flex-col gap-10">
-                  {/* 분류 */}
                   <TypeSection onTypeChange={form.handleTypeChange} />
-
-                  {/* 상세 분류 */}
                   <CategorySection />
-
-                  {/* 관계 */}
                   <RelationshipSection
                     onRelationshipChange={form.handleRelationshipChange}
                   />
-
-                  {/* 경조사 기간 */}
                   <DateTimeSection />
-
-                  {/* 학번 설정 */}
                   <AdmissionYearSection />
-
-                  {/* 내용 (선택) */}
-                  <ContentSection />
-
-                  {/* 주소 (선택) */}
+                  <ContentSection
+                    imageUploadRef={imageUpload.imageUploadRef}
+                    handleSetPhotoFiles={imageUpload.handleSetPhotoFiles}
+                    photoResetTrigger={imageUpload.photoResetTrigger}
+                  />
                   <AddressSection />
-
-                  {/* 문의 */}
                   <ContactSection />
-
-                  {/* 관련 링크 */}
                   <LinkSection />
                 </div>
               </div>
