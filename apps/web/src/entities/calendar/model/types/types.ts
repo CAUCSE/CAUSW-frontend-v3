@@ -35,4 +35,4 @@ export const CALENDAR_EVENTS_TYPE_MAP: Record<CalendarScheduleType, string> = {
   // COMPETITION: '대회/공모전',
   HOLIDAY: '공휴일',
 };
-export type CalendarEventype = 'holiday' | 'event' | 'important';
+export type CalendarEventType = 'holiday' | 'event' | 'important';
