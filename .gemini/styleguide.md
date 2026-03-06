@@ -102,3 +102,32 @@ import { Component } from '../ui';
 
 - Use @causw/cds components whenever possible.
 - Use utility functions like mergeStyles, cn, clsx for conditional styling with tailwindcss.
+
+### **6. Declarative Programming & Async State Handling**
+
+- **Declarative UI**: Utilize declarative programming patterns rather than imperative logic (e.g., `useEffect` for data fetching is discouraged). Let the structure describe *what* should be rendered.
+- **Data Fetching**: Use `@tanstack/react-query` with `useSuspenseQuery` for data fetching whenever possible to leverage React Suspense boundaries.
+- **Suspense & Error Boundary**:
+  - Handle loading states declaratively using `<Suspense>`.
+  - Handle error states declaratively using `QueryErrorBoundary` or `<ErrorBoundary>`.
+  - Prefer combining `QueryErrorBoundary` and `Suspense` at appropriate boundaries (e.g. Layout, Widget, Page) for optimal UX.
+
+**good👍**
+
+```tsx
+import { Suspense } from 'react';
+
+import { QueryErrorBoundary, LoadingSpinner } from '@/shared/ui';
+// Async component using useSuspenseQuery
+import { AsyncComponent } from './AsyncComponent'; 
+
+export const Page = () => {
+  return (
+    <QueryErrorBoundary fallbackMessage="데이터를 불러오는데 실패했습니다.">
+      <Suspense fallback={<SuspenseView />}>
+        <AsyncComponent />
+      </Suspense>
+    </QueryErrorBoundary>
+  );
+};
+```
