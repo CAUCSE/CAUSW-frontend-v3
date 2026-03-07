@@ -2,7 +2,7 @@ import { tv, VariantProps } from 'tailwind-variants';
 
 export const actionHeader = tv({
   slots: {
-    root: 'sticky top-0 z-50 flex w-full items-center justify-between bg-white px-5 py-4 transition-colors duration-200',
+    root: 'sticky top-0 z-50 flex w-full items-center justify-between px-5 py-4 backdrop-blur-md backdrop-saturate-150 transition-colors duration-200',
     backButton:
       'group flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
     backButtonIcon: 'transition-colors',
@@ -22,13 +22,13 @@ export const actionHeader = tv({
     },
     background: {
       transparent: {
-        root: 'bg-transparent',
+        root: 'bg-white/40',
       },
       white: {
-        root: 'bg-white',
+        root: 'bg-white/80',
       },
       gray: {
-        root: 'bg-gray-100',
+        root: 'bg-gray-100/80',
       },
     },
     buttonColor: {

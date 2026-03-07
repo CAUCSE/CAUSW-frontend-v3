@@ -4,11 +4,10 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
-import {
-  GlobalRoutingProvider,
-  QueryProviderWithDevtools,
-  Toaster,
-} from '@/shared/ui';
+import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
+
+import { MSWComponent } from './_mock';
+import { GlobalRoutingProvider } from './_provider';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',
@@ -26,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`antialiased`}>
-        <QueryProviderWithDevtools>
-          <Toaster />
-          <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
-        </QueryProviderWithDevtools>
+        <MSWComponent>
+          <QueryProviderWithDevtools>
+            <Toaster />
+            <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+          </QueryProviderWithDevtools>
+        </MSWComponent>
       </body>
     </html>
   );

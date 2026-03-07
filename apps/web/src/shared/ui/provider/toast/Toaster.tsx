@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import {
   ErrorColored,
   LoadingColored,
@@ -9,7 +11,7 @@ import {
   ToastViewport,
 } from '@causw/cds';
 
-import { toast, ToastType, useToastStore } from '@/shared/model/toast';
+import { toast, ToastType, useToastStore } from '@/shared/model';
 
 const Icons = {
   success: () => <SuccessColored size={20} />,
@@ -27,6 +29,29 @@ const toastIconMap: Record<ToastType, React.ReactNode> = {
 export const Toaster = () => {
   const toasts = useToastStore();
 
+  useEffect(() => {
+    const now = Date.now();
+
+    const timers = toasts.map((t) => {
+      if (t.duration === Infinity) return;
+
+      const remaining = t.duration - (now - t.createdAt);
+
+      if (remaining <= 0) {
+        toast.dismiss(t.id);
+        return;
+      }
+
+      return setTimeout(() => {
+        toast.dismiss(t.id);
+      }, remaining);
+    });
+
+    return () => {
+      timers.forEach((timer) => timer && clearTimeout(timer));
+    };
+  }, [toasts]);
+
   return (
     <ToastProvider>
       {toasts.map((t) => {
@@ -38,7 +63,7 @@ export const Toaster = () => {
             message={t.message}
             icon={iconToRender}
             variant="default"
-            duration={t.duration ?? 3000}
+            duration={Infinity}
             onOpenChange={(open) => {
               if (!open) toast.dismiss(t.id);
             }}
