@@ -11,7 +11,7 @@ export const useUpcomingCeremonies = (
   pageNum: number = 0,
 ) => {
   return useQuery({
-    queryKey: ceremonyQueryKey.upcoming(type),
+    queryKey: ceremonyQueryKey.upcomingPreview(type),
     queryFn: () => getUpcomingCeremonies(type, pageNum),
     staleTime: QUERY_STALE_TIME.DEFAULT,
     throwOnError: true,
