@@ -10,6 +10,7 @@ export interface Post {
   images?: string[];
   likeCount: number;
   isLiked: boolean;
+  isHtml?: boolean;
   vote?: {
     options: {
       value: string;

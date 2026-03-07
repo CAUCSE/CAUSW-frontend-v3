@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { Text, VStack } from '@causw/cds';
+
+import { sanitizeHtmlClient } from '@/shared/lib';
 
 import { PostImage } from './PostImage';
 
@@ -13,6 +15,7 @@ interface PostBodyProps {
   maxLines?: number;
   onExpand?: () => void;
   showExpandButton?: boolean;
+  isHtml?: boolean;
 }
 
 /**
@@ -39,9 +42,20 @@ export const PostBody = ({
   maxLines = 12,
   onExpand,
   showExpandButton = false,
+  isHtml = false,
 }: PostBodyProps) => {
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const textRef = useRef<HTMLElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
+
+  const sanitizedHtml = isHtml ? sanitizeHtmlClient(content) : '';
+  const collapseStyles = isCollapsed
+    ? {
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical' as const,
+        WebkitLineClamp: maxLines,
+        overflow: 'hidden',
+      }
+    : undefined;
 
   useEffect(() => {
     const el = textRef.current;
@@ -56,25 +70,28 @@ export const PostBody = ({
   return (
     <VStack gap="md">
       <VStack gap="sm" align="start">
-        <Text
-          ref={textRef}
-          as="p"
-          typography="body-16-regular"
-          textColor="gray-800"
-          className="whitespace-pre-wrap"
-          style={
-            isCollapsed
-              ? {
-                  display: '-webkit-box',
-                  WebkitBoxOrient: 'vertical',
-                  WebkitLineClamp: maxLines,
-                  overflow: 'hidden',
-                }
-              : undefined
-          }
-        >
-          {content}
-        </Text>
+        {isHtml ? (
+          <Text
+            ref={textRef as RefObject<HTMLDivElement>}
+            as="div"
+            typography="body-16-regular"
+            textColor="gray-800"
+            dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+            suppressHydrationWarning
+            style={collapseStyles}
+          />
+        ) : (
+          <Text
+            ref={textRef as RefObject<HTMLParagraphElement>}
+            as="p"
+            typography="body-16-regular"
+            textColor="gray-800"
+            className="whitespace-pre-wrap"
+            style={collapseStyles}
+          >
+            {content}
+          </Text>
+        )}
 
         {showExpandButton && isCollapsed && isOverflowing && (
           <button onClick={onExpand} className="cursor-pointer">

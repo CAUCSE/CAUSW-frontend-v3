@@ -49,7 +49,11 @@ export const PostContent = ({ postId }: PostContentProps) => {
           isMine={false}
           onAction={handleMenuAction}
         />
-        <PostBody content={MOCK_POST.content} images={MOCK_POST.images} />
+        <PostBody
+          content={MOCK_POST.content}
+          images={MOCK_POST.images}
+          isHtml={MOCK_POST.isHtml}
+        />
       </VStack>
 
       {MOCK_POST.vote && (
