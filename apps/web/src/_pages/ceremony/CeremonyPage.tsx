@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
@@ -19,11 +19,23 @@ import { filterByState } from '@/entities/ceremony';
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyPage = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
   const [filter, setFilter] = useState<CeremonyFilterType>('전체');
+  const [isCreateOpen, setIsCreateOpen] = useState(
+    () => searchParams.get('create') === 'true',
+  );
   const [myStateFilter, setMyStateFilter] =
     useState<MyCeremonyStateFilter>('등록 완료');
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsCreateOpen(open);
+
+    if (!open && searchParams.get('create') === 'true') {
+      router.replace(pathname);
+    }
+  };
 
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
@@ -61,7 +73,7 @@ export const CeremonyPage = () => {
 
       <CeremonyCreateDialog
         open={isCreateOpen}
-        onOpenChange={setIsCreateOpen}
+        onOpenChange={handleOpenChange}
       />
     </div>
   );

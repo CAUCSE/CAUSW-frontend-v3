@@ -14,18 +14,16 @@ export const setRequestInterceptors = (apiClient: BaseApiClient) => {
     const accessToken = await TokenManager.getAccessToken();
 
     const isPublic = isPublicEndpoint(config.url, config.options.method);
-
-    if (!refreshToken && !accessToken && !isPublic) {
+    if (isPublic) {
+      return config;
+    } else if (!refreshToken && !accessToken) {
       const newError = new AuthError(
         'token-expired',
         '토큰이 만료되었습니다. 다시 로그인해주세요.',
       );
       useAuthStore.getState().setAuthError(newError);
       throw newError;
-    }
-
-    // 토큰 주입
-    if (accessToken) {
+    } else {
       headers.Authorization = `Bearer ${accessToken}`;
     }
 

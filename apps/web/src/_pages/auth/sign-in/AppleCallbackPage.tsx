@@ -32,6 +32,7 @@ export const AppleCallbackPage = () => {
     onSuccess: async (appleCode) => {
       const toastId = String(toast.loading('Apple 로그인 중...'));
       try {
+        console.info('[Apple Login] code:', appleCode);
         await loginWithAppleCode({ code: appleCode });
         toast.dismiss(toastId);
         toast.success('로그인되었습니다.');

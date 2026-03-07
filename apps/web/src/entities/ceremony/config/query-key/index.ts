@@ -1,1 +1,1 @@
-export { ceremonyQueryKey } from './ceremonyQueryKey';
+export * from './ceremonyQueryKey';

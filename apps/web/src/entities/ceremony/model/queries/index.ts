@@ -1,5 +1,2 @@
-export {
-  useOngoingCeremoniesQuery,
-  useUpcomingCeremoniesQuery,
-  usePastCeremoniesQuery,
-} from './useCeremonyListQueries';
+export * from './useCeremonyListQueries';
+export * from './useUpcomingCeremonies';
