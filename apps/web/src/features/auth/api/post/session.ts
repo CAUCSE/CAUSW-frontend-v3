@@ -7,10 +7,13 @@ import type {
   SignoutRequestDto,
   KakaoLoginRequestDto,
   KakaoLoginResponseDto,
+  KakaoNativeLoginRequestDto,
   AppleLoginRequestDto,
   AppleLoginResponseDto,
+  AppleNativeLoginRequestDto,
   GoogleLoginRequestDto,
   GoogleLoginResponseDto,
+  GoogleNativeLoginRequestDto,
 } from '@/entities/auth';
 
 import { API } from '@/shared/api';
@@ -51,6 +54,27 @@ export const kakaoLogin = async (
 };
 
 /**
+ * 모바일 Native SDK에서 받은 카카오 액세스 토큰을 서버로 전달해 로그인 처리.
+ *
+ * TODO: 실제 API 엔드포인트로 교체 필요
+ * return API.post<KakaoLoginResponseDto>(`${URL_PREFIX}/oauth/kakao/native`, data);
+ */
+export const kakaoNativeLogin = async (
+  data: KakaoNativeLoginRequestDto,
+): Promise<KakaoLoginResponseDto> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        accessToken: `mock_access_token_for_native_${data.accessToken.slice(0, 8)}`,
+        name: '테스트 유저',
+        email: 'test@causw.ac.kr',
+        profileImgUrl: '',
+      });
+    }, 1500);
+  });
+};
+
+/**
  * Apple OAuth 인가 코드를 서버로 전달해 로그인 처리.
  *
  * TODO: 실제 API 엔드포인트로 교체 필요
@@ -72,6 +96,27 @@ export const appleLogin = async (
 };
 
 /**
+ * 모바일 Native SDK에서 받은 Apple 액세스 토큰을 서버로 전달해 로그인 처리.
+ *
+ * TODO: 실제 API 엔드포인트로 교체 필요
+ * return API.post<AppleLoginResponseDto>(`${URL_PREFIX}/oauth/apple/native`, data);
+ */
+export const appleNativeLogin = async (
+  data: AppleNativeLoginRequestDto,
+): Promise<AppleLoginResponseDto> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        accessToken: `mock_access_token_for_native_${data.accessToken.slice(0, 8)}`,
+        name: '테스트 유저',
+        email: 'test@causw.ac.kr',
+        profileImgUrl: '',
+      });
+    }, 1500);
+  });
+};
+
+/**
  * Google OAuth 인가 코드를 서버로 전달해 로그인 처리.
  *
  * TODO: 실제 API 엔드포인트로 교체 필요
@@ -84,6 +129,27 @@ export const googleLogin = async (
     setTimeout(() => {
       resolve({
         accessToken: `mock_access_token_for_code_${data.code.slice(0, 8)}`,
+        name: '테스트 유저',
+        email: 'test@causw.ac.kr',
+        profileImgUrl: '',
+      });
+    }, 1500);
+  });
+};
+
+/**
+ * 모바일 Native SDK에서 받은 Google 액세스 토큰을 서버로 전달해 로그인 처리.
+ *
+ * TODO: 실제 API 엔드포인트로 교체 필요
+ * return API.post<GoogleLoginResponseDto>(`${URL_PREFIX}/oauth/google/native`, data);
+ */
+export const googleNativeLogin = async (
+  data: GoogleNativeLoginRequestDto,
+): Promise<GoogleLoginResponseDto> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        accessToken: `mock_access_token_for_native_${data.accessToken.slice(0, 8)}`,
         name: '테스트 유저',
         email: 'test@causw.ac.kr',
         profileImgUrl: '',

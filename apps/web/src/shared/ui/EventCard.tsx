@@ -16,7 +16,7 @@ interface EventCardProps {
   descriptions: ReactNode[];
   icon: ReactNode;
   iconBgClass?: string;
-  link?: string;
+  link: string | null;
   className?: string;
   rightElement?: ReactNode;
 }
@@ -79,7 +79,7 @@ export function EventCard({
       </div>
     </HStack>
   );
-  //TODO : link가 어떻게 올지 모르곘음 api후에 수정
+
   if (!link) return CardContent;
 
   return (

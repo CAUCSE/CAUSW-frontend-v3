@@ -58,7 +58,10 @@ export const MyActivityFeed = ({
 
         {mode === 'empty' || posts.length === 0 ? (
           <section className="px-4 py-30 md:py-35">
-            <NoDataView message={emptyMessage} />
+            <NoDataView>
+              <NoDataView.Icon />
+              <NoDataView.Message>{emptyMessage}</NoDataView.Message>
+            </NoDataView>
           </section>
         ) : (
           <section className="px-4 py-2">

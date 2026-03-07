@@ -1,2 +1,2 @@
-export * from './NotificationHeader';
+export * from './NotificationMobileHeader';
 export * from './NotificationPopupCard';
