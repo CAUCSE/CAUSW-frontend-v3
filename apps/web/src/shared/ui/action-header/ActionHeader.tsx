@@ -2,6 +2,8 @@
 
 import { ComponentProps } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { ChevronLeft, Primitive, splitVariantProps } from '@causw/cds';
 
 import {
@@ -15,7 +17,14 @@ interface BackButtonProps
   children?: React.ReactNode;
 }
 
-const BackButton = ({ children, className, ...props }: BackButtonProps) => {
+const BackButton = ({
+  children,
+  className,
+  onClick,
+  type,
+  ...props
+}: BackButtonProps) => {
+  const router = useRouter();
   const [variantProps, rest] = splitVariantProps(
     props,
     actionHeaderVariantKeys,
@@ -24,7 +33,19 @@ const BackButton = ({ children, className, ...props }: BackButtonProps) => {
     actionHeader(variantProps);
 
   return (
-    <Primitive.button className={backButton({ className })} {...rest}>
+    <Primitive.button
+      type={type ?? 'button'}
+      className={backButton({ className })}
+      onClick={(event) => {
+        if (onClick) {
+          onClick(event);
+          return;
+        }
+
+        router.back();
+      }}
+      {...rest}
+    >
       <ChevronLeft size={18} className={backButtonIcon()} />
       {children && <span className={backButtonText()}>{children}</span>}
     </Primitive.button>

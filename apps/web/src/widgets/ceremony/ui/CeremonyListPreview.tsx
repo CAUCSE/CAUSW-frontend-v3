@@ -23,10 +23,12 @@ function CeremonyListContent() {
 
   if (isEmpty) {
     return (
-      <NoDataView
-        message={COPY.EMPTY_CEREMONY}
-        icon={<BellGrayColored size={52} />}
-      />
+      <NoDataView>
+        <NoDataView.Icon>
+          <BellGrayColored size={52} />
+        </NoDataView.Icon>
+        <NoDataView.Message>{COPY.EMPTY_CEREMONY}</NoDataView.Message>
+      </NoDataView>
     );
   }
 
@@ -68,8 +70,9 @@ export function CeremonyListPreview() {
         <QueryErrorBoundary FallbackComponent={ErrorView}>
           <CeremonyListContent />
         </QueryErrorBoundary>
-        <Link href={ROUTES.CEREMONY} className="w-full">
-          <CTAButton fullWidth color="blue" className="bg-blue-100">
+
+        <Link href={ROUTES.CEREMONY}>
+          <CTAButton fullWidth color="blue">
             {COPY.CEREMONY_VIEW_ALL}
           </CTAButton>
         </Link>

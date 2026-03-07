@@ -28,11 +28,12 @@ export const MyCeremonyListView = ({
 
     <div className="flex flex-col gap-2 px-5">
       {items.length === 0 ? (
-        <NoDataView
-          message="해당하는 경조사가 없어요"
-          icon={<BellGrayColored size={52} />}
-          className="rounded-[0.75rem] bg-white px-0 py-[3.5rem]"
-        />
+        <NoDataView className="rounded-3 bg-white px-0 py-13.5">
+          <NoDataView.Icon>
+            <BellGrayColored size={52} />
+          </NoDataView.Icon>
+          <NoDataView.Message>해당하는 경조사가 없어요</NoDataView.Message>
+        </NoDataView>
       ) : (
         items.map((item) => (
           <CeremonyListItem

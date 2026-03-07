@@ -76,10 +76,12 @@ export function CalendarEventListPreview() {
               );
             })
           ) : (
-            <NoDataView
-              message={COPY.EMPTY_SCHEDULE}
-              icon={<CalendarGrayColored size={48} />}
-            />
+            <NoDataView>
+              <NoDataView.Icon>
+                <CalendarGrayColored size={48} />
+              </NoDataView.Icon>
+              <NoDataView.Message>{COPY.EMPTY_SCHEDULE}</NoDataView.Message>
+            </NoDataView>
           )}
         </VStack>
         <Link href={ROUTES.SCHEDULE} className="w-full">
