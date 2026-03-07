@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, Flex, Text } from '@causw/cds';
+import { ChevronRight, Flex, Text, VStack } from '@causw/cds';
 
 interface PrivacyActionSectionProps {
   onLogout: () => void;
@@ -11,7 +11,7 @@ export const PrivacyActionSection = ({
   onLogout,
   onWithdraw,
 }: PrivacyActionSectionProps) => (
-  <div className="flex w-full flex-col gap-2 rounded-2xl bg-white p-4">
+  <VStack className="gap-2 rounded-2xl bg-white p-4">
     <button
       type="button"
       onClick={onLogout}
@@ -37,5 +37,5 @@ export const PrivacyActionSection = ({
         <ChevronRight size={18} className="text-gray-300" />
       </Flex>
     </button>
-  </div>
+  </VStack>
 );

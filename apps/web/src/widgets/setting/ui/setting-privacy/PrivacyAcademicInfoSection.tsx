@@ -11,7 +11,7 @@ export const PrivacyAcademicInfoSection = ({
   major,
   enrollmentYear,
 }: PrivacyAcademicInfoSectionProps) => (
-  <div className="flex w-full flex-col gap-5 rounded-2xl bg-white p-5">
+  <Flex className="flex-col gap-5 rounded-2xl bg-white p-5">
     <Flex justify="between" align="center" className="w-full">
       <Text typography="body-16-medium" textColor="gray-500">
         학번
@@ -36,5 +36,5 @@ export const PrivacyAcademicInfoSection = ({
         {enrollmentYear}
       </Text>
     </Flex>
-  </div>
+  </Flex>
 );

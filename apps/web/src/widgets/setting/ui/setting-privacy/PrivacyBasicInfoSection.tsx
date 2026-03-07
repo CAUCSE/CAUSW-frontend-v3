@@ -1,4 +1,4 @@
-import { Flex, Text } from '@causw/cds';
+import { Flex, Text, VStack } from '@causw/cds';
 
 interface PrivacyBasicInfoSectionProps {
   name: string;
@@ -9,7 +9,7 @@ export const PrivacyBasicInfoSection = ({
   name,
   email,
 }: PrivacyBasicInfoSectionProps) => (
-  <div className="flex w-full flex-col gap-5 rounded-2xl bg-white p-5">
+  <VStack className="gap-5 rounded-2xl bg-white p-5">
     <Flex justify="between" align="center" className="w-full">
       <Text typography="body-16-medium" textColor="gray-500">
         이름
@@ -26,5 +26,5 @@ export const PrivacyBasicInfoSection = ({
         {email}
       </Text>
     </Flex>
-  </div>
+  </VStack>
 );

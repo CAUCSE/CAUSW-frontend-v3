@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from '@causw/cds';
+import { Button, Flex, Text, VStack } from '@causw/cds';
 
 interface PrivacyEnrollmentStatusSectionProps {
   enrollmentStatus: string;
@@ -17,7 +17,7 @@ export const PrivacyEnrollmentStatusSection = ({
   currentSemesterFeeApplied,
   onChangeStatus,
 }: PrivacyEnrollmentStatusSectionProps) => (
-  <div className="flex w-full flex-col gap-5 rounded-2xl bg-white p-5">
+  <VStack className="gap-5 rounded-2xl bg-white p-5">
     <Flex justify="between" align="center" className="w-full">
       <Text typography="body-16-medium" textColor="gray-500">
         학적 상태
@@ -69,5 +69,5 @@ export const PrivacyEnrollmentStatusSection = ({
         {currentSemesterFeeApplied ? 'O' : 'X'}
       </Text>
     </Flex>
-  </div>
+  </VStack>
 );
