@@ -2,92 +2,127 @@
 
 import { useMemo, useRef, useState } from 'react';
 
+import { FormProvider } from 'react-hook-form';
+
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { VoteWriteValue } from '@/entities/post';
+import { Board } from '@/entities/feed';
+import {
+  PostCreateFormValues,
+  usePostCreateForm,
+  VoteWriteValue,
+} from '@/entities/post';
 
 import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
+import { createEmptyVote } from '../lib';
+
+import { PostBoardSelector } from './PostBoardSelector';
 import { PostWriteBody } from './PostWriteBody';
 import { PostWriteFooter } from './PostWriteFooter';
 import { PostWriteHeader } from './PostWriteHeader';
 
 interface PostWriteFormProps {
-  isSubmitActive: boolean;
-  onClose: () => void;
-  onSelectorClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  selectedCategory: string | null;
-  content: string;
-  setContent: (content: string) => void;
+  onClose: (isDirty: boolean) => void;
 }
 
-const createEmptyPoll = (): VoteWriteValue => ({
-  options: [
-    { id: crypto.randomUUID(), value: '' },
-    { id: crypto.randomUUID(), value: '' },
-  ],
-  endTime: new Date(),
-  allowMultiple: false,
-});
+export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
+  const form = usePostCreateForm();
 
-export const PostWriteForm = ({
-  isSubmitActive,
-  onClose,
-  onSelectorClick,
-  selectedCategory,
-  content,
-  setContent,
-}: PostWriteFormProps) => {
+  const {
+    handleSubmit,
+    formState: { isValid, isDirty },
+    watch,
+    setValue,
+  } = form;
+
+  const currentContent = watch('content');
+
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
+
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
 
   const [vote, setVote] = useState<VoteWriteValue | null>(null);
 
+  const onSubmit = async (data: PostCreateFormValues) => {
+    if (!selectedBoard) return;
+    console.log(data);
+  };
+
   const isVoteValid = useMemo(() => {
     if (!vote) return true;
-
     const validOptionsCount = vote.options.filter(
       (opt) => opt.value.trim().length > 0,
     ).length;
-
     return validOptionsCount >= 2;
   }, [vote]);
 
+  const handleBoardSelect = (board: Board) => {
+    setSelectedBoard(board);
+    setSelectorOpen(false);
+  };
+
+  const handleBack = () => {
+    if (selectorOpen) {
+      setSelectorOpen(false);
+    } else {
+      onClose(isDirty);
+    }
+  };
+
   return (
-    <VStack gap="none" className="h-full">
-      <PostWriteHeader
-        isSubmitActive={isSubmitActive && isVoteValid}
-        onBack={onClose}
-      />
-
-      <Dialog.Title className="sr-only">게시글 작성</Dialog.Title>
-      <PostWriteBody
-        onSelectorClick={onSelectorClick}
-        selectedCategory={selectedCategory}
-        content={content}
-        setContent={setContent}
-        vote={vote}
-        setVote={setVote}
-      />
-
-      <Box className="m-5 mb-0">
-        <ImageUploadField
-          ref={imageUploadRef}
-          name="images"
-          setValue={() => {}}
-          showMainBadge
+    <FormProvider {...form}>
+      <VStack
+        as="form"
+        onSubmit={handleSubmit(onSubmit)}
+        gap="none"
+        className="h-full"
+      >
+        <PostWriteHeader
+          isSubmitActive={isValid && isVoteValid}
+          onBack={handleBack}
         />
-      </Box>
 
-      <Dialog.Footer>
-        <PostWriteFooter
-          onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
-          onClickVote={() => {
-            if (!vote) {
-              setVote(createEmptyPoll());
-            }
-          }}
+        <Dialog.Title className="sr-only">게시글 작성</Dialog.Title>
+        <PostWriteBody
+          onSelectorClick={() => setSelectorOpen(true)}
+          selectedBoard={selectedBoard}
+          content={currentContent}
+          setContent={(val) =>
+            setValue('content', val, { shouldValidate: true })
+          }
+          vote={vote}
+          setVote={setVote}
         />
-      </Dialog.Footer>
-    </VStack>
+
+        <Box className="m-5 mb-0">
+          <ImageUploadField
+            ref={imageUploadRef}
+            name="images"
+            setValue={setValue}
+            showMainBadge
+          />
+        </Box>
+
+        <Dialog.Footer>
+          <PostWriteFooter
+            onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
+            onClickVote={() => {
+              if (!vote) {
+                setVote(createEmptyVote());
+              }
+            }}
+          />
+        </Dialog.Footer>
+      </VStack>
+
+      <PostBoardSelector
+        open={selectorOpen}
+        onOpenChange={setSelectorOpen}
+        selectedBoard={selectedBoard}
+        onSelectBoard={handleBoardSelect}
+      />
+    </FormProvider>
   );
 };

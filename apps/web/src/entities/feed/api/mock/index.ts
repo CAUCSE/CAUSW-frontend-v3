@@ -1,0 +1,1 @@
+export { boardsHandler } from './handler';

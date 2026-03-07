@@ -1,25 +1,29 @@
+'use client';
+
 import { Chip, HStack, mergeStyles } from '@causw/cds';
 
-import { POST_CATEGORIES, PostCategory } from '@/entities/post';
+import { Board, useGetAvailableBoards } from '@/entities/feed';
 
-interface CategoryChipListProps {
-  selectedCategory: PostCategory | null;
-  onSelectCategory: (category: PostCategory) => void;
+interface BoardChipListProps {
+  selectedBoard: Board | null;
+  onSelectBoard: (board: Board) => void;
   onClose: () => void;
 }
-export const CategoryChipList = ({
-  selectedCategory,
-  onSelectCategory,
+export const BoardChipList = ({
+  selectedBoard,
+  onSelectBoard,
   onClose,
-}: CategoryChipListProps) => {
+}: BoardChipListProps) => {
+  const { data } = useGetAvailableBoards();
+
   return (
     <HStack gap="sm" className="flex-wrap">
-      {POST_CATEGORIES.map((category) => {
-        const isActive = selectedCategory === category;
+      {data.boards.map((board) => {
+        const isActive = selectedBoard?.id === board.id;
 
         return (
           <Chip
-            key={category}
+            key={board.id}
             asChild
             color="lightgray"
             className={mergeStyles(
@@ -30,12 +34,13 @@ export const CategoryChipList = ({
             )}
           >
             <button
+              type="button"
               onClick={() => {
-                onSelectCategory(category);
+                onSelectBoard(board);
                 onClose();
               }}
             >
-              {category}
+              {board.name}
             </button>
           </Chip>
         );

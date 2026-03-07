@@ -1,5 +1,4 @@
-export * from './ConfirmDiscardModal';
-export * from './PostCategorySelector';
+export * from './PostBoardSelector';
 export * from './PostWriteHeader';
 export * from './PostWriteBody';
 export * from './PostWriteFooter';

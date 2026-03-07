@@ -1,14 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 
 import { Dialog, mergeStyles } from '@causw/cds';
 
-import {
-  PostCategorySelector,
-  PostWriteForm,
-  usePostWrite,
-} from '@/features/post-write';
+import { PostWriteForm } from '@/features/post-write';
 
 import { useBreakpoint } from '@/shared/hooks';
 import { ConfirmLeaveModal } from '@/shared/ui';
@@ -16,29 +14,12 @@ import { ConfirmLeaveModal } from '@/shared/ui';
 export const PostWriteModal = () => {
   const router = useRouter();
 
+  const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
+
   const { isMobileSize } = useBreakpoint();
 
-  const {
-    isCategoryOpen,
-    setIsCategoryOpen,
-    selectedCategory,
-    setSelectedCategory,
-    content,
-    setContent,
-    isCancelConfirmOpen,
-    setIsCancelConfirmOpen,
-    isSubmitActive,
-  } = usePostWrite();
-
-  const handleCategorySelectorClick = (
-    e: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.currentTarget.blur();
-    setIsCategoryOpen(true);
-  };
-
-  const handleRequestClose = () => {
-    if (content.trim().length > 0 || selectedCategory !== null) {
+  const handleRequestClose = (isDirty: boolean) => {
+    if (isDirty) {
       setIsCancelConfirmOpen(true);
     } else {
       router.back();
@@ -50,7 +31,7 @@ export const PostWriteModal = () => {
       <Dialog
         open
         onOpenChange={(open) => {
-          if (!open) handleRequestClose();
+          if (!open) setIsCancelConfirmOpen(true);
         }}
       >
         <Dialog.Content
@@ -58,30 +39,16 @@ export const PostWriteModal = () => {
           fullscreen={isMobileSize}
           onPointerDownOutside={(e) => {
             e.preventDefault();
-            handleRequestClose();
+            setIsCancelConfirmOpen(true);
           }}
           className={mergeStyles(
             'flex flex-col p-0 md:overflow-hidden',
             !isMobileSize ? 'w-[calc(100vw-200px)] max-w-175 md:h-128' : '',
           )}
         >
-          <PostWriteForm
-            isSubmitActive={isSubmitActive}
-            onClose={handleRequestClose}
-            onSelectorClick={handleCategorySelectorClick}
-            selectedCategory={selectedCategory}
-            content={content}
-            setContent={setContent}
-          />
+          <PostWriteForm onClose={handleRequestClose} />
         </Dialog.Content>
       </Dialog>
-
-      <PostCategorySelector
-        open={isCategoryOpen}
-        onOpenChange={setIsCategoryOpen}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-      />
 
       <ConfirmLeaveModal
         message="글쓰기를 그만두시겠어요?"

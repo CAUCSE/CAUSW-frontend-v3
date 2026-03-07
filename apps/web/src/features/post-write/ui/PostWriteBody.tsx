@@ -4,13 +4,14 @@ import { useEffect, useRef } from 'react';
 
 import { ArrowDown, Chip, TextArea, VStack } from '@causw/cds';
 
+import { Board } from '@/entities/feed';
 import { VoteWriteValue } from '@/entities/post';
 
 import { VoteField } from './VoteField';
 
 interface PostWriteBodyProps {
   onSelectorClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  selectedCategory: string | null;
+  selectedBoard: Board | null;
   content: string;
   setContent: (content: string) => void;
   vote: VoteWriteValue | null;
@@ -19,7 +20,7 @@ interface PostWriteBodyProps {
 
 export const PostWriteBody = ({
   onSelectorClick,
-  selectedCategory,
+  selectedBoard,
   content,
   setContent,
   vote,
@@ -62,7 +63,7 @@ export const PostWriteBody = ({
         className="transition-color mx-4 w-fit shrink-0 cursor-pointer hover:bg-gray-200 active:bg-gray-200 md:mt-4"
       >
         <button onClick={onSelectorClick}>
-          {selectedCategory ? selectedCategory : '주제를 선택해주세요'}{' '}
+          {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
           <ArrowDown size={14} color="gray-500" />
         </button>
       </Chip>
@@ -74,7 +75,7 @@ export const PostWriteBody = ({
             value={content}
             onChange={(e) => handleChange(e.target.value)}
             resize={false}
-            placeholder="내용을 입력하세요"
+            placeholder="내용을 입력해주세요."
             rows={1}
             className="min-h-0"
           />

@@ -2,37 +2,41 @@
 
 import { BottomSheet, Dialog, Text, VStack } from '@causw/cds';
 
-import { PostCategory } from '@/entities/post';
+import { Board } from '@/entities/feed';
 
 import { useBreakpoint } from '@/shared/hooks';
 
-import { CategoryChipList } from './CategoryChipList';
+import { BoardChipList } from './BoardChipList';
 
-interface PostCategorySelectorProps {
+interface PostBoardSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  selectedCategory: PostCategory | null;
-  onSelectCategory: (category: PostCategory) => void;
+  selectedBoard: Board | null;
+  onSelectBoard: (board: Board) => void;
 }
 
-export const PostCategorySelector = ({
+export const PostBoardSelector = ({
   open,
   onOpenChange,
-  selectedCategory,
-  onSelectCategory,
-}: PostCategorySelectorProps) => {
+  selectedBoard,
+  onSelectBoard,
+}: PostBoardSelectorProps) => {
   const { isMobileSize } = useBreakpoint();
 
   if (isMobileSize)
     return (
       <BottomSheet open={open} onOpenChange={onOpenChange}>
-        <BottomSheet.Content aria-describedby={undefined} className="z-modal">
+        <BottomSheet.Content
+          className="z-modal"
+          aria-describedby={undefined}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
           <VStack gap="lg" align="start">
             <BottomSheet.Header title="게시글 주제를 선택해주세요." />
             <BottomSheet.Body>
-              <CategoryChipList
-                selectedCategory={selectedCategory}
-                onSelectCategory={onSelectCategory}
+              <BoardChipList
+                selectedBoard={selectedBoard}
+                onSelectBoard={onSelectBoard}
                 onClose={() => onOpenChange(false)}
               />
             </BottomSheet.Body>
@@ -43,15 +47,20 @@ export const PostCategorySelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <Dialog.Content width={420} className="pt-8" aria-describedby={undefined}>
+      <Dialog.Content
+        width={420}
+        className="pt-8"
+        aria-describedby={undefined}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
         <Dialog.Title asChild>
           <Text as="h2" typography="subtitle-18-bold" textColor="gray-700">
             게시글 주제를 선택해주세요.
           </Text>
         </Dialog.Title>
-        <CategoryChipList
-          selectedCategory={selectedCategory}
-          onSelectCategory={onSelectCategory}
+        <BoardChipList
+          selectedBoard={selectedBoard}
+          onSelectBoard={onSelectBoard}
           onClose={() => onOpenChange(false)}
         />
       </Dialog.Content>

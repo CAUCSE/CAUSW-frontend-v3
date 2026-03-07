@@ -12,11 +12,11 @@ export const PostWriteFooter = ({
   return (
     <HStack justify="between" className="shrink-0 p-5">
       <HStack className="gap-1.75">
-        <Button onClick={onClickPhoto} className="text-gray-500">
+        <Button type="button" onClick={onClickPhoto} className="text-gray-500">
           <Camera active size={16} />
           사진첨부
         </Button>
-        <Button onClick={onClickVote} className="text-gray-500">
+        <Button type="button" onClick={onClickVote} className="text-gray-500">
           <Vote active size={16} />
           투표
         </Button>
