@@ -4,7 +4,7 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 import { Text, VStack } from '@causw/cds';
 
-import { sanitizeHtmlClient } from '@/shared/lib';
+import { sanitizeHtml } from '@/shared/lib';
 
 import { PostImage } from './PostImage';
 
@@ -47,7 +47,7 @@ export const PostBody = ({
   const textRef = useRef<HTMLElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
-  const sanitizedHtml = isHtml ? sanitizeHtmlClient(content) : '';
+  const sanitizedHtml = isHtml ? sanitizeHtml(content) : '';
   const collapseStyles = isCollapsed
     ? {
         display: '-webkit-box',
