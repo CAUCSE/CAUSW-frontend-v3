@@ -39,6 +39,7 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
   } = form;
 
   const currentContent = watch('content');
+  const isAnonymous = watch('isAnonymous');
 
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
 
@@ -115,6 +116,10 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
                 setVote(createEmptyVote());
               }
             }}
+            isAnonymous={isAnonymous}
+            onChangeAnonymous={(val) =>
+              setValue('isAnonymous', val, { shouldDirty: true })
+            }
           />
         </Dialog.Footer>
       </VStack>

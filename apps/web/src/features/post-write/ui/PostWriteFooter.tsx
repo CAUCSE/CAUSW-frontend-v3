@@ -3,11 +3,15 @@ import { Button, Camera, Checkbox, HStack, Vote } from '@causw/cds';
 interface PostWriteFooterProps {
   onClickPhoto: () => void;
   onClickVote: () => void;
+  isAnonymous: boolean;
+  onChangeAnonymous: (checked: boolean) => void;
 }
 
 export const PostWriteFooter = ({
   onClickPhoto,
   onClickVote,
+  isAnonymous,
+  onChangeAnonymous,
 }: PostWriteFooterProps) => {
   return (
     <HStack justify="between" className="shrink-0 p-5">
@@ -21,7 +25,11 @@ export const PostWriteFooter = ({
           투표
         </Button>
       </HStack>
-      <Checkbox defaultChecked className="group gap-1">
+      <Checkbox
+        checked={isAnonymous}
+        onCheckedChange={onChangeAnonymous}
+        className="group gap-1"
+      >
         <Checkbox.Indicator />
         <Checkbox.Label
           typography="body-15-semibold"
