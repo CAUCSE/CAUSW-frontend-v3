@@ -1,17 +1,13 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
 import { Board, useGetAvailableBoards } from '@/entities/feed';
-import {
-  PostCreateFormValues,
-  usePostCreateForm,
-  VoteWriteValue,
-} from '@/entities/post';
+import { PostCreateFormValues, usePostCreateForm } from '@/entities/post';
 
 import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
@@ -40,29 +36,21 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
 
   const currentContent = watch('content');
   const isAnonymous = watch('isAnonymous');
+  const currentBoardId = watch('boardId');
+  const currentVote = watch('vote');
 
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
-
   const [selectorOpen, setSelectorOpen] = useState(false);
-  const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
 
-  const [vote, setVote] = useState<VoteWriteValue | null>(null);
+  const selectedBoard =
+    boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
-    if (!selectedBoard) return;
-    console.log(data);
+    console.log('제출된 데이터:', data);
   };
 
-  const isVoteValid = useMemo(() => {
-    if (!vote) return true;
-    const validOptionsCount = vote.options.filter(
-      (opt) => opt.value.trim().length > 0,
-    ).length;
-    return validOptionsCount >= 2;
-  }, [vote]);
-
   const handleBoardSelect = (board: Board) => {
-    setSelectedBoard(board);
+    setValue('boardId', board.id, { shouldValidate: true, shouldDirty: true });
     setSelectorOpen(false);
   };
 
@@ -82,10 +70,7 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
         gap="none"
         className="h-full"
       >
-        <PostWriteHeader
-          isSubmitActive={isValid && isVoteValid}
-          onBack={handleBack}
-        />
+        <PostWriteHeader isSubmitActive={isValid} onBack={handleBack} />
 
         <Dialog.Title className="sr-only">게시글 작성</Dialog.Title>
         <PostWriteBody
@@ -95,8 +80,10 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
           setContent={(val) =>
             setValue('content', val, { shouldValidate: true })
           }
-          vote={vote}
-          setVote={setVote}
+          vote={currentVote ?? null}
+          setVote={(val) =>
+            setValue('vote', val, { shouldValidate: true, shouldDirty: true })
+          }
         />
 
         <Box className="m-5 mb-0">
@@ -112,8 +99,11 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
           <PostWriteFooter
             onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
             onClickVote={() => {
-              if (!vote) {
-                setVote(createEmptyVote());
+              if (!currentVote) {
+                setValue('vote', createEmptyVote(), {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                });
               }
             }}
             isAnonymous={isAnonymous}

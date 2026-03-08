@@ -35,7 +35,7 @@ export const getHandler = [
             ],
           },
         },
-        { status: 201 },
+        { status: 200 },
       );
     },
   ),
