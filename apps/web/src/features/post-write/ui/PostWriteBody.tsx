@@ -30,23 +30,15 @@ export const PostWriteBody = ({
 
   const handleChange = (value: string) => {
     setContent(value);
-
-    const el = textareaRef.current;
-    if (!el) return;
-
-    // 높이 초기화 후 scrollHeight만큼 다시 설정
-    el.style.height = 'auto';
-    el.style.height = `${el.scrollHeight}px`;
   };
 
-  // 최초 렌더 시에도 맞춰주기
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
 
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;
-  }, []);
+  }, [content]);
 
   return (
     <VStack

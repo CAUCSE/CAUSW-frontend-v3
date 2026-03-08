@@ -6,7 +6,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { Board } from '@/entities/feed';
+import { Board, useGetAvailableBoards } from '@/entities/feed';
 import {
   PostCreateFormValues,
   usePostCreateForm,
@@ -27,6 +27,8 @@ interface PostWriteFormProps {
 }
 
 export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
+  const { data: boardData } = useGetAvailableBoards();
+
   const form = usePostCreateForm();
 
   const {
@@ -122,6 +124,7 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
         onOpenChange={setSelectorOpen}
         selectedBoard={selectedBoard}
         onSelectBoard={handleBoardSelect}
+        boards={boardData?.boards ?? []}
       />
     </FormProvider>
   );

@@ -2,23 +2,23 @@
 
 import { Chip, HStack, mergeStyles } from '@causw/cds';
 
-import { Board, useGetAvailableBoards } from '@/entities/feed';
+import { Board } from '../model';
 
 interface BoardChipListProps {
+  boards: Board[];
   selectedBoard: Board | null;
   onSelectBoard: (board: Board) => void;
   onClose: () => void;
 }
 export const BoardChipList = ({
+  boards,
   selectedBoard,
   onSelectBoard,
   onClose,
 }: BoardChipListProps) => {
-  const { data } = useGetAvailableBoards();
-
   return (
     <HStack gap="sm" className="flex-wrap">
-      {data.boards.map((board) => {
+      {boards.map((board) => {
         const isActive = selectedBoard?.id === board.id;
 
         return (

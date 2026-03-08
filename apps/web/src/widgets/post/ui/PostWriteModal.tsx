@@ -43,7 +43,9 @@ export const PostWriteModal = () => {
           }}
           className={mergeStyles(
             'flex flex-col p-0 md:overflow-hidden',
-            !isMobileSize ? 'w-[calc(100vw-200px)] max-w-175 md:h-128' : '',
+            !isMobileSize
+              ? 'w-[calc(100vw-200px)] max-w-175 md:h-128'
+              : 'animate-none! transition-none! data-[state=closed]:animate-none! data-[state=open]:animate-none!',
           )}
         >
           <PostWriteForm onClose={handleRequestClose} />

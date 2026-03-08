@@ -2,17 +2,16 @@
 
 import { BottomSheet, Dialog, Text, VStack } from '@causw/cds';
 
-import { Board } from '@/entities/feed';
+import { Board, BoardChipList } from '@/entities/feed';
 
 import { useBreakpoint } from '@/shared/hooks';
-
-import { BoardChipList } from './BoardChipList';
 
 interface PostBoardSelectorProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   selectedBoard: Board | null;
   onSelectBoard: (board: Board) => void;
+  boards: Board[];
 }
 
 export const PostBoardSelector = ({
@@ -20,21 +19,19 @@ export const PostBoardSelector = ({
   onOpenChange,
   selectedBoard,
   onSelectBoard,
+  boards,
 }: PostBoardSelectorProps) => {
   const { isMobileSize } = useBreakpoint();
 
   if (isMobileSize)
     return (
       <BottomSheet open={open} onOpenChange={onOpenChange}>
-        <BottomSheet.Content
-          className="z-modal"
-          aria-describedby={undefined}
-          onPointerDown={(e) => e.stopPropagation()}
-        >
+        <BottomSheet.Content className="z-modal" aria-describedby={undefined}>
           <VStack gap="lg" align="start">
             <BottomSheet.Header title="게시글 주제를 선택해주세요." />
             <BottomSheet.Body>
               <BoardChipList
+                boards={boards}
                 selectedBoard={selectedBoard}
                 onSelectBoard={onSelectBoard}
                 onClose={() => onOpenChange(false)}
@@ -47,18 +44,14 @@ export const PostBoardSelector = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <Dialog.Content
-        width={420}
-        className="pt-8"
-        aria-describedby={undefined}
-        onPointerDown={(e) => e.stopPropagation()}
-      >
+      <Dialog.Content width={420} className="pt-8" aria-describedby={undefined}>
         <Dialog.Title asChild>
           <Text as="h2" typography="subtitle-18-bold" textColor="gray-700">
             게시글 주제를 선택해주세요.
           </Text>
         </Dialog.Title>
         <BoardChipList
+          boards={boards}
           selectedBoard={selectedBoard}
           onSelectBoard={onSelectBoard}
           onClose={() => onOpenChange(false)}
