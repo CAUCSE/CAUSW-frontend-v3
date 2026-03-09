@@ -1,7 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
 import { Tab } from '@causw/cds';
 
 import type {
@@ -12,33 +10,8 @@ import type {
 } from '@/entities/ceremony';
 import { CeremonyFilterChips, FILTER_TYPE_API_MAP } from '@/entities/ceremony';
 
-import { SuspenseView } from '@/shared/ui/fallback';
-
+import { CeremonySectionsGroup } from '../ceremony-section/CeremonySectionContent';
 import { MyCeremonyListView } from '../my-ceremony-list-view';
-
-const OngoingCeremonySection = dynamic(
-  () =>
-    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
-      default: mod.OngoingCeremonySection,
-    })),
-  { ssr: false, loading: () => <SuspenseView /> },
-);
-
-const UpcomingCeremonySection = dynamic(
-  () =>
-    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
-      default: mod.UpcomingCeremonySection,
-    })),
-  { ssr: false, loading: () => <SuspenseView /> },
-);
-
-const PastCeremonySection = dynamic(
-  () =>
-    import('../ceremony-section/CeremonySectionContent').then((mod) => ({
-      default: mod.PastCeremonySection,
-    })),
-  { ssr: false, loading: () => <SuspenseView /> },
-);
 
 interface CeremonyListViewProps {
   filter: CeremonyFilterType;
@@ -73,15 +46,7 @@ export const CeremonyListView = ({
       <Tab.Content value="all" className="flex flex-col gap-5 pt-5 pb-25">
         <CeremonyFilterChips selected={filter} onChange={onFilterChange} />
 
-        <OngoingCeremonySection
-          type={apiFilterType}
-          onItemClick={onItemClick}
-        />
-        <UpcomingCeremonySection
-          type={apiFilterType}
-          onItemClick={onItemClick}
-        />
-        <PastCeremonySection type={apiFilterType} onItemClick={onItemClick} />
+        <CeremonySectionsGroup type={apiFilterType} onItemClick={onItemClick} />
       </Tab.Content>
 
       <Tab.Content value="mine" className="flex flex-col gap-5 pt-5 pb-25">

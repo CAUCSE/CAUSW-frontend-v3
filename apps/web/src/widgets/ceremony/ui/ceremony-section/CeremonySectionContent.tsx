@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback } from 'react';
+import { Suspense, useCallback, useSyncExternalStore } from 'react';
 
 import type { CeremonyFilterTypeApi } from '@/entities/ceremony';
 import {
@@ -87,26 +87,31 @@ const PastContent = ({ type, onItemClick }: SectionContentProps) => {
   );
 };
 
-const SectionWrapper = ({ children }: { children: React.ReactNode }) => (
-  <Suspense fallback={<SuspenseView />}>
-    <QueryErrorBoundary>{children}</QueryErrorBoundary>
-  </Suspense>
-);
+const CeremonySectionsFallback = () => <SuspenseView />;
 
-export const OngoingCeremonySection = (props: SectionContentProps) => (
-  <SectionWrapper>
-    <OngoingContent {...props} />
-  </SectionWrapper>
-);
+const emptySubscribe = () => () => {};
+const useIsMounted = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
-export const UpcomingCeremonySection = (props: SectionContentProps) => (
-  <SectionWrapper>
-    <UpcomingContent {...props} />
-  </SectionWrapper>
-);
+export const CeremonySectionsGroup = ({
+  type,
+  onItemClick,
+}: SectionContentProps) => {
+  const isMounted = useIsMounted();
 
-export const PastCeremonySection = (props: SectionContentProps) => (
-  <SectionWrapper>
-    <PastContent {...props} />
-  </SectionWrapper>
-);
+  if (!isMounted) return <CeremonySectionsFallback />;
+
+  return (
+    <QueryErrorBoundary>
+      <Suspense fallback={<CeremonySectionsFallback />}>
+        <OngoingContent type={type} onItemClick={onItemClick} />
+        <UpcomingContent type={type} onItemClick={onItemClick} />
+        <PastContent type={type} onItemClick={onItemClick} />
+      </Suspense>
+    </QueryErrorBoundary>
+  );
+};
