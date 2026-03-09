@@ -4,8 +4,11 @@ import { useEffect, useRef } from 'react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { Flex, Text } from '@causw/cds';
+
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
+import { SuspenseView } from '@/shared/ui';
 
 export const SocialLoginCallbackPage = () => {
   const router = useRouter();
@@ -48,5 +51,16 @@ export const SocialLoginCallbackPage = () => {
     void handleCallback();
   }, [router, searchParams]);
 
-  return <>qwefqwef</>;
+  return (
+    <Flex
+      justify="center"
+      align="center"
+      className="h-screen w-full bg-gray-100"
+    >
+      <Text typography="subtitle-20-bold">
+        유저의 인증 상태를 확인 중입니다.
+        <SuspenseView />
+      </Text>
+    </Flex>
+  );
 };
