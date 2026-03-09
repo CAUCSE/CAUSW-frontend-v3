@@ -6,7 +6,7 @@ import { Text, CTAButton, VStack } from '@causw/cds';
 
 import { accountSchema, type SignUpFormData } from '@/entities/auth';
 
-import { RHFInput } from '@/shared/ui';
+import { RHFInput, RHFPasswordInput } from '@/shared/ui';
 
 export const AccountStep = ({ onNext }: { onNext: () => void }) => {
   const { control } = useFormContext<SignUpFormData>();
@@ -45,18 +45,16 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
         typography="body-16-regular"
       />
 
-      <RHFInput
+      <RHFPasswordInput
         name="password"
         label="비밀번호"
-        type="password"
         placeholder="비밀번호를 입력해주세요."
         typography="body-16-regular"
       />
 
-      <RHFInput
+      <RHFPasswordInput
         name="passwordConfirm"
         label="비밀번호 확인"
-        type="password"
         placeholder="비밀번호를 다시 입력해주세요."
         typography="body-16-regular"
       />
