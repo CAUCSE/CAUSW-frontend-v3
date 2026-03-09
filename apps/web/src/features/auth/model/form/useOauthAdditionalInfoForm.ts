@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { infoSchema, type InfoFormData } from '@/entities/auth';
 
-export const useAdditionalInfoForm = () => {
+export const useOauthAdditionalInfoForm = () => {
   const methods = useForm<InfoFormData>({
     resolver: zodResolver(infoSchema),
     mode: 'onBlur',
@@ -44,7 +44,7 @@ export const useAdditionalInfoForm = () => {
   };
 
   const onSubmit = (data: InfoFormData) => {
-    console.log('Additional Info Data:', data);
+    console.log('Oauth Additional Info Data:', data);
   };
 
   return {

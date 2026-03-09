@@ -2,15 +2,15 @@
 
 import { FormProvider } from 'react-hook-form';
 
-import { AuthContainer, AdditionalInfoForm } from '@/widgets/auth';
+import { AuthContainer, OauthAdditionalInfoForm } from '@/widgets/auth';
 
-import { useAdditionalInfoForm } from '@/features/auth';
+import { useOauthAdditionalInfoForm } from '@/features/auth';
 
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
-export const AdditionalInfoPage = () => {
+export const OauthAdditionalInfoPage = () => {
   const { methods, isSubmitEnabled, handlePhoneNumberChange, onSubmit } =
-    useAdditionalInfoForm();
+    useOauthAdditionalInfoForm();
 
   return (
     <FormProvider {...methods}>
@@ -28,7 +28,7 @@ export const AdditionalInfoPage = () => {
             </ActionHeader>
           </DesktopOnly>
 
-          <AdditionalInfoForm
+          <OauthAdditionalInfoForm
             isSubmitEnabled={isSubmitEnabled}
             onPhoneNumberChange={handlePhoneNumberChange}
           />

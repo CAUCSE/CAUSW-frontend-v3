@@ -1,3 +1,3 @@
 export * from './funnel';
 export * from './steps';
-export * from './additional-info';
+export * from './oauth-additional-info';

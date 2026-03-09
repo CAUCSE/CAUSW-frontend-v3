@@ -1,1 +1,1 @@
-export { useAdditionalInfoForm } from './useAdditionalInfoForm';
+export { useOauthAdditionalInfoForm } from './useOauthAdditionalInfoForm';

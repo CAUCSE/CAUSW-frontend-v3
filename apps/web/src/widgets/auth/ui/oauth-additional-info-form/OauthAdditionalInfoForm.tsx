@@ -4,15 +4,15 @@ import { CTAButton, Flex, LockOpenColored, Text, VStack } from '@causw/cds';
 
 import { RHFInput } from '@/shared/ui';
 
-type AdditionalInfoFormProps = {
+type OauthAdditionalInfoFormProps = {
   isSubmitEnabled: boolean;
   onPhoneNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const AdditionalInfoForm = ({
+export const OauthAdditionalInfoForm = ({
   isSubmitEnabled,
   onPhoneNumberChange,
-}: AdditionalInfoFormProps) => {
+}: OauthAdditionalInfoFormProps) => {
   return (
     <VStack className="gap-10">
       <VStack className="gap-3">
