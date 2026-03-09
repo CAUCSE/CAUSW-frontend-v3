@@ -20,51 +20,53 @@ interface SectionContentProps {
   onItemClick?: (id: string) => void;
 }
 
-const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
-  const { data, fetchNextPage, hasNextPage } = useOngoingCeremoniesQuery(type);
+type UseCeremonyQuery = typeof useOngoingCeremoniesQuery;
+
+interface CeremonySectionConfig {
+  useQuery: UseCeremonyQuery;
+  title: string;
+  emptyMessage?: string;
+  hideWhenEmpty?: boolean;
+}
+
+const CEREMONY_SECTIONS: CeremonySectionConfig[] = [
+  {
+    useQuery: useOngoingCeremoniesQuery,
+    title: '진행 중인 경조사',
+    emptyMessage: '진행 중인 경조사가 없어요',
+  },
+  {
+    useQuery: useUpcomingCeremoniesQuery,
+    title: '곧 다가올 경조사',
+    emptyMessage: '곧 다가올 경조사가 없어요',
+  },
+  {
+    useQuery: usePastCeremoniesQuery,
+    title: '끝난 경조사',
+    hideWhenEmpty: true,
+  },
+];
+
+const CeremonyContentSection = ({
+  config,
+  type,
+  onItemClick,
+}: {
+  config: CeremonySectionConfig;
+  type: CeremonyFilterTypeApi;
+  onItemClick?: (id: string) => void;
+}) => {
+  const { data, fetchNextPage, hasNextPage } = config.useQuery(type);
   const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
+
+  if (config.hideWhenEmpty && data.items.length === 0) return null;
 
   return (
     <>
       <CeremonySection
-        title="진행 중인 경조사"
+        title={config.title}
         items={data.items}
-        emptyMessage="진행 중인 경조사가 없어요"
-        onItemClick={onItemClick}
-      />
-      {data.hasNext && <div ref={targetRef} />}
-    </>
-  );
-};
-
-const UpcomingContent = ({ type, onItemClick }: SectionContentProps) => {
-  const { data, fetchNextPage, hasNextPage } = useUpcomingCeremoniesQuery(type);
-  const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
-
-  return (
-    <>
-      <CeremonySection
-        title="곧 다가올 경조사"
-        items={data.items}
-        emptyMessage="곧 다가올 경조사가 없어요"
-        onItemClick={onItemClick}
-      />
-      {data.hasNext && <div ref={targetRef} />}
-    </>
-  );
-};
-
-const PastContent = ({ type, onItemClick }: SectionContentProps) => {
-  const { data, fetchNextPage, hasNextPage } = usePastCeremoniesQuery(type);
-  const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
-
-  if (data.items.length === 0) return null;
-
-  return (
-    <>
-      <CeremonySection
-        title="끝난 경조사"
-        items={data.items}
+        emptyMessage={config.emptyMessage}
         onItemClick={onItemClick}
       />
       {data.hasNext && <div ref={targetRef} />}
@@ -93,9 +95,14 @@ export const CeremonySectionsGroup = ({
   return (
     <QueryErrorBoundary>
       <Suspense fallback={<CeremonySectionsFallback />}>
-        <OngoingContent type={type} onItemClick={onItemClick} />
-        <UpcomingContent type={type} onItemClick={onItemClick} />
-        <PastContent type={type} onItemClick={onItemClick} />
+        {CEREMONY_SECTIONS.map((config) => (
+          <CeremonyContentSection
+            key={config.title}
+            config={config}
+            type={type}
+            onItemClick={onItemClick}
+          />
+        ))}
       </Suspense>
     </QueryErrorBoundary>
   );
