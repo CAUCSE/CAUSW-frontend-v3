@@ -8,10 +8,10 @@ import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
 
 import { googleNativeLogin } from '@/features/auth/api';
 
-import { BASE_URL } from '@/shared/config';
+import { BASE_URL, isLocal } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
-import { extractErrorMessage, isDevelopment, isMobile } from '@/shared/utils';
+import { extractErrorMessage, isMobile } from '@/shared/utils';
 
 type GoogleLoginButtonProps = ComponentProps<'button'>;
 
@@ -52,7 +52,7 @@ export const GoogleLoginButton = ({
     }
 
     const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/google`);
-    if (isDevelopment) {
+    if (isLocal) {
       oauthUrl.searchParams.set('env', 'local');
     }
     window.location.href = oauthUrl.toString();
