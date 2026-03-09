@@ -21,11 +21,16 @@ export const useCreateCeremonyMutation = () => {
   return useMutation({
     mutationFn: ({ dto, imageFiles }: CreateCeremonyVariables) =>
       createCeremony(dto, imageFiles),
-    onSuccess: () => {
+    onMutate: () => {
+      return { toastId: toast.loading('경조사 신청 중입니다...') };
+    },
+    onSuccess: (_data, _variables, context) => {
+      toast.dismiss(context.toastId);
       toast.success('경조사 신청이 완료되었습니다.');
       queryClient.invalidateQueries({ queryKey: ceremonyQueryKey.lists() });
     },
-    onError: (error) => {
+    onError: (error, _variables, context) => {
+      if (context?.toastId) toast.dismiss(context.toastId);
       toast.error(extractErrorMessage(error, '경조사 신청에 실패했습니다.'));
     },
   });
