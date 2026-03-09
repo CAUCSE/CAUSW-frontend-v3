@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 import { TokenManager } from './shared/storage';
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // TODO: 실제 경로 맞춰서 세분화
   const privateRoutes = ['/home', '/feed', '/contacts', '/user'];
   const accessToken = await TokenManager.getAccessToken();
