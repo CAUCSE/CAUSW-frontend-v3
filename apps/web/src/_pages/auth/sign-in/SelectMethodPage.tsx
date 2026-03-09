@@ -16,7 +16,6 @@ import {
   KakaoLoginButton,
 } from '@/features/auth';
 
-import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/config';
 import { LogoHeader } from '@/shared/ui';
 import { isAndroid } from '@/shared/utils';
 
@@ -91,23 +90,18 @@ export const SelectMethodPage = () => {
             <KakaoLoginButton
               data-social-provider="kakao"
               onClick={handleSocialButtonClick('kakao')}
-              redirectUri="/auth/sign-in/kakao"
             />
 
             {!isAndroid && (
               <AppleLoginButton
                 data-social-provider="apple"
                 onClick={handleSocialButtonClick('apple')}
-                serviceId={APPLE_SERVICE_ID}
-                redirectUri={'/auth/sign-in/apple/callback'}
               />
             )}
 
             <GoogleLoginButton
               data-social-provider="google"
               onClick={handleSocialButtonClick('google')}
-              clientId={GOOGLE_CLIENT_ID}
-              redirectUri={'/auth/sign-in/google'}
             />
 
             <EmailLoginButton
