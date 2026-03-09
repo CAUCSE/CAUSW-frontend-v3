@@ -8,3 +8,4 @@ export * from './enrollment-step-card-header';
 export * from './terms';
 export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
 export { SignInImageSection } from './sign-in-image-section';
+export { AdditionalInfoForm } from './additional-info-form';
