@@ -1,10 +1,12 @@
 'use client';
 
+import { useRef, useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
-import { MethodSelectContainer } from '@/widgets/auth';
+import { MethodSelectContainer, SessionKeepConfirmModal } from '@/widgets/auth';
 
 import {
   AppleLoginButton,
@@ -16,14 +18,57 @@ import {
 import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/config';
 import { isAndroid } from '@/shared/utils';
 
+type SocialProvider = 'kakao' | 'apple' | 'google';
+
 export const SelectMethodPage = () => {
   const router = useRouter();
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [pendingProvider, setPendingProvider] = useState<SocialProvider | null>(
+    null,
+  );
+  const sessionKeepPreferenceRef = useRef<boolean | null>(null);
+
+  const handleSocialButtonClick =
+    (provider: SocialProvider): React.MouseEventHandler<HTMLButtonElement> =>
+    (event) => {
+      if (sessionKeepPreferenceRef.current !== null) return;
+
+      event.preventDefault();
+      setPendingProvider(provider);
+      setConfirmModalOpen(true);
+    };
+
+  const handleConfirm = (shouldKeepSession: boolean) => {
+    sessionKeepPreferenceRef.current = shouldKeepSession;
+    setConfirmModalOpen(false);
+
+    if (!pendingProvider) return;
+
+    const selector = `button[data-social-provider="${pendingProvider}"]`;
+    setPendingProvider(null);
+
+    queueMicrotask(() => {
+      const targetButton = document.querySelector<HTMLButtonElement>(selector);
+      targetButton?.click();
+    });
+  };
+
+  const handleConfirmModalOpenChange = (open: boolean) => {
+    setConfirmModalOpen(open);
+    if (!open && sessionKeepPreferenceRef.current === null) {
+      setPendingProvider(null);
+    }
+  };
 
   return (
     <MethodSelectContainer>
+      <SessionKeepConfirmModal
+        open={confirmModalOpen}
+        onOpenChange={handleConfirmModalOpenChange}
+        onConfirm={handleConfirm}
+      />
       <VStack className="gap-20">
         <VStack justify="center" align="center" className="w-full gap-8">
-          {/* Logo placeholder */}
           <VStack
             justify="center"
             align="center"
@@ -47,20 +92,23 @@ export const SelectMethodPage = () => {
 
         <VStack className="w-full gap-3">
           <KakaoLoginButton
-            onClick={() => console.log('Kakao login')}
+            data-social-provider="kakao"
+            onClick={handleSocialButtonClick('kakao')}
             redirectUri="/auth/sign-in/kakao"
           />
 
           {!isAndroid && (
             <AppleLoginButton
-              onClick={() => console.log('Apple login')}
+              data-social-provider="apple"
+              onClick={handleSocialButtonClick('apple')}
               serviceId={APPLE_SERVICE_ID}
               redirectUri={'/auth/sign-in/apple/callback'}
             />
           )}
 
           <GoogleLoginButton
-            onClick={() => console.log('Google login')}
+            data-social-provider="google"
+            onClick={handleSocialButtonClick('google')}
             clientId={GOOGLE_CLIENT_ID}
             redirectUri={'/auth/sign-in/google'}
           />
