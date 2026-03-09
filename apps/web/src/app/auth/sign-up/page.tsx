@@ -6,7 +6,12 @@ type PageProps = {
 
 const Page = async ({ searchParams }: PageProps) => {
   const resolvedSearchParams = await searchParams;
-  const step = resolvedSearchParams?.step === 'info' ? 'Info' : 'Account';
+  const step =
+    resolvedSearchParams?.step === 'info'
+      ? 'Info'
+      : resolvedSearchParams?.step === 'email-verification'
+        ? 'EmailVerification'
+        : 'Account';
 
   return <SignUpFunnel initialStep={step} />;
 };

@@ -14,10 +14,12 @@ import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
 import { AccountStep } from '../steps/AccountStep';
+import { EmailVerificationStep } from '../steps/EmailVerificationStep';
 import { InfoStep } from '../steps/InfoStep';
 
 export type SignUpStep = {
   Account: Record<string, never>; // Empty context for now
+  EmailVerification: Record<string, never>;
   Info: Record<string, never>;
 };
 
@@ -26,7 +28,7 @@ type SignUpFunnelProps = {
 };
 
 export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
-  const { allowInfoStep, syncInfoStepUrl } = useSignUpStepGuard({
+  const { allowEmailVerificationStep, allowInfoStep } = useSignUpStepGuard({
     initialStep,
   });
 
@@ -60,13 +62,17 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
     <>
       <MobileOnly>
         <ActionHeader>
-          <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+          <ActionHeader.BackButton onClick={() => funnel.history.back()}>
+            뒤로
+          </ActionHeader.BackButton>
         </ActionHeader>
       </MobileOnly>
       <AuthContainer>
         <DesktopOnly>
           <ActionHeader className="mb-10 px-0">
-            <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+            <ActionHeader.BackButton onClick={() => funnel.history.back()}>
+              뒤로
+            </ActionHeader.BackButton>
           </ActionHeader>
         </DesktopOnly>
         <FormProvider {...methods}>
@@ -81,8 +87,15 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
                   ]);
                   if (!isValid) return;
 
+                  allowEmailVerificationStep();
+                  history.push('EmailVerification');
+                }}
+              />
+            )}
+            EmailVerification={({ history }) => (
+              <EmailVerificationStep
+                onNext={() => {
                   allowInfoStep();
-                  syncInfoStepUrl();
                   history.push('Info');
                 }}
               />
