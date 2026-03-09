@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useCallback, useSyncExternalStore } from 'react';
+import { Suspense, useSyncExternalStore } from 'react';
 
 import type { CeremonyFilterTypeApi } from '@/entities/ceremony';
 import {
@@ -9,26 +9,11 @@ import {
   usePastCeremoniesQuery,
 } from '@/entities/ceremony';
 
-import { useInfiniteScroll } from '@/shared/hooks';
+import { useFetchNextOnScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui/fallback';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
 
 import { CeremonySection } from './CeremonySection';
-
-const useFetchNextOnScroll = (
-  fetchNextPage: () => void,
-  hasNextPage: boolean,
-) => {
-  const handleIntersect = useCallback<IntersectionObserverCallback>(
-    (entries) => {
-      if (entries[0]?.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage],
-  );
-  return useInfiniteScroll({ intersectionCallback: handleIntersect });
-};
 
 interface SectionContentProps {
   type: CeremonyFilterTypeApi;
@@ -37,7 +22,7 @@ interface SectionContentProps {
 
 const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
   const { data, fetchNextPage, hasNextPage } = useOngoingCeremoniesQuery(type);
-  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
+  const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
 
   return (
     <>
@@ -54,7 +39,7 @@ const OngoingContent = ({ type, onItemClick }: SectionContentProps) => {
 
 const UpcomingContent = ({ type, onItemClick }: SectionContentProps) => {
   const { data, fetchNextPage, hasNextPage } = useUpcomingCeremoniesQuery(type);
-  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
+  const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
 
   return (
     <>
@@ -71,7 +56,7 @@ const UpcomingContent = ({ type, onItemClick }: SectionContentProps) => {
 
 const PastContent = ({ type, onItemClick }: SectionContentProps) => {
   const { data, fetchNextPage, hasNextPage } = usePastCeremoniesQuery(type);
-  const { targetRef } = useFetchNextOnScroll(fetchNextPage, hasNextPage);
+  const { targetRef } = useFetchNextOnScroll({ fetchNextPage, hasNextPage });
 
   if (data.items.length === 0) return null;
 
