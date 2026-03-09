@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Text, VStack } from '@causw/cds';
 
 import { MethodSelectContainer, SessionKeepConfirmModal } from '@/widgets/auth';
+import { SignInImageSection } from '@/widgets/auth';
 
 import {
   AppleLoginButton,
@@ -16,6 +17,7 @@ import {
 } from '@/features/auth';
 
 import { APPLE_SERVICE_ID, GOOGLE_CLIENT_ID } from '@/shared/config';
+import { LogoHeader } from '@/shared/ui';
 import { isAndroid } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'apple' | 'google';
@@ -61,63 +63,59 @@ export const SelectMethodPage = () => {
   };
 
   return (
-    <MethodSelectContainer>
-      <SessionKeepConfirmModal
-        open={confirmModalOpen}
-        onOpenChange={handleConfirmModalOpenChange}
-        onConfirm={handleConfirm}
-      />
-      <VStack className="gap-20">
-        <VStack justify="center" align="center" className="w-full gap-8">
-          <VStack
-            justify="center"
-            align="center"
-            className="h-[130px] w-[130px] rounded-[40px] bg-gray-300"
-          >
-            <Text typography="title-22-bold" textColor="gray-400">
-              LOGO
+    <>
+      <LogoHeader />
+
+      <MethodSelectContainer>
+        <SessionKeepConfirmModal
+          open={confirmModalOpen}
+          onOpenChange={handleConfirmModalOpenChange}
+          onConfirm={handleConfirm}
+        />
+        <VStack className="gap-12 md:gap-20">
+          <VStack justify="center" align="center" className="w-full gap-8">
+            <SignInImageSection />
+
+            <Text
+              as="h1"
+              typography="title-22-bold"
+              textColor="gray-800"
+              className="text-center whitespace-pre-wrap"
+            >
+              함께하면 더 밝은 미래로,{'\n'}
+              우리들의 동문네트워크
             </Text>
           </VStack>
 
-          <Text
-            as="h1"
-            typography="title-22-bold"
-            textColor="gray-800"
-            className="text-center whitespace-pre-wrap"
-          >
-            함께하면 더 밝은 미래로,{'\n'}
-            우리들의 동문네트워크
-          </Text>
-        </VStack>
-
-        <VStack className="w-full gap-3">
-          <KakaoLoginButton
-            data-social-provider="kakao"
-            onClick={handleSocialButtonClick('kakao')}
-            redirectUri="/auth/sign-in/kakao"
-          />
-
-          {!isAndroid && (
-            <AppleLoginButton
-              data-social-provider="apple"
-              onClick={handleSocialButtonClick('apple')}
-              serviceId={APPLE_SERVICE_ID}
-              redirectUri={'/auth/sign-in/apple/callback'}
+          <VStack className="w-full gap-3">
+            <KakaoLoginButton
+              data-social-provider="kakao"
+              onClick={handleSocialButtonClick('kakao')}
+              redirectUri="/auth/sign-in/kakao"
             />
-          )}
 
-          <GoogleLoginButton
-            data-social-provider="google"
-            onClick={handleSocialButtonClick('google')}
-            clientId={GOOGLE_CLIENT_ID}
-            redirectUri={'/auth/sign-in/google'}
-          />
+            {!isAndroid && (
+              <AppleLoginButton
+                data-social-provider="apple"
+                onClick={handleSocialButtonClick('apple')}
+                serviceId={APPLE_SERVICE_ID}
+                redirectUri={'/auth/sign-in/apple/callback'}
+              />
+            )}
 
-          <EmailLoginButton
-            onClick={() => router.push('/auth/sign-in/email')}
-          />
+            <GoogleLoginButton
+              data-social-provider="google"
+              onClick={handleSocialButtonClick('google')}
+              clientId={GOOGLE_CLIENT_ID}
+              redirectUri={'/auth/sign-in/google'}
+            />
+
+            <EmailLoginButton
+              onClick={() => router.push('/auth/sign-in/email')}
+            />
+          </VStack>
         </VStack>
-      </VStack>
-    </MethodSelectContainer>
+      </MethodSelectContainer>
+    </>
   );
 };
