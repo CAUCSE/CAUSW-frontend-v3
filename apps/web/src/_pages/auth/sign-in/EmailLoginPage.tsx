@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Text, CTAButton, Flex, VStack, Separator } from '@causw/cds';
+import { Text, CTAButton, Flex, VStack, Separator, Checkbox } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
@@ -95,16 +95,16 @@ export const EmailLoginPage = () => {
               typography="body-16-regular"
             />
 
-            {/* <Checkbox className="w-fit" {...methods.register('rememberMe')}>
-            <Checkbox.Indicator />
-            <Checkbox.Label
-              as="span"
-              typography="body-15-semibold"
-              textColor="gray-700"
-            >
-              로그인 상태 유지
-            </Checkbox.Label>
-          </Checkbox> */}
+            <Checkbox className="w-fit">
+              <Checkbox.Indicator />
+              <Checkbox.Label
+                as="span"
+                typography="body-15-semibold"
+                textColor="gray-700"
+              >
+                로그인 상태 유지
+              </Checkbox.Label>
+            </Checkbox>
 
             <CTAButton color="dark" fullWidth type="submit">
               로그인
@@ -112,13 +112,33 @@ export const EmailLoginPage = () => {
 
             <Flex justify="center" className="w-full">
               <Link href="/auth/find-id">
-                <Text typography="body-15-semibold" textColor="gray-700">
-                  아이디/비번 찾기
+                <Text
+                  typography="body-15-semibold"
+                  textColor="gray-700"
+                  className="hover:text-gray-500 active:text-gray-500"
+                >
+                  아이디 찾기
+                </Text>
+              </Link>
+
+              <Separator orientation="vertical" className="gray-300" />
+
+              <Link href="/auth/find-password">
+                <Text
+                  typography="body-15-semibold"
+                  textColor="gray-700"
+                  className="hover:text-gray-500 active:text-gray-500"
+                >
+                  비밀번호 찾기
                 </Text>
               </Link>
               <Separator orientation="vertical" className="gray-300" />
               <Link href="/auth/sign-up">
-                <Text typography="body-15-semibold" textColor="gray-700">
+                <Text
+                  typography="body-15-semibold"
+                  textColor="gray-700"
+                  className="hover:text-gray-500 active:text-gray-500"
+                >
                   회원가입
                 </Text>
               </Link>
