@@ -6,7 +6,7 @@ interface SessionKeepConfirmDialogProps {
   onConfirm: (value: boolean) => void;
 }
 
-export const SessionKeepConfirmDialog = ({
+export const SessionKeepConfirmModal = ({
   open,
   onOpenChange,
   onConfirm,

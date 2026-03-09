@@ -6,4 +6,4 @@ export * from './enrollment-verification-form';
 export * from './enrollment-step-card';
 export * from './enrollment-step-card-header';
 export * from './terms';
-export { SessionKeepConfirmDialog } from './session-keep-confirm-dialog';
+export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
