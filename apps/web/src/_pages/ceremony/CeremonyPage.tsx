@@ -16,9 +16,11 @@ import type {
 } from '@/entities/ceremony';
 import { filterByState } from '@/entities/ceremony';
 
+import { useScrollRestoration } from '@/shared/hooks';
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyPage = () => {
+  const { saveScrollPosition } = useScrollRestoration('ceremony-list-scroll');
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -40,6 +42,7 @@ export const CeremonyPage = () => {
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
   const handleItemClick = (id: string) => {
+    saveScrollPosition();
     router.push(`/ceremony/${id}`);
   };
 
