@@ -16,7 +16,6 @@ import {
   KakaoLoginButton,
 } from '@/features/auth';
 
-import { LogoHeader } from '@/shared/ui';
 import { isAndroid } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'apple' | 'google';
@@ -63,8 +62,6 @@ export const SelectMethodPage = () => {
 
   return (
     <>
-      <LogoHeader />
-
       <MethodSelectContainer>
         <SessionKeepConfirmModal
           open={confirmModalOpen}
