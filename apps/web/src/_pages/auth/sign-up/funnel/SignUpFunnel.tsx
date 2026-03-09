@@ -11,6 +11,8 @@ import { useSignUpStepGuard } from '@/features/auth/model/guard';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
+import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
+
 import { AccountStep } from '../steps/AccountStep';
 import { InfoStep } from '../steps/InfoStep';
 
@@ -55,28 +57,40 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
   };
 
   return (
-    <AuthContainer>
-      <FormProvider {...methods}>
-        <funnel.Render
-          Account={({ history }) => (
-            <AccountStep
-              onNext={async () => {
-                const isValid = await methods.trigger([
-                  'email',
-                  'password',
-                  'passwordConfirm',
-                ]);
-                if (!isValid) return;
+    <>
+      <MobileOnly>
+        <ActionHeader>
+          <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+        </ActionHeader>
+      </MobileOnly>
+      <AuthContainer>
+        <DesktopOnly>
+          <ActionHeader className="mb-10 px-0">
+            <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+          </ActionHeader>
+        </DesktopOnly>
+        <FormProvider {...methods}>
+          <funnel.Render
+            Account={({ history }) => (
+              <AccountStep
+                onNext={async () => {
+                  const isValid = await methods.trigger([
+                    'email',
+                    'password',
+                    'passwordConfirm',
+                  ]);
+                  if (!isValid) return;
 
-                allowInfoStep();
-                syncInfoStepUrl();
-                history.push('Info');
-              }}
-            />
-          )}
-          Info={() => <InfoStep onNext={methods.handleSubmit(onSubmit)} />}
-        />
-      </FormProvider>
-    </AuthContainer>
+                  allowInfoStep();
+                  syncInfoStepUrl();
+                  history.push('Info');
+                }}
+              />
+            )}
+            Info={() => <InfoStep onNext={methods.handleSubmit(onSubmit)} />}
+          />
+        </FormProvider>
+      </AuthContainer>
+    </>
   );
 };

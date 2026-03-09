@@ -17,7 +17,7 @@ import { SigninRequestDto, signInSchema } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { RHFInput } from '@/shared/ui';
+import { ActionHeader, DesktopOnly, MobileOnly, RHFInput } from '@/shared/ui';
 import { extractErrorMessage } from '@/shared/utils';
 
 export const EmailLoginPage = () => {
@@ -50,40 +50,52 @@ export const EmailLoginPage = () => {
   };
 
   return (
-    <AuthContainer>
-      <FormProvider {...methods}>
-        <VStack
-          as="form"
-          className="w-full gap-7"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <VStack justify="center" className="w-full">
-            <Text
-              as="h1"
-              typography="title-22-bold"
-              textColor="gray-800"
-              className="whitespace-pre-wrap"
-            >
-              이메일로 시작하기
-            </Text>
-          </VStack>
+    <>
+      <MobileOnly>
+        <ActionHeader>
+          <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+        </ActionHeader>
+      </MobileOnly>
 
-          <RHFInput
-            name="email"
-            label="이메일"
-            placeholder="이메일을 입력해주세요."
-            typography="body-16-regular"
-          />
+      <AuthContainer>
+        <FormProvider {...methods}>
+          <VStack
+            as="form"
+            className="w-full gap-7"
+            onSubmit={methods.handleSubmit(onSubmit)}
+          >
+            <DesktopOnly>
+              <ActionHeader className="px-0">
+                <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+              </ActionHeader>
+            </DesktopOnly>
+            <VStack justify="center" className="w-full">
+              <Text
+                as="h1"
+                typography="title-22-bold"
+                textColor="gray-800"
+                className="whitespace-pre-wrap"
+              >
+                이메일로 시작하기
+              </Text>
+            </VStack>
 
-          <RHFInput
-            name="password"
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호를 입력해주세요."
-            typography="body-16-regular"
-          />
+            <RHFInput
+              name="email"
+              label="이메일"
+              placeholder="이메일을 입력해주세요."
+              typography="body-16-regular"
+            />
 
-          {/* <Checkbox className="w-fit" {...methods.register('rememberMe')}>
+            <RHFInput
+              name="password"
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호를 입력해주세요."
+              typography="body-16-regular"
+            />
+
+            {/* <Checkbox className="w-fit" {...methods.register('rememberMe')}>
             <Checkbox.Indicator />
             <Checkbox.Label
               as="span"
@@ -94,25 +106,26 @@ export const EmailLoginPage = () => {
             </Checkbox.Label>
           </Checkbox> */}
 
-          <CTAButton color="dark" fullWidth type="submit">
-            로그인
-          </CTAButton>
+            <CTAButton color="dark" fullWidth type="submit">
+              로그인
+            </CTAButton>
 
-          <Flex justify="center" className="w-full">
-            <Link href="/auth/find-id">
-              <Text typography="body-15-semibold" textColor="gray-700">
-                아이디/비번 찾기
-              </Text>
-            </Link>
-            <Separator orientation="vertical" className="gray-300" />
-            <Link href="/auth/sign-up">
-              <Text typography="body-15-semibold" textColor="gray-700">
-                회원가입
-              </Text>
-            </Link>
-          </Flex>
-        </VStack>
-      </FormProvider>
-    </AuthContainer>
+            <Flex justify="center" className="w-full">
+              <Link href="/auth/find-id">
+                <Text typography="body-15-semibold" textColor="gray-700">
+                  아이디/비번 찾기
+                </Text>
+              </Link>
+              <Separator orientation="vertical" className="gray-300" />
+              <Link href="/auth/sign-up">
+                <Text typography="body-15-semibold" textColor="gray-700">
+                  회원가입
+                </Text>
+              </Link>
+            </Flex>
+          </VStack>
+        </FormProvider>
+      </AuthContainer>
+    </>
   );
 };
