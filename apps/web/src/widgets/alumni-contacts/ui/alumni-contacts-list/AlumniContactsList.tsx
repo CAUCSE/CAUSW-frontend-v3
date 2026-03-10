@@ -79,8 +79,6 @@ export const AlumniContactsListWrapper = () => {
     },
   });
 
-  console.log({ data });
-
   if (!data || data?.length === 0) {
     return <AlumniContactsListEmptyView />;
   }
