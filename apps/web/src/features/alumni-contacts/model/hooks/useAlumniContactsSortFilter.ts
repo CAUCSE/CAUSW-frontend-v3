@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -14,12 +14,11 @@ export const useAlumniContactsSortFilter = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [sortType, setSortType] =
-    useState<AlumniContactsSortFilterOption | null>(
-      searchParams.get(
-        ALUMNI_CONTACTS_FILTER.SORT_TYPE,
-      ) as AlumniContactsSortFilterOption | null,
-    );
+  const sortType = useMemo(() => {
+    return searchParams.get(
+      ALUMNI_CONTACTS_FILTER.SORT_TYPE,
+    ) as AlumniContactsSortFilterOption | null;
+  }, [searchParams]);
 
   const setSortTypeParam = useCallback(
     (value: AlumniContactsSortFilterOption) => {
@@ -32,7 +31,6 @@ export const useAlumniContactsSortFilter = () => {
 
   const handleSelectChange = useCallback(
     (value: string) => {
-      setSortType(value as AlumniContactsSortFilterOption);
       setSortTypeParam(value as AlumniContactsSortFilterOption);
     },
     [setSortTypeParam],
