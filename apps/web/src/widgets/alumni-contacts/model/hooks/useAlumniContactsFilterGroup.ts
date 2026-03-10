@@ -29,7 +29,6 @@ export const useAlumniContactsFilterGroup = () => {
   }, [admissionYearStart, admissionYearEnd]);
 
   const academicStatusFilterActive = useMemo(() => {
-    console.log(academicStatus);
     return academicStatus && academicStatus.length > 0;
   }, [academicStatus]);
 
