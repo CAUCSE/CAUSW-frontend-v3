@@ -4,6 +4,8 @@ import { Text, CTAButton, VStack, HStack } from '@causw/cds';
 
 import { useSignUpEmailVerificationStep } from '@/features/auth';
 
+import { RHFInput } from '@/shared/ui';
+
 export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
   const {
     email,
@@ -36,20 +38,17 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
           </VStack>
         </VStack>
 
-        <VStack className="w-full gap-2">
-          <Text typography="body-15-semibold" textColor="gray-700">
-            인증 코드 (6자리)
-          </Text>
-          <input
-            value={verificationCode}
-            onChange={(e) =>
-              setVerificationCode(e.target.value.replace(/[^0-9a-zA-Z]/g, ''))
-            }
-            maxLength={6}
-            placeholder="인증 코드를 입력해주세요"
-            className="typo-body-16-regular h-14 w-full rounded-md border border-gray-300 px-4 text-gray-800 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none"
-          />
-        </VStack>
+        <RHFInput
+          name="verificationCode"
+          label="인증 코드 (6자리)"
+          typography="body-16-regular"
+          value={verificationCode}
+          onChange={(e) =>
+            setVerificationCode(e.target.value.replace(/[^0-9a-zA-Z]/g, ''))
+          }
+          maxLength={6}
+          placeholder="인증 코드를 입력해주세요"
+        />
       </VStack>
       <VStack className="gap-3">
         <CTAButton
