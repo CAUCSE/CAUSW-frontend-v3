@@ -2,12 +2,11 @@
 
 import { useCallback } from 'react';
 
-import { useShallow } from 'zustand/shallow';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
-  useAlumniContactsFilterStore,
   useAlumniContactsAcademicFilterSheetModalContext,
-  ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
+  ALUMNI_CONTACTS_FILTER,
 } from '@/entities/alumni-contacts';
 
 interface useAlumniContactsAcademicFilterSheetModalProps {
@@ -17,19 +16,12 @@ interface useAlumniContactsAcademicFilterSheetModalProps {
 export const useAlumniContactsAcademicFilterSheetModal = ({
   setIsOpen,
 }: useAlumniContactsAcademicFilterSheetModalProps) => {
-  const { MIN: MIN_ADMISSION_YEAR, MAX: MAX_ADMISSION_YEAR } =
-    ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER;
   const { startAdmissionYear, endAdmissionYear, academicStatus } =
     useAlumniContactsAcademicFilterSheetModalContext();
 
-  const { setAdmissionYearStart, setAdmissionYearEnd, setAcademicStatus } =
-    useAlumniContactsFilterStore(
-      useShallow((state) => ({
-        setAdmissionYearStart: state.setAdmissionYearStart,
-        setAdmissionYearEnd: state.setAdmissionYearEnd,
-        setAcademicStatus: state.setAcademicStatus,
-      })),
-    );
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handleOpenChange = useCallback(
     (open: boolean) => {
@@ -38,22 +30,36 @@ export const useAlumniContactsAcademicFilterSheetModal = ({
     [setIsOpen],
   );
 
-  const handleApply = useCallback(() => {
-    setAdmissionYearStart(startAdmissionYear ?? MIN_ADMISSION_YEAR);
-    setAdmissionYearEnd(endAdmissionYear ?? MAX_ADMISSION_YEAR);
-    setAcademicStatus(academicStatus);
-    handleOpenChange(false);
+  const handleSetFilterSearchParams = useCallback(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(
+      ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_START,
+      startAdmissionYear?.toString() ?? '',
+    );
+    params.set(
+      ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_END,
+      endAdmissionYear?.toString() ?? '',
+    );
+    if (academicStatus && academicStatus.length > 0) {
+      params.set(
+        ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS,
+        academicStatus.join(','),
+      );
+    }
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [
-    MIN_ADMISSION_YEAR,
-    MAX_ADMISSION_YEAR,
     startAdmissionYear,
     endAdmissionYear,
     academicStatus,
-    handleOpenChange,
-    setAdmissionYearStart,
-    setAdmissionYearEnd,
-    setAcademicStatus,
+    searchParams,
+    router,
+    pathname,
   ]);
+
+  const handleApply = useCallback(() => {
+    handleSetFilterSearchParams();
+    handleOpenChange(false);
+  }, [handleSetFilterSearchParams, handleOpenChange]);
 
   return {
     handleOpenChange,

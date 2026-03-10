@@ -1,32 +1,13 @@
 'use client';
 
-import { useCallback } from 'react';
-
-import { useShallow } from 'zustand/shallow';
-
 import { Select, Text } from '@causw/cds';
 
-import {
-  ALUMNI_CONTACTS_SORT_FILTER_OPTION,
-  AlumniContactsSortFilterOption,
-  useAlumniContactsFilterStore,
-} from '@/entities/alumni-contacts';
+import { ALUMNI_CONTACTS_SORT_FILTER_OPTION } from '@/entities/alumni-contacts';
+
+import { useAlumniContactsSortFilter } from '../../model';
 
 export const AlumniContactsSortFilterSelect = () => {
-  const { sortType, setSortType } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      sortType: state.sortType,
-      setSortType: state.setSortType,
-    })),
-  );
-
-  const handleSelectChange = useCallback(
-    (value: string) => {
-      setSortType(value as AlumniContactsSortFilterOption);
-    },
-    [setSortType],
-  );
-
+  const { sortType, handleSelectChange } = useAlumniContactsSortFilter();
   return (
     <Select
       defaultValue={ALUMNI_CONTACTS_SORT_FILTER_OPTION.UPDATED_AT_DESC.value}

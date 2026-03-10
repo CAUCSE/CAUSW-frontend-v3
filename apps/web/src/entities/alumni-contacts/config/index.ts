@@ -7,3 +7,7 @@ export {
   type AlumniContactsAcademicStatusFilterOption,
 } from './alumniContactsAcademicStatusFilterOption';
 export { ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER } from './alumniContactsAdmissionYearFilter';
+export {
+  ALUMNI_CONTACTS_FILTER,
+  type AlumniContactsFilter,
+} from './alumniContactsFilter';

@@ -2,38 +2,35 @@
 
 import { useCallback, useMemo } from 'react';
 
-import { useShallow } from 'zustand/shallow';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
+  ALUMNI_CONTACTS_FILTER,
   AlumniContactsAcademicStatusFilterOption,
-  useAlumniContactsFilterStore,
 } from '@/entities/alumni-contacts';
 
 export const useAlumniContactsFilterGroup = () => {
-  const {
-    admissionYearStart,
-    admissionYearEnd,
-    academicStatus,
-    setAdmissionYearStart,
-    setAdmissionYearEnd,
-    setAcademicStatus,
-  } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      admissionYearStart: state.admissionYearStart,
-      admissionYearEnd: state.admissionYearEnd,
-      academicStatus: state.academicStatus,
-      setAdmissionYearStart: state.setAdmissionYearStart,
-      setAdmissionYearEnd: state.setAdmissionYearEnd,
-      setAcademicStatus: state.setAcademicStatus,
-    })),
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const admissionYearStart = searchParams.get(
+    ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_START,
   );
+  const admissionYearEnd = searchParams.get(
+    ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_END,
+  );
+  const academicStatus = searchParams
+    .get(ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS)
+    ?.split(',') as AlumniContactsAcademicStatusFilterOption[];
 
   const admissionYearFilterActive = useMemo(() => {
     return admissionYearStart !== null && admissionYearEnd !== null;
   }, [admissionYearStart, admissionYearEnd]);
 
   const academicStatusFilterActive = useMemo(() => {
-    return academicStatus !== null && academicStatus.length > 0;
+    console.log(academicStatus);
+    return academicStatus && academicStatus.length > 0;
   }, [academicStatus]);
 
   const filterActive = useMemo(() => {
@@ -42,19 +39,32 @@ export const useAlumniContactsFilterGroup = () => {
 
   const handleAcademicStatusFilterChipClick = useCallback(
     (status: AlumniContactsAcademicStatusFilterOption) => {
+      const params = new URLSearchParams(searchParams.toString());
       const currentAcademicStatus = academicStatus ?? [];
       const newAcademicStatus = currentAcademicStatus.filter(
         (s) => s !== status,
       );
-      setAcademicStatus(newAcademicStatus);
+
+      if (newAcademicStatus.length === 0) {
+        params.delete(ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS);
+      } else {
+        params.set(
+          ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS,
+          newAcademicStatus.join(','),
+        );
+      }
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [academicStatus, setAcademicStatus],
+    [academicStatus, router, pathname, searchParams],
   );
 
   const handleAdmissionYearFilterChipClick = useCallback(() => {
-    setAdmissionYearStart(null);
-    setAdmissionYearEnd(null);
-  }, [setAdmissionYearStart, setAdmissionYearEnd]);
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_START);
+    params.delete(ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_END);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [router, pathname, searchParams]);
 
   return {
     admissionYearStart,

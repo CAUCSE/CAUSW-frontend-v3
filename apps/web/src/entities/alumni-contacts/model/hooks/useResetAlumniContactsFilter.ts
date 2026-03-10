@@ -2,16 +2,15 @@
 
 import { useEffect, useRef } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useAlumniContactsFilterStore } from '@/entities/alumni-contacts/model/stores';
+import { ALUMNI_CONTACTS_FILTER } from '../../config';
 
 export const useResetAlumniContactsFilter = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const prevPathnameRef = useRef(pathname);
-  const resetAlumniContactsFilter = useAlumniContactsFilterStore(
-    (state) => state.reset,
-  );
 
   useEffect(() => {
     const prevPathname = prevPathnameRef.current;
@@ -20,10 +19,14 @@ export const useResetAlumniContactsFilter = () => {
       !pathname.startsWith('/alumni-contacts');
 
     if (isLeavingAlumniContacts) {
-      resetAlumniContactsFilter();
-      useAlumniContactsFilterStore.persist.clearStorage();
+      const params = new URLSearchParams(searchParams.toString());
+      Object.values(ALUMNI_CONTACTS_FILTER).forEach((filter) => {
+        params.delete(filter);
+      });
+
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     }
 
     prevPathnameRef.current = pathname;
-  }, [pathname, resetAlumniContactsFilter]);
+  }, [pathname, router, searchParams]);
 };
