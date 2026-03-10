@@ -4,11 +4,13 @@ export {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
   type AlumniContactsAcademicStatusFilterOption,
   ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
+  ALUMNI_CONTACTS_FILTER,
+  type AlumniContactsFilter,
 } from './config';
 export {
-  useAlumniContactsFilterStore,
   AlumniContactsAcademicFilterSheetModalContext,
   useAlumniContactsAcademicFilterSheetModalContext,
   useResetAlumniContactsFilter,
 } from './model';
 export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
+export { alumniContactsQueryOptions, alumniContactsQueryKeys } from './api';
