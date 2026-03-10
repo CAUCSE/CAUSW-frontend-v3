@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useForm, FormProvider } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
@@ -55,6 +57,18 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
     },
   });
   const signUpMutation = useSignUpMutation();
+
+  useEffect(() => {
+    const navigationEntry = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+
+    if (navigationEntry?.type !== 'reload') return;
+    if (initialStep === 'Account') return;
+
+    window.sessionStorage.setItem('sign_up_step_level', '0');
+    funnel.history.replace('Account');
+  }, []);
 
   const onSubmit = (data: SignUpFormData) => {
     signUpMutation.mutate(
