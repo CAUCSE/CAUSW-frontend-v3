@@ -53,6 +53,14 @@ export interface VerifyEmailVerificationCodeResponseDto {
   message: string;
 }
 
+export interface CheckPhoneDuplicateRequestDto {
+  phoneNumber: string;
+}
+
+export interface CheckNicknameDuplicateRequestDto {
+  nickname: string;
+}
+
 export interface KakaoLoginRequestDto {
   /** 카카오 OAuth 인가 코드 */
   code: string;
