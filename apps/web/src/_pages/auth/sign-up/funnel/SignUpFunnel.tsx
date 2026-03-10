@@ -7,7 +7,7 @@ import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { useSignUpStepGuard } from '@/features/auth/model/guard';
+import { useSignUpStepGuard } from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
@@ -31,7 +31,6 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
   const { allowEmailVerificationStep, allowInfoStep } = useSignUpStepGuard({
     initialStep,
   });
-
   const funnel = useFunnel<SignUpStep>({
     id: 'sign-up',
     initial: {
@@ -39,7 +38,6 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
       context: {},
     },
   });
-
   const methods = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     mode: 'onBlur',
@@ -77,26 +75,19 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
         </DesktopOnly>
         <FormProvider {...methods}>
           <funnel.Render
-            Account={({ history }) => (
+            Account={() => (
               <AccountStep
-                onNext={async () => {
-                  const isValid = await methods.trigger([
-                    'email',
-                    'password',
-                    'passwordConfirm',
-                  ]);
-                  if (!isValid) return;
-
+                onNext={() => {
                   allowEmailVerificationStep();
-                  history.push('EmailVerification');
+                  funnel.history.push('EmailVerification');
                 }}
               />
             )}
-            EmailVerification={({ history }) => (
+            EmailVerification={() => (
               <EmailVerificationStep
                 onNext={() => {
                   allowInfoStep();
-                  history.push('Info');
+                  funnel.history.push('Info');
                 }}
               />
             )}
