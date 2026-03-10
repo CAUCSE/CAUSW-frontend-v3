@@ -1,15 +1,19 @@
 import { SignUpFunnel } from '@/_pages/auth/sign-up/funnel/SignUpFunnel';
 
 type PageProps = {
-  searchParams?: Promise<{ step?: string }>;
+  searchParams?: Promise<Record<string, string | undefined>>;
 };
 
 const Page = async ({ searchParams }: PageProps) => {
   const resolvedSearchParams = await searchParams;
+  const rawStep =
+    resolvedSearchParams?.step ?? resolvedSearchParams?.['sign-up.step'];
+  const normalizedStep = rawStep?.toLowerCase();
   const step =
-    resolvedSearchParams?.step === 'info'
+    normalizedStep === 'info'
       ? 'Info'
-      : resolvedSearchParams?.step === 'email-verification'
+      : normalizedStep === 'email-verification' ||
+          normalizedStep === 'emailverification'
         ? 'EmailVerification'
         : 'Account';
 
