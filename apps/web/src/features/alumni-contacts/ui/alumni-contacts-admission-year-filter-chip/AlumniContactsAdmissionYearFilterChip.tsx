@@ -3,8 +3,8 @@
 import { Button, Chip, Close } from '@causw/cds';
 
 interface AlumniContactsAdmissionYearFilterChipProps {
-  admissionYearStart: number;
-  admissionYearEnd: number;
+  admissionYearStart: string;
+  admissionYearEnd: string;
   onClick: () => void;
 }
 
