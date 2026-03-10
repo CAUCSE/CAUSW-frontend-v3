@@ -2,12 +2,14 @@
 
 import { useForm, FormProvider } from 'react-hook-form';
 
+import { useRouter } from 'next/navigation';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { useSignUpStepGuard } from '@/features/auth';
+import { useSignUpMutation, useSignUpStepGuard } from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
@@ -28,6 +30,7 @@ type SignUpFunnelProps = {
 };
 
 export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
+  const router = useRouter();
   const { allowEmailVerificationStep, allowInfoStep } = useSignUpStepGuard({
     initialStep,
   });
@@ -48,12 +51,27 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
       name: '',
       phoneNumber: '',
       nickname: '',
+      emailVerificationCode: '',
     },
   });
+  const signUpMutation = useSignUpMutation();
 
   const onSubmit = (data: SignUpFormData) => {
-    console.log('Final Submission:', data);
-    // Submit logic here
+    signUpMutation.mutate(
+      {
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        phoneNumber: data.phoneNumber,
+        nickname: data.nickname,
+        emailVerificationCode: data.emailVerificationCode,
+      },
+      {
+        onSuccess: () => {
+          router.replace('/auth/enrollment-verification');
+        },
+      },
+    );
   };
 
   return (
