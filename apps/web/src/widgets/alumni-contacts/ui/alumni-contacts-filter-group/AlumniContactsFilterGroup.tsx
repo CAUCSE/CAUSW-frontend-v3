@@ -2,8 +2,6 @@
 
 import { HStack } from '@causw/cds';
 
-import { useAlumniContactsFilterGroup } from '@/widgets/alumni-contacts/model';
-
 import {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
@@ -12,6 +10,7 @@ import {
 
 import { AlumniContactsAcademicFilterSheetModalProvider } from '@/entities/alumni-contacts';
 
+import { useAlumniContactsFilterGroup } from '../../model';
 import { AlumniContactsAcademicFilterSheetModal } from '../alumni-contacts-academic-filter-sheet-modal';
 
 export const AlumniContactsFilterGroup = () => {
@@ -34,10 +33,9 @@ export const AlumniContactsFilterGroup = () => {
         <HStack gap="sm" className="overflow-x-auto">
           <>
             {admissionYearFilterActive && (
-              // 무조건 number임
               <AlumniContactsAdmissionYearFilterChip
-                admissionYearStart={admissionYearStart ?? 0}
-                admissionYearEnd={admissionYearEnd ?? 0}
+                admissionYearStart={admissionYearStart ?? ''}
+                admissionYearEnd={admissionYearEnd ?? ''}
                 onClick={handleAdmissionYearFilterChipClick}
               />
             )}

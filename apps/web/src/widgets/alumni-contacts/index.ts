@@ -1,4 +1,4 @@
 export {
   AlumniContactsFilterGroup,
-  AlumniContactsAcademicListServer,
+  AlumniContactsListServerComponent,
 } from './ui';

@@ -2,8 +2,10 @@ import { Suspense } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { AlumniContactsFilterGroup } from '@/widgets/alumni-contacts';
-import { AlumniContactsListServerComponent } from '@/widgets/alumni-contacts/ui';
+import {
+  AlumniContactsFilterGroup,
+  AlumniContactsListServerComponent,
+} from '@/widgets/alumni-contacts';
 
 import {
   AlumniContactsSearchInput,
