@@ -1,7 +1,8 @@
-import { FindPasswordPage } from '@/_pages/auth/find-password';
+import { FindIdPage } from '@/_pages/auth/find-id';
 
 const Page = () => {
-  return <FindPasswordPage />;
+  return <FindIdPage />;
+};
 };
 
 export default Page;
