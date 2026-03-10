@@ -10,5 +10,6 @@ interface GetAlumniContactsResponseDto {
   description: string;
 }
 
-export type GetPaginatedAlumniContactsResponseDto =
-  PaginationDto<GetAlumniContactsResponseDto>;
+export type GetPaginatedAlumniContactsResponseDto = PaginationDto<
+  GetAlumniContactsResponseDto[]
+>;
