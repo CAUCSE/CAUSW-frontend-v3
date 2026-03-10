@@ -4,6 +4,8 @@ import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Text, CTAButton, VStack } from '@causw/cds';
 
+import { useSignUpAccountStep } from '@/features/auth';
+
 import { accountSchema, type SignUpFormData } from '@/entities/auth';
 
 import { RHFInput, RHFPasswordInput } from '@/shared/ui';
@@ -14,6 +16,7 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
     control,
     name: ['email', 'password', 'passwordConfirm'],
   });
+  const { handleNextClick, isSendingCode } = useSignUpAccountStep(onNext);
 
   const isNextEnabled = accountSchema.safeParse({
     email,
@@ -61,11 +64,11 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
       <CTAButton
         color="dark"
         fullWidth
-        disabled={!isNextEnabled}
-        onClick={onNext}
+        disabled={!isNextEnabled || isSendingCode}
+        onClick={handleNextClick}
         className="mt-16 md:mt-10"
       >
-        다음
+        {isSendingCode ? '전송 중...' : '다음'}
       </CTAButton>
     </VStack>
   );
