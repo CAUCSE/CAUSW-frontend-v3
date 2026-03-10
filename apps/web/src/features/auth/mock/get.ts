@@ -1,7 +1,5 @@
 import { HttpResponse } from 'msw';
 
-import { CheckDuplicateResponseDto } from '@/entities/auth';
-
 import { mswHttp } from '@/shared/lib';
 
 const USER_API_PREFIX = '/api/v2/users';
@@ -13,7 +11,7 @@ const DUPLICATED_PHONE_NUMBERS = new Set([
 ]);
 
 export const getHandler = [
-  mswHttp.get<CheckDuplicateResponseDto>(
+  mswHttp.get<null>(
     `${USER_API_PREFIX}/check-phone`,
     ({ request }) => {
       const { searchParams } = new URL(request.url);
@@ -45,13 +43,13 @@ export const getHandler = [
         {
           code: 'S000',
           message: '요청 처리 성공',
-          data: {},
+          data: null,
         },
         { status: 200 },
       );
     },
   ),
-  mswHttp.get<CheckDuplicateResponseDto>(
+  mswHttp.get<null>(
     `${USER_API_PREFIX}/check-nickname`,
     ({ request }) => {
       const { searchParams } = new URL(request.url);
@@ -85,7 +83,7 @@ export const getHandler = [
         {
           code: 'S000',
           message: '요청 처리 성공',
-          data: {},
+          data: null,
         },
         { status: 200 },
       );
