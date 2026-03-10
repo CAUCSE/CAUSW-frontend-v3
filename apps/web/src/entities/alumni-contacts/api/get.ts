@@ -8,7 +8,10 @@ import type {
 
 const URL_PREFIX = '/api/v2/users-info';
 
-export const getAlumniContacts = async (query: GetAlumniContactsQuery) => {
+export const getAlumniContacts = async (
+  query: GetAlumniContactsQuery,
+  pageNum: number = 0,
+) => {
   const queryString = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {
@@ -17,7 +20,11 @@ export const getAlumniContacts = async (query: GetAlumniContactsQuery) => {
     }
   });
 
+  queryString.append('pageNum', pageNum.toString());
+
   const url = withQuery(URL_PREFIX, queryString.toString());
 
-  return await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+  const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+
+  return response;
 };
