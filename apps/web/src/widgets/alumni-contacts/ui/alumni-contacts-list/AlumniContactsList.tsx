@@ -18,6 +18,8 @@ import { SuspenseView } from '@/shared/ui';
 
 import { AlumniContactsListItem } from '../alumni-contacts-list-item';
 
+import { AlumniContactsListEmptyView } from './AlumniContactsListEmptyView';
+
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
@@ -37,7 +39,7 @@ const AlumniContactsList = ({
   targetRef,
 }: AlumniContactsListProps) => {
   return (
-    <ul className="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <ul className="mb-20 grid grid-cols-1 gap-4 md:mb-5 md:grid-cols-2">
       {data?.map((item) => (
         <AlumniContactsListItem key={item.id} item={item} />
       ))}
@@ -46,7 +48,7 @@ const AlumniContactsList = ({
       )}
       {isLoading ||
         (isFetchingNextPage && (
-          <div className="col-span-2 flex w-full justify-center">
+          <div className="col-span-1 flex w-full justify-center md:col-span-2">
             <SuspenseView />
           </div>
         ))}
@@ -76,6 +78,12 @@ export const AlumniContactsListWrapper = () => {
       }
     },
   });
+
+  console.log({ data });
+
+  if (!data || data?.length === 0) {
+    return <AlumniContactsListEmptyView />;
+  }
 
   // PullToRefresh 컴포넌트 스크롤 동작 오류로 주석처리
   // const { isMobileSize } = useBreakpoint();
