@@ -21,11 +21,17 @@ export const SocialLoginCallbackPage = () => {
 
     const isFirstLogin = searchParams.get('isFirstLogin');
     const error = searchParams.get('error');
+    const message = searchParams.get('message');
     const isValidFirstLoginValue =
       isFirstLogin === 'true' || isFirstLogin === 'false';
 
+    if (isFirstLogin) {
+      router.replace('/auth/sign-up/oauth-additional-info');
+      return;
+    }
+
     if (error || !isValidFirstLoginValue) {
-      toast.error('잘못된 접근입니다.');
+      toast.error(message ?? '잘못된 접근입니다.');
       router.replace('/auth/sign-in');
       return;
     }
@@ -43,7 +49,7 @@ export const SocialLoginCallbackPage = () => {
 
         router.replace('/home');
       } catch {
-        toast.error('잘못된 접근입니다.');
+        toast.error('잘못된 인증 정보입니다.');
         router.replace('/auth/sign-in');
       }
     };
