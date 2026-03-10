@@ -25,8 +25,16 @@ export const infoSchema = z.object({
   nickname: nicknameSchema,
 });
 
+export const emailVerificationSchema = z.object({
+  emailVerificationCode: z
+    .string()
+    .regex(/^[0-9A-Za-z]{6}$/, '인증 코드를 6자리 입력해주세요.'),
+});
+
 // 전체 스키마 (필요시 병합해서 사용)
-export const signUpSchema = z.intersection(accountSchema, infoSchema);
+export const signUpSchema = accountSchema
+  .and(infoSchema)
+  .and(emailVerificationSchema);
 
 export type AccountFormData = z.infer<typeof accountSchema>;
 export type InfoFormData = z.infer<typeof infoSchema>;

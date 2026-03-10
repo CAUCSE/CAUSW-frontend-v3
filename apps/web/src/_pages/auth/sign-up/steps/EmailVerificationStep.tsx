@@ -1,20 +1,27 @@
 'use client';
 
+import { useFormContext, useWatch } from 'react-hook-form';
+
 import { Text, CTAButton, VStack, HStack } from '@causw/cds';
 
 import { useSignUpEmailVerificationStep } from '@/features/auth';
 
+import { emailVerificationSchema, SignUpFormData } from '@/entities/auth';
+
 import { RHFInput } from '@/shared/ui';
 
 export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
-  const {
-    email,
-    verificationCode,
-    setVerificationCode,
-    handleVerifyClick,
-    handleResendClick,
-    isVerifyingCode,
-  } = useSignUpEmailVerificationStep(onNext);
+  const { handleVerifyClick, handleResendClick, isVerifyingCode } =
+    useSignUpEmailVerificationStep(onNext);
+  const { control } = useFormContext<SignUpFormData>();
+  const [email = '', emailVerificationCode = ''] = useWatch({
+    control,
+    name: ['email', 'emailVerificationCode'],
+  });
+
+  const isNextEnabled = emailVerificationSchema.safeParse({
+    emailVerificationCode,
+  }).success;
 
   return (
     <VStack className="gap-14 md:gap-10">
@@ -39,13 +46,9 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
         </VStack>
 
         <RHFInput
-          name="verificationCode"
+          name="emailVerificationCode"
           label="인증 코드 (6자리)"
           typography="body-16-regular"
-          value={verificationCode}
-          onChange={(e) =>
-            setVerificationCode(e.target.value.replace(/[^0-9a-zA-Z]/g, ''))
-          }
           maxLength={6}
           placeholder="인증 코드를 입력해주세요"
         />
@@ -55,7 +58,7 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
           color="dark"
           fullWidth
           onClick={handleVerifyClick}
-          disabled={verificationCode.length < 6 || isVerifyingCode}
+          disabled={!isNextEnabled || isVerifyingCode}
         >
           {isVerifyingCode ? '검증 중...' : '다음'}
         </CTAButton>

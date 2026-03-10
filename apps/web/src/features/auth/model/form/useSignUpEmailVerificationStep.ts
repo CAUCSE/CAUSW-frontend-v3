@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import {
@@ -14,15 +12,14 @@ import { type SignUpFormData } from '@/entities/auth';
 export const useSignUpEmailVerificationStep = (onNext: () => void) => {
   const { control } = useFormContext<SignUpFormData>();
   const email = useWatch({ control, name: 'email' }) ?? '';
-  const [verificationCode, setVerificationCode] = useState('');
+  const verificationCode =
+    useWatch({ control, name: 'emailVerificationCode' }) ?? '';
   const sendEmailVerificationCodeMutation =
     useSendEmailVerificationCodeMutation();
   const verifyEmailVerificationCodeMutation =
     useVerifyEmailVerificationCodeMutation();
 
   const handleVerifyClick = () => {
-    if (verifyEmailVerificationCodeMutation.isPending) return;
-
     verifyEmailVerificationCodeMutation.mutate(
       {
         email,
@@ -44,8 +41,6 @@ export const useSignUpEmailVerificationStep = (onNext: () => void) => {
 
   return {
     email,
-    verificationCode,
-    setVerificationCode,
     handleVerifyClick,
     handleResendClick,
     isSendingCode: sendEmailVerificationCodeMutation.isPending,
