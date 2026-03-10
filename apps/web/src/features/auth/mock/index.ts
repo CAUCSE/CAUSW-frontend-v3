@@ -1,1 +1,3 @@
-export { authHandler } from './handler';
+import { postHandler } from './post';
+
+export const authHandler = [...postHandler];
