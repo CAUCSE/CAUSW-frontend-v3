@@ -14,3 +14,11 @@ export {
 } from './model';
 export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
 export { alumniContactsQueryOptions, alumniContactsQueryKeys } from './api';
+export {
+  AlumniContactsFilterSearchParam,
+  checkAlumniContactsFilterSearchParamValidation,
+} from './lib';
+export type {
+  GetPaginatedAlumniContactsResponseDto,
+  GetAlumniContactsQuery,
+} from './types';
