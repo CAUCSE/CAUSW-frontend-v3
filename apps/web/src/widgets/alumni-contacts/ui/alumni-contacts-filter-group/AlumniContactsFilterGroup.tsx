@@ -26,7 +26,7 @@ export const AlumniContactsFilterGroup = () => {
   } = useAlumniContactsFilterGroup();
 
   return (
-    <HStack className="items-center">
+    <HStack className="items-center overflow-x-auto">
       <AlumniContactsSortFilterSelect />
       <div className="h-3 w-px shrink-0 bg-gray-300" />
       {filterActive ? (
