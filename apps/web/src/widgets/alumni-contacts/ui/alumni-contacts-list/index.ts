@@ -1,0 +1,1 @@
+export { AlumniContactsListServerComponent } from './AlumniContactsListServerComponent';
