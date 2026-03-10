@@ -10,7 +10,7 @@ type UseSignUpStepGuardParams = {
   initialStep: GuardStep;
 };
 
-const SIGN_UP_ACCOUNT_URL = '/auth/sign-up?step=account';
+const SIGN_UP_ACCOUNT_URL = '/auth/sign-up?sign-up.step=Account';
 const SIGN_UP_STEP_LEVEL_KEY = 'sign_up_step_level';
 
 const STEP_LEVEL: Record<GuardStep, number> = {
@@ -20,11 +20,17 @@ const STEP_LEVEL: Record<GuardStep, number> = {
 };
 
 const getAllowedStepLevel = () => {
-  if (typeof window === 'undefined') return STEP_LEVEL.Account;
+  if (typeof window === 'undefined') return null;
 
   const saved = window.sessionStorage.getItem(SIGN_UP_STEP_LEVEL_KEY);
+  if (saved === null) return null;
+
   const parsed = Number(saved);
-  if (Number.isNaN(parsed)) return STEP_LEVEL.Account;
+  if (Number.isNaN(parsed)) return null;
+
+  if (parsed < STEP_LEVEL.Account || parsed > STEP_LEVEL.Info) {
+    return null;
+  }
 
   return parsed;
 };
@@ -40,12 +46,19 @@ export const useSignUpStepGuard = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (initialStep === 'Account') {
+    const allowedStepLevel = getAllowedStepLevel();
+
+    if (allowedStepLevel === null) {
       setAllowedStepLevel(STEP_LEVEL.Account);
+    }
+
+    if (initialStep === 'Account') {
       return;
     }
 
-    if (getAllowedStepLevel() >= STEP_LEVEL[initialStep]) return;
+    const currentAllowedStepLevel =
+      allowedStepLevel === null ? STEP_LEVEL.Account : allowedStepLevel;
+    if (currentAllowedStepLevel >= STEP_LEVEL[initialStep]) return;
     router.replace(SIGN_UP_ACCOUNT_URL);
   }, [initialStep, router]);
 

@@ -6,14 +6,11 @@ type PageProps = {
 
 const Page = async ({ searchParams }: PageProps) => {
   const resolvedSearchParams = await searchParams;
-  const rawStep =
-    resolvedSearchParams?.step ?? resolvedSearchParams?.['sign-up.step'];
-  const normalizedStep = rawStep?.toLowerCase();
+  const rawStep = resolvedSearchParams?.['sign-up.step'];
   const step =
-    normalizedStep === 'info'
+    rawStep === 'Info'
       ? 'Info'
-      : normalizedStep === 'email-verification' ||
-          normalizedStep === 'emailverification'
+      : rawStep === 'EmailVerification'
         ? 'EmailVerification'
         : 'Account';
 
