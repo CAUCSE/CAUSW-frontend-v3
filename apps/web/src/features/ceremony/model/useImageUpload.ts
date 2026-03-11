@@ -7,7 +7,7 @@ import type { ImageUploadFieldRef } from '@/shared/ui/image';
 export const useImageUpload = () => {
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
   const [photoResetTrigger, setPhotoResetTrigger] = useState(false);
-  const [, setPhotoFiles] = useState<File[]>([]);
+  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
 
   const handleSetPhotoFiles = useCallback((_name: string, value: unknown) => {
     setPhotoFiles(value as File[]);
@@ -20,6 +20,7 @@ export const useImageUpload = () => {
 
   return {
     imageUploadRef,
+    photoFiles,
     photoResetTrigger,
     handleSetPhotoFiles,
     resetImageUpload,

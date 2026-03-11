@@ -9,6 +9,7 @@ export interface RHFTabSelectProps {
   label: string;
   options: { label: string; value: string }[];
   required?: boolean;
+  onValueChange?: (value: string) => void;
 }
 
 export const RHFTabSelect = ({
@@ -16,6 +17,7 @@ export const RHFTabSelect = ({
   label,
   options,
   required,
+  onValueChange,
 }: RHFTabSelectProps) => {
   const {
     field: { value, onChange },
@@ -25,7 +27,14 @@ export const RHFTabSelect = ({
   return (
     <Field className="flex flex-col gap-2" error={!!error?.message}>
       <Field.Label>{label}</Field.Label>
-      <Tab.Root variant="chip" value={value} onValueChange={onChange}>
+      <Tab.Root
+        variant="chip"
+        value={value}
+        onValueChange={(nextValue) => {
+          onChange(nextValue);
+          onValueChange?.(nextValue);
+        }}
+      >
         <Tab.List className="scrollbar-hide flex-wrap gap-2 overflow-x-auto">
           {options.map((opt) => (
             <Tab.TabItem key={opt.value} value={opt.value} type="button">

@@ -23,34 +23,33 @@ export interface CeremonyItem {
   category: CeremonyCategory;
   startDate: string;
   endDate: string;
-  startTime: string;
-  endTime: string;
+  startTime: string | null;
+  endTime: string | null;
   state: CeremonyState;
 }
 
-/** 경조사 목록 페이지네이션 응답 (data 필드) */
-export interface CeremonyListData {
+/** 경조사 목록 페이지네이션 응답 */
+export interface CeremonyPageResponse {
   content: CeremonyItem[];
-  totalElements: number;
-  totalPages: number;
-  last: boolean;
-  first: boolean;
-  size: number;
-  number: number;
-  numberOfElements: number;
-  empty: boolean;
+  currentPage: number;
+  hasNext: boolean;
+  hasPrev: boolean;
 }
+
+/** 경조사 필터 API 파라미터 타입 */
+export type CeremonyFilterTypeApi = 'all' | 'celebration' | 'condolence';
 
 /** 경조사 필터 탭 타입 */
 export type CeremonyFilterType = '전체' | '경사' | '조사';
 
-export type CeremonyTypeApi = 'ALL' | 'CELEBRATION' | 'CONDOLENCE';
+export type CeremonyTypeApi = 'CELEBRATION' | 'CONDOLENCE';
+
 /** 내 경조사 상태 필터 */
 export type MyCeremonyStateFilter = '등록 완료' | '등록 거부' | '등록 대기중';
 
 export type CeremonyCategoryApi = 'ETC' | string;
 
-export type RelationType = 'ME' | 'FAMILY' | 'ALUMNI';
+export type RelationType = 'ME' | 'FAMILY' | 'INSTEAD';
 
 export type FamilyRelation = 'SON' | string;
 
@@ -77,7 +76,7 @@ export interface CeremonyCreateRequest {
   contact: string | null;
   link: string | null;
   isSetAll: boolean;
-  targetAdmissionYears: string[] | null;
+  targetAdmissionYears: number[] | null;
 }
 
 export interface CeremonyDetailResponse {
@@ -102,19 +101,4 @@ export interface CeremonyDetailResponse {
   targetAdmissionYears: string[] | null;
   state: CeremonyState;
   note: string | null;
-}
-export interface CeremonyUpcomingDto {
-  id: string;
-  title: string;
-  type: string;
-  category: string;
-  startDate: string;
-  endDate: string;
-  startTime: string | null;
-  endTime: string | null;
-  state: string | null;
-}
-
-export interface CeremonyUpcomingResponseDto {
-  content: CeremonyUpcomingDto[];
 }

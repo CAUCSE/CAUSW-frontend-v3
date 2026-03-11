@@ -1,7 +1,6 @@
 import { ChevronRight } from '@causw/cds';
 
-import { getCeremonyIcon } from '@/entities/ceremony/config';
-
+import { getCeremonyIcon } from '../config';
 import type { CeremonyItem } from '../model';
 
 interface CeremonyListItemProps {
@@ -9,26 +8,26 @@ interface CeremonyListItemProps {
   onClick?: () => void;
 }
 
-const isAllDay = (time: string) => time === '00:00:00' || time === '23:59:00';
+const ALL_DAY_TIMES = ['00:00:00', '23:59:00', '00:00', '23:59'];
+const isAllDay = (time: string | null) =>
+  time === null || ALL_DAY_TIMES.includes(time);
+
+const formatD = (date: string) => {
+  const [, month, day] = date.split('-');
+  return `${Number(month)}/${Number(day)}`;
+};
 
 const formatDateRange = (
   startDate: string,
   endDate: string,
-  startTime: string,
-  endTime: string,
+  startTime: string | null,
+  endTime: string | null,
 ): string => {
-  const formatD = (date: string) => {
-    const [, month, day] = date.split('-');
-    return `${Number(month)}/${Number(day)}`;
-  };
-
-  const formatT = (time: string) => time.slice(0, 5);
-
   const sameDay = startDate === endDate;
   const hasTime = !isAllDay(startTime) || !isAllDay(endTime);
 
-  if (sameDay && hasTime) {
-    return `${formatD(startDate)} ${formatT(startTime)}`;
+  if (sameDay && hasTime && startTime) {
+    return `${formatD(startDate)} ${startTime.slice(0, 5)}`;
   }
 
   if (sameDay) {
