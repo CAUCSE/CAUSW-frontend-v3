@@ -50,7 +50,11 @@ export const CeremonyPage = () => {
     <div className="relative flex min-h-screen flex-col bg-gray-100">
       <ActionHeader background="gray">
         <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
-        <ActionHeader.ActionButton>알림 설정</ActionHeader.ActionButton>
+        <ActionHeader.ActionButton
+          onClick={() => router.push('/setting/notifications')}
+        >
+          알림 설정
+        </ActionHeader.ActionButton>
       </ActionHeader>
 
       <CeremonyListView
