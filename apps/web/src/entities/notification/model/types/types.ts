@@ -43,3 +43,14 @@ export interface NotificationSettingsResponse {
   service: ServiceNotificationSettings;
   officialBoards: OfficialBoardNotificationSettings[];
 }
+
+export interface UpdateNotificationSettingsRequest {
+  community?: Partial<CommunityNotificationSettings>;
+  ceremony?: Partial<CeremonyNotificationSettings>;
+  service?: Partial<ServiceNotificationSettings>;
+}
+
+export interface UpdateOfficialBoardNotificationRequest {
+  boardId: string;
+  subscribed: boolean;
+}
