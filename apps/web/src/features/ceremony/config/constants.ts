@@ -12,17 +12,17 @@ export const CUSTOM_VALUE = 'custom';
 export const CEREMONY_TYPES: CeremonyType[] = ['경사', '조사'];
 
 export const HAPPY_CATEGORIES: CategoryOption[] = [
-  { value: '결혼식', emoji: '💍' },
-  { value: '돌잔치', emoji: '👶' },
-  { value: '개업', emoji: '🏪' },
-  { value: '생신잔치', emoji: '🎁' },
+  { value: '결혼식', label: '💍 결혼식' },
+  { value: '돌잔치', label: '👶 돌잔치' },
+  { value: '개업', label: '🏪 개업' },
+  { value: '생신잔치', label: '🎁 생신잔치' },
   { value: CUSTOM_VALUE, label: '직접 입력' },
 ];
 
 export const SAD_CATEGORIES: CategoryOption[] = [
-  { value: '장례식' },
-  { value: '사고' },
-  { value: '투병' },
+  { value: '장례식', label: '장례식' },
+  { value: '사고', label: '사고' },
+  { value: '투병' , label: '투병'},
   { value: CUSTOM_VALUE, label: '직접 입력' },
 ];
 
