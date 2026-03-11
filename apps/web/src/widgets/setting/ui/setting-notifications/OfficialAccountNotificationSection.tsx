@@ -6,10 +6,12 @@ import { SETTING_NOTIFICATIONS } from '../../config';
 
 type OfficialAccountNotificationSectionProps = {
   boards: OfficialBoardNotificationSettings[];
+  onToggle: (boardId: string, checked: boolean) => void;
 };
 
 export const OfficialAccountNotificationSection = ({
   boards,
+  onToggle,
 }: OfficialAccountNotificationSectionProps) => {
   if (boards.length === 0) return null;
 
@@ -23,6 +25,9 @@ export const OfficialAccountNotificationSection = ({
           <Toggle
             key={board.boardId}
             checked={board.subscribed}
+            onCheckedChange={(checked) =>
+              onToggle(board.boardId, Boolean(checked))
+            }
             className="justify-between"
           >
             <Toggle.Label typography="body-16-medium">

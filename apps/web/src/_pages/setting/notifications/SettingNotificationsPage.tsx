@@ -10,7 +10,12 @@ import {
 } from '@/widgets/setting';
 import { SETTING_NOTIFICATIONS } from '@/widgets/setting/config';
 
-import { useNotificationSettings } from '@/entities/notification';
+import { useNotificationSettingsOptimisticMutations } from '@/features/notification';
+
+import {
+  type CommunityNotificationSettings,
+  useNotificationSettings,
+} from '@/entities/notification';
 
 import { ActionHeader, HydrationSuspense, SuspenseView } from '@/shared/ui';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
@@ -27,6 +32,12 @@ export const SettingNotificationsPage = () => {
 
 const SettingNotificationContent = () => {
   const { data: settings } = useNotificationSettings();
+  const {
+    updateNotificationSettings,
+    updateOfficialBoardNotification,
+    isUpdatingNotificationSettings,
+    isUpdatingOfficialBoards,
+  } = useNotificationSettingsOptimisticMutations();
 
   return (
     <VStack gap="sm" className="w-full">
@@ -37,10 +48,45 @@ const SettingNotificationContent = () => {
       <VStack gap="md" className="w-full px-4">
         <Text typography="title-22-bold">{SETTING_NOTIFICATIONS.title}</Text>
 
-        <CommunityNotificationSection settings={settings.community} />
-        <OfficialAccountNotificationSection boards={settings.officialBoards} />
-        <NoticeNotificationSection settings={settings.service} />
-        <EventNotificationSection settings={settings.ceremony} />
+        <CommunityNotificationSection
+          settings={settings.community}
+          onToggle={(key, checked) => {
+            if (isUpdatingNotificationSettings) return;
+
+            const community = {
+              [key]: checked,
+            } as Partial<CommunityNotificationSettings>;
+
+            updateNotificationSettings({ community });
+          }}
+        />
+        <OfficialAccountNotificationSection
+          boards={settings.officialBoards}
+          onToggle={(boardId, subscribed) => {
+            if (isUpdatingOfficialBoards) return;
+            updateOfficialBoardNotification({ boardId, subscribed });
+          }}
+        />
+        <NoticeNotificationSection
+          settings={settings.service}
+          onToggle={(checked) => {
+            if (isUpdatingNotificationSettings) return;
+
+            updateNotificationSettings({
+              service: { noticeEnabled: checked },
+            });
+          }}
+        />
+        <EventNotificationSection
+          settings={settings.ceremony}
+          onToggle={(checked) => {
+            if (isUpdatingNotificationSettings) return;
+
+            updateNotificationSettings({
+              ceremony: { enabled: checked },
+            });
+          }}
+        />
       </VStack>
     </VStack>
   );

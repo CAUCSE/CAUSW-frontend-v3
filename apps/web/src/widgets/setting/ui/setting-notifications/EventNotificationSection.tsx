@@ -6,10 +6,12 @@ import { SETTING_NOTIFICATIONS } from '../../config';
 
 type EventNotificationSectionProps = {
   settings: CeremonyNotificationSettings;
+  onToggle: (checked: boolean) => void;
 };
 
 export const EventNotificationSection = ({
   settings,
+  onToggle,
 }: EventNotificationSectionProps) => {
   return (
     <VStack className="gap-5 rounded-lg bg-white p-5">
@@ -17,7 +19,11 @@ export const EventNotificationSection = ({
         {SETTING_NOTIFICATIONS.event.title}
       </Text>
       <VStack className="gap-6">
-        <Toggle checked={settings.enabled} className="justify-between">
+        <Toggle
+          checked={settings.enabled}
+          onCheckedChange={(checked) => onToggle(Boolean(checked))}
+          className="justify-between"
+        >
           <Toggle.Label typography="body-16-medium">
             경조사 알림 받기
           </Toggle.Label>
