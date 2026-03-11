@@ -1,9 +1,15 @@
 'use server';
 import { cookies } from 'next/headers';
 
-import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
+import {
+  getStorageAccessKey,
+  getStorageAuthRefreshedKey,
+  getStorageRefreshKey,
+  REFRRESHED,
+} from '@/shared/utils';
 
 const accessKey = getStorageAccessKey();
+const authRefreshedKey = getStorageAuthRefreshedKey();
 const refreshKey = getStorageRefreshKey();
 
 export const getServerATK = async (): Promise<string> => {
@@ -36,4 +42,8 @@ export const removeServerATK = async (): Promise<void> => {
 
 export const removeServerRTK = async (): Promise<void> => {
   (await cookies()).delete(refreshKey);
+};
+
+export const setServerAuthRefreshed = async (): Promise<void> => {
+  (await cookies()).set(authRefreshedKey, REFRRESHED);
 };

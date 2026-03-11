@@ -1,8 +1,14 @@
 import Cookies from 'js-cookie';
 
-import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
+import {
+  getStorageAccessKey,
+  getStorageAuthRefreshedKey,
+  getStorageRefreshKey,
+  REFRRESHED,
+} from '@/shared/utils';
 
 const accessKey = getStorageAccessKey();
+const authRefreshedKey = getStorageAuthRefreshedKey();
 const refreshKey = getStorageRefreshKey();
 
 export const getClientATK = (): string => {
@@ -35,4 +41,12 @@ export const removeClientATK = () => {
 
 export const removeClientRTK = () => {
   Cookies.remove(refreshKey);
+};
+
+export const getClientAuthRefreshed = (): boolean => {
+  return Cookies.get(authRefreshedKey) === REFRRESHED;
+};
+
+export const removeClientAuthRefreshed = () => {
+  Cookies.remove(authRefreshedKey);
 };
