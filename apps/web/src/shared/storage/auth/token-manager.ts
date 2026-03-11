@@ -22,6 +22,7 @@ import {
   getServerRTK,
   removeServerATK,
   removeServerRTK,
+  setServerAuthRefreshed,
   setServerATK,
 } from './auth-storage.server';
 
@@ -109,6 +110,12 @@ export class TokenManager {
       await removeNativeRTK();
     } else {
       removeClientRTK();
+    }
+  }
+
+  static async setAuthRefreshed(): Promise<void> {
+    if (isServer) {
+      await setServerAuthRefreshed();
     }
   }
 }
