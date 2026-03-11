@@ -16,3 +16,30 @@ export type NotificationType =
   | 'CEREMONY'
   | 'BOARD'
   | 'ADMISSION';
+
+export interface CommunityNotificationSettings {
+  likeOnMyPost: boolean;
+  commentOnMyPost: boolean;
+  replyOnMyComment: boolean;
+}
+
+export interface CeremonyNotificationSettings {
+  enabled: boolean;
+}
+
+export interface ServiceNotificationSettings {
+  noticeEnabled: boolean;
+}
+
+export interface OfficialBoardNotificationSettings {
+  boardId: string;
+  name: string;
+  subscribed: boolean;
+}
+
+export interface NotificationSettingsResponse {
+  community: CommunityNotificationSettings;
+  ceremony: CeremonyNotificationSettings;
+  service: ServiceNotificationSettings;
+  officialBoards: OfficialBoardNotificationSettings[];
+}
