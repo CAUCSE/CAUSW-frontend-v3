@@ -1,10 +1,10 @@
+import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier/flat';
-import importPlugin from 'eslint-plugin-import';
 import checkFile from 'eslint-plugin-check-file';
-import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
+import importPlugin from 'eslint-plugin-import';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -133,7 +133,8 @@ const eslintConfig = defineConfig([
             'App Router page must default export a component named "Page".',
         },
         {
-          selector: 'ExportDefaultDeclaration > FunctionDeclaration[id.name!="Page"]',
+          selector:
+            'ExportDefaultDeclaration > FunctionDeclaration[id.name!="Page"]',
           message:
             'App Router page must default export a component named "Page".',
         },
@@ -148,7 +149,8 @@ const eslintConfig = defineConfig([
             'App Router page must default export a component named "Page".',
         },
         {
-          selector: 'ExportDefaultDeclaration > ClassDeclaration[id.name!="Page"]',
+          selector:
+            'ExportDefaultDeclaration > ClassDeclaration[id.name!="Page"]',
           message:
             'App Router page must default export a component named "Page".',
         },
@@ -158,6 +160,12 @@ const eslintConfig = defineConfig([
             'App Router page must default export a component named "Page".',
         },
       ],
+    },
+  },
+  {
+    files: ['**/\\(\\.\\)feed/**'],
+    rules: {
+      'check-file/folder-naming-convention': 'off',
     },
   },
 ]);

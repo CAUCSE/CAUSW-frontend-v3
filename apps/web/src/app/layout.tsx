@@ -4,10 +4,7 @@ import type { Metadata } from 'next';
 
 import { getTraceData } from '@causw/logger';
 
-import {
-  QueryProviderWithDevtools,
-  Toaster,
-} from '@/shared/ui';
+import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 
 import { MSWComponent } from './_mock';
 import { GlobalRoutingProvider } from './_provider';

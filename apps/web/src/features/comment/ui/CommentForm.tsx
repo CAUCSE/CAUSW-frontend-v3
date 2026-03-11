@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 
 import { Checkbox, HStack, Stack, Text } from '@causw/cds';

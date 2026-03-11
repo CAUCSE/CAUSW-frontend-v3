@@ -19,12 +19,11 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
     icon: <Board size={18} />,
     href: '/feed',
   },
-  //TODO: write 라우팅 주소 수정 필요
   {
     key: 'write',
     label: '글쓰기',
     icon: <Pen size={18} />,
-    href: '/home',
+    href: '/feed/write',
   },
   {
     key: 'alumni-contacts',
