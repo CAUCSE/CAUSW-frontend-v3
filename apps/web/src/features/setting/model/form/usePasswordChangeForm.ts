@@ -21,7 +21,11 @@ export const usePasswordChangeForm = () => {
       confirmPassword: '',
     },
   });
-  const changePasswordMutation = useChangeMyPasswordMutation();
+  const changePasswordMutation = useChangeMyPasswordMutation({
+    onSuccess: () => {
+      methods.reset();
+    },
+  });
 
   const onSubmit = (data: PasswordChangeFormData) => {
     changePasswordMutation.mutate({
