@@ -9,7 +9,11 @@ import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { useSignUpMutation, useSignUpStepGuard } from '@/features/auth';
+import {
+  SIGN_UP_STEP,
+  useSignUpMutation,
+  useSignUpStepGuard,
+} from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
@@ -41,7 +45,7 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
   const { allowEmailVerificationStep, allowInfoStep } = useSignUpStepGuard({
     initialStep,
     onResetToAccount: () => {
-      funnel.history.replace('Account');
+      funnel.history.replace(SIGN_UP_STEP.Account);
     },
   });
   const methods = useForm<SignUpFormData>({
@@ -100,7 +104,7 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
               <AccountStep
                 onNext={() => {
                   allowEmailVerificationStep();
-                  funnel.history.push('EmailVerification');
+                  funnel.history.push(SIGN_UP_STEP.EmailVerification);
                 }}
               />
             )}
@@ -108,7 +112,7 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
               <EmailVerificationStep
                 onNext={() => {
                   allowInfoStep();
-                  funnel.history.push('Info');
+                  funnel.history.push(SIGN_UP_STEP.Info);
                 }}
               />
             )}
