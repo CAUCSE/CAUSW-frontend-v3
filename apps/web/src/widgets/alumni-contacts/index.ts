@@ -1,1 +1,5 @@
-export { AlumniContactsFilterGroup } from './ui';
+export {
+  AlumniContactsFilterGroup,
+  AlumniContactsListServerComponent,
+  AlumniContactsListLoadingView,
+} from './ui';

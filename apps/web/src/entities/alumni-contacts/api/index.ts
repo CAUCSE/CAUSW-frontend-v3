@@ -1,0 +1,1 @@
+export { getAlumniContacts } from './get';

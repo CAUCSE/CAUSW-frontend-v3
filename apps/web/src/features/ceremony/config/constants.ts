@@ -22,7 +22,7 @@ export const HAPPY_CATEGORIES: CategoryOption[] = [
 export const SAD_CATEGORIES: CategoryOption[] = [
   { value: '장례식', label: '장례식' },
   { value: '사고', label: '사고' },
-  { value: '투병' , label: '투병'},
+  { value: '투병', label: '투병' },
   { value: CUSTOM_VALUE, label: '직접 입력' },
 ];
 

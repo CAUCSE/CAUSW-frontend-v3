@@ -1,34 +1,59 @@
 'use client';
 
-import { type ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent, useCallback, useMemo, useState } from 'react';
 
-import { useShallow } from 'zustand/shallow';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useAlumniContactsFilterStore } from '@/entities/alumni-contacts';
+import { debounce } from 'es-toolkit';
+
+import { ALUMNI_CONTACTS_FILTER } from '@/entities/alumni-contacts';
 
 export const useAlumniContactsSearchInput = () => {
-  const { keyword, setKeyword } = useAlumniContactsFilterStore(
-    useShallow((state) => ({
-      keyword: state.keyword,
-      setKeyword: state.setKeyword,
-    })),
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const [keyword, setKeyword] = useState<string | null>(
+    searchParams.get(ALUMNI_CONTACTS_FILTER.KEYWORD),
   );
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
   }, []);
 
+  const debouncedSetKeywordParam = useMemo(
+    () =>
+      debounce((value: string, currentSearchParams: URLSearchParams) => {
+        const params = new URLSearchParams(currentSearchParams.toString());
+        const newValue = value.trim();
+        if (newValue.length === 0) {
+          params.delete(ALUMNI_CONTACTS_FILTER.KEYWORD);
+        } else {
+          params.set(ALUMNI_CONTACTS_FILTER.KEYWORD, newValue);
+        }
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      }, 300),
+    [pathname, router],
+  );
+
   const handleTextInputChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
+      const { value } = event.target;
       setKeyword(value);
+      debouncedSetKeywordParam(value, searchParams);
     },
-    [setKeyword],
+    [debouncedSetKeywordParam, searchParams],
   );
+
+  const handleClearKeyword = useCallback(() => {
+    setKeyword('');
+    debouncedSetKeywordParam('', searchParams);
+  }, [debouncedSetKeywordParam, searchParams]);
 
   return {
     keyword,
     handleInitialFocus,
     handleTextInputChange,
+    handleClearKeyword,
   };
 };

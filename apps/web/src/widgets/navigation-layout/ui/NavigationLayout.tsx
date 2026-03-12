@@ -29,7 +29,7 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
         id="main-scroll-container"
         className={mergeStyles(
           'flex-1 overflow-y-auto bg-gray-100',
-          showBottomNav ? 'pb-14 xl:pb-0' : 'pb-0',
+          showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
         )}
       >
         {children}
