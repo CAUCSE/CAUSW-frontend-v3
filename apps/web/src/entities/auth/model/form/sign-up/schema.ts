@@ -8,6 +8,23 @@ import {
   nicknameSchema,
 } from '@/shared/model';
 
+export const INFO_FORM_FIELD = Object.freeze({
+  name: 'name',
+  phoneNumber: 'phoneNumber',
+  nickname: 'nickname',
+} as const);
+
+export const ACCOUNT_FORM_FIELD = Object.freeze({
+  email: 'email',
+  password: 'password',
+  passwordConfirm: 'passwordConfirm',
+} as const);
+
+export const EMAIL_VERIFICATION_FORM_FIELD = Object.freeze({
+  email: 'email',
+  emailVerificationCode: 'emailVerificationCode',
+} as const);
+
 export const accountSchema = z
   .object({
     email: emailSchema,
@@ -16,7 +33,7 @@ export const accountSchema = z
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: '비밀번호가 일치하지 않습니다.',
-    path: ['passwordConfirm'],
+    path: [ACCOUNT_FORM_FIELD.passwordConfirm],
   });
 
 export const infoSchema = z.object({
@@ -26,7 +43,7 @@ export const infoSchema = z.object({
 });
 
 export const emailVerificationSchema = z.object({
-  emailVerificationCode: z
+  [EMAIL_VERIFICATION_FORM_FIELD.emailVerificationCode]: z
     .string()
     .regex(/^[0-9A-Za-z]{6}$/, '인증 코드를 6자리 입력해주세요.'),
 });
