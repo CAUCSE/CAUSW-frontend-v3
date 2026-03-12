@@ -98,7 +98,6 @@ export const AlumniContactsListWrapper = () => {
         onRefresh={async () => {
           await refetch();
         }}
-        className="overscroll-y-auto"
       >
         <AlumniContactsList
           data={data}
