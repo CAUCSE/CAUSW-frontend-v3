@@ -4,6 +4,7 @@ import { VStack } from '@causw/cds';
 
 import {
   AlumniContactsFilterGroup,
+  AlumniContactsListLoadingView,
   AlumniContactsListServerComponent,
 } from '@/widgets/alumni-contacts';
 
@@ -18,7 +19,6 @@ import {
 } from '@/entities/alumni-contacts';
 
 import type { NextSearchParams } from '@/shared/types';
-import { SuspenseView } from '@/shared/ui';
 
 export async function AlumniContactsPage({
   searchParams,
@@ -33,7 +33,7 @@ export async function AlumniContactsPage({
         <VStack className="min-h-0 flex-1 gap-3">
           <AlumniContactsSearchInput />
           <AlumniContactsFilterGroup />
-          <Suspense fallback={<SuspenseView />}>
+          <Suspense fallback={<AlumniContactsListLoadingView />}>
             <AlumniContactsListServerComponent searchParams={searchParams} />
           </Suspense>
         </VStack>
