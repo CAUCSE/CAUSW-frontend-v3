@@ -9,7 +9,11 @@ import {
   useCheckPhoneDuplicateQuery,
 } from '@/features/auth';
 
-import { infoSchema, type SignUpFormData } from '@/entities/auth';
+import {
+  INFO_FORM_FIELD,
+  infoSchema,
+  type SignUpFormData,
+} from '@/entities/auth';
 
 import { usePhoneNumberChangeHandler } from '@/shared/hooks';
 
@@ -18,13 +22,14 @@ const UNKNOWN_DUPLICATE_CHECK_ERROR_MESSAGE =
 
 const PHONE_DUPLICATED_MESSAGE = '이미 사용 중인 전화번호입니다.';
 const NICKNAME_DUPLICATED_MESSAGE = '이미 사용 중인 닉네임입니다.';
+const DUPLICATE_CHECK_CONFLICT_STATUS = 409;
 
 export const useSignUpInfoStep = () => {
   const { control, setValue, trigger, setError, clearErrors, formState } =
     useFormContext<SignUpFormData>();
   const [name = '', phoneNumber = '', nickname = ''] = useWatch({
     control,
-    name: ['name', 'phoneNumber', 'nickname'],
+    name: Object.values(INFO_FORM_FIELD),
   });
   const checkPhoneDuplicateQuery = useCheckPhoneDuplicateQuery(phoneNumber);
   const checkNicknameDuplicateQuery = useCheckNicknameDuplicateQuery(nickname);
@@ -36,7 +41,8 @@ export const useSignUpInfoStep = () => {
   }).success;
 
   const hasDuplicateError =
-    !!formState.errors.phoneNumber || !!formState.errors.nickname;
+    !!formState.errors[INFO_FORM_FIELD.phoneNumber] ||
+    !!formState.errors[INFO_FORM_FIELD.nickname];
 
   const isNextEnabled =
     isInfoValid &&
@@ -46,28 +52,31 @@ export const useSignUpInfoStep = () => {
   const { handlePhoneNumberChange } =
     usePhoneNumberChangeHandler<SignUpFormData>({
       setValue,
-      fieldName: 'phoneNumber',
+      fieldName: INFO_FORM_FIELD.phoneNumber,
     });
 
   const handlePhoneNumberBlur = () => {
-    trigger('phoneNumber').then((isValid) => {
+    trigger(INFO_FORM_FIELD.phoneNumber).then((isValid) => {
       if (!isValid) return;
 
       checkPhoneDuplicateQuery.refetch().then((result) => {
         if (!result.error) {
-          clearErrors('phoneNumber');
+          clearErrors(INFO_FORM_FIELD.phoneNumber);
           return;
         }
 
-        if (result.error instanceof ApiError && result.error.status === 409) {
-          setError('phoneNumber', {
+        if (
+          result.error instanceof ApiError &&
+          result.error.status === DUPLICATE_CHECK_CONFLICT_STATUS
+        ) {
+          setError(INFO_FORM_FIELD.phoneNumber, {
             type: 'manual',
             message: PHONE_DUPLICATED_MESSAGE,
           });
           return;
         }
 
-        setError('phoneNumber', {
+        setError(INFO_FORM_FIELD.phoneNumber, {
           type: 'manual',
           message: UNKNOWN_DUPLICATE_CHECK_ERROR_MESSAGE,
         });
@@ -76,24 +85,27 @@ export const useSignUpInfoStep = () => {
   };
 
   const handleNicknameBlur = () => {
-    trigger('nickname').then((isValid) => {
+    trigger(INFO_FORM_FIELD.nickname).then((isValid) => {
       if (!isValid) return;
 
       checkNicknameDuplicateQuery.refetch().then((result) => {
         if (!result.error) {
-          clearErrors('nickname');
+          clearErrors(INFO_FORM_FIELD.nickname);
           return;
         }
 
-        if (result.error instanceof ApiError && result.error.status === 409) {
-          setError('nickname', {
+        if (
+          result.error instanceof ApiError &&
+          result.error.status === DUPLICATE_CHECK_CONFLICT_STATUS
+        ) {
+          setError(INFO_FORM_FIELD.nickname, {
             type: 'manual',
             message: NICKNAME_DUPLICATED_MESSAGE,
           });
           return;
         }
 
-        setError('nickname', {
+        setError(INFO_FORM_FIELD.nickname, {
           type: 'manual',
           message: UNKNOWN_DUPLICATE_CHECK_ERROR_MESSAGE,
         });

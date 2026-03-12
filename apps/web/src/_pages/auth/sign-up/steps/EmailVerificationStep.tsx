@@ -6,7 +6,11 @@ import { Text, CTAButton, VStack, HStack } from '@causw/cds';
 
 import { useSignUpEmailVerificationStep } from '@/features/auth';
 
-import { emailVerificationSchema, SignUpFormData } from '@/entities/auth';
+import {
+  EMAIL_VERIFICATION_FORM_FIELD,
+  emailVerificationSchema,
+  SignUpFormData,
+} from '@/entities/auth';
 
 import { RHFInput } from '@/shared/ui';
 
@@ -16,7 +20,7 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
   const { control } = useFormContext<SignUpFormData>();
   const [email = '', emailVerificationCode = ''] = useWatch({
     control,
-    name: ['email', 'emailVerificationCode'],
+    name: Object.values(EMAIL_VERIFICATION_FORM_FIELD),
   });
 
   const isNextEnabled = emailVerificationSchema.safeParse({
@@ -46,7 +50,7 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
         </VStack>
 
         <RHFInput
-          name="emailVerificationCode"
+          name={EMAIL_VERIFICATION_FORM_FIELD.emailVerificationCode}
           label="인증 코드 (6자리)"
           typography="body-16-regular"
           maxLength={6}

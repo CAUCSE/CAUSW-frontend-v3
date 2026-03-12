@@ -4,7 +4,11 @@ import { useForm, useWatch } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { infoSchema, type InfoFormData } from '@/entities/auth';
+import {
+  INFO_FORM_FIELD,
+  infoSchema,
+  type InfoFormData,
+} from '@/entities/auth';
 
 import { usePhoneNumberChangeHandler } from '@/shared/hooks';
 
@@ -21,7 +25,7 @@ export const useOauthAdditionalInfoForm = () => {
 
   const [name = '', phoneNumber = '', nickname = ''] = useWatch({
     control: methods.control,
-    name: ['name', 'phoneNumber', 'nickname'],
+    name: Object.values(INFO_FORM_FIELD),
   });
 
   const isSubmitEnabled = infoSchema.safeParse({
@@ -32,7 +36,7 @@ export const useOauthAdditionalInfoForm = () => {
   const { handlePhoneNumberChange } = usePhoneNumberChangeHandler<InfoFormData>(
     {
       setValue: methods.setValue,
-      fieldName: 'phoneNumber',
+      fieldName: INFO_FORM_FIELD.phoneNumber,
     },
   );
 

@@ -7,13 +7,20 @@ import {
   useVerifyEmailVerificationCodeMutation,
 } from '@/features/auth';
 
-import { type SignUpFormData } from '@/entities/auth';
+import {
+  EMAIL_VERIFICATION_FORM_FIELD,
+  type SignUpFormData,
+} from '@/entities/auth';
 
 export const useSignUpEmailVerificationStep = (onNext: () => void) => {
   const { control } = useFormContext<SignUpFormData>();
-  const email = useWatch({ control, name: 'email' }) ?? '';
+  const email =
+    useWatch({ control, name: EMAIL_VERIFICATION_FORM_FIELD.email }) ?? '';
   const verificationCode =
-    useWatch({ control, name: 'emailVerificationCode' }) ?? '';
+    useWatch({
+      control,
+      name: EMAIL_VERIFICATION_FORM_FIELD.emailVerificationCode,
+    }) ?? '';
   const sendEmailVerificationCodeMutation =
     useSendEmailVerificationCodeMutation();
   const verifyEmailVerificationCodeMutation =

@@ -6,7 +6,11 @@ import { Text, CTAButton, VStack } from '@causw/cds';
 
 import { useSignUpAccountStep } from '@/features/auth';
 
-import { accountSchema, type SignUpFormData } from '@/entities/auth';
+import {
+  ACCOUNT_FORM_FIELD,
+  accountSchema,
+  type SignUpFormData,
+} from '@/entities/auth';
 
 import { RHFInput, RHFPasswordInput } from '@/shared/ui';
 
@@ -14,7 +18,7 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
   const { control } = useFormContext<SignUpFormData>();
   const [email = '', password = '', passwordConfirm = ''] = useWatch({
     control,
-    name: ['email', 'password', 'passwordConfirm'],
+    name: Object.values(ACCOUNT_FORM_FIELD),
   });
   const { handleNextClick, isSendingCode } = useSignUpAccountStep(onNext);
 
@@ -42,21 +46,21 @@ export const AccountStep = ({ onNext }: { onNext: () => void }) => {
       </VStack>
 
       <RHFInput
-        name="email"
+        name={ACCOUNT_FORM_FIELD.email}
         label="이메일"
         placeholder="이메일을 입력해주세요."
         typography="body-16-regular"
       />
 
       <RHFPasswordInput
-        name="password"
+        name={ACCOUNT_FORM_FIELD.password}
         label="비밀번호"
         placeholder="비밀번호를 입력해주세요."
         typography="body-16-regular"
       />
 
       <RHFPasswordInput
-        name="passwordConfirm"
+        name={ACCOUNT_FORM_FIELD.passwordConfirm}
         label="비밀번호 확인"
         placeholder="비밀번호를 다시 입력해주세요."
         typography="body-16-regular"

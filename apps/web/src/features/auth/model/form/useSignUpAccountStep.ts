@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 
 import { useSendEmailVerificationCodeMutation } from '@/features/auth';
 
-import { type SignUpFormData } from '@/entities/auth';
+import { ACCOUNT_FORM_FIELD, type SignUpFormData } from '@/entities/auth';
 
 export const useSignUpAccountStep = (onNext: () => void) => {
   const { trigger, getValues } = useFormContext<SignUpFormData>();
@@ -14,12 +14,12 @@ export const useSignUpAccountStep = (onNext: () => void) => {
   const handleNextClick = () => {
     if (sendEmailVerificationCodeMutation.isPending) return;
 
-    void trigger(['email', 'password', 'passwordConfirm']).then((isValid) => {
+    trigger(Object.values(ACCOUNT_FORM_FIELD)).then((isValid) => {
       if (!isValid) return;
 
       sendEmailVerificationCodeMutation.mutate(
         {
-          email: getValues('email'),
+          email: getValues(ACCOUNT_FORM_FIELD.email),
         },
         {
           onSuccess: () => {
