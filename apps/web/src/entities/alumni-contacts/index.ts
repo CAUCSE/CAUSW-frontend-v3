@@ -6,6 +6,8 @@ export {
   ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
   ALUMNI_CONTACTS_FILTER,
   type AlumniContactsFilter,
+  alumniContactsQueryOptions,
+  alumniContactsQueryKeys,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -13,7 +15,6 @@ export {
   useResetAlumniContactsFilter,
 } from './model';
 export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
-export { alumniContactsQueryOptions, alumniContactsQueryKeys } from './api';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,

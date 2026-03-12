@@ -11,3 +11,4 @@ export {
   ALUMNI_CONTACTS_FILTER,
   type AlumniContactsFilter,
 } from './alumniContactsFilter';
+export { alumniContactsQueryOptions, alumniContactsQueryKeys } from './query';
