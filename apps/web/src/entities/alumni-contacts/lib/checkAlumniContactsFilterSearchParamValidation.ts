@@ -28,7 +28,7 @@ export const checkAlumniContactsFilterSearchParamValidation = async (
         newParams.delete(ALUMNI_CONTACTS_FILTER.ADMISSION_YEAR_END);
         continue;
       }
-      newParams.delete(field as string);
+      newParams.delete(String(field));
     }
 
     redirect(`/alumni-contacts?${newParams.toString()}`);
