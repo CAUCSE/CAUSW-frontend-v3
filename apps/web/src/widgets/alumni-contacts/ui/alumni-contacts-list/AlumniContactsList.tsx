@@ -73,7 +73,7 @@ export const AlumniContactsListWrapper = () => {
   const { targetRef } = useInfiniteScroll({
     intersectionCallback: (entries) => {
       const [entry] = entries;
-      if (entry.isIntersecting && hasNextPage) {
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
     },
