@@ -16,7 +16,7 @@ export const AlumniContactsListItem = ({
 }: AlumniContactsListItemProps) => {
   return (
     <Link href={`/alumni-contacts/${item.id}`} key={item.id}>
-      <li key={item.id} className="flex gap-3 rounded-md bg-white p-4">
+      <li className="flex gap-3 rounded-md bg-white p-4">
         <HStack className="grow gap-5">
           <Avatar src={item.profileImageUrl} size="64" className="shrink-0" />
           <VStack gap="none" className="grow">
