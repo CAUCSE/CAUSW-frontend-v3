@@ -2,6 +2,17 @@
 
 import { NavigationLayout } from '@/widgets/navigation-layout';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return <NavigationLayout>{children}</NavigationLayout>;
+export default function Layout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
+  return (
+    <NavigationLayout>
+      {children}
+      {modal}
+    </NavigationLayout>
+  );
 }

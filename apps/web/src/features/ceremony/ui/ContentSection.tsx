@@ -1,3 +1,5 @@
+import type { RefObject } from 'react';
+
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, Camera, TextArea } from '@causw/cds';
@@ -5,14 +7,21 @@ import { Button, Camera, TextArea } from '@causw/cds';
 import type { CeremonyFormData } from '@/entities/ceremony';
 
 import { FormSection } from '@/shared/ui/form-section';
+import type { ImageUploadFieldRef } from '@/shared/ui/image';
 import { ImageUploadField } from '@/shared/ui/image';
 
-import { useImageUpload } from '../model/useImageUpload';
+interface ContentSectionProps {
+  imageUploadRef: RefObject<ImageUploadFieldRef | null>;
+  handleSetPhotoFiles: (name: string, value: unknown) => void;
+  photoResetTrigger: boolean;
+}
 
-export const ContentSection = () => {
+export const ContentSection = ({
+  imageUploadRef,
+  handleSetPhotoFiles,
+  photoResetTrigger,
+}: ContentSectionProps) => {
   const { control } = useFormContext<CeremonyFormData>();
-  const { imageUploadRef, handleSetPhotoFiles, photoResetTrigger } =
-    useImageUpload();
   const content = useWatch({ control, name: 'content' });
 
   return (

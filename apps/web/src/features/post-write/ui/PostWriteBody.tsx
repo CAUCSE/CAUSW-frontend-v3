@@ -1,0 +1,86 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
+import { ArrowDown, Chip, TextArea, VStack } from '@causw/cds';
+
+import { Board } from '@/entities/feed';
+import { VoteWriteValue } from '@/entities/post';
+
+import { VoteField } from './VoteField';
+
+interface PostWriteBodyProps {
+  onSelectorClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  selectedBoard: Board | null;
+  content: string;
+  setContent: (content: string) => void;
+  vote: VoteWriteValue | null;
+  setVote: (vote: VoteWriteValue | null) => void;
+}
+
+export const PostWriteBody = ({
+  onSelectorClick,
+  selectedBoard,
+  content,
+  setContent,
+  vote,
+  setVote,
+}: PostWriteBodyProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleChange = (value: string) => {
+    setContent(value);
+  };
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }, [content]);
+
+  return (
+    <VStack
+      gap="none"
+      className="flex-1 overflow-y-auto"
+      style={{
+        scrollbarWidth: 'auto',
+        msOverflowStyle: 'auto',
+      }}
+    >
+      <Chip
+        asChild
+        color="lightgray"
+        className="transition-color mx-4 w-fit shrink-0 cursor-pointer hover:bg-gray-200 active:bg-gray-200 md:mt-4"
+      >
+        <button onClick={onSelectorClick}>
+          {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
+          <ArrowDown size={14} color="gray-500" />
+        </button>
+      </Chip>
+
+      <VStack gap="lg" className="mx-5 my-4">
+        <TextArea className="p-0 ring-0 focus-within:ring-0">
+          <TextArea.Input
+            ref={textareaRef}
+            value={content}
+            onChange={(e) => handleChange(e.target.value)}
+            resize={false}
+            placeholder="내용을 입력해주세요."
+            rows={1}
+            className="min-h-0"
+          />
+        </TextArea>
+
+        {vote && (
+          <VoteField
+            value={vote}
+            onChange={setVote}
+            onRemove={() => setVote(null)}
+          />
+        )}
+      </VStack>
+    </VStack>
+  );
+};

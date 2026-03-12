@@ -1,0 +1,1 @@
+export { createCeremony } from './post';

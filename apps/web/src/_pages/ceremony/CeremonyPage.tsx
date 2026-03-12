@@ -8,23 +8,19 @@ import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
 import { CeremonyListView } from '@/widgets/ceremony';
 
-import {
-  CeremonyCreateDialog,
-  MOCK_ONGOING,
-  MOCK_UPCOMING,
-  MOCK_ENDED,
-  MOCK_MY_CEREMONIES,
-} from '@/features/ceremony';
+import { CeremonyCreateDialog, MOCK_MY_CEREMONIES } from '@/features/ceremony';
 
 import type {
   CeremonyFilterType,
   MyCeremonyStateFilter,
 } from '@/entities/ceremony';
-import { filterItems, filterByState } from '@/entities/ceremony';
+import { filterByState } from '@/entities/ceremony';
 
+import { useScrollRestoration } from '@/shared/hooks';
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyPage = () => {
+  const { saveScrollPosition } = useScrollRestoration('ceremony-list-scroll');
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -42,12 +38,11 @@ export const CeremonyPage = () => {
       router.replace(pathname);
     }
   };
-  const ongoingItems = filterItems(MOCK_ONGOING, filter);
-  const upcomingItems = filterItems(MOCK_UPCOMING, filter);
-  const endedItems = filterItems(MOCK_ENDED, filter);
+
   const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
 
   const handleItemClick = (id: string) => {
+    saveScrollPosition();
     router.push(`/ceremony/${id}`);
   };
 
@@ -55,15 +50,16 @@ export const CeremonyPage = () => {
     <div className="relative flex min-h-screen flex-col bg-gray-100">
       <ActionHeader background="gray">
         <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
-        <ActionHeader.ActionButton>알림 설정</ActionHeader.ActionButton>
+        <ActionHeader.ActionButton
+          onClick={() => router.push('/setting/notifications')}
+        >
+          알림 설정
+        </ActionHeader.ActionButton>
       </ActionHeader>
 
       <CeremonyListView
         filter={filter}
         onFilterChange={setFilter}
-        ongoingItems={ongoingItems}
-        upcomingItems={upcomingItems}
-        endedItems={endedItems}
         myStateFilter={myStateFilter}
         onMyStateFilterChange={setMyStateFilter}
         myItems={myItems}

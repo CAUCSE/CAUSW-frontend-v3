@@ -28,8 +28,12 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
       const originalRequest = error.config;
       const status = error.status ?? 0;
 
-      // Access Token 만료 시
-      if (isAccessTokenError(errorCode)) {
+      // Access Token 만료 시 + 이전 에러코드 값 포함
+      if (
+        isAccessTokenError(errorCode) ||
+        error.data?.errorCode === '4105' ||
+        error.data?.errorCode === '4110'
+      ) {
         if (apiWrapper.getIsRefreshing()) {
           return new Promise((resolve, reject) => {
             apiWrapper.addToRefreshQueue({

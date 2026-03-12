@@ -1,11 +1,12 @@
+'use client';
+
 import { useState } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { ReportFlow } from '@/widgets/report';
-
 import { BlockUserModal } from '@/features/block';
 import { PostHeader, usePostMenuActions } from '@/features/post';
+import { ReportFlow } from '@/features/report';
 
 import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
 
@@ -48,7 +49,11 @@ export const PostContent = ({ postId }: PostContentProps) => {
           isMine={false}
           onAction={handleMenuAction}
         />
-        <PostBody content={MOCK_POST.content} images={MOCK_POST.images} />
+        <PostBody
+          content={MOCK_POST.content}
+          images={MOCK_POST.images}
+          isHtml={MOCK_POST.isHtml}
+        />
       </VStack>
 
       {MOCK_POST.vote && (

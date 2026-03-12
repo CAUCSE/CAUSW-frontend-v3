@@ -1,9 +1,10 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-import { Field, Tab, TextInput } from '@causw/cds';
+import { Field, TextInput } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
+import { RHFTabSelect } from '@/shared/ui';
 import { FormSection } from '@/shared/ui/form-section';
 
 import {
@@ -22,63 +23,38 @@ export const RelationshipSection = ({
   const { control, register } = useFormContext<CeremonyFormData>();
   const relationship = useWatch({ control, name: 'relationship' });
 
+  const options = RELATIONSHIP_OPTIONS.map((value) => ({
+    label: value,
+    value,
+  }));
+  const familyRelationOptions = FAMILY_RELATIONS.map((value) => ({
+    label: value,
+    value,
+  }));
+  const alumniRelationOptions = ALUMNI_RELATIONS.map((value) => ({
+    label: value,
+    value,
+  }));
+
   return (
     <>
-      <FormSection title="관계">
-        <Controller
-          control={control}
-          name="relationship"
-          render={({ field }) => (
-            <Tab
-              variant="chip"
-              value={field.value}
-              onValueChange={(v) =>
-                onRelationshipChange(v as CeremonyFormData['relationship'])
-              }
-            >
-              <Tab.List>
-                {RELATIONSHIP_OPTIONS.map((opt) => (
-                  <Tab.TabItem key={opt} value={opt}>
-                    {opt}
-                  </Tab.TabItem>
-                ))}
-              </Tab.List>
-            </Tab>
-          )}
-        />
-      </FormSection>
+      <RHFTabSelect
+        label="관계"
+        name="relationship"
+        options={options}
+        onValueChange={(nextValue) => {
+          onRelationshipChange(nextValue as CeremonyFormData['relationship']);
+        }}
+      />
 
       {relationship === '가족' && (
-        <FormSection title="상세 관계">
-          <Controller
-            control={control}
+        <div className="md:w-1/2">
+          <RHFTabSelect
+            label="상세 관계"
             name="familyRelation"
-            render={({ field }) => (
-              <Tab
-                variant="chip"
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <div className="flex flex-col gap-2">
-                  <Tab.List>
-                    {FAMILY_RELATIONS.slice(0, 6).map((rel) => (
-                      <Tab.TabItem key={rel} value={rel}>
-                        {rel}
-                      </Tab.TabItem>
-                    ))}
-                  </Tab.List>
-                  <Tab.List>
-                    {FAMILY_RELATIONS.slice(6).map((rel) => (
-                      <Tab.TabItem key={rel} value={rel}>
-                        {rel}
-                      </Tab.TabItem>
-                    ))}
-                  </Tab.List>
-                </div>
-              </Tab>
-            )}
+            options={familyRelationOptions}
           />
-        </FormSection>
+        </div>
       )}
 
       {relationship === '동문소식 대신 전달' && (
@@ -102,37 +78,13 @@ export const RelationshipSection = ({
               />
             </Field>
           </FormSection>
-
-          <FormSection title="대상과의 관계">
-            <Controller
-              control={control}
+          <div className="md:w-1/2">
+            <RHFTabSelect
+              label="대상과의 관계"
               name="alumniRelation"
-              render={({ field }) => (
-                <Tab
-                  variant="chip"
-                  value={field.value}
-                  onValueChange={field.onChange}
-                >
-                  <div className="flex flex-col gap-2">
-                    <Tab.List>
-                      {ALUMNI_RELATIONS.slice(0, 4).map((rel) => (
-                        <Tab.TabItem key={rel} value={rel}>
-                          {rel}
-                        </Tab.TabItem>
-                      ))}
-                    </Tab.List>
-                    <Tab.List>
-                      {ALUMNI_RELATIONS.slice(4).map((rel) => (
-                        <Tab.TabItem key={rel} value={rel}>
-                          {rel}
-                        </Tab.TabItem>
-                      ))}
-                    </Tab.List>
-                  </div>
-                </Tab>
-              )}
+              options={alumniRelationOptions}
             />
-          </FormSection>
+          </div>
         </>
       )}
     </>
