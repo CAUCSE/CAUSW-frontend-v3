@@ -29,8 +29,8 @@ export async function AlumniContactsPage({
 
   return (
     <div className="relative flex size-full justify-center p-4 md:px-8 md:py-6">
-      <div className="w-full xl:w-225">
-        <VStack className="gap-3">
+      <div className="flex w-full flex-col xl:w-225">
+        <VStack className="min-h-0 flex-1 gap-3">
           <AlumniContactsSearchInput />
           <AlumniContactsFilterGroup />
           <Suspense fallback={<SuspenseView />}>

@@ -41,7 +41,7 @@ const AlumniContactsList = ({
   targetRef,
 }: AlumniContactsListProps) => {
   return (
-    <ul className="mb-20 grid grid-cols-1 gap-4 md:mb-5 md:grid-cols-2">
+    <ul className="mb-20 grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto md:mb-5 md:grid-cols-2">
       {data?.map((item) => (
         <AlumniContactsListItem key={item.id} item={item} />
       ))}
