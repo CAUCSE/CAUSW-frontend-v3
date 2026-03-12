@@ -8,12 +8,13 @@ type GuardStep = 'Account' | 'EmailVerification' | 'Info';
 
 type UseSignUpStepGuardParams = {
   initialStep: GuardStep;
+  onResetToAccount?: () => void;
 };
 
 const SIGN_UP_ACCOUNT_URL = '/auth/sign-up?sign-up.step=Account';
-const SIGN_UP_STEP_LEVEL_KEY = 'sign_up_step_level';
+export const SIGN_UP_STEP_LEVEL_KEY = 'sign_up_step_level';
 
-const STEP_LEVEL: Record<GuardStep, number> = {
+export const SIGN_UP_STEP_LEVEL: Record<GuardStep, number> = {
   Account: 0,
   EmailVerification: 1,
   Info: 2,
@@ -28,7 +29,7 @@ const getAllowedStepLevel = () => {
   const parsed = Number(saved);
   if (Number.isNaN(parsed)) return null;
 
-  if (parsed < STEP_LEVEL.Account || parsed > STEP_LEVEL.Info) {
+  if (parsed < SIGN_UP_STEP_LEVEL.Account || parsed > SIGN_UP_STEP_LEVEL.Info) {
     return null;
   }
 
@@ -42,14 +43,25 @@ const setAllowedStepLevel = (level: number) => {
 
 export const useSignUpStepGuard = ({
   initialStep,
+  onResetToAccount,
 }: UseSignUpStepGuardParams) => {
   const router = useRouter();
 
   useEffect(() => {
+    const navigationEntry = performance.getEntriesByType('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+
+    if (navigationEntry?.type === 'reload' && initialStep !== 'Account') {
+      setAllowedStepLevel(SIGN_UP_STEP_LEVEL.Account);
+      onResetToAccount?.();
+      return;
+    }
+
     const allowedStepLevel = getAllowedStepLevel();
 
     if (allowedStepLevel === null) {
-      setAllowedStepLevel(STEP_LEVEL.Account);
+      setAllowedStepLevel(SIGN_UP_STEP_LEVEL.Account);
     }
 
     if (initialStep === 'Account') {
@@ -57,17 +69,17 @@ export const useSignUpStepGuard = ({
     }
 
     const currentAllowedStepLevel =
-      allowedStepLevel === null ? STEP_LEVEL.Account : allowedStepLevel;
-    if (currentAllowedStepLevel >= STEP_LEVEL[initialStep]) return;
+      allowedStepLevel === null ? SIGN_UP_STEP_LEVEL.Account : allowedStepLevel;
+    if (currentAllowedStepLevel >= SIGN_UP_STEP_LEVEL[initialStep]) return;
     router.replace(SIGN_UP_ACCOUNT_URL);
-  }, [initialStep, router]);
+  }, [initialStep, onResetToAccount, router]);
 
   const allowInfoStep = () => {
-    setAllowedStepLevel(STEP_LEVEL.Info);
+    setAllowedStepLevel(SIGN_UP_STEP_LEVEL.Info);
   };
 
   const allowEmailVerificationStep = () => {
-    setAllowedStepLevel(STEP_LEVEL.EmailVerification);
+    setAllowedStepLevel(SIGN_UP_STEP_LEVEL.EmailVerification);
   };
 
   return {
