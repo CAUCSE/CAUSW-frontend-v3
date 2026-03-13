@@ -12,8 +12,8 @@ export const CeremonyDetailPage = () => {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
-  const context =
-    (searchParams.get('context') as CeremonyDetailContext) ?? 'general';
+  const rawContext = searchParams.get('context');
+  const context: CeremonyDetailContext = rawContext === 'my' ? 'my' : 'general';
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
