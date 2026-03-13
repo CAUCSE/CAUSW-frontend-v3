@@ -1,4 +1,8 @@
-import type { CeremonyFilterTypeApi } from '../../model';
+import type {
+  CeremonyDetailContext,
+  CeremonyFilterTypeApi,
+  CeremonyState,
+} from '../../model';
 
 export const ceremonyQueryKey = {
   all: ['ceremony'] as const,
@@ -11,5 +15,8 @@ export const ceremonyQueryKey = {
     [...ceremonyQueryKey.lists(), 'upcoming-preview', type] as const,
   past: (type: CeremonyFilterTypeApi) =>
     [...ceremonyQueryKey.lists(), 'past', type] as const,
-  detail: (id: string) => [...ceremonyQueryKey.all, 'detail', id] as const,
+  my: (state: CeremonyState) =>
+    [...ceremonyQueryKey.lists(), 'my', state] as const,
+  detail: (id: string, context: CeremonyDetailContext = 'general') =>
+    [...ceremonyQueryKey.all, 'detail', id, context] as const,
 };
