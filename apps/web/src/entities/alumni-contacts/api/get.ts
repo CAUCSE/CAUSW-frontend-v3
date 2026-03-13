@@ -4,6 +4,7 @@ import { withQuery } from '@/shared/utils';
 import type {
   GetAlumniContactsQuery,
   GetPaginatedAlumniContactsResponseDto,
+  AlumniDetailResponseDto,
 } from '../types';
 
 const URL_PREFIX = '/api/v2/users-info';
@@ -25,6 +26,13 @@ export const getAlumniContacts = async (
   const url = withQuery(URL_PREFIX, queryString.toString());
 
   const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+
+  return response;
+};
+
+export const getAlumniDetail = async (userInfoId: string) => {
+  const url = `${URL_PREFIX}/${userInfoId}`;
+  const response = await API.get<AlumniDetailResponseDto>(url);
 
   return response;
 };

@@ -1,1 +1,1 @@
-export type { GetPaginatedAlumniContactsResponseDto } from './getAlumniContactsDto';
+export type * from './getAlumniContactsDto';

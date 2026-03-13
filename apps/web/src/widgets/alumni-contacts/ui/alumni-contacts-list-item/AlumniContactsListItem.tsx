@@ -44,7 +44,7 @@ export const AlumniContactsListItem = ({
                 {item.academicStatus}
               </Text>
             </HStack>
-            <p>{item.hob}</p>
+            <p>{item.job}</p>
             <p className="line-clamp-1">{item.description}</p>
           </VStack>
           <ChevronRight

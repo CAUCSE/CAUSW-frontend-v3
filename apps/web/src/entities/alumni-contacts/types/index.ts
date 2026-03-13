@@ -1,2 +1,2 @@
 export type { GetAlumniContactsQuery } from './query';
-export type { GetPaginatedAlumniContactsResponseDto } from './dto';
+export type * from './dto';
