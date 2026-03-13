@@ -2,7 +2,7 @@
 
 import { BottomSheet, Dialog, Text, VStack } from '@causw/cds';
 
-import { Board, BoardChipList } from '@/entities/feed';
+import { type Board, BoardChipList } from '@/entities/feed';
 
 import { useBreakpoint } from '@/shared/hooks';
 

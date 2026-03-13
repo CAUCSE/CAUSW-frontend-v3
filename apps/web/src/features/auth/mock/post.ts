@@ -1,9 +1,9 @@
 import { HttpResponse } from 'msw';
 
 import {
-  SigninResponseDto,
-  SignoutResponseDto,
-  SignupResponseDto,
+  type SigninResponseDto,
+  type SignoutResponseDto,
+  type SignupResponseDto,
 } from '@/entities/auth';
 
 import { mswHttp } from '@/shared/lib';

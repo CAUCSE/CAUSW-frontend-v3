@@ -1,4 +1,4 @@
-import { ToastData, ToastOptions, ToastType } from './type';
+import { type ToastData, type ToastOptions, type ToastType } from './type';
 
 const MAX_TOAST = 3;
 const DEFAULT_DURATION = 3000;

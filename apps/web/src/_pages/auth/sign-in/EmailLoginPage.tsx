@@ -13,7 +13,7 @@ import { AuthContainer } from '@/widgets/auth';
 
 import { useSignInMutation } from '@/features/auth';
 
-import { SigninRequestDto, signInSchema } from '@/entities/auth';
+import { type SigninRequestDto, signInSchema } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';

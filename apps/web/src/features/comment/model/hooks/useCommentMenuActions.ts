@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { CommentAction } from '../types';
+import { type CommentAction } from '../types';
 
 export const useCommentMenuActions = (commentId: string | number) => {
   const [isReportOpen, setIsReportOpen] = useState(false);

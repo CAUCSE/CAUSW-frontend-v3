@@ -1,4 +1,4 @@
-import { ApiResponse, isApiError } from '@causw/api-client';
+import { type ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
@@ -8,7 +8,7 @@ import {
   parseCustomErrorCode,
 } from '@/shared/utils/auth/errorHandler';
 
-import { BaseApiClient } from '../../instances';
+import { type BaseApiClient } from '../../instances';
 
 export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
   const { internalClient } = apiWrapper;

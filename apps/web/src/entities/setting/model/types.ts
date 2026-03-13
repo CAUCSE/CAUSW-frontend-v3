@@ -1,4 +1,4 @@
-﻿import { PostCardItem } from '@/entities/post';
+﻿import { type PostCardItem } from '@/entities/post';
 
 export type ActivityType = 'my-posts' | 'my-comments' | 'favorites';
 export type ActivityMode = 'list' | 'empty';

@@ -1,8 +1,8 @@
 import {
   buildMyFeedHref,
-  SettingAccountMenuItem,
-  SettingActivityItem,
-  SettingSupportMenuItem,
+  type SettingAccountMenuItem,
+  type SettingActivityItem,
+  type SettingSupportMenuItem,
 } from '../model';
 
 export const SETTING_PROFILE_IDENTITY = {

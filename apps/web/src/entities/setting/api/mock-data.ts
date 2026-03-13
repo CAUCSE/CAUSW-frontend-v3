@@ -1,4 +1,4 @@
-﻿import { PostCardItem } from '@/entities/post';
+﻿import { type PostCardItem } from '@/entities/post';
 
 export const MOCK_ACTIVITY_POSTS: PostCardItem[] = [
   {

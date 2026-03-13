@@ -1,5 +1,5 @@
 import { BASE_URL } from '@/shared/config';
-import { DefaultResponseField } from '@/shared/types';
+import { type DefaultResponseField } from '@/shared/types';
 import { isMobile, isServer } from '@/shared/utils';
 
 import {

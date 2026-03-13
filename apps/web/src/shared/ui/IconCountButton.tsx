@@ -1,6 +1,6 @@
-import { cloneElement, ReactElement } from 'react';
+import { cloneElement, type ReactElement } from 'react';
 
-import { HStack, mergeStyles, MonoIconProps, Text } from '@causw/cds';
+import { HStack, mergeStyles, type MonoIconProps, Text } from '@causw/cds';
 
 interface IconCountButtonProps {
   icon: ReactElement<MonoIconProps>;

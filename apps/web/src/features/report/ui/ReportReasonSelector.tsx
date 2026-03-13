@@ -11,7 +11,7 @@ import {
 
 import { useBreakpoint } from '@/shared/hooks';
 
-import { ReportReason } from '../model';
+import { type ReportReason } from '../model';
 
 import { ReasonSelectRadio } from './ReasonSelectRadio';
 

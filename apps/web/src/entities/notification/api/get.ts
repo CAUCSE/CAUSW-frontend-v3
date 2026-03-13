@@ -3,12 +3,12 @@ import { withQuery } from '@/shared/utils';
 
 import { NOTIFICATION_END_POINT_PREFIX } from '../config';
 import {
-  NotificationLatestResponse,
-  NotificationUnreadCntResponse,
+  type NotificationLatestResponse,
+  type NotificationUnreadCntResponse,
 } from '../model/types';
 import {
-  GetNotificationsQuery,
-  GetPaginatedNotificationsResponseDto,
+  type GetNotificationsQuery,
+  type GetPaginatedNotificationsResponseDto,
 } from '../types';
 
 export const getNotificationUnreadCnt =
