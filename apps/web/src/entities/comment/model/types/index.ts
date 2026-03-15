@@ -39,6 +39,24 @@ export interface GetCommentsRequestDto {
 
 export type GetCommentsResponseDto = PaginationDto<Comment[]>;
 
+/* 댓글 작성 */
+export interface PostCommentRequestDto {
+  content: string;
+  postId: string;
+  isAnonymous: boolean;
+}
+
+export type PostCommentResponseDto = Comment;
+
+/* 답글(대댓글) 작성 */
+export interface PostChildCommentRequestDto {
+  content: string;
+  parentCommentId: string;
+  isAnonymous: boolean;
+}
+
+export type PostChildCommentResponseDto = ChildComment;
+
 /* 대댓글 미리보기 */
 export type ReplyTarget = {
   id: string;

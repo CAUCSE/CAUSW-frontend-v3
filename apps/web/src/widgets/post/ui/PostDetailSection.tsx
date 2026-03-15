@@ -45,6 +45,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
       </Stack>
 
       <CommentForm
+        postId={postId}
         replyTarget={replyTarget}
         onCancelReply={() => setReplyTarget(null)}
         inputRef={inputRef}

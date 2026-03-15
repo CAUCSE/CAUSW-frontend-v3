@@ -69,16 +69,18 @@ export const CommentCard = ({
                 </Text>
               </VStack>
 
-              <HStack align="center" justify="between">
-                <button
-                  type="button"
-                  onClick={onReplyClick}
-                  className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
-                >
-                  <Text typography="body-14-medium" textColor="gray-400">
-                    답글달기
-                  </Text>
-                </button>
+              <HStack align="center" justify={isReply ? 'end' : 'between'}>
+                {!isReply && (
+                  <button
+                    type="button"
+                    onClick={onReplyClick}
+                    className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
+                  >
+                    <Text typography="body-14-medium" textColor="gray-400">
+                      답글달기
+                    </Text>
+                  </button>
+                )}
 
                 <IconCountButton
                   icon={<Heart />}
