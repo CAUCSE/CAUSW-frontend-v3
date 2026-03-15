@@ -12,6 +12,8 @@ import { PostCreateFormValues, usePostCreateForm } from '@/entities/post';
 import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
 import { createEmptyVote } from '../lib';
+import { mapPostCreateFormToDto } from '../lib/mappers';
+import { useCreatePostMutation } from '../model';
 
 import { PostBoardSelector } from './PostBoardSelector';
 import { PostWriteBody } from './PostWriteBody';
@@ -26,6 +28,7 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
   const { data: boardData } = useGetAvailableBoards();
 
   const form = usePostCreateForm();
+  const { mutate: createPost } = useCreatePostMutation();
 
   const {
     handleSubmit,
@@ -46,7 +49,12 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
     boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
-    console.log('제출된 데이터:', data);
+    const dto = mapPostCreateFormToDto(data);
+
+    createPost({
+      postCreateRequest: dto,
+      attachImageList: data.images,
+    });
   };
 
   const handleBoardSelect = (board: Board) => {

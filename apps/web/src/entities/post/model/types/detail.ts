@@ -1,3 +1,8 @@
+/* 게시글 단일 조회 */
+export interface GetPostRequestDto {
+  postId: string;
+}
+
 export interface GetPostResponseDto {
   id: string;
   content: string;
