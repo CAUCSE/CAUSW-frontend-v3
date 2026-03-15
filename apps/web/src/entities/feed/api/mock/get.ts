@@ -21,7 +21,7 @@ export const getHandler = [
                 name: '일반',
               },
               {
-                id: '3c9f86a98e1861d8018e186a8acd0000',
+                id: 'a5535d2f-a991-4246-a83e-5b6b6f6974e7',
                 name: '학생회',
               },
               {
