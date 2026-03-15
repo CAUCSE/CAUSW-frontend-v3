@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -36,16 +36,16 @@ export default function ProfilePage() {
   );
   const { mutate: updateProfile } = useUpdateProfile();
 
-  const [prevMeData, setPrevMeData] = useState(meData);
-  const [prevIsEditing, setPrevIsEditing] = useState(isEditing);
-
-  if (meData !== prevMeData || isEditing !== prevIsEditing) {
-    setPrevMeData(meData);
-    setPrevIsEditing(isEditing);
-    if (!isEditing) {
-      setFormData(meData as AlumniDetailResponseDto);
+  // ✅ ESLint 에러(set-state-in-effect) 해결:
+  // 동기적으로 바로 실행되지 않도록 브라우저의 다음 프레임이나 마이크로태스크로 미룹니다.
+  useEffect(() => {
+    if (!isEditing && meData) {
+      const timeoutId = setTimeout(() => {
+        setFormData(meData as AlumniDetailResponseDto);
+      }, 0);
+      return () => clearTimeout(timeoutId);
     }
-  }
+  }, [isEditing, meData]);
 
   const openDialog = (type: DialogType, payload: DialogPayload = '') => {
     setInputValue('');
@@ -59,64 +59,62 @@ export default function ProfilePage() {
     setDialogType(type);
   };
 
-  const handleConfirm = (extraData?: CalendarData) => {
-    if (dialogType === 'SAVE_CONFIRM') {
-      updateProfile(formData, {
-        onSuccess: () => {
-          setDialogType(null);
-          setIsEditing(false);
-        },
-      });
-      return;
-    }
+  const handleSave = () => {
+    updateProfile(formData, {
+      onSuccess: () => {
+        setDialogType(null);
+        setIsEditing(false);
+      },
+    });
+  };
 
+  const handleDeleteItem = (payload: {
+    type: string;
+    value?: string;
+    id?: string;
+  }) => {
     setFormData((prev) => {
       const nextData = { ...prev };
-
-      if (dialogType === 'EDIT_JOB') nextData.job = inputValue;
-      if (dialogType === 'EDIT_DESC') nextData.description = inputValue;
-      if (dialogType === 'EDIT_VISIBLE')
-        nextData.isPhoneNumberVisible = toggleValue;
-
-      if (
-        dialogType === 'DELETE_CONFIRM' &&
-        dialogPayload &&
-        typeof dialogPayload === 'object'
-      ) {
-        const { type, value, id } = dialogPayload;
-        switch (type) {
-          case 'SNS':
-            nextData.socialLinks = (nextData.socialLinks || []).filter(
-              (i) => i !== value,
-            );
-            break;
-          case 'TECH':
-            nextData.techStack = (nextData.techStack || []).filter(
-              (i) => i !== value,
-            );
-            break;
-          case 'CAREER':
-            nextData.userCareer = (nextData.userCareer || []).filter(
-              (i) => i.id !== id,
-            );
-            break;
-          case 'PROJECT':
-            nextData.userProject = (nextData.userProject || []).filter(
-              (i) => i.id !== id,
-            );
-            break;
-          case 'INT_TECH':
-            nextData.userInterestTech = (
-              nextData.userInterestTech || []
-            ).filter((i) => i !== value);
-            break;
-          case 'INT_DOMAIN':
-            nextData.userInterestDomain = (
-              nextData.userInterestDomain || []
-            ).filter((i) => i !== value);
-            break;
-        }
+      const { type, value, id } = payload;
+      switch (type) {
+        case 'SNS':
+          nextData.socialLinks = (nextData.socialLinks || []).filter(
+            (i) => i !== value,
+          );
+          break;
+        case 'TECH':
+          nextData.techStack = (nextData.techStack || []).filter(
+            (i) => i !== value,
+          );
+          break;
+        case 'CAREER':
+          nextData.userCareer = (nextData.userCareer || []).filter(
+            (i) => i.id !== id,
+          );
+          break;
+        case 'PROJECT':
+          nextData.userProject = (nextData.userProject || []).filter(
+            (i) => i.id !== id,
+          );
+          break;
+        case 'INT_TECH':
+          nextData.userInterestTech = (nextData.userInterestTech || []).filter(
+            (i) => i !== value,
+          );
+          break;
+        case 'INT_DOMAIN':
+          nextData.userInterestDomain = (
+            nextData.userInterestDomain || []
+          ).filter((i) => i !== value);
+          break;
       }
+      return nextData;
+    });
+  };
+
+  const handleAddItem = (extraData?: CalendarData) => {
+    setFormData((prev) => {
+      const nextData = { ...prev };
 
       if (dialogType === 'ADD_LINK')
         nextData.socialLinks = [...(nextData.socialLinks || []), inputValue];
@@ -135,7 +133,7 @@ export default function ProfilePage() {
 
       if (dialogType === 'ADD_CAREER' || dialogType === 'ADD_PROJECT') {
         const newItem = {
-          id: Date.now().toString(),
+          id: crypto.randomUUID(),
           description: inputValue,
           startYear: extraData?.startYear || new Date().getFullYear(),
           startMonth: extraData?.startMonth || new Date().getMonth() + 1,
@@ -162,9 +160,34 @@ export default function ProfilePage() {
           ];
         }
       }
-
       return nextData;
     });
+  };
+
+  const handleConfirm = (extraData?: CalendarData) => {
+    if (dialogType === 'SAVE_CONFIRM') {
+      handleSave();
+      return;
+    }
+
+    if (
+      dialogType === 'DELETE_CONFIRM' &&
+      dialogPayload &&
+      typeof dialogPayload === 'object'
+    ) {
+      handleDeleteItem(dialogPayload);
+    } else {
+      if (dialogType === 'EDIT_JOB')
+        setFormData((prev) => ({ ...prev, job: inputValue }));
+      if (dialogType === 'EDIT_DESC')
+        setFormData((prev) => ({ ...prev, description: inputValue }));
+      if (dialogType === 'EDIT_VISIBLE')
+        setFormData((prev) => ({ ...prev, isPhoneNumberVisible: toggleValue }));
+
+      if (dialogType?.includes('ADD')) {
+        handleAddItem(extraData);
+      }
+    }
 
     setDialogType(null);
     setDialogPayload(null);

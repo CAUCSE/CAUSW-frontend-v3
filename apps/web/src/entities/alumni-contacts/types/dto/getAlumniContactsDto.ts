@@ -18,8 +18,8 @@ export interface UserActivity {
   id: string;
   startYear: number;
   startMonth: number;
-  endYear: number;
-  endMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
   description: string;
 }
 

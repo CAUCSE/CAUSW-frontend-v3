@@ -4,8 +4,6 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { toast } from '@/shared/model';
-
 import {
   Box,
   VStack,
@@ -17,7 +15,9 @@ import {
   Message,
   Mail,
   ChevronLeft,
-} from '../../../../../../packages/design-system/cds';
+} from '@causw/cds';
+
+import { toast } from '@/shared/model';
 
 interface AlumniData {
   profileImageUrl?: string;
@@ -71,7 +71,6 @@ export const AlumniDetailCard = ({
       typeof navigator !== 'undefined' &&
       /Mobi|Android/i.test(navigator.userAgent),
   );
-  console.log('data.isPhoneNumberVisible:', data.isPhoneNumberVisible);
 
   const handleCall = () => {
     if (isEditing) {

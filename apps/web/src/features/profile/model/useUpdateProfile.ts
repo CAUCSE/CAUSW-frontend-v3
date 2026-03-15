@@ -10,7 +10,6 @@ export const useUpdateProfile = () => {
     mutationFn: updateMyProfile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileQueryKeys.all });
-      console.log('프로필이 업데이트되었습니다.');
     },
     onError: (error) => {
       console.error('업데이트 실패:', error);

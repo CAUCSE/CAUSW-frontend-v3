@@ -264,7 +264,7 @@ export const AlumniInfoWidget = ({
           value={activeTab}
           onValueChange={handleTabChange}
         >
-          <Tab.List className="gap-5 border-none" style={{ padding: 0 }}>
+          <Tab.List className="gap-5 border-none p-0">
             {tabMap.map((tab) => (
               <Tab.TabItem key={tab.key} value={tab.key} className="py-3">
                 {tab.label}
@@ -283,9 +283,9 @@ export const AlumniInfoWidget = ({
                 onClick={() => onOpenDialog?.('ADD_LINK')}
               />
             )}
-            {data.socialLinks?.map((url, i) => (
+            {data.socialLinks?.map((url) => (
               <ContactIcon
-                key={i}
+                key={url}
                 variant="sns"
                 url={url}
                 isEditing={isEditing}
