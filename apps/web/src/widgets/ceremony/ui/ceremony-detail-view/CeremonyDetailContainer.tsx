@@ -18,8 +18,8 @@ interface CeremonyDetailContainerProps {
 
 const CeremonyDetailFetcher = ({
   ceremonyId,
-  context = 'general',
-}: CeremonyDetailContainerProps) => {
+  context,
+}: Required<CeremonyDetailContainerProps>) => {
   const { data } = useCeremonyDetailQuery(ceremonyId, context);
 
   return <CeremonyDetailView detail={data} />;
