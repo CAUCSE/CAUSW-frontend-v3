@@ -1,3 +1,26 @@
+export interface GetPostResponse {
+  id: string;
+  content: string;
+  isDeleted: boolean;
+  displayWriterNickname: string;
+  writerProfileImage: string;
+  fileUrlList: string[];
+  numComment: number;
+  numLike: number;
+  numFavorite: number;
+  voteId?: string;
+  isAnonymous: boolean;
+  isOwner: boolean;
+  isPostLike: boolean;
+  isPostFavorite: boolean;
+  updatable: boolean;
+  deletable: boolean;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+  boardId: string;
+  boardName: string;
+}
+
 export interface Post {
   id: number;
   author: {

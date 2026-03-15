@@ -8,7 +8,7 @@ import { PostActionMenu } from './PostActionMenu';
 
 interface PostHeaderProps {
   authorName: string;
-  createdAt: string;
+  createdAt: Date | string;
   avatarUrl?: string;
   isOfficial?: boolean;
   isMine: boolean;

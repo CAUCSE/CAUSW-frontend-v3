@@ -7,12 +7,18 @@ import { Stack } from '@causw/cds';
 import { CommentForm } from '@/features/comment';
 
 import { MOCK_POST_COMMENTS, ReplyTarget } from '@/entities/comment';
-import { MOCK_POST } from '@/entities/post';
+import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';
 import { PostContent } from './PostContent';
 
-export const PostDetailSection = () => {
+interface PostDetailSectionProps {
+  postId: string;
+}
+
+export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
+  const { data: post } = usePostQuery(postId);
+
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -33,7 +39,7 @@ export const PostDetailSection = () => {
           msOverflowStyle: 'none',
         }}
       >
-        <PostContent postId={MOCK_POST.id} />
+        <PostContent post={post} />
         <CommentList comments={MOCK_POST_COMMENTS} onReply={handleReply} />
       </Stack>
 

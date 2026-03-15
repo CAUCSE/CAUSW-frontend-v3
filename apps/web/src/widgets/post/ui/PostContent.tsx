@@ -8,13 +8,13 @@ import { BlockUserModal } from '@/features/block';
 import { PostHeader, usePostMenuActions } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
+import { GetPostResponse, PostBody, PostReactions } from '@/entities/post';
 
 interface PostContentProps {
-  postId: string | number;
+  post: GetPostResponse;
 }
 
-export const PostContent = ({ postId }: PostContentProps) => {
+export const PostContent = ({ post }: PostContentProps) => {
   const {
     isReportOpen,
     setIsReportOpen,
@@ -23,10 +23,10 @@ export const PostContent = ({ postId }: PostContentProps) => {
     handleAction: handleMenuAction,
     submitReport,
     submitBlock,
-  } = usePostMenuActions(postId);
+  } = usePostMenuActions(post.id);
 
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(MOCK_POST.likeCount);
+  const [likeCount, setLikeCount] = useState(post.numLike);
 
   const handleLikeClick = () => {
     if (isLiked) {
@@ -42,26 +42,24 @@ export const PostContent = ({ postId }: PostContentProps) => {
     <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
       <VStack gap="sm">
         <PostHeader
-          authorName={MOCK_POST.author.name}
-          createdAt={MOCK_POST.createdAt}
-          avatarUrl={MOCK_POST.author.profileImage}
-          isOfficial={MOCK_POST.author.isOfficial}
+          authorName={post.displayWriterNickname}
+          createdAt={post.createdAt}
+          avatarUrl={post.writerProfileImage}
+          // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
+          isOfficial={post.isOwner}
           isMine={false}
           onAction={handleMenuAction}
         />
         <PostBody
-          content={MOCK_POST.content}
-          images={MOCK_POST.images}
-          isHtml={MOCK_POST.isHtml}
+          content={post.content}
+          images={post.fileUrlList}
+          // isHtml={post.isHtml}
         />
       </VStack>
 
-      {MOCK_POST.vote && (
-        <PostVote
-          options={MOCK_POST.vote.options}
-          endTime={MOCK_POST.vote.endTime}
-        />
-      )}
+      {/* {post.voteId && (
+        <PostVote options={post.vote.options} endTime={post.vote.endTime} />
+      )} */}
 
       <PostReactions
         active={isLiked}
