@@ -6,7 +6,7 @@ import { Stack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
-import { MOCK_POST_COMMENTS, ReplyTarget } from '@/entities/comment';
+import { ReplyTarget, useCommentsQuery } from '@/entities/comment';
 import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';
@@ -18,6 +18,7 @@ interface PostDetailSectionProps {
 
 export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
   const { data: post } = usePostQuery(postId);
+  const { data: comments } = useCommentsQuery({ postId });
 
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -40,7 +41,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
         }}
       >
         <PostContent post={post} />
-        <CommentList comments={MOCK_POST_COMMENTS} onReply={handleReply} />
+        <CommentList comments={comments.content} onReply={handleReply} />
       </Stack>
 
       <CommentForm

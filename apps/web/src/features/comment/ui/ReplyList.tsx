@@ -1,9 +1,9 @@
-import { Comment, ReplyTarget } from '@/entities/comment';
+import { ChildComment, ReplyTarget } from '@/entities/comment';
 
 import { ReplyItem } from './ReplyItem';
 
 interface ReplyListProps {
-  replies: Comment[];
+  replies: ChildComment[];
   onReply: (target: ReplyTarget) => void;
 }
 

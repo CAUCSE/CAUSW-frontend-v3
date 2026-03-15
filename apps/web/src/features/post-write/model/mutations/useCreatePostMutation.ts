@@ -22,9 +22,18 @@ export const useCreatePostMutation = () => {
     mutationFn: ({ postCreateRequest, attachImageList }) =>
       createPost(postCreateRequest, attachImageList),
 
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success('게시글이 작성되었어요.');
-      router.push(`/feed/${data.id}`);
+
+      // TODO: 작성 후 게시글 목록 invalidateQueries 필요
+      // queryClient.invalidateQueries({
+      //   queryKey: ['feed'],
+      // });
+
+      router.back();
+      setTimeout(() => {
+        router.replace('/feed');
+      }, 0);
     },
 
     onError: () => {

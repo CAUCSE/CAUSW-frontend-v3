@@ -1,6 +1,6 @@
-import { Stack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { CommentItem } from '@/features/comment';
+import { CommentEmptyState, CommentItem } from '@/features/comment';
 
 import { Comment, CommentHeader, ReplyTarget } from '@/entities/comment';
 
@@ -10,13 +10,19 @@ interface CommentListProps {
 }
 
 export const CommentList = ({ comments, onReply }: CommentListProps) => {
+  const isEmpty = comments.length === 0;
+
   return (
-    <Stack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">
+    <VStack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">
       <CommentHeader count={comments.length} />
 
-      {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} onReply={onReply} />
-      ))}
-    </Stack>
+      {isEmpty ? (
+        <CommentEmptyState />
+      ) : (
+        comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} onReply={onReply} />
+        ))
+      )}
+    </VStack>
   );
 };

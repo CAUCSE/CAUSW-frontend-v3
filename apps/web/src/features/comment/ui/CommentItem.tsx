@@ -7,7 +7,9 @@ import { Stack } from '@causw/cds';
 import { BlockUserModal } from '@/features/block';
 import { ReportFlow } from '@/features/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+import { CommentCard, ReplyTarget, Comment } from '@/entities/comment';
+
+import { formatRelativeTime } from '@/shared/lib';
 
 import { useCommentMenuActions } from '../model';
 
@@ -47,16 +49,17 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
     <Stack gap="none" key={comment.id}>
       <CommentCard
         {...comment}
-        author={comment.author}
+        author={comment.displayWriterNickname}
+        profileImage={comment.writerProfileImage}
         content={comment.content}
-        time={comment.time}
+        time={formatRelativeTime(comment.createdAt)}
         isLiked={isLiked}
         likeCount={likeCount}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
             id: comment.id,
-            author: comment.author,
+            author: comment.displayWriterNickname,
             content: comment.content,
           })
         }
@@ -65,7 +68,7 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         }
       />
 
-      <ReplyList replies={comment.replies} onReply={onReply} />
+      <ReplyList replies={comment.childCommentList} onReply={onReply} />
 
       <ReportFlow
         open={isReportOpen}

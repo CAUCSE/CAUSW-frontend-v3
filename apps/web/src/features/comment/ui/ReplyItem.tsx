@@ -6,12 +6,14 @@ import { BlockUserModal } from '@/features/block';
 import { useCommentMenuActions } from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+import { CommentCard, ReplyTarget, ChildComment } from '@/entities/comment';
+
+import { formatRelativeTime } from '@/shared/lib';
 
 import { CommentActionMenu } from './CommentActionMenu';
 
 interface ReplyItemProps {
-  reply: Comment;
+  reply: ChildComment;
   onReply: (target: ReplyTarget) => void;
 }
 
@@ -43,16 +45,17 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
     <>
       <CommentCard
         isReply
-        author={reply.author}
+        author={reply.displayWriterNickname}
+        profileImage={reply.writerProfileImage}
         content={reply.content}
-        time={reply.time}
+        time={formatRelativeTime(reply.createdAt)}
         isLiked={isLiked}
         likeCount={likeCount}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
             id: reply.id,
-            author: reply.author,
+            author: reply.displayWriterNickname,
             content: reply.content,
           })
         }

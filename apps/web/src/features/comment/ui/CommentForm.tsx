@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { Checkbox, HStack, Stack, Text } from '@causw/cds';
 
-import { ReplyPreview, ReplyTarget } from '@/entities/comment';
+import { ReplyIndicator, ReplyTarget } from '@/entities/comment';
 
 import { useCommentForm } from '../model';
 
@@ -42,7 +42,7 @@ export const CommentForm = ({
 
   return (
     <Stack gap="none" className="rounded-b-lg bg-white">
-      <ReplyPreview replyTarget={replyTarget} onCancel={onCancelReply} />
+      <ReplyIndicator replyTarget={replyTarget} onCancel={onCancelReply} />
 
       <HStack
         gap="sm"

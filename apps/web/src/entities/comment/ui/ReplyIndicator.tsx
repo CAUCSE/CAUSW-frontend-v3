@@ -2,12 +2,15 @@ import { Close, HStack, Stack, Text } from '@causw/cds';
 
 import { ReplyTarget } from '../model';
 
-interface ReplyPreviewProps {
+interface ReplyIndicatorProps {
   replyTarget: ReplyTarget;
   onCancel: () => void;
 }
 
-export const ReplyPreview = ({ replyTarget, onCancel }: ReplyPreviewProps) => {
+export const ReplyIndicator = ({
+  replyTarget,
+  onCancel,
+}: ReplyIndicatorProps) => {
   if (!replyTarget) return null;
 
   return (
