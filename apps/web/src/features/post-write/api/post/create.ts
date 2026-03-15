@@ -21,9 +21,11 @@ export const createPost = (
     });
   }
 
-  return API.post<PostCreateResponseDto>(`/api/v2/posts`, formData, {
+  const data = API.post<PostCreateResponseDto>(`/api/v2/posts`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+
+  return data;
 };
