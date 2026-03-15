@@ -36,8 +36,6 @@ export default function ProfilePage() {
   );
   const { mutate: updateProfile } = useUpdateProfile();
 
-  // ✅ ESLint 에러(set-state-in-effect) 해결:
-  // 동기적으로 바로 실행되지 않도록 브라우저의 다음 프레임이나 마이크로태스크로 미룹니다.
   useEffect(() => {
     if (!isEditing && meData) {
       const timeoutId = setTimeout(() => {
