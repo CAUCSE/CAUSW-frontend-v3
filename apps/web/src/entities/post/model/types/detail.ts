@@ -1,4 +1,4 @@
-export interface GetPostResponse {
+export interface GetPostResponseDto {
   id: string;
   content: string;
   isDeleted: boolean;

@@ -1,8 +1,8 @@
 import { API } from '@/shared/api';
 
-import { GetPostResponse } from '../../model';
+import { GetPostResponseDto } from '../../model';
 
-export const getPost = async (postId: string): Promise<GetPostResponse> => {
-  const data = await API.get<GetPostResponse>(`/api/v2/posts/${postId}`);
+export const getPost = async (postId: string): Promise<GetPostResponseDto> => {
+  const data = await API.get<GetPostResponseDto>(`/api/v2/posts/${postId}`);
   return data;
 };

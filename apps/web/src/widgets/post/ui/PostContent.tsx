@@ -8,10 +8,10 @@ import { BlockUserModal } from '@/features/block';
 import { PostHeader, usePostMenuActions } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { GetPostResponse, PostBody, PostReactions } from '@/entities/post';
+import { GetPostResponseDto, PostBody, PostReactions } from '@/entities/post';
 
 interface PostContentProps {
-  post: GetPostResponse;
+  post: GetPostResponseDto;
 }
 
 export const PostContent = ({ post }: PostContentProps) => {
