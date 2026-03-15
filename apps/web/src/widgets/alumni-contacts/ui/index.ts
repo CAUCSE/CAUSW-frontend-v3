@@ -3,3 +3,6 @@ export {
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,
 } from './alumni-contacts-list';
+
+export * from './AlumniInfoWidget';
+export * from './AlumniDetailCard';

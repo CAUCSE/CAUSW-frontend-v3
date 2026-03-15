@@ -15,3 +15,4 @@ export * from './action-header';
 export * from './QuickMenu';
 export * from './IconCountButton';
 export * from './ConfirmLeaveModal';
+export * from './ContentLayout';
