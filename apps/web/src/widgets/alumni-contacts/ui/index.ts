@@ -6,3 +6,4 @@ export {
 
 export * from './AlumniInfoWidget';
 export * from './AlumniDetailCard';
+export * from './ProfileDialogs';
