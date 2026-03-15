@@ -47,7 +47,7 @@ export const PostContent = ({ post }: PostContentProps) => {
           avatarUrl={post.writerProfileImage}
           // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
           isOfficial={post.isOwner}
-          isMine={false}
+          isMine={post.isOwner}
           onAction={handleMenuAction}
         />
         <PostBody

@@ -60,7 +60,10 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
           })
         }
         menuSlot={
-          <CommentActionMenu isMine={false} onAction={handleMenuAction} />
+          <CommentActionMenu
+            isMine={reply.isOwner}
+            onAction={handleMenuAction}
+          />
         }
       />
 

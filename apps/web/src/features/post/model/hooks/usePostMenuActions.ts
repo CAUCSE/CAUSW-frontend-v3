@@ -2,11 +2,14 @@
 
 import { useState } from 'react';
 
+import { useDeletePostMutation } from '../mutations';
 import { PostAction } from '../types';
 
-export const usePostMenuActions = (postId?: string | number) => {
+export const usePostMenuActions = (postId: string) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
+
+  const { mutate: deletePost } = useDeletePostMutation();
 
   const handleAction = (action: PostAction) => {
     switch (action) {
@@ -17,8 +20,8 @@ export const usePostMenuActions = (postId?: string | number) => {
         setIsBlockOpen(true);
         break;
       case 'delete':
-        // TODO: 게시글 삭제 API 호출 로직
-        console.log(`id ${postId} 게시글 삭제`);
+        if (!postId) return;
+        deletePost(postId);
         break;
       case 'edit':
         // TODO: 게시글 수정 로직
