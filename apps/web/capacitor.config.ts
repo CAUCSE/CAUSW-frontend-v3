@@ -74,6 +74,12 @@ const config: CapacitorConfig = {
     flavor: isDevFlavor ? 'dev' : 'prod',
   },
   plugins: {
+    CapacitorCookies: {
+      enabled: false,
+    },
+    CapacitorHttp: {
+      enabled: true,
+    },
     StatusBar: {
       style: 'LIGHT_CONTENT',
       backgroundColor: '#ffffff',
