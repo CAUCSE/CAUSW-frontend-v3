@@ -14,6 +14,7 @@ import { AuthContainer } from '@/widgets/auth';
 import { useSignInMutation } from '@/features/auth';
 
 import { SigninRequestDto, signInSchema } from '@/entities/auth';
+import { usePushNotification } from '@/entities/notification';
 
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
@@ -30,13 +31,15 @@ export const EmailLoginPage = () => {
       password: '',
     },
   });
-
+  const { compareFCMToken } = usePushNotification();
   const signInMutation = useSignInMutation({
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       toast.success('로그인에 성공했습니다.');
-      TokenManager.setAccessToken(res.accessToken);
-      TokenManager.setRefreshToken();
+      await TokenManager.setAccessToken(res.accessToken);
+      await TokenManager.setRefreshToken();
       // TODO: 현재 인증 상태에 따른 redirect 로직 추가
+
+      await compareFCMToken();
       router.push('/home');
     },
     onError: (error) => {

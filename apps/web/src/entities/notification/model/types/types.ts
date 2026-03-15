@@ -16,3 +16,7 @@ export type NotificationType =
   | 'CEREMONY'
   | 'BOARD'
   | 'ADMISSION';
+
+export interface UpdateFCMTokenRequestDto {
+  fcmToken: string;
+}

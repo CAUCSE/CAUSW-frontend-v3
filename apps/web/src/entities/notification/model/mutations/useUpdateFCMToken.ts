@@ -16,7 +16,10 @@ export const useUpdateFCMToken = (withToast: boolean = true) => {
       }
     },
 
-    onError: () => {
+    onError: (e) => {
+      ///삭제!!!!
+      console.log('[FCM] update token API failed', e);
+      toast.error('22222222');
       if (withToast) {
         toast.error(MESSAGE.PUSH_NOTIFIACTION_FAILURE);
       }

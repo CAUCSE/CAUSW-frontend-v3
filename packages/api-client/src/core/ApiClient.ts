@@ -97,10 +97,18 @@ export class ApiClient {
 
     let response: Response;
     try {
+      //삭제!!!
+      console.log('[API] FINAL url ->', `${this.baseUrl}${config.url}`);
+      console.log('[API] FINAL headers ->', config.options.headers);
+
       response = await fetch(`${this.baseUrl}${config.url}`, {
         ...config.options,
         signal: controller.signal,
       });
+      console.log('[API] redirected?', response.redirected);
+      console.log('[API] response.url', response.url);
+      console.log('[API] status', response.status);
+      console.log('[API] location header', response.headers.get('location'));
     } catch (error) {
       const errorOptions = { cause: error };
 
