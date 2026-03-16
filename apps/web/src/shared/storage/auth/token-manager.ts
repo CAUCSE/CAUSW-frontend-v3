@@ -98,9 +98,10 @@ export class TokenManager {
   static async setRefreshToken(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
-      //삭제!!
-      console.log('client RTK:', getClientRTK());
-      console.log('document.cookie', document.cookie);
+
+      if (!refreshToken) {
+        return;
+      }
       await setNativeRTK(refreshToken);
     }
   }
