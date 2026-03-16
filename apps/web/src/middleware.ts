@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = await TokenManager.getAccessToken();
   const { device } = userAgent(request);
 
-  // 2. 기기 타입이 모바일(또는 태블릿)이면 토큰 검사 없이 바로 통과
+  //  기기 타입이 모바일(또는 태블릿)이면 토큰 검사 없이 바로 통과
   if (device.type === 'mobile' || device.type === 'tablet') {
     return NextResponse.next();
   }

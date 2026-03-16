@@ -74,12 +74,14 @@ const config: CapacitorConfig = {
     flavor: isDevFlavor ? 'dev' : 'prod',
   },
   plugins: {
+    //260315 - CapacitorHttp 플러그인 활성화 (서버에서 rtk붙여주는 것 때문에 임시로활성화, 추후 로직 수정 후 제거 예정)
     CapacitorCookies: {
       enabled: false,
     },
     CapacitorHttp: {
       enabled: true,
     },
+    //260315- 여기까지
     StatusBar: {
       style: 'LIGHT_CONTENT',
       backgroundColor: '#ffffff',

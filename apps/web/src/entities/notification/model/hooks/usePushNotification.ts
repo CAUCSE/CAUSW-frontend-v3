@@ -6,51 +6,71 @@ import { getNativeFCM, setNativeFCM } from '@/shared/storage';
 import { isWeb } from '@/shared/utils';
 
 import { useUpdateFCMToken } from '../mutations/useUpdateFCMToken';
-
+//TODO : main에 올리기 전에 console 제거하기
 export const usePushNotification = () => {
-  const updateFCMTokenMutation = useUpdateFCMToken(true);
-
-  const extendFCMTokenMutation = useUpdateFCMToken(false);
+  const updateFCMTokenMutation = useUpdateFCMToken();
 
   const compareFCMToken = async (): Promise<void> => {
     try {
-      if (isWeb) {
+      if (isWeb) return;
+
+      let permStatus = await PushNotifications.checkPermissions();
+
+      if (permStatus.receive === 'prompt') {
+        permStatus = await PushNotifications.requestPermissions();
+
+        if (permStatus.receive !== 'granted') {
+          toast.error(MESSAGE.PUSH_NOTIFICATION.PERMISSION_DENIED);
+          return;
+        }
+      }
+
+      if (permStatus.receive !== 'granted') {
         return;
       }
 
-      const permStatus = await PushNotifications.checkPermissions();
+      const registrationListener = await PushNotifications.addListener(
+        'registration',
+        async ({ value }) => {
+          try {
+            const clientFCMToken = value;
+            const localFCMToken = await getNativeFCM();
 
-      if (permStatus.receive === 'prompt') {
-        await PushNotifications.requestPermissions();
-      }
+            if (localFCMToken === clientFCMToken) {
+              return;
+            }
 
-      PushNotifications.addListener('registration', async ({ value }) => {
-        const clientFCMToken = value;
+            await updateFCMTokenMutation.mutateAsync({
+              fcmToken: clientFCMToken,
+            });
 
-        const localFCMToken = await getNativeFCM();
+            await setNativeFCM(clientFCMToken);
+            toast.success(MESSAGE.PUSH_NOTIFICATION.SUCCESS);
+          } catch (error) {
+            console.log('[PN] registration handler error', error);
+            toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
+          } finally {
+            await registrationListener.remove();
+            await registrationErrorListener.remove();
+          }
+        },
+      );
 
-        if (localFCMToken !== clientFCMToken) {
-          updateFCMTokenMutation.mutate({
-            fcmToken: clientFCMToken,
-          });
+      const registrationErrorListener = await PushNotifications.addListener(
+        'registrationError',
+        async (err) => {
+          console.log('[PN] registrationError', err);
+          toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
 
-          await setNativeFCM(clientFCMToken);
-        } else {
-          extendFCMTokenMutation.mutate({
-            fcmToken: clientFCMToken,
-          });
-        }
-      });
-
-      PushNotifications.addListener('registrationError', (err) => {
-        console.log('[PN] registrationError', err);
-        toast.error('11111111');
-        toast.error(MESSAGE.PUSH_NOTIFIACTION_FAILURE);
-      });
+          await registrationListener.remove();
+          await registrationErrorListener.remove();
+        },
+      );
 
       await PushNotifications.register();
-    } catch (_error) {
-      toast.error(MESSAGE.PUSH_NOTIFIACTION_ERROR);
+    } catch (error) {
+      console.log('[PN] compareFCMToken error', error);
+      toast.error(MESSAGE.PUSH_NOTIFICATION.UNKNOWN_ERROR);
     }
   };
 
