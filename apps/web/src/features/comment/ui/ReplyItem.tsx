@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-
 import { BlockUserModal } from '@/features/block';
-import { useCommentMenuActions } from '@/features/comment';
+import {
+  useCommentMenuActions,
+  useToggleReplyLikeMutation,
+} from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
 import { CommentCard, ReplyTarget, ChildComment } from '@/entities/comment';
@@ -13,11 +14,12 @@ import { formatRelativeTime } from '@/shared/lib';
 import { CommentActionMenu } from './CommentActionMenu';
 
 interface ReplyItemProps {
+  postId: string;
   reply: ChildComment;
   onReply: (target: ReplyTarget) => void;
 }
 
-export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
+export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
   const {
     isReportOpen,
     setIsReportOpen,
@@ -28,17 +30,14 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
     submitBlock,
   } = useCommentMenuActions(reply.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const { mutate: toggleLike, isPending } = useToggleReplyLikeMutation(
+    postId,
+    reply.id,
+  );
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    if (isPending) return;
+    toggleLike(!reply.isChildCommentLike);
   };
 
   return (
@@ -49,8 +48,8 @@ export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
         profileImage={reply.writerProfileImage}
         content={reply.content}
         time={formatRelativeTime(reply.createdAt)}
-        isLiked={isLiked}
-        likeCount={likeCount}
+        isLiked={reply.isChildCommentLike}
+        likeCount={reply.numLike}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({

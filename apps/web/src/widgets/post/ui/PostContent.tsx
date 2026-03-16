@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
-
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
-import { PostHeader, usePostMenuActions } from '@/features/post';
+import {
+  PostHeader,
+  usePostMenuActions,
+  useTogglePostLikeMutation,
+} from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
 import { GetPostResponseDto, PostBody, PostReactions } from '@/entities/post';
@@ -25,17 +27,11 @@ export const PostContent = ({ post }: PostContentProps) => {
     submitBlock,
   } = usePostMenuActions(post.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.numLike);
+  const { mutate: toggleLike, isPending } = useTogglePostLikeMutation(post.id);
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    if (isPending) return;
+    toggleLike(!post.isPostLike);
   };
 
   return (
@@ -46,7 +42,7 @@ export const PostContent = ({ post }: PostContentProps) => {
           createdAt={post.createdAt}
           avatarUrl={post.writerProfileImage}
           // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
-          isOfficial={post.isOwner}
+          // isOfficial={}
           isMine={post.isOwner}
           onAction={handleMenuAction}
         />
@@ -62,8 +58,8 @@ export const PostContent = ({ post }: PostContentProps) => {
       )} */}
 
       <PostReactions
-        active={isLiked}
-        likeCount={likeCount}
+        active={post.isPostLike}
+        likeCount={post.numLike}
         onLikeClick={handleLikeClick}
       />
 

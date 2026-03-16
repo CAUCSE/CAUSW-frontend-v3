@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Stack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
@@ -11,7 +9,7 @@ import { CommentCard, ReplyTarget, Comment } from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
 
-import { useCommentMenuActions } from '../model';
+import { useCommentMenuActions, useToggleCommentLikeMutation } from '../model';
 
 import { CommentActionMenu } from './CommentActionMenu';
 import { ReplyList } from './ReplyList';
@@ -32,17 +30,13 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
     submitBlock,
   } = useCommentMenuActions(comment.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const { mutate: toggleLike } = useToggleCommentLikeMutation(
+    comment.postId,
+    comment.id,
+  );
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    toggleLike(!comment.isCommentLike);
   };
 
   return (
@@ -53,8 +47,8 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         profileImage={comment.writerProfileImage}
         content={comment.content}
         time={formatRelativeTime(comment.createdAt)}
-        isLiked={isLiked}
-        likeCount={likeCount}
+        isLiked={comment.isCommentLike}
+        likeCount={comment.numLike}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
@@ -71,7 +65,11 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         }
       />
 
-      <ReplyList replies={comment.childCommentList} onReply={onReply} />
+      <ReplyList
+        postId={comment.postId}
+        replies={comment.childCommentList}
+        onReply={onReply}
+      />
 
       <ReportFlow
         open={isReportOpen}

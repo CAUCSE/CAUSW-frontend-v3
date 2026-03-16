@@ -26,3 +26,11 @@ export const createReply = async (
   );
   return data;
 };
+
+export const likeComment = async (commentId: string): Promise<void> => {
+  await API.post(`/api/v2/comments/${commentId}/like`);
+};
+
+export const likeReply = async (replyId: string): Promise<void> => {
+  await API.post(`/api/v2/child-comments/${replyId}/like`);
+};
