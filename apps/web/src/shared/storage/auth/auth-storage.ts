@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 
+import { REFRRESHED } from '@/shared/config';
 import {
   getStorageAccessKey,
   getStorageAuthRefreshedKey,
   getStorageRefreshKey,
-  REFRRESHED,
 } from '@/shared/utils';
 
 const accessKey = getStorageAccessKey();

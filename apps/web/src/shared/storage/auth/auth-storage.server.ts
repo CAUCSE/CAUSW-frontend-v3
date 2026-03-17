@@ -1,11 +1,11 @@
 'use server';
 import { cookies } from 'next/headers';
 
+import { REFRRESHED } from '@/shared/config';
 import {
   getStorageAccessKey,
   getStorageAuthRefreshedKey,
   getStorageRefreshKey,
-  REFRRESHED,
 } from '@/shared/utils';
 
 const accessKey = getStorageAccessKey();
