@@ -17,22 +17,12 @@ import {
   ChevronLeft,
 } from '@causw/cds';
 
+import { AlumniDetailResponseDto } from '@/entities/alumni-contacts/types';
+
 import { toast } from '@/shared/model';
 
-interface AlumniData {
-  profileImageUrl?: string;
-  name: string;
-  admissionYear: string;
-  academicStatus: string;
-  job: string;
-  description: string;
-  email: string;
-  phoneNumber?: string;
-  isPhoneNumberVisible?: boolean;
-}
-
 interface Props {
-  data: AlumniData;
+  data: AlumniDetailResponseDto;
   isMyProfile?: boolean;
   isEditing?: boolean;
   onActionClick?: () => void;
@@ -71,7 +61,12 @@ export const AlumniDetailCard = ({
       typeof navigator !== 'undefined' &&
       /Mobi|Android/i.test(navigator.userAgent),
   );
-
+  console.group('🔍 AlumniInfoWidget Data Check');
+  console.log('전체 데이터:', data);
+  console.log('기술 스택(techStack):', data.techStack);
+  console.log('관심 기술(userInterestTech):', data.userInterestTech);
+  console.log('관심 도메인(userInterestDomain):', data.userInterestDomain);
+  console.groupEnd();
   const handleCall = () => {
     if (isEditing) {
       onOpenDialog?.('EDIT_VISIBLE', data.isPhoneNumberVisible ?? true);
@@ -81,7 +76,7 @@ export const AlumniDetailCard = ({
     if (
       !data.phoneNumber ||
       data.phoneNumber === '전화번호 없음' ||
-      data.isPhoneNumberVisible === false
+      !data.isPhoneNumberVisible
     ) {
       toast.error('등록된 전화번호가 없거나 비공개 상태입니다.');
       return;
@@ -99,7 +94,7 @@ export const AlumniDetailCard = ({
     if (
       !data.phoneNumber ||
       data.phoneNumber === '전화번호 없음' ||
-      data.isPhoneNumberVisible === false
+      !data.isPhoneNumberVisible
     ) {
       toast.error('등록된 전화번호가 없거나 비공개 상태입니다.');
       return;
@@ -196,7 +191,7 @@ export const AlumniDetailCard = ({
             <Call size={18} className="text-gray-400" />
             <Text typography="body-14-semibold" className="text-gray-600">
               {/* 삼항 연산자를 사용하여 명확하게 렌더링 */}
-              {data.isPhoneNumberVisible === false ? '전화 (비공개)' : '전화'}
+              {!data.isPhoneNumberVisible ? '전화 (비공개)' : '전화'}
             </Text>
           </Box>
 
@@ -206,9 +201,7 @@ export const AlumniDetailCard = ({
           >
             <Message size={18} className="text-gray-400" />
             <Text typography="body-14-semibold" className="text-gray-600">
-              {data.isPhoneNumberVisible === false
-                ? '메세지 (비공개)'
-                : '메세지'}
+              {!data.isPhoneNumberVisible ? '메세지 (비공개)' : '메세지'}
             </Text>
           </Box>
 
