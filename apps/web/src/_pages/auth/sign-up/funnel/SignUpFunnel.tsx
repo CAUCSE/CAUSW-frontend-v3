@@ -1,21 +1,16 @@
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
-import { useRouter } from 'next/navigation';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
 
 import {
   SIGN_UP_STEP,
-  useSignUpMutation,
+  useSignUpForm,
   useSignUpStepGuard,
 } from '@/features/auth';
-
-import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
@@ -34,7 +29,6 @@ type SignUpFunnelProps = {
 };
 
 export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
-  const router = useRouter();
   const funnel = useFunnel<SignUpStep>({
     id: 'sign-up',
     initial: {
@@ -48,38 +42,7 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
       funnel.history.replace(SIGN_UP_STEP.Account);
     },
   });
-  const methods = useForm<SignUpFormData>({
-    resolver: zodResolver(signUpSchema),
-    mode: 'onBlur',
-    defaultValues: {
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      name: '',
-      phoneNumber: '',
-      nickname: '',
-      emailVerificationCode: '',
-    },
-  });
-  const signUpMutation = useSignUpMutation();
-
-  const onSubmit = (data: SignUpFormData) => {
-    signUpMutation.mutate(
-      {
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        phoneNumber: data.phoneNumber,
-        nickname: data.nickname,
-        emailVerificationCode: data.emailVerificationCode,
-      },
-      {
-        onSuccess: () => {
-          router.replace('/auth/enrollment-verification');
-        },
-      },
-    );
-  };
+  const { methods, handleSubmit } = useSignUpForm();
 
   return (
     <>
@@ -116,7 +79,9 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
                 }}
               />
             )}
-            Info={() => <InfoStep onNext={methods.handleSubmit(onSubmit)} />}
+            Info={() => (
+              <InfoStep onNext={methods.handleSubmit(handleSubmit)} />
+            )}
           />
         </FormProvider>
       </AuthContainer>
