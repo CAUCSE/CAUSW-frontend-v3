@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { QUERY_STALE_TIME } from '@/shared/constants';
+import {
+  getNotificationUnreadCnt,
+  notificationQueryKey,
+} from '@/entities/notification';
 
-import { getNotificationUnreadCnt } from '../../api';
-import { notificationQueryKey } from '../../config';
+import { QUERY_STALE_TIME } from '@/shared/constants';
 
 export const useUnreadNotificationCnt = () => {
   return useQuery({
