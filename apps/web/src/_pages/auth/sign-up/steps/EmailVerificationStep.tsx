@@ -70,14 +70,12 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
           <Text typography="body-14-medium" textColor="gray-400">
             메일이 도착하지 않았나요?
           </Text>
-          <Text
-            typography="body-14-medium"
-            textColor="gray-400"
-            className="cursor-pointer underline"
+          <button
+            className="typo-body-14-medium cursor-pointer text-gray-400 underline"
             onClick={handleResendClick}
           >
             재전송
-          </Text>
+          </button>
         </HStack>
       </VStack>
     </VStack>
