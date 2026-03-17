@@ -6,21 +6,17 @@ import type { PropsWithChildren } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { TokenManager } from '@/shared/storage';
-import {
-  getClientAuthRefreshed,
-  removeClientAuthRefreshed,
-} from '@/shared/storage/auth/auth-storage';
 
 export function AuthRefreshProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!getClientAuthRefreshed()) {
+    if (!TokenManager.getAuthRefreshed()) {
       return;
     }
 
     TokenManager.setRefreshToken();
-    removeClientAuthRefreshed();
+    TokenManager.removeAuthRefreshed();
   }, [pathname]);
 
   return <>{children}</>;

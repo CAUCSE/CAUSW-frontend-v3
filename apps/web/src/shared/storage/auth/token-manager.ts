@@ -4,8 +4,10 @@ import { isMobile, isServer } from '@/shared/utils';
 
 import {
   getClientATK,
+  getClientAuthRefreshed,
   getClientRTK,
   removeClientATK,
+  removeClientAuthRefreshed,
   removeClientRTK,
   setClientATK,
 } from './auth-storage';
@@ -117,5 +119,13 @@ export class TokenManager {
     if (isServer) {
       await setServerAuthRefreshed();
     }
+  }
+
+  static async getAuthRefreshed(): Promise<boolean> {
+    return getClientAuthRefreshed();
+  }
+
+  static async removeAuthRefreshed(): Promise<void> {
+    removeClientAuthRefreshed();
   }
 }
