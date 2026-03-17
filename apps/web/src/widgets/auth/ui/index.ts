@@ -10,3 +10,4 @@ export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
 export { SignInImageSection } from './sign-in-image-section';
 export { OauthAdditionalInfoForm } from './oauth-additional-info-form';
 export { OauthAdditionalInfoNotice } from './oauth-additional-info-notice';
+export { SignUpInfoStepHeader } from './sign-up-info-step-header';

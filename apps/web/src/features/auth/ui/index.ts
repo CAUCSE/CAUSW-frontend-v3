@@ -8,3 +8,7 @@ export * from './oauth-additional-info-name-field';
 export * from './oauth-additional-info-phone-number-field';
 export * from './oauth-additional-info-nickname-field';
 export * from './oauth-additional-info-submit-button';
+export * from './sign-up-info-step-name-field';
+export * from './sign-up-info-step-phone-number-field';
+export * from './sign-up-info-step-nickname-field';
+export * from './sign-up-info-step-next-button';
