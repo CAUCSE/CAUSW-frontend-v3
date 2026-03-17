@@ -3,7 +3,6 @@ import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { isServer } from '@/shared/utils';
 import {
   isAccessTokenError,
   parseCustomErrorCode,
@@ -63,9 +62,7 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
           await TokenManager.setAccessToken(newAccessToken);
           await TokenManager.setRefreshToken();
-          if (isServer) {
-            await TokenManager.setAuthRefreshed();
-          }
+          await TokenManager.setAuthRefreshed();
 
           apiWrapper.processRefreshQueue(newAccessToken);
 
