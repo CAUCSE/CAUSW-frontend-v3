@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
-  INFO_FORM_FIELD,
+  OAUTH_ADDITIONAL_INFO_FORM_FIELD,
   infoSchema,
   type InfoFormData,
 } from '@/entities/auth';
@@ -28,7 +28,7 @@ export const useOauthAdditionalInfoForm = () => {
   const { handlePhoneNumberChange } = usePhoneNumberChangeHandler<InfoFormData>(
     {
       setValue: methods.setValue,
-      fieldName: INFO_FORM_FIELD.phoneNumber,
+      fieldName: OAUTH_ADDITIONAL_INFO_FORM_FIELD.phoneNumber,
     },
   );
 

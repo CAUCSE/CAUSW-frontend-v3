@@ -4,3 +4,7 @@ export { AppleLoginButton } from './apple-login-button';
 export { EmailLoginButton } from './email-login-button';
 export * from './enrollment-verification-section';
 export * from './enrollment-step-action-button';
+export * from './oauth-additional-info-name-field';
+export * from './oauth-additional-info-phone-number-field';
+export * from './oauth-additional-info-nickname-field';
+export * from './oauth-additional-info-submit-button';

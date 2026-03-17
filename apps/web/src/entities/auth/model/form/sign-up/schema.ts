@@ -14,6 +14,8 @@ export const INFO_FORM_FIELD = Object.freeze({
   nickname: 'nickname',
 } as const);
 
+export const OAUTH_ADDITIONAL_INFO_FORM_FIELD = INFO_FORM_FIELD;
+
 export const ACCOUNT_FORM_FIELD = Object.freeze({
   email: 'email',
   password: 'password',
