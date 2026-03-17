@@ -1,6 +1,6 @@
 'use client';
 
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -23,16 +23,8 @@ export const useOauthAdditionalInfoForm = () => {
     },
   });
 
-  const [name = '', phoneNumber = '', nickname = ''] = useWatch({
-    control: methods.control,
-    name: Object.values(INFO_FORM_FIELD),
-  });
+  const isSubmitEnabled = methods.formState.isValid;
 
-  const isSubmitEnabled = infoSchema.safeParse({
-    name,
-    phoneNumber,
-    nickname,
-  }).success;
   const { handlePhoneNumberChange } = usePhoneNumberChangeHandler<InfoFormData>(
     {
       setValue: methods.setValue,
