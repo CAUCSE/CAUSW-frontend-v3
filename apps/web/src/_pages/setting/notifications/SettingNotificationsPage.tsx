@@ -17,8 +17,12 @@ import {
   useNotificationSettings,
 } from '@/entities/notification';
 
-import { ActionHeader, HydrationSuspense, SuspenseView } from '@/shared/ui';
-import { QueryErrorBoundary } from '@/shared/ui/provider';
+import {
+  ActionHeader,
+  HydrationSuspense,
+  QueryErrorBoundary,
+  SuspenseView,
+} from '@/shared/ui';
 
 export const SettingNotificationsPage = () => {
   return (
