@@ -1,19 +1,30 @@
-﻿'use client';
+'use client';
+
+import { RefObject } from 'react';
 
 import { Tab } from '@causw/cds';
 
-import { PostCard, PostCardItem } from '@/entities/post';
-import { ActivityMode, ActivityType } from '@/entities/setting';
+import {
+  ActivityMode,
+  ActivityType,
+  MyActivityPostItem,
+} from '@/entities/setting';
 
-import { ActionHeader, NoDataView } from '@/shared/ui';
+import { SuspenseView, ActionHeader, NoDataView } from '@/shared/ui';
 
 import { ACTIVITY_TABS } from '../model';
+
+import { MyActivityPostContent } from './MyActivityPostContent';
 
 type Props = {
   activeTab: ActivityType;
   mode: ActivityMode;
-  posts: PostCardItem[];
+  posts: MyActivityPostItem[];
   emptyMessage: string;
+  isLoading: boolean;
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean;
+  targetRef: RefObject<HTMLDivElement | null>;
   onBack: () => void;
   onTabChange: (tab: ActivityType) => void;
 };
@@ -23,12 +34,18 @@ export const MyActivityFeed = ({
   mode,
   posts,
   emptyMessage,
+  isLoading,
+  isFetchingNextPage,
+  hasNextPage,
+  targetRef,
   onBack,
   onTabChange,
 }: Props) => {
+  const showEmpty = !isLoading && (mode === 'empty' || posts.length === 0);
+
   return (
-    <div>
-      <div className="mx-auto w-full pb-6 md:px-8 md:pt-6">
+    <div className="w-full pb-6 md:pb-0">
+      <div className="w-full">
         <ActionHeader
           isSticky={true}
           background="transparent"
@@ -40,7 +57,7 @@ export const MyActivityFeed = ({
           <div />
         </ActionHeader>
 
-        <section className="px-5 py-2">
+        <section className="px-5 py-2 md:px-5">
           <Tab
             variant="chip"
             value={activeTab}
@@ -56,19 +73,33 @@ export const MyActivityFeed = ({
           </Tab>
         </section>
 
-        {mode === 'empty' || posts.length === 0 ? (
-          <section className="px-4 py-30 md:py-35">
+        {isLoading ? (
+          <section className="px-4 py-20">
+            <SuspenseView />
+          </section>
+        ) : showEmpty ? (
+          <section className="px-4 py-30 md:px-4 md:py-35">
             <NoDataView>
               <NoDataView.Icon />
               <NoDataView.Message>{emptyMessage}</NoDataView.Message>
             </NoDataView>
           </section>
         ) : (
-          <section className="px-4 py-2">
+          <section className="px-4 py-2 md:px-4">
             <div className="flex flex-col gap-2">
               {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <MyActivityPostContent key={post.postId} post={post} />
               ))}
+
+              {!isFetchingNextPage && hasNextPage && (
+                <div ref={targetRef} className="h-3 w-full" />
+              )}
+
+              {isFetchingNextPage && (
+                <div className="flex justify-center py-4">
+                  <SuspenseView />
+                </div>
+              )}
             </div>
           </section>
         )}
