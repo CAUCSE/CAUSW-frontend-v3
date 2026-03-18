@@ -76,6 +76,7 @@ export const PostBody = ({
             as="div"
             typography="body-16-regular"
             textColor="gray-800"
+            className="min-w-0 break-all"
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             suppressHydrationWarning
             style={collapseStyles}
@@ -86,7 +87,7 @@ export const PostBody = ({
             as="p"
             typography="body-16-regular"
             textColor="gray-800"
-            className="whitespace-pre-wrap"
+            className="min-w-0 break-all whitespace-pre-wrap"
             style={collapseStyles}
           >
             {content}

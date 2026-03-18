@@ -1,20 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
 import { PostHeader, usePostMenuActions } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
+import { GetPostResponseDto, PostBody, PostReactions } from '@/entities/post';
 
 interface PostContentProps {
-  postId: string | number;
+  post: GetPostResponseDto;
 }
 
-export const PostContent = ({ postId }: PostContentProps) => {
+const HTML_TAG_PATTERN = /<\/?[a-z][\s\S]*>/i;
+
+export const PostContent = ({ post }: PostContentProps) => {
   const {
     isReportOpen,
     setIsReportOpen,
@@ -23,49 +23,40 @@ export const PostContent = ({ postId }: PostContentProps) => {
     handleAction: handleMenuAction,
     submitReport,
     submitBlock,
-  } = usePostMenuActions(postId);
+  } = usePostMenuActions(post.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(MOCK_POST.likeCount);
+  const imageList = Array.isArray(post.fileUrlList)
+    ? post.fileUrlList
+    : post.fileUrlList
+      ? [post.fileUrlList]
+      : [];
+
+  const isHtmlContent = HTML_TAG_PATTERN.test(post.content);
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    // TODO: feat/#127 머지 후 useTogglePostLikeMutation으로 교체
   };
 
   return (
     <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
       <VStack gap="sm">
         <PostHeader
-          authorName={MOCK_POST.author.name}
-          createdAt={MOCK_POST.createdAt}
-          avatarUrl={MOCK_POST.author.profileImage}
-          isOfficial={MOCK_POST.author.isOfficial}
-          isMine={false}
+          authorName={post.displayWriterNickname}
+          createdAt={post.createdAt}
+          avatarUrl={post.writerProfileImage ?? undefined}
+          isMine={post.isOwner}
           onAction={handleMenuAction}
         />
         <PostBody
-          content={MOCK_POST.content}
-          images={MOCK_POST.images}
-          isHtml={MOCK_POST.isHtml}
+          content={post.content}
+          images={imageList}
+          isHtml={isHtmlContent}
         />
       </VStack>
 
-      {MOCK_POST.vote && (
-        <PostVote
-          options={MOCK_POST.vote.options}
-          endTime={MOCK_POST.vote.endTime}
-        />
-      )}
-
       <PostReactions
-        active={isLiked}
-        likeCount={likeCount}
+        active={post.isPostLike}
+        likeCount={post.numLike}
         onLikeClick={handleLikeClick}
       />
 
