@@ -11,6 +11,7 @@ import { createComment } from '../../api';
 export const usePostCommentMutation = () => {
   const queryClient = useQueryClient();
 
+  // TODO: 댓글 등록 optimistic update
   return useMutation({
     mutationFn: createComment,
 

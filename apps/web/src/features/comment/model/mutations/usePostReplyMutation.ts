@@ -16,6 +16,7 @@ interface CreateReplyVariables extends PostChildCommentRequestDto {
 export const usePostReplyMutation = () => {
   const queryClient = useQueryClient();
 
+  // TODO: 대댓글 등록 optimistic update
   return useMutation({
     mutationFn: ({ postId: _postId, ...body }: CreateReplyVariables) =>
       createReply(body),
