@@ -70,7 +70,7 @@ export const Toaster = () => {
           />
         );
       })}
-      <ToastViewport className="flex flex-col gap-2 p-4" />
+      <ToastViewport className="flex flex-col gap-2 p-4 md:ml-22" />
     </ToastProvider>
   );
 };
