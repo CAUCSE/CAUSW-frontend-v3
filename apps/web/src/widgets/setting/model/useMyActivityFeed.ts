@@ -1,20 +1,29 @@
-﻿import { useSuspenseQueries } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { ActivityMode, getMyActivityFeed } from '@/entities/setting';
+import {
+  ActivityMode,
+  ActivityType,
+  EMPTY_ACTIVITY_MESSAGE,
+  getMyActivityFeed,
+} from '@/entities/setting';
 
-import { ACTIVITY_TAB_KEYS } from './tabs';
+import { QUERY_STALE_TIME } from '@/shared/constants';
 
-export const useMyActivityFeeds = (mode: ActivityMode) => {
-  const results = useSuspenseQueries({
-    queries: ACTIVITY_TAB_KEYS.map((activityType) => ({
-      queryKey: ['setting', 'activity-feed', activityType, mode],
-      queryFn: () => getMyActivityFeed(activityType, mode),
-    })),
+export const useMyActivityFeed = (
+  activityType: ActivityType,
+  mode: ActivityMode,
+) => {
+  const query = useInfiniteQuery({
+    queryKey: ['setting', 'activity-feed', activityType],
+    queryFn: ({ pageParam }) => getMyActivityFeed(activityType, pageParam),
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    enabled: mode !== 'empty',
+    staleTime: QUERY_STALE_TIME.NONE,
   });
 
   return {
-    'my-posts': results[0].data,
-    'my-comments': results[1].data,
-    favorites: results[2].data,
+    ...query,
+    emptyMessage: EMPTY_ACTIVITY_MESSAGE[activityType],
   };
 };

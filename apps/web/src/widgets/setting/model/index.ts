@@ -1,4 +1,4 @@
-﻿export * from './useMyActivityFeed';
+export * from './useMyActivityFeed';
 export * from './navigation';
 export * from './activity-mode';
 export * from './tabs';

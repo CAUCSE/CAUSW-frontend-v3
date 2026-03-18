@@ -1,6 +1,4 @@
-﻿'use client';
-
-import { Suspense } from 'react';
+'use client';
 
 import { useRouter } from 'next/navigation';
 
@@ -9,12 +7,12 @@ import {
   MyActivityFeed,
   toActivityMode,
   toActivityTab,
-  useMyActivityFeeds,
+  useMyActivityFeed,
 } from '@/widgets/setting';
 
-import { ActivityMode, ActivityType } from '@/entities/setting';
+import { ActivityType } from '@/entities/setting';
 
-import { SuspenseView } from '@/shared/ui';
+import { useInfiniteScroll } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
 
 type SearchParams = {
@@ -29,19 +27,40 @@ const ActivityContent = ({
   onTabChange,
 }: {
   activeTab: ActivityType;
-  mode: ActivityMode;
+  mode: 'list' | 'empty';
   onBack: () => void;
   onTabChange: (tab: ActivityType) => void;
 }) => {
-  const activityFeeds = useMyActivityFeeds(mode);
-  const currentFeed = activityFeeds[activeTab];
+  const {
+    data,
+    emptyMessage,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useMyActivityFeed(activeTab, mode);
+
+  const posts = data?.pages.flatMap((page) => page.posts) ?? [];
+
+  const { targetRef } = useInfiniteScroll({
+    intersectionCallback: (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+  });
 
   return (
     <MyActivityFeed
       activeTab={activeTab}
       mode={mode}
-      posts={currentFeed.posts}
-      emptyMessage={currentFeed.emptyMessage}
+      posts={posts}
+      emptyMessage={emptyMessage}
+      isLoading={isLoading}
+      isFetchingNextPage={isFetchingNextPage}
+      hasNextPage={Boolean(hasNextPage)}
+      targetRef={targetRef}
       onBack={onBack}
       onTabChange={onTabChange}
     />
@@ -67,14 +86,12 @@ export const MyFeedPage = ({
 
   return (
     <QueryErrorBoundary fallbackMessage="내 활동 데이터를 불러오지 못했어요.">
-      <Suspense fallback={<SuspenseView />}>
-        <ActivityContent
-          activeTab={activeTab}
-          mode={mode}
-          onBack={goBack}
-          onTabChange={changeTab}
-        />
-      </Suspense>
+      <ActivityContent
+        activeTab={activeTab}
+        mode={mode}
+        onBack={goBack}
+        onTabChange={changeTab}
+      />
     </QueryErrorBoundary>
   );
 };
