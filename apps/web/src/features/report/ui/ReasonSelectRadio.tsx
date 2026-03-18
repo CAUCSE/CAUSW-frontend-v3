@@ -1,7 +1,8 @@
 import { Radio, RadioGroup } from '@causw/cds';
 
+import { ReportReason } from '@/entities/report';
+
 import { REPORT_OPTIONS } from '../config';
-import { ReportReason } from '../model';
 
 interface ReasonSelectRadioProps {
   value: ReportReason;
@@ -12,15 +13,20 @@ export const ReasonSelectRadio = ({
   value,
   onChange,
 }: ReasonSelectRadioProps) => {
+  const entries = Object.entries(REPORT_OPTIONS) as [
+    ReportReason,
+    (typeof REPORT_OPTIONS)[ReportReason],
+  ][];
+
   return (
     <RadioGroup
       name="report-reason"
       value={value}
       onValueChange={(val) => onChange(val as ReportReason)}
     >
-      {(Object.keys(REPORT_OPTIONS) as ReportReason[]).map((key) => (
+      {entries.map(([key, option]) => (
         <Radio key={key} value={key}>
-          {REPORT_OPTIONS[key].label}
+          {option.label}
         </Radio>
       ))}
     </RadioGroup>

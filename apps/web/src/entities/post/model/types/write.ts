@@ -10,8 +10,8 @@ export interface PostCreateResponseDto {
   content: string;
   fileUrlList: string[];
   isAnonymous: boolean;
-  createdAt: Date | string;
-  updatedAt: Date | string;
+  createdAt: string;
+  updatedAt: string;
   boardName: string;
 }
 

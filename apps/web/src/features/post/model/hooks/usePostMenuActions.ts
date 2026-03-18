@@ -2,6 +2,11 @@
 
 import { useState } from 'react';
 
+import { useBlockUserByPostMutation } from '@/features/block';
+import { useReportPostMutation } from '@/features/report';
+
+import { ReportReason } from '@/entities/report';
+
 import { useDeletePostMutation } from '../mutations';
 import { PostAction } from '../types';
 
@@ -10,6 +15,8 @@ export const usePostMenuActions = (postId: string) => {
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
   const { mutate: deletePost } = useDeletePostMutation();
+  const { mutate: reportPost } = useReportPostMutation();
+  const { mutate: blockUser } = useBlockUserByPostMutation();
 
   const handleAction = (action: PostAction) => {
     switch (action) {
@@ -32,15 +39,13 @@ export const usePostMenuActions = (postId: string) => {
     }
   };
 
-  const submitReport = () => {
-    // TODO: 신고 API 호출
-    console.log('신고 제출');
+  const submitReport = (reason: ReportReason) => {
+    reportPost({ postId, reportReason: reason });
     setIsReportOpen(false);
   };
 
   const submitBlock = () => {
-    // TODO: 차단 API 호출
-    console.log('차단 제출');
+    blockUser(postId);
     setIsBlockOpen(false);
   };
 

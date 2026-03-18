@@ -3,8 +3,8 @@ import { PaginationDto } from '@/shared/types';
 export interface BaseComment {
   id: string;
   content: string;
-  createdAt: Date | string;
-  updatedAt: Date | string;
+  createdAt: string;
+  updatedAt: string;
   isDeleted: boolean;
   writerName: string;
   writerNickname: string;
