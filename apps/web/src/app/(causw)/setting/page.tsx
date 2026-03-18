@@ -1,5 +1,7 @@
 import { SettingPage } from '@/_pages/setting';
 
-export default function Home() {
+const Page = () => {
   return <SettingPage />;
-}
+};
+
+export default Page;
