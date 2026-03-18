@@ -1,26 +1,33 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import { useRouter } from 'next/navigation';
 
 import { PostDetailSection } from '@/widgets/post';
 
-import { useBreakpoint } from '@/shared/hooks';
-import { ActionHeader } from '@/shared/ui';
+import { ActionHeader, QueryErrorBoundary, SuspenseView } from '@/shared/ui';
 
-export const PostDetailPage = () => {
+interface PostDetailPageProps {
+  postId: string;
+}
+
+export const PostDetailPage = ({ postId }: PostDetailPageProps) => {
   const router = useRouter();
-
-  const { isMobileSize } = useBreakpoint();
 
   return (
     <div className="mx-auto flex h-screen max-w-225 flex-col md:px-8 md:py-6">
-      <ActionHeader background={isMobileSize ? 'white' : 'transparent'}>
+      <ActionHeader background="transparent" isSticky={false}>
         <ActionHeader.BackButton onClick={() => router.back()}>
           뒤로
         </ActionHeader.BackButton>
       </ActionHeader>
 
-      <PostDetailSection />
+      <QueryErrorBoundary fallbackMessage="게시글을 불러오지 못했어요.">
+        <Suspense fallback={<SuspenseView />}>
+          <PostDetailSection postId={postId} />
+        </Suspense>
+      </QueryErrorBoundary>
     </div>
   );
 };
