@@ -1,8 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
-import { Dialog, mergeStyles } from '@causw/cds';
+import {
+  Dialog,
+  ErrorColored,
+  LoadingColored,
+  SuccessColored,
+  mergeStyles,
+} from '@causw/cds';
 
 import type {
   LockerDetailItem,
@@ -34,6 +40,14 @@ type ActiveFloor = {
 type LockerGridItem = LockerDetailItem & {
   lockerNumber: number;
   viewStatus: LockerStatus;
+};
+
+type LockerToastType = 'success' | 'error' | 'loading';
+
+type LockerToastItem = {
+  id: string;
+  message: string;
+  type: LockerToastType;
 };
 
 const PHASE_LABEL: Record<LockerPhase, string> = {
@@ -211,6 +225,51 @@ function LockerNoticeCard({
         </div>
       </div>
     </section>
+  );
+}
+
+function LockerToastStack({
+  toasts,
+  onDismiss,
+  className,
+}: {
+  toasts: LockerToastItem[];
+  onDismiss: (id: string) => void;
+  className?: string;
+}) {
+  if (toasts.length === 0) return null;
+
+  const iconMap: Record<LockerToastType, ReactNode> = {
+    success: <SuccessColored size={20} />,
+    error: <ErrorColored size={20} />,
+    loading: <LoadingColored size={20} className="animate-spin" />,
+  };
+
+  return (
+    <div
+      className={mergeStyles(
+        'pointer-events-none flex w-full flex-col gap-2',
+        className,
+      )}
+    >
+      {toasts.map((toast) => (
+        <div
+          key={toast.id}
+          role="alert"
+          aria-live="assertive"
+          className={mergeStyles(
+            'pointer-events-auto flex w-full items-center justify-center gap-2 rounded-xl bg-gray-700 px-0 py-3',
+            'text-gray-0 text-center text-base leading-[160%] font-medium tracking-[-0.02rem]',
+          )}
+          onClick={() => onDismiss(toast.id)}
+        >
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center">
+            {iconMap[toast.type]}
+          </span>
+          <span className="min-w-0 break-words">{toast.message}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -424,6 +483,8 @@ function LockerSelectionOverlay({
   isLoading,
   isPending,
   errorMessage,
+  toasts,
+  onDismissToast,
   onOpenChange,
   onSelectLocker,
   onApply,
@@ -442,6 +503,8 @@ function LockerSelectionOverlay({
   isLoading: boolean;
   isPending: boolean;
   errorMessage: string | null;
+  toasts: LockerToastItem[];
+  onDismissToast: (id: string) => void;
   onOpenChange: (open: boolean) => void;
   onSelectLocker: (lockerId: string) => void;
   onApply: () => void;
@@ -473,18 +536,26 @@ function LockerSelectionOverlay({
       />
     </div>
   );
+
   const actionPanel = (
-    <LockerPanelActions
-      hasCurrentLocker={Boolean(currentLocker)}
-      isCurrentLockerInActiveFloor={isCurrentLockerInActiveFloor}
-      canApply={canApply}
-      canExtend={canExtend}
-      hasSelection={selectedLockerId !== null}
-      isPending={isPending}
-      onApply={onApply}
-      onReturn={onReturn}
-      onExtend={onExtend}
-    />
+    <div className="flex flex-col gap-4 bg-gray-100">
+      <LockerToastStack
+        toasts={toasts}
+        onDismiss={onDismissToast}
+        className="mx-auto w-full max-w-[20rem]"
+      />
+      <LockerPanelActions
+        hasCurrentLocker={Boolean(currentLocker)}
+        isCurrentLockerInActiveFloor={isCurrentLockerInActiveFloor}
+        canApply={canApply}
+        canExtend={canExtend}
+        hasSelection={selectedLockerId !== null}
+        isPending={isPending}
+        onApply={onApply}
+        onReturn={onReturn}
+        onExtend={onExtend}
+      />
+    </div>
   );
 
   if (isMobileSize) {
@@ -541,6 +612,10 @@ export function LockerListPage() {
     string | null
   >(null);
   const [isSelectionOpen, setIsSelectionOpen] = useState(false);
+  const [lockerToasts, setLockerToasts] = useState<LockerToastItem[]>([]);
+  const toastTimerMapRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
+    new Map(),
+  );
 
   const periodStatusQuery = useLockerPeriodStatus();
   const myLockerQuery = useMyLocker();
@@ -596,6 +671,47 @@ export function LockerListPage() {
     returnLockerMutation.isPending ||
     extendLockerMutation.isPending;
 
+  const dismissLockerToast = (toastId: string) => {
+    const timer = toastTimerMapRef.current.get(toastId);
+    if (timer) {
+      clearTimeout(timer);
+      toastTimerMapRef.current.delete(toastId);
+    }
+
+    setLockerToasts((current) =>
+      current.filter((toast) => toast.id !== toastId),
+    );
+  };
+
+  const showLockerToast = (
+    message: string,
+    type: LockerToastType,
+    duration = type === 'loading' ? Infinity : 3000,
+  ) => {
+    const toastId = `${Date.now()}-${Math.random()}`;
+
+    setLockerToasts((current) =>
+      [...current, { id: toastId, message, type }].slice(-3),
+    );
+
+    if (duration !== Infinity) {
+      const timer = setTimeout(() => {
+        dismissLockerToast(toastId);
+      }, duration);
+
+      toastTimerMapRef.current.set(toastId, timer);
+    }
+
+    return toastId;
+  };
+
+  useEffect(() => {
+    return () => {
+      toastTimerMapRef.current.forEach((timer) => clearTimeout(timer));
+      toastTimerMapRef.current.clear();
+    };
+  }, []);
+
   const handleOpenFloor = (floor: LockerLocationSummary) => {
     setActiveFloor({
       locationId: floor.locationId,
@@ -606,30 +722,75 @@ export function LockerListPage() {
   };
 
   const handleApply = async () => {
-    if (!selectedLockerId) return;
+    if (!selectedLockerId) {
+      showLockerToast('신청할 사물함을 선택해 주세요.', 'error');
+      return;
+    }
+
+    const loadingToastId = showLockerToast(
+      '사물함 등록 중이에요.',
+      'loading',
+      Infinity,
+    );
 
     try {
       await registerLockerMutation.mutateAsync(selectedLockerId);
+      dismissLockerToast(loadingToastId);
+      showLockerToast('사물함 등록이 완료되었습니다.', 'success');
       setIsSelectionOpen(false);
-    } catch {}
+    } catch (error) {
+      dismissLockerToast(loadingToastId);
+      showLockerToast(
+        extractErrorMessage(error, '사물함 등록에 실패했습니다.'),
+        'error',
+      );
+    }
   };
 
   const handleReturn = async () => {
     if (!currentLocker?.lockerId) return;
 
+    const loadingToastId = showLockerToast(
+      '사물함 반납 중이에요.',
+      'loading',
+      Infinity,
+    );
+
     try {
       await returnLockerMutation.mutateAsync(currentLocker.lockerId);
+      dismissLockerToast(loadingToastId);
+      showLockerToast('사물함 반납이 완료되었습니다.', 'success');
       setIsSelectionOpen(false);
-    } catch {}
+    } catch (error) {
+      dismissLockerToast(loadingToastId);
+      showLockerToast(
+        extractErrorMessage(error, '사물함 반납에 실패했습니다.'),
+        'error',
+      );
+    }
   };
 
   const handleExtend = async () => {
     if (!currentLocker?.lockerId) return;
 
+    const loadingToastId = showLockerToast(
+      '사물함 연장 중이에요.',
+      'loading',
+      Infinity,
+    );
+
     try {
       await extendLockerMutation.mutateAsync(currentLocker.lockerId);
+      dismissLockerToast(loadingToastId);
+      showLockerToast('사물함 연장이 완료되었습니다.', 'success');
       setIsSelectionOpen(false);
-    } catch {}
+    } catch (error) {
+      dismissLockerToast(loadingToastId);
+      showLockerToast(
+        extractErrorMessage(error, '사물함 연장에 실패했습니다.'),
+        'error',
+      );
+    }
   };
 
   const initialError =
@@ -726,6 +887,8 @@ export function LockerListPage() {
               )
             : null
         }
+        toasts={lockerToasts}
+        onDismissToast={dismissLockerToast}
         onOpenChange={setIsSelectionOpen}
         onSelectLocker={setUserSelectedLockerId}
         onApply={handleApply}
