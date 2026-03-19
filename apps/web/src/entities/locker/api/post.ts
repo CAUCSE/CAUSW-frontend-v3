@@ -1,21 +1,28 @@
 import { API } from '@/shared/api';
+import type { DefaultResponseField } from '@/shared/types';
 
 const URL_PREFIX = '/api/v2/lockers';
 
 export const createLockerRegistration = async (lockerId: string) => {
-  return await API.post<Record<string, never>>(
-    `${URL_PREFIX}/${lockerId}/register`,
-  );
+  const response = await API.internalClient.post<
+    DefaultResponseField<Record<string, never>>
+  >(`${URL_PREFIX}/${lockerId}/register`);
+
+  return response.data?.data ?? {};
 };
 
 export const deleteLockerAssignment = async (lockerId: string) => {
-  return await API.post<Record<string, never>>(
-    `${URL_PREFIX}/${lockerId}/return`,
-  );
+  const response = await API.internalClient.post<
+    DefaultResponseField<Record<string, never>>
+  >(`${URL_PREFIX}/${lockerId}/return`);
+
+  return response.data?.data ?? {};
 };
 
 export const updateLockerExtension = async (lockerId: string) => {
-  return await API.post<Record<string, never>>(
-    `${URL_PREFIX}/${lockerId}/extend`,
-  );
+  const response = await API.internalClient.post<
+    DefaultResponseField<Record<string, never>>
+  >(`${URL_PREFIX}/${lockerId}/extend`);
+
+  return response.data?.data ?? {};
 };
