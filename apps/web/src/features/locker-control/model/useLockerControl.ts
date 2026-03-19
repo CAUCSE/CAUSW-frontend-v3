@@ -77,19 +77,11 @@ export const useLockerControl = ({
       return;
     }
 
-    const loadingToastId = showToast(
-      '사물함 등록 중이에요.',
-      'loading',
-      Infinity,
-    );
-
     try {
       await registerLockerMutation.mutateAsync(selectedLockerId);
-      dismissToast(loadingToastId);
       showToast('사물함 등록이 완료되었습니다.', 'success');
       onCompleted();
     } catch (error) {
-      dismissToast(loadingToastId);
       showToast(
         extractErrorMessage(error, '사물함 등록에 실패했습니다.'),
         'error',
@@ -100,19 +92,11 @@ export const useLockerControl = ({
   const handleReturn = async () => {
     if (!currentLockerId) return;
 
-    const loadingToastId = showToast(
-      '사물함 반납 중이에요.',
-      'loading',
-      Infinity,
-    );
-
     try {
       await returnLockerMutation.mutateAsync(currentLockerId);
-      dismissToast(loadingToastId);
       showToast('사물함 반납이 완료되었습니다.', 'success');
       onCompleted();
     } catch (error) {
-      dismissToast(loadingToastId);
       showToast(
         extractErrorMessage(error, '사물함 반납에 실패했습니다.'),
         'error',
@@ -123,19 +107,11 @@ export const useLockerControl = ({
   const handleExtend = async () => {
     if (!currentLockerId) return;
 
-    const loadingToastId = showToast(
-      '사물함 연장 중이에요.',
-      'loading',
-      Infinity,
-    );
-
     try {
       await extendLockerMutation.mutateAsync(currentLockerId);
-      dismissToast(loadingToastId);
       showToast('사물함 연장이 완료되었습니다.', 'success');
       onCompleted();
     } catch (error) {
-      dismissToast(loadingToastId);
       showToast(
         extractErrorMessage(error, '사물함 연장에 실패했습니다.'),
         'error',
