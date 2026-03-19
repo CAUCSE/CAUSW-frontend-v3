@@ -13,7 +13,7 @@ export const useMyActivityFeed = (
   activityType: ActivityType,
   mode: ActivityMode,
 ) => {
-  const query = useInfiniteQuery({
+  const query = useSuspenseInfiniteQuery({
     queryKey: ['setting', 'activity-feed', activityType],
     queryFn: ({ pageParam }) => getMyActivityFeed(activityType, pageParam),
     initialPageParam: undefined as string | undefined,
