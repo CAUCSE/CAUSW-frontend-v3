@@ -13,3 +13,4 @@ export { OauthAdditionalInfoNotice } from './oauth-additional-info-notice';
 export { SignUpAccountStepHeader } from './sign-up-account-step-header';
 export { SignUpInfoStepHeader } from './sign-up-info-step-header';
 export { SignUpEmailVerificationStepHeader } from './sign-up-email-verification-step-header';
+export { FindAccountContainer } from './find-account-container';
