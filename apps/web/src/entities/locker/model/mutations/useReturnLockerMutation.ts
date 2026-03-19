@@ -2,14 +2,14 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { returnLocker } from '../../api';
+import { deleteLockerAssignment } from '../../api';
 import { lockerQueryKey } from '../../config';
 
 export const useReturnLockerMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: returnLocker,
+    mutationFn: deleteLockerAssignment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: lockerQueryKey.all });
       await Promise.all([
