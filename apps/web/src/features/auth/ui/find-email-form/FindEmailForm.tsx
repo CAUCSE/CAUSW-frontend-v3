@@ -36,22 +36,24 @@ export const FindEmailForm = ({ onSubmit }: FindEmailFormProps) => {
     <FormProvider {...methods}>
       <VStack
         as="form"
-        className="w-full gap-6"
+        className="w-full gap-10"
         onSubmit={methods.handleSubmit(handleSubmit)}
       >
-        <RHFInput
-          name="name"
-          label="이름"
-          placeholder="실명을 입력해주세요."
-          typography="body-16-regular"
-        />
+        <VStack className="gap-6">
+          <RHFInput
+            name="name"
+            label="이름"
+            placeholder="실명을 입력해주세요."
+            typography="body-16-regular"
+          />
 
-        <RHFInput
-          name="phoneNumber"
-          label="전화번호"
-          placeholder="010-1234-5678"
-          typography="body-16-regular"
-        />
+          <RHFInput
+            name="phoneNumber"
+            label="전화번호"
+            placeholder="010-1234-5678"
+            typography="body-16-regular"
+          />
+        </VStack>
 
         <CTAButton color="dark" fullWidth type="submit" disabled={!isValid}>
           이메일 찾기
