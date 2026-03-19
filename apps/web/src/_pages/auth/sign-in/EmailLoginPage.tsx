@@ -111,25 +111,13 @@ export const EmailLoginPage = () => {
             </CTAButton>
 
             <Flex justify="center" className="w-full">
-              <Link href="/auth/find-id">
+              <Link href="/auth/find-account">
                 <Text
                   typography="body-15-semibold"
                   textColor="gray-700"
                   className="hover:text-gray-500 active:text-gray-500"
                 >
-                  아이디 찾기
-                </Text>
-              </Link>
-
-              <Separator orientation="vertical" className="gray-300" />
-
-              <Link href="/auth/find-password">
-                <Text
-                  typography="body-15-semibold"
-                  textColor="gray-700"
-                  className="hover:text-gray-500 active:text-gray-500"
-                >
-                  비밀번호 찾기
+                  아이디/비번 찾기
                 </Text>
               </Link>
               <Separator orientation="vertical" className="gray-300" />
