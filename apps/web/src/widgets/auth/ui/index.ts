@@ -14,3 +14,5 @@ export { SignUpAccountStepHeader } from './sign-up-account-step-header';
 export { SignUpInfoStepHeader } from './sign-up-info-step-header';
 export { SignUpEmailVerificationStepHeader } from './sign-up-email-verification-step-header';
 export { FindAccountContainer } from './find-account-container';
+export { FindEmailResult } from './find-email-result';
+export { FindEmailNotFound } from './find-email-not-found';
