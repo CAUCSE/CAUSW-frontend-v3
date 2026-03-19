@@ -1,2 +1,2 @@
-export { useLockerControl, type LockerToastItem } from './model';
-export { LockerActionPanel, LockerToastStack } from './ui';
+export { useLockerControl } from './model';
+export { LockerActionPanel } from './ui';

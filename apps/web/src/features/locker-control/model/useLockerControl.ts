@@ -1,16 +1,11 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
-
 import {
   useExtendLockerMutation,
   useRegisterLockerMutation,
   useReturnLockerMutation,
 } from '@/entities/locker';
 
+import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
-
-import type { LockerToastItem, LockerToastType } from './types';
 
 type UseLockerControlParams = {
   currentLockerId: string | null;
@@ -21,68 +16,21 @@ export const useLockerControl = ({
   currentLockerId,
   selectedLockerId,
 }: UseLockerControlParams) => {
-  const [toasts, setToasts] = useState<LockerToastItem[]>([]);
-  const toastTimerMapRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
-    new Map(),
-  );
-
   const registerLockerMutation = useRegisterLockerMutation();
   const returnLockerMutation = useReturnLockerMutation();
   const extendLockerMutation = useExtendLockerMutation();
 
-  const dismissToast = (toastId: string) => {
-    const timer = toastTimerMapRef.current.get(toastId);
-    if (timer) {
-      clearTimeout(timer);
-      toastTimerMapRef.current.delete(toastId);
-    }
-
-    setToasts((current) => current.filter((toast) => toast.id !== toastId));
-  };
-
-  const showToast = (
-    message: string,
-    type: LockerToastType,
-    duration = type === 'loading' ? Infinity : 3000,
-  ) => {
-    const toastId = `${Date.now()}-${Math.random()}`;
-
-    setToasts((current) =>
-      [...current, { id: toastId, message, type }].slice(-3),
-    );
-
-    if (duration !== Infinity) {
-      const timer = setTimeout(() => {
-        dismissToast(toastId);
-      }, duration);
-
-      toastTimerMapRef.current.set(toastId, timer);
-    }
-
-    return toastId;
-  };
-
-  useEffect(() => {
-    return () => {
-      toastTimerMapRef.current.forEach((timer) => clearTimeout(timer));
-      toastTimerMapRef.current.clear();
-    };
-  }, []);
-
   const handleApply = async () => {
     if (!selectedLockerId) {
-      showToast('신청할 사물함을 선택해 주세요.', 'error');
+      toast.error('신청할 사물함을 선택해 주세요.');
       return;
     }
 
     try {
       await registerLockerMutation.mutateAsync(selectedLockerId);
-      showToast('사물함 등록이 완료되었습니다.', 'success');
+      toast.success('사물함 등록이 완료되었습니다.');
     } catch (error) {
-      showToast(
-        extractErrorMessage(error, '사물함 등록에 실패했습니다.'),
-        'error',
-      );
+      toast.error(extractErrorMessage(error, '사물함 등록에 실패했습니다.'));
     }
   };
 
@@ -91,12 +39,9 @@ export const useLockerControl = ({
 
     try {
       await returnLockerMutation.mutateAsync(currentLockerId);
-      showToast('사물함 반납이 완료되었습니다.', 'success');
+      toast.success('사물함 반납이 완료되었습니다.');
     } catch (error) {
-      showToast(
-        extractErrorMessage(error, '사물함 반납에 실패했습니다.'),
-        'error',
-      );
+      toast.error(extractErrorMessage(error, '사물함 반납에 실패했습니다.'));
     }
   };
 
@@ -105,17 +50,13 @@ export const useLockerControl = ({
 
     try {
       await extendLockerMutation.mutateAsync(currentLockerId);
-      showToast('사물함 연장이 완료되었습니다.', 'success');
+      toast.success('사물함 연장이 완료되었습니다.');
     } catch (error) {
-      showToast(
-        extractErrorMessage(error, '사물함 연장에 실패했습니다.'),
-        'error',
-      );
+      toast.error(extractErrorMessage(error, '사물함 연장에 실패했습니다.'));
     }
   };
 
   return {
-    dismissToast,
     handleApply,
     handleExtend,
     handleReturn,
@@ -123,6 +64,5 @@ export const useLockerControl = ({
       registerLockerMutation.isPending ||
       returnLockerMutation.isPending ||
       extendLockerMutation.isPending,
-    toasts,
   };
 };
