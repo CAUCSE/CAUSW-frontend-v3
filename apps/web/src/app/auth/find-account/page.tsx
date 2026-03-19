@@ -1,5 +1,3 @@
-'use client';
-
 import { FindAccountPage } from '@/_pages/auth';
 
 const Page = () => {
