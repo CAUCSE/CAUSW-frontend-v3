@@ -6,10 +6,44 @@ import { Text, VStack, HStack, Tab, LockOpenColored } from '@causw/cds';
 
 import { FindEmailForm } from '@/features/auth';
 
+import type { EmailFindResponse } from '@/entities/auth';
+
+import { FindEmailNotFound } from '../find-email-not-found';
+import { FindEmailResult } from '../find-email-result';
+
 type FindAccountTab = 'find-email' | 'find-password';
+
+type FindAccountView =
+  | { type: 'form' }
+  | { type: 'result'; data: EmailFindResponse; name: string }
+  | { type: 'not-found' };
 
 export const FindAccountContainer = () => {
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
+  const [view, setView] = useState<FindAccountView>({ type: 'form' });
+
+  const handleBackToForm = () => {
+    setView({ type: 'form' });
+  };
+
+  const handleFindPassword = () => {
+    setView({ type: 'form' });
+    setActiveTab('find-password');
+  };
+
+  if (view.type === 'result') {
+    return (
+      <FindEmailResult
+        data={view.data}
+        name={view.name}
+        onFindPassword={handleFindPassword}
+      />
+    );
+  }
+
+  if (view.type === 'not-found') {
+    return <FindEmailNotFound onRetry={handleBackToForm} />;
+  }
 
   return (
     <Tab
