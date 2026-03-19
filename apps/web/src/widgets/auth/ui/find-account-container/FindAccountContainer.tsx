@@ -13,7 +13,7 @@ import { FindEmailResult } from '../find-email-result';
 
 type FindAccountTab = 'find-email' | 'find-password';
 
-type FindAccountView =
+export type FindAccountView =
   | { type: 'form' }
   | { type: 'result'; data: EmailFindResponse; name: string }
   | { type: 'not-found' };
@@ -42,17 +42,24 @@ const MOCK_RESPONSES: (EmailFindResponse | null)[] = [
   null,
 ];
 
-export const FindAccountContainer = () => {
+interface FindAccountContainerProps {
+  view: FindAccountView;
+  onViewChange: (view: FindAccountView) => void;
+}
+
+export const FindAccountContainer = ({
+  view,
+  onViewChange,
+}: FindAccountContainerProps) => {
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
-  const [view, setView] = useState<FindAccountView>({ type: 'form' });
   const mockIndex = useRef(0);
 
   const handleBackToForm = () => {
-    setView({ type: 'form' });
+    onViewChange({ type: 'form' });
   };
 
   const handleFindPassword = () => {
-    setView({ type: 'form' });
+    onViewChange({ type: 'form' });
     setActiveTab('find-password');
   };
 
@@ -62,9 +69,9 @@ export const FindAccountContainer = () => {
     mockIndex.current++;
 
     if (response) {
-      setView({ type: 'result', data: response, name: formData.name });
+      onViewChange({ type: 'result', data: response, name: formData.name });
     } else {
-      setView({ type: 'not-found' });
+      onViewChange({ type: 'not-found' });
     }
   };
 
