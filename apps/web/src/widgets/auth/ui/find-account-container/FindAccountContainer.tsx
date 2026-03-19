@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Text, VStack, HStack, Tab, LockOpenColored } from '@causw/cds';
 
 import { FindEmailForm } from '@/features/auth';
 
-import type { EmailFindResponse } from '@/entities/auth';
+import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
 
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
@@ -18,9 +18,34 @@ type FindAccountView =
   | { type: 'result'; data: EmailFindResponse; name: string }
   | { type: 'not-found' };
 
+// TODO: API 연동 후 제거
+const MOCK_RESPONSES: (EmailFindResponse | null)[] = [
+  {
+    email: 'abc***@cau.ac.kr',
+    createdAt: '2020-01-02',
+    socialAccounts: [
+      { provider: 'KAKAO', createdAt: '2024-01-01' },
+      { provider: 'APPLE', createdAt: '2024-05-12' },
+      { provider: 'GOOGLE', createdAt: '2024-05-12' },
+    ],
+  },
+  {
+    email: 'abc***@cau.ac.kr',
+    createdAt: '2020-01-02',
+    socialAccounts: [],
+  },
+  {
+    email: '',
+    createdAt: '',
+    socialAccounts: [{ provider: 'KAKAO', createdAt: '2024-01-01' }],
+  },
+  null,
+];
+
 export const FindAccountContainer = () => {
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
   const [view, setView] = useState<FindAccountView>({ type: 'form' });
+  const mockIndex = useRef(0);
 
   const handleBackToForm = () => {
     setView({ type: 'form' });
@@ -29,6 +54,18 @@ export const FindAccountContainer = () => {
   const handleFindPassword = () => {
     setView({ type: 'form' });
     setActiveTab('find-password');
+  };
+
+  // TODO: API 연동 후 제거
+  const handleMockSubmit = (formData: FindEmailFormData) => {
+    const response = MOCK_RESPONSES[mockIndex.current % MOCK_RESPONSES.length];
+    mockIndex.current++;
+
+    if (response) {
+      setView({ type: 'result', data: response, name: formData.name });
+    } else {
+      setView({ type: 'not-found' });
+    }
   };
 
   if (view.type === 'result') {
@@ -93,7 +130,7 @@ export const FindAccountContainer = () => {
               </Text>
             </HStack>
 
-            <FindEmailForm />
+            <FindEmailForm onSubmit={handleMockSubmit} />
           </>
         )}
 
