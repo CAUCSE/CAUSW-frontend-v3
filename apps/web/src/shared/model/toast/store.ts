@@ -38,6 +38,7 @@ const dispatch = (message: string, type: ToastType, options?: ToastOptions) => {
     duration,
     createdAt: Date.now(),
     icon: options?.icon,
+    classNames: options?.classNames,
   };
 
   memoryState = [...memoryState, newToast].slice(-MAX_TOAST);

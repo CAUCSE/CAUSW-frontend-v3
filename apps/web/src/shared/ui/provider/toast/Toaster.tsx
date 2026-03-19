@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import {
   ErrorColored,
   LoadingColored,
+  mergeStyles,
   SuccessColored,
   Toast,
   ToastProvider,
   ToastViewport,
-  mergeStyles,
 } from '@causw/cds';
 
 import { toast, type ToastType, useToastStore } from '@/shared/model';
@@ -27,16 +27,9 @@ const toastIconMap: Record<ToastType, React.ReactNode> = {
   default: undefined,
 };
 
-// const FULL_SCREEN_ROUTES = ['/auth'];
-
 export const Toaster = () => {
   const toasts = useToastStore();
-  // const pathname = usePathname();
-
-  // // const isFullScreen = FULL_SCREEN_ROUTES.some((route) =>
-  // //   pathname?.startsWith(route),
-  // // );
-  // // const hasSidebarOffset = !isFullScreen;
+  const viewportClassName = toasts.at(-1)?.classNames?.viewport;
 
   useEffect(() => {
     const now = Date.now();
@@ -82,7 +75,7 @@ export const Toaster = () => {
       <ToastViewport
         className={mergeStyles(
           'flex flex-col gap-2 p-4 transition-all duration-300',
-          // hasSidebarOffset ? 'md:ml-11' : 'md:ml-0',
+          viewportClassName,
         )}
       />
     </ToastProvider>
