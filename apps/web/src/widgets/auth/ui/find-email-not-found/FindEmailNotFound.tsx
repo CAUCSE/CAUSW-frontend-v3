@@ -30,7 +30,7 @@ export const FindEmailNotFound = ({ onRetry }: FindEmailNotFoundProps) => {
               가입된 계정 정보를 찾을 수 없어요.
             </Text>
             <Text typography="body-15-regular" textColor="gray-500">
-              입력하신 정보(이름, 이메일)에 오타가 없는지 다시 한번 확인해
+              입력하신 정보(이름, 전화번호)에 오타가 없는지 다시 한번 확인해
               주세요.
             </Text>
           </VStack>
