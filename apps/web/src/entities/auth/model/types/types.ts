@@ -114,3 +114,12 @@ export interface GoogleLoginResponseDto {
   email: string;
   profileImgUrl: string;
 }
+
+export interface FindEmailRequestDto {
+  name: string;
+  phoneNumber: string;
+}
+
+export interface FindEmailResponseDto {
+  email: string;
+}
