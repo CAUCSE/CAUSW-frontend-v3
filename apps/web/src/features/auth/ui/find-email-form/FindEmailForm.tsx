@@ -11,7 +11,7 @@ import { findEmailSchema, type FindEmailFormData } from '@/entities/auth';
 import { RHFInput } from '@/shared/ui';
 
 interface FindEmailFormProps {
-  onSubmit?: (data: FindEmailFormData) => void;
+  onSubmit: (data: FindEmailFormData) => void;
 }
 
 export const FindEmailForm = ({ onSubmit }: FindEmailFormProps) => {
@@ -29,7 +29,7 @@ export const FindEmailForm = ({ onSubmit }: FindEmailFormProps) => {
   } = methods;
 
   const handleSubmit = (data: FindEmailFormData) => {
-    onSubmit?.(data);
+    onSubmit(data);
   };
 
   return (
