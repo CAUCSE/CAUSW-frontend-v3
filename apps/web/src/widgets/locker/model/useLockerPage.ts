@@ -93,7 +93,6 @@ export const useLockerPage = () => {
     canApply: activeFloorDetail?.currentPolicy.canApply ?? false,
     canExtend: activeFloorDetail?.currentPolicy.canExtend ?? false,
     currentLocker,
-    dismissToast: lockerControl.dismissToast,
     handleApply: lockerControl.handleApply,
     handleExtend: lockerControl.handleExtend,
     handleOpenFloor,
@@ -112,6 +111,5 @@ export const useLockerPage = () => {
     periodStatusQuery,
     selectedLockerId: resolvedSelectedLockerId,
     setSelectedLockerId,
-    toasts: lockerControl.toasts,
   };
 };

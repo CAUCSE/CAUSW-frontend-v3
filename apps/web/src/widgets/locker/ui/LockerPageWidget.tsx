@@ -19,7 +19,6 @@ export const LockerPageWidget = () => {
     canApply,
     canExtend,
     currentLocker,
-    dismissToast,
     handleApply,
     handleExtend,
     handleOpenFloor,
@@ -35,7 +34,6 @@ export const LockerPageWidget = () => {
     periodStatusQuery,
     selectedLockerId,
     setSelectedLockerId,
-    toasts,
   } = useLockerPage();
 
   return (
@@ -118,14 +116,12 @@ export const LockerPageWidget = () => {
         isPending={isPending}
         lockers={activeFloorLockers}
         onApply={handleApply}
-        onDismissToast={dismissToast}
         onExtend={handleExtend}
         onOpenChange={handleSelectionOpenChange}
         onReturn={handleReturn}
         onSelectLocker={setSelectedLockerId}
         open={isSelectionOpen}
         selectedLockerId={selectedLockerId}
-        toasts={toasts}
         totalCount={activeFloorTotalCount}
       />
     </>

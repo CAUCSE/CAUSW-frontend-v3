@@ -2,11 +2,7 @@
 
 import { Dialog, mergeStyles } from '@causw/cds';
 
-import {
-  LockerActionPanel,
-  LockerToastStack,
-  type LockerToastItem,
-} from '@/features/locker-control';
+import { LockerActionPanel } from '@/features/locker-control';
 
 import type { LockerMyResponse } from '@/entities/locker';
 
@@ -162,14 +158,12 @@ export const LockerSelectionOverlay = ({
   isPending,
   lockers,
   onApply,
-  onDismissToast,
   onExtend,
   onOpenChange,
   onReturn,
   onSelectLocker,
   open,
   selectedLockerId,
-  toasts,
   totalCount,
 }: {
   availableCount: number;
@@ -182,14 +176,12 @@ export const LockerSelectionOverlay = ({
   isPending: boolean;
   lockers: LockerGridItem[];
   onApply: () => void;
-  onDismissToast: (id: string) => void;
   onExtend: () => void;
   onOpenChange: (open: boolean) => void;
   onReturn: () => void;
   onSelectLocker: (lockerId: string) => void;
   open: boolean;
   selectedLockerId: string | null;
-  toasts: LockerToastItem[];
   totalCount: number;
 }) => {
   const { isMobileSize } = useBreakpoint();
@@ -218,11 +210,6 @@ export const LockerSelectionOverlay = ({
 
   const actionPanel = (
     <div className="flex flex-col gap-4 bg-gray-100">
-      <LockerToastStack
-        className="mx-auto w-full max-w-[20rem]"
-        onDismiss={onDismissToast}
-        toasts={toasts}
-      />
       <LockerActionPanel
         canApply={canApply}
         canExtend={canExtend}
