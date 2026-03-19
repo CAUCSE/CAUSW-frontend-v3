@@ -1,14 +1,12 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { Dialog, mergeStyles } from '@causw/cds';
 
 import {
-  Dialog,
-  ErrorColored,
-  LoadingColored,
-  SuccessColored,
-  mergeStyles,
-} from '@causw/cds';
+  LockerActionPanel,
+  LockerToastStack,
+  type LockerToastItem,
+} from '@/features/locker-control';
 
 import type { LockerMyResponse } from '@/entities/locker';
 
@@ -20,20 +18,18 @@ import {
   getLockerCellClassName,
   type ActiveFloor,
   type LockerGridItem,
-  type LockerToastItem,
-  type LockerToastType,
 } from '../model';
 
 import { LockerInfoCard } from './LockerInfoCard';
 
 const LockerSelectionGrid = ({
   lockers,
-  selectedLockerId,
   onSelect,
+  selectedLockerId,
 }: {
   lockers: LockerGridItem[];
-  selectedLockerId: string | null;
   onSelect: (lockerId: string) => void;
+  selectedLockerId: string | null;
 }) => {
   return (
     <div className="desktop:gap-3 grid grid-cols-5 gap-2">
@@ -87,76 +83,31 @@ const LockerLegend = () => {
   );
 };
 
-const LockerToastStack = ({
-  toasts,
-  onDismiss,
-  className,
-}: {
-  toasts: LockerToastItem[];
-  onDismiss: (id: string) => void;
-  className?: string;
-}) => {
-  if (toasts.length === 0) return null;
-
-  const iconMap: Record<LockerToastType, ReactNode> = {
-    success: <SuccessColored size={20} />,
-    error: <ErrorColored size={20} />,
-    loading: <LoadingColored size={20} className="animate-spin" />,
-  };
-
-  return (
-    <div
-      className={mergeStyles(
-        'pointer-events-none flex w-full flex-col gap-2',
-        className,
-      )}
-    >
-      {toasts.map((toast) => (
-        <div
-          key={toast.id}
-          role="alert"
-          aria-live="assertive"
-          className={mergeStyles(
-            'pointer-events-auto flex w-full items-center justify-center gap-2 rounded-xl bg-gray-700 px-0 py-3',
-            'text-gray-0 text-center text-base leading-[160%] font-medium tracking-[-0.02rem]',
-          )}
-          onClick={() => onDismiss(toast.id)}
-        >
-          <span className="flex h-5 w-5 shrink-0 items-center justify-center">
-            {iconMap[toast.type]}
-          </span>
-          <span className="min-w-0 break-words">{toast.message}</span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
 const LockerPanelContent = ({
-  floorName,
-  currentLocker,
-  selectedLockerId,
-  lockers,
   availableCount,
-  totalCount,
+  currentLocker,
+  errorMessage,
+  floorName,
   isActionAvailable,
   isLoading,
-  errorMessage,
+  lockers,
   onSelectLocker,
+  selectedLockerId,
+  totalCount,
 }: {
-  floorName: string;
-  currentLocker: LockerMyResponse | null;
-  selectedLockerId: string | null;
-  lockers: LockerGridItem[];
   availableCount: number;
-  totalCount: number;
+  currentLocker: LockerMyResponse | null;
+  errorMessage: string | null;
+  floorName: string;
   isActionAvailable: boolean;
   isLoading: boolean;
-  errorMessage: string | null;
+  lockers: LockerGridItem[];
   onSelectLocker: (lockerId: string) => void;
+  selectedLockerId: string | null;
+  totalCount: number;
 }) => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 bg-gray-100">
       <div className="px-1">
         <h2 className="text-[1.375rem] font-bold tracking-[-0.0275rem] text-gray-700">
           {floorName}
@@ -191,8 +142,8 @@ const LockerPanelContent = ({
         ) : (
           <LockerSelectionGrid
             lockers={lockers}
-            selectedLockerId={selectedLockerId}
             onSelect={onSelectLocker}
+            selectedLockerId={selectedLockerId}
           />
         )}
       </section>
@@ -200,129 +151,46 @@ const LockerPanelContent = ({
   );
 };
 
-const LockerPanelActions = ({
-  hasCurrentLocker,
-  isCurrentLockerInActiveFloor,
-  canApply,
-  canExtend,
-  hasSelection,
-  isPending,
-  onApply,
-  onReturn,
-  onExtend,
-}: {
-  hasCurrentLocker: boolean;
-  isCurrentLockerInActiveFloor: boolean;
-  canApply: boolean;
-  canExtend: boolean;
-  hasSelection: boolean;
-  isPending: boolean;
-  onApply: () => void;
-  onReturn: () => void;
-  onExtend: () => void;
-}) => {
-  if (isCurrentLockerInActiveFloor) {
-    return (
-      <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={onReturn}
-          disabled={isPending}
-          className={mergeStyles(
-            'flex h-[3.25rem] flex-1 items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white',
-            isPending
-              ? 'cursor-not-allowed bg-gray-400'
-              : 'cursor-pointer bg-gray-700',
-          )}
-        >
-          반납하기
-        </button>
-        <button
-          type="button"
-          onClick={onExtend}
-          disabled={!canExtend || isPending}
-          className={mergeStyles(
-            'flex h-[3.25rem] flex-1 items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem]',
-            canExtend && !isPending
-              ? 'cursor-pointer bg-white text-gray-500'
-              : 'cursor-not-allowed bg-gray-300 text-white',
-          )}
-        >
-          연장하기
-        </button>
-      </div>
-    );
-  }
-
-  if (!canApply) {
-    return (
-      <button
-        type="button"
-        disabled
-        className="flex h-[3.25rem] w-full cursor-not-allowed items-center justify-center rounded-md bg-gray-300 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white"
-      >
-        {hasCurrentLocker ? '반납하기' : '신청하기'}
-      </button>
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={onApply}
-      disabled={!hasSelection || isPending}
-      className={mergeStyles(
-        'flex h-[3.25rem] w-full items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] transition-colors',
-        hasSelection && !isPending
-          ? 'cursor-pointer bg-gray-700 text-white'
-          : 'cursor-not-allowed bg-gray-300 text-white',
-      )}
-    >
-      {hasCurrentLocker ? '반납하기' : '신청하기'}
-    </button>
-  );
-};
-
 export const LockerSelectionOverlay = ({
-  open,
-  floor,
-  currentLocker,
-  selectedLockerId,
-  lockers,
   availableCount,
-  totalCount,
   canApply,
   canExtend,
+  currentLocker,
+  errorMessage,
+  floor,
   isLoading,
   isPending,
-  errorMessage,
-  toasts,
-  onDismissToast,
-  onOpenChange,
-  onSelectLocker,
+  lockers,
   onApply,
-  onReturn,
+  onDismissToast,
   onExtend,
+  onOpenChange,
+  onReturn,
+  onSelectLocker,
+  open,
+  selectedLockerId,
+  toasts,
+  totalCount,
 }: {
-  open: boolean;
-  floor: ActiveFloor | null;
-  currentLocker: LockerMyResponse | null;
-  selectedLockerId: string | null;
-  lockers: LockerGridItem[];
   availableCount: number;
-  totalCount: number;
   canApply: boolean;
   canExtend: boolean;
+  currentLocker: LockerMyResponse | null;
+  errorMessage: string | null;
+  floor: ActiveFloor | null;
   isLoading: boolean;
   isPending: boolean;
-  errorMessage: string | null;
-  toasts: LockerToastItem[];
-  onDismissToast: (id: string) => void;
-  onOpenChange: (open: boolean) => void;
-  onSelectLocker: (lockerId: string) => void;
+  lockers: LockerGridItem[];
   onApply: () => void;
-  onReturn: () => void;
+  onDismissToast: (id: string) => void;
   onExtend: () => void;
+  onOpenChange: (open: boolean) => void;
+  onReturn: () => void;
+  onSelectLocker: (lockerId: string) => void;
+  open: boolean;
+  selectedLockerId: string | null;
+  toasts: LockerToastItem[];
+  totalCount: number;
 }) => {
   const { isMobileSize } = useBreakpoint();
 
@@ -334,39 +202,37 @@ export const LockerSelectionOverlay = ({
   );
 
   const panelContent = (
-    <div className="flex flex-col gap-6 bg-gray-100">
-      <LockerPanelContent
-        floorName={floor.floorName}
-        currentLocker={currentLocker}
-        selectedLockerId={selectedLockerId}
-        lockers={lockers}
-        availableCount={availableCount}
-        totalCount={totalCount}
-        isActionAvailable={canApply || canExtend}
-        isLoading={isLoading}
-        errorMessage={errorMessage}
-        onSelectLocker={onSelectLocker}
-      />
-    </div>
+    <LockerPanelContent
+      availableCount={availableCount}
+      currentLocker={currentLocker}
+      errorMessage={errorMessage}
+      floorName={floor.floorName}
+      isActionAvailable={canApply || canExtend}
+      isLoading={isLoading}
+      lockers={lockers}
+      onSelectLocker={onSelectLocker}
+      selectedLockerId={selectedLockerId}
+      totalCount={totalCount}
+    />
   );
 
   const actionPanel = (
     <div className="flex flex-col gap-4 bg-gray-100">
       <LockerToastStack
-        toasts={toasts}
-        onDismiss={onDismissToast}
         className="mx-auto w-full max-w-[20rem]"
+        onDismiss={onDismissToast}
+        toasts={toasts}
       />
-      <LockerPanelActions
-        hasCurrentLocker={Boolean(currentLocker)}
-        isCurrentLockerInActiveFloor={isCurrentLockerInActiveFloor}
+      <LockerActionPanel
         canApply={canApply}
         canExtend={canExtend}
+        hasCurrentLocker={Boolean(currentLocker)}
         hasSelection={selectedLockerId !== null}
+        isCurrentLockerInActiveFloor={isCurrentLockerInActiveFloor}
         isPending={isPending}
         onApply={onApply}
-        onReturn={onReturn}
         onExtend={onExtend}
+        onReturn={onReturn}
       />
     </div>
   );

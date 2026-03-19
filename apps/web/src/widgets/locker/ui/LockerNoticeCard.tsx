@@ -3,13 +3,13 @@ import type { LockerPhase } from '@/entities/locker';
 import { getPeriodLabel, PHASE_LABEL } from '../model';
 
 export const LockerNoticeCard = ({
+  endAt,
   phase,
   startAt,
-  endAt,
 }: {
+  endAt?: string;
   phase?: LockerPhase;
   startAt?: string;
-  endAt?: string;
 }) => {
   return (
     <section className="flex flex-col gap-[0.625rem]">

@@ -1,11 +1,11 @@
 import type { LockerLocationSummary } from '@/entities/locker';
 
 export const FloorSummaryCard = ({
-  summary,
   onOpen,
+  summary,
 }: {
-  summary: LockerLocationSummary;
   onOpen: (floor: LockerLocationSummary) => void;
+  summary: LockerLocationSummary;
 }) => {
   const progressRatio = Math.min(
     summary.totalCount > 0 ? summary.availableCount / summary.totalCount : 0,
