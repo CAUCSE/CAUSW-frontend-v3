@@ -281,7 +281,7 @@ export const FeedPage = () => {
     hasNextPage: Boolean(hasNextPage),
   });
 
-  const feedPosts = useMemo(() => data ?? [], [data]);
+  const feedPosts = data ?? [];
 
   const commitRecentSearch = (nextKeyword: string) => {
     const nextRecentSearches = createRecentSearches(
