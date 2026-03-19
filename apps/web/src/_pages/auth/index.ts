@@ -4,3 +4,4 @@ export * from './enrollment-verification';
 export * from './social-login-callback';
 export * from './find-id';
 export * from './find-password';
+export * from './find-account';
