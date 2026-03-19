@@ -56,10 +56,6 @@ export const useLockerPage = () => {
   const lockerControl = useLockerControl({
     currentLockerId: currentLocker?.lockerId ?? null,
     selectedLockerId: resolvedSelectedLockerId,
-    onCompleted: () => {
-      setIsSelectionOpen(false);
-      setSelectedLockerId(null);
-    },
   });
 
   const handleOpenFloor = (floor: LockerLocationSummary) => {

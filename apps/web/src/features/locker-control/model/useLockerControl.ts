@@ -15,13 +15,11 @@ import type { LockerToastItem, LockerToastType } from './types';
 type UseLockerControlParams = {
   currentLockerId: string | null;
   selectedLockerId: string | null;
-  onCompleted: () => void;
 };
 
 export const useLockerControl = ({
   currentLockerId,
   selectedLockerId,
-  onCompleted,
 }: UseLockerControlParams) => {
   const [toasts, setToasts] = useState<LockerToastItem[]>([]);
   const toastTimerMapRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(
@@ -80,7 +78,6 @@ export const useLockerControl = ({
     try {
       await registerLockerMutation.mutateAsync(selectedLockerId);
       showToast('사물함 등록이 완료되었습니다.', 'success');
-      onCompleted();
     } catch (error) {
       showToast(
         extractErrorMessage(error, '사물함 등록에 실패했습니다.'),
@@ -95,7 +92,6 @@ export const useLockerControl = ({
     try {
       await returnLockerMutation.mutateAsync(currentLockerId);
       showToast('사물함 반납이 완료되었습니다.', 'success');
-      onCompleted();
     } catch (error) {
       showToast(
         extractErrorMessage(error, '사물함 반납에 실패했습니다.'),
@@ -110,7 +106,6 @@ export const useLockerControl = ({
     try {
       await extendLockerMutation.mutateAsync(currentLockerId);
       showToast('사물함 연장이 완료되었습니다.', 'success');
-      onCompleted();
     } catch (error) {
       showToast(
         extractErrorMessage(error, '사물함 연장에 실패했습니다.'),
