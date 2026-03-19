@@ -120,6 +120,15 @@ export interface FindEmailRequestDto {
   phoneNumber: string;
 }
 
-export interface FindEmailResponseDto {
+export type SocialProvider = 'KAKAO' | 'APPLE' | 'GOOGLE';
+
+export interface SocialAccountSummary {
+  provider: SocialProvider;
+  createdAt: string;
+}
+
+export interface EmailFindResponse {
   email: string;
+  createdAt: string;
+  socialAccounts: SocialAccountSummary[];
 }
