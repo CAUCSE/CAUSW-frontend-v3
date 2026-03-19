@@ -1,0 +1,40 @@
+import type { LockerPhase } from '@/entities/locker';
+
+import { getPeriodLabel, PHASE_LABEL } from '../model';
+
+export const LockerNoticeCard = ({
+  phase,
+  startAt,
+  endAt,
+}: {
+  phase?: LockerPhase;
+  startAt?: string;
+  endAt?: string;
+}) => {
+  return (
+    <section className="flex flex-col gap-[0.625rem]">
+      <div className="flex items-center gap-1 px-1">
+        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-gray-300 text-[0.625rem] font-bold text-white">
+          i
+        </span>
+        <p className="text-base font-bold tracking-[-0.02rem] text-gray-700">
+          사물함 기간 안내
+        </p>
+      </div>
+      <div className="rounded-lg bg-white p-5">
+        <div className="flex items-center justify-between text-base tracking-[-0.02rem]">
+          <p className="font-medium text-gray-500">현재 상태</p>
+          <p className="font-bold text-gray-700">
+            {phase ? PHASE_LABEL[phase] : '불러오는 중'}
+          </p>
+        </div>
+        <div className="mt-5 flex items-center justify-between gap-4 text-base tracking-[-0.02rem]">
+          <p className="font-medium text-gray-500">적용 기간</p>
+          <p className="text-right font-bold text-gray-700">
+            {getPeriodLabel(startAt, endAt)}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
