@@ -2,95 +2,72 @@
 
 import { useState } from 'react';
 
-import { BottomSheet, Dialog, mergeStyles } from '@causw/cds';
+import { Dialog, mergeStyles } from '@causw/cds';
+
+import type {
+  LockerDetailItem,
+  LockerLocationSummary,
+  LockerMyResponse,
+  LockerPhase,
+} from '@/entities/locker';
+import {
+  useExtendLockerMutation,
+  useLockerLocationDetail,
+  useLockerLocations,
+  useLockerPeriodStatus,
+  useMyLocker,
+  useRegisterLockerMutation,
+  useReturnLockerMutation,
+} from '@/entities/locker';
 
 import { useBreakpoint } from '@/shared/hooks';
-import { toast } from '@/shared/model';
 import { ActionHeader } from '@/shared/ui';
-
-type FloorId = '2' | '3' | '4';
-
-type FloorSummary = {
-  floorId: FloorId;
-  availableCount: number;
-  totalCount: number;
-};
-
-type LockerAssignment = {
-  floorId: FloorId;
-  lockerNumber: number;
-  expiresAt: string;
-};
+import { extractErrorMessage } from '@/shared/utils';
 
 type LockerStatus = 'available' | 'disabled' | 'mine';
 
-type LockerCell = {
-  lockerNumber: number;
-  status: LockerStatus;
-  hidden?: boolean;
+type ActiveFloor = {
+  locationId: string;
+  floorName: string;
 };
 
-const FLOOR_SUMMARIES: FloorSummary[] = [
-  { floorId: '2', availableCount: 68, totalCount: 136 },
-  { floorId: '3', availableCount: 168, totalCount: 166 },
-  { floorId: '4', availableCount: 31, totalCount: 32 },
-];
+type LockerGridItem = LockerDetailItem & {
+  lockerNumber: number;
+  viewStatus: LockerStatus;
+};
 
-const APPLICATION_TIME_LABEL = '오전 00:00 - 오후 00:00';
-const FLOOR_LOCKER_COUNT = 32;
-const CLOSED_PERIOD_FLOOR: FloorId = '4';
+const PHASE_LABEL: Record<LockerPhase, string> = {
+  READY: '신청 준비',
+  APPLY: '신청 기간',
+  EXTEND: '연장 기간',
+  CLOSED: '마감',
+};
 
-function getInitialLockerCells(
-  floorId: FloorId,
-  currentLocker: LockerAssignment | null,
-): LockerCell[] {
-  const lockers: LockerCell[] = Array.from(
-    { length: FLOOR_LOCKER_COUNT },
-    (_, index): LockerCell => {
-      const lockerNumber = index + 1;
-      const isMine =
-        currentLocker?.floorId === floorId &&
-        currentLocker.lockerNumber === lockerNumber;
+function formatDateTime(value?: string | null) {
+  if (!value) return '-';
 
-      if (isMine) {
-        return { lockerNumber, status: 'mine' };
-      }
+  const date = new Date(value);
 
-      const disabledByFloor: Record<FloorId, number[]> = {
-        '2': [4, 11, 18, 27],
-        '3': [2, 14, 21],
-        '4': [19],
-      };
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
 
-      return {
-        lockerNumber,
-        status: disabledByFloor[floorId].includes(lockerNumber)
-          ? 'disabled'
-          : 'available',
-      };
-    },
-  );
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-  const hiddenLockers: LockerCell[] =
-    floorId === '4'
-      ? [
-          { lockerNumber: 33, status: 'available', hidden: true },
-          { lockerNumber: 34, status: 'available', hidden: true },
-          { lockerNumber: 35, status: 'available', hidden: true },
-        ]
-      : [];
-
-  return lockers.concat(hiddenLockers);
+  return `${year}.${month}.${day} ${hours}:${minutes}`;
 }
 
-function getSummaryActionLabel(
-  floorId: FloorId,
-  currentLocker: LockerAssignment | null,
-) {
-  if (!currentLocker) return '사물함 신청하기';
-  return currentLocker.floorId === floorId
-    ? '사물함 확인하기'
-    : '사물함 현황 보기';
+function getPeriodLabel(startAt?: string, endAt?: string) {
+  if (!startAt || !endAt) return '기간 정보가 없어요.';
+  return `${formatDateTime(startAt)} - ${formatDateTime(endAt)}`;
+}
+
+function getFloorNameFromDisplayName(displayName?: string | null) {
+  return displayName?.split(' ')[0] ?? null;
 }
 
 function getLockerCellClassName(status: LockerStatus, isSelected: boolean) {
@@ -105,31 +82,46 @@ function getLockerCellClassName(status: LockerStatus, isSelected: boolean) {
   return 'bg-white text-gray-700';
 }
 
+function getLockerViewStatus(
+  locker: LockerDetailItem,
+  currentLockerId: string | null,
+): LockerStatus {
+  if (locker.lockerId === currentLockerId || locker.status === 'MINE') {
+    return 'mine';
+  }
+
+  if (locker.status === 'AVAILABLE') {
+    return 'available';
+  }
+
+  return 'disabled';
+}
+
 function LockerSelectionGrid({
   lockers,
-  selectedLockerNumber,
+  selectedLockerId,
   onSelect,
 }: {
-  lockers: LockerCell[];
-  selectedLockerNumber: number | null;
-  onSelect: (lockerNumber: number) => void;
+  lockers: LockerGridItem[];
+  selectedLockerId: string | null;
+  onSelect: (lockerId: string) => void;
 }) {
   return (
     <div className="desktop:gap-3 grid grid-cols-5 gap-2">
       {lockers.map((locker) => {
-        const isSelected = selectedLockerNumber === locker.lockerNumber;
-        const isClickable = locker.status === 'available';
+        const isSelected = selectedLockerId === locker.lockerId;
+        const isClickable = locker.viewStatus === 'available';
 
         return (
           <button
-            key={`${locker.lockerNumber}-${locker.hidden ? 'hidden' : 'shown'}`}
+            key={locker.lockerId}
             type="button"
             disabled={!isClickable}
-            onClick={() => isClickable && onSelect(locker.lockerNumber)}
+            onClick={() => isClickable && onSelect(locker.lockerId)}
             className={mergeStyles(
               'flex h-[4.3125rem] items-center justify-center rounded-md text-lg tracking-[-0.0225rem] transition-colors',
-              getLockerCellClassName(locker.status, isSelected),
-              locker.hidden ? 'pointer-events-none opacity-0' : '',
+              isClickable ? 'cursor-pointer' : 'cursor-not-allowed',
+              getLockerCellClassName(locker.viewStatus, isSelected),
             )}
           >
             {locker.lockerNumber}
@@ -166,24 +158,34 @@ function LockerLegend() {
   );
 }
 
-function LockerInfoCard({ assignment }: { assignment: LockerAssignment }) {
+function LockerInfoCard({ assignment }: { assignment: LockerMyResponse }) {
   return (
     <div className="rounded-lg bg-white p-5">
       <div className="flex items-center justify-between text-base tracking-[-0.02rem]">
         <p className="font-medium text-gray-500">현재 사물함</p>
         <p className="font-bold text-gray-700">
-          {assignment.floorId}층 {assignment.lockerNumber}번
+          {assignment.displayName ?? '없음'}
         </p>
       </div>
       <div className="mt-5 flex items-center justify-between text-base tracking-[-0.02rem]">
         <p className="font-medium text-gray-500">만료 일시</p>
-        <p className="font-bold text-gray-700">{assignment.expiresAt}</p>
+        <p className="font-bold text-gray-700">
+          {formatDateTime(assignment.expiredAt)}
+        </p>
       </div>
     </div>
   );
 }
 
-function LockerNoticeCard() {
+function LockerNoticeCard({
+  phase,
+  startAt,
+  endAt,
+}: {
+  phase?: LockerPhase;
+  startAt?: string;
+  endAt?: string;
+}) {
   return (
     <section className="flex flex-col gap-[0.625rem]">
       <div className="flex items-center gap-1 px-1">
@@ -196,8 +198,16 @@ function LockerNoticeCard() {
       </div>
       <div className="rounded-lg bg-white p-5">
         <div className="flex items-center justify-between text-base tracking-[-0.02rem]">
-          <p className="font-medium text-gray-500">신청기간</p>
-          <p className="font-bold text-gray-700">{APPLICATION_TIME_LABEL}</p>
+          <p className="font-medium text-gray-500">현재 상태</p>
+          <p className="font-bold text-gray-700">
+            {phase ? PHASE_LABEL[phase] : '불러오는 중'}
+          </p>
+        </div>
+        <div className="mt-5 flex items-center justify-between gap-4 text-base tracking-[-0.02rem]">
+          <p className="font-medium text-gray-500">적용 기간</p>
+          <p className="text-right font-bold text-gray-700">
+            {getPeriodLabel(startAt, endAt)}
+          </p>
         </div>
       </div>
     </section>
@@ -206,12 +216,10 @@ function LockerNoticeCard() {
 
 function FloorSummaryCard({
   summary,
-  currentLocker,
   onOpen,
 }: {
-  summary: FloorSummary;
-  currentLocker: LockerAssignment | null;
-  onOpen: (floorId: FloorId) => void;
+  summary: LockerLocationSummary;
+  onOpen: (floor: LockerLocationSummary) => void;
 }) {
   const progressRatio = Math.min(
     summary.availableCount / summary.totalCount,
@@ -222,7 +230,7 @@ function FloorSummaryCard({
     <article className="rounded-md bg-white p-4">
       <div className="flex items-end justify-between">
         <h3 className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
-          {summary.floorId}층
+          {summary.floorName}
         </h3>
         <p className="text-base font-bold tracking-[-0.02rem] text-gray-700">
           잔여 {summary.availableCount}개
@@ -243,53 +251,59 @@ function FloorSummaryCard({
 
       <button
         type="button"
-        onClick={() => onOpen(summary.floorId)}
-        className="mt-4 flex h-[3.25rem] w-full items-center justify-center rounded-lg bg-blue-100 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-blue-700"
+        onClick={() => onOpen(summary)}
+        className="mt-4 flex h-[3.25rem] w-full cursor-pointer items-center justify-center rounded-lg bg-blue-100 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-blue-700"
       >
-        {getSummaryActionLabel(summary.floorId, currentLocker)}
+        사물함 신청하기
       </button>
     </article>
   );
 }
 
 function LockerPanelContent({
-  floorId,
+  floorName,
   currentLocker,
-  selectedLockerNumber,
+  selectedLockerId,
   lockers,
-  isApplicationPeriod,
+  availableCount,
+  totalCount,
+  isActionAvailable,
+  isLoading,
+  errorMessage,
   onSelectLocker,
 }: {
-  floorId: FloorId;
-  currentLocker: LockerAssignment | null;
-  selectedLockerNumber: number | null;
-  lockers: LockerCell[];
-  isApplicationPeriod: boolean;
-  onSelectLocker: (lockerNumber: number) => void;
+  floorName: string;
+  currentLocker: LockerMyResponse | null;
+  selectedLockerId: string | null;
+  lockers: LockerGridItem[];
+  availableCount: number;
+  totalCount: number;
+  isActionAvailable: boolean;
+  isLoading: boolean;
+  errorMessage: string | null;
+  onSelectLocker: (lockerId: string) => void;
 }) {
-  const availableCount = lockers.filter(
-    (locker) => locker.status === 'available' || locker.status === 'mine',
-  ).length;
-
   return (
     <div className="flex flex-col gap-6">
       <div className="px-1">
         <h2 className="text-[1.375rem] font-bold tracking-[-0.0275rem] text-gray-700">
-          {floorId}층
+          {floorName}
         </h2>
       </div>
 
-      {currentLocker && currentLocker.floorId === floorId && (
-        <LockerInfoCard assignment={currentLocker} />
-      )}
+      {currentLocker &&
+        getFloorNameFromDisplayName(currentLocker.displayName) ===
+          floorName && <LockerInfoCard assignment={currentLocker} />}
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 px-1">
           <p className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
-            {isApplicationPeriod ? (
+            {isLoading ? (
+              '사물함 정보를 불러오는 중이에요.'
+            ) : isActionAvailable ? (
               <>
                 잔여 <span className="text-blue-700">{availableCount}개</span> /
-                전체 {FLOOR_LOCKER_COUNT}개
+                전체 {totalCount}개
               </>
             ) : (
               '사물함 신청기간이 아니에요.'
@@ -298,57 +312,69 @@ function LockerPanelContent({
           <LockerLegend />
         </div>
 
-        <LockerSelectionGrid
-          lockers={lockers}
-          selectedLockerNumber={selectedLockerNumber}
-          onSelect={onSelectLocker}
-        />
+        {errorMessage ? (
+          <div className="rounded-lg bg-white px-4 py-5 text-sm text-red-500">
+            {errorMessage}
+          </div>
+        ) : (
+          <LockerSelectionGrid
+            lockers={lockers}
+            selectedLockerId={selectedLockerId}
+            onSelect={onSelectLocker}
+          />
+        )}
       </section>
     </div>
   );
 }
 
 function LockerPanelActions({
-  currentLocker,
-  isApplicationPeriod,
+  hasCurrentLocker,
+  isCurrentLockerInActiveFloor,
+  canApply,
+  canExtend,
   hasSelection,
+  isPending,
   onApply,
   onReturn,
   onExtend,
 }: {
-  currentLocker: LockerAssignment | null;
-  isApplicationPeriod: boolean;
+  hasCurrentLocker: boolean;
+  isCurrentLockerInActiveFloor: boolean;
+  canApply: boolean;
+  canExtend: boolean;
   hasSelection: boolean;
+  isPending: boolean;
   onApply: () => void;
   onReturn: () => void;
   onExtend: () => void;
 }) {
-  if (!isApplicationPeriod && !currentLocker) {
-    return (
-      <button
-        type="button"
-        disabled
-        className="flex h-[3.25rem] w-full items-center justify-center rounded-md bg-gray-300 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white"
-      >
-        사물함 신청하기
-      </button>
-    );
-  }
-
-  if (currentLocker) {
+  if (isCurrentLockerInActiveFloor) {
     return (
       <div className="flex gap-2">
         <button
           type="button"
           onClick={onReturn}
-          className="flex h-[3.25rem] flex-1 items-center justify-center rounded-md bg-gray-700 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white"
+          disabled={isPending}
+          className={mergeStyles(
+            'flex h-[3.25rem] flex-1 items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white',
+            isPending
+              ? 'cursor-not-allowed bg-gray-400'
+              : 'cursor-pointer bg-gray-700',
+          )}
         >
           반납하기
         </button>
         <button
           type="button"
           onClick={onExtend}
-          className="flex h-[3.25rem] flex-1 items-center justify-center rounded-md bg-white px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-gray-500"
+          disabled={!canExtend || isPending}
+          className={mergeStyles(
+            'flex h-[3.25rem] flex-1 items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem]',
+            canExtend && !isPending
+              ? 'cursor-pointer bg-white text-gray-500'
+              : 'cursor-not-allowed bg-gray-300 text-white',
+          )}
         >
           연장하기
         </button>
@@ -356,27 +382,48 @@ function LockerPanelActions({
     );
   }
 
+  if (!canApply) {
+    return (
+      <button
+        type="button"
+        disabled
+        className="flex h-[3.25rem] w-full cursor-not-allowed items-center justify-center rounded-md bg-gray-300 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-white"
+      >
+        {hasCurrentLocker ? '반납하기' : '신청하기'}
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
       onClick={onApply}
+      disabled={!hasSelection || isPending}
       className={mergeStyles(
         'flex h-[3.25rem] w-full items-center justify-center rounded-md px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] transition-colors',
-        hasSelection ? 'bg-gray-700 text-white' : 'bg-gray-300 text-white',
+        hasSelection && !isPending
+          ? 'cursor-pointer bg-gray-700 text-white'
+          : 'cursor-not-allowed bg-gray-300 text-white',
       )}
     >
-      사물함 신청하기
+      {hasCurrentLocker ? '반납하기' : '신청하기'}
     </button>
   );
 }
 
 function LockerSelectionOverlay({
   open,
-  floorId,
+  floor,
   currentLocker,
-  selectedLockerNumber,
+  selectedLockerId,
   lockers,
-  isApplicationPeriod,
+  availableCount,
+  totalCount,
+  canApply,
+  canExtend,
+  isLoading,
+  isPending,
+  errorMessage,
   onOpenChange,
   onSelectLocker,
   onApply,
@@ -384,50 +431,88 @@ function LockerSelectionOverlay({
   onExtend,
 }: {
   open: boolean;
-  floorId: FloorId | null;
-  currentLocker: LockerAssignment | null;
-  selectedLockerNumber: number | null;
-  lockers: LockerCell[];
-  isApplicationPeriod: boolean;
+  floor: ActiveFloor | null;
+  currentLocker: LockerMyResponse | null;
+  selectedLockerId: string | null;
+  lockers: LockerGridItem[];
+  availableCount: number;
+  totalCount: number;
+  canApply: boolean;
+  canExtend: boolean;
+  isLoading: boolean;
+  isPending: boolean;
+  errorMessage: string | null;
   onOpenChange: (open: boolean) => void;
-  onSelectLocker: (lockerNumber: number) => void;
+  onSelectLocker: (lockerId: string) => void;
   onApply: () => void;
   onReturn: () => void;
   onExtend: () => void;
 }) {
   const { isMobileSize } = useBreakpoint();
 
-  if (!floorId) return null;
+  if (!floor) return null;
 
-  const content = (
+  const isCurrentLockerInActiveFloor = Boolean(
+    currentLocker?.lockerId &&
+    lockers.some((locker) => locker.lockerId === currentLocker.lockerId),
+  );
+
+  const panelContent = (
     <div className="flex flex-col gap-6 bg-gray-100">
       <LockerPanelContent
-        floorId={floorId}
+        floorName={floor.floorName}
         currentLocker={currentLocker}
-        selectedLockerNumber={selectedLockerNumber}
+        selectedLockerId={selectedLockerId}
         lockers={lockers}
-        isApplicationPeriod={isApplicationPeriod}
+        availableCount={availableCount}
+        totalCount={totalCount}
+        isActionAvailable={canApply || canExtend}
+        isLoading={isLoading}
+        errorMessage={errorMessage}
         onSelectLocker={onSelectLocker}
       />
-      <LockerPanelActions
-        currentLocker={currentLocker}
-        isApplicationPeriod={isApplicationPeriod}
-        hasSelection={selectedLockerNumber !== null}
-        onApply={onApply}
-        onReturn={onReturn}
-        onExtend={onExtend}
-      />
     </div>
+  );
+  const actionPanel = (
+    <LockerPanelActions
+      hasCurrentLocker={Boolean(currentLocker)}
+      isCurrentLockerInActiveFloor={isCurrentLockerInActiveFloor}
+      canApply={canApply}
+      canExtend={canExtend}
+      hasSelection={selectedLockerId !== null}
+      isPending={isPending}
+      onApply={onApply}
+      onReturn={onReturn}
+      onExtend={onExtend}
+    />
   );
 
   if (isMobileSize) {
     return (
-      <BottomSheet open={open} onOpenChange={onOpenChange} headerAlign="left">
-        <BottomSheet.Header className="hidden" title={`${floorId}층`} />
-        <BottomSheet.Content className="z-modal bg-gray-100 px-5 pt-7 pb-6">
-          {content}
-        </BottomSheet.Content>
-      </BottomSheet>
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog.Content
+          className="h-dvh max-h-dvh w-full overflow-hidden rounded-none bg-gray-100 px-0 py-0"
+          aria-describedby={undefined}
+        >
+          <Dialog.Title hidden>{floor.floorName} 사물함 선택</Dialog.Title>
+          <div className="flex h-full min-h-0 w-full flex-col">
+            <ActionHeader background="gray">
+              <ActionHeader.BackButton
+                type="button"
+                onClick={() => onOpenChange(false)}
+              >
+                뒤로
+              </ActionHeader.BackButton>
+            </ActionHeader>
+            <div className="min-h-0 flex-1 overflow-y-auto px-5 pt-5 pb-6">
+              {panelContent}
+            </div>
+            <div className="shrink-0 px-5 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
+              {actionPanel}
+            </div>
+          </div>
+        </Dialog.Content>
+      </Dialog>
     );
   }
 
@@ -435,82 +520,123 @@ function LockerSelectionOverlay({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <Dialog.Content
         width={700}
-        className="max-h-[calc(100vh-80px)] overflow-y-auto rounded-[1.75rem] bg-gray-100 p-8"
+        className="max-h-[calc(100vh-80px)] overflow-hidden rounded-[1.75rem] bg-gray-100 p-0"
         aria-describedby={undefined}
       >
-        <Dialog.Title hidden>{floorId}층 사물함 선택</Dialog.Title>
-        {content}
+        <Dialog.Title hidden>{floor.floorName} 사물함 선택</Dialog.Title>
+        <div className="flex max-h-[calc(100vh-80px)] min-h-0 flex-col">
+          <div className="min-h-0 flex-1 overflow-y-auto p-8 pb-6">
+            {panelContent}
+          </div>
+          <div className="shrink-0 px-8 pt-2 pb-8">{actionPanel}</div>
+        </div>
       </Dialog.Content>
     </Dialog>
   );
 }
 
 export function LockerListPage() {
-  const [currentLocker, setCurrentLocker] = useState<LockerAssignment | null>(
-    null,
-  );
-  const [activeFloorId, setActiveFloorId] = useState<FloorId | null>(null);
-  const [selectedLockerNumber, setSelectedLockerNumber] = useState<
-    number | null
+  const [activeFloor, setActiveFloor] = useState<ActiveFloor | null>(null);
+  const [userSelectedLockerId, setUserSelectedLockerId] = useState<
+    string | null
   >(null);
   const [isSelectionOpen, setIsSelectionOpen] = useState(false);
 
-  const isApplicationPeriod = activeFloorId
-    ? activeFloorId !== CLOSED_PERIOD_FLOOR
-    : true;
+  const periodStatusQuery = useLockerPeriodStatus();
+  const myLockerQuery = useMyLocker();
+  const lockerLocationsQuery = useLockerLocations();
+  const lockerLocationDetailQuery = useLockerLocationDetail(
+    activeFloor?.locationId ?? null,
+  );
 
-  const activeLockers = activeFloorId
-    ? getInitialLockerCells(activeFloorId, currentLocker)
-    : [];
+  const registerLockerMutation = useRegisterLockerMutation();
+  const returnLockerMutation = useReturnLockerMutation();
+  const extendLockerMutation = useExtendLockerMutation();
 
-  const handleOpenFloor = (floorId: FloorId) => {
-    setActiveFloorId(floorId);
-    setSelectedLockerNumber(
-      currentLocker?.floorId === floorId ? currentLocker.lockerNumber : null,
-    );
+  const currentLocker = myLockerQuery.data?.hasLocker
+    ? myLockerQuery.data
+    : null;
+  const locationList = lockerLocationsQuery.data?.floors ?? [];
+  const activeFloorSummary =
+    locationList.find(
+      (floor) => floor.locationId === activeFloor?.locationId,
+    ) ?? null;
+  const activeFloorDetail = lockerLocationDetailQuery.data;
+  const currentLockerInActiveFloor =
+    activeFloorDetail?.lockers.find(
+      (locker) => locker.lockerId === currentLocker?.lockerId,
+    ) ?? null;
+  const selectedLockerId =
+    userSelectedLockerId ?? currentLockerInActiveFloor?.lockerId ?? null;
+  const activeFloorLockers: LockerGridItem[] = (
+    activeFloorDetail?.lockers ?? []
+  )
+    .slice()
+    .sort((left, right) => Number(left.number) - Number(right.number))
+    .map((locker) => ({
+      ...locker,
+      lockerNumber: Number(locker.number),
+      viewStatus: getLockerViewStatus(locker, currentLocker?.lockerId ?? null),
+    }));
+  const activeFloorAvailableCount =
+    activeFloorSummary?.availableCount ??
+    activeFloorDetail?.summary.availableCount ??
+    activeFloorLockers.filter(
+      (locker) =>
+        locker.viewStatus === 'available' || locker.viewStatus === 'mine',
+    ).length;
+  const activeFloorTotalCount =
+    activeFloorSummary?.totalCount ??
+    activeFloorDetail?.summary.totalCount ??
+    activeFloorLockers.length;
+  const canApply = activeFloorDetail?.currentPolicy.canApply ?? false;
+  const canExtend = activeFloorDetail?.currentPolicy.canExtend ?? false;
+  const isPending =
+    registerLockerMutation.isPending ||
+    returnLockerMutation.isPending ||
+    extendLockerMutation.isPending;
+
+  const handleOpenFloor = (floor: LockerLocationSummary) => {
+    setActiveFloor({
+      locationId: floor.locationId,
+      floorName: floor.floorName,
+    });
+    setUserSelectedLockerId(null);
     setIsSelectionOpen(true);
   };
 
-  const handleApply = () => {
-    if (!activeFloorId || !selectedLockerNumber) {
-      toast.error('신청할 사물함을 선택해 주세요.');
-      return;
-    }
+  const handleApply = async () => {
+    if (!selectedLockerId) return;
 
-    setCurrentLocker({
-      floorId: activeFloorId,
-      lockerNumber: selectedLockerNumber,
-      expiresAt: '2025-09-05 23:59',
-    });
-    setSelectedLockerNumber(null);
-    setIsSelectionOpen(false);
-    toast.success(
-      `사물함 신청이 완료됐어요. ${activeFloorId}층 ${selectedLockerNumber}번`,
-    );
+    try {
+      await registerLockerMutation.mutateAsync(selectedLockerId);
+      setIsSelectionOpen(false);
+    } catch {}
   };
 
-  const handleReturn = () => {
-    if (!currentLocker) return;
+  const handleReturn = async () => {
+    if (!currentLocker?.lockerId) return;
 
-    const returnedLocker = `${currentLocker.floorId}층 ${currentLocker.lockerNumber}번`;
-    setCurrentLocker(null);
-    setSelectedLockerNumber(null);
-    setIsSelectionOpen(false);
-    toast.success(`${returnedLocker} 사물함을 반납했어요.`);
+    try {
+      await returnLockerMutation.mutateAsync(currentLocker.lockerId);
+      setIsSelectionOpen(false);
+    } catch {}
   };
 
-  const handleExtend = () => {
-    if (!currentLocker) return;
+  const handleExtend = async () => {
+    if (!currentLocker?.lockerId) return;
 
-    setCurrentLocker({
-      ...currentLocker,
-      expiresAt: '2025-10-05 23:59',
-    });
-    setSelectedLockerNumber(currentLocker.lockerNumber);
-    setIsSelectionOpen(false);
-    toast.success('사물함 사용 기간을 연장했어요.');
+    try {
+      await extendLockerMutation.mutateAsync(currentLocker.lockerId);
+      setIsSelectionOpen(false);
+    } catch {}
   };
 
+  const initialError =
+    periodStatusQuery.error ??
+    myLockerQuery.error ??
+    lockerLocationsQuery.error;
+  const activeFloorError = lockerLocationDetailQuery.error;
   return (
     <div className="min-h-full bg-gray-100">
       <ActionHeader
@@ -528,62 +654,80 @@ export function LockerListPage() {
             </h1>
           </div>
 
-          <div className="rounded-lg bg-white p-5">
-            {currentLocker ? (
-              <>
-                <div className="flex items-center justify-between text-base tracking-[-0.02rem]">
-                  <p className="font-medium text-gray-500">현재 사물함</p>
-                  <p className="font-bold text-gray-700">
-                    {currentLocker.floorId}층 {currentLocker.lockerNumber}번
-                  </p>
-                </div>
-                <div className="mt-5 flex items-center justify-between text-base tracking-[-0.02rem]">
-                  <p className="font-medium text-gray-500">만료 일시</p>
-                  <p className="font-bold text-gray-700">
-                    {currentLocker.expiresAt}
-                  </p>
-                </div>
-              </>
-            ) : (
+          {currentLocker ? (
+            <LockerInfoCard assignment={currentLocker} />
+          ) : (
+            <div className="rounded-lg bg-white p-5">
               <div className="flex items-center justify-between text-base tracking-[-0.02rem]">
                 <p className="font-medium text-gray-500">현재 사물함</p>
-                <p className="font-bold text-gray-700">없음</p>
+                <p className="font-bold text-gray-700">
+                  {myLockerQuery.isLoading ? '불러오는 중' : '없음'}
+                </p>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </section>
 
         <section className="flex flex-col gap-3">
           <div className="px-1">
             <p className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
-              잔여 <span className="text-blue-700">332개</span> / 전체 336개
+              잔여{' '}
+              <span className="text-blue-700">
+                {lockerLocationsQuery.data?.summary.availableCount ?? '-'}개
+              </span>{' '}
+              / 전체 {lockerLocationsQuery.data?.summary.totalCount ?? '-'}개
             </p>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {FLOOR_SUMMARIES.map((summary) => (
-              <FloorSummaryCard
-                key={summary.floorId}
-                summary={summary}
-                currentLocker={currentLocker}
-                onOpen={handleOpenFloor}
-              />
-            ))}
-          </div>
+          {initialError ? (
+            <div className="rounded-lg bg-white px-5 py-6 text-sm text-red-500">
+              {extractErrorMessage(
+                initialError,
+                '사물함 정보를 불러오지 못했어요.',
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {locationList.map((summary) => (
+                <FloorSummaryCard
+                  key={summary.locationId}
+                  summary={summary}
+                  onOpen={handleOpenFloor}
+                />
+              ))}
+            </div>
+          )}
         </section>
 
-        <LockerNoticeCard />
+        <LockerNoticeCard
+          phase={periodStatusQuery.data?.phase}
+          startAt={periodStatusQuery.data?.startAt}
+          endAt={periodStatusQuery.data?.endAt}
+        />
       </div>
 
       <LockerSelectionOverlay
         open={isSelectionOpen}
-        floorId={activeFloorId}
+        floor={activeFloor}
         currentLocker={currentLocker}
-        selectedLockerNumber={selectedLockerNumber}
-        lockers={activeLockers}
-        isApplicationPeriod={isApplicationPeriod}
+        selectedLockerId={selectedLockerId}
+        lockers={activeFloorLockers}
+        availableCount={activeFloorAvailableCount}
+        totalCount={activeFloorTotalCount}
+        canApply={canApply}
+        canExtend={canExtend}
+        isLoading={lockerLocationDetailQuery.isLoading}
+        isPending={isPending}
+        errorMessage={
+          activeFloorError
+            ? extractErrorMessage(
+                activeFloorError,
+                '층 정보를 불러오지 못했어요.',
+              )
+            : null
+        }
         onOpenChange={setIsSelectionOpen}
-        onSelectLocker={setSelectedLockerNumber}
+        onSelectLocker={setUserSelectedLockerId}
         onApply={handleApply}
         onReturn={handleReturn}
         onExtend={handleExtend}
