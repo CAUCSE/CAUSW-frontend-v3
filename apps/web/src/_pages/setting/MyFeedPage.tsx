@@ -10,7 +10,7 @@ import {
   useMyActivityFeed,
 } from '@/widgets/setting';
 
-import { ActivityType } from '@/entities/setting';
+import { ActivityType, MyActivityFeedPage } from '@/entities/setting';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
@@ -40,7 +40,10 @@ const ActivityContent = ({
     fetchNextPage,
   } = useMyActivityFeed(activeTab, mode);
 
-  const posts = data?.pages.flatMap((page) => page.posts) ?? [];
+  const posts =
+    (data?.pages as MyActivityFeedPage[] | undefined)?.flatMap(
+      (page) => page.posts,
+    ) ?? [];
 
   const { targetRef } = useInfiniteScroll({
     intersectionCallback: (entries) => {
