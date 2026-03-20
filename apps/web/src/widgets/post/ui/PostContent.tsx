@@ -8,11 +8,11 @@ import { ReportFlow } from '@/features/report';
 
 import { GetPostResponseDto, PostBody, PostReactions } from '@/entities/post';
 
+import { HTML_TAG_PATTERN } from '@/shared/constants';
+
 interface PostContentProps {
   post: GetPostResponseDto;
 }
-
-const HTML_TAG_PATTERN = /<\/?[a-z][\s\S]*>/i;
 
 export const PostContent = ({ post }: PostContentProps) => {
   const {

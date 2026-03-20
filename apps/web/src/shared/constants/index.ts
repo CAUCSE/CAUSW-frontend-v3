@@ -1,6 +1,7 @@
 export * from './tanstack-query';
 export * from './error';
 export * from './image';
+export * from './html';
 export * from './breakpoints';
 export * from './copy';
 export * from './routes';
