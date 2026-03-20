@@ -1,5 +1,7 @@
 import { InfoPage } from '@/_pages/info';
 
-export default function Page() {
+const Page = () => {
   return <InfoPage />;
-}
+};
+
+export default Page;

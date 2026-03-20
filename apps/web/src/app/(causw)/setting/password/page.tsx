@@ -1,5 +1,7 @@
 import { SettingPasswordPage } from '@/_pages/setting';
 
-export default function Page() {
+const Page = () => {
   return <SettingPasswordPage />;
-}
+};
+
+export default Page;

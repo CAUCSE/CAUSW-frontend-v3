@@ -1,5 +1,7 @@
 import { NotificationPage } from '@/_pages/notification';
 
-export default function Page() {
+const Page = () => {
   return <NotificationPage />;
-}
+};
+
+export default Page;

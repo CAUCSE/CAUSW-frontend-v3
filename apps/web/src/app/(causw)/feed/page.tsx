@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Button, FloatingActionButton, HStack, Plus, Search } from '@causw/cds';
 
-export default function Page() {
+const Page = () => {
   const router = useRouter();
 
   return (
@@ -36,4 +36,6 @@ export default function Page() {
       </FloatingActionButton>
     </div>
   );
-}
+};
+
+export default Page;

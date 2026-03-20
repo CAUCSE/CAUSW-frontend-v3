@@ -4,10 +4,12 @@ import { NextSearchParams } from '@/shared/types';
 
 import { AlumniContactsPage } from '@/_pages/alumni-contacts';
 
-export default function Page({
+const Page = ({
   searchParams,
 }: {
   searchParams: NextSearchParams<AlumniContactsFilter>;
-}) {
+}) => {
   return <AlumniContactsPage searchParams={searchParams} />;
-}
+};
+
+export default Page;

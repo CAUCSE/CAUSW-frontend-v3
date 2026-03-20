@@ -1,5 +1,7 @@
 import { SettingPrivacyPage } from '@/_pages/setting';
 
-export default function Page() {
+const Page = () => {
   return <SettingPrivacyPage />;
-}
+};
+
+export default Page;

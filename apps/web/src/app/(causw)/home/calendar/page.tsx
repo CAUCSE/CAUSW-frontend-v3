@@ -1,5 +1,7 @@
 import { CalendarPage } from '@/_pages/home/calendar';
 
-export default function Page() {
+const Page = () => {
   return <CalendarPage />;
-}
+};
+
+export default Page;

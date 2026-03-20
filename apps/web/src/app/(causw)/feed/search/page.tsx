@@ -1,5 +1,7 @@
 import { FeedPage } from '@/_pages/feed';
 
-export default function Page() {
+const Page = () => {
   return <FeedPage />;
-}
+};
+
+export default Page;

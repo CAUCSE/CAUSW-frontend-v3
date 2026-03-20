@@ -1,5 +1,7 @@
 import { ProfilePage } from '@/_pages/profile';
 
-export default function Page() {
+const Page = () => {
   return <ProfilePage />;
-}
+};
+
+export default Page;

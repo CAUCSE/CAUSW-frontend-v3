@@ -1,5 +1,7 @@
 import { LockerListPage } from '@/_pages/locker';
 
-export default function Page() {
+const Page = () => {
   return <LockerListPage />;
-}
+};
+
+export default Page;

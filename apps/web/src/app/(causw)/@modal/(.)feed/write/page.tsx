@@ -1,5 +1,7 @@
 import { PostWritePage } from '@/_pages/feed';
 
-export default function Page() {
+const Page = () => {
   return <PostWritePage />;
-}
+};
+
+export default Page;
