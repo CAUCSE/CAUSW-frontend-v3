@@ -27,10 +27,14 @@ export const MyActivityPostContent = ({ post }: Props) => {
     router.push(`/feed/${post.postId}`);
   };
 
-  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
-    const target = event.target as HTMLElement;
+  const shouldPreventNavigation = (target: EventTarget | null) => {
+    return (target as HTMLElement | null)?.closest(
+      'button, a, [role="menuitem"]',
+    );
+  };
 
-    if (target.closest('button, a, [role="menuitem"]')) {
+  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
+    if (shouldPreventNavigation(event.target)) {
       return;
     }
 
@@ -42,9 +46,7 @@ export const MyActivityPostContent = ({ post }: Props) => {
       return;
     }
 
-    const target = event.target as HTMLElement;
-
-    if (target.closest('button, a, [role="menuitem"]')) {
+    if (shouldPreventNavigation(event.target)) {
       return;
     }
 
