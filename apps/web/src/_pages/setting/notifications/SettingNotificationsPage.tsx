@@ -7,8 +7,8 @@ import {
   EventNotificationSection,
   NoticeNotificationSection,
   OfficialAccountNotificationSection,
+  SETTING_NOTIFICATIONS,
 } from '@/widgets/setting';
-import { SETTING_NOTIFICATIONS } from '@/widgets/setting/config';
 
 import { ActionHeader } from '@/shared/ui';
 

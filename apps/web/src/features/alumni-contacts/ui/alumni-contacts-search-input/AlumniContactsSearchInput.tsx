@@ -2,7 +2,7 @@
 
 import { Search, TextInput } from '@causw/cds';
 
-import { useAlumniContactsSearchInput } from '@/features/alumni-contacts/model';
+import { useAlumniContactsSearchInput } from '@/features/alumni-contacts';
 
 import { AlumniContactsSearchInputClearButton } from './AlumniContactsSearchInputClearButton';
 

@@ -7,7 +7,7 @@ import { Stack } from '@causw/cds';
 import { CommentForm } from '@/features/comment';
 
 import { MOCK_POST_COMMENTS, ReplyTarget } from '@/entities/comment';
-import { usePostQuery } from '@/entities/post/model/queries/usePostQuery';
+import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';
 import { PostContent } from './PostContent';

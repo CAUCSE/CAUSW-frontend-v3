@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
-import { AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
+import type { AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
 import { AlumniContactsAcademicFilterSheetModalContext } from '@/entities/alumni-contacts/model';
 
 const DEFAULT_START_ADMISSION_YEAR = 1972;

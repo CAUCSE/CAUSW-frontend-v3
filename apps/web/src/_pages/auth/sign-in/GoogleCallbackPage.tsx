@@ -6,8 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { GoogleLogo } from '@causw/cds';
 
-import { useOAuthCallback } from '@/features/auth';
-import { useGoogleLoginMutation } from '@/features/auth/model/mutations';
+import { useGoogleLoginMutation, useOAuthCallback } from '@/features/auth';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';

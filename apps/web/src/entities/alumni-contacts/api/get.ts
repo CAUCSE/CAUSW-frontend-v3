@@ -4,7 +4,7 @@ import { withQuery } from '@/shared/utils';
 import type {
   GetAlumniContactsQuery,
   GetPaginatedAlumniContactsResponseDto,
-} from '../types';
+} from '../model';
 
 const URL_PREFIX = '/api/v2/users-info';
 

@@ -6,8 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { AppleLogo } from '@causw/cds';
 
-import { useOAuthCallback } from '@/features/auth';
-import { useAppleLoginMutation } from '@/features/auth/model/mutations';
+import { useAppleLoginMutation, useOAuthCallback } from '@/features/auth';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';

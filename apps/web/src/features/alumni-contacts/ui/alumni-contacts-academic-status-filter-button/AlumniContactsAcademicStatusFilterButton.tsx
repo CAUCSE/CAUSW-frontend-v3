@@ -2,7 +2,7 @@
 
 import { Button, Chip } from '@causw/cds';
 
-import { useAlumniContactsAcademicStatusFilterButton } from '@/features/alumni-contacts/model';
+import { useAlumniContactsAcademicStatusFilterButton } from '@/features/alumni-contacts';
 
 import {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,

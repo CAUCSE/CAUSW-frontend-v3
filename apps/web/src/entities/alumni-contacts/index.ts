@@ -22,4 +22,4 @@ export {
 export type {
   GetPaginatedAlumniContactsResponseDto,
   GetAlumniContactsQuery,
-} from './types';
+} from './model';

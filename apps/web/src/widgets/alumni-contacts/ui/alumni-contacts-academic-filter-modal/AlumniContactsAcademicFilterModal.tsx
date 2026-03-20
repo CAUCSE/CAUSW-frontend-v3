@@ -1,6 +1,6 @@
 import { Modal } from '@causw/cds';
 
-import { AlumniContactsAcademicFilterSheetModalMain } from '@/widgets/alumni-contacts/ui/alumni-contacts-academic-filter-sheet-modal-main';
+import { AlumniContactsAcademicFilterSheetModalMain } from '@/widgets/alumni-contacts';
 
 interface AlumniContactsAcademicFilterModalProps {
   open: boolean;

@@ -6,8 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { KakaoTalkBlackLogo } from '@causw/cds';
 
-import { useOAuthCallback } from '@/features/auth';
-import { useKakaoLoginMutation } from '@/features/auth/model/mutations';
+import { useKakaoLoginMutation, useOAuthCallback } from '@/features/auth';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';

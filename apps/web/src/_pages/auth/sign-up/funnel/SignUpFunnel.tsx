@@ -7,7 +7,7 @@ import { useFunnel } from '@use-funnel/browser';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { useSignUpStepGuard } from '@/features/auth/model/guard';
+import { useSignUpStepGuard } from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 

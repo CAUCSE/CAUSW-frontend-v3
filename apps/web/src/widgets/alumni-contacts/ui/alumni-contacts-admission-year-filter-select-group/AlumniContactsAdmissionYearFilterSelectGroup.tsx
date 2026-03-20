@@ -2,7 +2,7 @@
 
 import { HStack } from '@causw/cds';
 
-import { useAlumniContactsAdmissionYearFilterSelectGroup } from '@/widgets/alumni-contacts/model';
+import { useAlumniContactsAdmissionYearFilterSelectGroup } from '@/widgets/alumni-contacts';
 
 import { AlumniContactsAdmissionYearFilterSelect } from '@/features/alumni-contacts';
 
