@@ -1,4 +1,4 @@
-import { GetAlumniContactsQuery } from '../../types';
+import { GetAlumniContactsQuery } from '../../model';
 
 export const alumniContactsQueryKeys = {
   all: ['alumni-contacts'] as const,
