@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Dropdown, Menu } from '@causw/cds';
 
-import { CommentAction } from '../model';
+import { CommentAction } from '../config';
 
 interface CommentActionMenuProps {
   isMine: boolean;

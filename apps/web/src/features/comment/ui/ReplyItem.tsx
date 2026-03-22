@@ -2,9 +2,9 @@
 
 import { BlockUserModal } from '@/features/block';
 import {
+  COMMENT_ACTION,
   useCommentMenuActions,
   useToggleReplyLikeMutation,
-  useDeleteReplyMutation,
 } from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
@@ -25,31 +25,22 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
   const isInactive = reply.isDeleted || reply.isBlocked;
 
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
-    isDeleteOpen,
-    setIsDeleteOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
-  } = useCommentMenuActions(reply.id);
+    submitDelete,
+  } = useCommentMenuActions(postId, reply.id);
 
   const { mutate: toggleLike, isPending } = useToggleReplyLikeMutation(
     postId,
     reply.id,
   );
 
-  const { mutate: deleteReply } = useDeleteReplyMutation(postId);
-
   const handleLikeClick = () => {
     if (isPending || isInactive) return;
     toggleLike(!reply.isChildCommentLike);
-  };
-
-  const handleDelete = () => {
-    deleteReply(reply.id);
   };
 
   return (
@@ -80,24 +71,30 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
         }
       />
 
-      <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
-        onSubmitReport={submitReport}
-      />
+      {activeModal === COMMENT_ACTION.REPORT && (
+        <ReportFlow
+          open={true}
+          setOpen={closeModal}
+          onSubmitReport={submitReport}
+        />
+      )}
 
-      <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
-        onSubmitBlock={submitBlock}
-      />
+      {activeModal === COMMENT_ACTION.BLOCK && (
+        <BlockUserModal
+          open={true}
+          setOpen={closeModal}
+          onSubmitBlock={submitBlock}
+        />
+      )}
 
-      <ConfirmModal
-        open={isDeleteOpen}
-        onOpenChange={setIsDeleteOpen}
-        message="답글을 삭제하시겠어요?"
-        onConfirm={handleDelete}
-      />
+      {activeModal === COMMENT_ACTION.DELETE && (
+        <ConfirmModal
+          open={true}
+          onOpenChange={closeModal}
+          message="답글을 삭제하시겠어요?"
+          onConfirm={submitDelete}
+        />
+      )}
     </>
   );
 };

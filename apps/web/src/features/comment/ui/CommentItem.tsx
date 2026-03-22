@@ -10,11 +10,8 @@ import { CommentCard, ReplyTarget, Comment } from '@/entities/comment';
 import { formatRelativeTime } from '@/shared/lib';
 import { ConfirmModal } from '@/shared/ui';
 
-import {
-  useCommentMenuActions,
-  useToggleCommentLikeMutation,
-  useDeleteCommentMutation,
-} from '../model';
+import { COMMENT_ACTION } from '../config';
+import { useCommentMenuActions, useToggleCommentLikeMutation } from '../model';
 
 import { CommentActionMenu } from './CommentActionMenu';
 import { ReplyList } from './ReplyList';
@@ -28,31 +25,22 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
   const isInactive = comment.isDeleted || comment.isBlocked;
 
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
-    isDeleteOpen,
-    setIsDeleteOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
-  } = useCommentMenuActions(comment.id);
+    submitDelete,
+  } = useCommentMenuActions(comment.postId, comment.id);
 
   const { mutate: toggleLike } = useToggleCommentLikeMutation(
     comment.postId,
     comment.id,
   );
 
-  const { mutate: deleteComment } = useDeleteCommentMutation(comment.postId);
-
   const handleLikeClick = () => {
     if (isInactive) return;
     toggleLike(!comment.isCommentLike);
-  };
-
-  const handleDelete = () => {
-    deleteComment(comment.id);
   };
 
   return (
@@ -88,24 +76,30 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         onReply={onReply}
       />
 
-      <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
-        onSubmitReport={submitReport}
-      />
+      {activeModal === COMMENT_ACTION.REPORT && (
+        <ReportFlow
+          open={true}
+          setOpen={closeModal}
+          onSubmitReport={submitReport}
+        />
+      )}
 
-      <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
-        onSubmitBlock={submitBlock}
-      />
+      {activeModal === COMMENT_ACTION.BLOCK && (
+        <BlockUserModal
+          open={true}
+          setOpen={closeModal}
+          onSubmitBlock={submitBlock}
+        />
+      )}
 
-      <ConfirmModal
-        open={isDeleteOpen}
-        onOpenChange={setIsDeleteOpen}
-        message="댓글을 삭제하시겠어요?"
-        onConfirm={handleDelete}
-      />
+      {activeModal === COMMENT_ACTION.DELETE && (
+        <ConfirmModal
+          open={true}
+          onOpenChange={closeModal}
+          message="댓글을 삭제하시겠어요?"
+          onConfirm={submitDelete}
+        />
+      )}
     </Stack>
   );
 };
