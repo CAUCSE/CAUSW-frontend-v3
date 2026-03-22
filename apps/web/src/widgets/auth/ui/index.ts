@@ -17,3 +17,4 @@ export {
   FindAccountContainer,
   type FindAccountView,
 } from './find-account-container';
+export { PasswordEmailSent } from './password-email-sent';
