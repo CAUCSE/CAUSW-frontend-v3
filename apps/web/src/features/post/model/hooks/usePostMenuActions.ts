@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { useBlockUserByPostMutation } from '@/features/block';
 import { useReportPostMutation } from '@/features/report';
 
@@ -11,6 +13,7 @@ import { useDeletePostMutation } from '../mutations';
 import { PostAction } from '../types';
 
 export const usePostMenuActions = (postId: string) => {
+  const router = useRouter();
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
 
@@ -31,8 +34,8 @@ export const usePostMenuActions = (postId: string) => {
         deletePost(postId);
         break;
       case 'edit':
-        // TODO: 게시글 수정 로직
-        console.log(`id ${postId} 게시글 수정`);
+        if (!postId) return;
+        router.push(`/feed/${postId}/edit`);
         break;
       default:
         console.log(action);

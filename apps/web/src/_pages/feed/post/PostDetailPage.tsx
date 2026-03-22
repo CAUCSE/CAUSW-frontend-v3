@@ -9,11 +9,7 @@ import { PostDetailSection } from '@/widgets/post';
 import { useBreakpoint, useIsMounted } from '@/shared/hooks';
 import { ActionHeader, QueryErrorBoundary, SuspenseView } from '@/shared/ui';
 
-interface PostDetailPageProps {
-  postId: string;
-}
-
-export const PostDetailPage = ({ postId }: PostDetailPageProps) => {
+export const PostDetailPage = ({ postId }: { postId: string }) => {
   const router = useRouter();
 
   const { isMobileSize } = useBreakpoint();

@@ -13,7 +13,7 @@ import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
 import { createEmptyVote } from '../lib';
 import { mapPostCreateFormToDto } from '../lib/mappers';
-import { useCreatePostMutation } from '../model';
+import { useCreatePostMutation, useUpdatePostMutation } from '../model';
 
 import { PostBoardSelector } from './PostBoardSelector';
 import { PostWriteBody } from './PostWriteBody';
@@ -22,13 +22,20 @@ import { PostWriteHeader } from './PostWriteHeader';
 
 interface PostWriteFormProps {
   onClose: (isDirty: boolean) => void;
+  postId?: string;
+  initialData?: Partial<PostCreateFormValues>;
 }
 
-export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
+export const PostWriteForm = ({
+  onClose,
+  postId,
+  initialData,
+}: PostWriteFormProps) => {
   const { data: boardData } = useGetAvailableBoards();
 
-  const form = usePostCreateForm();
+  const form = usePostCreateForm(initialData);
   const { mutate: createPost } = useCreatePostMutation();
+  const { mutate: updatePost } = useUpdatePostMutation();
 
   const {
     handleSubmit,
@@ -49,12 +56,23 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
     boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
-    const dto = mapPostCreateFormToDto(data);
+    if (postId) {
+      updatePost({
+        postId,
+        postUpdateRequest: {
+          content: data.content,
+          isAnonymous: data.isAnonymous,
+        },
+        attachImageList: data.images,
+      });
+    } else {
+      const dto = mapPostCreateFormToDto(data);
 
-    createPost({
-      postCreateRequest: dto,
-      attachImageList: data.images,
-    });
+      createPost({
+        postCreateRequest: dto,
+        attachImageList: data.images,
+      });
+    }
   };
 
   const handleBoardSelect = (board: Board) => {
@@ -80,7 +98,6 @@ export const PostWriteForm = ({ onClose }: PostWriteFormProps) => {
       >
         <PostWriteHeader isSubmitActive={isValid} onBack={handleBack} />
 
-        <Dialog.Title className="sr-only">게시글 작성</Dialog.Title>
         <PostWriteBody
           onSelectorClick={() => setSelectorOpen(true)}
           selectedBoard={selectedBoard}
