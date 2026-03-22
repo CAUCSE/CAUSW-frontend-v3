@@ -4,19 +4,21 @@ import { useRef, useState } from 'react';
 
 import { Text, VStack, HStack, Tab, LockOpenColored } from '@causw/cds';
 
-import { FindEmailForm } from '@/features/auth';
+import { FindEmailForm, FindPasswordForm } from '@/features/auth';
 
 import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
 
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
+import { PasswordEmailSent } from '../password-email-sent';
 
 type FindAccountTab = 'find-email' | 'find-password';
 
 export type FindAccountView =
   | { type: 'form' }
   | { type: 'result'; data: EmailFindResponse; name: string }
-  | { type: 'not-found' };
+  | { type: 'not-found' }
+  | { type: 'password-email-sent'; email: string };
 
 // TODO: API 연동 후 제거
 const MOCK_RESPONSES: (EmailFindResponse | null)[] = [
@@ -89,6 +91,10 @@ export const FindAccountContainer = ({
     return <FindEmailNotFound onRetry={handleBackToForm} />;
   }
 
+  if (view.type === 'password-email-sent') {
+    return <PasswordEmailSent email={view.email} />;
+  }
+
   return (
     <Tab
       value={activeTab}
@@ -141,7 +147,13 @@ export const FindAccountContainer = ({
           </>
         )}
 
-        {activeTab === 'find-password' && null}
+        {activeTab === 'find-password' && (
+          <FindPasswordForm
+            onSubmit={(email) =>
+              onViewChange({ type: 'password-email-sent', email })
+            }
+          />
+        )}
       </VStack>
     </Tab>
   );
