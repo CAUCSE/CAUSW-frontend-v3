@@ -34,8 +34,12 @@ export const FindAccountPage = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  const isPasswordEmailSent = view.type === 'password-email-sent';
+
   const handleBack = () => {
-    if (view.type !== 'form') {
+    if (isPasswordEmailSent) {
+      router.push('/auth/sign-in');
+    } else if (view.type !== 'form') {
       window.history.back();
     } else {
       router.back();
@@ -52,7 +56,7 @@ export const FindAccountPage = () => {
           className="px-0"
         >
           <ActionHeader.BackButton onClick={handleBack}>
-            뒤로
+            {isPasswordEmailSent ? '닫기' : '뒤로'}
           </ActionHeader.BackButton>
         </ActionHeader>
         <FindAccountContainer view={view} onViewChange={handleViewChange} />
