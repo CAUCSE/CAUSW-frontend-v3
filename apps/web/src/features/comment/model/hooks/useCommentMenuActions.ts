@@ -7,6 +7,7 @@ import { CommentAction } from '../types';
 export const useCommentMenuActions = (commentId: string | number) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
   const [isBlockOpen, setIsBlockOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleAction = (action: CommentAction) => {
     switch (action) {
@@ -17,7 +18,7 @@ export const useCommentMenuActions = (commentId: string | number) => {
         setIsBlockOpen(true);
         break;
       case 'delete':
-        console.log(`id ${commentId} 댓글 삭제 API 호출`);
+        setIsDeleteOpen(true);
         break;
       default:
         console.log(action);
@@ -39,6 +40,8 @@ export const useCommentMenuActions = (commentId: string | number) => {
     setIsReportOpen,
     isBlockOpen,
     setIsBlockOpen,
+    isDeleteOpen,
+    setIsDeleteOpen,
     handleAction,
     submitReport,
     submitBlock,

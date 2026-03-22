@@ -4,12 +4,14 @@ import { BlockUserModal } from '@/features/block';
 import {
   useCommentMenuActions,
   useToggleReplyLikeMutation,
+  useDeleteReplyMutation,
 } from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
 import { CommentCard, ReplyTarget, ChildComment } from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
+import { ConfirmModal } from '@/shared/ui';
 
 import { CommentActionMenu } from './CommentActionMenu';
 
@@ -20,11 +22,15 @@ interface ReplyItemProps {
 }
 
 export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
+  const isInactive = reply.isDeleted || reply.isBlocked;
+
   const {
     isReportOpen,
     setIsReportOpen,
     isBlockOpen,
     setIsBlockOpen,
+    isDeleteOpen,
+    setIsDeleteOpen,
     handleAction: handleMenuAction,
     submitReport,
     submitBlock,
@@ -35,9 +41,15 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
     reply.id,
   );
 
+  const { mutate: deleteReply } = useDeleteReplyMutation(postId);
+
   const handleLikeClick = () => {
-    if (isPending) return;
+    if (isPending || isInactive) return;
     toggleLike(!reply.isChildCommentLike);
+  };
+
+  const handleDelete = () => {
+    deleteReply(reply.id);
   };
 
   return (
@@ -48,6 +60,8 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
         profileImage={reply.writerProfileImage}
         content={reply.content}
         time={formatRelativeTime(reply.createdAt)}
+        isDeleted={reply.isDeleted}
+        isBlocked={reply.isBlocked}
         isLiked={reply.isChildCommentLike}
         likeCount={reply.numLike}
         onLikeClick={handleLikeClick}
@@ -76,6 +90,13 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
         open={isBlockOpen}
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        message="답글을 삭제하시겠어요?"
+        onConfirm={handleDelete}
       />
     </>
   );

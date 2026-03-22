@@ -8,8 +8,13 @@ import { ReportFlow } from '@/features/report';
 import { CommentCard, ReplyTarget, Comment } from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
+import { ConfirmModal } from '@/shared/ui';
 
-import { useCommentMenuActions, useToggleCommentLikeMutation } from '../model';
+import {
+  useCommentMenuActions,
+  useToggleCommentLikeMutation,
+  useDeleteCommentMutation,
+} from '../model';
 
 import { CommentActionMenu } from './CommentActionMenu';
 import { ReplyList } from './ReplyList';
@@ -20,11 +25,15 @@ interface CommentItemProps {
 }
 
 export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
+  const isInactive = comment.isDeleted || comment.isBlocked;
+
   const {
     isReportOpen,
     setIsReportOpen,
     isBlockOpen,
     setIsBlockOpen,
+    isDeleteOpen,
+    setIsDeleteOpen,
     handleAction: handleMenuAction,
     submitReport,
     submitBlock,
@@ -35,18 +44,26 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
     comment.id,
   );
 
+  const { mutate: deleteComment } = useDeleteCommentMutation(comment.postId);
+
   const handleLikeClick = () => {
+    if (isInactive) return;
     toggleLike(!comment.isCommentLike);
+  };
+
+  const handleDelete = () => {
+    deleteComment(comment.id);
   };
 
   return (
     <Stack gap="none" key={comment.id}>
       <CommentCard
-        {...comment}
         author={comment.displayWriterNickname}
         profileImage={comment.writerProfileImage}
         content={comment.content}
         time={formatRelativeTime(comment.createdAt)}
+        isDeleted={comment.isDeleted}
+        isBlocked={comment.isBlocked}
         isLiked={comment.isCommentLike}
         likeCount={comment.numLike}
         onLikeClick={handleLikeClick}
@@ -81,6 +98,13 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         open={isBlockOpen}
         setOpen={setIsBlockOpen}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        message="댓글을 삭제하시겠어요?"
+        onConfirm={handleDelete}
       />
     </Stack>
   );

@@ -41,7 +41,11 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
         }}
       >
         <PostContent post={post} />
-        <CommentList comments={comments.content} onReply={handleReply} />
+        <CommentList
+          countComment={post.numComment}
+          comments={comments.content}
+          onReply={handleReply}
+        />
       </Stack>
 
       <CommentForm

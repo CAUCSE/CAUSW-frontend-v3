@@ -9,6 +9,7 @@ interface CommentCardProps {
   profileImage: string;
   content: string;
   time: string;
+  isDeleted?: boolean;
   isBlocked?: boolean;
   isReply?: boolean;
   menuSlot?: ReactNode;
@@ -23,6 +24,7 @@ export const CommentCard = ({
   profileImage,
   content,
   time,
+  isDeleted,
   isBlocked,
   isReply,
   menuSlot,
@@ -31,19 +33,21 @@ export const CommentCard = ({
   likeCount = 0,
   onLikeClick,
 }: CommentCardProps) => {
+  const isInactive = isDeleted || isBlocked;
+
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
-      <HStack align={isBlocked ? 'center' : 'start'} className="gap-3">
-        {isBlocked ? (
-          // 차단된 사용자의 댓글
+      <HStack align={isInactive ? 'center' : 'start'} className="gap-3">
+        {isInactive ? (
           <>
             <Avatar size="36" className="my-1 shrink-0" />
-            <Text typography="body-16-regular" textColor="gray-400">
-              차단된 사용자의 댓글입니다
-            </Text>
+            <VStack gap="none">
+              <Text typography="body-15-regular" textColor="gray-400">
+                {isDeleted ? '삭제된 댓글입니다' : '차단된 사용자의 댓글입니다'}
+              </Text>
+            </VStack>
           </>
         ) : (
-          // 차단되지 않은 경우
           <>
             <Avatar size="36" src={profileImage} className="my-1 shrink-0" />
             <VStack className="w-full gap-3">

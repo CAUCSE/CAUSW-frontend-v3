@@ -16,8 +16,6 @@ export const usePostCommentMutation = () => {
     mutationFn: createComment,
 
     onSuccess: (_, variables) => {
-      toast.success('댓글이 작성되었어요.');
-
       queryClient.invalidateQueries({
         queryKey: commentKeys.post(variables.postId),
       });

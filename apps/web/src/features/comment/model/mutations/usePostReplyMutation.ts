@@ -22,8 +22,6 @@ export const usePostReplyMutation = () => {
       createReply(body),
 
     onSuccess: (_, variables) => {
-      toast.success('답글이 작성되었어요.');
-
       queryClient.invalidateQueries({
         queryKey: commentKeys.post(variables.postId),
       });
