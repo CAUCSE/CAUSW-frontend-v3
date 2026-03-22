@@ -79,7 +79,7 @@ export const FindPasswordForm = ({ onSubmit }: FindPasswordFormProps) => {
         className="w-full gap-10"
         onSubmit={methods.handleSubmit(handleSubmit)}
       >
-        <VStack className="gap-6">
+        <VStack className="gap-2">
           <Field className="flex flex-col gap-2" error={!!errors.email}>
             <Field.Label>이메일</Field.Label>
             <HStack className="items-end gap-2">
