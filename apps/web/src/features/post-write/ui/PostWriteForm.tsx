@@ -12,7 +12,7 @@ import { PostCreateFormValues, usePostCreateForm } from '@/entities/post';
 import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
 
 import { createEmptyVote } from '../lib';
-import { mapPostCreateFormToDto } from '../lib/mappers';
+import { mapPostCreateFormToDto, mapPostUpdateFormToDto } from '../lib/mappers';
 import { useCreatePostMutation, useUpdatePostMutation } from '../model';
 
 import { PostBoardSelector } from './PostBoardSelector';
@@ -57,19 +57,18 @@ export const PostWriteForm = ({
 
   const onSubmit = async (data: PostCreateFormValues) => {
     if (postId) {
+      const updateDto = mapPostUpdateFormToDto(data);
+
       updatePost({
         postId,
-        postUpdateRequest: {
-          content: data.content,
-          isAnonymous: data.isAnonymous,
-        },
+        postUpdateRequest: updateDto,
         attachImageList: data.images,
       });
     } else {
-      const dto = mapPostCreateFormToDto(data);
+      const createDto = mapPostCreateFormToDto(data);
 
       createPost({
-        postCreateRequest: dto,
+        postCreateRequest: createDto,
         attachImageList: data.images,
       });
     }
