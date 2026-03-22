@@ -21,3 +21,4 @@ export * from './sign-up-info-step-nickname-field';
 export * from './sign-up-info-step-next-button';
 export * from './find-email-form';
 export * from './find-password-form';
+export * from './reset-password-form';
