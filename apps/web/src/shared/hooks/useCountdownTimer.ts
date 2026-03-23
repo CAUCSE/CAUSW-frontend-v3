@@ -29,11 +29,7 @@ export const useCountdownTimer = (
     setIsRunning(true);
   }, [initialSeconds, clearTimer]);
 
-  const reset = useCallback(() => {
-    clearTimer();
-    setTimeLeft(initialSeconds);
-    setIsRunning(true);
-  }, [initialSeconds, clearTimer]);
+  const reset = start;
 
   useEffect(() => {
     if (!isRunning) return;
