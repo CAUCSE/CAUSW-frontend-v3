@@ -38,7 +38,7 @@ export const FindAccountPage = () => {
 
   const handleBack = () => {
     if (isPasswordEmailSent) {
-      router.push('/auth/sign-in');
+      router.replace('/auth/sign-in');
     } else if (view.type !== 'form') {
       window.history.back();
     } else {

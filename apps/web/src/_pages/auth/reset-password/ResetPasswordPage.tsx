@@ -19,7 +19,7 @@ export const ResetPasswordPage = () => {
   // TODO: API 연동 후 실제 비밀번호 변경 로직으로 교체
   const handleSubmit = (_data: ResetPasswordFormData) => {
     toast.success('비밀번호 변경이 완료되었습니다.');
-    router.push('/auth/sign-in/email');
+    router.replace('/auth/sign-in/email');
   };
 
   return (
@@ -31,7 +31,9 @@ export const ResetPasswordPage = () => {
           buttonColor="gray"
           className="px-0"
         >
-          <ActionHeader.BackButton onClick={() => router.push('/auth/sign-in')}>
+          <ActionHeader.BackButton
+            onClick={() => router.replace('/auth/sign-in')}
+          >
             닫기
           </ActionHeader.BackButton>
         </ActionHeader>

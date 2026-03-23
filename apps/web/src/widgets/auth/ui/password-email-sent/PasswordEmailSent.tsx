@@ -26,7 +26,7 @@ export const PasswordEmailSent = ({ email }: PasswordEmailSentProps) => {
       <CTAButton
         color="dark"
         fullWidth
-        onClick={() => router.push('/auth/sign-in')}
+        onClick={() => router.replace('/auth/sign-in')}
       >
         로그인 화면으로 돌아가기
       </CTAButton>
