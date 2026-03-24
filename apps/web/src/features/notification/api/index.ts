@@ -1,0 +1,1 @@
+export { patchNotificationReadStatus } from './patch';
