@@ -1,4 +1,4 @@
-import { ApiResponse, InternalRequestConfig } from '../types';
+import { type ApiResponse, type InternalRequestConfig } from '../types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class ApiError<T = any> extends Error {
