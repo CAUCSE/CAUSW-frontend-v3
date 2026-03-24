@@ -3,7 +3,16 @@ export * from './lib';
 export type {
   GetNotificationsQuery,
   GetNotificationsResponseDto,
-  GetPaginatedNotificationsResponseDto,
 } from './types';
 export { notificationHandler } from './mock';
-export { notificationQueryKeys, notificationQueryOptions } from './config';
+export {
+  notificationQueryKeys,
+  notificationQueryOptions,
+  NOTIFICATION_TYPE,
+  type NotificationType,
+} from './config';
+export {
+  NotificationTypeLabel,
+  NotificationTimeLabel,
+  NotificationTitle,
+} from './ui';
