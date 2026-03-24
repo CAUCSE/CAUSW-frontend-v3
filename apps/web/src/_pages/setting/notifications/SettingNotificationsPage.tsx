@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { Text, VStack } from '@causw/cds';
 
 import {
@@ -7,6 +9,7 @@ import {
   EventNotificationSection,
   NoticeNotificationSection,
   OfficialAccountNotificationSection,
+  PushNotificationPermissionNotice,
 } from '@/widgets/setting';
 import { SETTING_NOTIFICATIONS } from '@/widgets/setting/config';
 
@@ -17,6 +20,7 @@ import {
   useNotificationSettings,
 } from '@/entities/notification';
 
+import { isPushNotificationPermissionDenied } from '@/shared/lib';
 import {
   ActionHeader,
   HydrationSuspense,
@@ -49,10 +53,29 @@ const SettingNotificationContent = () => {
     isUpdatingOfficialBoards,
   } = useNotificationSettingsOptimisticMutations();
 
+  const [isPushNotificationDenied, setIsPushNotificationDenied] =
+    useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const syncPushNotificationPermission = async () => {
+      const denied = await isPushNotificationPermissionDenied();
+      if (!mounted) return;
+      setIsPushNotificationDenied(denied);
+    };
+
+    void syncPushNotificationPermission();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <VStack gap="md" className="w-full px-4">
       <Text typography="title-22-bold">{SETTING_NOTIFICATIONS.title}</Text>
-
+      {isPushNotificationDenied && <PushNotificationPermissionNotice />}
       <CommunityNotificationSection
         settings={settings.community}
         onToggle={(key, checked) => {
