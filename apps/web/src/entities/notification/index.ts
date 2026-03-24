@@ -16,4 +16,6 @@ export {
   NotificationTypeLabel,
   NotificationTimeLabel,
   NotificationTitle,
+  NotificationRetentionNotice,
+  NotificationReadStatusIndicator,
 } from './ui';

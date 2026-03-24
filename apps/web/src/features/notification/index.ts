@@ -1,2 +1,1 @@
-export { NotificationReadStatusIndicator } from './ui';
-export { patchNotificationReadStatus } from './api';
+export { NotificationListItem } from './ui';
