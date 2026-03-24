@@ -35,8 +35,7 @@ export class TokenManager {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${await TokenManager.getAccessToken()}`,
-        Cookie: `refresh_token=${await TokenManager.getRefreshToken()}`,
+        Authorization: `Bearer any-token`,
       },
       credentials: 'include',
     });
