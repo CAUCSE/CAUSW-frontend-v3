@@ -11,6 +11,7 @@ export {
   notificationQueryOptions,
   NOTIFICATION_TYPE,
   type NotificationType,
+  NOTIFICATION_END_POINT_PREFIX,
 } from './config';
 export {
   NotificationTypeLabel,
@@ -19,3 +20,4 @@ export {
   NotificationRetentionNotice,
   NotificationReadStatusIndicator,
 } from './ui';
+export * from './api';

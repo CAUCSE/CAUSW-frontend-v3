@@ -1,0 +1,1 @@
+export { SignUpInfoStepNextButton } from './SignUpInfoStepNextButton';

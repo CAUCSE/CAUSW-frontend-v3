@@ -6,4 +6,5 @@ export const notificationQueryKeys = {
   latest: () => [...notificationQueryKeys.all, 'latest'] as const,
   list: (query: GetNotificationsQuery) =>
     [...notificationQueryKeys.all, 'list', query] as const,
+  settings: () => [...notificationQueryKeys.all, 'settings'] as const,
 };

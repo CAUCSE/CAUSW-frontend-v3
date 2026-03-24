@@ -4,6 +4,7 @@ import { withQuery } from '@/shared/utils';
 import { NOTIFICATION_END_POINT_PREFIX } from '../config';
 import type {
   NotificationLatestResponse,
+  NotificationSettingsResponse,
   NotificationUnreadCntResponse,
 } from '../model';
 import type {
@@ -39,3 +40,10 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 
   return await API.get<GetNotificationsResponseDto[]>(path);
 };
+
+export const getNotificationSettings =
+  async (): Promise<NotificationSettingsResponse> => {
+    return await API.get<NotificationSettingsResponse>(
+      '/api/v2/notification-settings',
+    );
+  };

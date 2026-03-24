@@ -1,10 +1,19 @@
 import { z } from 'zod';
 
+import {
+  MAX_NICKNAME_LENGTH,
+  MIN_NICKNAME_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from '@/shared/constants';
+
 export const emailSchema = z.string().email('올바른 이메일 형식이 아닙니다.');
 
 export const passwordSchema = z
   .string()
-  .min(8, '비밀번호는 8자 이상이어야 합니다.');
+  .min(
+    MIN_PASSWORD_LENGTH,
+    `비밀번호는 ${MIN_PASSWORD_LENGTH}자 이상이어야 합니다.`,
+  );
 
 export const nameSchema = z.string().min(1, '이름을 입력해주세요.');
 
@@ -16,6 +25,12 @@ export const phoneNumberSchema = z
 
 export const nicknameSchema = z
   .string()
-  .min(2, '닉네임은 2자 이상이어야 합니다.')
-  .max(8, '닉네임은 8자 이하여야 합니다.')
+  .min(
+    MIN_NICKNAME_LENGTH,
+    `닉네임은 ${MIN_NICKNAME_LENGTH}자 이상이어야 합니다.`,
+  )
+  .max(
+    MAX_NICKNAME_LENGTH,
+    `닉네임은 ${MAX_NICKNAME_LENGTH}자 이하여야 합니다.`,
+  )
   .regex(/^[가-힣a-zA-Z0-9_]+$/, '한글, 영문, 숫자, _만 사용할 수 있습니다.');

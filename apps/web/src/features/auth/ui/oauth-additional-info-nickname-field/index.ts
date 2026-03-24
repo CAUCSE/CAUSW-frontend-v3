@@ -1,0 +1,1 @@
+export { OauthAdditionalInfoNicknameField } from './OauthAdditionalInfoNicknameField';

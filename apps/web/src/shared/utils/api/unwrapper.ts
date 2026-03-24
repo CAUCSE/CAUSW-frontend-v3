@@ -14,7 +14,7 @@ export const unwrapResponse = <T>(
   }
 
   if (!response.data.data) {
-    throw new Error('응답 데이터가 없습니다.');
+    return {} as T;
   }
 
   return response.data.data;

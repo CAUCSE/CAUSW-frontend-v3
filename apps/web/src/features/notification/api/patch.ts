@@ -1,7 +1,27 @@
-import type { PatchNotificationReadStatusParam } from '@/entities/notification';
-import { NOTIFICATION_END_POINT_PREFIX } from '@/entities/notification/config';
+import {
+  type UpdateNotificationSettingsRequest,
+  type UpdateOfficialBoardNotificationRequest,
+  type PatchNotificationReadStatusParam,
+  NOTIFICATION_END_POINT_PREFIX,
+} from '@/entities/notification';
 
 import { API } from '@/shared/api';
+
+export const updateNotificationSettings = async (
+  body: UpdateNotificationSettingsRequest,
+) => {
+  return await API.patch<null>('/api/v2/notification-settings', body);
+};
+
+export const updateOfficialBoardNotification = async ({
+  boardId,
+  subscribed,
+}: UpdateOfficialBoardNotificationRequest) => {
+  return await API.patch<null>(
+    `/api/v2/notification-settings/official-boards/${boardId}`,
+    { subscribed },
+  );
+};
 
 export const patchNotificationReadStatus = async (
   param: PatchNotificationReadStatusParam,
