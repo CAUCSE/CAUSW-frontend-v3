@@ -1,9 +1,6 @@
 'use client';
 
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { FormProvider } from 'react-hook-form';
 
 import {
   CTAButton,
@@ -15,13 +12,9 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { nicknameSchema, toast } from '@/shared/model';
+import { useNicknameChangeForm } from '@/features/setting';
+
 import { ActionHeader } from '@/shared/ui';
-
-type NicknameFormData = { nickname: z.infer<typeof nicknameSchema> };
-const nicknameFormSchema = z.object({ nickname: nicknameSchema });
-
-const MAX_NICKNAME_LENGTH = 8;
 
 export interface NicknameChangeDialogProps {
   open: boolean;
@@ -32,30 +25,17 @@ export const NicknameChangeDialog = ({
   open,
   onOpenChange,
 }: NicknameChangeDialogProps) => {
-  const methods = useForm<NicknameFormData>({
-    resolver: zodResolver(nicknameFormSchema),
-    mode: 'onChange',
-    defaultValues: { nickname: '' },
+  const {
+    methods,
+    currentLength,
+    errorMessage,
+    onSubmit,
+    handleClose,
+    isSubmitting,
+    maxNicknameLength,
+  } = useNicknameChangeForm({
+    onClose: () => onOpenChange(false),
   });
-
-  const nicknameValue = useWatch({
-    control: methods.control,
-    name: 'nickname',
-  });
-  const currentLength = nicknameValue?.length ?? 0;
-  const errorMessage = methods.formState.errors.nickname?.message;
-
-  const handleClose = () => {
-    methods.reset();
-    onOpenChange(false);
-  };
-
-  const onSubmit = (data: NicknameFormData) => {
-    // TODO: 닉네임 변경 API 연결
-    console.log('닉네임 변경:', data.nickname);
-    toast.success('닉네임이 변경되었습니다.');
-    handleClose();
-  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -96,17 +76,17 @@ export const NicknameChangeDialog = ({
                       <Text
                         typography="body-16-regular"
                         textColor={
-                          currentLength >= MAX_NICKNAME_LENGTH
+                          currentLength >= maxNicknameLength
                             ? 'red-400'
                             : 'gray-400'
                         }
                       >
-                        {currentLength}/{MAX_NICKNAME_LENGTH}
+                        {currentLength}/{maxNicknameLength}
                       </Text>
                     }
                     placeholder="변경할 닉네임을 입력해주세요."
                     typography="body-16-regular"
-                    maxLength={MAX_NICKNAME_LENGTH}
+                    maxLength={maxNicknameLength}
                   />
 
                   <Field.ErrorDescription>
@@ -118,9 +98,9 @@ export const NicknameChangeDialog = ({
                   color="dark"
                   fullWidth
                   type="submit"
-                  disabled={!methods.formState.isValid}
+                  disabled={!methods.formState.isValid || isSubmitting}
                 >
-                  변경하기
+                  {isSubmitting ? '변경 중...' : '변경하기'}
                 </CTAButton>
               </VStack>
             </VStack>
