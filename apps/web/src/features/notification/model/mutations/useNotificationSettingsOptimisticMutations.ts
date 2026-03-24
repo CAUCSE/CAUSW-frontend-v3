@@ -4,8 +4,8 @@ import {
   type NotificationSettingsResponse,
   type UpdateNotificationSettingsRequest,
   type UpdateOfficialBoardNotificationRequest,
+  notificationQueryKey,
 } from '@/entities/notification';
-import { notificationQueryKey } from '@/entities/notification/config';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
