@@ -3,3 +3,5 @@ export {
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,
 } from './ui';
+
+export * from './ui';

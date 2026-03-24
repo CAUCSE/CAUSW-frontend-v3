@@ -23,3 +23,5 @@ export type {
   GetPaginatedAlumniContactsResponseDto,
   GetAlumniContactsQuery,
 } from './types';
+
+export * from './types';

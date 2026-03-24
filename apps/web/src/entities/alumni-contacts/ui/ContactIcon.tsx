@@ -1,10 +1,19 @@
 'use client';
 
 import * as Icons from '@causw/cds';
-import { Box, VStack, Text } from '@causw/cds';
+import { Box, Text } from '@causw/cds';
+
+export const CONTACT_ICON_VARIANT = {
+  SNS: 'sns',
+  LIST: 'list',
+  SNS_ADD: 'sns-add',
+} as const;
+
+type ContactIconVariant =
+  (typeof CONTACT_ICON_VARIANT)[keyof typeof CONTACT_ICON_VARIANT];
 
 interface ContactIconProps {
-  variant: 'sns' | 'list' | 'sns-add';
+  variant: ContactIconVariant;
   url?: string;
   type?: 'career' | 'project';
   onClick?: () => void;
@@ -48,13 +57,12 @@ export const ContactIcon = ({
   isEditing,
   onDelete,
 }: ContactIconProps) => {
-  if (variant === 'sns-add') {
+  if (variant === CONTACT_ICON_VARIANT.SNS_ADD) {
     return (
-      <VStack
-        align="center"
-        gap="none"
-        className="w-[60px] cursor-pointer"
+      <button
+        type="button"
         onClick={onClick}
+        className="flex w-[60px] cursor-pointer flex-col items-center border-none bg-transparent p-0 outline-none"
       >
         <Box className="mb-1.5 flex h-[60px] w-[60px] items-center justify-center rounded-[1.25rem] bg-[#F5F6F8]">
           <svg
@@ -76,19 +84,20 @@ export const ContactIcon = ({
         >
           추가하기
         </Text>
-      </VStack>
+      </button>
     );
   }
 
   const { Icon, label, color } = getIconData(type, url);
 
-  if (variant === 'sns') {
+  if (variant === CONTACT_ICON_VARIANT.SNS) {
     return (
-      <VStack
-        align="center"
-        gap="none"
-        className={`w-[60px] ${onClick && !isEditing ? 'cursor-pointer' : ''}`}
+      <button
+        type="button"
         onClick={!isEditing ? onClick : undefined}
+        className={`flex w-[60px] flex-col items-center border-none bg-transparent p-0 outline-none ${
+          onClick && !isEditing ? 'cursor-pointer' : 'cursor-default'
+        }`}
       >
         <div className="relative">
           <Box className="mb-1.5 flex h-[60px] w-[60px] items-center justify-center rounded-[1.25rem] bg-gray-100">
@@ -96,10 +105,18 @@ export const ContactIcon = ({
           </Box>
 
           {isEditing && (
-            <button
+            <div
+              role="button"
+              tabIndex={0}
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete?.();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.stopPropagation();
+                  onDelete?.();
+                }
               }}
               className="absolute -top-1 -right-1 flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full border-none bg-[#4B5563]"
             >
@@ -113,7 +130,7 @@ export const ContactIcon = ({
               >
                 <path d="M2.5 2.5L7.5 7.5M7.5 2.5L2.5 7.5" />
               </svg>
-            </button>
+            </div>
           )}
         </div>
         <Text
@@ -122,7 +139,7 @@ export const ContactIcon = ({
         >
           {label}
         </Text>
-      </VStack>
+      </button>
     );
   }
 

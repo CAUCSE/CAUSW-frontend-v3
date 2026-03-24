@@ -110,6 +110,17 @@ const INITIAL_CALENDAR_STATE: CalendarState = {
   activeCalendar: null,
 };
 
+const visuallyHiddenStyle: React.CSSProperties = {
+  border: 0,
+  height: '1px',
+  margin: '-1px',
+  overflow: 'hidden',
+  padding: 0,
+  position: 'absolute',
+  whiteSpace: 'nowrap',
+  width: '1px',
+};
+
 export const ProfileDialogs = ({
   isOpen,
   dialogType,
@@ -231,7 +242,6 @@ export const ProfileDialogs = ({
               기간
             </Text>
             <HStack gap="sm" align="center" className="relative w-full">
-              {/* 시작일 */}
               <Box
                 onClick={() => toggleCalendar('start')}
                 className="flex h-[52px] flex-1 cursor-pointer items-center justify-between rounded-xl bg-gray-50 px-4"
@@ -247,7 +257,6 @@ export const ProfileDialogs = ({
 
               <Text className="text-[#9CA3AF]">-</Text>
 
-              {/* 종료일 */}
               <Box
                 onClick={() => toggleCalendar('end')}
                 className="flex h-[52px] flex-1 cursor-pointer items-center justify-between rounded-xl bg-gray-50 px-4"
@@ -261,7 +270,6 @@ export const ProfileDialogs = ({
                 <CalendarIcon />
               </Box>
 
-              {/* 캘린더 팝업 */}
               {activeCalendar && (
                 <Box
                   className={`absolute bottom-full z-[9999] mb-2 scale-[0.85] transform overflow-hidden rounded-xl border border-gray-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.15)] ${
@@ -311,13 +319,17 @@ export const ProfileDialogs = ({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Dialog.Content maxWidth={340}>
         <VStack gap="lg" className="py-2">
-          {!CONFIRM_DIALOGS.has(dialogType) && (
-            <Dialog.Title>
+          <Dialog.Title>
+            {CONFIRM_DIALOGS.has(dialogType) ? (
+              <span style={visuallyHiddenStyle}>
+                {dialogType === 'SAVE_CONFIRM' ? '저장 확인' : '삭제 확인'}
+              </span>
+            ) : (
               <Text typography="subtitle-18-bold" className="text-[#1E2E3F]">
-                {DIALOG_TITLES[dialogType as NonNullable<DialogType>] ?? ''}
+                {DIALOG_TITLES[dialogType as NonNullable<DialogType>] ?? '알림'}
               </Text>
-            </Dialog.Title>
-          )}
+            )}
+          </Dialog.Title>
 
           <VStack gap="md">{renderContent()}</VStack>
 
