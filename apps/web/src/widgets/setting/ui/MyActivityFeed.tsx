@@ -46,11 +46,7 @@ export const MyActivityFeed = ({
   return (
     <div className="w-full pb-6 md:pb-0">
       <div className="w-full">
-        <ActionHeader
-          isSticky={true}
-          background="transparent"
-          buttonColor="gray"
-        >
+        <ActionHeader isSticky={true} background="gray" buttonColor="gray">
           <ActionHeader.BackButton onClick={onBack}>
             뒤로
           </ActionHeader.BackButton>
