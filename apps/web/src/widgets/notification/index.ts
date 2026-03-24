@@ -1,6 +1,7 @@
 export {
-  NotificationList,
   NotificationMobileHeader,
   NotificationPopupCard,
   NotificationListActionHeader,
+  NotificationListSectionServerComponent,
+  NotificationListSectionLoadingView,
 } from './ui';
