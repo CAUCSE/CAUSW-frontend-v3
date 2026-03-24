@@ -1,1 +1,1 @@
-export { NotificationReadStatusIndicator } from './notification-read-status-indicator';
+export { NotificationListItem } from './notification-list-item';
