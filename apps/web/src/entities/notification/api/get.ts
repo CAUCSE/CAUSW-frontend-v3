@@ -1,3 +1,5 @@
+import { isNil } from 'es-toolkit';
+
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
@@ -29,7 +31,7 @@ export const getNotificationLatest =
 export const getNotifications = async (query: GetNotificationsQuery) => {
   const queryString = new URLSearchParams();
   Object.entries(query).forEach(([key, value]) => {
-    if (value) {
+    if (!isNil(value)) {
       queryString.append(key, value);
     }
   });
