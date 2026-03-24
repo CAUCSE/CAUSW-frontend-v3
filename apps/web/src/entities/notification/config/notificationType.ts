@@ -2,19 +2,19 @@ import { type ValueOf } from '@/shared/lib';
 
 export const NOTIFICATION_TYPE = {
   COMMUNITY: {
-    type: 'community',
+    type: 'COMMUNITY',
     label: '커뮤니티 알림',
   },
   OFFICIAL: {
-    type: 'official',
+    type: 'OFFICIAL',
     label: '공식계정 글 알림',
   },
   CEREMONY: {
-    type: 'ceremony',
+    type: 'CEREMONY',
     label: '경조사 알림',
   },
   SYSTEM: {
-    type: 'system',
+    type: 'SYSTEM',
     label: '시스템 알림',
   },
 } as const;
