@@ -2,13 +2,13 @@ import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
 import { NOTIFICATION_END_POINT_PREFIX } from '../config';
-import {
-  type NotificationLatestResponse,
-  type NotificationUnreadCntResponse,
-} from '../model/types';
-import {
-  type GetNotificationsQuery,
-  type GetPaginatedNotificationsResponseDto,
+import type {
+  NotificationLatestResponse,
+  NotificationUnreadCntResponse,
+} from '../model';
+import type {
+  GetNotificationsResponseDto,
+  GetNotificationsQuery,
 } from '../types';
 
 export const getNotificationUnreadCnt =
@@ -37,5 +37,5 @@ export const getNotifications = async (query: GetNotificationsQuery) => {
 
   const path = withQuery(url, queryString.toString());
 
-  return await API.get<GetPaginatedNotificationsResponseDto>(path);
+  return await API.get<GetNotificationsResponseDto[]>(path);
 };

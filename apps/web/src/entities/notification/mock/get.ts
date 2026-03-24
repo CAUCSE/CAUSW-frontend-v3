@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
-import type { GetPaginatedNotificationsResponseDto } from '../types';
+import { type GetNotificationsResponseDto } from '../types';
 
 import {
   notificationMockDbAllRead,
@@ -12,7 +12,7 @@ import {
 const NOTIFICATIONS_API_PREFIX = '/api/v2/notifications';
 
 export const getHandler = [
-  mswHttp.get<GetPaginatedNotificationsResponseDto>(
+  mswHttp.get<GetNotificationsResponseDto[]>(
     `${NOTIFICATIONS_API_PREFIX}/log`,
     ({ request }) => {
       const url = new URL(request.url);

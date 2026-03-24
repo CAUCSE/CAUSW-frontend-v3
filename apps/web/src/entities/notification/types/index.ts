@@ -1,5 +1,2 @@
 export type { GetNotificationsQuery } from './query';
-export type {
-  GetNotificationsResponseDto,
-  GetPaginatedNotificationsResponseDto,
-} from './dto';
+export type { GetNotificationsResponseDto } from './dto';

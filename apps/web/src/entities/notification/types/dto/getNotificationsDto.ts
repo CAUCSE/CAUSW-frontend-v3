@@ -1,6 +1,7 @@
-import { type PaginationDto } from '@/shared/types';
-
-type NotificationType = 'POST' | 'COMMENT' | 'CEREMONY' | 'BOARD' | 'ADMISSION';
+/**
+ * 커뮤니티, 공식, 시스템, 경조사 알림
+ */
+type NotificationType = 'COMMUNITY' | 'OFFICIAL' | 'SYSTEM' | 'CEREMONY';
 
 export interface GetNotificationsResponseDto {
   notificationLogId: string;
@@ -12,7 +13,3 @@ export interface GetNotificationsResponseDto {
   isRead: boolean;
   createdAt: string;
 }
-
-export type GetPaginatedNotificationsResponseDto = PaginationDto<
-  GetNotificationsResponseDto[]
->;

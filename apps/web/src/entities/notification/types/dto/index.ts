@@ -1,4 +1,1 @@
-export type {
-  GetNotificationsResponseDto,
-  GetPaginatedNotificationsResponseDto,
-} from './getNotificationsDto';
+export type { GetNotificationsResponseDto } from './getNotificationsDto';
