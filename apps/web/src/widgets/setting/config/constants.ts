@@ -25,7 +25,7 @@ export const SETTING_NOTIFICATIONS = {
     title: '공식계정 글 알림',
   },
   notice: {
-    title: '공지',
+    title: '시스템 알림',
   },
   event: {
     title: '경조사 알림',
