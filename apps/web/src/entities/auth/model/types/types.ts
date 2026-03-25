@@ -26,6 +26,26 @@ export interface SigninResponseDto {
   profileImgUrl: string;
 }
 
+export type UserProfileImageType =
+  | 'MALE_1'
+  | 'MALE_2'
+  | 'FEMALE_1'
+  | 'FEMALE_2'
+  | 'CUSTOM'
+  | 'GHOST';
+
+export interface UserResponseDto {
+  id: string;
+  name: string;
+  nickname: string;
+  profileImage: {
+    profileImageType: UserProfileImageType;
+    profileImageUrl: string;
+  };
+  admissionYear: number;
+  job: string;
+}
+
 export interface SignoutRequestDto {
   fcmToken: string;
 }
