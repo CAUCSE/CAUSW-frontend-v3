@@ -1,10 +1,12 @@
 export { AuthContainer } from './auth-container';
 export { MethodSelectContainer } from './method-select-container';
 export { EnrollmentStepContainer } from './enrollment-step-container';
+export { EnrollmentVerificationSectionContent } from './enrollment-verification-section-content';
+export { EnrollmentVerificationSectionServerComponent } from './enrollment-verification-section-server-component';
 export { EnrollmentVerificationDialog } from './enrollment-verification-dialog';
-export { EnrollmentVerificationActionHeader} from './enrollment-verification-action-header';
+export { EnrollmentVerificationActionHeader } from './enrollment-verification-action-header';
 export { EnrollmentVerificationHeader } from './enrollment-verification-header';
-export { EnrollmentVerificationForm} from './enrollment-verification-form';
+export { EnrollmentVerificationForm } from './enrollment-verification-form';
 export * from './enrollment-step-card';
 export * from './enrollment-step-card-header';
 export * from './terms';
