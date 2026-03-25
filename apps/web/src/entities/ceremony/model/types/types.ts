@@ -25,7 +25,7 @@ export interface CeremonyItem {
   type: CeremonyType;
   category: CeremonyCategory;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   startTime: string | null;
   endTime: string | null;
   state: CeremonyState;

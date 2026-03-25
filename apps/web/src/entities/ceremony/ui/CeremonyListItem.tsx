@@ -19,10 +19,14 @@ const formatD = (date: string) => {
 
 const formatDateRange = (
   startDate: string,
-  endDate: string,
+  endDate: string | null,
   startTime: string | null,
   endTime: string | null,
 ): string => {
+  if (!endDate) {
+    return formatD(startDate);
+  }
+
   const sameDay = startDate === endDate;
   const hasTime = !isAllDay(startTime) || !isAllDay(endTime);
 
