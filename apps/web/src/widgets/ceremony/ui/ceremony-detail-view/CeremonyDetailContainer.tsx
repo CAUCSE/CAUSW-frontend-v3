@@ -1,13 +1,13 @@
 'use client';
 
-import { Suspense } from 'react';
-
 import type { CeremonyDetailContext } from '@/entities/ceremony';
 import { useCeremonyDetailQuery } from '@/entities/ceremony';
 
-import { useIsMounted } from '@/shared/hooks';
-import { SuspenseView } from '@/shared/ui/fallback';
-import { QueryErrorBoundary } from '@/shared/ui/provider';
+import {
+  HydrationSuspense,
+  QueryErrorBoundary,
+  SuspenseView,
+} from '@/shared/ui';
 
 import { CeremonyDetailView } from './CeremonyDetailView';
 
@@ -29,15 +29,11 @@ export const CeremonyDetailContainer = ({
   ceremonyId,
   context = 'general',
 }: CeremonyDetailContainerProps) => {
-  const isMounted = useIsMounted();
-
-  if (!isMounted) return <SuspenseView />;
-
   return (
     <QueryErrorBoundary>
-      <Suspense fallback={<SuspenseView />}>
+      <HydrationSuspense fallback={<SuspenseView />}>
         <CeremonyDetailFetcher ceremonyId={ceremonyId} context={context} />
-      </Suspense>
+      </HydrationSuspense>
     </QueryErrorBoundary>
   );
 };
