@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
-import { type GetNotificationsResponseDto } from '../types';
+import { type GetNotificationsResponseDto } from '../model';
 
 import {
   notificationMockDbAllRead,

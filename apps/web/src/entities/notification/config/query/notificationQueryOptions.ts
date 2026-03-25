@@ -7,7 +7,7 @@ import {
   getNotifications,
   getNotificationUnreadCnt,
 } from '../../api';
-import type { GetNotificationsQuery } from '../../types';
+import { type GetNotificationsQuery } from '../../model';
 
 import { notificationQueryKeys } from './notificationQueryKeys';
 

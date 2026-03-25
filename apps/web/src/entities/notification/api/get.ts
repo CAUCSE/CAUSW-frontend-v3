@@ -5,14 +5,12 @@ import { withQuery } from '@/shared/utils';
 
 import { NOTIFICATION_END_POINT_PREFIX } from '../config';
 import type {
+  GetNotificationsQuery,
+  GetNotificationsResponseDto,
   NotificationLatestResponse,
   NotificationSettingsResponse,
   NotificationUnreadCntResponse,
 } from '../model';
-import type {
-  GetNotificationsResponseDto,
-  GetNotificationsQuery,
-} from '../types';
 
 export const getNotificationUnreadCnt =
   async (): Promise<NotificationUnreadCntResponse> => {

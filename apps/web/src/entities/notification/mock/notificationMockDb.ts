@@ -1,4 +1,4 @@
-import type { GetNotificationsResponseDto } from '../types';
+import { type GetNotificationsResponseDto } from '../model';
 
 const notificationTypes: GetNotificationsResponseDto['noticeType'][] = [
   'COMMUNITY',

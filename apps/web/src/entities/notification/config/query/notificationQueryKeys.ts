@@ -1,4 +1,4 @@
-import type { GetNotificationsQuery } from '../../types';
+import { type GetNotificationsQuery } from '../../model';
 
 export const notificationQueryKeys = {
   all: ['notification'] as const,
