@@ -1,23 +1,15 @@
 import { type GetNotificationsResponseDto } from '../model';
 
-const notificationTypes: GetNotificationsResponseDto['noticeType'][] = [
-  'COMMUNITY',
-  'OFFICIAL',
-  'SYSTEM',
-  'CEREMONY',
-];
-
-const getRandomNoticeType = (): GetNotificationsResponseDto['noticeType'] =>
-  notificationTypes[Math.floor(Math.random() * notificationTypes.length)];
-
 const baseContent = [
   {
     notificationLogId: '79976c29-037d-4a8c-a07e-cba37a92592b',
-    title: '새 게시글이 등록됐어요',
+    title:
+      '새 게시글이 등록됐어요새 게시글이 등록됐어요새 게시글이 등록됐어요새 게시글이 등록됐어요새 게시글이 등록됐어요새 게시글이 등록됐어요새 게시글이 등록됐어요',
     body: '새 댓글 : ㅇㅇ',
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:29:34.25314',
+    noticeType: 'COMMUNITY',
   },
   {
     notificationLogId: '2d7428fe-6fc7-41ad-a1dd-f01be9c1f805',
@@ -26,6 +18,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:28:31.888004',
+    noticeType: 'OFFICIAL',
   },
   {
     notificationLogId: 'd6b8e2df-b9a3-4783-8334-169bbc85306e',
@@ -34,6 +27,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:28:07.444547',
+    noticeType: 'CEREMONY',
   },
   {
     notificationLogId: 'a60b4c6d-a140-4e0a-be33-f6b7e2213107',
@@ -42,6 +36,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:28:03.363729',
+    noticeType: 'SYSTEM',
   },
   {
     notificationLogId: '7c004141-dc38-40af-abdb-6fec4d8c2479',
@@ -50,6 +45,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:27:55.61466',
+    noticeType: 'OFFICIAL',
   },
   {
     notificationLogId: 'f584e406-2cc4-4e0f-8c25-4e4e0bbbbb98',
@@ -58,6 +54,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-02T01:35:26.265219',
+    noticeType: 'COMMUNITY',
   },
   {
     notificationLogId: '238acfb2-392f-4264-8572-3883ec5c8e97',
@@ -66,6 +63,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-02T01:31:56.3099',
+    noticeType: 'CEREMONY',
   },
   {
     notificationLogId: 'd78726e8-8966-434a-b168-139fcf01f2a8',
@@ -74,6 +72,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-02T01:31:46.52642',
+    noticeType: 'SYSTEM',
   },
   {
     notificationLogId: '531f313b-e07a-4d75-88c6-b1948f138b81',
@@ -82,6 +81,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-03-02T01:13:43.881254',
+    noticeType: 'COMMUNITY',
   },
   {
     notificationLogId: '6d5c0bd8-636a-4e10-9f3a-002c30f3b206',
@@ -90,6 +90,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:52:50.9794',
+    noticeType: 'OFFICIAL',
   },
   {
     notificationLogId: 'd01c2717-44de-4d35-aca8-583e4c8eabc3',
@@ -98,6 +99,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:52:47.541144',
+    noticeType: 'SYSTEM',
   },
   {
     notificationLogId: '4f01854e-e4a2-4339-b008-5dad56f8ff73',
@@ -106,6 +108,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:52:44.264724',
+    noticeType: 'OFFICIAL',
   },
   {
     notificationLogId: '95541a46-07c6-4850-82e0-d9c297d6c63a',
@@ -114,6 +117,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:48:31.354945',
+    noticeType: 'COMMUNITY',
   },
   {
     notificationLogId: 'a2ab7ce4-1b64-41dd-a300-57ba51a1d1a6',
@@ -122,6 +126,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:43:41.368632',
+    noticeType: 'CEREMONY',
   },
   {
     notificationLogId: '66439c46-20cd-4b2a-bcbc-867bfbafba99',
@@ -130,6 +135,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:43:29.027238',
+    noticeType: 'SYSTEM',
   },
   {
     notificationLogId: '7c172d7b-13da-4755-8ed0-255f9a243312',
@@ -138,6 +144,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:40:51.752434',
+    noticeType: 'COMMUNITY',
   },
   {
     notificationLogId: '3bcf4c12-ee8d-40ed-b92d-dcfa85e1735f',
@@ -146,6 +153,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:39:37.696118',
+    noticeType: 'OFFICIAL',
   },
   {
     notificationLogId: '6a8000c2-0070-494a-8070-777904534428',
@@ -154,6 +162,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:37:50.480154',
+    noticeType: 'CEREMONY',
   },
   {
     notificationLogId: '114ed498-2914-4e27-a898-51fffa34ed12',
@@ -162,6 +171,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:37:29.2486',
+    noticeType: 'SYSTEM',
   },
   {
     notificationLogId: 'e8663717-4d5d-4b45-9988-58b501f613ba',
@@ -170,13 +180,13 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-14T23:46:28.553914',
+    noticeType: 'CEREMONY',
   },
 ];
 
 const createNotificationMockDb = (isRead: boolean) =>
   baseContent.map((item) => ({
     ...item,
-    noticeType: getRandomNoticeType(),
     isRead,
   })) as GetNotificationsResponseDto[];
 
