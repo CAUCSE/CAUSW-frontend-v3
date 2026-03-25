@@ -7,3 +7,4 @@ export * from './useVerifyEmailVerificationCodeMutation';
 export * from './useFindEmailMutation';
 export * from './useSendPasswordResetCodeMutation';
 export * from './useVerifyPasswordResetCodeMutation';
+export * from './useSubmitAdmissionMutation';
