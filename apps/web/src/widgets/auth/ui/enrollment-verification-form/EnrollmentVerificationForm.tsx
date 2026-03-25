@@ -13,6 +13,7 @@ import {
 } from '@/features/auth';
 
 import {
+  ENROLLMENT_VERIFICATION_FORM_FIELD,
   enrollmentVerificationSchema,
   type EnrollmentVerificationFormData,
 } from '@/entities/auth';
@@ -34,13 +35,13 @@ export const EnrollmentVerificationForm = ({
     mode: 'onChange',
     resolver: zodResolver(enrollmentVerificationSchema),
     defaultValues: {
-      major: '',
-      enrollmentYear: '',
-      graduationYear: '',
-      studentId: '',
-      enrollmentState: '',
-      content: '',
-      images: [],
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.major]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.content]: '',
+      [ENROLLMENT_VERIFICATION_FORM_FIELD.images]: [],
     },
   });
 

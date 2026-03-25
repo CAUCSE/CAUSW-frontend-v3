@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { ENROLLMENT_VERIFICATION_FORM_FIELD } from '@/entities/auth/config';
+
 const MIN_ENROLLMENT_YEAR = 1950;
 const MAX_ENROLLMENT_YEAR = new Date().getFullYear();
 
@@ -17,34 +19,44 @@ const yearSchema = (label: '입학년도' | '졸업년도') =>
 
 export const enrollmentVerificationSchema = z
   .object({
-    major: z.string().min(1, '학과를 선택해주세요.'),
-    enrollmentYear: yearSchema('입학년도'),
-    graduationYear: z.string().optional(),
-    studentId: z
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.major]: z
+      .string()
+      .min(1, '학과를 선택해주세요.'),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear]:
+      yearSchema('입학년도'),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear]:
+      z.string().optional(),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: z
       .string()
       .min(1, '학번을 입력해주세요.')
       .regex(/^\d+$/, '학번은 숫자만 입력 가능합니다.'),
-    enrollmentState: z.string().min(1, '재학 분류를 선택해주세요.'),
-    content: z
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState]: z
+      .string()
+      .min(1, '재학 분류를 선택해주세요.'),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.content]: z
       .string()
       .max(500, '증빙서류 내용은 500자 이내로 입력해주세요.')
       .optional(),
-    images: z
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.images]: z
       .array(z.instanceof(File))
       .max(3, '이미지는 최대 3장까지 첨부할 수 있습니다.')
       .optional(),
   })
   .superRefine((data, ctx) => {
-    if (data.enrollmentState !== '졸업') return;
+    if (data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState] !== '졸업') {
+      return;
+    }
 
-    const result = yearSchema('졸업년도').safeParse(data.graduationYear);
+    const result = yearSchema('졸업년도').safeParse(
+      data[ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear],
+    );
 
     if (result.success) return;
 
     result.error.issues.forEach((issue) => {
       ctx.addIssue({
         ...issue,
-        path: ['graduationYear'],
+        path: [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear],
       });
     });
   });

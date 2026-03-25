@@ -1,14 +1,18 @@
 import { useWatch } from 'react-hook-form';
 
+import { ENROLLMENT_VERIFICATION_FORM_FIELD } from '@/entities/auth';
+
 import { RHFInput, RHFTabSelect } from '@/shared/ui';
 
 export const AcademicInfoSection = () => {
-  const enrollmentState = useWatch({ name: 'enrollmentState' });
+  const enrollmentState = useWatch({
+    name: ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState,
+  });
 
   return (
     <>
       <RHFTabSelect
-        name="major"
+        name={ENROLLMENT_VERIFICATION_FORM_FIELD.major}
         label="학과(부)"
         options={[
           { label: '전산학과', value: '전산학과' },
@@ -22,17 +26,17 @@ export const AcademicInfoSection = () => {
 
       <RHFInput
         label="입학년도"
-        name="enrollmentYear"
+        name={ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear}
         placeholder="입학년도를 입력해주세요."
       />
       <RHFInput
         label="학번"
-        name="studentId"
+        name={ENROLLMENT_VERIFICATION_FORM_FIELD.studentId}
         placeholder="학번을 입력해주세요."
       />
 
       <RHFTabSelect
-        name="enrollmentState"
+        name={ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState}
         label="재학 분류"
         options={[
           { label: '재적 (휴학 포함)', value: '재적 (휴학 포함)' },
@@ -43,7 +47,7 @@ export const AcademicInfoSection = () => {
       {enrollmentState === '졸업' && (
         <RHFInput
           label="졸업년도"
-          name="graduationYear"
+          name={ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear}
           placeholder="졸업년도를 입력해주세요."
         />
       )}
