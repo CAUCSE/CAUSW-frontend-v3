@@ -1,8 +1,8 @@
 import { API } from '@/shared/api';
 
 import {
-  CheckNicknameDuplicateRequestDto,
-  CheckPhoneDuplicateRequestDto,
+  type CheckNicknameDuplicateRequestDto,
+  type CheckPhoneDuplicateRequestDto,
 } from '../model/types';
 
 export const checkPhoneDuplicate = async (

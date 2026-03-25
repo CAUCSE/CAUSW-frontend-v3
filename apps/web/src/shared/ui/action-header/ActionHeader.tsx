@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -9,7 +9,7 @@ import { ChevronLeft, Primitive, splitVariantProps } from '@causw/cds';
 import {
   actionHeader,
   actionHeaderVariantKeys,
-  ActionHeaderVariants,
+  type ActionHeaderVariants,
 } from './ActionHeader.styles';
 
 interface BackButtonProps

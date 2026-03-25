@@ -1,4 +1,4 @@
-import { VoteWriteValue } from '@/entities/post';
+import { type VoteWriteValue } from '@/entities/post';
 
 const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
 

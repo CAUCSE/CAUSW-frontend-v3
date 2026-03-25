@@ -2,7 +2,11 @@ import { Stack } from '@causw/cds';
 
 import { CommentItem } from '@/features/comment';
 
-import { Comment, CommentHeader, ReplyTarget } from '@/entities/comment';
+import {
+  type Comment,
+  CommentHeader,
+  type ReplyTarget,
+} from '@/entities/comment';
 
 interface CommentListProps {
   comments: Comment[];

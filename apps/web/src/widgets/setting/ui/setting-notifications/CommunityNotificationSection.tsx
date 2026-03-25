@@ -6,7 +6,10 @@ import { SETTING_NOTIFICATIONS } from '../../config';
 
 type CommunityNotificationSectionProps = {
   settings: CommunityNotificationSettings;
-  onToggle: (key: keyof CommunityNotificationSettings, checked: boolean) => void;
+  onToggle: (
+    key: keyof CommunityNotificationSettings,
+    checked: boolean,
+  ) => void;
 };
 
 export const CommunityNotificationSection = ({
@@ -21,7 +24,9 @@ export const CommunityNotificationSection = ({
       <VStack className="gap-6">
         <Toggle
           checked={settings.likeOnMyPost}
-          onCheckedChange={(checked) => onToggle('likeOnMyPost', Boolean(checked))}
+          onCheckedChange={(checked) =>
+            onToggle('likeOnMyPost', Boolean(checked))
+          }
           className="justify-between"
         >
           <Toggle.Label typography="body-16-medium">

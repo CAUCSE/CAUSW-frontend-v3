@@ -1,5 +1,5 @@
 // shared/ui/responsive.tsx
-import { ComponentProps } from 'react';
+import { type ComponentProps } from 'react';
 
 import { mergeStyles, Primitive } from '@causw/cds';
 

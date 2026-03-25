@@ -1,4 +1,4 @@
-import type { PasswordChangeRequest } from '@/entities/setting';
+import { type PasswordChangeRequest } from '@/entities/setting';
 
 import { API } from '@/shared/api';
 

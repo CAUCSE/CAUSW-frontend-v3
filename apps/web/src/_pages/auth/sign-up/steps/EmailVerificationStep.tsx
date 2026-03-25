@@ -16,7 +16,7 @@ import {
 import {
   EMAIL_VERIFICATION_FORM_FIELD,
   emailVerificationSchema,
-  SignUpFormData,
+  type SignUpFormData,
 } from '@/entities/auth';
 
 export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {

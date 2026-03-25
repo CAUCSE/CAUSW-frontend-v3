@@ -3,7 +3,7 @@ import { TokenManager } from '@/shared/storage';
 import { isServer } from '@/shared/utils';
 import { isPublicEndpoint } from '@/shared/utils/auth';
 
-import { BaseApiClient } from '../../instances';
+import { type BaseApiClient } from '../../instances';
 
 export const setRequestInterceptors = (apiClient: BaseApiClient) => {
   apiClient.internalClient.interceptors.request.register(async (config) => {

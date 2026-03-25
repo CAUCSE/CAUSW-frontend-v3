@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
+  notificationQueryKeys,
   type NotificationSettingsResponse,
   type UpdateNotificationSettingsRequest,
   type UpdateOfficialBoardNotificationRequest,
-  notificationQueryKey,
 } from '@/entities/notification';
 
 import { toast } from '@/shared/model';
@@ -23,17 +23,17 @@ export const useNotificationSettingsOptimisticMutations = () => {
       updateNotificationSettings(body),
     onMutate: async (body) => {
       await queryClient.cancelQueries({
-        queryKey: notificationQueryKey.settings(),
+        queryKey: notificationQueryKeys.settings(),
       });
 
       const previousSettings =
         queryClient.getQueryData<NotificationSettingsResponse>(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
         );
 
       if (previousSettings) {
         queryClient.setQueryData<NotificationSettingsResponse>(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
           {
             ...previousSettings,
             community: {
@@ -57,7 +57,7 @@ export const useNotificationSettingsOptimisticMutations = () => {
     onError: (error, _body, context) => {
       if (context?.previousSettings) {
         queryClient.setQueryData(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
           context.previousSettings,
         );
       }
@@ -71,7 +71,7 @@ export const useNotificationSettingsOptimisticMutations = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: notificationQueryKey.settings(),
+        queryKey: notificationQueryKeys.settings(),
       });
     },
   });
@@ -81,17 +81,17 @@ export const useNotificationSettingsOptimisticMutations = () => {
       updateOfficialBoardNotification(body),
     onMutate: async ({ boardId, subscribed }) => {
       await queryClient.cancelQueries({
-        queryKey: notificationQueryKey.settings(),
+        queryKey: notificationQueryKeys.settings(),
       });
 
       const previousSettings =
         queryClient.getQueryData<NotificationSettingsResponse>(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
         );
 
       if (previousSettings) {
         queryClient.setQueryData<NotificationSettingsResponse>(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
           {
             ...previousSettings,
             officialBoards: previousSettings.officialBoards.map((board) =>
@@ -106,7 +106,7 @@ export const useNotificationSettingsOptimisticMutations = () => {
     onError: (error, _body, context) => {
       if (context?.previousSettings) {
         queryClient.setQueryData(
-          notificationQueryKey.settings(),
+          notificationQueryKeys.settings(),
           context.previousSettings,
         );
       }
@@ -120,7 +120,7 @@ export const useNotificationSettingsOptimisticMutations = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: notificationQueryKey.settings(),
+        queryKey: notificationQueryKeys.settings(),
       });
     },
   });

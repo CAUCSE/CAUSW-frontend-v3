@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { ReplyTarget } from '@/entities/comment';
+import { type ReplyTarget } from '@/entities/comment';
 
 interface UseCommentFormProps {
   replyTarget: ReplyTarget;

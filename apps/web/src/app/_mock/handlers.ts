@@ -2,5 +2,10 @@
 import { authHandler } from '@/features/auth/mock';
 
 import { boardsHandler } from '@/entities/feed';
+import { notificationHandler } from '@/entities/notification';
 
-export const handlers = [...boardsHandler, ...authHandler];
+export const handlers = [
+  ...boardsHandler,
+  ...notificationHandler,
+  ...authHandler,
+];
