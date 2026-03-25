@@ -7,6 +7,7 @@ import { VStack } from '@causw/cds';
 import {
   type EnrollmentAction,
   useMyAdmissionStateSuspenseQuery,
+  useMyInfoSuspenseQuery,
 } from '@/entities/auth';
 
 import { EnrollmentStepContainer } from '../enrollment-step-container';
@@ -15,6 +16,7 @@ import { EnrollmentVerificationDialog } from '../enrollment-verification-dialog'
 export const EnrollmentVerificationSectionContent = () => {
   const [open, setOpen] = useState(false);
   const { data: admissionData } = useMyAdmissionStateSuspenseQuery();
+  const { data: myInfo } = useMyInfoSuspenseQuery();
 
   const actionHandlers: Record<EnrollmentAction, () => void> = {
     submit: () => setOpen(true),
@@ -36,7 +38,11 @@ export const EnrollmentVerificationSectionContent = () => {
         />
       </VStack>
 
-      <EnrollmentVerificationDialog open={open} onOpenChange={setOpen} />
+      <EnrollmentVerificationDialog
+        open={open}
+        onOpenChange={setOpen}
+        userName={myInfo.name}
+      />
     </>
   );
 };

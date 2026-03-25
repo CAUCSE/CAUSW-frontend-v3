@@ -18,13 +18,13 @@ import {
 import { EnrollmentVerificationActionHeader } from '../enrollment-verification-action-header';
 
 export interface EnrollmentVerificationFormProps {
-  userName?: string;
+  userName: string;
   onCancel: () => void;
   onSuccess: () => void;
 }
 
 export const EnrollmentVerificationForm = ({
-  userName = '유지아',
+  userName,
   onCancel,
   onSuccess,
 }: EnrollmentVerificationFormProps) => {
