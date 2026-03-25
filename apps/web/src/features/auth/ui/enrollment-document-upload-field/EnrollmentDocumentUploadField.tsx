@@ -1,6 +1,8 @@
+'use client';
+
 import { useRef } from 'react';
 
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, Camera, Field, Text } from '@causw/cds';
 
@@ -11,20 +13,22 @@ import {
 
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
-export const DocumentSection = () => {
+export const EnrollmentDocumentUploadField = () => {
   const imageFieldRef = useRef<ImageUploadFieldRef>(null);
   const {
     register,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<EnrollmentVerificationFormData>();
+  const watchedContent = useWatch<EnrollmentVerificationFormData>({
+    name: ENROLLMENT_VERIFICATION_FORM_FIELD.content,
+  });
+  const content = typeof watchedContent === 'string' ? watchedContent : '';
+  const imageErrorMessage =
+    errors[ENROLLMENT_VERIFICATION_FORM_FIELD.images]?.message;
 
   return (
-    <Field
-      className="flex flex-col gap-2"
-      error={!!errors[ENROLLMENT_VERIFICATION_FORM_FIELD.images]?.message}
-    >
+    <Field className="flex flex-col gap-2" error={!!imageErrorMessage}>
       <Field.Label>증빙서류</Field.Label>
       <div className="flex flex-col gap-2">
         <Text
@@ -67,14 +71,13 @@ export const DocumentSection = () => {
               사진첨부
             </Button>
             <Text typography="body-16-regular" textColor="gray-400">
-              {watch(ENROLLMENT_VERIFICATION_FORM_FIELD.content)?.length || 0}
-              /500
+              {content.length}/500
             </Text>
           </div>
         </div>
       </div>
       <Field.ErrorDescription>
-        {errors[ENROLLMENT_VERIFICATION_FORM_FIELD.images]?.message as string}
+        {imageErrorMessage as string}
       </Field.ErrorDescription>
     </Field>
   );
