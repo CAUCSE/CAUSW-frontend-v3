@@ -147,3 +147,27 @@ export interface PasswordResetVerifyRequestDto {
 export interface PasswordResetVerifyResponseDto {
   temporaryPassword: string;
 }
+
+export type AdmissionDepartment =
+  | 'DEPT_OF_AI'
+  | 'SCHOOL_OF_SW'
+  | 'SCHOOL_OF_CSE'
+  | 'DEPT_OF_CSE'
+  | 'DEPT_OF_CS';
+
+export type AdmissionAcademicStatus = 'ENROLLED' | 'GRADUATED';
+
+export interface AdmissionCreateRequestPayloadDto {
+  name: string;
+  requestedDepartment: AdmissionDepartment;
+  requestedAdmissionYear: number;
+  requestedStudentId: string;
+  requestedAcademicStatus: AdmissionAcademicStatus;
+  graduationYear?: number;
+  description?: string;
+}
+
+export interface AdmissionCreateRequestDto {
+  request: AdmissionCreateRequestPayloadDto;
+  attachImages: File[];
+}
