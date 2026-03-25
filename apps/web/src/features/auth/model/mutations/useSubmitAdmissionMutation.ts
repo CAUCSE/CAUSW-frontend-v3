@@ -1,8 +1,12 @@
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutationOptions,
+} from '@tanstack/react-query';
 
 import { createAdmission } from '@/features/auth/api';
 
-import type { AdmissionCreateRequestDto } from '@/entities/auth';
+import { authQueryKey, type AdmissionCreateRequestDto } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
@@ -19,6 +23,7 @@ type SubmitAdmissionMutationOptions = Omit<
 export const useSubmitAdmissionMutation = (
   options?: SubmitAdmissionMutationOptions,
 ) => {
+  const queryClient = useQueryClient();
   const { onSuccess, onError, onMutate, ...restOptions } = options ?? {};
 
   return useMutation({
@@ -27,7 +32,10 @@ export const useSubmitAdmissionMutation = (
       toast.loading('인증 서류를 제출하고 있어요...');
       onMutate?.();
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: authQueryKey.admissionState(),
+      });
       toast.success('인증 신청이 접수되었습니다.');
       onSuccess?.();
     },
