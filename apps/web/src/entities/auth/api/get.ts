@@ -4,6 +4,7 @@ import {
   type AdmissionStateResponseDto,
   type CheckNicknameDuplicateRequestDto,
   type CheckPhoneDuplicateRequestDto,
+  type UserResponseDto,
 } from '../model/types';
 
 const AUTH_API_URL_PREFIX = '/api/v2/users';
@@ -12,6 +13,10 @@ export const getAdmissionState = async () => {
   return API.get<AdmissionStateResponseDto>(
     `${AUTH_API_URL_PREFIX}/me/admission/state`,
   );
+};
+
+export const getMyInfo = async () => {
+  return API.get<UserResponseDto>(`${AUTH_API_URL_PREFIX}/me`);
 };
 
 export const checkPhoneDuplicate = async (
