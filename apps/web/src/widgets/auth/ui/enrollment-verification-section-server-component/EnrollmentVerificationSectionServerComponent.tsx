@@ -13,9 +13,10 @@ import { EnrollmentVerificationSectionContent } from '../enrollment-verification
 export const EnrollmentVerificationSectionServerComponent = async () => {
   const queryClient = new QueryClient();
 
-  const admissionState = await queryClient.fetchQuery(
-    authQueryOptions.admissionState(),
-  );
+  const [admissionState] = await Promise.all([
+    queryClient.fetchQuery(authQueryOptions.admissionState()),
+    queryClient.prefetchQuery(authQueryOptions.me()),
+  ]);
 
   if (admissionState.userState === 'ACTIVE') {
     redirect('/home');
