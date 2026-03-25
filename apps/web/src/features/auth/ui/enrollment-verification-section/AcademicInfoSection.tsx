@@ -1,6 +1,10 @@
+import { useWatch } from 'react-hook-form';
+
 import { RHFInput, RHFTabSelect } from '@/shared/ui';
 
 export const AcademicInfoSection = () => {
+  const enrollmentState = useWatch({ name: 'enrollmentState' });
+
   return (
     <>
       <RHFTabSelect
@@ -36,6 +40,13 @@ export const AcademicInfoSection = () => {
         ]}
         required
       />
+      {enrollmentState === '졸업' && (
+        <RHFInput
+          label="졸업년도"
+          name="graduationYear"
+          placeholder="졸업년도를 입력해주세요."
+        />
+      )}
     </>
   );
 };
