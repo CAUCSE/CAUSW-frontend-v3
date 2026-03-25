@@ -8,6 +8,7 @@ import { VStack, CTAButton } from '@causw/cds';
 
 import { findEmailSchema, type FindEmailFormData } from '@/entities/auth';
 
+import { usePhoneNumberChangeHandler } from '@/shared/hooks';
 import { RHFInput } from '@/shared/ui';
 
 interface FindEmailFormProps {
@@ -27,6 +28,12 @@ export const FindEmailForm = ({ onSubmit }: FindEmailFormProps) => {
   const {
     formState: { isValid },
   } = methods;
+
+  const { handlePhoneNumberChange } =
+    usePhoneNumberChangeHandler<FindEmailFormData>({
+      setValue: methods.setValue,
+      fieldName: 'phoneNumber',
+    });
 
   const handleSubmit = (data: FindEmailFormData) => {
     onSubmit(data);
@@ -52,6 +59,8 @@ export const FindEmailForm = ({ onSubmit }: FindEmailFormProps) => {
             label="전화번호"
             placeholder="010-1234-5678"
             typography="body-16-regular"
+            maxLength={13}
+            onChange={handlePhoneNumberChange}
           />
         </VStack>
 
