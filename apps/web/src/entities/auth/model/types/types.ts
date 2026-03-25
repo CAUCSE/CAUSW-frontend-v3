@@ -203,7 +203,7 @@ export interface AdmissionCreateRequestDto {
  * - `ACTIVE`: 승인 완료 상태
  * - `REJECT`: 심사 반려 상태
  */
-export type EnrollmentStatus = 'AWAIT' | 'ACTIVE' | 'REJECT';
+export type EnrollmentStatus = 'AWAIT' | 'ACTIVE' | 'REJECT' | 'GUEST' | 'DROP';
 
 export interface AdmissionStateResponseDto {
   userState: EnrollmentStatus;

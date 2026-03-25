@@ -18,6 +18,14 @@ export const EnrollmentVerificationSectionServerComponent = async () => {
     queryClient.prefetchQuery(authQueryOptions.me()),
   ]);
 
+  if (
+    !admissionState ||
+    admissionState.userState === 'GUEST' ||
+    admissionState.userState === 'DROP'
+  ) {
+    redirect('/auth/sign-in');
+  }
+
   if (admissionState.userState === 'ACTIVE') {
     redirect('/home');
   }
