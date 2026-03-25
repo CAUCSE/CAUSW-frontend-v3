@@ -1,8 +1,6 @@
 'use client';
 
-import { FormProvider, useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider } from 'react-hook-form';
 
 import { VStack } from '@causw/cds';
 
@@ -14,12 +12,8 @@ import {
   EnrollmentVerificationNameField,
   EnrollmentVerificationStateField,
   EnrollmentVerificationStudentIdField,
+  useEnrollmentVerificationForm,
 } from '@/features/auth';
-
-import {
-  enrollmentVerificationSchema,
-  type EnrollmentVerificationFormData,
-} from '@/entities/auth';
 
 import { EnrollmentVerificationActionHeader } from '../enrollment-verification-action-header';
 import { EnrollmentVerificationHeader } from '../enrollment-verification-header';
@@ -35,34 +29,20 @@ export const EnrollmentVerificationForm = ({
   onCancel,
   onSuccess,
 }: EnrollmentVerificationFormProps) => {
-  const methods = useForm<EnrollmentVerificationFormData>({
-    mode: 'onChange',
-    resolver: zodResolver(enrollmentVerificationSchema),
-    defaultValues: {
-      major: '',
-      enrollmentYear: '',
-      graduationYear: '',
-      studentId: '',
-      enrollmentState: '',
-      content: '',
-      images: [],
-    },
-  });
-
-  const onSubmit = (data: EnrollmentVerificationFormData) => {
-    // TODO: API 호출
-    console.log('Submitted data:', data);
-    onSuccess();
-  };
+  const { methods, handleSubmit, isSubmitting } =
+    useEnrollmentVerificationForm({
+      userName,
+      onSuccess,
+    });
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(handleSubmit)}
         className="flex h-full w-full flex-col overflow-hidden"
       >
         <EnrollmentVerificationActionHeader
-          isSubmitDisabled={!methods.formState.isValid}
+          isSubmitDisabled={!methods.formState.isValid || isSubmitting}
           onCancel={onCancel}
         />
 
