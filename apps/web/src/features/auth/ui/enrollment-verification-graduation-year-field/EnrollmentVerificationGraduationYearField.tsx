@@ -2,7 +2,10 @@
 
 import { useWatch } from 'react-hook-form';
 
-import { ENROLLMENT_VERIFICATION_FORM_FIELD } from '@/entities/auth';
+import {
+  ENROLLMENT_VERIFICATION_ACADEMIC_STATUS,
+  ENROLLMENT_VERIFICATION_FORM_FIELD,
+} from '@/entities/auth';
 
 import { RHFInput } from '@/shared/ui';
 
@@ -11,7 +14,11 @@ export const EnrollmentVerificationGraduationYearField = () => {
     name: ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState,
   });
 
-  if (enrollmentState !== '졸업') return null;
+  if (
+    enrollmentState !== ENROLLMENT_VERIFICATION_ACADEMIC_STATUS.GRADUATED.value
+  ) {
+    return null;
+  }
 
   return (
     <RHFInput

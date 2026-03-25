@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-import { ENROLLMENT_VERIFICATION_FORM_FIELD } from '@/entities/auth/config';
+import {
+  ENROLLMENT_VERIFICATION_ACADEMIC_STATUS,
+  ENROLLMENT_VERIFICATION_FORM_FIELD,
+} from '@/entities/auth/config';
 
 const MIN_ENROLLMENT_YEAR = 1950;
 const MAX_ENROLLMENT_YEAR = new Date().getFullYear();
@@ -22,10 +25,8 @@ export const enrollmentVerificationSchema = z
     [ENROLLMENT_VERIFICATION_FORM_FIELD.major]: z
       .string()
       .min(1, '학과를 선택해주세요.'),
-    [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear]:
-      yearSchema('입학년도'),
-    [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear]:
-      z.string().optional(),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear]: yearSchema('입학년도'),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear]: z.string().optional(),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: z
       .string()
       .min(1, '학번을 입력해주세요.')
@@ -43,9 +44,11 @@ export const enrollmentVerificationSchema = z
       .optional(),
   })
   .superRefine((data, ctx) => {
-    if (data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState] !== '졸업') {
+    if (
+      data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState] !==
+      ENROLLMENT_VERIFICATION_ACADEMIC_STATUS.GRADUATED.value
+    )
       return;
-    }
 
     const result = yearSchema('졸업년도').safeParse(
       data[ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear],
