@@ -2,7 +2,7 @@
 
 import { FormProvider } from 'react-hook-form';
 
-import { VStack } from '@causw/cds';
+import { Text, VStack } from '@causw/cds';
 
 import {
   EnrollmentDocumentUploadField,
@@ -16,7 +16,6 @@ import {
 } from '@/features/auth';
 
 import { EnrollmentVerificationActionHeader } from '../enrollment-verification-action-header';
-import { EnrollmentVerificationHeader } from '../enrollment-verification-header';
 
 export interface EnrollmentVerificationFormProps {
   userName?: string;
@@ -29,11 +28,12 @@ export const EnrollmentVerificationForm = ({
   onCancel,
   onSuccess,
 }: EnrollmentVerificationFormProps) => {
-  const { methods, handleSubmit, isSubmitting } =
-    useEnrollmentVerificationForm({
+  const { methods, handleSubmit, isSubmitting } = useEnrollmentVerificationForm(
+    {
       userName,
       onSuccess,
-    });
+    },
+  );
 
   return (
     <FormProvider {...methods}>
@@ -47,7 +47,9 @@ export const EnrollmentVerificationForm = ({
         />
 
         <VStack className="flex-1 gap-5 overflow-y-auto px-4 py-2 md:px-2 md:py-4">
-          <EnrollmentVerificationHeader />
+          <Text typography="title-22-bold" textColor="gray-800">
+            재학정보 인증
+          </Text>
 
           <VStack className="gap-10">
             <EnrollmentVerificationNameField userName={userName} />

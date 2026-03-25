@@ -2,7 +2,7 @@ import { Text, VStack } from '@causw/cds';
 
 export const EnrollmentVerificationHeader = () => {
   return (
-    <VStack justify="center" className="w-full gap-6">
+    <VStack justify="center" className="w-full gap-2">
       <Text
         as="h1"
         typography="title-22-bold"
