@@ -36,6 +36,7 @@ export const EnrollmentVerificationForm = ({
     defaultValues: {
       major: '',
       enrollmentYear: '',
+      graduationYear: '',
       studentId: '',
       enrollmentState: '',
       content: '',
