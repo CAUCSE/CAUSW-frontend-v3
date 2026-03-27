@@ -6,7 +6,7 @@ import { Stack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
-import { ReplyTarget, useCommentsQuery } from '@/entities/comment';
+import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
 import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';

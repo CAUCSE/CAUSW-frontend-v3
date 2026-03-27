@@ -2,9 +2,9 @@ import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
 import {
-  CalendarScheduleResponse,
-  CalendarScheduleItem,
-  CalendarScheduleParams,
+  type CalendarScheduleResponse,
+  type CalendarScheduleItem,
+  type CalendarScheduleParams,
 } from '../model';
 
 import { formatCalendarParams } from './formatter';

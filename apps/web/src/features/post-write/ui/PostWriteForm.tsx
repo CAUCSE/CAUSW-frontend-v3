@@ -6,10 +6,10 @@ import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { Board, useGetAvailableBoards } from '@/entities/feed';
-import { PostCreateFormValues, usePostCreateForm } from '@/entities/post';
+import { type Board, useGetAvailableBoards } from '@/entities/feed';
+import { type PostCreateFormValues, usePostCreateForm } from '@/entities/post';
 
-import { ImageUploadField, ImageUploadFieldRef } from '@/shared/ui';
+import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
 import { createEmptyVote } from '../lib';
 import { mapPostCreateFormToDto, mapPostUpdateFormToDto } from '../lib/mappers';

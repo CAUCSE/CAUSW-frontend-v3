@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { Checkbox, HStack, Stack, Text } from '@causw/cds';
 
-import { ReplyIndicator, ReplyTarget } from '@/entities/comment';
+import { ReplyIndicator, type ReplyTarget } from '@/entities/comment';
 
 import { useCommentForm } from '../model';
 

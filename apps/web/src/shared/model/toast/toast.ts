@@ -1,5 +1,5 @@
 import { toastStore } from './store';
-import { ToastOptions } from './type';
+import { type ToastOptions } from './type';
 
 export const toastRoot = (message: string, options?: ToastOptions) =>
   toastStore.dispatch(message, 'default', options);

@@ -7,10 +7,10 @@ import { useRouter } from 'next/navigation';
 import { useBlockUserByPostMutation } from '@/features/block';
 import { useReportPostMutation } from '@/features/report';
 
-import { ReportReason } from '@/entities/report';
+import { type ReportReason } from '@/entities/report';
 
 import { useDeletePostMutation } from '../mutations';
-import { PostAction } from '../types';
+import { type PostAction } from '../types';
 
 export const usePostMenuActions = (postId: string) => {
   const router = useRouter();

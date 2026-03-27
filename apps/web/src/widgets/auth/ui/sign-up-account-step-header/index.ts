@@ -1,0 +1,1 @@
+export { SignUpAccountStepHeader } from './SignUpAccountStepHeader';
