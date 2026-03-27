@@ -114,3 +114,21 @@ export interface GoogleLoginResponseDto {
   email: string;
   profileImgUrl: string;
 }
+
+export interface FindEmailRequestDto {
+  name: string;
+  phoneNumber: string;
+}
+
+export type SocialProvider = 'KAKAO' | 'APPLE' | 'GOOGLE';
+
+export interface SocialAccountSummary {
+  provider: SocialProvider;
+  createdAt: string;
+}
+
+export interface EmailFindResponse {
+  email: string;
+  createdAt: string;
+  socialAccounts: SocialAccountSummary[];
+}
