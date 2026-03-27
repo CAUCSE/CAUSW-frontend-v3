@@ -5,6 +5,7 @@ export { EnrollmentVerificationSectionContent } from './enrollment-verification-
 export { EnrollmentVerificationSectionServerComponent } from './enrollment-verification-section-server-component';
 export { EnrollmentVerificationDialog } from './enrollment-verification-dialog';
 export { EnrollmentVerificationActionHeader } from './enrollment-verification-action-header';
+export { EnrollmentVerificationPageActionHeader } from './enrollment-verification-page-action-header';
 export { EnrollmentVerificationHeader } from './enrollment-verification-header';
 export { EnrollmentVerificationForm } from './enrollment-verification-form';
 export * from './enrollment-step-card';
