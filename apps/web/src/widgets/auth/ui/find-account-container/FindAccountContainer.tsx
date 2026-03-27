@@ -1,12 +1,22 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
+import { ApiError } from '@causw/api-client';
 import { Text, VStack, HStack, Tab, LockOpenColored } from '@causw/cds';
 
-import { FindEmailForm, FindPasswordForm } from '@/features/auth';
+import {
+  FindEmailForm,
+  FindPasswordForm,
+  useFindEmailMutation,
+  useSendPasswordResetCodeMutation,
+  useVerifyPasswordResetCodeMutation,
+} from '@/features/auth';
 
 import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
+
+import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
@@ -20,30 +30,6 @@ export type FindAccountView =
   | { type: 'not-found' }
   | { type: 'password-email-sent'; email: string };
 
-// TODO: API 연동 후 제거
-const MOCK_RESPONSES: (EmailFindResponse | null)[] = [
-  {
-    email: 'abc***@cau.ac.kr',
-    createdAt: '2020-01-02',
-    socialAccounts: [
-      { provider: 'KAKAO', createdAt: '2024-01-01' },
-      { provider: 'APPLE', createdAt: '2024-05-12' },
-      { provider: 'GOOGLE', createdAt: '2024-05-12' },
-    ],
-  },
-  {
-    email: 'abc***@cau.ac.kr',
-    createdAt: '2020-01-02',
-    socialAccounts: [],
-  },
-  {
-    email: '',
-    createdAt: '',
-    socialAccounts: [{ provider: 'KAKAO', createdAt: '2024-01-01' }],
-  },
-  null,
-];
-
 interface FindAccountContainerProps {
   view: FindAccountView;
   onViewChange: (view: FindAccountView) => void;
@@ -54,7 +40,10 @@ export const FindAccountContainer = ({
   onViewChange,
 }: FindAccountContainerProps) => {
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
-  const mockIndex = useRef(0);
+
+  const findEmailMutation = useFindEmailMutation();
+  const sendResetCodeMutation = useSendPasswordResetCodeMutation();
+  const verifyResetCodeMutation = useVerifyPasswordResetCodeMutation();
 
   const handleBackToForm = () => {
     onViewChange({ type: 'form' });
@@ -65,16 +54,25 @@ export const FindAccountContainer = ({
     setActiveTab('find-password');
   };
 
-  // TODO: API 연동 후 제거
-  const handleMockSubmit = (formData: FindEmailFormData) => {
-    const response = MOCK_RESPONSES[mockIndex.current % MOCK_RESPONSES.length];
-    mockIndex.current++;
-
-    if (response) {
-      onViewChange({ type: 'result', data: response, name: formData.name });
-    } else {
-      onViewChange({ type: 'not-found' });
-    }
+  const handleFindEmail = (formData: FindEmailFormData) => {
+    findEmailMutation.mutate(formData, {
+      onSuccess: (data) => {
+        toast.success('계정 정보를 찾았습니다.');
+        onViewChange({ type: 'result', data, name: formData.name });
+      },
+      onError: (error) => {
+        if (error instanceof ApiError && error.status && error.status < 500) {
+          onViewChange({ type: 'not-found' });
+        } else {
+          toast.error(
+            extractErrorMessage(
+              error,
+              '계정 정보 조회에 실패했습니다. 다시 시도해 주세요.',
+            ),
+          );
+        }
+      },
+    });
   };
 
   if (view.type === 'result') {
@@ -143,15 +141,19 @@ export const FindAccountContainer = ({
               </Text>
             </HStack>
 
-            <FindEmailForm onSubmit={handleMockSubmit} />
+            <FindEmailForm onSubmit={handleFindEmail} />
           </>
         )}
 
         {activeTab === 'find-password' && (
           <FindPasswordForm
-            onSubmit={(email) =>
-              onViewChange({ type: 'password-email-sent', email })
-            }
+            onSendCode={async (email) => {
+              await sendResetCodeMutation.mutateAsync({ email });
+            }}
+            onVerifyCode={async (data) => {
+              await verifyResetCodeMutation.mutateAsync(data);
+              onViewChange({ type: 'password-email-sent', email: data.email });
+            }}
           />
         )}
       </VStack>
