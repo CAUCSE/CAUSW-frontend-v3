@@ -132,3 +132,16 @@ export interface EmailFindResponse {
   createdAt: string;
   socialAccounts: SocialAccountSummary[];
 }
+
+export interface PasswordResetSendRequestDto {
+  email: string;
+}
+
+export interface PasswordResetVerifyRequestDto {
+  email: string;
+  verificationCode: string;
+}
+
+export interface PasswordResetVerifyResponseDto {
+  temporaryPassword: string;
+}
