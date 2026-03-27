@@ -12,16 +12,24 @@ import { findPasswordSchema, type FindPasswordFormData } from '@/entities/auth';
 
 import { useCountdownTimer } from '@/shared/hooks';
 
-type FindPasswordStep = 'idle' | 'codeSent' | 'codeVerified';
+type FindPasswordStep = 'idle' | 'codeSent';
 
 interface FindPasswordFormProps {
-  onSubmit: (email: string) => void;
+  onSendCode: (email: string) => Promise<void>;
+  onVerifyCode: (data: {
+    email: string;
+    verificationCode: string;
+  }) => Promise<void>;
 }
 
 const TIMER_SECONDS = 600;
 
-export const FindPasswordForm = ({ onSubmit }: FindPasswordFormProps) => {
+export const FindPasswordForm = ({
+  onSendCode,
+  onVerifyCode,
+}: FindPasswordFormProps) => {
   const [step, setStep] = useState<FindPasswordStep>('idle');
+  const [isPending, setIsPending] = useState(false);
   const { formattedTime, isExpired, start, reset } =
     useCountdownTimer(TIMER_SECONDS);
 
@@ -44,41 +52,45 @@ export const FindPasswordForm = ({ onSubmit }: FindPasswordFormProps) => {
 
   const isEmailValid = !!emailValue && !errors.email;
 
-  // TODO: API 연동 + 인증코드 전송 로직으로 교체
-  const handleSendCode = () => {
-    if (step === 'idle') {
+  const handleSendCode = async () => {
+    if (isPending) return;
+    const email = methods.getValues('email');
+    setIsPending(true);
+    try {
+      await onSendCode(email);
+      if (step === 'idle') {
+        start();
+      } else {
+        reset();
+      }
       setStep('codeSent');
-      start();
-    } else {
-      setStep('codeSent');
-      reset();
+    } catch {
+      /* mutation onError에서 토스트 처리 */
+    } finally {
+      setIsPending(false);
     }
   };
 
-  // TODO: 인증코드 검증 로직으로 교체
-  // mock: 6자리 입력 완료 시 검증 성공으로 처리
-  const handleVerificationCodeChange = (
+  const handleVerificationCodeChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const value = e.target.value;
-    if (value.length === 6 && !isExpired) {
-      setStep('codeVerified');
-    } else if (step === 'codeVerified') {
-      setStep('codeSent');
+    if (value.length === 6 && !isExpired && !isPending) {
+      const email = methods.getValues('email');
+      setIsPending(true);
+      try {
+        await onVerifyCode({ email, verificationCode: value });
+      } catch {
+        /* mutation onError에서 토스트 처리 */
+      } finally {
+        setIsPending(false);
+      }
     }
-  };
-
-  const handleSubmit = (data: FindPasswordFormData) => {
-    onSubmit(data.email);
   };
 
   return (
     <FormProvider {...methods}>
-      <VStack
-        as="form"
-        className="w-full gap-10"
-        onSubmit={methods.handleSubmit(handleSubmit)}
-      >
+      <VStack className="w-full gap-10">
         <VStack className="gap-2">
           <Field className="flex flex-col gap-2" error={!!errors.email}>
             <Field.Label>이메일</Field.Label>
@@ -92,7 +104,7 @@ export const FindPasswordForm = ({ onSubmit }: FindPasswordFormProps) => {
               <CTAButton
                 type="button"
                 color="dark"
-                disabled={!isEmailValid}
+                disabled={!isEmailValid || isPending}
                 onClick={handleSendCode}
                 className="w-[6.25rem]"
               >
@@ -120,15 +132,6 @@ export const FindPasswordForm = ({ onSubmit }: FindPasswordFormProps) => {
             />
           )}
         </VStack>
-
-        <CTAButton
-          color="dark"
-          fullWidth
-          type="submit"
-          disabled={step !== 'codeVerified'}
-        >
-          재설정 이메일 받기
-        </CTAButton>
       </VStack>
     </FormProvider>
   );
