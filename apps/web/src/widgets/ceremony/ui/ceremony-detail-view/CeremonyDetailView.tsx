@@ -96,7 +96,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
             <Text
               typography="body-16-regular"
               textColor="gray-700"
-              className="whitespace-pre-wrap"
+              className="whitespace-pre-wrap" // TODO: 공백 없는 긴 문자열이 가로로 넘침 — break-all 추가 필요
             >
               {content}
             </Text>
