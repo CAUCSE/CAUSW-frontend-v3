@@ -1,4 +1,4 @@
-import { REPORT_REASON } from '../../config';
+import { type REPORT_REASON } from '../../config';
 
 /* 신고 사유 */
 export type ReportReason = (typeof REPORT_REASON)[keyof typeof REPORT_REASON];

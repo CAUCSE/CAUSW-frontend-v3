@@ -9,9 +9,9 @@ import {
 import { ReportFlow } from '@/features/report';
 
 import {
+  type ChildComment,
   CommentCard,
   type ReplyTarget,
-  type ChildComment,
 } from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
@@ -35,7 +35,7 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
     submitReport,
     submitBlock,
     submitDelete,
-  } = useCommentMenuActions(postId, reply.id);
+  } = useCommentMenuActions(postId, reply.id, true);
 
   const { mutate: toggleLike, isPending } = useToggleReplyLikeMutation(
     postId,
