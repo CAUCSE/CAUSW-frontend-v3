@@ -34,9 +34,15 @@ export const RHFPasswordInput = ({
         type={isVisible ? 'text' : 'password'}
         rightIcon={
           isVisible ? (
-            <Eye onClick={() => setIsVisible((value) => !value)} />
+            <Eye
+              className="cursor-pointer"
+              onClick={() => setIsVisible((value) => !value)}
+            />
           ) : (
-            <EyeOff onClick={() => setIsVisible((value) => !value)} />
+            <EyeOff
+              className="cursor-pointer"
+              onClick={() => setIsVisible((value) => !value)}
+            />
           )
         }
         {...register(

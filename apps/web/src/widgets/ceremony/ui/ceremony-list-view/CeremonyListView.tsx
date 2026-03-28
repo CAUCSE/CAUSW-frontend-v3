@@ -5,7 +5,6 @@ import { Tab } from '@causw/cds';
 import type {
   CeremonyFilterType,
   CeremonyFilterTypeApi,
-  CeremonyItem,
   MyCeremonyStateFilter,
 } from '@/entities/ceremony';
 import { CeremonyFilterChips, FILTER_TYPE_API_MAP } from '@/entities/ceremony';
@@ -18,8 +17,8 @@ interface CeremonyListViewProps {
   onFilterChange: (filter: CeremonyFilterType) => void;
   myStateFilter: MyCeremonyStateFilter;
   onMyStateFilterChange: (filter: MyCeremonyStateFilter) => void;
-  myItems: CeremonyItem[];
   onItemClick?: (id: string) => void;
+  onMyItemClick?: (id: string) => void;
 }
 
 export const CeremonyListView = ({
@@ -27,8 +26,8 @@ export const CeremonyListView = ({
   onFilterChange,
   myStateFilter,
   onMyStateFilterChange,
-  myItems,
   onItemClick,
+  onMyItemClick,
 }: CeremonyListViewProps) => {
   const apiFilterType: CeremonyFilterTypeApi = FILTER_TYPE_API_MAP[filter];
 
@@ -53,8 +52,7 @@ export const CeremonyListView = ({
         <MyCeremonyListView
           stateFilter={myStateFilter}
           onStateFilterChange={onMyStateFilterChange}
-          items={myItems}
-          onItemClick={onItemClick}
+          onItemClick={onMyItemClick}
         />
       </Tab.Content>
     </Tab>

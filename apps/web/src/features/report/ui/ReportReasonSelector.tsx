@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { ReportReason } from '@/entities/report';
+import { type ReportReason } from '@/entities/report';
 
 import { useBreakpoint } from '@/shared/hooks';
 

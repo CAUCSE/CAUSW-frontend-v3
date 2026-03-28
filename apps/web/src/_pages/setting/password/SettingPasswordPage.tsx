@@ -1,36 +1,15 @@
 'use client';
 
-import { FormProvider, useForm } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { FormProvider } from 'react-hook-form';
 
 import { CTAButton, Text, VStack } from '@causw/cds';
+
+import { usePasswordChangeForm } from '@/features/setting';
 
 import { ActionHeader, RHFPasswordInput } from '@/shared/ui';
 
 export const SettingPasswordPage = () => {
-  const passwordChangeSchema = z
-    .object({
-      currentPassword: z.string().min(1),
-      nextPassword: z.string().min(8),
-      confirmPassword: z.string().min(1),
-    })
-    .refine((data) => data.nextPassword === data.confirmPassword, {
-      path: ['confirmPassword'],
-    });
-
-  const methods = useForm({
-    mode: 'onChange',
-    resolver: zodResolver(passwordChangeSchema),
-    defaultValues: {
-      currentPassword: '',
-      nextPassword: '',
-      confirmPassword: '',
-    },
-  });
-
-  const onSubmit = () => {};
+  const { methods, onSubmit, isSubmitting } = usePasswordChangeForm();
 
   return (
     <VStack className="w-full">
@@ -67,9 +46,9 @@ export const SettingPasswordPage = () => {
               color="dark"
               fullWidth
               type="submit"
-              disabled={!methods.formState.isValid}
+              disabled={!methods.formState.isValid || isSubmitting}
             >
-              변경하기
+              {isSubmitting ? '변경 중...' : '변경하기'}
             </CTAButton>
           </VStack>
         </form>

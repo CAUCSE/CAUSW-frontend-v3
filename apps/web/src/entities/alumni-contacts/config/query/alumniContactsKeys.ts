@@ -1,4 +1,4 @@
-import { GetAlumniContactsQuery } from '../../types';
+import { type GetAlumniContactsQuery } from '../../types';
 
 export const alumniContactsQueryKeys = {
   all: ['alumni-contacts'] as const,

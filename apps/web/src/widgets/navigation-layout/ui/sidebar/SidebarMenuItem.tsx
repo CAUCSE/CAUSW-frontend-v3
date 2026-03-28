@@ -4,7 +4,7 @@ import { HStack, Sidebar } from '@causw/cds';
 
 import { CountBadge, StatusDot } from '@/shared/ui';
 
-import { SidebarItem } from '../../model';
+import { type SidebarItem } from '../../model';
 
 export function SidebarMenuItem({
   item,

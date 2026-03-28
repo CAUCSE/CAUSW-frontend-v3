@@ -7,7 +7,7 @@ import { QueryErrorBoundary } from '@/shared/ui';
 import {
   SIDEBAR_BOTTOM_ITEMS,
   SIDEBAR_MAIN_ITEMS,
-  SidebarKey,
+  type SidebarKey,
 } from '../../model';
 import { FooterProfile } from '../FooterProfile';
 

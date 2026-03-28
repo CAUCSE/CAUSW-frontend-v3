@@ -7,7 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { useResetAlumniContactsFilter } from '@/entities/alumni-contacts';
 
-import { useAuthStore } from '@/shared/model';
+import { toast, useAuthStore } from '@/shared/model';
 
 export function GlobalRoutingProvider({ children }: PropsWithChildren) {
   const router = useRouter();
@@ -20,7 +20,7 @@ export function GlobalRoutingProvider({ children }: PropsWithChildren) {
     if (!authError) return;
 
     if (authError.errorType === 'token-expired') {
-      alert(authError.message);
+      toast.error(authError.message);
 
       // TODO: 로그인 시 callbackUrl 활용한 라우팅 추가
       const callbackUrl = encodeURIComponent(pathname ?? '/');

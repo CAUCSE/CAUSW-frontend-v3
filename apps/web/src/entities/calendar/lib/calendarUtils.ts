@@ -1,4 +1,4 @@
-import { CalendarScheduleItem, CalendarEventType } from '../model';
+import { type CalendarScheduleItem, type CalendarEventType } from '../model';
 export const transformToCalendarEvents = (items: CalendarScheduleItem[]) => {
   return items.map((item) => ({
     id: item.id,

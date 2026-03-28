@@ -2,7 +2,7 @@
 
 import {
   ErrorBoundary,
-  ErrorBoundaryPropsWithComponent,
+  type ErrorBoundaryPropsWithComponent,
   type FallbackProps,
 } from 'react-error-boundary';
 

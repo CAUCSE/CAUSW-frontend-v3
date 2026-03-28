@@ -1,7 +1,7 @@
 import { RatioChart } from '@causw/cds';
 
 import { formatVoteStatus } from '../lib';
-import { VoteOption } from '../model';
+import { type VoteOption } from '../model';
 
 interface PostVoteProps {
   options: VoteOption[];

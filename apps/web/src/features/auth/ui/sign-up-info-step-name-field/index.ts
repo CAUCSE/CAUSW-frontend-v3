@@ -1,0 +1,1 @@
+export { SignUpInfoStepNameField } from './SignUpInfoStepNameField';

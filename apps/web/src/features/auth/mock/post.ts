@@ -1,9 +1,9 @@
-import { HttpResponse } from 'msw';
+import { HttpResponse, passthrough } from 'msw';
 
 import {
-  SigninResponseDto,
-  SignoutResponseDto,
-  SignupResponseDto,
+  type SigninResponseDto,
+  type SignoutResponseDto,
+  type SignupResponseDto,
 } from '@/entities/auth';
 
 import { mswHttp } from '@/shared/lib';
@@ -12,6 +12,7 @@ const AUTH_API_PREFIX = '/api/v2/auth';
 
 export const postHandler = [
   mswHttp.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: '201',
@@ -29,6 +30,7 @@ export const postHandler = [
     );
   }),
   mswHttp.post<SigninResponseDto>(`${AUTH_API_PREFIX}/login`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: '201',
@@ -44,6 +46,7 @@ export const postHandler = [
     );
   }),
   mswHttp.post<SignoutResponseDto>(`${AUTH_API_PREFIX}/logout`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: '204',

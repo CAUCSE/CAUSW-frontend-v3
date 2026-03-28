@@ -8,7 +8,11 @@ import {
 } from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
-import { CommentCard, ReplyTarget, ChildComment } from '@/entities/comment';
+import {
+  CommentCard,
+  type ReplyTarget,
+  type ChildComment,
+} from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
 import { ConfirmModal } from '@/shared/ui';

@@ -1,4 +1,4 @@
-import { ChildComment, ReplyTarget } from '@/entities/comment';
+import { type ChildComment, type ReplyTarget } from '@/entities/comment';
 
 import { ReplyItem } from './ReplyItem';
 

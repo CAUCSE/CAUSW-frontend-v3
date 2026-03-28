@@ -1,6 +1,11 @@
 import { isApiError } from '@causw/api-client';
 
-import { SentryExtra, SentryFormat, SentryLevel, SentryType } from '../types';
+import {
+  type SentryExtra,
+  type SentryFormat,
+  type SentryLevel,
+  type SentryType,
+} from '../types';
 
 /**
  * 에러 객체를 분석하여 Sentry 포맷(Level, Tag, Extra)으로 변환합니다.

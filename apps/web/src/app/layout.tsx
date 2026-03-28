@@ -7,7 +7,7 @@ import { getTraceData } from '@causw/logger';
 import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 
 import { MSWComponent } from './_mock';
-import { GlobalRoutingProvider } from './_provider';
+import { AuthRefreshProvider, GlobalRoutingProvider } from './_provider';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',
@@ -28,7 +28,9 @@ export default function RootLayout({
         <MSWComponent>
           <QueryProviderWithDevtools>
             <Toaster />
-            <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+            <AuthRefreshProvider>
+              <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+            </AuthRefreshProvider>
           </QueryProviderWithDevtools>
         </MSWComponent>
       </body>
