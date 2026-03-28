@@ -4,11 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import {
-  postKeys,
-  PostUpdateRequestDto,
-  PostUpdateResponseDto,
-} from '@/entities/post';
+import { postKeys, type PostUpdateRequestDto } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
@@ -31,10 +27,8 @@ export const useUpdatePostMutation = () => {
       attachImageList,
     }: UpdatePostParams) =>
       updatePost(postId, postUpdateRequest, attachImageList),
-    onSuccess: (data: PostUpdateResponseDto) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postKeys.all });
-      queryClient.invalidateQueries({ queryKey: postKeys.detail(data.id) });
-
       router.back();
     },
     onError: (error) => {

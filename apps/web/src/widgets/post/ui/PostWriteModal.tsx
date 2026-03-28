@@ -9,7 +9,7 @@ import { Dialog, mergeStyles } from '@causw/cds';
 import { PostWriteForm, PostEditForm } from '@/features/post-write';
 
 import { useBreakpoint } from '@/shared/hooks';
-import { ConfirmLeaveModal } from '@/shared/ui';
+import { ConfirmLeaveModal, SuspenseView } from '@/shared/ui';
 
 export const PostWriteModal = ({ postId }: { postId?: string }) => {
   const router = useRouter();
@@ -42,7 +42,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
             setIsCancelConfirmOpen(true);
           }}
           className={mergeStyles(
-            'flex flex-col p-0 md:overflow-hidden',
+            'flex flex-col p-0 focus:outline-none md:overflow-hidden',
             !isMobileSize
               ? 'w-[calc(100vw-200px)] max-w-175 md:h-128'
               : 'animate-none! transition-none! data-[state=closed]:animate-none! data-[state=open]:animate-none!',
@@ -52,13 +52,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
             {postId ? '게시글 수정' : '게시글 작성'}
           </Dialog.Title>
           {postId ? (
-            <Suspense
-              fallback={
-                <div className="p-8 text-center text-gray-500">
-                  게시글을 불러오는 중...
-                </div>
-              }
-            >
+            <Suspense fallback={<SuspenseView />}>
               <PostEditForm postId={postId} onClose={handleRequestClose} />
             </Suspense>
           ) : (

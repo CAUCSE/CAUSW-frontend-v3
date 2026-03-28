@@ -31,6 +31,7 @@ export const PostWriteForm = ({
   postId,
   initialData,
 }: PostWriteFormProps) => {
+  const isEdit = !!postId;
   const { data: boardData } = useGetAvailableBoards();
 
   const form = usePostCreateForm(initialData);
@@ -56,7 +57,7 @@ export const PostWriteForm = ({
     boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
-    if (postId) {
+    if (isEdit) {
       const updateDto = mapPostUpdateFormToDto(data);
 
       updatePost({
@@ -108,6 +109,7 @@ export const PostWriteForm = ({
           setVote={(val) =>
             setValue('vote', val, { shouldValidate: true, shouldDirty: true })
           }
+          isEdit={isEdit}
         />
 
         <Box className="m-5 mb-0">

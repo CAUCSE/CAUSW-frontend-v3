@@ -20,7 +20,7 @@ export const PostEditForm = ({ postId, onClose }: PostEditFormProps) => {
         content: post.content,
         boardId: post.boardId,
         isAnonymous: post.isAnonymous,
-        images: [], // Existing images cannot be displayed correctly in current ImageUploadField without refactoring
+        images: [],
         vote: null,
       }}
     />

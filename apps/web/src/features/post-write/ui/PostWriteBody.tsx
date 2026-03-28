@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-import { ArrowDown, Chip, TextArea, VStack } from '@causw/cds';
+import { ArrowDown, Chip, mergeStyles, TextArea, VStack } from '@causw/cds';
 
 import { type Board } from '@/entities/feed';
 import { type VoteWriteValue } from '@/entities/post';
@@ -16,6 +16,7 @@ interface PostWriteBodyProps {
   setContent: (content: string) => void;
   vote: VoteWriteValue | null;
   setVote: (vote: VoteWriteValue | null) => void;
+  isEdit?: boolean;
 }
 
 export const PostWriteBody = ({
@@ -25,6 +26,7 @@ export const PostWriteBody = ({
   setContent,
   vote,
   setVote,
+  isEdit,
 }: PostWriteBodyProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -40,6 +42,17 @@ export const PostWriteBody = ({
     el.style.height = `${el.scrollHeight}px`;
   }, [content]);
 
+  // 모달 진입 시 텍스트 끝에 포커스
+  useEffect(() => {
+    if (isEdit) {
+      const el = textareaRef.current;
+      if (el) {
+        el.focus();
+        el.setSelectionRange(el.value.length, el.value.length);
+      }
+    }
+  }, [isEdit]);
+
   return (
     <VStack
       gap="none"
@@ -52,9 +65,12 @@ export const PostWriteBody = ({
       <Chip
         asChild
         color="lightgray"
-        className="transition-color mx-4 w-fit shrink-0 cursor-pointer hover:bg-gray-200 active:bg-gray-200 md:mt-4"
+        className={mergeStyles(
+          'transition-color mx-4 w-fit shrink-0 md:mt-4',
+          !isEdit ? 'cursor-pointer hover:bg-gray-200 active:bg-gray-200' : '',
+        )}
       >
-        <button onClick={onSelectorClick}>
+        <button onClick={onSelectorClick} disabled={isEdit}>
           {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
           <ArrowDown size={14} color="gray-500" />
         </button>
