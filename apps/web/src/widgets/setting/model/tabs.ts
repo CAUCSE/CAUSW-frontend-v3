@@ -1,4 +1,4 @@
-﻿import { type ActivityType } from '@/entities/setting';
+﻿import { ActivityType } from '@/entities/setting';
 
 export const ACTIVITY_TABS: Array<{ key: ActivityType; label: string }> = [
   { key: 'my-posts', label: '내가 쓴 글' },

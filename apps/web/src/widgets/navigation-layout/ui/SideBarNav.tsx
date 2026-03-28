@@ -6,11 +6,7 @@ import { HStack, VStack, Sidebar } from '@causw/cds';
 
 import { CountBadge, StatusDot } from '@/shared/ui';
 
-import {
-  SIDEBAR_BOTTOM_ITEMS,
-  SIDEBAR_MAIN_ITEMS,
-  type SidebarKey,
-} from '../model';
+import { SIDEBAR_BOTTOM_ITEMS, SIDEBAR_MAIN_ITEMS, SidebarKey } from '../model';
 
 import { FooterProfile } from './FooterProfile';
 

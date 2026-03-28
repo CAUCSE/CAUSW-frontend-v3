@@ -1,1 +1,0 @@
-export { SignUpInfoStepHeader } from './SignUpInfoStepHeader';

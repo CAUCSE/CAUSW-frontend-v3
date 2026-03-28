@@ -9,7 +9,7 @@ import {
   Setting,
 } from '@causw/cds';
 
-import { type BottomNavItem, type SidebarItem } from './types';
+import { BottomNavItem, SidebarItem } from './types';
 
 export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
   { key: 'home', label: '홈', icon: <Home />, href: '/home' },

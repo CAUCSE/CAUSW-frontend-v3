@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { BottomNavigation } from '@causw/cds';
 
-import { BOTTOM_NAV_ITEMS, type BottomNavKey } from '../model';
+import { BOTTOM_NAV_ITEMS, BottomNavKey } from '../model';
 
 type Props = {
   selected: BottomNavKey;

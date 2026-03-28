@@ -46,9 +46,7 @@ function CeremonyListContent() {
             title={item.title}
             icon={getCeremonyIcon(item.category)}
             descriptions={[
-              item.endDate
-                ? `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`
-                : formatToMonthDay(item.startDate),
+              `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`,
               item.category || item.type,
             ]}
           />

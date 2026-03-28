@@ -8,16 +8,22 @@ import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
 
 import { appleNativeLogin } from '@/features/auth/api';
 
-import { BASE_URL, isLocal } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
 import { extractErrorMessage, isMobile } from '@/shared/utils';
 
-type AppleLoginButtonProps = ComponentProps<'button'>;
+type AppleLoginButtonProps = ComponentProps<'button'> & {
+  serviceId?: string;
+  redirectUri?: string;
+  state?: string;
+};
 
 export const AppleLoginButton = ({
   className,
   onClick,
+  serviceId,
+  redirectUri,
+  state,
   ...props
 }: AppleLoginButtonProps) => {
   const router = useRouter();
@@ -51,11 +57,21 @@ export const AppleLoginButton = ({
       return;
     }
 
-    const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/apple`);
-    if (isLocal) {
-      oauthUrl.searchParams.set('env', 'local');
-    }
-    window.location.href = oauthUrl.toString();
+    if (!serviceId || !redirectUri) return;
+
+    const resolvedRedirectUri = redirectUri.startsWith('/')
+      ? `${window.location.origin}${redirectUri}`
+      : redirectUri;
+
+    const url = new URL('https://appleid.apple.com/auth/authorize');
+    url.searchParams.set('client_id', serviceId);
+    url.searchParams.set('redirect_uri', resolvedRedirectUri);
+    url.searchParams.set('response_type', 'code');
+    url.searchParams.set('response_mode', 'form_post');
+    url.searchParams.set('scope', 'name email');
+    if (state) url.searchParams.set('state', state);
+
+    window.location.href = url.toString();
   };
 
   return (

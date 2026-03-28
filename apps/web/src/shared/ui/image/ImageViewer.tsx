@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { Close, ChevronLeft, ChevronRight } from '@causw/cds';
 
 import { getOriginalImageUrl, awsImageLoader, saveImage } from '@/shared/lib';
-import { type ImageViewerProps } from '@/shared/types';
+import { ImageViewerProps } from '@/shared/types';
 
 const LONG_PRESS_DURATION = 500;
 const LONG_PRESS_MOVE_THRESHOLD = 10;

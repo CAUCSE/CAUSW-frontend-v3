@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 
-import { type AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
+import { AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
 
 interface AlumniContactsAcademicFilterSheetModalState {
   startAdmissionYear: number | null;

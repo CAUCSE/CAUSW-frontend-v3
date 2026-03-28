@@ -1,4 +1,4 @@
-import { type ApiResponse, isApiError } from '@causw/api-client';
+import { ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
@@ -8,7 +8,7 @@ import {
   parseCustomErrorCode,
 } from '@/shared/utils/auth/errorHandler';
 
-import { type BaseApiClient } from '../../instances';
+import { BaseApiClient } from '../../instances';
 
 export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
   const { internalClient } = apiWrapper;
@@ -62,7 +62,6 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
           await TokenManager.setAccessToken(newAccessToken);
           await TokenManager.setRefreshToken();
-          await TokenManager.setAuthRefreshed();
 
           apiWrapper.processRefreshQueue(newAccessToken);
 

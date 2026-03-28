@@ -4,7 +4,6 @@ export interface SignupRequestDto {
   name: string;
   phoneNumber: string;
   nickname: string;
-  emailVerificationCode: string;
 }
 
 export interface SignupResponseDto {
@@ -32,33 +31,6 @@ export interface SignoutRequestDto {
 
 export interface SignoutResponseDto {
   data: string;
-}
-
-export interface SendEmailVerificationCodeRequestDto {
-  email: string;
-}
-
-export interface SendEmailVerificationCodeResponseDto {
-  code: string;
-  message: string;
-}
-
-export interface VerifyEmailVerificationCodeRequestDto {
-  email: string;
-  verificationCode: string;
-}
-
-export interface VerifyEmailVerificationCodeResponseDto {
-  code: string;
-  message: string;
-}
-
-export interface CheckPhoneDuplicateRequestDto {
-  phoneNumber: string;
-}
-
-export interface CheckNicknameDuplicateRequestDto {
-  nickname: string;
 }
 
 export interface KakaoLoginRequestDto {
@@ -113,22 +85,4 @@ export interface GoogleLoginResponseDto {
   name: string;
   email: string;
   profileImgUrl: string;
-}
-
-export interface FindEmailRequestDto {
-  name: string;
-  phoneNumber: string;
-}
-
-export type SocialProvider = 'KAKAO' | 'APPLE' | 'GOOGLE';
-
-export interface SocialAccountSummary {
-  provider: SocialProvider;
-  createdAt: string;
-}
-
-export interface EmailFindResponse {
-  email: string;
-  createdAt: string;
-  socialAccounts: SocialAccountSummary[];
 }

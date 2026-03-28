@@ -2,11 +2,7 @@ import { VStack } from '@causw/cds';
 
 import { CommentEmptyState, CommentItem } from '@/features/comment';
 
-import {
-  type Comment,
-  CommentHeader,
-  type ReplyTarget,
-} from '@/entities/comment';
+import { Comment, CommentHeader, ReplyTarget } from '@/entities/comment';
 
 interface CommentListProps {
   countComment: number;

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { type ReplyTarget } from '@/entities/comment';
+import { ReplyTarget } from '@/entities/comment';
 
 import { usePostCommentMutation, usePostReplyMutation } from '../mutations';
 

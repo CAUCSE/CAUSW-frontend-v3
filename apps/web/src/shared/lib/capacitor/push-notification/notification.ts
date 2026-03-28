@@ -1,9 +1,4 @@
-import type { PermissionState } from '@capacitor/core';
-import {
-  PushNotifications,
-  type PermissionStatus,
-  type Token,
-} from '@capacitor/push-notifications';
+import { PushNotifications, type Token } from '@capacitor/push-notifications';
 
 import { isMobile } from '@/shared/utils';
 
@@ -13,23 +8,6 @@ type InitNotificationOptions = {
 };
 
 let registered = false;
-
-async function getPushNotificationPermissionState(): Promise<
-  PermissionState | 'unsupported'
-> {
-  if (!isMobile) return 'unsupported';
-
-  const permission: PermissionStatus =
-    await PushNotifications.checkPermissions();
-
-  return permission.receive;
-}
-
-export async function isPushNotificationPermissionDenied() {
-  const status = await getPushNotificationPermissionState();
-
-  return status === 'denied';
-}
 
 export async function initNotification({
   onToken,

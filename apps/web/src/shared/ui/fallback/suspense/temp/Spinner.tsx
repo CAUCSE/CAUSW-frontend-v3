@@ -1,4 +1,4 @@
-import { type SVGProps } from 'react';
+import { SVGProps } from 'react';
 
 import { mergeStyles } from '@causw/cds';
 

@@ -1,15 +1,13 @@
 'use server';
 import { cookies } from 'next/headers';
 
-import {
-  AUTH_REFRESHED_STORAGE_VALUE,
-  STORAGE_ACCESS_KEY,
-  STORAGE_AUTH_REFRESHED_KEY,
-  STORAGE_REFRESH_KEY,
-} from '@/shared/config';
+import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
+
+const accessKey = getStorageAccessKey();
+const refreshKey = getStorageRefreshKey();
 
 export const getServerATK = async (): Promise<string> => {
-  const atk = (await cookies()).get(STORAGE_ACCESS_KEY);
+  const atk = (await cookies()).get(accessKey);
   if (!atk) {
     return '';
   }
@@ -17,7 +15,7 @@ export const getServerATK = async (): Promise<string> => {
 };
 
 export const getServerRTK = async (): Promise<string> => {
-  const rtk = (await cookies()).get(STORAGE_REFRESH_KEY);
+  const rtk = (await cookies()).get(refreshKey);
   if (!rtk) {
     return '';
   }
@@ -25,24 +23,17 @@ export const getServerRTK = async (): Promise<string> => {
 };
 
 export const setServerATK = async (token: string): Promise<void> => {
-  (await cookies()).set(STORAGE_ACCESS_KEY, token);
+  (await cookies()).set(accessKey, token);
 };
 
 export const setServerRTK = async (token: string): Promise<void> => {
-  (await cookies()).set(STORAGE_REFRESH_KEY, token);
+  (await cookies()).set(refreshKey, token);
 };
 
 export const removeServerATK = async (): Promise<void> => {
-  (await cookies()).delete(STORAGE_ACCESS_KEY);
+  (await cookies()).delete(accessKey);
 };
 
 export const removeServerRTK = async (): Promise<void> => {
-  (await cookies()).delete(STORAGE_REFRESH_KEY);
-};
-
-export const setServerAuthRefreshed = async (): Promise<void> => {
-  (await cookies()).set(
-    STORAGE_AUTH_REFRESHED_KEY,
-    AUTH_REFRESHED_STORAGE_VALUE,
-  );
+  (await cookies()).delete(refreshKey);
 };

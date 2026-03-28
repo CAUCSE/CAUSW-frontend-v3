@@ -1,10 +1,10 @@
 import { ApiError } from '../errors/ApiError';
 import { InterceptorManager } from '../interceptors/InterceptorManager';
 import {
-  type ApiClientConfig,
-  type ApiResponse,
-  type FetchOptions,
-  type InternalRequestConfig,
+  ApiClientConfig,
+  ApiResponse,
+  FetchOptions,
+  InternalRequestConfig,
 } from '../types';
 
 export class ApiClient {

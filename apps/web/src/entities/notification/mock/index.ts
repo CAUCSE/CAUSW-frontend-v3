@@ -1,1 +1,0 @@
-export { notificationHandler } from './handler';

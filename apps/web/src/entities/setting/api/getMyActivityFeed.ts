@@ -1,8 +1,8 @@
 ﻿import {
-  type ActivityMode,
-  type ActivityType,
+  ActivityMode,
+  ActivityType,
   EMPTY_ACTIVITY_MESSAGE,
-  type MyActivityFeed,
+  MyActivityFeed,
 } from '../model';
 
 import { MOCK_ACTIVITY_POSTS } from './mock-data';

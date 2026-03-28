@@ -1,6 +1,6 @@
-import { type AlumniContactsFilter } from '@/entities/alumni-contacts';
+import { AlumniContactsFilter } from '@/entities/alumni-contacts';
 
-import { type NextSearchParams } from '@/shared/types';
+import { NextSearchParams } from '@/shared/types';
 
 import { AlumniContactsPage } from '@/_pages/alumni-contacts';
 

@@ -22,7 +22,7 @@ export const AlumniContactsListItem = ({
           <VStack gap="none" className="grow">
             <Text
               typography="subtitle-16-bold"
-              textColor="gray-700"
+              color="gray-700"
               className="truncate"
             >
               {item.name}
@@ -30,7 +30,7 @@ export const AlumniContactsListItem = ({
             <HStack className="min-w-0 items-center gap-2">
               <Text
                 typography="body-14-regular"
-                textColor="gray-400"
+                color="gray-400"
                 className="min-w-0 truncate"
               >
                 {item.admissionYear}
@@ -38,7 +38,7 @@ export const AlumniContactsListItem = ({
               <div className="h-2 w-px shrink-0 bg-gray-200" />
               <Text
                 typography="body-14-regular"
-                textColor="gray-400"
+                color="gray-400"
                 className="min-w-0 truncate"
               >
                 {item.academicStatus}

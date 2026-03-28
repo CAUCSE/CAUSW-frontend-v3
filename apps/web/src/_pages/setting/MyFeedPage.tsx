@@ -12,7 +12,7 @@ import {
   useMyActivityFeeds,
 } from '@/widgets/setting';
 
-import { type ActivityMode, type ActivityType } from '@/entities/setting';
+import { ActivityMode, ActivityType } from '@/entities/setting';
 
 import { SuspenseView } from '@/shared/ui';
 import { QueryErrorBoundary } from '@/shared/ui/provider';

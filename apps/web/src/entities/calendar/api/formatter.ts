@@ -1,6 +1,6 @@
 import { formatToISOWithTime } from '@/shared/lib';
 
-import { type CalendarScheduleParams } from '../model';
+import { CalendarScheduleParams } from '../model';
 
 export const formatCalendarParams = (
   params: CalendarScheduleParams,

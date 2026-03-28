@@ -1,6 +1,6 @@
-import { RatioChartEditor, type RatioChartEditorOption } from '@causw/cds';
+import { RatioChartEditor, RatioChartEditorOption } from '@causw/cds';
 
-import { type VoteWriteValue } from '@/entities/post';
+import { VoteWriteValue } from '@/entities/post';
 
 interface VoteFieldProps {
   value: VoteWriteValue;

@@ -1,6 +1,6 @@
 import { ApiError } from '@causw/api-client';
 
-import { type DefaultErrorField } from '@/shared/types';
+import { DefaultErrorField } from '@/shared/types';
 
 /**
  * ApiError에서 서버가 보낸 에러 메시지를 추출합니다.

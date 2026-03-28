@@ -1,10 +1,13 @@
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
-import { NATIVE_ACCESS_KEY, NATIVE_REFRESH_KEY } from '@/shared/config';
+import { getNativeAccessKey, getNativeRefreshKey } from '@/shared/utils';
+
+const accessNativeKey = getNativeAccessKey();
+const refreshNativeKey = getNativeRefreshKey();
 export const getNativeATK = async (): Promise<string> => {
   try {
     const { value } = await SecureStoragePlugin.get({
-      key: NATIVE_ACCESS_KEY,
+      key: accessNativeKey,
     });
     return value ?? '';
   } catch {
@@ -15,7 +18,7 @@ export const getNativeATK = async (): Promise<string> => {
 export const getNativeRTK = async (): Promise<string> => {
   try {
     const { value } = await SecureStoragePlugin.get({
-      key: NATIVE_REFRESH_KEY,
+      key: refreshNativeKey,
     });
     return value ?? '';
   } catch {
@@ -24,17 +27,17 @@ export const getNativeRTK = async (): Promise<string> => {
 };
 
 export const setNativeATK = async (token: string): Promise<void> => {
-  await SecureStoragePlugin.set({ key: NATIVE_ACCESS_KEY, value: token });
+  await SecureStoragePlugin.set({ key: accessNativeKey, value: token });
 };
 
 export const setNativeRTK = async (token: string): Promise<void> => {
-  await SecureStoragePlugin.set({ key: NATIVE_REFRESH_KEY, value: token });
+  await SecureStoragePlugin.set({ key: refreshNativeKey, value: token });
 };
 
 export const removeNativeATK = async (): Promise<void> => {
-  await SecureStoragePlugin.remove({ key: NATIVE_ACCESS_KEY });
+  await SecureStoragePlugin.remove({ key: accessNativeKey });
 };
 
 export const removeNativeRTK = async (): Promise<void> => {
-  await SecureStoragePlugin.remove({ key: NATIVE_REFRESH_KEY });
+  await SecureStoragePlugin.remove({ key: refreshNativeKey });
 };

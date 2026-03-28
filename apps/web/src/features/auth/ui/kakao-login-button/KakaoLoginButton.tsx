@@ -8,18 +8,31 @@ import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
 
 import { kakaoNativeLogin } from '@/features/auth/api';
 
-import { BASE_URL, isLocal } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
 import { extractErrorMessage, isMobile } from '@/shared/utils';
 
-type KakaoLoginButtonProps = ComponentProps<'button'>;
+import { useKakaoSDK } from '../../lib/useKakaoSDK';
+
+type KakaoLoginButtonProps = ComponentProps<'button'> & {
+  /**
+   * 카카오 로그인 성공 후 리다이렉트될 URI.
+   *
+   * - 전용 콜백 페이지가 없어도 됩니다.
+   * - 생략하면 현재 페이지 URL을 사용합니다.
+   *   → 현재 페이지의 useEffect 등에서 `?code=` 쿼리 파라미터를 읽어 처리하세요.
+   * - 카카오 개발자 콘솔에 등록된 URI와 정확히 일치해야 합니다.
+   */
+  redirectUri?: string;
+};
 
 export const KakaoLoginButton = ({
   className,
   onClick,
+  redirectUri,
   ...props
 }: KakaoLoginButtonProps) => {
+  const { isReady } = useKakaoSDK();
   const router = useRouter();
 
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -51,11 +64,19 @@ export const KakaoLoginButton = ({
       return;
     }
 
-    const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/kakao`);
-    if (isLocal) {
-      oauthUrl.searchParams.set('env', 'local');
-    }
-    window.location.href = oauthUrl.toString();
+    if (!isReady || !window.Kakao?.Auth) return;
+
+    const resolvedRedirectUri = redirectUri
+      ? redirectUri.startsWith('/')
+        ? `${window.location.origin}${redirectUri}`
+        : redirectUri
+      : window.location.href.split('?')[0];
+
+    window.Kakao.Auth.authorize({
+      // redirectUri를 생략하면 현재 페이지로 돌아오고,
+      // 페이지 마운트 시 URL의 ?code= 파라미터로 처리합니다.
+      redirectUri: resolvedRedirectUri,
+    });
   };
 
   return (

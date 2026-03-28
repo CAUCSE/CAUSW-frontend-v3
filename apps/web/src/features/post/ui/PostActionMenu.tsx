@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { Dropdown, Menu } from '@causw/cds';
 
-import { type PostAction } from '../model';
+import { PostAction } from '../model';
 
 interface PostActionMenuProps {
   isMine: boolean;

@@ -1,6 +1,6 @@
 import { API } from '@/shared/api';
 
-import { type BoardAvailableListResponseDto } from '../../model';
+import { BoardAvailableListResponseDto } from '../../model';
 
 export const getAvailableBoards =
   async (): Promise<BoardAvailableListResponseDto> => {

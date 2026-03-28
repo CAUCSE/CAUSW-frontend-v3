@@ -1,1 +1,0 @@
-export { SocialLoginCallbackPage } from './SocialLoginCallbackPage';

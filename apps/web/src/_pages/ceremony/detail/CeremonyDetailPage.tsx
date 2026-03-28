@@ -1,19 +1,18 @@
 'use client';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-import { CeremonyDetailContainer } from '@/widgets/ceremony';
+import { CeremonyDetailView } from '@/widgets/ceremony';
 
-import type { CeremonyDetailContext } from '@/entities/ceremony';
+import { MOCK_CEREMONY_DETAIL } from '@/features/ceremony';
 
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyDetailPage = () => {
   const router = useRouter();
-  const { id } = useParams<{ id: string }>();
-  const searchParams = useSearchParams();
-  const rawContext = searchParams.get('context');
-  const context: CeremonyDetailContext = rawContext === 'my' ? 'my' : 'general';
+
+  // TODO: useParams()로 id 가져와서 API 호출로 교체
+  const detail = MOCK_CEREMONY_DETAIL;
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
@@ -23,7 +22,7 @@ export const CeremonyDetailPage = () => {
         </ActionHeader.BackButton>
       </ActionHeader>
 
-      <CeremonyDetailContainer ceremonyId={id} context={context} />
+      <CeremonyDetailView detail={detail} />
     </div>
   );
 };

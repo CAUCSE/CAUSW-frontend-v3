@@ -1,6 +1,6 @@
 import { ROUTES } from '@/shared/constants';
 
-import { type NotificationLatestResponse } from '../model';
+import { NotificationLatestResponse } from '../model';
 export function getNotificationPopupLink(data: NotificationLatestResponse) {
   const { noticeType, targetId, targetParentId } = data;
   //TODO : 페이지 다 나오면 링크 수정

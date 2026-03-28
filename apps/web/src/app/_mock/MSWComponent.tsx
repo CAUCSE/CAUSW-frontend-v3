@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropsWithChildren, Suspense, use } from 'react';
+import { PropsWithChildren, Suspense, use } from 'react';
 
 import { ENVIRONMENT } from '@/shared/config';
 

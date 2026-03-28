@@ -1,4 +1,4 @@
-﻿import { type ActivityType } from '@/entities/setting';
+﻿import { ActivityType } from '@/entities/setting';
 
 export const toActivityTab = (view?: string): ActivityType => {
   if (view === 'my-comments' || view === 'comments') return 'my-comments';

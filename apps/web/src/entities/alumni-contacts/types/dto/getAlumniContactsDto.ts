@@ -1,4 +1,4 @@
-import { type PaginationDto } from '@/shared/types';
+import { PaginationDto } from '@/shared/types';
 
 interface GetAlumniContactsResponseDto {
   id: string;

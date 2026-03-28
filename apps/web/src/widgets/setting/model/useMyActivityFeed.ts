@@ -1,6 +1,6 @@
 ﻿import { useSuspenseQueries } from '@tanstack/react-query';
 
-import { type ActivityMode, getMyActivityFeed } from '@/entities/setting';
+import { ActivityMode, getMyActivityFeed } from '@/entities/setting';
 
 import { ACTIVITY_TAB_KEYS } from './tabs';
 

@@ -1,4 +1,4 @@
-import { tv, type VariantProps } from 'tailwind-variants';
+import { tv, VariantProps } from 'tailwind-variants';
 
 export const actionHeader = tv({
   slots: {

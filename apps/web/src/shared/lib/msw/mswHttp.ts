@@ -1,13 +1,13 @@
 import {
   http,
-  type HttpHandler,
-  type HttpResponseResolver,
-  type PathParams,
+  HttpHandler,
+  HttpResponseResolver,
+  PathParams,
   type DefaultBodyType,
 } from 'msw';
 
 import { BASE_URL } from '@/shared/config';
-import { type DefaultResponseField } from '@/shared/types';
+import { DefaultResponseField } from '@/shared/types';
 
 type MswResolver<T, U extends DefaultBodyType> = HttpResponseResolver<
   PathParams,

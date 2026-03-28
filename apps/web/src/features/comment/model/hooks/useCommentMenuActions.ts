@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { type CommentAction } from '../../config';
+import { CommentAction } from '../../config';
 import { useDeleteCommentMutation } from '../mutations';
 
 type ActiveModalType = CommentAction | null;

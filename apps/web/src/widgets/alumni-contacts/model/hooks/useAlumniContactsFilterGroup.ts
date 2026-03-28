@@ -6,7 +6,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
   ALUMNI_CONTACTS_FILTER,
-  type AlumniContactsAcademicStatusFilterOption,
+  AlumniContactsAcademicStatusFilterOption,
 } from '@/entities/alumni-contacts';
 
 export const useAlumniContactsFilterGroup = () => {

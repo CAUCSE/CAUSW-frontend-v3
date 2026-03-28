@@ -1,4 +1,4 @@
-import { type Post } from './types';
+import { Post } from './types';
 
 export const MOCK_IMAGES = [
   'https://picsum.photos/seed/openlab1/1200/800',

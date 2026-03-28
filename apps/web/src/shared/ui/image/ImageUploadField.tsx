@@ -2,14 +2,14 @@
 
 import * as React from 'react';
 
-import { type FieldValues } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 
 import Image from 'next/image';
 
 import { CloseFilled } from '@causw/cds';
 
 import { IMAGE_UPLOAD_RULES, ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
-import { type ImageUploadFieldProps } from '@/shared/types';
+import { ImageUploadFieldProps } from '@/shared/types';
 
 export interface ImageUploadFieldRef {
   openFilePicker: () => void;

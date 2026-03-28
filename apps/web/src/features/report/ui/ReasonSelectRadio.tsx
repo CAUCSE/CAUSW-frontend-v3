@@ -1,6 +1,6 @@
 import { Radio, RadioGroup } from '@causw/cds';
 
-import { type ReportReason } from '@/entities/report';
+import { ReportReason } from '@/entities/report';
 
 import { REPORT_OPTIONS } from '../config';
 

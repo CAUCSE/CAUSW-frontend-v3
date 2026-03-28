@@ -5,11 +5,7 @@ import { Stack } from '@causw/cds';
 import { BlockUserModal } from '@/features/block';
 import { ReportFlow } from '@/features/report';
 
-import {
-  type Comment,
-  CommentCard,
-  type ReplyTarget,
-} from '@/entities/comment';
+import { CommentCard, ReplyTarget, Comment } from '@/entities/comment';
 
 import { formatRelativeTime } from '@/shared/lib';
 import { ConfirmModal } from '@/shared/ui';

@@ -1,6 +1,6 @@
 import { Close, HStack, Stack, Text } from '@causw/cds';
 
-import { type ReplyTarget } from '../model';
+import { ReplyTarget } from '../model';
 
 interface ReplyIndicatorProps {
   replyTarget: ReplyTarget;

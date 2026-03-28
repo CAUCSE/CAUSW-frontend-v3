@@ -2,7 +2,7 @@ import { HttpResponse } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
-import { type BoardAvailableListResponseDto } from '../../model';
+import { BoardAvailableListResponseDto } from '../../model';
 
 const BOARDS_API_PREFIX = '/api/v2/boards';
 

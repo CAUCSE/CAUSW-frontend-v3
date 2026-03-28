@@ -1,4 +1,4 @@
-import { type ApiError } from '@causw/api-client';
+import { ApiError } from '@causw/api-client';
 
 import { noATKCode, noRTKCode } from '@/shared/constants';
 

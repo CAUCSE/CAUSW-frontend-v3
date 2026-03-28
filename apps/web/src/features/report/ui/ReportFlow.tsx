@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { REPORT_OPTIONS } from '@/features/report';
 
-import { REPORT_REASON, type ReportReason } from '@/entities/report';
+import { REPORT_REASON, ReportReason } from '@/entities/report';
 
 import { ReportConfirmModal } from './ReportConfirmModal';
 import { ReportReasonSelector } from './ReportReasonSelector';

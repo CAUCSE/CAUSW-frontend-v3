@@ -1,1 +1,0 @@
-export { NotificationTimeLabel } from './NotificationTimeLabel';

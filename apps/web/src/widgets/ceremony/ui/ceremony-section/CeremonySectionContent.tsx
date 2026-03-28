@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useSyncExternalStore } from 'react';
 
 import type { CeremonyFilterTypeApi } from '@/entities/ceremony';
 import {
@@ -9,7 +9,7 @@ import {
   usePastCeremoniesQuery,
 } from '@/entities/ceremony';
 
-import { useFetchNextOnScroll, useIsMounted } from '@/shared/hooks';
+import { useFetchNextOnScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui/fallback';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
 
@@ -75,6 +75,14 @@ const CeremonyContentSection = ({
 };
 
 const CeremonySectionsFallback = () => <SuspenseView />;
+
+const emptySubscribe = () => () => {};
+const useIsMounted = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
 export const CeremonySectionsGroup = ({
   type,

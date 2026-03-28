@@ -14,7 +14,7 @@ import {
 } from '@/features/alumni-contacts';
 
 import {
-  type AlumniContactsFilter,
+  AlumniContactsFilter,
   checkAlumniContactsFilterSearchParamValidation,
 } from '@/entities/alumni-contacts';
 

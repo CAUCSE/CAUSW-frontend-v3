@@ -2,8 +2,8 @@
 
 import { Tab } from '@causw/cds';
 
-import { PostCard, type PostCardItem } from '@/entities/post';
-import { type ActivityMode, type ActivityType } from '@/entities/setting';
+import { PostCard, PostCardItem } from '@/entities/post';
+import { ActivityMode, ActivityType } from '@/entities/setting';
 
 import { ActionHeader, NoDataView } from '@/shared/ui';
 

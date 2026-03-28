@@ -2,7 +2,7 @@ import { Avatar, Flex, HStack, OfficialColored, Text } from '@causw/cds';
 
 import { formatRelativeTime } from '@/shared/lib';
 
-import { type PostAction } from '../model';
+import { PostAction } from '../model';
 
 import { PostActionMenu } from './PostActionMenu';
 

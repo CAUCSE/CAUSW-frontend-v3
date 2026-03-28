@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 
 import {
   ALUMNI_CONTACTS_FILTER,
-  type AlumniContactsAcademicStatusFilterOption,
+  AlumniContactsAcademicStatusFilterOption,
   useAlumniContactsAcademicFilterSheetModalContext,
 } from '@/entities/alumni-contacts';
 

@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 
-import { type SentryExtra, type SentryLevel, type SentryType } from '../types';
+import { SentryExtra, SentryLevel, SentryType } from '../types';
 
 import { createSentryFormat } from './utils';
 

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
-import { type CalendarScheduleParams } from '..';
+import { CalendarScheduleParams } from '..';
 import { getCalendarSchedules } from '../../api';
 import { calendarQueryKeys } from '../../config';
 

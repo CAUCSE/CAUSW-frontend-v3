@@ -8,12 +8,13 @@ import { FloatingActionButton, HStack, Plus } from '@causw/cds';
 
 import { CeremonyListView } from '@/widgets/ceremony';
 
-import { CeremonyCreateDialog } from '@/features/ceremony';
+import { CeremonyCreateDialog, MOCK_MY_CEREMONIES } from '@/features/ceremony';
 
 import type {
   CeremonyFilterType,
   MyCeremonyStateFilter,
 } from '@/entities/ceremony';
+import { filterByState } from '@/entities/ceremony';
 
 import { useScrollRestoration } from '@/shared/hooks';
 import { ActionHeader } from '@/shared/ui';
@@ -38,14 +39,11 @@ export const CeremonyPage = () => {
     }
   };
 
+  const myItems = filterByState(MOCK_MY_CEREMONIES, myStateFilter);
+
   const handleItemClick = (id: string) => {
     saveScrollPosition();
     router.push(`/ceremony/${id}`);
-  };
-
-  const handleMyItemClick = (id: string) => {
-    saveScrollPosition();
-    router.push(`/ceremony/${id}?context=my`);
   };
 
   return (
@@ -64,8 +62,8 @@ export const CeremonyPage = () => {
         onFilterChange={setFilter}
         myStateFilter={myStateFilter}
         onMyStateFilterChange={setMyStateFilter}
+        myItems={myItems}
         onItemClick={handleItemClick}
-        onMyItemClick={handleMyItemClick}
       />
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">

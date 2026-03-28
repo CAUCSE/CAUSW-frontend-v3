@@ -2,7 +2,7 @@
 
 import { Chip, HStack, mergeStyles } from '@causw/cds';
 
-import { type Board } from '../model';
+import { Board } from '../model';
 
 interface BoardChipListProps {
   boards: Board[];

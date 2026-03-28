@@ -12,7 +12,8 @@ export const MethodSelectContainer = ({
       <Flex justify="center" className="min-h-screen bg-gray-100">
         <Flex
           gap="none"
-          className="w-[600px] flex-col px-4 py-20 md:justify-center"
+          justify="center"
+          className="w-[600px] flex-col px-4 py-20"
         >
           {children}
         </Flex>
