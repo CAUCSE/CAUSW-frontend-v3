@@ -35,7 +35,7 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
     submitReport,
     submitBlock,
     submitDelete,
-  } = useCommentMenuActions(postId, reply.id, true);
+  } = useCommentMenuActions(postId, reply.id);
 
   const { mutate: toggleLike, isPending } = useToggleReplyLikeMutation(
     postId,
