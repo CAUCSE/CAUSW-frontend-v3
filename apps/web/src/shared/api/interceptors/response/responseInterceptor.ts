@@ -3,6 +3,7 @@ import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
+import { isPublicEndpoint } from '@/shared/utils/auth';
 import {
   isAccessTokenError,
   parseCustomErrorCode,
@@ -27,13 +28,17 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
       const errorCode = parseCustomErrorCode(error);
       const originalRequest = error.config;
       const status = error.status ?? 0;
+      const requestUrl = originalRequest.url;
+      const requestMethod = originalRequest.options.method;
+      const isPublicRequest = isPublicEndpoint(requestUrl, requestMethod);
+      const shouldHandleAccessTokenRefresh =
+        !isPublicRequest &&
+        (isAccessTokenError(errorCode) ||
+          error.data?.errorCode === '4105' ||
+          error.data?.errorCode === '4110');
 
       // Access Token 만료 시 + 이전 에러코드 값 포함
-      if (
-        isAccessTokenError(errorCode) ||
-        error.data?.errorCode === '4105' ||
-        error.data?.errorCode === '4110'
-      ) {
+      if (shouldHandleAccessTokenRefresh) {
         if (apiWrapper.getIsRefreshing()) {
           return new Promise((resolve, reject) => {
             apiWrapper.addToRefreshQueue({
