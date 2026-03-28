@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { GetCommentsResponseDto } from '@/entities/comment';
+import { type GetCommentsResponseDto } from '@/entities/comment';
 import { commentKeys } from '@/entities/comment/config';
 
 import { toast } from '@/shared/model';
@@ -34,7 +34,6 @@ export const useToggleCommentLikeMutation = (
           if (!old) return old;
 
           const updatedContent = old.content.map((comment) => {
-            // 좋아요를 누른 대상이 댓글일 때
             if (comment.id === commentId) {
               return {
                 ...comment,
@@ -42,29 +41,6 @@ export const useToggleCommentLikeMutation = (
                 numLike: Math.max(
                   0,
                   comment.numLike + (isCommentLike ? 1 : -1),
-                ),
-              };
-            }
-
-            // 좋아요를 누른 대상이 이 부모 댓글의 대댓글일 때
-            const isTargetInChild = comment.childCommentList.some(
-              (child) => child.id === commentId,
-            );
-
-            if (isTargetInChild) {
-              return {
-                ...comment,
-                childCommentList: comment.childCommentList.map((child) =>
-                  child.id === commentId
-                    ? {
-                        ...child,
-                        isChildCommentLike: isCommentLike,
-                        numLike: Math.max(
-                          0,
-                          child.numLike + (isCommentLike ? 1 : -1),
-                        ),
-                      }
-                    : child,
                 ),
               };
             }

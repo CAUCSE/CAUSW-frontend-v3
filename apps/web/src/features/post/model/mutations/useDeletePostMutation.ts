@@ -26,7 +26,7 @@ export const useDeletePostMutation = () => {
     },
 
     onError: () => {
-      toast.error('게시긆 삭제에 실패했어요.');
+      toast.error('게시글 삭제에 실패했어요.');
     },
   });
 };

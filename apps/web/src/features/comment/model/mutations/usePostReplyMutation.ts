@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { PostChildCommentRequestDto } from '@/entities/comment';
+import { type PostChildCommentRequestDto } from '@/entities/comment';
 import { commentKeys } from '@/entities/comment/config';
 
 import { toast } from '@/shared/model';
