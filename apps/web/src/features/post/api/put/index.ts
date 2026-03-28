@@ -1,7 +1,11 @@
-import { PostUpdateRequestDto, PostUpdateResponseDto } from '@/entities/post';
+import {
+  type PostUpdateRequestDto,
+  type PostUpdateResponseDto,
+} from '@/entities/post';
 
 import { API } from '@/shared/api';
 
+/* 게시글 수정 */
 export const updatePost = (
   postId: string,
   postUpdateRequest: PostUpdateRequestDto,

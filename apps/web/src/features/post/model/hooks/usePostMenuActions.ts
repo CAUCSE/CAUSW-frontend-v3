@@ -9,8 +9,8 @@ import { useReportPostMutation } from '@/features/report';
 
 import { type ReportReason } from '@/entities/report';
 
+import { type PostAction } from '../../config';
 import { useDeletePostMutation } from '../mutations';
-import { type PostAction } from '../types';
 
 type ActiveModalType = PostAction | null;
 

@@ -1,7 +1,7 @@
 import {
-  PostCreateFormValues,
-  PostCreateRequestDto,
-  PostUpdateRequestDto,
+  type PostCreateFormValues,
+  type PostCreateRequestDto,
+  type PostUpdateRequestDto,
 } from '@/entities/post';
 
 /**

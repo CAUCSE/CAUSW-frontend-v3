@@ -4,7 +4,10 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation } from '@tanstack/react-query';
 
-import { PostCreateRequestDto, PostCreateResponseDto } from '@/entities/post';
+import {
+  type PostCreateRequestDto,
+  type PostCreateResponseDto,
+} from '@/entities/post';
 
 import { toast } from '@/shared/model';
 

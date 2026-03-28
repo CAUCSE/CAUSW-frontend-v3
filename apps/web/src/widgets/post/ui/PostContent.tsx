@@ -4,11 +4,11 @@ import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
 import {
+  POST_ACTION,
   PostHeader,
   usePostMenuActions,
   useTogglePostLikeMutation,
 } from '@/features/post';
-import { POST_ACTION } from '@/features/post-write';
 import { ReportFlow } from '@/features/report';
 
 import {

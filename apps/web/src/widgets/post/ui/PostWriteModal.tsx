@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { Dialog, mergeStyles } from '@causw/cds';
 
-import { PostWriteForm, PostEditForm } from '@/features/post-write';
+import { PostEditForm, PostWriteForm } from '@/features/post';
 
 import { useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';
