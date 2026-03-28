@@ -12,10 +12,12 @@ import { type ReportReason } from '@/entities/report';
 import { useDeletePostMutation } from '../mutations';
 import { type PostAction } from '../types';
 
+type ActiveModalType = PostAction | null;
+
 export const usePostMenuActions = (postId: string) => {
   const router = useRouter();
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
+
+  const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
 
   const { mutate: deletePost } = useDeletePostMutation();
   const { mutate: reportPost } = useReportPostMutation();
@@ -24,41 +26,39 @@ export const usePostMenuActions = (postId: string) => {
   const handleAction = (action: PostAction) => {
     switch (action) {
       case 'report':
-        setIsReportOpen(true);
-        break;
       case 'block':
-        setIsBlockOpen(true);
-        break;
       case 'delete':
-        if (!postId) return;
-        deletePost(postId);
+        setActiveModal(action);
         break;
       case 'edit':
-        if (!postId) return;
         router.push(`/feed/${postId}/edit`);
         break;
-      default:
-        console.log(action);
     }
+  };
+
+  const closeModal = () => setActiveModal(null);
+
+  const submitDelete = () => {
+    deletePost(postId);
+    closeModal();
   };
 
   const submitReport = (reason: ReportReason) => {
     reportPost({ postId, reportReason: reason });
-    setIsReportOpen(false);
+    closeModal();
   };
 
   const submitBlock = () => {
     blockUser(postId);
-    setIsBlockOpen(false);
+    closeModal();
   };
 
   return {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction,
+    closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   };
 };

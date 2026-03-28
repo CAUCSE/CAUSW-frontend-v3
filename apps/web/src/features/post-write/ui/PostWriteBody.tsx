@@ -44,14 +44,12 @@ export const PostWriteBody = ({
 
   // 모달 진입 시 텍스트 끝에 포커스
   useEffect(() => {
-    if (isEdit) {
-      const el = textareaRef.current;
-      if (el) {
-        el.focus();
-        el.setSelectionRange(el.value.length, el.value.length);
-      }
+    const el = textareaRef.current;
+    if (el) {
+      el.focus();
+      el.setSelectionRange(el.value.length, el.value.length);
     }
-  }, [isEdit]);
+  }, []);
 
   return (
     <VStack

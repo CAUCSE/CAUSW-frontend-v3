@@ -80,30 +80,27 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         onReply={onReply}
       />
 
-      {activeModal === COMMENT_ACTION.REPORT && (
-        <ReportFlow
-          open={true}
-          setOpen={closeModal}
-          onSubmitReport={submitReport}
-        />
-      )}
+      <ReportFlow
+        open={activeModal === COMMENT_ACTION.REPORT}
+        setOpen={closeModal}
+        onSubmitReport={submitReport}
+      />
 
-      {activeModal === COMMENT_ACTION.BLOCK && (
-        <BlockUserModal
-          open={true}
-          setOpen={closeModal}
-          onSubmitBlock={submitBlock}
-        />
-      )}
+      <BlockUserModal
+        open={activeModal === COMMENT_ACTION.BLOCK}
+        setOpen={closeModal}
+        onSubmitBlock={submitBlock}
+      />
 
-      {activeModal === COMMENT_ACTION.DELETE && (
-        <ConfirmModal
-          open={true}
-          onOpenChange={closeModal}
-          message="댓글을 삭제하시겠어요?"
-          onConfirm={submitDelete}
-        />
-      )}
+      <ConfirmModal
+        title="댓글을 삭제하시겠어요?"
+        open={activeModal === COMMENT_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
+      />
     </Stack>
   );
 };

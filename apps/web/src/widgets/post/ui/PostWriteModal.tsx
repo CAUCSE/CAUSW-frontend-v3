@@ -9,7 +9,7 @@ import { Dialog, mergeStyles } from '@causw/cds';
 import { PostWriteForm, PostEditForm } from '@/features/post-write';
 
 import { useBreakpoint } from '@/shared/hooks';
-import { ConfirmLeaveModal, SuspenseView } from '@/shared/ui';
+import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
 export const PostWriteModal = ({ postId }: { postId?: string }) => {
   const router = useRouter();
@@ -61,12 +61,14 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
         </Dialog.Content>
       </Dialog>
 
-      <ConfirmLeaveModal
-        message={
+      <ConfirmModal
+        title={
           postId ? '게시글 수정을 그만두시겠어요?' : '글쓰기를 그만두시겠어요?'
         }
         open={isCancelConfirmOpen}
-        setOpen={setIsCancelConfirmOpen}
+        onOpenChange={setIsCancelConfirmOpen}
+        onConfirm={() => router.back()}
+        titleTypo="subtitle-16-bold"
       />
     </>
   );

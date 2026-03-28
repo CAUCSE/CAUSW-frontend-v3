@@ -8,9 +8,16 @@ import {
   usePostMenuActions,
   useTogglePostLikeMutation,
 } from '@/features/post';
+import { POST_ACTION } from '@/features/post-write';
 import { ReportFlow } from '@/features/report';
 
-import { GetPostResponseDto, PostBody, PostReactions } from '@/entities/post';
+import {
+  type GetPostResponseDto,
+  PostBody,
+  PostReactions,
+} from '@/entities/post';
+
+import { ConfirmModal } from '@/shared/ui';
 
 interface PostContentProps {
   post: GetPostResponseDto;
@@ -18,13 +25,12 @@ interface PostContentProps {
 
 export const PostContent = ({ post }: PostContentProps) => {
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   } = usePostMenuActions(post.id);
 
   const { mutate: toggleLike, isPending } = useTogglePostLikeMutation(post.id);
@@ -64,15 +70,25 @@ export const PostContent = ({ post }: PostContentProps) => {
       />
 
       <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
+        open={activeModal === POST_ACTION.REPORT}
+        setOpen={closeModal}
         onSubmitReport={submitReport}
       />
 
       <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
+        open={activeModal === POST_ACTION.BLOCK}
+        setOpen={closeModal}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        title="답글을 삭제하시겠어요?"
+        open={activeModal === POST_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </VStack>
   );

@@ -103,7 +103,10 @@ export const PostWriteForm = ({
           selectedBoard={selectedBoard}
           content={currentContent}
           setContent={(val) =>
-            setValue('content', val, { shouldValidate: true })
+            setValue('content', val, {
+              shouldValidate: true,
+              shouldDirty: true,
+            })
           }
           vote={currentVote ?? null}
           setVote={(val) =>
