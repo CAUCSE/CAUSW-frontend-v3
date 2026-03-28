@@ -127,6 +127,50 @@ export interface GoogleNativeLoginRequestDto {
   accessToken: string;
 }
 
+export type NativeSocialLoginProvider = 'kakao' | 'apple' | 'google';
+
+export interface NativeSocialLoginRequestDto {
+  provider: NativeSocialLoginProvider;
+  accessToken?: string;
+  idToken?: string;
+}
+
+type OnboardingStatus =
+  | 'TERMS_REQUIRED'
+  | 'GUEST'
+  | 'ACADEMIC_CERTIFICATION_REQUIRED'
+  | 'ACTIVE';
+
+type AcademicStatus =
+  | 'ENROLLED'
+  | 'LEAVE_OF_ABSENCE'
+  | 'GRADUATED'
+  | 'DROPPED_OUT'
+  | 'SUSPEND'
+  | 'EXPEL'
+  | 'PROFESSOR'
+  | 'UNDETERMINED';
+
+type UserProfileImageType =
+  | 'MALE_1'
+  | 'MALE_2'
+  | 'FEMALE_1'
+  | 'FEMALE_2'
+  | 'CUSTOM'
+  | 'GHOST';
+
+export interface AuthResponseDto {
+  accessToken: string;
+  name: string;
+  email: string;
+  profileImage: {
+    profileImageType: UserProfileImageType;
+    profileImageUrl: string;
+  };
+  onboardingStatus: OnboardingStatus;
+  academicStatus: AcademicStatus;
+}
+
 /** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
 export interface GoogleLoginResponseDto {
   accessToken: string;
