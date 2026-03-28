@@ -1,4 +1,4 @@
-import { REPORT_REASON, ReportReason } from '@/entities/report';
+import { REPORT_REASON, type ReportReason } from '@/entities/report';
 
 export const REPORT_OPTIONS: Record<
   ReportReason,

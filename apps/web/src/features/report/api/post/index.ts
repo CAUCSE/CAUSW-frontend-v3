@@ -1,4 +1,7 @@
-import { ReportPostRequestDto, ReportPostResponseDto } from '@/entities/report';
+import {
+  type ReportPostRequestDto,
+  type ReportPostResponseDto,
+} from '@/entities/report';
 
 import { API } from '@/shared/api';
 

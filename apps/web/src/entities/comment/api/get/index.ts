@@ -1,6 +1,9 @@
 import { API } from '@/shared/api';
 
-import { GetCommentsRequestDto, GetCommentsResponseDto } from '../../model';
+import {
+  type GetCommentsRequestDto,
+  type GetCommentsResponseDto,
+} from '../../model';
 
 export const getComments = async ({
   postId,

@@ -1,8 +1,8 @@
 import {
-  PostChildCommentRequestDto,
-  PostChildCommentResponseDto,
-  PostCommentRequestDto,
-  PostCommentResponseDto,
+  type PostChildCommentRequestDto,
+  type PostChildCommentResponseDto,
+  type PostCommentRequestDto,
+  type PostCommentResponseDto,
 } from '@/entities/comment';
 
 import { API } from '@/shared/api';

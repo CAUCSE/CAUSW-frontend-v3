@@ -1,4 +1,4 @@
-import { PaginationDto } from '@/shared/types';
+import { type PaginationDto } from '@/shared/types';
 
 export interface BaseComment {
   id: string;

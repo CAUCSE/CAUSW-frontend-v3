@@ -1,4 +1,4 @@
-import { BlockUserResponseDto } from '@/entities/block';
+import { type BlockUserResponseDto } from '@/entities/block';
 
 import { API } from '@/shared/api';
 

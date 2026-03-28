@@ -6,7 +6,7 @@ import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import { getComments } from '../../api';
 import { commentKeys } from '../../config';
-import { GetCommentsRequestDto } from '../types';
+import { type GetCommentsRequestDto } from '../types';
 
 export const useCommentsQuery = ({
   postId,

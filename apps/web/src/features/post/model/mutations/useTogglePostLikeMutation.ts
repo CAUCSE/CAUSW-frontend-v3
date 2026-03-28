@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { GetPostResponseDto, postKeys } from '@/entities/post';
+import { type GetPostResponseDto, postKeys } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
