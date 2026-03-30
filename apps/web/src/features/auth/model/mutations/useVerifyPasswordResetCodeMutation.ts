@@ -26,6 +26,9 @@ export const useVerifyPasswordResetCodeMutation = (
     onMutate: () => {
       toast.loading('인증코드를 검증하고 있어요...');
     },
+    onSuccess: () => {
+      toast.success('인증코드가 확인되었습니다.');
+    },
     onError: (error) => {
       toast.error(
         extractErrorMessage(
