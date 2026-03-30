@@ -15,9 +15,6 @@ import {
 
 import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
 
-import { toast } from '@/shared/model';
-import { extractErrorMessage } from '@/shared/utils';
-
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
 import { PasswordEmailSent } from '../password-email-sent';
@@ -57,19 +54,11 @@ export const FindAccountContainer = ({
   const handleFindEmail = (formData: FindEmailFormData) => {
     findEmailMutation.mutate(formData, {
       onSuccess: (data) => {
-        toast.success('계정 정보를 찾았습니다.');
         onViewChange({ type: 'result', data, name: formData.name });
       },
       onError: (error) => {
         if (error instanceof ApiError && error.status && error.status < 500) {
           onViewChange({ type: 'not-found' });
-        } else {
-          toast.error(
-            extractErrorMessage(
-              error,
-              '계정 정보 조회에 실패했습니다. 다시 시도해 주세요.',
-            ),
-          );
         }
       },
     });
