@@ -147,8 +147,8 @@ export const FindAccountContainer = ({
 
         {activeTab === 'find-password' && (
           <FindPasswordForm
-            onSendCode={async (email) => {
-              await sendResetCodeMutation.mutateAsync({ email });
+            onSendCode={async ({ name, email }) => {
+              await sendResetCodeMutation.mutateAsync({ name, email });
             }}
             onVerifyCode={async (data) => {
               await verifyResetCodeMutation.mutateAsync(data);
