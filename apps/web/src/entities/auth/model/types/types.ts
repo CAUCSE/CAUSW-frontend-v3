@@ -134,10 +134,12 @@ export interface EmailFindResponse {
 }
 
 export interface PasswordResetSendRequestDto {
+  name: string;
   email: string;
 }
 
 export interface PasswordResetVerifyRequestDto {
+  name: string;
   email: string;
   verificationCode: string;
 }
