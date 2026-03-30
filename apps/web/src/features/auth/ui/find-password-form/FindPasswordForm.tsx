@@ -11,12 +11,14 @@ import { VStack, HStack, CTAButton, Field, TextInput, Text } from '@causw/cds';
 import { findPasswordSchema, type FindPasswordFormData } from '@/entities/auth';
 
 import { useCountdownTimer } from '@/shared/hooks';
+import { RHFInput } from '@/shared/ui';
 
 type FindPasswordStep = 'idle' | 'codeSent';
 
 interface FindPasswordFormProps {
-  onSendCode: (email: string) => Promise<void>;
+  onSendCode: (data: { name: string; email: string }) => Promise<void>;
   onVerifyCode: (data: {
+    name: string;
     email: string;
     verificationCode: string;
   }) => Promise<void>;
@@ -37,6 +39,7 @@ export const FindPasswordForm = ({
     resolver: zodResolver(findPasswordSchema),
     mode: 'onChange',
     defaultValues: {
+      name: '',
       email: '',
       verificationCode: '',
     },
@@ -48,16 +51,19 @@ export const FindPasswordForm = ({
     formState: { errors },
   } = methods;
 
+  const nameValue = watch('name');
   const emailValue = watch('email');
 
+  const isNameValid = !!nameValue && !errors.name;
   const isEmailValid = !!emailValue && !errors.email;
+  const canSendCode = isNameValid && isEmailValid;
 
   const handleSendCode = async () => {
     if (isPending) return;
-    const email = methods.getValues('email');
+    const { name, email } = methods.getValues();
     setIsPending(true);
     try {
-      await onSendCode(email);
+      await onSendCode({ name, email });
       if (step === 'idle') {
         start();
       } else {
@@ -76,10 +82,10 @@ export const FindPasswordForm = ({
   ) => {
     const value = e.target.value;
     if (value.length === 6 && !isExpired && !isPending) {
-      const email = methods.getValues('email');
+      const { name, email } = methods.getValues();
       setIsPending(true);
       try {
-        await onVerifyCode({ email, verificationCode: value });
+        await onVerifyCode({ name, email, verificationCode: value });
       } catch {
         /* mutation onError에서 토스트 처리 */
       } finally {
@@ -92,6 +98,13 @@ export const FindPasswordForm = ({
     <FormProvider {...methods}>
       <VStack className="w-full gap-10">
         <VStack className="gap-2">
+          <RHFInput
+            name="name"
+            label="이름"
+            placeholder="실명을 입력해주세요."
+            typography="body-16-regular"
+          />
+
           <Field className="flex flex-col gap-2" error={!!errors.email}>
             <Field.Label>이메일</Field.Label>
             <HStack className="items-end gap-2">
@@ -104,7 +117,7 @@ export const FindPasswordForm = ({
               <CTAButton
                 type="button"
                 color="dark"
-                disabled={!isEmailValid || isPending}
+                disabled={!canSendCode || isPending}
                 onClick={handleSendCode}
                 className="w-[6.25rem]"
               >
