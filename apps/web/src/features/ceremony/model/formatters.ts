@@ -10,10 +10,21 @@ import {
   RELATIONSHIP_API_MAP,
 } from '../config';
 
+const MAX_HOURS = 24;
+const MAX_MINUTES = 59;
+
+const clampDigits = (value: number, max: number) =>
+  String(Math.min(value, max)).padStart(2, '0');
+
 export const formatTime = (value: string) => {
   const digits = value.replace(/\D/g, '').slice(0, 4);
   if (digits.length <= 2) return digits;
-  return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+
+  const hours = Math.min(Number(digits.slice(0, 2)), MAX_HOURS);
+  const minutes =
+    hours === MAX_HOURS ? 0 : Math.min(Number(digits.slice(2)), MAX_MINUTES);
+
+  return `${clampDigits(hours, MAX_HOURS)}:${clampDigits(minutes, MAX_MINUTES)}`;
 };
 
 const formatDateToString = (date: Date): string => {
