@@ -4,6 +4,7 @@ import { DatePicker, Field, TextInput, Toggle } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
+import { isEndDateTimeBeforeStart } from '@/shared/lib';
 import { toast } from '@/shared/model/toast';
 import { FormSection } from '@/shared/ui/form-section';
 
@@ -31,29 +32,47 @@ export const DateTimeSection = () => {
     }
   };
 
+  const checkEndBeforeStart = () => {
+    const [startDate, endDate, startTime, endTime, currentHasTime] = getValues([
+      'startDate',
+      'endDate',
+      'startTime',
+      'endTime',
+      'hasTime',
+    ]);
+
+    if (!startDate || !endDate) return;
+
+    if (
+      isEndDateTimeBeforeStart(
+        startDate,
+        endDate,
+        currentHasTime ? startTime : undefined,
+        currentHasTime ? endTime : undefined,
+      )
+    ) {
+      toast.error(END_DATE_ERROR_MESSAGE);
+    }
+  };
+
   const handleStartDateChange = (
     date: Date,
     onChange: (date: Date) => void,
   ) => {
     onChange(date);
-    const endDate = getValues('endDate');
-    if (endDate && endDate < date) {
-      toast.error(END_DATE_ERROR_MESSAGE);
-    }
+    checkEndBeforeStart();
   };
 
   const handleEndDateChange = (date: Date, onChange: (date: Date) => void) => {
     onChange(date);
-    const startDate = getValues('startDate');
-    if (startDate && date < startDate) {
-      toast.error(END_DATE_ERROR_MESSAGE);
-    }
+    checkEndBeforeStart();
   };
 
   const handleTimeChange =
     (field: 'startTime' | 'endTime') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setValue(field, formatTime(e.target.value));
+      checkEndBeforeStart();
     };
 
   return (
