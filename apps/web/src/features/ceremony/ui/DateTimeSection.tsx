@@ -26,7 +26,10 @@ export const DateTimeSection = () => {
 
   const handleTimeToggle = (checked: boolean) => {
     setValue('hasTime', checked);
-    if (!checked) {
+    if (checked) {
+      setValue('startTime', getValues('startTime') ?? '');
+      setValue('endTime', getValues('endTime') ?? '');
+    } else {
       setValue('startTime', '');
       setValue('endTime', '');
     }
