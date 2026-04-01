@@ -1,6 +1,6 @@
 'use client';
 
-import type { RefObject } from 'react';
+import { type Ref, type RefObject } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -17,7 +17,9 @@ import {
 import { QUERY_STALE_TIME } from '@/shared/constants';
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
+import { ScrollTopButton } from '@/shared/ui/scroll-top-button';
 
+import { useAlumniContactsListScrollTop } from '../../model';
 import { AlumniContactsListItem } from '../alumni-contacts-list-item';
 
 import { AlumniContactsListEmptyView } from './AlumniContactsListEmptyView';
@@ -31,6 +33,7 @@ interface AlumniContactsListProps {
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
+  ref: Ref<HTMLUListElement>;
 }
 
 const AlumniContactsList = ({
@@ -39,9 +42,13 @@ const AlumniContactsList = ({
   isFetchingNextPage,
   hasNextPage,
   targetRef,
+  ref,
 }: AlumniContactsListProps) => {
   return (
-    <ul className="mb-20 grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto md:mb-5 md:grid-cols-2">
+    <ul
+      className="mb-20 grid min-h-0 flex-1 grid-cols-1 gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
+      ref={ref}
+    >
       {data?.map((item) => (
         <AlumniContactsListItem key={item.id} item={item} />
       ))}
@@ -88,35 +95,55 @@ export const AlumniContactsListWrapper = () => {
     },
   });
 
+  const {
+    setDesktopScrollTargetRef,
+    setMobileScrollTargetRef,
+    showScrollToTopButton,
+    handleClickScrollTop,
+  } = useAlumniContactsListScrollTop();
+
   if (!data || data?.length === 0) {
     return <AlumniContactsListEmptyView />;
   }
 
   if (isMobileSize) {
     return (
-      <PullToRefresh
-        onRefresh={async () => {
-          await refetch();
-        }}
-      >
-        <AlumniContactsList
-          data={data}
-          isLoading={isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-          hasNextPage={hasNextPage}
-          targetRef={targetRef}
-        />
-      </PullToRefresh>
+      <>
+        <PullToRefresh
+          className="alumni-contacts-scroll-container min-h-0 flex-1"
+          onRefresh={async () => {
+            await refetch();
+          }}
+        >
+          <AlumniContactsList
+            data={data}
+            isLoading={isLoading}
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+            targetRef={targetRef}
+            ref={setMobileScrollTargetRef}
+          />
+        </PullToRefresh>
+        {showScrollToTopButton && (
+          <ScrollTopButton onClick={handleClickScrollTop} />
+        )}
+      </>
     );
   }
 
   return (
-    <AlumniContactsList
-      data={data}
-      isLoading={isLoading}
-      isFetchingNextPage={isFetchingNextPage}
-      hasNextPage={hasNextPage}
-      targetRef={targetRef}
-    />
+    <>
+      <AlumniContactsList
+        data={data}
+        isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        targetRef={targetRef}
+        ref={setDesktopScrollTargetRef}
+      />
+      {showScrollToTopButton && (
+        <ScrollTopButton onClick={handleClickScrollTop} />
+      )}
+    </>
   );
 };

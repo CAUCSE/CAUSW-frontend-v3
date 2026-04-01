@@ -3,4 +3,5 @@ export {
   useAlumniContactsAcademicFilterSheetModal,
   useAlumniContactsAdmissionYearFilterSelectGroup,
   useAlumniContactsAcademicFilterSheetModalTrigger,
+  useAlumniContactsListScrollTop,
 } from './hooks';
