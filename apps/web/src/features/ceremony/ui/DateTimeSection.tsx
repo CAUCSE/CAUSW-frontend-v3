@@ -4,12 +4,15 @@ import { DatePicker, Field, TextInput, Toggle } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
+import { toast } from '@/shared/model/toast';
 import { FormSection } from '@/shared/ui/form-section';
 
 import { formatTime } from '../model';
 
+const END_DATE_ERROR_MESSAGE = '종료일은 시작일 이후여야 합니다.';
+
 export const DateTimeSection = () => {
-  const { control, setValue } = useFormContext<CeremonyFormData>();
+  const { control, setValue, getValues } = useFormContext<CeremonyFormData>();
   const [hasEndDate, hasTime] = useWatch({
     control,
     name: ['hasEndDate', 'hasTime'],
@@ -25,6 +28,25 @@ export const DateTimeSection = () => {
     if (!checked) {
       setValue('startTime', '');
       setValue('endTime', '');
+    }
+  };
+
+  const handleStartDateChange = (
+    date: Date,
+    onChange: (date: Date) => void,
+  ) => {
+    onChange(date);
+    const endDate = getValues('endDate');
+    if (endDate && endDate < date) {
+      toast.error(END_DATE_ERROR_MESSAGE);
+    }
+  };
+
+  const handleEndDateChange = (date: Date, onChange: (date: Date) => void) => {
+    onChange(date);
+    const startDate = getValues('startDate');
+    if (startDate && date < startDate) {
+      toast.error(END_DATE_ERROR_MESSAGE);
     }
   };
 
@@ -46,7 +68,9 @@ export const DateTimeSection = () => {
               render={({ field }) => (
                 <DatePicker
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onValueChange={(date) =>
+                    handleStartDateChange(date, field.onChange)
+                  }
                   placeholder="연도-월-일"
                   dateFormat="yyyy-MM-dd"
                   className="w-full rounded-xl bg-white"
@@ -83,7 +107,9 @@ export const DateTimeSection = () => {
                     render={({ field }) => (
                       <DatePicker
                         value={field.value}
-                        onValueChange={field.onChange}
+                        onValueChange={(date) =>
+                          handleEndDateChange(date, field.onChange)
+                        }
                         placeholder="연도-월-일"
                         dateFormat="yyyy-MM-dd"
                         className="w-full rounded-xl bg-white"
@@ -107,7 +133,9 @@ export const DateTimeSection = () => {
                 render={({ field }) => (
                   <DatePicker
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(date) =>
+                      handleEndDateChange(date, field.onChange)
+                    }
                     placeholder="연도-월-일"
                     dateFormat="yyyy-MM-dd"
                     className="w-full rounded-xl bg-white"
