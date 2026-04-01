@@ -67,6 +67,17 @@ export const ceremonyFormSchema = z
       });
     }
 
+    // 종료일이 시작일보다 이전인지 검사
+    if (data.hasEndDate && data.startDate && data.endDate) {
+      if (data.endDate < data.startDate) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '종료일은 시작일 이후여야 합니다.',
+          path: ['endDate'],
+        });
+      }
+    }
+
     // 관계 조건부 필수
     if (data.relationship === '') {
       ctx.addIssue({
