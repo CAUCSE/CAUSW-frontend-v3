@@ -28,6 +28,7 @@ export const useAlumniContactsListScrollTop = () => {
 
   const setMobileScrollTargetRef = useCallback(
     (node: HTMLUListElement | null) => {
+      // PullToRefresh가 스크롤 컨테이너라서 이런식으로 ref를 지정해야함
       setScrollTarget(
         node?.closest(
           '.alumni-contacts-scroll-container',
