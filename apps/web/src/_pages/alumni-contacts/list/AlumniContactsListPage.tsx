@@ -20,7 +20,7 @@ import {
 
 import type { NextSearchParams } from '@/shared/types';
 
-export async function AlumniContactsPage({
+export async function AlumniContactsListPage({
   searchParams,
 }: {
   searchParams: NextSearchParams<AlumniContactsFilter>;
