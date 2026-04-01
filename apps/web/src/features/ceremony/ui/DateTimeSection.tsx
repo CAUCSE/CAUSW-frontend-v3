@@ -74,9 +74,16 @@ export const DateTimeSection = () => {
   const handleTimeChange =
     (field: 'startTime' | 'endTime') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(field, formatTime(e.target.value));
-      checkEndBeforeStart();
+      setValue(field, e.target.value);
     };
+
+  const handleTimeBlur = (field: 'startTime' | 'endTime') => () => {
+    const rawValue = getValues(field);
+    if (rawValue) {
+      setValue(field, formatTime(rawValue));
+    }
+    checkEndBeforeStart();
+  };
 
   return (
     <FormSection title="경조사 기간">
@@ -114,6 +121,7 @@ export const DateTimeSection = () => {
                         <TextInput
                           value={field.value}
                           onChange={handleTimeChange('startTime')}
+                          onBlur={handleTimeBlur('startTime')}
                           placeholder="시간"
                           maxLength={5}
                           inputMode="numeric"
@@ -175,6 +183,7 @@ export const DateTimeSection = () => {
                   <TextInput
                     value={field.value}
                     onChange={handleTimeChange('endTime')}
+                    onBlur={handleTimeBlur('endTime')}
                     placeholder="시간"
                     maxLength={5}
                     inputMode="numeric"
