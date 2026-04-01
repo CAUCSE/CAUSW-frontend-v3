@@ -73,14 +73,14 @@ export const ceremonyFormSchema = z
     if (data.hasTime && data.startTime !== '' && !isValidTimeFormat(data.startTime)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 24:00)',
+        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
         path: ['startTime'],
       });
     }
     if (data.hasTime && data.endTime !== '' && !isValidTimeFormat(data.endTime)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 24:00)',
+        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
         path: ['endTime'],
       });
     }
