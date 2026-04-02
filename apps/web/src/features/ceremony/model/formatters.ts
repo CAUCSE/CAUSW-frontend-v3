@@ -12,7 +12,8 @@ import {
   RELATIONSHIP_API_MAP,
 } from '../config';
 
-const DEFAULT_TIME = '00:00';
+const DEFAULT_START_TIME = '00:00';
+const DEFAULT_END_TIME = '23:59';
 
 const clampDigits = (value: number, max: number) =>
   String(Math.min(value, max)).padStart(2, '0');
@@ -64,11 +65,11 @@ export const toCreateCeremonyDto = (
       form.hasEndDate && form.endDate ? formatDateToString(form.endDate) : null,
     startTime: form.hasTime
       ? (emptyToNull(form.startTime) ??
-        (form.endTime.trim() ? DEFAULT_TIME : null))
+        (form.endTime.trim() ? DEFAULT_START_TIME : null))
       : null,
     endTime: form.hasTime
       ? (emptyToNull(form.endTime) ??
-        (form.startTime.trim() ? DEFAULT_TIME : null))
+        (form.startTime.trim() ? DEFAULT_END_TIME : null))
       : null,
     relationType,
     familyRelation:
