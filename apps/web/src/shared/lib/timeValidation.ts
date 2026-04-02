@@ -1,6 +1,6 @@
 const TIME_FORMAT_REGEX = /^\d{2}:\d{2}$/;
-const MAX_HOURS = 23;
-const MAX_MINUTES = 59;
+export const MAX_HOURS = 23;
+export const MAX_MINUTES = 59;
 
 /**
  * HH:MM 형식의 시간 문자열이 유효한지 검증

@@ -3,6 +3,8 @@ import type {
   CeremonyFormData,
 } from '@/entities/ceremony';
 
+import { MAX_HOURS, MAX_MINUTES } from '@/shared/lib';
+
 import {
   CEREMONY_TYPE_API_MAP,
   CATEGORY_API_MAP,
@@ -10,8 +12,6 @@ import {
   RELATIONSHIP_API_MAP,
 } from '../config';
 
-const MAX_HOURS = 23;
-const MAX_MINUTES = 59;
 const DEFAULT_TIME = '00:00';
 
 const clampDigits = (value: number, max: number) =>
