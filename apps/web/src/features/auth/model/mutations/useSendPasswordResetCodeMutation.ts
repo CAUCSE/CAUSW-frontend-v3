@@ -1,6 +1,6 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
-import { sendPasswordResetCode } from '@/features/auth/api/post/session';
+import { sendPasswordResetCode } from '@/features/auth/api';
 
 import type { PasswordResetSendRequestDto } from '@/entities/auth';
 

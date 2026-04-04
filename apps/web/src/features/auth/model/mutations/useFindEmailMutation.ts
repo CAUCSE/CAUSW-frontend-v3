@@ -1,6 +1,6 @@
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
-import { findEmail } from '@/features/auth/api/post/session';
+import { findEmail } from '@/features/auth/api';
 
 import type { FindEmailRequestDto, EmailFindResponse } from '@/entities/auth';
 
