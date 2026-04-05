@@ -12,9 +12,9 @@ import { Text, CTAButton, Flex, VStack, Separator } from '@causw/cds';
 import { AuthContainer } from '@/widgets/auth';
 
 import { useSignInMutation } from '@/features/auth';
+import { usePushNotification } from '@/features/notification';
 
 import { SigninRequestDto, signInSchema } from '@/entities/auth';
-import { usePushNotification } from '@/entities/notification';
 
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';

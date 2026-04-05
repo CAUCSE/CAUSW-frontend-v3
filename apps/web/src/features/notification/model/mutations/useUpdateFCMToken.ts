@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import { MESSAGE } from '@/shared/constants';
 import { toast } from '@/shared/model';
 
-import { updateFCMToken } from '../../api/post';
-import { UpdateFCMTokenRequestDto } from '../types';
+import { updateFCMToken } from '../../../../entities/notification/api/post';
+import { UpdateFCMTokenRequestDto } from '../../../../entities/notification/model/types';
 
 export const useUpdateFCMToken = () => {
   return useMutation({
