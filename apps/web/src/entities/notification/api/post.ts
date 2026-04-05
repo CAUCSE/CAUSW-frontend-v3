@@ -1,6 +1,6 @@
 import { API } from '@/shared/api';
 
-import { UpdateFCMTokenRequestDto } from '../model/types';
+import { type UpdateFCMTokenRequestDto } from '../model';
 
 export const updateFCMToken = async (
   payload: UpdateFCMTokenRequestDto,
