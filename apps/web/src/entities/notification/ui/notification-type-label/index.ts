@@ -1,0 +1,1 @@
+export { NotificationTypeLabel } from './NotificationTypeLabel';

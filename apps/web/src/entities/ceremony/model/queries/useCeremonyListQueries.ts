@@ -10,25 +10,9 @@ import {
   getPastCeremonies,
 } from '../../api';
 import { ceremonyQueryKey } from '../../config';
-import type { CeremonyFilterTypeApi, CeremonyPageResponse } from '../types';
+import type { CeremonyFilterTypeApi } from '../types';
 
-const selectCeremonyPages = (data: { pages: CeremonyPageResponse[] }) => {
-  const allItems = data.pages.flatMap((page) => page.content);
-  const seen = new Set<string>();
-  const items = allItems.filter((item) => {
-    if (seen.has(item.id)) return false;
-    seen.add(item.id);
-    return true;
-  });
-
-  return {
-    items,
-    hasNext: data.pages[data.pages.length - 1]?.hasNext ?? false,
-  };
-};
-
-const getNextPage = (lastPage: CeremonyPageResponse) =>
-  lastPage.hasNext ? lastPage.currentPage + 1 : undefined;
+import { selectCeremonyPages, getNextPage } from './ceremonyQueryHelpers';
 
 export const useOngoingCeremoniesQuery = (type: CeremonyFilterTypeApi) =>
   useSuspenseInfiniteQuery({

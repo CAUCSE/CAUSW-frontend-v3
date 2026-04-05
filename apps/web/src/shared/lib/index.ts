@@ -5,4 +5,4 @@ export * from './image-save';
 export * from './format';
 export * from './kakao-map';
 export { mswHttp } from './msw';
-export * from './sanitizer';
+export * from './type-utils';

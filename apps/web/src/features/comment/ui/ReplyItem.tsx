@@ -6,7 +6,11 @@ import { BlockUserModal } from '@/features/block';
 import { useCommentMenuActions } from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+import {
+  type Comment,
+  CommentCard,
+  type ReplyTarget,
+} from '@/entities/comment';
 
 import { CommentActionMenu } from './CommentActionMenu';
 

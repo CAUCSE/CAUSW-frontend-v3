@@ -14,6 +14,10 @@ import type {
   GoogleLoginRequestDto,
   GoogleLoginResponseDto,
   GoogleNativeLoginRequestDto,
+  SendEmailVerificationCodeRequestDto,
+  SendEmailVerificationCodeResponseDto,
+  VerifyEmailVerificationCodeRequestDto,
+  VerifyEmailVerificationCodeResponseDto,
 } from '@/entities/auth';
 
 import { API } from '@/shared/api';
@@ -30,6 +34,24 @@ export const signin = async (data: SigninRequestDto) => {
 
 export const signout = async (data: SignoutRequestDto) => {
   return API.post<SignoutResponseDto>(`${URL_PREFIX}/logout`, data);
+};
+
+export const sendEmailVerificationCode = async (
+  data: SendEmailVerificationCodeRequestDto,
+) => {
+  return API.post<SendEmailVerificationCodeResponseDto>(
+    `${URL_PREFIX}/email/send`,
+    data,
+  );
+};
+
+export const verifyEmailVerificationCode = async (
+  data: VerifyEmailVerificationCodeRequestDto,
+) => {
+  return API.post<VerifyEmailVerificationCodeResponseDto>(
+    `${URL_PREFIX}/email/verify`,
+    data,
+  );
 };
 
 /**

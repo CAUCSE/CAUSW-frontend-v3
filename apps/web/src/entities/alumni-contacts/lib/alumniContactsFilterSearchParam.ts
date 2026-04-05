@@ -6,7 +6,7 @@ import {
   ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
   ALUMNI_CONTACTS_FILTER,
   ALUMNI_CONTACTS_SORT_FILTER_OPTION,
-  AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsAcademicStatusFilterOption,
   type AlumniContactsSortFilterOption,
 } from '../config';
 

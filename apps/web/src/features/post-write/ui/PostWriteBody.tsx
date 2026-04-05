@@ -4,8 +4,8 @@ import { useEffect, useRef } from 'react';
 
 import { ArrowDown, Chip, TextArea, VStack } from '@causw/cds';
 
-import { Board } from '@/entities/feed';
-import { VoteWriteValue } from '@/entities/post';
+import { type Board } from '@/entities/feed';
+import { type VoteWriteValue } from '@/entities/post';
 
 import { VoteField } from './VoteField';
 

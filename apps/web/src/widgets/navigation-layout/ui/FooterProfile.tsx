@@ -39,6 +39,8 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
             <button
               type="button"
               aria-label="menu"
+              // radix ui app router 노운 이슈로 인한 문제 해결을 위한 코드
+              suppressHydrationWarning
               className="cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-200 active:bg-gray-300"
               onClick={(e) => e.stopPropagation()}
             >

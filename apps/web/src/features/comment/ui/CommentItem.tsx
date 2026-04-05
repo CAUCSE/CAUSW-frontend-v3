@@ -7,7 +7,11 @@ import { Stack } from '@causw/cds';
 import { BlockUserModal } from '@/features/block';
 import { ReportFlow } from '@/features/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+import {
+  type Comment,
+  CommentCard,
+  type ReplyTarget,
+} from '@/entities/comment';
 
 import { useCommentMenuActions } from '../model';
 

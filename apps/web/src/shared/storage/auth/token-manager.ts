@@ -1,11 +1,13 @@
 import { BASE_URL } from '@/shared/config';
-import { DefaultResponseField } from '@/shared/types';
+import { type DefaultResponseField } from '@/shared/types';
 import { isMobile, isServer } from '@/shared/utils';
 
 import {
   getClientATK,
+  getClientAuthRefreshed,
   getClientRTK,
   removeClientATK,
+  removeClientAuthRefreshed,
   removeClientRTK,
   setClientATK,
 } from './auth-storage';
@@ -22,6 +24,7 @@ import {
   getServerRTK,
   removeServerATK,
   removeServerRTK,
+  setServerAuthRefreshed,
   setServerATK,
 } from './auth-storage.server';
 
@@ -32,8 +35,7 @@ export class TokenManager {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${await TokenManager.getAccessToken()}`,
-        Cookie: `refresh_token=${await TokenManager.getRefreshToken()}`,
+        Authorization: `Bearer any-token`,
       },
       credentials: 'include',
     });
@@ -114,5 +116,19 @@ export class TokenManager {
     } else {
       removeClientRTK();
     }
+  }
+
+  static async setAuthRefreshed(): Promise<void> {
+    if (isServer) {
+      await setServerAuthRefreshed();
+    }
+  }
+
+  static async getAuthRefreshed(): Promise<boolean> {
+    return getClientAuthRefreshed();
+  }
+
+  static async removeAuthRefreshed(): Promise<void> {
+    removeClientAuthRefreshed();
   }
 }

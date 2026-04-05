@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { PostAction } from '../types';
+import { type PostAction } from '../types';
 
 export const usePostMenuActions = (postId?: string | number) => {
   const [isReportOpen, setIsReportOpen] = useState(false);
