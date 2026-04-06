@@ -8,18 +8,24 @@ export {
   type AlumniContactsFilter,
   alumniContactsQueryOptions,
   alumniContactsQueryKeys,
+  ALUMNI_CONTACTS_CONTACT_ACTION,
+  ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
+  type AlumniContactsContactActionType,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
   useAlumniContactsAcademicFilterSheetModalContext,
   useResetAlumniContactsFilter,
+  type GetPaginatedAlumniContactsResponseDto,
+  type GetAlumniContactsQuery,
+  type GetAlumniContactsDetailResponseDto,
 } from './model';
-export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
+export {
+  AlumniContactsAcademicFilterSheetModalProvider,
+  AlumniContactsBasicInfo,
+  AlumniContactsDescription,
+} from './ui';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
 } from './lib';
-export type {
-  GetPaginatedAlumniContactsResponseDto,
-  GetAlumniContactsQuery,
-} from './types';

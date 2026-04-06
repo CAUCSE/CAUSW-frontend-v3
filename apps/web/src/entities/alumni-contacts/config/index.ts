@@ -12,3 +12,8 @@ export {
   type AlumniContactsFilter,
 } from './alumniContactsFilter';
 export { alumniContactsQueryOptions, alumniContactsQueryKeys } from './query';
+export {
+  ALUMNI_CONTACTS_CONTACT_ACTION,
+  ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
+  type AlumniContactsContactActionType,
+} from './alumniContactsContactAction';
