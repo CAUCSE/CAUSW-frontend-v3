@@ -1,10 +1,12 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
-import type {
-  GetAlumniContactsQuery,
-  GetPaginatedAlumniContactsResponseDto,
-} from '../types';
+import {
+  type GetAlumniContactsDetailResponseDto,
+  type GetAlumniContactsDetailParam,
+  type GetAlumniContactsQuery,
+  type GetPaginatedAlumniContactsResponseDto,
+} from '../model';
 
 const URL_PREFIX = '/api/v2/users-info';
 
@@ -25,6 +27,18 @@ export const getAlumniContacts = async (
   const url = withQuery(URL_PREFIX, queryString.toString());
 
   const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+
+  return response;
+};
+
+export const getAlumniContactsDetail = async (
+  param: GetAlumniContactsDetailParam,
+) => {
+  const { alumniContactsId } = param;
+
+  const url = `${URL_PREFIX}/${alumniContactsId}`;
+
+  const response = await API.get<GetAlumniContactsDetailResponseDto>(url);
 
   return response;
 };
