@@ -1,7 +1,7 @@
-import type {
-  AlumniContactsAcademicStatusFilterOption,
-  AlumniContactsSortFilterOption,
-} from '../../config';
+import {
+  type AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsSortFilterOption,
+} from '@/entities/alumni-contacts/config';
 
 export interface GetAlumniContactsQuery {
   keyword?: string;
