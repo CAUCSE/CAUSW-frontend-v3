@@ -10,7 +10,7 @@ android {
         versionCode 14
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        aaptOptions {
+        aaptOptions {$
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
@@ -37,7 +37,7 @@ if (localPropertiesFile.exists()) {
         dev {
             dimension "env"
             applicationIdSuffix ".dev"              // => kr.co.causwv2.twa.dev
-            versionNameSuffix "-dev"                // => 1.0-dev
+            // versionNameSuffix "-dev"                // => 1.0-dev
             manifestPlaceholders = [appLabel: "DEV-크자회"]
         }
         prod {
