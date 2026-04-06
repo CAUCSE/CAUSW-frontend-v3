@@ -6,3 +6,4 @@ export { AlumniContactsAcademicFilterSheetModalTrigger } from './alumni-contacts
 export { AlumniContactsAcademicStatusFilterChip } from './alumni-contacts-academic-status-filter-chip';
 export { AlumniContactsAdmissionYearFilterChip } from './alumni-contacts-admission-year-filter-chip';
 export { MyAlumniContactsButton } from './my-alumni-contacts-button';
+export { AlumniContactsContactActionButton } from './alumni-contacts-contact-action-button';

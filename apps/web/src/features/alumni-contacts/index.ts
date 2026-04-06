@@ -7,4 +7,5 @@ export {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
   MyAlumniContactsButton,
+  AlumniContactsContactActionButton,
 } from './ui';
