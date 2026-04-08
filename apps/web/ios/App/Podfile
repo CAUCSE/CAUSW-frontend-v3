@@ -12,6 +12,7 @@ def capacitor_pods
   pod 'Capacitor', :path => '../../../../node_modules/.pnpm/@capacitor+ios@7.4.2_@capacitor+core@7.4.2/node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../../../node_modules/.pnpm/@capacitor+ios@7.4.2_@capacitor+core@7.4.2/node_modules/@capacitor/ios'
   pod 'CapacitorApp', :path => '../../../../node_modules/.pnpm/@capacitor+app@7.1.2_@capacitor+core@7.4.2/node_modules/@capacitor/app'
+  pod 'CapacitorBrowser', :path => '../../../../node_modules/.pnpm/@capacitor+browser@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/browser'
   pod 'CapacitorPushNotifications', :path => '../../../../node_modules/.pnpm/@capacitor+push-notifications@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/push-notifications'
   pod 'CapacitorStatusBar', :path => '../../../../node_modules/.pnpm/@capacitor+status-bar@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/status-bar'
   pod 'CapacitorSecureStoragePlugin', :path => '../../../../node_modules/.pnpm/capacitor-secure-storage-plugin@0.12.0_@capacitor+core@7.4.2/node_modules/capacitor-secure-storage-plugin'
