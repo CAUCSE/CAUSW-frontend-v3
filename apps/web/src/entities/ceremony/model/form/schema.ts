@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
+import { isValidTimeFormat, isEndDateTimeBeforeStart } from '@/shared/lib';
 import { phoneNumberSchema } from '@/shared/model/form';
+
 
 export const ceremonyFormSchema = z
   .object({
@@ -65,6 +67,36 @@ export const ceremonyFormSchema = z
         message: '시작일을 선택해주세요.',
         path: ['startDate'],
       });
+    }
+
+    // 시간 형식 검증
+    if (data.hasTime && data.startTime !== '' && !isValidTimeFormat(data.startTime)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
+        path: ['startTime'],
+      });
+    }
+    if (data.hasTime && data.endTime !== '' && !isValidTimeFormat(data.endTime)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
+        path: ['endTime'],
+      });
+    }
+
+    // 종료일시가 시작일시보다 이전인지 검사 (날짜+시간 결합)
+    if (data.hasEndDate && data.startDate && data.endDate) {
+      const startTime = data.hasTime ? data.startTime : undefined;
+      const endTime = data.hasTime ? data.endTime : undefined;
+
+      if (isEndDateTimeBeforeStart(data.startDate, data.endDate, startTime, endTime)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '종료일은 시작일 이후여야 합니다.',
+          path: ['endDate'],
+        });
+      }
     }
 
     // 관계 조건부 필수

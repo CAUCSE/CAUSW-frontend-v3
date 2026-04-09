@@ -60,7 +60,11 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
         <div className="flex size-10 shrink-0 items-center justify-center rounded-[0.75rem] bg-white">
           {getCeremonyIcon(category)}
         </div>
-        <Text typography="subtitle-18-bold" textColor="gray-700">
+        <Text
+          typography="subtitle-18-bold"
+          textColor="gray-700"
+          className="wrap-break-word"
+        >
           {title}
         </Text>
       </div>
@@ -96,7 +100,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
             <Text
               typography="body-16-regular"
               textColor="gray-700"
-              className="whitespace-pre-wrap" // TODO: 공백 없는 긴 문자열이 가로로 넘침 — break-all 추가 필요
+              className="wrap-break-word whitespace-pre-wrap"
             >
               {content}
             </Text>
@@ -118,7 +122,11 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
             {/* 주소 텍스트 + 상세주소 그룹 (gap: 2px) */}
             <div className="flex flex-col gap-[0.125rem]">
               <div className="flex items-center justify-between gap-[0.25rem]">
-                <Text typography="subtitle-16-bold" textColor="gray-700">
+                <Text
+                  typography="subtitle-16-bold"
+                  textColor="gray-700"
+                  className="wrap-break-word"
+                >
                   {address}
                 </Text>
                 <Button size="sm" color="gray" onClick={handleCopyAddress}>
@@ -126,7 +134,11 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
                 </Button>
               </div>
               {detailedAddress && (
-                <Text typography="body-16-regular" textColor="gray-700">
+                <Text
+                  typography="body-16-regular"
+                  textColor="gray-700"
+                  className="wrap-break-word"
+                >
                   {detailedAddress}
                 </Text>
               )}
@@ -147,7 +159,11 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
             문의
           </Text>
           <div className="flex items-center justify-between rounded-[0.75rem] bg-white p-5">
-            <Text typography="body-16-regular" textColor="gray-700">
+            <Text
+              typography="body-16-regular"
+              textColor="gray-700"
+              className="wrap-break-word"
+            >
               {contact}
             </Text>
             <Button size="sm" color="gray" onClick={handleCall}>
