@@ -8,4 +8,3 @@ export {
   useCreateCeremonyMutation,
   useImageUpload,
 } from './model';
-export { MOCK_MY_CEREMONIES, MOCK_CEREMONY_DETAIL } from './config';

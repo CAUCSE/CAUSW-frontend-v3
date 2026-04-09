@@ -24,7 +24,9 @@ export const RHFInput = ({ name, label, ...props }: RHFInputProps) => {
         {...props}
         {...register(
           name,
-          props.onChange ? { onChange: props.onChange } : undefined,
+          props.onChange || props.onBlur
+            ? { onChange: props.onChange, onBlur: props.onBlur }
+            : undefined,
         )}
       />
       <Field.ErrorDescription>{errorMessage}</Field.ErrorDescription>

@@ -4,12 +4,16 @@ import { DatePicker, Field, TextInput, Toggle } from '@causw/cds';
 
 import type { CeremonyFormData } from '@/entities/ceremony';
 
+import { isEndDateTimeBeforeStart } from '@/shared/lib';
+import { toast } from '@/shared/model/toast';
 import { FormSection } from '@/shared/ui/form-section';
 
 import { formatTime } from '../model';
 
+const END_DATE_ERROR_MESSAGE = '종료일은 시작일 이후여야 합니다.';
+
 export const DateTimeSection = () => {
-  const { control, setValue } = useFormContext<CeremonyFormData>();
+  const { control, setValue, getValues } = useFormContext<CeremonyFormData>();
   const [hasEndDate, hasTime] = useWatch({
     control,
     name: ['hasEndDate', 'hasTime'],
@@ -22,17 +26,64 @@ export const DateTimeSection = () => {
 
   const handleTimeToggle = (checked: boolean) => {
     setValue('hasTime', checked);
-    if (!checked) {
+    if (checked) {
+      setValue('startTime', getValues('startTime') ?? '');
+      setValue('endTime', getValues('endTime') ?? '');
+    } else {
       setValue('startTime', '');
       setValue('endTime', '');
     }
   };
 
+  const checkEndBeforeStart = () => {
+    const [startDate, endDate, startTime, endTime, currentHasTime] = getValues([
+      'startDate',
+      'endDate',
+      'startTime',
+      'endTime',
+      'hasTime',
+    ]);
+
+    if (!startDate || !endDate) return;
+
+    if (
+      isEndDateTimeBeforeStart(
+        startDate,
+        endDate,
+        currentHasTime ? startTime : undefined,
+        currentHasTime ? endTime : undefined,
+      )
+    ) {
+      toast.error(END_DATE_ERROR_MESSAGE);
+    }
+  };
+
+  const handleStartDateChange = (
+    date: Date,
+    onChange: (date: Date) => void,
+  ) => {
+    onChange(date);
+    checkEndBeforeStart();
+  };
+
+  const handleEndDateChange = (date: Date, onChange: (date: Date) => void) => {
+    onChange(date);
+    checkEndBeforeStart();
+  };
+
   const handleTimeChange =
     (field: 'startTime' | 'endTime') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(field, formatTime(e.target.value));
+      setValue(field, e.target.value);
     };
+
+  const handleTimeBlur = (field: 'startTime' | 'endTime') => () => {
+    const rawValue = getValues(field);
+    if (rawValue) {
+      setValue(field, formatTime(rawValue));
+    }
+    checkEndBeforeStart();
+  };
 
   return (
     <FormSection title="경조사 기간">
@@ -46,7 +97,9 @@ export const DateTimeSection = () => {
               render={({ field }) => (
                 <DatePicker
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onValueChange={(date) =>
+                    handleStartDateChange(date, field.onChange)
+                  }
                   placeholder="연도-월-일"
                   dateFormat="yyyy-MM-dd"
                   className="w-full rounded-xl bg-white"
@@ -68,6 +121,7 @@ export const DateTimeSection = () => {
                         <TextInput
                           value={field.value}
                           onChange={handleTimeChange('startTime')}
+                          onBlur={handleTimeBlur('startTime')}
                           placeholder="시간"
                           maxLength={5}
                           inputMode="numeric"
@@ -83,7 +137,9 @@ export const DateTimeSection = () => {
                     render={({ field }) => (
                       <DatePicker
                         value={field.value}
-                        onValueChange={field.onChange}
+                        onValueChange={(date) =>
+                          handleEndDateChange(date, field.onChange)
+                        }
                         placeholder="연도-월-일"
                         dateFormat="yyyy-MM-dd"
                         className="w-full rounded-xl bg-white"
@@ -107,7 +163,9 @@ export const DateTimeSection = () => {
                 render={({ field }) => (
                   <DatePicker
                     value={field.value}
-                    onValueChange={field.onChange}
+                    onValueChange={(date) =>
+                      handleEndDateChange(date, field.onChange)
+                    }
                     placeholder="연도-월-일"
                     dateFormat="yyyy-MM-dd"
                     className="w-full rounded-xl bg-white"
@@ -125,6 +183,7 @@ export const DateTimeSection = () => {
                   <TextInput
                     value={field.value}
                     onChange={handleTimeChange('endTime')}
+                    onBlur={handleTimeBlur('endTime')}
                     placeholder="시간"
                     maxLength={5}
                     inputMode="numeric"

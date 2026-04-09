@@ -1,10 +1,10 @@
 'use client';
 
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
 
 import { Text, VStack } from '@causw/cds';
 
-import { sanitizeHtml } from '@/shared/lib';
+import { sanitizeHtml } from '@/shared/lib/sanitizer';
 
 import { PostImage } from './PostImage';
 

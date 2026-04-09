@@ -11,7 +11,7 @@ import {
   ToastViewport,
 } from '@causw/cds';
 
-import { toast, ToastType, useToastStore } from '@/shared/model';
+import { toast, type ToastType, useToastStore } from '@/shared/model';
 
 const Icons = {
   success: () => <SuccessColored size={20} />,

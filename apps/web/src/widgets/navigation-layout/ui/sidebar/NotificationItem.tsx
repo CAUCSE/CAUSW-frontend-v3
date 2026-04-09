@@ -1,6 +1,6 @@
 import { useUnreadNotificationCnt } from '@/entities/notification';
 
-import { SidebarItem } from '../../model';
+import { type SidebarItem } from '../../model';
 
 import { SidebarMenuItem } from './SidebarMenuItem';
 

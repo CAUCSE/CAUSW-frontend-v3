@@ -1,7 +1,7 @@
 import { Radio, RadioGroup } from '@causw/cds';
 
 import { REPORT_OPTIONS } from '../config';
-import { ReportReason } from '../model';
+import { type ReportReason } from '../model';
 
 interface ReasonSelectRadioProps {
   value: ReportReason;

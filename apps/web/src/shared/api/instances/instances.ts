@@ -1,12 +1,12 @@
 import {
-  ApiClient,
-  ApiClientConfig,
+  type ApiClient,
+  type ApiClientConfig,
   createApiClient,
-  FetchOptions,
+  type FetchOptions,
 } from '@causw/api-client';
 
 import { BASE_URL } from '@/shared/config';
-import { DefaultResponseField } from '@/shared/types';
+import { type DefaultResponseField } from '@/shared/types';
 import { unwrapResponse } from '@/shared/utils';
 
 import {

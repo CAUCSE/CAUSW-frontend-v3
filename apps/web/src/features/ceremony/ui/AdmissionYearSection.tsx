@@ -95,7 +95,9 @@ export const AdmissionYearSection = () => {
               <Field>
                 <TextInput
                   value={admissionYearInput}
-                  onChange={(e) => setAdmissionYearInput(e.target.value)}
+                  onChange={(e) =>
+                    setAdmissionYearInput(e.target.value.replace(/\D/g, ''))
+                  }
                   placeholder="학번을 입력해주세요."
                   inputMode="numeric"
                   className="rounded-xl bg-gray-100"

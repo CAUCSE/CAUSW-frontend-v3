@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from 'react';
 
 import {
-  AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsAcademicStatusFilterOption,
   useAlumniContactsAcademicFilterSheetModalContext,
 } from '@/entities/alumni-contacts';
 

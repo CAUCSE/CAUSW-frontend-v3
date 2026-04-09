@@ -1,12 +1,14 @@
 import Cookies from 'js-cookie';
 
-import { getStorageAccessKey, getStorageRefreshKey } from '@/shared/utils';
-
-const accessKey = getStorageAccessKey();
-const refreshKey = getStorageRefreshKey();
+import {
+  AUTH_REFRESHED_STORAGE_VALUE,
+  STORAGE_ACCESS_KEY,
+  STORAGE_AUTH_REFRESHED_KEY,
+  STORAGE_REFRESH_KEY,
+} from '@/shared/config';
 
 export const getClientATK = (): string => {
-  const atk = Cookies.get(accessKey);
+  const atk = Cookies.get(STORAGE_ACCESS_KEY);
   if (!atk) {
     return '';
   }
@@ -14,7 +16,7 @@ export const getClientATK = (): string => {
 };
 
 export const getClientRTK = (): string => {
-  const rtk = Cookies.get(refreshKey);
+  const rtk = Cookies.get(STORAGE_REFRESH_KEY);
   if (!rtk) {
     return '';
   }
@@ -22,17 +24,27 @@ export const getClientRTK = (): string => {
 };
 
 export const setClientATK = (token: string) => {
-  Cookies.set(accessKey, token);
+  Cookies.set(STORAGE_ACCESS_KEY, token);
 };
 
 export const setClientRTK = (token: string) => {
-  Cookies.set(refreshKey, token);
+  Cookies.set(STORAGE_REFRESH_KEY, token);
 };
 
 export const removeClientATK = () => {
-  Cookies.remove(accessKey);
+  Cookies.remove(STORAGE_ACCESS_KEY);
 };
 
 export const removeClientRTK = () => {
-  Cookies.remove(refreshKey);
+  Cookies.remove(STORAGE_REFRESH_KEY);
+};
+
+export const getClientAuthRefreshed = (): boolean => {
+  return (
+    Cookies.get(STORAGE_AUTH_REFRESHED_KEY) === AUTH_REFRESHED_STORAGE_VALUE
+  );
+};
+
+export const removeClientAuthRefreshed = () => {
+  Cookies.remove(STORAGE_AUTH_REFRESHED_KEY);
 };
