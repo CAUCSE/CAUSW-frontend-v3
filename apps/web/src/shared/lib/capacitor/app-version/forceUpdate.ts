@@ -35,9 +35,9 @@ export async function checkForceUpdate(
   }
 
   const appInfo = await getAppVersion();
-
+  //TODO : prod올리기 전에 삭제
   console.log(
-    'App Version Info:',
+    'App Version Info-force:',
     JSON.stringify(
       {
         name: appInfo.name,
@@ -51,7 +51,7 @@ export async function checkForceUpdate(
   );
 
   const remoteConfig = await fetchMinVersion(env, platform);
-
+  //TODO : prod올리기 전에 삭제
   console.log(
     '[RemoteConfig]',
     JSON.stringify(
@@ -77,7 +77,7 @@ export async function checkForceUpdate(
     storeUrl: remoteConfig.storeUrl,
     updateMessage: remoteConfig.updateMessage,
   };
-
+  //TODO : prod올리기 전에 삭제
   console.log(
     '[ForceUpdateCheck]',
     JSON.stringify(

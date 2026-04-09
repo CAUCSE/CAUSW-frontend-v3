@@ -9,7 +9,8 @@ export interface AppVersionInfo {
 
 export async function getAppVersion(): Promise<AppVersionInfo> {
   const info = await App.getInfo();
-  console.log('App Version Info:', info, JSON.stringify(info, null, 2)); // 여기 :
+  //TODO : prod올리기 전에 삭제
+  console.log('App Version Info-get:', info, JSON.stringify(info, null, 2));
   return {
     version: info.version,
     build: info.build,
