@@ -25,11 +25,7 @@ export const PostContent = ({ post }: PostContentProps) => {
     submitBlock,
   } = usePostMenuActions(post.id);
 
-  const imageList = Array.isArray(post.fileUrlList)
-    ? post.fileUrlList
-    : post.fileUrlList
-      ? [post.fileUrlList]
-      : [];
+  const imageList = ([] as string[]).concat(post.fileUrlList ?? []);
 
   const isHtmlContent = HTML_TAG_PATTERN.test(post.content);
 
