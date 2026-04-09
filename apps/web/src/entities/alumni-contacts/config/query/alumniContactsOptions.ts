@@ -1,7 +1,7 @@
 import { infiniteQueryOptions } from '@tanstack/react-query';
 
 import { getAlumniContacts } from '../../api';
-import { type GetAlumniContactsQuery } from '../../types';
+import { type GetAlumniContactsQuery } from '../../model';
 
 import { alumniContactsQueryKeys } from './alumniContactsKeys';
 
