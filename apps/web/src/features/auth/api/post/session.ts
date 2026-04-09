@@ -18,6 +18,11 @@ import type {
   SendEmailVerificationCodeResponseDto,
   VerifyEmailVerificationCodeRequestDto,
   VerifyEmailVerificationCodeResponseDto,
+  FindEmailRequestDto,
+  EmailFindResponse,
+  PasswordResetSendRequestDto,
+  PasswordResetVerifyRequestDto,
+  PasswordResetVerifyResponseDto,
 } from '@/entities/auth';
 
 import { API } from '@/shared/api';
@@ -178,4 +183,23 @@ export const googleNativeLogin = async (
       });
     }, 1500);
   });
+};
+
+export const findEmail = async (data: FindEmailRequestDto) => {
+  return API.post<EmailFindResponse>(`${URL_PREFIX}/find-email`, data);
+};
+
+export const sendPasswordResetCode = async (
+  data: PasswordResetSendRequestDto,
+) => {
+  return API.post<null>(`${URL_PREFIX}/password-reset/send`, data);
+};
+
+export const verifyPasswordResetCode = async (
+  data: PasswordResetVerifyRequestDto,
+) => {
+  return API.post<PasswordResetVerifyResponseDto>(
+    `${URL_PREFIX}/password-reset/verify`,
+    data,
+  );
 };
