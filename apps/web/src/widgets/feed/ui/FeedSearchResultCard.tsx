@@ -2,13 +2,13 @@
 
 import { Comment, Heart, VStack } from '@causw/cds';
 
+import type { FeedSearchPost } from '@/widgets/feed/model';
+
 import { PostHeader } from '@/features/post';
 
 import { PostBody } from '@/entities/post';
 
 import { IconCountButton } from '@/shared/ui';
-
-import type { FeedSearchPost } from '@/_pages/feed/feed-page.helpers';
 
 type FeedSearchResultCardProps = {
   post: FeedSearchPost;
@@ -20,9 +20,16 @@ export const FeedSearchResultCard = ({
   onClick,
 }: FeedSearchResultCardProps) => {
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          onClick();
+        }
+      }}
       className="w-full rounded-lg bg-white p-4 text-left transition-colors hover:bg-gray-50"
     >
       <VStack gap="md" className="items-stretch">
@@ -34,7 +41,14 @@ export const FeedSearchResultCard = ({
           onAction={() => {}}
         />
 
-        <PostBody content={post.content} isCollapsed maxLines={2} />
+        <PostBody
+          content={post.content}
+          isHtml={post.isHtml}
+          isCollapsed
+          maxLines={2}
+          showExpandButton
+          onExpand={onClick}
+        />
 
         <div className="flex items-center gap-5">
           <IconCountButton icon={<Heart />} count={post.likeCount} disabled />
@@ -45,6 +59,6 @@ export const FeedSearchResultCard = ({
           />
         </div>
       </VStack>
-    </button>
+    </div>
   );
 };

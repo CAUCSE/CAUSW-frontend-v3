@@ -1,16 +1,6 @@
+import type { FeedSearchPost } from '@/widgets/feed/model';
+
 import type { GetPostsItemResponseDto } from '@/entities/post';
-
-import { HTML_TAG_PATTERN } from '@/shared/constants';
-
-export type FeedSearchPost = {
-  id: string;
-  author: string;
-  createdAt: string;
-  avatarUrl?: string;
-  content: string;
-  likeCount: number;
-  commentCount: number;
-};
 
 type UpdateSearchParamParams = {
   keyword: string;
@@ -24,27 +14,6 @@ type UpdateSearchParamParams = {
 };
 
 const FEED_RECENT_SEARCHES_KEY = 'feed-recent-searches';
-const HTML_ENTITY_PATTERN = /&[a-zA-Z0-9#]+;/g;
-const HTML_TAG_REPLACE_PATTERN = new RegExp(HTML_TAG_PATTERN.source, 'gi');
-
-const decodeHtmlEntity = (value: string) =>
-  value
-    .replaceAll('&nbsp;', ' ')
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'");
-
-export const getPostPreviewText = (content: string, fallbackText: string) => {
-  const withoutTags = content.replace(HTML_TAG_REPLACE_PATTERN, ' ');
-  const normalized = withoutTags
-    .replace(HTML_ENTITY_PATTERN, decodeHtmlEntity)
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return normalized || fallbackText;
-};
 
 export const saveRecentSearches = (keywords: string[]) => {
   if (typeof window === 'undefined') return;
@@ -115,13 +84,13 @@ export const formatEmptyResultMessage = (keyword: string, template: string) =>
 
 export const mapPostToCard = (
   post: GetPostsItemResponseDto,
-  fallbackText: string,
 ): FeedSearchPost => ({
   id: post.postId,
   author: post.writerNickname,
   createdAt: post.createdAt,
   avatarUrl: post.writerProfileImageUrl ?? undefined,
-  content: getPostPreviewText(post.content, fallbackText),
+  content: post.content,
+  isHtml: post.isCrawled,
   likeCount: post.numLike,
   commentCount: post.numComment,
 });

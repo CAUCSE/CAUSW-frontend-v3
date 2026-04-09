@@ -1,2 +1,3 @@
-﻿// @/widgets/board
-// 게시판 관련 화면 조합
+export * from './lib';
+export * from './model';
+export * from './ui';

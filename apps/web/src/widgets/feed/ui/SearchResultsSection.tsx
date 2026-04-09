@@ -2,9 +2,9 @@
 
 import type { RefObject } from 'react';
 
-import { FeedSearchResultCard } from './FeedSearchResultCard';
+import type { FeedSearchPost } from '@/widgets/feed/model';
 
-import type { FeedSearchPost } from '@/_pages/feed/feed-page.helpers';
+import { FeedSearchResultCard } from './FeedSearchResultCard';
 
 type SearchResultsSectionProps = {
   posts: FeedSearchPost[];

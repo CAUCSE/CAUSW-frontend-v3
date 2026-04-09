@@ -1,33 +1,25 @@
 'use client';
 
-import { type ChangeEvent, useDeferredValue, useEffect, useState } from 'react';
+import { type ChangeEvent, useEffect, useState } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
-
 import { mergeStyles } from '@causw/cds';
-
-import { postQueryOptions } from '@/entities/post';
-
-import { QUERY_STALE_TIME } from '@/shared/constants';
-import { useBreakpoint, useFetchNextOnScroll } from '@/shared/hooks';
-import { ActionHeader } from '@/shared/ui';
-
-import { FeedSearchEmptyState } from './ui/FeedSearchEmptyState';
-import { FeedSearchInput } from './ui/FeedSearchInput';
-import { FeedSearchLoadingState } from './ui/FeedSearchLoadingState';
-import { RecentSearchesSection } from './ui/RecentSearchesSection';
-import { SearchResultsSection } from './ui/SearchResultsSection';
 
 import {
   createRecentSearches,
+  FeedSearchContent,
+  FeedSearchInput,
   formatEmptyResultMessage,
   loadRecentSearches,
-  mapPostToCard,
   saveRecentSearches,
   updateSearchParam,
-} from '@/_pages/feed/feed-page.helpers';
+} from '@/widgets/feed';
+
+import { useDebounce, useFetchNextOnScroll } from '@/shared/hooks';
+import { ActionHeader } from '@/shared/ui';
+
+import { useFeedSearchPosts } from '@/_pages/feed/useFeedSearchPosts';
 
 const COPY = {
   back: '뒤로',
@@ -39,41 +31,35 @@ const COPY = {
   writePost: '글 쓰러 가기',
   removeSuffix: '삭제',
   loading: '검색 결과를 불러오는 중...',
-  htmlOnlyPost: '이미지가 포함된 게시글입니다.',
 } as const;
 
 export const FeedPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { isMobileSize, isTabletSize } = useBreakpoint();
   const searchKeyword = searchParams.get('q') ?? '';
 
   const [keyword, setKeyword] = useState(searchKeyword);
   const [recentSearches, setRecentSearches] =
     useState<string[]>(loadRecentSearches);
 
-  const deferredKeyword = useDeferredValue(keyword);
-  const trimmedDeferredKeyword = deferredKeyword.trim();
-  const hasKeyword = trimmedDeferredKeyword.length > 0;
+  const debouncedKeyword = useDebounce(keyword, 300);
+  const trimmedDebouncedKeyword = debouncedKeyword.trim();
 
   useEffect(() => {
     setKeyword(searchKeyword);
   }, [searchKeyword]);
 
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useInfiniteQuery({
-      ...postQueryOptions.list({
-        keyword: trimmedDeferredKeyword,
-        size: 20,
-      }),
-      enabled: hasKeyword,
-      staleTime: QUERY_STALE_TIME.NONE,
-      select: (queryData) =>
-        queryData.pages
-          .flatMap((page) => page.posts)
-          .map((post) => mapPostToCard(post, COPY.htmlOnlyPost)),
-    });
+  const {
+    posts: feedPosts,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    hasKeyword,
+  } = useFeedSearchPosts({
+    keyword: trimmedDebouncedKeyword,
+  });
 
   const { targetRef } = useFetchNextOnScroll({
     fetchNextPage: () => {
@@ -83,8 +69,6 @@ export const FeedPage = () => {
     },
     hasNextPage: Boolean(hasNextPage),
   });
-
-  const feedPosts = data ?? [];
 
   const commitRecentSearch = (nextKeyword: string) => {
     const nextRecentSearches = createRecentSearches(
@@ -151,72 +135,52 @@ export const FeedPage = () => {
     router.push('/feed/write');
   };
 
-  const contentWidthClassName = isMobileSize
-    ? 'w-full'
-    : isTabletSize
-      ? 'w-full max-w-[540px]'
-      : 'w-full max-w-[900px]';
-
-  const renderContent = () => {
-    if (!hasKeyword) {
-      if (recentSearches.length > 0) {
-        return (
-          <RecentSearchesSection
-            recentSearches={recentSearches}
-            clearAllLabel={COPY.clearAll}
-            title={COPY.recentSearches}
-            removeSuffix={COPY.removeSuffix}
-            onClearAll={handleRecentSearchClear}
-            onClickItem={handleRecentSearchClick}
-            onRemoveItem={handleRecentSearchRemove}
-          />
-        );
-      }
-
-      return (
-        <FeedSearchEmptyState
-          message={COPY.noRecentSearches}
-          variant="recent"
-        />
-      );
-    }
-
-    if (isLoading) {
-      return <FeedSearchLoadingState message={COPY.loading} />;
-    }
-
-    if (feedPosts.length > 0) {
-      return (
-        <SearchResultsSection
-          posts={feedPosts}
-          hasNextPage={Boolean(hasNextPage)}
-          isFetchingNextPage={isFetchingNextPage}
-          loadingMessage={COPY.loading}
-          targetRef={targetRef}
-          onPostClick={handlePostClick}
-        />
-      );
-    }
-
-    return (
-      <FeedSearchEmptyState
-        message={formatEmptyResultMessage(
-          trimmedDeferredKeyword,
-          COPY.noSearchResult,
-        )}
-        writePostLabel={COPY.writePost}
-        variant="search"
-        onWritePost={handleWritePostClick}
-      />
-    );
-  };
+  const searchContentProps = !hasKeyword
+    ? recentSearches.length > 0
+      ? {
+          state: 'recent-searches' as const,
+          recentSearches,
+          recentSearchTitle: COPY.recentSearches,
+          clearAllLabel: COPY.clearAll,
+          removeSuffix: COPY.removeSuffix,
+          onClearAllRecentSearches: handleRecentSearchClear,
+          onClickRecentSearch: handleRecentSearchClick,
+          onRemoveRecentSearch: handleRecentSearchRemove,
+        }
+      : {
+          state: 'empty-recent-searches' as const,
+          message: COPY.noRecentSearches,
+        }
+    : isLoading
+      ? {
+          state: 'loading' as const,
+          message: COPY.loading,
+        }
+      : feedPosts.length > 0
+        ? {
+            state: 'search-results' as const,
+            posts: feedPosts,
+            hasNextPage: Boolean(hasNextPage),
+            isFetchingNextPage,
+            loadingMessage: COPY.loading,
+            targetRef,
+            onPostClick: handlePostClick,
+          }
+        : {
+            state: 'empty-search-results' as const,
+            message: formatEmptyResultMessage(
+              trimmedDebouncedKeyword,
+              COPY.noSearchResult,
+            ),
+            writePostLabel: COPY.writePost,
+            onWritePost: handleWritePostClick,
+          };
 
   return (
     <div className="min-h-screen bg-gray-100">
       <div
         className={mergeStyles(
-          'tablet:px-8 tablet:pt-6 mx-auto px-4 pt-[47px] pb-8',
-          contentWidthClassName,
+          'mx-auto w-full px-4 pt-[47px] pb-8 md:max-w-[540px] md:px-8 md:pt-6 lg:max-w-[900px]',
         )}
       >
         <ActionHeader isSticky={false}>
@@ -224,7 +188,7 @@ export const FeedPage = () => {
           <div />
         </ActionHeader>
 
-        <div className="tablet:mt-0 mt-3">
+        <div className="mt-3 md:mt-0">
           <FeedSearchInput
             keyword={keyword}
             placeholder={COPY.searchPlaceholder}
@@ -234,7 +198,7 @@ export const FeedPage = () => {
           />
         </div>
 
-        {renderContent()}
+        <FeedSearchContent {...searchContentProps} />
       </div>
     </div>
   );
