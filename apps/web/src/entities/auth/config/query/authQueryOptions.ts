@@ -3,6 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import { getAdmissionState, getMyInfo } from '../../api';
+import { getMe } from '@/entities/auth/api';
 
 import { authQueryKey } from './authQueryKey';
 
