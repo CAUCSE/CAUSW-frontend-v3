@@ -1,6 +1,8 @@
 import { HttpResponse } from 'msw';
 
 import { USER_API_PREFIX } from '@/shared/constants';
+import { type UserMeResponseDto } from '@/entities/auth';
+
 import { mswHttp } from '@/shared/lib';
 const DUPLICATED_NICKNAMES = new Set(['admin', 'causw', 'test']);
 const DUPLICATED_PHONE_NUMBERS = new Set([
@@ -10,6 +12,27 @@ const DUPLICATED_PHONE_NUMBERS = new Set([
 ]);
 
 export const getHandler = [
+  mswHttp.get<UserMeResponseDto>(`${USER_API_PREFIX}/me`, () => {
+    return HttpResponse.json(
+      {
+        code: 'S000',
+        message: '요청 처리 성공',
+        data: {
+          id: '550e8400-e29b-41d4-a716-446655440000',
+          name: '모킹 이름',
+          nickname: '모킹 닉네임',
+          profileImage: {
+            profileImageType: 'MALE_1',
+            profileImageUrl: '',
+          },
+          admissionYear: 2020,
+          job: '개발자',
+          onboardingStatus: 'ACADEMIC_CERTIFICATION_REQUIRED',
+        },
+      },
+      { status: 200 },
+    );
+  }),
   mswHttp.get<null>(`${USER_API_PREFIX}/check-phone`, ({ request }) => {
     const { searchParams } = new URL(request.url);
     const phoneNumber = (searchParams.get('phoneNumber') ?? '').trim();
