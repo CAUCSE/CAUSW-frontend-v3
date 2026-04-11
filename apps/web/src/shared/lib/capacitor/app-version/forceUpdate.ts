@@ -4,7 +4,7 @@ import type { UpdateEnv } from '@/shared/config';
 
 import { compareSemver } from './compareVersion';
 import { fetchMinVersion } from './fetchMinVersion';
-import { getAppVersion } from './getVersion';
+import { getAppVersion } from './getAppVersion';
 
 export interface ForceUpdateResult {
   needUpdate: boolean;
