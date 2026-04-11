@@ -135,10 +135,11 @@ export interface NativeSocialLoginRequestDto {
   idToken?: string;
 }
 
-type OnboardingStatus =
+export type OnboardingStatus =
   | 'TERMS_REQUIRED'
   | 'GUEST'
   | 'ACADEMIC_CERTIFICATION_REQUIRED'
+  | 'EMAIL_VERIFICATION_REQUIRED'
   | 'ACTIVE';
 
 type AcademicStatus =
@@ -158,6 +159,19 @@ type UserProfileImageType =
   | 'FEMALE_2'
   | 'CUSTOM'
   | 'GHOST';
+
+export interface UserMeResponseDto {
+  id: string;
+  name: string;
+  nickname: string;
+  profileImage: {
+    profileImageType: UserProfileImageType;
+    profileImageUrl: string;
+  };
+  admissionYear: number;
+  job: string;
+  onboardingStatus: OnboardingStatus;
+}
 
 export interface AuthResponseDto {
   accessToken: string;
