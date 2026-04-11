@@ -29,15 +29,8 @@ export function ForceUpdateProvider({
   children: React.ReactNode;
 }) {
   const [state, setState] = useState<ForceUpdateState>(initialState);
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
+    let cancelled = false;
 
     const run = async () => {
       try {
@@ -59,7 +52,7 @@ export function ForceUpdateProvider({
 
         const result = await checkForceUpdate(updateEnv);
 
-        if (result.needUpdate) {
+        if (!cancelled && result.needUpdate) {
           setState({
             open: true,
             message: result.updateMessage,
@@ -74,11 +67,27 @@ export function ForceUpdateProvider({
     };
 
     void run();
-  }, [mounted]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleUpdate = async () => {
     if (!state.storeUrl) return;
-    await Browser.open({ url: state.storeUrl });
+
+    try {
+      await Browser.open({
+        url: state.storeUrl,
+      });
+      return;
+    } catch (browserError) {
+      console.error('[ForceUpdate] Browser.open failed', browserError);
+    }
+
+    if (typeof window !== 'undefined') {
+      window.location.href = state.storeUrl;
+    }
   };
 
   return (
