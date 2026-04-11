@@ -2,11 +2,9 @@
 
 import type { ComponentProps } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
 
-import { kakaoNativeLogin } from '@/features/auth/api';
+import { useNativeSocialLoginMutation } from '@/features/auth';
 
 import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
@@ -20,7 +18,7 @@ export const KakaoLoginButton = ({
   onClick,
   ...props
 }: KakaoLoginButtonProps) => {
-  const router = useRouter();
+  const nativeSocialLoginMutation = useNativeSocialLoginMutation();
 
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
@@ -29,12 +27,14 @@ export const KakaoLoginButton = ({
     if (isMobile) {
       const handleMobileLogin = async () => {
         const loadingToastId = String(toast.loading('kakao 로그인 중...'));
+        let accessToken: string;
+
         try {
-          const nativeAccessToken = await requestNativeSocialLogin('kakao');
-          await kakaoNativeLogin({ accessToken: nativeAccessToken });
-          toast.dismiss(loadingToastId);
-          toast.success('로그인되었습니다.');
-          router.replace('/home');
+          const tokens = await requestNativeSocialLogin('kakao');
+          if (!tokens.accessToken) {
+            throw new Error('카카오 액세스 토큰을 가져오지 못했습니다.');
+          }
+          accessToken = tokens.accessToken;
         } catch (error) {
           toast.dismiss(loadingToastId);
           toast.error(
@@ -43,8 +43,20 @@ export const KakaoLoginButton = ({
               '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
             ),
           );
-          router.replace('/auth/sign-in');
+          return;
         }
+
+        nativeSocialLoginMutation.mutate(
+          {
+            provider: 'kakao',
+            accessToken,
+          },
+          {
+            onSettled: () => {
+              toast.dismiss(loadingToastId);
+            },
+          },
+        );
       };
 
       handleMobileLogin();

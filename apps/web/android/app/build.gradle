@@ -38,10 +38,14 @@ if (localPropertiesFile.exists()) {
             dimension "env"
             applicationIdSuffix ".dev"              // => kr.co.causwv2.twa.dev
             versionNameSuffix "-dev"                // => 1.0-dev
+            resValue "string", "package_name", "kr.co.causwv2.twa.dev"
+            resValue "string", "custom_url_scheme", "kr.co.causwv2.twa.dev"
             manifestPlaceholders = [appLabel: "DEV-크자회"]
         }
         prod {
             dimension "env"
+            resValue "string", "package_name", "kr.co.causwv2.twa"
+            resValue "string", "custom_url_scheme", "kr.co.causwv2.twa"
             manifestPlaceholders = [appLabel: "크자회(CCSSAA)"]
         }
     }

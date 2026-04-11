@@ -20,47 +20,58 @@ type NativeSocialLoginMutationOptions = Omit<
   UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>,
   'mutationFn' | 'onSuccess' | 'onError'
 > & {
-  onSuccess?: (data: AuthResponseDto) => void;
-  onError?: (error: Error) => void;
+  onSuccess?: UseMutationOptions<
+    AuthResponseDto,
+    Error,
+    NativeSocialLoginRequestDto
+  >['onSuccess'];
+  onError?: UseMutationOptions<
+    AuthResponseDto,
+    Error,
+    NativeSocialLoginRequestDto
+  >['onError'];
 };
 
 export const useNativeSocialLoginMutation = (
   options?: NativeSocialLoginMutationOptions,
 ) => {
   const router = useRouter();
-  const { onSuccess, onError, ...restOptions } = options ?? {};
+  const {
+    onSuccess: customOnSuccess,
+    onError: customOnError,
+    ...restOptions
+  } = options ?? {};
+
+  const onSuccess: NonNullable<
+    NativeSocialLoginMutationOptions['onSuccess']
+  > = async (data) => {
+    toast.success('로그인되었습니다.');
+    routeAfterSignIn(router, data);
+  };
+
+  const onError: NonNullable<
+    NativeSocialLoginMutationOptions['onError']
+  > = async (error) => {
+    toast.error(
+      extractErrorMessage(
+        error,
+        '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
+      ),
+    );
+    router.replace('/auth/sign-in');
+  };
 
   return useMutation({
-    mutationFn: (data: NativeSocialLoginRequestDto) => nativeSocialLogin(data),
-    onSuccess: async (data) => {
-      try {
-        await TokenManager.setAccessToken(data.accessToken);
-        await TokenManager.setRefreshToken();
+    mutationFn: async (data: NativeSocialLoginRequestDto) => {
+      const response = await nativeSocialLogin(data);
 
-        toast.success('로그인되었습니다.');
-        routeAfterSignIn(router, data);
+      await TokenManager.setAccessToken(response.accessToken);
+      await TokenManager.setRefreshToken();
 
-        onSuccess?.(data);
-      } catch (error) {
-        toast.error(
-          extractErrorMessage(
-            error,
-            '로그인 정보 저장에 실패했습니다. 다시 시도해 주세요.',
-          ),
-        );
-        router.replace('/auth/sign-in');
-      }
+      return response;
     },
-    onError: (error) => {
-      toast.error(
-        extractErrorMessage(
-          error,
-          '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
-        ),
-      );
-      router.replace('/auth/sign-in');
-      onError?.(error);
-    },
+    onSuccess: customOnSuccess ?? onSuccess,
+    onError: customOnError ?? onError,
     ...restOptions,
   });
 };

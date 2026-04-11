@@ -2,11 +2,9 @@
 
 import type { ComponentProps } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
 
-import { appleNativeLogin } from '@/features/auth/api';
+import { useNativeSocialLoginMutation } from '@/features/auth';
 
 import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
@@ -20,7 +18,7 @@ export const AppleLoginButton = ({
   onClick,
   ...props
 }: AppleLoginButtonProps) => {
-  const router = useRouter();
+  const nativeSocialLoginMutation = useNativeSocialLoginMutation();
 
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
@@ -29,12 +27,14 @@ export const AppleLoginButton = ({
     if (isMobile) {
       const handleMobileLogin = async () => {
         const loadingToastId = String(toast.loading('apple 로그인 중...'));
+        let idToken: string;
+
         try {
-          const nativeAccessToken = await requestNativeSocialLogin('apple');
-          await appleNativeLogin({ accessToken: nativeAccessToken });
-          toast.dismiss(loadingToastId);
-          toast.success('로그인되었습니다.');
-          router.replace('/home');
+          const tokens = await requestNativeSocialLogin('apple');
+          if (!tokens.idToken) {
+            throw new Error('Apple id token을 가져오지 못했습니다.');
+          }
+          idToken = tokens.idToken;
         } catch (error) {
           toast.dismiss(loadingToastId);
           toast.error(
@@ -43,8 +43,20 @@ export const AppleLoginButton = ({
               '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
             ),
           );
-          router.replace('/auth/sign-in');
+          return;
         }
+
+        nativeSocialLoginMutation.mutate(
+          {
+            provider: 'apple',
+            idToken,
+          },
+          {
+            onSettled: () => {
+              toast.dismiss(loadingToastId);
+            },
+          },
+        );
       };
 
       handleMobileLogin();
