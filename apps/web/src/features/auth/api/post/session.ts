@@ -1,6 +1,5 @@
 import type {
   SignupResponseDto,
-  SigninResponseDto,
   SignoutResponseDto,
   SignupRequestDto,
   SigninRequestDto,
@@ -26,7 +25,7 @@ export const signup = async (data: SignupRequestDto) => {
 };
 
 export const signin = async (data: SigninRequestDto) => {
-  return API.post<SigninResponseDto>(`${AUTH_API_PREFIX}/login`, data);
+  return API.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login`, data);
 };
 
 export const signout = async (data: SignoutRequestDto) => {
@@ -51,9 +50,7 @@ export const verifyEmailVerificationCode = async (
   );
 };
 
-export const nativeSocialLogin = async (
-  data: NativeSocialLoginRequestDto,
-) => {
+export const nativeSocialLogin = async (data: NativeSocialLoginRequestDto) => {
   return API.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login/native`, {
     provider: data.provider,
     accessToken: data.accessToken,
