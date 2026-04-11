@@ -43,12 +43,26 @@ export const useSignInMutation = (
     'mutationFn'
   >,
 ) => {
+  const { onSuccess: afterSuccess, ...restOptions } = options ?? {};
+
   return useMutation({
     mutationFn: (data: SigninRequestDto) => signin(data),
-    onError: (error) => {
+    onMutate: () => {
+      toast.loading('로그인을 진행하고 있어요...');
+    },
+    onSuccess: (
+      data: SigninResponseDto,
+      variables: SigninRequestDto,
+      onMutateResult,
+      context,
+    ) => {
+      toast.success('로그인에 성공했습니다.');
+      afterSuccess?.(data, variables, onMutateResult, context);
+    },
+    onError: (error: Error) => {
       toast.error(extractErrorMessage(error, '로그인에 실패했습니다.'));
     },
-    ...options,
+    ...restOptions,
   });
 };
 
