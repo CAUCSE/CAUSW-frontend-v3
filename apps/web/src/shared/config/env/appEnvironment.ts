@@ -31,11 +31,3 @@ export function getUpdateEnv(): UpdateEnv {
       return 'dev';
   }
 }
-
-export function isDevUpdateEnv(): boolean {
-  return getUpdateEnv() === 'dev';
-}
-
-export function isProdUpdateEnv(): boolean {
-  return getUpdateEnv() === 'prod';
-}

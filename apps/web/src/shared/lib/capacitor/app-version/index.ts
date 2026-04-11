@@ -1,2 +1,2 @@
 export * from './forceUpdate';
-export * from './openStore';
+export * from './openAppStore';
