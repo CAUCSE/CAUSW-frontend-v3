@@ -2,10 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import { Browser } from '@capacitor/browser';
-
 import { getRawAppEnv, getUpdateEnv } from '@/shared/config';
-import { checkForceUpdate } from '@/shared/lib';
+import { checkForceUpdate, openAppStore } from '@/shared/lib';
 
 interface ForceUpdateState {
   open: boolean;
@@ -78,47 +76,10 @@ export function ForceUpdateProvider({
   }, []);
 
   const handleUpdate = async () => {
-    if (!state.storeUrlApp && !state.storeUrlWeb) return;
-
-    try {
-      if (state.storeUrlApp) {
-        const { AppLauncher } = await import('@capacitor/app-launcher');
-        const { completed } = await AppLauncher.openUrl({
-          url: state.storeUrlApp,
-        });
-        console.log(
-          '[ForceUpdate] AppLauncher result !!!',
-          JSON.stringify({
-            url: state.storeUrlApp,
-            completed,
-          }),
-        );
-        if (completed) return;
-      }
-    } catch (launcherError) {
-      console.error('[ForceUpdate] AppLauncher.openUrl failed', launcherError);
-    }
-
-    try {
-      if (state.storeUrlWeb) {
-        console.log(
-          '[ForceUpdate] fallback to Browser.open !!!',
-          JSON.stringify({
-            url: state.storeUrlWeb,
-          }),
-        );
-        await Browser.open({
-          url: state.storeUrlWeb,
-        });
-        return;
-      }
-    } catch (browserError) {
-      console.error('[ForceUpdate] Browser.open failed', browserError);
-    }
-
-    if (typeof window !== 'undefined' && state.storeUrlWeb) {
-      window.location.href = state.storeUrlWeb;
-    }
+    await openAppStore({
+      appUrl: state.storeUrlApp,
+      webUrl: state.storeUrlWeb,
+    });
   };
 
   return (
