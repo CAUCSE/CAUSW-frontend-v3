@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { CTAButton, Dialog, Text } from '@causw/cds';
+
 import { getRawAppEnv, getUpdateEnv } from '@/shared/config';
 import { checkForceUpdate, openAppStore } from '@/shared/lib';
 
@@ -86,36 +88,55 @@ export function ForceUpdateProvider({
     <>
       {children}
 
-      {state.open && (
-        <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-5">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="mb-5">
-              <h2 className="text-lg font-bold text-gray-900">
+      <Dialog open={state.open} onOpenChange={() => {}}>
+        <Dialog.Content
+          width={350}
+          maxWidth={420}
+          className="w-[calc(100vw-2rem)]! max-w-100! overflow-hidden rounded-[0.75rem]!"
+        >
+          <div className="mb-2">
+            <Dialog.Title>
+              <Text typography="subtitle-18-bold" className="break-keep">
                 업데이트가 필요합니다
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-gray-600">
+              </Text>
+            </Dialog.Title>
+
+            <Dialog.Description>
+              <Text
+                typography="body-14-regular"
+                textColor="gray-600"
+                className="leading-7 break-keep"
+              >
                 {state.message ||
-                  '안정적인 사용을 위해서는 최신 버전이 필요합니다.'}
-              </p>
-            </div>
+                  '안정적인 사용을 위해 최신 버전으로 업데이트 해주세요.'}
+              </Text>
+            </Dialog.Description>
+          </div>
 
-            <div className="mb-5 rounded-xl bg-gray-50 p-4 text-sm text-gray-700">
-              <p>현재 버전: {state.currentVersion}</p>
-              <p className="mt-1">최소 버전: {state.minimumVersion}</p>
-            </div>
+          <Text
+            typography="body-14-regular"
+            textColor="gray-700"
+            className="mb-4 rounded-[1rem] bg-gray-50 p-5 leading-7 break-keep"
+          >
+            <p>현재 버전: {state.currentVersion}</p>
+            <p className="mt-1">최소 버전: {state.minimumVersion}</p>
+          </Text>
 
-            <button
-              type="button"
+          <Dialog.Footer className="block">
+            <CTAButton
               onClick={() => {
                 void handleUpdate();
               }}
-              className="flex h-12 w-full items-center justify-center rounded-xl bg-black text-sm font-semibold text-white transition hover:bg-gray-800 active:scale-[0.99]"
+              className="w-full rounded-[1rem] bg-black"
+              color="dark"
             >
-              업데이트하러 가기
-            </button>
-          </div>
-        </div>
-      )}
+              <Text textColor="white" typography="body-15-medium">
+                업데이트하러 가기
+              </Text>
+            </CTAButton>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog>
     </>
   );
 }
