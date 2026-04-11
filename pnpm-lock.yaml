@@ -132,6 +132,9 @@ importers:
       '@capacitor/app':
         specifier: ^7.1.1
         version: 7.1.2(@capacitor/core@7.4.2)
+      '@capacitor/app-launcher':
+        specifier: ^7
+        version: 7.0.4(@capacitor/core@7.4.2)
       '@capacitor/browser':
         specifier: ^7
         version: 7.0.5(@capacitor/core@7.4.2)
@@ -417,6 +420,11 @@ packages:
     resolution: {integrity: sha512-FZ7M9NwFkljR7EP5eXiE32mAIfZNcYw2CzRMCG3rQu0u0ZaIoeOeq5/oK4YcDnGpNmu8jpngKJqZ+9OiSQSwDg==}
     peerDependencies:
       '@capacitor/core': ^7.4.0
+
+  '@capacitor/app-launcher@7.0.4':
+    resolution: {integrity: sha512-epTJ0g2K/wgfyqdQXtwTn12aVyAwnexzSCIh/Rh0VmUonTOT7SFMFoIOl5x5edv+4HDrYZstyTHPBVnXVTVtCA==}
+    peerDependencies:
+      '@capacitor/core': '>=7.0.0'
 
   '@capacitor/app@7.1.2':
     resolution: {integrity: sha512-d4I/oF/PRu4megL7/IGKYfe5j7yzSON1FRFgq6kH+m5kH6g7V+wyjHRLauCzGNjdRx4S+nWOumINds0qcRBtKg==}
@@ -5204,6 +5212,10 @@ snapshots:
       css-tree: 3.2.1
 
   '@capacitor/android@7.4.2(@capacitor/core@7.4.2)':
+    dependencies:
+      '@capacitor/core': 7.4.2
+
+  '@capacitor/app-launcher@7.0.4(@capacitor/core@7.4.2)':
     dependencies:
       '@capacitor/core': 7.4.2
 
