@@ -10,7 +10,8 @@ import { checkForceUpdate } from '@/shared/lib';
 interface ForceUpdateState {
   open: boolean;
   message: string;
-  storeUrl: string;
+  storeUrlApp: string;
+  storeUrlWeb: string;
   currentVersion: string;
   minimumVersion: string;
 }
@@ -18,7 +19,8 @@ interface ForceUpdateState {
 const initialState: ForceUpdateState = {
   open: false,
   message: '',
-  storeUrl: '',
+  storeUrlApp: '',
+  storeUrlWeb: '',
   currentVersion: '',
   minimumVersion: '',
 };
@@ -29,6 +31,7 @@ export function ForceUpdateProvider({
   children: React.ReactNode;
 }) {
   const [state, setState] = useState<ForceUpdateState>(initialState);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -56,7 +59,8 @@ export function ForceUpdateProvider({
           setState({
             open: true,
             message: result.updateMessage,
-            storeUrl: result.storeUrl,
+            storeUrlApp: result.storeUrlApp,
+            storeUrlWeb: result.storeUrlWeb,
             currentVersion: result.currentVersion,
             minimumVersion: result.minimumVersion,
           });
@@ -74,19 +78,46 @@ export function ForceUpdateProvider({
   }, []);
 
   const handleUpdate = async () => {
-    if (!state.storeUrl) return;
+    if (!state.storeUrlApp && !state.storeUrlWeb) return;
 
     try {
-      await Browser.open({
-        url: state.storeUrl,
-      });
-      return;
+      if (state.storeUrlApp) {
+        const { AppLauncher } = await import('@capacitor/app-launcher');
+        const { completed } = await AppLauncher.openUrl({
+          url: state.storeUrlApp,
+        });
+        console.log(
+          '[ForceUpdate] AppLauncher result !!!',
+          JSON.stringify({
+            url: state.storeUrlApp,
+            completed,
+          }),
+        );
+        if (completed) return;
+      }
+    } catch (launcherError) {
+      console.error('[ForceUpdate] AppLauncher.openUrl failed', launcherError);
+    }
+
+    try {
+      if (state.storeUrlWeb) {
+        console.log(
+          '[ForceUpdate] fallback to Browser.open !!!',
+          JSON.stringify({
+            url: state.storeUrlWeb,
+          }),
+        );
+        await Browser.open({
+          url: state.storeUrlWeb,
+        });
+        return;
+      }
     } catch (browserError) {
       console.error('[ForceUpdate] Browser.open failed', browserError);
     }
 
-    if (typeof window !== 'undefined') {
-      window.location.href = state.storeUrl;
+    if (typeof window !== 'undefined' && state.storeUrlWeb) {
+      window.location.href = state.storeUrlWeb;
     }
   };
 
@@ -95,7 +126,7 @@ export function ForceUpdateProvider({
       {children}
 
       {state.open && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 px-5">
+        <div className="fixed inset-0 z-999 flex items-center justify-center bg-black/60 px-5">
           <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
             <div className="mb-5">
               <h2 className="text-lg font-bold text-gray-900">

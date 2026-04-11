@@ -13,7 +13,8 @@ type Platform = 'ios' | 'android';
 export interface RemoteVersionConfig {
   forceUpdateEnabled: boolean;
   minimumVersion: string;
-  storeUrl: string;
+  storeUrlApp: string;
+  storeUrlWeb: string;
   updateMessage: string;
 }
 
@@ -40,6 +41,16 @@ function getMinimumVersionKey(env: UpdateEnv, platform: Platform): string {
   return env === 'dev' ? 'min_version_android_dev' : 'min_version_android_prod';
 }
 
+function getStoreUrlAppKey(platform: Platform): string {
+  if (platform === 'ios') return 'ios_store_url_app';
+  return 'android_store_url_app';
+}
+
+function getStoreUrlWebKey(platform: Platform): string {
+  if (platform === 'ios') return 'ios_store_url_web';
+  return 'android_store_url_web';
+}
+
 export async function fetchMinVersion(
   env: UpdateEnv,
   platform: Platform,
@@ -50,7 +61,8 @@ export async function fetchMinVersion(
     return {
       forceUpdateEnabled: false,
       minimumVersion: '0.0.0',
-      storeUrl: '',
+      storeUrlApp: '',
+      storeUrlWeb: '',
       updateMessage: '',
     };
   }
@@ -67,8 +79,10 @@ export async function fetchMinVersion(
     min_version_ios_prod: '0.0.0',
     min_version_android_dev: '0.0.0',
     min_version_android_prod: '0.0.0',
-    ios_store_url: '',
-    android_store_url: '',
+    ios_store_url_app: '',
+    ios_store_url_web: '',
+    android_store_url_app: '',
+    android_store_url_web: '',
     update_message_ko: '최신 버전으로 업데이트해주세요.',
   };
 
@@ -80,17 +94,23 @@ export async function fetchMinVersion(
   const minimumVersionKey = getMinimumVersionKey(env, platform);
   const minimumVersion = getValue(remoteConfig, minimumVersionKey).asString();
 
-  const storeUrl =
-    platform === 'ios'
-      ? getValue(remoteConfig, 'ios_store_url').asString()
-      : getValue(remoteConfig, 'android_store_url').asString();
+  const storeUrlApp = getValue(
+    remoteConfig,
+    getStoreUrlAppKey(platform),
+  ).asString();
+
+  const storeUrlWeb = getValue(
+    remoteConfig,
+    getStoreUrlWebKey(platform),
+  ).asString();
 
   const updateMessage = getValue(remoteConfig, 'update_message_ko').asString();
 
   return {
     forceUpdateEnabled,
     minimumVersion,
-    storeUrl,
+    storeUrlApp,
+    storeUrlWeb,
     updateMessage,
   };
 }
