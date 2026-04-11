@@ -6,9 +6,9 @@ import type {
   SigninRequestDto,
   SignupRequestDto,
   SignoutRequestDto,
-  SigninResponseDto,
   SignupResponseDto,
   SignoutResponseDto,
+  AuthResponseDto,
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
@@ -39,7 +39,7 @@ export const useSignUpMutation = (options?: SignUpMutationOptions) => {
 
 export const useSignInMutation = (
   options?: Omit<
-    UseMutationOptions<SigninResponseDto, Error, SigninRequestDto>,
+    UseMutationOptions<AuthResponseDto, Error, SigninRequestDto>,
     'mutationFn'
   >,
 ) => {
@@ -51,7 +51,7 @@ export const useSignInMutation = (
       toast.loading('로그인을 진행하고 있어요...');
     },
     onSuccess: (
-      data: SigninResponseDto,
+      data: AuthResponseDto,
       variables: SigninRequestDto,
       onMutateResult,
       context,
