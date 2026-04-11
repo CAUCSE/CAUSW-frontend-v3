@@ -6,13 +6,20 @@ import { Stack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
-import { MOCK_POST_COMMENTS, type ReplyTarget } from '@/entities/comment';
-import { MOCK_POST } from '@/entities/post';
+import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
+import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';
 import { PostContent } from './PostContent';
 
-export const PostDetailSection = () => {
+interface PostDetailSectionProps {
+  postId: string;
+}
+
+export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
+  const { data: post } = usePostQuery(postId);
+  const { data: comments } = useCommentsQuery({ postId });
+
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -33,11 +40,16 @@ export const PostDetailSection = () => {
           msOverflowStyle: 'none',
         }}
       >
-        <PostContent postId={MOCK_POST.id} />
-        <CommentList comments={MOCK_POST_COMMENTS} onReply={handleReply} />
+        <PostContent post={post} />
+        <CommentList
+          countComment={post.numComment}
+          comments={comments.content}
+          onReply={handleReply}
+        />
       </Stack>
 
       <CommentForm
+        postId={postId}
         replyTarget={replyTarget}
         onCancelReply={() => setReplyTarget(null)}
         inputRef={inputRef}

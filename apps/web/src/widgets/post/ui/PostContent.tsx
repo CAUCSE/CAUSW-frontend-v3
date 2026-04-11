@@ -1,84 +1,94 @@
 'use client';
 
-import { useState } from 'react';
-
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
-import { PostHeader, usePostMenuActions } from '@/features/post';
+import {
+  POST_ACTION,
+  PostHeader,
+  usePostMenuActions,
+  useTogglePostLikeMutation,
+} from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { MOCK_POST, PostBody, PostReactions, PostVote } from '@/entities/post';
+import {
+  type GetPostResponseDto,
+  PostBody,
+  PostReactions,
+} from '@/entities/post';
+
+import { ConfirmModal } from '@/shared/ui';
 
 interface PostContentProps {
-  postId: string | number;
+  post: GetPostResponseDto;
 }
 
-export const PostContent = ({ postId }: PostContentProps) => {
+export const PostContent = ({ post }: PostContentProps) => {
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
-  } = usePostMenuActions(postId);
+    submitDelete,
+  } = usePostMenuActions(post.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(MOCK_POST.likeCount);
+  const { mutate: toggleLike, isPending } = useTogglePostLikeMutation(post.id);
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    if (isPending) return;
+    toggleLike(!post.isPostLike);
   };
 
   return (
     <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
       <VStack gap="sm">
         <PostHeader
-          authorName={MOCK_POST.author.name}
-          createdAt={MOCK_POST.createdAt}
-          avatarUrl={MOCK_POST.author.profileImage}
-          isOfficial={MOCK_POST.author.isOfficial}
-          isMine={false}
+          authorName={post.displayWriterNickname}
+          createdAt={post.createdAt}
+          avatarUrl={post.writerProfileImage}
+          // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
+          // isOfficial={}
+          isMine={post.isOwner}
           onAction={handleMenuAction}
         />
         <PostBody
-          content={MOCK_POST.content}
-          images={MOCK_POST.images}
-          isHtml={MOCK_POST.isHtml}
+          content={post.content}
+          images={post.fileUrlList}
+          // isHtml={post.isHtml}
         />
       </VStack>
 
-      {MOCK_POST.vote && (
-        <PostVote
-          options={MOCK_POST.vote.options}
-          endTime={MOCK_POST.vote.endTime}
-        />
-      )}
+      {/* {post.voteId && (
+        <PostVote options={post.vote.options} endTime={post.vote.endTime} />
+      )} */}
 
       <PostReactions
-        active={isLiked}
-        likeCount={likeCount}
+        active={post.isPostLike}
+        likeCount={post.numLike}
         onLikeClick={handleLikeClick}
       />
 
       <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
+        open={activeModal === POST_ACTION.REPORT}
+        setOpen={closeModal}
         onSubmitReport={submitReport}
       />
 
       <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
+        open={activeModal === POST_ACTION.BLOCK}
+        setOpen={closeModal}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        title="답글을 삭제하시겠어요?"
+        open={activeModal === POST_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </VStack>
   );

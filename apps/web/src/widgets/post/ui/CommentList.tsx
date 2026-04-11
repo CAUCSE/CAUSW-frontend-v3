@@ -1,6 +1,6 @@
-import { Stack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { CommentItem } from '@/features/comment';
+import { CommentEmptyState, CommentItem } from '@/features/comment';
 
 import {
   type Comment,
@@ -9,18 +9,29 @@ import {
 } from '@/entities/comment';
 
 interface CommentListProps {
+  countComment: number;
   comments: Comment[];
   onReply: (target: ReplyTarget) => void;
 }
 
-export const CommentList = ({ comments, onReply }: CommentListProps) => {
-  return (
-    <Stack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">
-      <CommentHeader count={comments.length} />
+export const CommentList = ({
+  countComment,
+  comments,
+  onReply,
+}: CommentListProps) => {
+  const isEmpty = countComment === 0;
 
-      {comments.map((comment) => (
-        <CommentItem key={comment.id} comment={comment} onReply={onReply} />
-      ))}
-    </Stack>
+  return (
+    <VStack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">
+      <CommentHeader count={countComment} />
+
+      {isEmpty ? (
+        <CommentEmptyState />
+      ) : (
+        comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} onReply={onReply} />
+        ))
+      )}
+    </VStack>
   );
 };

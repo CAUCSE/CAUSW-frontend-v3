@@ -1,17 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import { Dialog, mergeStyles } from '@causw/cds';
 
-import { PostWriteForm } from '@/features/post-write';
+import { PostEditForm, PostWriteForm } from '@/features/post';
 
 import { useBreakpoint } from '@/shared/hooks';
-import { ConfirmLeaveModal } from '@/shared/ui';
+import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
-export const PostWriteModal = () => {
+export const PostWriteModal = ({ postId }: { postId?: string }) => {
   const router = useRouter();
 
   const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
@@ -42,20 +42,33 @@ export const PostWriteModal = () => {
             setIsCancelConfirmOpen(true);
           }}
           className={mergeStyles(
-            'flex flex-col p-0 md:overflow-hidden',
+            'flex flex-col p-0 focus:outline-none md:overflow-hidden',
             !isMobileSize
               ? 'w-[calc(100vw-200px)] max-w-175 md:h-128'
               : 'animate-none! transition-none! data-[state=closed]:animate-none! data-[state=open]:animate-none!',
           )}
         >
-          <PostWriteForm onClose={handleRequestClose} />
+          <Dialog.Title className="sr-only">
+            {postId ? '게시글 수정' : '게시글 작성'}
+          </Dialog.Title>
+          {postId ? (
+            <Suspense fallback={<SuspenseView />}>
+              <PostEditForm postId={postId} onClose={handleRequestClose} />
+            </Suspense>
+          ) : (
+            <PostWriteForm onClose={handleRequestClose} />
+          )}
         </Dialog.Content>
       </Dialog>
 
-      <ConfirmLeaveModal
-        message="글쓰기를 그만두시겠어요?"
+      <ConfirmModal
+        title={
+          postId ? '게시글 수정을 그만두시겠어요?' : '글쓰기를 그만두시겠어요?'
+        }
         open={isCancelConfirmOpen}
-        setOpen={setIsCancelConfirmOpen}
+        onOpenChange={setIsCancelConfirmOpen}
+        onConfirm={() => router.back()}
+        titleTypo="subtitle-16-bold"
       />
     </>
   );

@@ -1,19 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-
 import { Stack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
 import { ReportFlow } from '@/features/report';
 
 import {
-  type Comment,
   CommentCard,
   type ReplyTarget,
+  type Comment,
 } from '@/entities/comment';
 
-import { useCommentMenuActions } from '../model';
+import { formatRelativeTime } from '@/shared/lib';
+import { ConfirmModal } from '@/shared/ui';
+
+import { COMMENT_ACTION } from '../config';
+import { useCommentMenuActions, useToggleCommentLikeMutation } from '../model';
 
 import { CommentActionMenu } from './CommentActionMenu';
 import { ReplyList } from './ReplyList';
@@ -24,63 +26,80 @@ interface CommentItemProps {
 }
 
 export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
+  const isInactive = comment.isDeleted || comment.isBlocked;
+
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
-  } = useCommentMenuActions(comment.id);
+    submitDelete,
+  } = useCommentMenuActions(comment.postId, comment.id);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const { mutate: toggleLike } = useToggleCommentLikeMutation(
+    comment.postId,
+    comment.id,
+  );
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    if (isInactive) return;
+    toggleLike(!comment.isCommentLike);
   };
 
   return (
     <Stack gap="none" key={comment.id}>
       <CommentCard
-        {...comment}
-        author={comment.author}
+        author={comment.displayWriterNickname}
+        profileImage={comment.writerProfileImage}
         content={comment.content}
-        time={comment.time}
-        isLiked={isLiked}
-        likeCount={likeCount}
+        time={formatRelativeTime(comment.createdAt)}
+        isDeleted={comment.isDeleted}
+        isBlocked={comment.isBlocked}
+        isLiked={comment.isCommentLike}
+        likeCount={comment.numLike}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
             id: comment.id,
-            author: comment.author,
+            author: comment.displayWriterNickname,
             content: comment.content,
           })
         }
         menuSlot={
-          <CommentActionMenu isMine={false} onAction={handleMenuAction} />
+          <CommentActionMenu
+            isMine={comment.isOwner}
+            onAction={handleMenuAction}
+          />
         }
       />
 
-      <ReplyList replies={comment.replies} onReply={onReply} />
+      <ReplyList
+        postId={comment.postId}
+        replies={comment.childCommentList}
+        onReply={onReply}
+      />
 
       <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
+        open={activeModal === COMMENT_ACTION.REPORT}
+        setOpen={closeModal}
         onSubmitReport={submitReport}
       />
 
       <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
+        open={activeModal === COMMENT_ACTION.BLOCK}
+        setOpen={closeModal}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        title="댓글을 삭제하시겠어요?"
+        open={activeModal === COMMENT_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </Stack>
   );

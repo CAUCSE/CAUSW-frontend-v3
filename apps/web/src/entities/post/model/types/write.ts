@@ -1,3 +1,20 @@
+/* 게시글 작성 */
+export interface PostCreateRequestDto {
+  content: string;
+  boardId: string;
+  isAnonymous: boolean;
+}
+
+export interface PostCreateResponseDto {
+  id: string;
+  content: string;
+  fileUrlList: string[];
+  isAnonymous: boolean;
+  createdAt: string;
+  updatedAt: string;
+  boardName: string;
+}
+
 export interface VoteWriteOption {
   id: string;
   value: string;
