@@ -11,12 +11,12 @@ export const authQueryOptions = {
     queryOptions({
       queryKey: authQueryKey.me(),
       queryFn: getMyInfo,
-      staleTime: QUERY_STALE_TIME.SHORT,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
     }),
   admissionState: () =>
     queryOptions({
       queryKey: authQueryKey.admissionState(),
       queryFn: getAdmissionState,
-      staleTime: QUERY_STALE_TIME.SHORT,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
     }),
 };
