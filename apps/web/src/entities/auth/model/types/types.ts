@@ -135,6 +135,12 @@ export interface NativeSocialLoginRequestDto {
   idToken?: string;
 }
 
+export interface SocialLoginAdditionalInfoRequestDto {
+  name: string;
+  phoneNumber: string;
+  nickname: string;
+}
+
 export type OnboardingStatus =
   | 'TERMS_REQUIRED'
   | 'GUEST'
