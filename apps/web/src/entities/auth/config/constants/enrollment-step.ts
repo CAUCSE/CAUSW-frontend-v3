@@ -113,4 +113,4 @@ export const ENROLLMENT_STEP_CONFIG: Readonly<EnrollmentStepConfig> =
         action: 'resubmit',
       },
     ],
-  });
+  } as const satisfies EnrollmentStepConfig);
