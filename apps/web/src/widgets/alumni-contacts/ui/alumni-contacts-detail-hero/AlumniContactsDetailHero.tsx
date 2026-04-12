@@ -18,7 +18,7 @@ export const AlumniContactsDetailHero = ({
   alumniContactsDetail,
 }: AlumniContactsDetailHeroProps) => {
   return (
-    <VStack gap="lg" className="my-6 w-full px-6" as="section">
+    <VStack gap="lg" className="my-6 w-full shrink-0 px-6" as="section">
       <VStack>
         <AlumniContactsBasicInfo
           name={alumniContactsDetail.name}
