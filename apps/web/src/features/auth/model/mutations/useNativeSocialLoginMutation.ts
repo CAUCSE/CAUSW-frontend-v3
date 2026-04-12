@@ -12,66 +12,33 @@ import type {
   NativeSocialLoginRequestDto,
 } from '@/entities/auth';
 
-import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { extractErrorMessage } from '@/shared/utils';
-
-type NativeSocialLoginMutationOptions = Omit<
-  UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>,
-  'mutationFn' | 'onSuccess' | 'onError'
-> & {
-  onSuccess?: UseMutationOptions<
-    AuthResponseDto,
-    Error,
-    NativeSocialLoginRequestDto
-  >['onSuccess'];
-  onError?: UseMutationOptions<
-    AuthResponseDto,
-    Error,
-    NativeSocialLoginRequestDto
-  >['onError'];
-};
 
 export const useNativeSocialLoginMutation = (
-  options?: NativeSocialLoginMutationOptions,
+  options?: Omit<
+    UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>,
+    'mutationFn' | 'onSuccess' | 'onError'
+  >,
 ) => {
   const router = useRouter();
-  const {
-    onSuccess: customOnSuccess,
-    onError: customOnError,
-    ...restOptions
-  } = options ?? {};
+  const { ...restOptions } = options ?? {};
 
   const onSuccess: NonNullable<
-    NativeSocialLoginMutationOptions['onSuccess']
+    UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>['onSuccess']
   > = async (data) => {
-    toast.success('로그인되었습니다.');
-    routeAfterSignIn(router, data);
+    await TokenManager.setAccessToken(data.accessToken);
+    await TokenManager.setRefreshToken();
+    routeAfterSignIn(router, data.onboardingStatus);
   };
 
   const onError: NonNullable<
-    NativeSocialLoginMutationOptions['onError']
-  > = async (error) => {
-    toast.error(
-      extractErrorMessage(
-        error,
-        '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
-      ),
-    );
-    router.replace('/auth/sign-in');
-  };
+    UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>['onError']
+  > = async () => {};
 
   return useMutation({
-    mutationFn: async (data: NativeSocialLoginRequestDto) => {
-      const response = await nativeSocialLogin(data);
-
-      await TokenManager.setAccessToken(response.accessToken);
-      await TokenManager.setRefreshToken();
-
-      return response;
-    },
-    onSuccess: customOnSuccess ?? onSuccess,
-    onError: customOnError ?? onError,
+    mutationFn: nativeSocialLogin,
+    onSuccess,
+    onError,
     ...restOptions,
   });
 };
