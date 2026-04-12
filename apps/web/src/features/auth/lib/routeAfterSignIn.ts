@@ -14,5 +14,5 @@ export const routeAfterSignIn = (
     TERMS_REQUIRED: '/home',
   } as const;
 
-  router.replace(AUTH_ROUTE_MAP[onboardingStatus]);
+  router.push(AUTH_ROUTE_MAP[onboardingStatus]);
 };
