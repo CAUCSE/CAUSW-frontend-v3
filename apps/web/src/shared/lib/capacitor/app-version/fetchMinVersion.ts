@@ -7,6 +7,7 @@ import {
 } from 'firebase/remote-config';
 
 import { FIREBASE_CONFIG, type UpdateEnv } from '@/shared/config';
+import { QUERY_TIME } from '@/shared/constants';
 
 type Platform = 'ios' | 'android';
 
@@ -64,7 +65,7 @@ export async function fetchMinVersion(
   const remoteConfig = getRemoteConfig(app);
 
   remoteConfig.settings.minimumFetchIntervalMillis =
-    process.env.NODE_ENV === 'development' ? 0 : 12 * 60 * 60 * 1000;
+    process.env.NODE_ENV === 'development' ? 0 : QUERY_TIME.RC_INTERVAL;
 
   remoteConfig.defaultConfig = {
     force_update_enabled: 'false',
