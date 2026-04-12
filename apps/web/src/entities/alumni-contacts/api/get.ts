@@ -1,14 +1,13 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
+import { ALUMNI_CONTACTS_URL_PREFIX } from '../config';
 import {
   type GetAlumniContactsDetailResponseDto,
   type GetAlumniContactsDetailParam,
   type GetAlumniContactsQuery,
   type GetPaginatedAlumniContactsResponseDto,
 } from '../model';
-
-const URL_PREFIX = '/api/v2/users-info';
 
 export const getAlumniContacts = async (
   query: GetAlumniContactsQuery,
@@ -24,7 +23,7 @@ export const getAlumniContacts = async (
 
   queryString.append('pageNum', pageNum.toString());
 
-  const url = withQuery(URL_PREFIX, queryString.toString());
+  const url = withQuery(ALUMNI_CONTACTS_URL_PREFIX, queryString.toString());
 
   const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
 
@@ -36,7 +35,7 @@ export const getAlumniContactsDetail = async (
 ) => {
   const { alumniContactsId } = param;
 
-  const url = `${URL_PREFIX}/${alumniContactsId}`;
+  const url = `${ALUMNI_CONTACTS_URL_PREFIX}/${alumniContactsId}`;
 
   const response = await API.get<GetAlumniContactsDetailResponseDto>(url);
 
