@@ -4,12 +4,10 @@ import type { ComponentProps } from 'react';
 
 import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
 
-import { useNativeSocialLoginMutation } from '@/features/auth';
+import { useNativeSocialLoginFlowMutation } from '@/features/auth';
 
 import { BASE_URL, ENVIRONMENT } from '@/shared/config';
-import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
-import { toast } from '@/shared/model';
-import { extractErrorMessage, isMobile } from '@/shared/utils';
+import { isMobile } from '@/shared/utils';
 
 type KakaoLoginButtonProps = ComponentProps<'button'>;
 
@@ -18,48 +16,16 @@ export const KakaoLoginButton = ({
   onClick,
   ...props
 }: KakaoLoginButtonProps) => {
-  const nativeSocialLoginMutation = useNativeSocialLoginMutation();
+  const nativeSocialLoginFlowMutation = useNativeSocialLoginFlowMutation();
 
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
 
     if (e.defaultPrevented) return;
     if (isMobile) {
-      const handleMobileLogin = async () => {
-        const loadingToastId = String(toast.loading('kakao 로그인 중...'));
-        let accessToken: string;
-
-        try {
-          const tokens = await requestNativeSocialLogin('kakao');
-          if (!tokens.accessToken) {
-            throw new Error('카카오 액세스 토큰을 가져오지 못했습니다.');
-          }
-          accessToken = tokens.accessToken;
-        } catch (error) {
-          toast.dismiss(loadingToastId);
-          toast.error(
-            extractErrorMessage(
-              error,
-              '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
-            ),
-          );
-          return;
-        }
-
-        nativeSocialLoginMutation.mutate(
-          {
-            provider: 'kakao',
-            accessToken,
-          },
-          {
-            onSettled: () => {
-              toast.dismiss(loadingToastId);
-            },
-          },
-        );
-      };
-
-      handleMobileLogin();
+      nativeSocialLoginFlowMutation.mutate({
+        provider: 'kakao',
+      });
       return;
     }
 

@@ -4,12 +4,10 @@ import type { ComponentProps } from 'react';
 
 import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
 
-import { useNativeSocialLoginMutation } from '@/features/auth';
+import { useNativeSocialLoginFlowMutation } from '@/features/auth';
 
 import { BASE_URL, ENVIRONMENT } from '@/shared/config';
-import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
-import { toast } from '@/shared/model';
-import { extractErrorMessage, isMobile } from '@/shared/utils';
+import { isMobile } from '@/shared/utils';
 
 type GoogleLoginButtonProps = ComponentProps<'button'>;
 
@@ -18,48 +16,16 @@ export const GoogleLoginButton = ({
   onClick,
   ...props
 }: GoogleLoginButtonProps) => {
-  const nativeSocialLoginMutation = useNativeSocialLoginMutation();
+  const nativeSocialLoginFlowMutation = useNativeSocialLoginFlowMutation();
 
   const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     onClick?.(e);
 
     if (e.defaultPrevented) return;
     if (isMobile) {
-      const handleMobileLogin = async () => {
-        const loadingToastId = String(toast.loading('google 로그인 중...'));
-        let idToken: string;
-
-        try {
-          const tokens = await requestNativeSocialLogin('google');
-          if (!tokens.idToken) {
-            throw new Error('Google id token을 가져오지 못했습니다.');
-          }
-          idToken = tokens.idToken;
-        } catch (error) {
-          toast.dismiss(loadingToastId);
-          toast.error(
-            extractErrorMessage(
-              error,
-              '소셜 로그인에 실패했습니다. 다시 시도해 주세요.',
-            ),
-          );
-          return;
-        }
-
-        nativeSocialLoginMutation.mutate(
-          {
-            provider: 'google',
-            idToken,
-          },
-          {
-            onSettled: () => {
-              toast.dismiss(loadingToastId);
-            },
-          },
-        );
-      };
-
-      handleMobileLogin();
+      nativeSocialLoginFlowMutation.mutate({
+        provider: 'google',
+      });
       return;
     }
 

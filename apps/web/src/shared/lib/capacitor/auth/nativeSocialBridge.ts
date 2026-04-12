@@ -16,7 +16,7 @@ type NativeSocialLoginResult = {
   message?: string;
 };
 
-type NativeSocialLoginToken = {
+export type NativeSocialLoginToken = {
   accessToken?: string;
   idToken?: string;
 };
