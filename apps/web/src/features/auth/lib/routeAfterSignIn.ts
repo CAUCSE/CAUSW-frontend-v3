@@ -9,7 +9,7 @@ export const routeAfterSignIn = (
   const AUTH_ROUTE_MAP: Record<OnboardingStatus, string> = {
     EMAIL_VERIFICATION_REQUIRED: '/auth/sign-up/email-verification',
     GUEST: '/auth/sign-up/oauth-additional-info',
-    ACADEMIC_CERTIFICATION_REQUIRED: '/auth/sign-up/enrollment-verification',
+    ACADEMIC_CERTIFICATION_REQUIRED: '/auth/enrollment-verification',
     ACTIVE: '/home',
     TERMS_REQUIRED: '/home',
   } as const;
