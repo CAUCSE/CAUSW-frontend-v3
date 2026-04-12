@@ -1,1 +1,1 @@
-export * from './ForceUpdateProvier';
+export * from './ForceUpdateProvider';
