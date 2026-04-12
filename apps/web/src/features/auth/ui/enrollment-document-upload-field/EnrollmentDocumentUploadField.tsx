@@ -76,9 +76,9 @@ export const EnrollmentDocumentUploadField = () => {
           </div>
         </div>
       </div>
-      <Field.ErrorDescription>
-        {imageErrorMessage as string}
-      </Field.ErrorDescription>
+      {imageErrorMessage && (
+        <Field.ErrorDescription>{imageErrorMessage}</Field.ErrorDescription>
+      )}
     </Field>
   );
 };
