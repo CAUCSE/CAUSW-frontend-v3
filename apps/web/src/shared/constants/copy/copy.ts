@@ -16,4 +16,8 @@ export const COPY = Object.freeze({
   EMPTY_UPCOMING_SCHEDULE: '다가올 일정이 없어요',
   PAST_SCHEDULE: '끝난 일정',
   EMPTY_PAST_SCHEDULE: '지난 일정이 없어요',
+  APP_UPDATE_REQUIRE_TITLE: '업데이트가 필요합니다',
+  CURRENT_VERSION: '현재 버전',
+  MINIMUM_VERSION: '최소 버전',
+  GO_TO_UPDATE: '업데이트하러 가기',
 } as const);

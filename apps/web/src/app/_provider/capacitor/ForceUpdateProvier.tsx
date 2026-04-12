@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { CTAButton, Dialog, Text } from '@causw/cds';
 
 import { getRawAppEnv, getUpdateEnv } from '@/shared/config';
+import { COPY } from '@/shared/constants';
 import { checkForceUpdate, openAppStore } from '@/shared/lib';
 
 interface ForceUpdateState {
@@ -97,7 +98,7 @@ export function ForceUpdateProvider({
           <div className="mb-2">
             <Dialog.Title>
               <Text typography="subtitle-18-bold" className="break-keep">
-                업데이트가 필요합니다
+                {COPY.APP_UPDATE_REQUIRE_TITLE}
               </Text>
             </Dialog.Title>
 
@@ -118,8 +119,12 @@ export function ForceUpdateProvider({
             textColor="gray-700"
             className="mb-4 rounded-[1rem] bg-gray-50 p-5 leading-7 break-keep"
           >
-            <p>현재 버전: {state.currentVersion}</p>
-            <p className="mt-1">최소 버전: {state.minimumVersion}</p>
+            <p>
+              {COPY.CURRENT_VERSION}: {state.currentVersion}
+            </p>
+            <p className="mt-1">
+              {COPY.MINIMUM_VERSION}: {state.minimumVersion}
+            </p>
           </Text>
 
           <Dialog.Footer className="block">
@@ -131,7 +136,7 @@ export function ForceUpdateProvider({
               color="dark"
             >
               <Text textColor="white" typography="body-15-medium">
-                업데이트하러 가기
+                {COPY.GO_TO_UPDATE}
               </Text>
             </CTAButton>
           </Dialog.Footer>
