@@ -6,4 +6,5 @@ export {
   useAlumniContactsListScrollTop,
   useAlumniContactsContactAction,
   useAlumniContactsDetailHeaderTheme,
+  useAlumniContactsDetailSection,
 } from './hooks';
