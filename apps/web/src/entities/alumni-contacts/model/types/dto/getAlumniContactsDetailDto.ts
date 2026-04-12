@@ -15,8 +15,8 @@ interface UserCareerResponse {
   id: string;
   startYear: number;
   startMonth: number;
-  endYear: number;
-  endMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
   description: string;
 }
 
@@ -24,8 +24,8 @@ interface UserProjectResponse {
   id: string;
   startYear: number;
   startMonth: number;
-  endYear: number;
-  endMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
   description: string;
 }
 
@@ -42,8 +42,8 @@ export interface GetAlumniContactsDetailResponseDto {
   email: string;
   socialLinks: string[];
   userTechStack: string[];
-  userCareer: UserCareerResponse;
-  userProject: UserProjectResponse;
+  userCareer: UserCareerResponse[];
+  userProject: UserProjectResponse[];
   userInterestTech: string[];
   userInterestDomain: string[];
 }
