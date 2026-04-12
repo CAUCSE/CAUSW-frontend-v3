@@ -39,7 +39,7 @@ export function ForceUpdateProvider({
       try {
         const rawEnv = getRawAppEnv();
         const updateEnv = getUpdateEnv();
-
+        //TODO : prod올리기 전에 삭제
         console.log(
           '[APP_ENV]',
           JSON.stringify(
@@ -66,7 +66,7 @@ export function ForceUpdateProvider({
           });
         }
       } catch (error) {
-        console.error('[ForceUpdateProvider] failed:', error);
+        console.log('[ForceUpdateProvider] failed:', error);
       }
     };
 

@@ -26,8 +26,6 @@ export async function checkForceUpdate(
   const platform = getPlatform();
 
   if (platform === 'web') {
-    console.log('[ForceUpdateCheck] skipped on web');
-
     return {
       needUpdate: false,
       currentVersion: '0.0.0',
@@ -40,9 +38,9 @@ export async function checkForceUpdate(
   }
 
   const appInfo = await getAppVersion();
-
+  //TODO : prod올리기 전에 삭제
   console.log(
-    'App Version Info:',
+    'App Version Info-force:',
     JSON.stringify(
       {
         name: appInfo.name,

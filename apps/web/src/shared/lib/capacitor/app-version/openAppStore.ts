@@ -1,6 +1,8 @@
 import { AppLauncher } from '@capacitor/app-launcher';
 import { Browser } from '@capacitor/browser';
 
+import { toast } from '@/shared/model';
+
 export async function openAppStore({
   appUrl,
   webUrl,
@@ -8,14 +10,17 @@ export async function openAppStore({
   appUrl: string;
   webUrl: string;
 }) {
-  if (!appUrl && !webUrl) return;
+  if (!appUrl && !webUrl) {
+    toast.error('업데이트 경로를 찾을 수 없어요.');
+    return;
+  }
 
   try {
     if (appUrl) {
       const { completed } = await AppLauncher.openUrl({
         url: appUrl,
       });
-
+      //TODO : prod올리기 전에 삭제
       console.log(
         '[openStore] AppLauncher result',
         JSON.stringify({
@@ -32,6 +37,7 @@ export async function openAppStore({
 
   try {
     if (webUrl) {
+      //TODO : prod올리기 전에 삭제
       console.log(
         '[openStore] fallback to Browser.open',
         JSON.stringify({
@@ -45,10 +51,15 @@ export async function openAppStore({
       return;
     }
   } catch (browserError) {
-    console.error('[openStore] Browser.open failed', browserError);
+    console.log('[openStore] Browser.open failed', browserError);
   }
 
-  if (typeof window !== 'undefined' && webUrl) {
-    window.location.href = webUrl;
-  }
+  try {
+    if (typeof window !== 'undefined' && webUrl) {
+      window.location.href = webUrl;
+      return;
+    }
+  } catch {}
+
+  toast.error('스토어를 열 수 없어요. 잠시 후 다시 시도해주세요.');
 }
