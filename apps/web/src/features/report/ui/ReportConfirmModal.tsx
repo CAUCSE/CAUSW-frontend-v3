@@ -1,4 +1,4 @@
-import { Modal } from '@causw/cds';
+import { ConfirmModal } from '@/shared/ui';
 
 interface ReportConfirmModalProps {
   open: boolean;
@@ -16,29 +16,14 @@ export const ReportConfirmModal = ({
   onConfirm,
 }: ReportConfirmModalProps) => {
   return (
-    <Modal open={open} onOpenChange={onClose}>
-      <Modal.Content className="w-[min(312px,calc(100%-32px))]">
-        <Modal.Title textAlign="left">{title}</Modal.Title>
-        <Modal.Description
-          textAlign="left"
-          className="mt-3 whitespace-pre-wrap"
-        >
-          {description} {`\n\n허위 신고 시 제재될 수 있습니다.`}
-        </Modal.Description>
-
-        <Modal.Footer>
-          <Modal.Close asChild>
-            <Modal.ActionButton color="light" onClick={onClose}>
-              취소
-            </Modal.ActionButton>
-          </Modal.Close>
-          <Modal.Close asChild>
-            <Modal.ActionButton color="red" onClick={onConfirm}>
-              확인
-            </Modal.ActionButton>
-          </Modal.Close>
-        </Modal.Footer>
-      </Modal.Content>
-    </Modal>
+    <ConfirmModal
+      title={title}
+      message={description + `\n\n허위 신고 시 제재될 수 있습니다.`}
+      open={open}
+      onOpenChange={onClose}
+      onConfirm={onConfirm}
+      confirmColor="red"
+      textAlign="left"
+    />
   );
 };

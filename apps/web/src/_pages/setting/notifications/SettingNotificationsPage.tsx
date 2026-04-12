@@ -31,7 +31,7 @@ import {
 export const SettingNotificationsPage = () => {
   return (
     <VStack gap="sm" className="w-full">
-      <ActionHeader>
+      <ActionHeader background="gray">
         <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
       </ActionHeader>
 

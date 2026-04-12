@@ -42,7 +42,9 @@ export const postCreateSchema = z
 
 export type PostCreateFormValues = z.infer<typeof postCreateSchema>;
 
-export const usePostCreateForm = () => {
+export const usePostCreateForm = (
+  defaultValues?: Partial<PostCreateFormValues>,
+) => {
   return useForm<PostCreateFormValues>({
     resolver: zodResolver(postCreateSchema),
     defaultValues: {
@@ -51,6 +53,7 @@ export const usePostCreateForm = () => {
       images: [],
       isAnonymous: true,
       vote: null,
+      ...defaultValues,
     },
     mode: 'onChange',
   });

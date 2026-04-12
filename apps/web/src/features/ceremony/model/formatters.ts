@@ -3,6 +3,8 @@ import type {
   CeremonyFormData,
 } from '@/entities/ceremony';
 
+import { MAX_HOURS, MAX_MINUTES } from '@/shared/lib';
+
 import {
   CEREMONY_TYPE_API_MAP,
   CATEGORY_API_MAP,
@@ -10,10 +12,20 @@ import {
   RELATIONSHIP_API_MAP,
 } from '../config';
 
+const DEFAULT_START_TIME = '00:00';
+const DEFAULT_END_TIME = '23:59';
+
+const clampDigits = (value: number, max: number) =>
+  String(Math.min(value, max)).padStart(2, '0');
+
 export const formatTime = (value: string) => {
   const digits = value.replace(/\D/g, '').slice(0, 4);
   if (digits.length <= 2) return digits;
-  return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+
+  const hours = Math.min(Number(digits.slice(0, 2)), MAX_HOURS);
+  const minutes = Math.min(Number(digits.slice(2)), MAX_MINUTES);
+
+  return `${clampDigits(hours, MAX_HOURS)}:${clampDigits(minutes, MAX_MINUTES)}`;
 };
 
 const formatDateToString = (date: Date): string => {
@@ -51,8 +63,14 @@ export const toCreateCeremonyDto = (
     startDate: form.startDate ? formatDateToString(form.startDate) : '',
     endDate:
       form.hasEndDate && form.endDate ? formatDateToString(form.endDate) : null,
-    startTime: form.hasTime ? emptyToNull(form.startTime) : null,
-    endTime: form.hasTime ? emptyToNull(form.endTime) : null,
+    startTime: form.hasTime
+      ? (emptyToNull(form.startTime) ??
+        (form.endTime.trim() ? DEFAULT_START_TIME : null))
+      : null,
+    endTime: form.hasTime
+      ? (emptyToNull(form.endTime) ??
+        (form.startTime.trim() ? DEFAULT_END_TIME : null))
+      : null,
     relationType,
     familyRelation:
       relationType === 'FAMILY' ? emptyToNull(form.familyRelation) : null,

@@ -9,9 +9,9 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { useBreakpoint } from '@/shared/hooks';
+import { type ReportReason } from '@/entities/report';
 
-import { type ReportReason } from '../model';
+import { useBreakpoint } from '@/shared/hooks';
 
 import { ReasonSelectRadio } from './ReasonSelectRadio';
 

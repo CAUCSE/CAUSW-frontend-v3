@@ -12,6 +12,7 @@ import { Text, CTAButton, Flex, VStack, Separator, Checkbox } from '@causw/cds';
 import { AuthContainer } from '@/widgets/auth';
 
 import { useSignInMutation } from '@/features/auth';
+import { usePushNotification } from '@/features/notification';
 
 import { type SigninRequestDto, signInSchema } from '@/entities/auth';
 
@@ -30,13 +31,15 @@ export const EmailLoginPage = () => {
       password: '',
     },
   });
-
+  const { compareFCMToken } = usePushNotification();
   const signInMutation = useSignInMutation({
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       toast.success('로그인에 성공했습니다.');
-      TokenManager.setAccessToken(res.accessToken);
-      TokenManager.setRefreshToken();
+      await TokenManager.setAccessToken(res.accessToken);
+      await TokenManager.setRefreshToken();
       // TODO: 현재 인증 상태에 따른 redirect 로직 추가
+
+      await compareFCMToken();
       router.push('/home');
     },
     onError: (error) => {

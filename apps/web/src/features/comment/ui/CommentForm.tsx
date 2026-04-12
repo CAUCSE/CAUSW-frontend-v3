@@ -4,23 +4,26 @@ import { useEffect } from 'react';
 
 import { Checkbox, HStack, Stack, Text } from '@causw/cds';
 
-import { ReplyPreview, type ReplyTarget } from '@/entities/comment';
+import { ReplyIndicator, type ReplyTarget } from '@/entities/comment';
 
 import { useCommentForm } from '../model';
 
 interface CommentFormProps {
+  postId: string;
   replyTarget: ReplyTarget;
   onCancelReply: () => void;
   inputRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 export const CommentForm = ({
+  postId,
   replyTarget,
   onCancelReply,
   inputRef,
 }: CommentFormProps) => {
-  const { text, setText, isAnonymous, setIsAnonymous, handleSubmit } =
+  const { content, setContent, isAnonymous, setIsAnonymous, handleSubmit } =
     useCommentForm({
+      postId,
       replyTarget,
       onCancelReply,
     });
@@ -33,7 +36,7 @@ export const CommentForm = ({
     const lineHeight = 24; // leading-normal
     const maxHeight = lineHeight * 5;
     el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px';
-  }, [text, inputRef]);
+  }, [content, inputRef]);
 
   const handleSubmitWrapper = () => {
     const success = handleSubmit();
@@ -42,7 +45,7 @@ export const CommentForm = ({
 
   return (
     <Stack gap="none" className="rounded-b-lg bg-white">
-      <ReplyPreview replyTarget={replyTarget} onCancel={onCancelReply} />
+      <ReplyIndicator replyTarget={replyTarget} onCancel={onCancelReply} />
 
       <HStack
         gap="sm"
@@ -66,8 +69,8 @@ export const CommentForm = ({
         <textarea
           ref={inputRef}
           rows={1}
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="댓글을 입력해주세요!"
           className="font-regular max-h-30 flex-1 resize-none font-sans text-sm leading-normal text-gray-800 placeholder-gray-400 outline-none"
         />
@@ -75,10 +78,10 @@ export const CommentForm = ({
         <button
           type="button"
           onClick={handleSubmitWrapper}
-          disabled={!text.trim()}
+          disabled={!content.trim()}
           className="cursor-pointer"
         >
-          {text.trim().length > 0 && (
+          {content.trim().length > 0 && (
             <Text typography="body-15-semibold" textColor="gray-800">
               등록
             </Text>

@@ -10,4 +10,7 @@ export const PUBLIC_ENDPOINTS: PublicEndpoint[] = [
   { method: 'POST', path: '/api/v2/auth/signup' },
   { method: 'POST', path: '/api/v2/auth/email/send' },
   { method: 'POST', path: '/api/v2/auth/email/verify' },
+  { method: 'POST', path: '/api/v2/auth/find-email' },
+  { method: 'POST', path: '/api/v2/auth/password-reset/send' },
+  { method: 'POST', path: '/api/v2/auth/password-reset/verify' },
 ];
