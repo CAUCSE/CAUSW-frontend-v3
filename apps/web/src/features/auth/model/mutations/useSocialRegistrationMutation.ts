@@ -1,29 +1,43 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
-import { registerSocialUser } from '@/features/auth/api';
+import { completeSocialRegistration } from '@/features/auth/api';
 
-import type { SocialRegistrationRequestDto } from '@/entities/auth';
+import type {
+  AuthResponseDto,
+  SocialLoginAdditionalInfoRequestDto,
+} from '@/entities/auth';
 
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
+import { routeAfterSignIn } from '../../lib';
+
 type SocialRegistrationMutationOptions = Omit<
-  UseMutationOptions<null, Error, SocialRegistrationRequestDto>,
+  UseMutationOptions<
+    AuthResponseDto,
+    Error,
+    SocialLoginAdditionalInfoRequestDto
+  >,
   'mutationFn'
 >;
 
 export const useSocialRegistrationMutation = (
   options?: SocialRegistrationMutationOptions,
 ) => {
+  const router = useRouter();
+
   return useMutation({
-    mutationFn: registerSocialUser,
+    mutationFn: completeSocialRegistration,
     onMutate: () => {
       toast.loading('추가 정보를 저장하고 있어요...');
     },
-    onSuccess: () => {
+    onSuccess: (data: AuthResponseDto) => {
       toast.success('추가 정보 입력이 완료되었습니다.');
+      routeAfterSignIn(router, data.onboardingStatus);
     },
     onError: (error) => {
       toast.error(

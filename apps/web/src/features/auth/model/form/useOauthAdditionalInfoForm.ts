@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { useSocialRegistrationMutation } from '@/features/auth';
+
 import {
   OAUTH_ADDITIONAL_INFO_FORM_FIELD,
   infoSchema,
@@ -13,6 +15,7 @@ import {
 import { usePhoneNumberChangeHandler } from '@/shared/hooks';
 
 export const useOauthAdditionalInfoForm = () => {
+  const socialRegistrationMutation = useSocialRegistrationMutation();
   const methods = useForm<InfoFormData>({
     resolver: zodResolver(infoSchema),
     mode: 'onBlur',
@@ -32,8 +35,8 @@ export const useOauthAdditionalInfoForm = () => {
     },
   );
 
-  const onSubmit = (data: InfoFormData) => {
-    console.log('Oauth Additional Info Data:', data);
+  const onSubmit = async (data: InfoFormData) => {
+    await socialRegistrationMutation.mutateAsync(data);
   };
 
   return {
