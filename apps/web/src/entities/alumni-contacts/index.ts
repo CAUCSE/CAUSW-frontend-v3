@@ -32,5 +32,6 @@ export {
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
+  formatAlumniContactsPeriod,
 } from './lib';
 export { alumniContactsHandler } from './mock';
