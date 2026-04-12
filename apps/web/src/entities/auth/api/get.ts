@@ -20,12 +20,12 @@ export const checkPhoneDuplicate = async (
   params: CheckPhoneDuplicateRequestDto,
 ) => {
   const query = new URLSearchParams({ phoneNumber: params.phoneNumber });
-  return API.get<null>(`${USER_API_PREFIX}/check-phone?${query}`);
+  return API.get(`${USER_API_PREFIX}/check-phone?${query}`);
 };
 
 export const checkNicknameDuplicate = async (
   params: CheckNicknameDuplicateRequestDto,
 ) => {
   const query = new URLSearchParams({ nickname: params.nickname });
-  return API.get<null>(`${USER_API_PREFIX}/check-nickname?${query}`);
+  return API.get(`${USER_API_PREFIX}/check-nickname?${query}`);
 };

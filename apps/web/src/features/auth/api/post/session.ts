@@ -191,7 +191,7 @@ export const findEmail = async (data: FindEmailRequestDto) => {
 export const sendPasswordResetCode = async (
   data: PasswordResetSendRequestDto,
 ) => {
-  return API.post<null>(`${AUTH_API_PREFIX}/password-reset/send`, data);
+  return API.post(`${AUTH_API_PREFIX}/password-reset/send`, data);
 };
 
 export const verifyPasswordResetCode = async (
