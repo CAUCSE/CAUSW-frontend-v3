@@ -1,6 +1,2 @@
-export {
-  getNotificationUnreadCnt,
-  getNotificationLatest,
-  getNotifications,
-  getNotificationSettings,
-} from './get';
+export * from './get';
+export * from './post';

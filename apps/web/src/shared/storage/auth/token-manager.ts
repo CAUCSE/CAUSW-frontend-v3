@@ -100,6 +100,10 @@ export class TokenManager {
   static async setRefreshToken(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
+
+      if (!refreshToken) {
+        return;
+      }
       await setNativeRTK(refreshToken);
     }
   }

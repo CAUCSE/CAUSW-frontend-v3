@@ -17,6 +17,9 @@ export type NotificationType =
   | 'BOARD'
   | 'ADMISSION';
 
+export interface UpdateFCMTokenRequestDto {
+  fcmToken: string;
+}
 export interface CommunityNotificationSettings {
   likeOnMyPost: boolean;
   commentOnMyPost: boolean;
