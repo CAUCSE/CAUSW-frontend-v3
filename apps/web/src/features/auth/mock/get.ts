@@ -1,8 +1,7 @@
 import { HttpResponse } from 'msw';
 
+import { USER_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
-
-const USER_API_PREFIX = '/api/v2/users';
 const DUPLICATED_NICKNAMES = new Set(['admin', 'causw', 'test']);
 const DUPLICATED_PHONE_NUMBERS = new Set([
   '010-1111-2222',

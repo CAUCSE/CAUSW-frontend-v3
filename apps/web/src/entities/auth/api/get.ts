@@ -1,4 +1,5 @@
 import { API } from '@/shared/api';
+import { USER_API_PREFIX } from '@/shared/constants';
 
 import {
   type AdmissionStateResponseDto,
@@ -7,28 +8,24 @@ import {
   type UserResponseDto,
 } from '../model/types';
 
-const AUTH_API_URL_PREFIX = '/api/v2/users';
-
 export const getAdmissionState = async () => {
-  return API.get<AdmissionStateResponseDto>(
-    `${AUTH_API_URL_PREFIX}/me/admission/state`,
-  );
+  return API.get<AdmissionStateResponseDto>('/api/v2/users/me/admission/state');
 };
 
 export const getMyInfo = async () => {
-  return API.get<UserResponseDto>(`${AUTH_API_URL_PREFIX}/me`);
+  return API.get<UserResponseDto>(`${USER_API_PREFIX}/me`);
 };
 
 export const checkPhoneDuplicate = async (
   params: CheckPhoneDuplicateRequestDto,
 ) => {
   const query = new URLSearchParams({ phoneNumber: params.phoneNumber });
-  return API.get<null>(`${AUTH_API_URL_PREFIX}/check-phone?${query}`);
+  return API.get<null>(`${USER_API_PREFIX}/check-phone?${query}`);
 };
 
 export const checkNicknameDuplicate = async (
   params: CheckNicknameDuplicateRequestDto,
 ) => {
   const query = new URLSearchParams({ nickname: params.nickname });
-  return API.get<null>(`${AUTH_API_URL_PREFIX}/check-nickname?${query}`);
+  return API.get<null>(`${USER_API_PREFIX}/check-nickname?${query}`);
 };
