@@ -1,4 +1,4 @@
-import type { StepCardData } from '../../model/types/types';
+import type { StepCardData } from '../../model/types';
 
 type AwaitEnrollmentStepConfig = {
   WITHOUT_ADMISSION: StepCardData[];

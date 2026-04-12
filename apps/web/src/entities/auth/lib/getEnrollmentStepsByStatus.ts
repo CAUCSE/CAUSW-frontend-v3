@@ -1,4 +1,4 @@
-import { ENROLLMENT_STEP_CONFIG } from '../config/constants';
+import { ENROLLMENT_STEP_CONFIG } from '../config';
 import type { EnrollmentStatus, StepCardData } from '../model';
 
 /**
