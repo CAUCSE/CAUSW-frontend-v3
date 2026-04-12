@@ -63,7 +63,8 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
         try {
           apiWrapper.setIsRefreshing(true);
 
-          const newAccessToken = await TokenManager.refreshAccessToken();
+          const { accessToken: newAccessToken } =
+            await TokenManager.refreshAuth();
 
           await TokenManager.setAccessToken(newAccessToken);
           await TokenManager.setRefreshToken();
