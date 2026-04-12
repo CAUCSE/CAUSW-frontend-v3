@@ -1,0 +1,1 @@
+export { AlumniContactsSnsItem } from './AlumniContactsSnsItem';

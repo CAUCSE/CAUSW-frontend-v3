@@ -17,3 +17,14 @@ export {
   ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
   type AlumniContactsContactActionType,
 } from './alumniContactsContactAction';
+export {
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE,
+  type AlumniContactsDetailSectionTabType,
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL,
+} from './alumniContactsDetailSectionTab';
+export { ALUMNI_CONTACTS_URL_PREFIX } from './alumniContactUrlPrefix';
+export {
+  ALUMNI_CONTACTS_SNS_TYPE,
+  ALUMNI_CONTACTS_SNS_TYPE_LABEL,
+  type AlumniContactsSnsType,
+} from './alumniContactsSns';

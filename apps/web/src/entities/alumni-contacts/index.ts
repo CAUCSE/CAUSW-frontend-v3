@@ -11,6 +11,9 @@ export {
   ALUMNI_CONTACTS_CONTACT_ACTION,
   ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
   type AlumniContactsContactActionType,
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE,
+  type AlumniContactsDetailSectionTabType,
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -24,8 +27,10 @@ export {
   AlumniContactsAcademicFilterSheetModalProvider,
   AlumniContactsBasicInfo,
   AlumniContactsDescription,
+  AlumniContactsSnsItem,
 } from './ui';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
 } from './lib';
+export { alumniContactsHandler } from './mock';
