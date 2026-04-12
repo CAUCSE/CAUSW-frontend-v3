@@ -6,7 +6,7 @@ import {
   isSupported,
 } from 'firebase/remote-config';
 
-import type { UpdateEnv } from '@/shared/config';
+import { FIREBASE_CONFIG, type UpdateEnv } from '@/shared/config';
 
 type Platform = 'ios' | 'android';
 
@@ -18,19 +18,12 @@ export interface RemoteVersionConfig {
   updateMessage: string;
 }
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
 function getFirebaseApp() {
   if (getApps().length > 0) {
     return getApps()[0];
   }
 
-  return initializeApp(firebaseConfig);
+  return initializeApp(FIREBASE_CONFIG);
 }
 
 function getMinimumVersionKey(env: UpdateEnv, platform: Platform): string {
