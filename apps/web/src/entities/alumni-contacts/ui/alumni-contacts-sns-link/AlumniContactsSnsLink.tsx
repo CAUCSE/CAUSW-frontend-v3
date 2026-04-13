@@ -5,16 +5,15 @@ import { Text } from '@causw/cds';
 import { ALUMNI_CONTACTS_SNS_TYPE_LABEL } from '../../config';
 import { getAlumniContactSnsType } from '../../lib';
 import { type GetAlumniContactsDetailResponseDto } from '../../model';
+import { AlumniContactsSnsIcon } from '../alumni-contacts-sns-icon';
 
-import { SnsIcon } from './SnsIcon';
-
-interface AlumniContactsSnsItemProps {
+interface AlumniContactsSnsLinkProps {
   socialLink: GetAlumniContactsDetailResponseDto['socialLinks'][number];
 }
 
-export const AlumniContactsSnsItem = ({
+export const AlumniContactsSnsLink = ({
   socialLink,
-}: AlumniContactsSnsItemProps) => {
+}: AlumniContactsSnsLinkProps) => {
   const snsType = getAlumniContactSnsType(socialLink);
 
   return (
@@ -24,7 +23,7 @@ export const AlumniContactsSnsItem = ({
       className="flex flex-col items-center gap-1.5"
     >
       <div className="flex size-15 items-center justify-center rounded-xl bg-gray-100">
-        <SnsIcon snsType={snsType} />
+        <AlumniContactsSnsIcon snsType={snsType} />
       </div>
       <Text typography="body-14-regular" textColor="gray-600">
         {ALUMNI_CONTACTS_SNS_TYPE_LABEL[snsType]}
