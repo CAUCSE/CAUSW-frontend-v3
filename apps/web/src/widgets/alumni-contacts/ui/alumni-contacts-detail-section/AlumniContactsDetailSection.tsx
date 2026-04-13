@@ -24,7 +24,10 @@ export const AlumniContactsDetailSection = ({
     useAlumniContactsDetailSection();
 
   return (
-    <VStack as="section" className="flex-1 gap-7 bg-white px-6 py-4">
+    <VStack
+      as="section"
+      className="flex-1 gap-7 bg-white px-6 py-4 md:rounded-b-lg"
+    >
       <AlumniContactsDetailSectionTabs
         selectedTab={selectedTab}
         handleClickCategoryTab={handleClickCategoryTab}
