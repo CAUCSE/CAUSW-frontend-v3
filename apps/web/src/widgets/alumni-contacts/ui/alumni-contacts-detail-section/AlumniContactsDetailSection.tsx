@@ -20,8 +20,6 @@ interface AlumniContactsDetailSectionProps {
 export const AlumniContactsDetailSection = ({
   alumniContactsDetail,
 }: AlumniContactsDetailSectionProps) => {
-  console.log(alumniContactsDetail);
-
   const { selectedTab, categoryRef, handleClickCategoryTab } =
     useAlumniContactsDetailSection();
 
