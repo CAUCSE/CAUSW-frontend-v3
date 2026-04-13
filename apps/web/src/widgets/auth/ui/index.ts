@@ -15,6 +15,7 @@ export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
 export { SignInImageSection } from './sign-in-image-section';
 export { OauthAdditionalInfoForm } from './oauth-additional-info-form';
 export { OauthAdditionalInfoNotice } from './oauth-additional-info-notice';
+export { EmailVerificationHeader } from './email-verification-header';
 export { SignUpAccountStepHeader } from './sign-up-account-step-header';
 export { SignUpInfoStepHeader } from './sign-up-info-step-header';
 export { SignUpEmailVerificationStepHeader } from './sign-up-email-verification-step-header';
