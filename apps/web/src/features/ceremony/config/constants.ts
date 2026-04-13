@@ -4,10 +4,11 @@ import type {
   CeremonyCategoryApi,
   RelationType,
 } from '@/entities/ceremony';
+import { CUSTOM_VALUE } from '@/entities/ceremony';
 
 import type { CategoryOption } from './types';
 
-export { CUSTOM_VALUE } from '@/entities/ceremony';
+export { CUSTOM_VALUE };
 
 export const CEREMONY_TYPES: CeremonyType[] = ['경사', '조사'];
 
