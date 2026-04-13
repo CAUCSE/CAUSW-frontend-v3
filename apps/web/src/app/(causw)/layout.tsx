@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { NavigationLayout } from '@/widgets/navigation-layout';
 
 export default function Layout({
@@ -11,8 +13,8 @@ export default function Layout({
 }) {
   return (
     <NavigationLayout>
-      {children}
-      {modal}
+      <React.Fragment key="children">{children}</React.Fragment>
+      <React.Fragment key="modal">{modal}</React.Fragment>
     </NavigationLayout>
   );
 }
