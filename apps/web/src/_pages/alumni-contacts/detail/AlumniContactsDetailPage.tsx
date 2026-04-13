@@ -21,13 +21,9 @@ interface AlumniContactsDetailPageProps {
 export const AlumniContactsDetailPage = ({
   alumniContactsId,
 }: AlumniContactsDetailPageProps) => {
-  console.log({ alumniContactsId });
-
   const { data: alumniContactsDetail } = useSuspenseQuery(
     alumniContactsQueryOptions.detail({ alumniContactsId }),
   );
-
-  console.log(alumniContactsDetail);
 
   return (
     <div className="flex size-full justify-center">
@@ -36,7 +32,7 @@ export const AlumniContactsDetailPage = ({
           gap="none"
           className="bg-[linear-gradient(180deg,#4C688F_0%,#1E2E3F_25.625rem,#fff_25.625rem,#fff_100%)] pt-4 md:rounded-t-lg"
         >
-          <AlumniContactsDetailHeader alumniContactsId={alumniContactsId} />
+          <AlumniContactsDetailHeader />
           <AlumniContactsDetailHero
             alumniContactsDetail={alumniContactsDetail}
           />

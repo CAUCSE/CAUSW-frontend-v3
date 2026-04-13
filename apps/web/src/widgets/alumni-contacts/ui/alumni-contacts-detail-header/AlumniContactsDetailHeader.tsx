@@ -1,26 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-
 import { mergeStyles } from '@causw/cds';
 
 import { ActionHeader } from '@/shared/ui';
 
 import { useAlumniContactsDetailHeaderTheme } from '../../model';
 
-interface AlumniContactsDetailHeaderProps {
-  alumniContactsId: string;
-}
-
-export const AlumniContactsDetailHeader = ({
-  alumniContactsId,
-}: AlumniContactsDetailHeaderProps) => {
-  const router = useRouter();
-
-  const handleClickEditButton = () => {
-    router.push(`/alumni-contacts/${alumniContactsId}/edit`);
-  };
-
+export const AlumniContactsDetailHeader = () => {
   const { changeHeaderTextColor } = useAlumniContactsDetailHeaderTheme();
 
   return (
@@ -34,7 +18,7 @@ export const AlumniContactsDetailHeader = ({
       >
         뒤로
       </ActionHeader.BackButton>
-      <ActionHeader.ActionButton
+      {/* <ActionHeader.ActionButton
         className={mergeStyles(
           changeHeaderTextColor
             ? 'text-gray-700 hover:text-gray-900!'
@@ -43,7 +27,7 @@ export const AlumniContactsDetailHeader = ({
         onClick={handleClickEditButton}
       >
         수정하기
-      </ActionHeader.ActionButton>
+      </ActionHeader.ActionButton> */}
     </ActionHeader>
   );
 };
