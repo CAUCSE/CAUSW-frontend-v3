@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { isValidTimeFormat, isEndDateTimeBeforeStart } from '@/shared/lib';
 import { phoneNumberSchema } from '@/shared/model/form';
 
+import { CUSTOM_VALUE } from '../../config';
+
 export const ceremonyFormSchema = z
   .object({
     ceremonyType: z.enum(['경사', '조사', '']),
@@ -44,7 +46,7 @@ export const ceremonyFormSchema = z
     }
 
     // category 필수 (custom일 때 customCategory 확인)
-    if (data.category === 'custom') {
+    if (data.category === CUSTOM_VALUE) {
       if (data.customCategory.trim() === '') {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -129,7 +131,7 @@ export const ceremonyFormSchema = z
           path: ['familyRelation'],
         });
       } else if (
-        data.familyRelation === 'custom' &&
+        data.familyRelation === CUSTOM_VALUE &&
         data.customFamilyRelation.trim() === ''
       ) {
         ctx.addIssue({

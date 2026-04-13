@@ -7,7 +7,7 @@ import type {
 
 import type { CategoryOption } from './types';
 
-export const CUSTOM_VALUE = 'custom';
+export { CUSTOM_VALUE } from '@/entities/ceremony';
 
 export const CEREMONY_TYPES: CeremonyType[] = ['경사', '조사'];
 
