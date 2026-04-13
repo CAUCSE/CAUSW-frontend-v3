@@ -4,7 +4,7 @@ import { EMAIL_VERIFICATION_FORM_FIELD } from '@/entities/auth';
 
 import { RHFInput } from '@/shared/ui';
 
-export const SignUpEmailVerificationStepCodeField = () => {
+export const EmailVerificationStepCodeField = () => {
   return (
     <RHFInput
       name={EMAIL_VERIFICATION_FORM_FIELD.emailVerificationCode}

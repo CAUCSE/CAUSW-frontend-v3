@@ -7,9 +7,9 @@ import { VStack } from '@causw/cds';
 import { SignUpEmailVerificationStepHeader } from '@/widgets/auth';
 
 import {
-  SignUpEmailVerificationStepCodeField,
+  EmailVerificationStepCodeField,
   SignUpEmailVerificationStepNextButton,
-  SignUpEmailVerificationStepResendSection,
+  EmailVerificationStepResendSection,
   useSignUpEmailVerificationStep,
 } from '@/features/auth';
 
@@ -36,7 +36,7 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
     <VStack className="gap-14 md:gap-10">
       <VStack className="w-full gap-7">
         <SignUpEmailVerificationStepHeader email={email} />
-        <SignUpEmailVerificationStepCodeField />
+        <EmailVerificationStepCodeField />
       </VStack>
       <VStack className="gap-3">
         <SignUpEmailVerificationStepNextButton
@@ -44,7 +44,7 @@ export const EmailVerificationStep = ({ onNext }: { onNext: () => void }) => {
           onClick={handleVerifyClick}
           disabled={!isNextEnabled || isVerifyingCode}
         />
-        <SignUpEmailVerificationStepResendSection onClick={handleResendClick} />
+        <EmailVerificationStepResendSection onClick={handleResendClick} />
       </VStack>
     </VStack>
   );

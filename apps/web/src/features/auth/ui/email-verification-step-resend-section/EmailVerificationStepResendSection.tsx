@@ -6,7 +6,7 @@ type SignUpEmailVerificationStepResendActionProps = {
   onClick: () => void;
 };
 
-export const SignUpEmailVerificationStepResendSection = ({
+export const EmailVerificationStepResendSection = ({
   onClick,
 }: SignUpEmailVerificationStepResendActionProps) => {
   return (
