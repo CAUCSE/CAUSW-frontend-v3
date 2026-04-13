@@ -14,6 +14,9 @@ export {
   ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE,
   type AlumniContactsDetailSectionTabType,
   ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL,
+  ALUMNI_CONTACTS_SNS_TYPE,
+  ALUMNI_CONTACTS_SNS_TYPE_LABEL,
+  type AlumniContactsSnsType,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -27,11 +30,13 @@ export {
   AlumniContactsAcademicFilterSheetModalProvider,
   AlumniContactsBasicInfo,
   AlumniContactsDescription,
-  AlumniContactsSnsItem,
+  AlumniContactsSnsLink,
+  AlumniContactsSnsIcon,
 } from './ui';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
   formatAlumniContactsPeriod,
+  getAlumniContactSnsType,
 } from './lib';
 export { alumniContactsHandler } from './mock';

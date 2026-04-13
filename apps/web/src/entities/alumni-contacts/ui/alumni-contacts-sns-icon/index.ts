@@ -1,0 +1,1 @@
+export { AlumniContactsSnsIcon } from './AlumniContactsSnsIcon';

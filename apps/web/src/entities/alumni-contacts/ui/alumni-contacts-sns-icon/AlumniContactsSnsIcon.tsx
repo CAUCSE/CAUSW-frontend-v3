@@ -27,11 +27,13 @@ import {
   type AlumniContactsSnsType,
 } from '../../config';
 
-interface SnsIconProps {
+interface AlumniContactsSnsIconProps {
   snsType: AlumniContactsSnsType;
 }
 
-export const SnsIcon = ({ snsType }: SnsIconProps) => {
+export const AlumniContactsSnsIcon = ({
+  snsType,
+}: AlumniContactsSnsIconProps) => {
   switch (snsType) {
     case ALUMNI_CONTACTS_SNS_TYPE.TISTORY:
       return <TistoryLogo size={24} />;
