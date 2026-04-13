@@ -1,0 +1,1 @@
+export { AlumniContactsDetailMainServerComponent } from './AlumniContactsDetailMainServerComponent';

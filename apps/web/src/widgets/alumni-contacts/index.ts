@@ -5,4 +5,5 @@ export {
   AlumniContactsDetailHeader,
   AlumniContactsDetailHero,
   AlumniContactsDetailSection,
+  AlumniContactsDetailMainServerComponent,
 } from './ui';

@@ -1,3 +1,5 @@
+'use client';
+
 import { mergeStyles } from '@causw/cds';
 
 import { ActionHeader } from '@/shared/ui';
