@@ -2,7 +2,11 @@ import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
 import { QUERY_GC_TIME, QUERY_STALE_TIME } from '@/shared/constants';
 
-import { getAlumniContacts, getAlumniContactsDetail } from '../../api';
+import {
+  getAlumniContacts,
+  getAlumniContactsDetail,
+  getMyAlumniContacts,
+} from '../../api';
 import {
   type GetAlumniContactsDetailParam,
   type GetAlumniContactsQuery,
@@ -23,6 +27,13 @@ export const alumniContactsQueryOptions = {
     queryOptions({
       queryKey: alumniContactsQueryKeys.detail(param),
       queryFn: () => getAlumniContactsDetail(param),
+      staleTime: QUERY_STALE_TIME.LONG,
+      gcTime: QUERY_GC_TIME.LONG,
+    }),
+  my: () =>
+    queryOptions({
+      queryKey: alumniContactsQueryKeys.my(),
+      queryFn: () => getMyAlumniContacts(),
       staleTime: QUERY_STALE_TIME.LONG,
       gcTime: QUERY_GC_TIME.LONG,
     }),

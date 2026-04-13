@@ -1,13 +1,29 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { mergeStyles } from '@causw/cds';
 
 import { ActionHeader } from '@/shared/ui';
 
 import { useAlumniContactsDetailHeaderTheme } from '../../model';
 
-export const AlumniContactsDetailHeader = () => {
+interface AlumniContactsDetailHeaderProps {
+  isEditable?: boolean;
+}
+
+export const AlumniContactsDetailHeader = ({
+  isEditable = false,
+}: AlumniContactsDetailHeaderProps) => {
   const { changeHeaderTextColor } = useAlumniContactsDetailHeaderTheme();
+
+  const router = useRouter();
+
+  const handleClickEditButton = () => {
+    if (isEditable) {
+      router.push(`/profile/edit`);
+    }
+  };
 
   return (
     <ActionHeader className="bg-transparent px-5 backdrop-saturate-100 md:px-6">
@@ -20,16 +36,18 @@ export const AlumniContactsDetailHeader = () => {
       >
         뒤로
       </ActionHeader.BackButton>
-      {/* <ActionHeader.ActionButton
-        className={mergeStyles(
-          changeHeaderTextColor
-            ? 'text-gray-700 hover:text-gray-900!'
-            : 'text-white hover:text-gray-300!',
-        )}
-        onClick={handleClickEditButton}
-      >
-        수정하기
-      </ActionHeader.ActionButton> */}
+      {isEditable && (
+        <ActionHeader.ActionButton
+          className={mergeStyles(
+            changeHeaderTextColor
+              ? 'text-gray-700 hover:text-gray-900!'
+              : 'text-white hover:text-gray-300!',
+          )}
+          onClick={handleClickEditButton}
+        >
+          수정하기
+        </ActionHeader.ActionButton>
+      )}
     </ActionHeader>
   );
 };

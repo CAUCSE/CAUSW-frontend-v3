@@ -9,4 +9,5 @@ export const alumniContactsQueryKeys = {
     [...alumniContactsQueryKeys.all, 'list', query] as const,
   detail: (param: GetAlumniContactsDetailParam) =>
     [...alumniContactsQueryKeys.all, 'detail', param] as const,
+  my: () => [...alumniContactsQueryKeys.all, 'my'] as const,
 };

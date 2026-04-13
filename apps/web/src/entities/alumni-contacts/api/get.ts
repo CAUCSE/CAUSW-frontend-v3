@@ -7,6 +7,7 @@ import {
   type GetAlumniContactsDetailParam,
   type GetAlumniContactsQuery,
   type GetPaginatedAlumniContactsResponseDto,
+  type GetMyAlumniContactsResponseDto,
 } from '../model';
 
 export const getAlumniContacts = async (
@@ -38,6 +39,14 @@ export const getAlumniContactsDetail = async (
   const url = `${ALUMNI_CONTACTS_URL_PREFIX}/${alumniContactsId}`;
 
   const response = await API.get<GetAlumniContactsDetailResponseDto>(url);
+
+  return response;
+};
+
+export const getMyAlumniContacts = async () => {
+  const url = `${ALUMNI_CONTACTS_URL_PREFIX}/me`;
+
+  const response = await API.get<GetMyAlumniContactsResponseDto>(url);
 
   return response;
 };
