@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
+import { getScrollContainer } from '@/shared/utils';
+
 export const useAlumniContactsDetailHeaderTheme = () => {
   const [changeHeaderTextColor, setChangeHeaderTextColor] =
     useState<boolean>(false);
 
   useEffect(() => {
-    const scrollContainer = document.querySelector('#main-scroll-container');
+    const scrollContainer = getScrollContainer();
 
     const handleScroll = () => {
       if ((scrollContainer?.scrollTop ?? 0) > 400) {
