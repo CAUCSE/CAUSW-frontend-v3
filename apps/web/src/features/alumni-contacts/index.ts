@@ -8,4 +8,6 @@ export {
   AlumniContactsAdmissionYearFilterChip,
   MyAlumniContactsButton,
   AlumniContactsContactActionButton,
+  MyAlumniContactsEditButton,
+  MyAlumniContactsSaveButton,
 } from './ui';
