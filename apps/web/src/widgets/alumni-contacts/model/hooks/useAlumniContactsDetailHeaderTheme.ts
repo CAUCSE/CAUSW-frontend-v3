@@ -8,11 +8,13 @@ export const useAlumniContactsDetailHeaderTheme = () => {
   const [changeHeaderTextColor, setChangeHeaderTextColor] =
     useState<boolean>(false);
 
+  const PROFILE_HEADER_HEIGHT = 400;
+
   useEffect(() => {
     const scrollContainer = getScrollContainer();
 
     const handleScroll = () => {
-      if ((scrollContainer?.scrollTop ?? 0) > 400) {
+      if ((scrollContainer?.scrollTop ?? 0) > PROFILE_HEADER_HEIGHT) {
         setChangeHeaderTextColor(true);
       } else {
         setChangeHeaderTextColor(false);
