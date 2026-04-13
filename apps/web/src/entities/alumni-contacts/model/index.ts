@@ -8,4 +8,5 @@ export type {
   GetAlumniContactsDetailResponseDto,
   GetAlumniContactsQuery,
   GetAlumniContactsDetailParam,
+  GetMyAlumniContactsResponseDto,
 } from './types';

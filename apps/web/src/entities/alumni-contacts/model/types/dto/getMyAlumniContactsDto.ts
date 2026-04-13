@@ -1,3 +1,3 @@
 import { type AlumniContactsDetailDto } from './alumnContactsDetailDto';
 
-export type GetAlumniContactsDetailResponseDto = AlumniContactsDetailDto;
+export type GetMyAlumniContactsResponseDto = AlumniContactsDetailDto;
