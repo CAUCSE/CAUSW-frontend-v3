@@ -19,7 +19,7 @@ export const CommentList = ({
   comments,
   onReply,
 }: CommentListProps) => {
-  const isEmpty = countComment === 0;
+  const isEmpty = comments.length === 0;
 
   return (
     <VStack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">

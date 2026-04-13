@@ -2,6 +2,17 @@
 
 import { useState } from 'react';
 
+import {
+  useBlockUserByCommentMutation,
+  useBlockUserByReplyMutation,
+} from '@/features/block';
+import {
+  useReportCommentMutation,
+  useReportReplyMutation,
+} from '@/features/report';
+
+import { type ReportReason } from '@/entities/report';
+
 import { type CommentAction } from '../../config';
 import { useDeleteCommentMutation, useDeleteReplyMutation } from '../mutations';
 
@@ -16,9 +27,19 @@ export const useCommentMenuActions = (
 
   const { mutate: deleteComment } = useDeleteCommentMutation(postId);
   const { mutate: deleteReply } = useDeleteReplyMutation(postId);
+  const { mutate: reportComment } = useReportCommentMutation();
+  const { mutate: reportReply } = useReportReplyMutation();
+  const { mutate: blockUserByComment } = useBlockUserByCommentMutation();
+  const { mutate: blockUserByReply } = useBlockUserByReplyMutation();
 
   const handleAction = (action: CommentAction) => {
-    setActiveModal(action);
+    switch (action) {
+      case 'report':
+      case 'block':
+      case 'delete':
+        setActiveModal(action);
+        break;
+    }
   };
 
   const closeModal = () => setActiveModal(null);
@@ -32,15 +53,21 @@ export const useCommentMenuActions = (
     closeModal();
   };
 
-  const submitReport = () => {
-    console.log(`${targetId}번 댓글 신고 제출`);
-    // TODO: 신고 API mutation 호출
+  const submitReport = (reason: ReportReason) => {
+    if (isReply) {
+      reportReply({ childCommentId: targetId, reportReason: reason });
+    } else {
+      reportComment({ commentId: targetId, reportReason: reason });
+    }
     closeModal();
   };
 
   const submitBlock = () => {
-    console.log(`${targetId}번 댓글 작성자 차단`);
-    // TODO: 차단 API mutation 호출
+    if (isReply) {
+      blockUserByReply(targetId);
+    } else {
+      blockUserByComment(targetId);
+    }
     closeModal();
   };
 
