@@ -6,4 +6,5 @@ export {
   AlumniContactsDetailHero,
   AlumniContactsDetailSection,
   AlumniContactsDetailMainServerComponent,
+  MyAlumniContactsMainServerComponent,
 } from './ui';
