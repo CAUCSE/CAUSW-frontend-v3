@@ -20,6 +20,9 @@ export const useAlumniContactsDetailSection = () => {
   const skipScrollSyncRef = useRef(false);
   const scrollSyncOpIdRef = useRef(0);
 
+  const CATEGORY_TAB_SYNC_THRESHOLD = 90; // y좌표가 90px 이하일 때 해당 카테고리가 활성화되도록 함
+  const TAB_SYNC_FALLBACK_TIMER = 800; // scrollend 이벤트가 발생하지 않을 경우 탭 동기화를 위한 타이머
+
   const scheduleTabSyncUnlockOnScrollEnd = (opId: number) => {
     const scrollContainer = getScrollContainer();
 
@@ -43,7 +46,7 @@ export const useAlumniContactsDetailSection = () => {
     };
 
     /* scrollend 이벤트가 발생하지 않을 경우 탭 동기화를 위한 타이머 */
-    const fallbackTimer = window.setTimeout(done, 800);
+    const fallbackTimer = window.setTimeout(done, TAB_SYNC_FALLBACK_TIMER);
     scrollContainer.addEventListener('scrollend', done, { passive: true });
   };
 
@@ -67,7 +70,10 @@ export const useAlumniContactsDetailSection = () => {
       if (skipScrollSyncRef.current) return;
 
       categoryRef.current.forEach((ref: HTMLSpanElement | null) => {
-        if (ref && ref.getBoundingClientRect().y <= 90) {
+        if (
+          ref &&
+          ref.getBoundingClientRect().y <= CATEGORY_TAB_SYNC_THRESHOLD
+        ) {
           setSelectedTab(ref.id as AlumniContactsDetailSectionTabType);
         }
       });
