@@ -1,1 +1,0 @@
-export { AlumniContactsDetailHeader } from './AlumniContactsDetailHeader';

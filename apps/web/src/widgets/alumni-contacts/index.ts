@@ -2,9 +2,11 @@ export {
   AlumniContactsFilterGroup,
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,
-  AlumniContactsDetailHeader,
+  AlumniContactsHeader,
   AlumniContactsDetailHero,
   AlumniContactsDetailSection,
   AlumniContactsDetailMainServerComponent,
   MyAlumniContactsMainServerComponent,
+  AlumniContactsDetailMainLoadingView,
+  MyAlumniContactsMainLoadingView,
 } from './ui';
