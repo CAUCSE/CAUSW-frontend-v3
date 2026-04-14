@@ -12,8 +12,11 @@ declare global {
   }
 }
 
+const isMockServerEnabled =
+  ENVIRONMENT === 'development' || ENVIRONMENT === 'local';
+
 const startMockWorkerPromise =
-  ENVIRONMENT === 'development' && typeof window !== 'undefined'
+  isMockServerEnabled && typeof window !== 'undefined'
     ? import('./browser').then(async ({ worker }) => {
         await worker.start({
           onUnhandledRequest(request, print) {

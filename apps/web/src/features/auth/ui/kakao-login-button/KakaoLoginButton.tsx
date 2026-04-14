@@ -8,7 +8,7 @@ import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
 
 import { kakaoNativeLogin } from '@/features/auth/api';
 
-import { BASE_URL, isLocal } from '@/shared/config';
+import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
 import { extractErrorMessage, isMobile } from '@/shared/utils';
@@ -52,9 +52,13 @@ export const KakaoLoginButton = ({
     }
 
     const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/kakao`);
-    if (isLocal) {
+    if (ENVIRONMENT === 'local') {
       oauthUrl.searchParams.set('env', 'local');
     }
+    if (ENVIRONMENT === 'development') {
+      oauthUrl.searchParams.set('env', 'dev');
+    }
+
     window.location.href = oauthUrl.toString();
   };
 

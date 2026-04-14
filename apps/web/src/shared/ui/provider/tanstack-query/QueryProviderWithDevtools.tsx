@@ -29,7 +29,9 @@ export function QueryProviderWithDevtools({
   return (
     <QueryClientProvider client={client}>
       {children}
-      <ReactQueryDevtools initialIsOpen={ENVIRONMENT === 'development'} />
+      <ReactQueryDevtools
+        initialIsOpen={ENVIRONMENT === 'development' || ENVIRONMENT === 'local'}
+      />
     </QueryClientProvider>
   );
 }
