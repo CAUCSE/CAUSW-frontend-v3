@@ -83,6 +83,20 @@ export interface CheckNicknameDuplicateRequestDto {
   nickname: string;
 }
 
+export interface TermResponseDto {
+  id: string;
+  title: string;
+  type: string;
+  isRequired: boolean;
+  version: number;
+  effectiveDate: string;
+  content: string;
+}
+
+export interface TermsAgreementRequestDto {
+  termsIds: string[];
+}
+
 export interface KakaoLoginRequestDto {
   /** 카카오 OAuth 인가 코드 */
   code: string;
