@@ -2,13 +2,11 @@
 
 import { useState } from 'react';
 
+import dynamic from 'next/dynamic';
+
 import { Spacer, VStack } from '@causw/cds';
 
-import {
-  SignUpInfoStepHeader,
-  TermsBottomSheet,
-  TermsDialog,
-} from '@/widgets/auth';
+import { SignUpInfoStepHeader } from '@/widgets/auth';
 
 import {
   SignUpInfoStepNameField,
@@ -19,7 +17,23 @@ import {
 } from '@/features/auth';
 
 import { useBreakpoint } from '@/shared/hooks';
-// TODO: bottom-sheet, dialog 렌더링 충돌 이슈 핸들링
+import { SuspenseView } from '@/shared/ui';
+
+const TermsBottomSheet = dynamic(
+  () => import('@/widgets/auth').then((mod) => mod.TermsBottomSheet),
+  {
+    ssr: false,
+    loading: () => <SuspenseView />,
+  },
+);
+
+const TermsDialog = dynamic(
+  () => import('@/widgets/auth').then((mod) => mod.TermsDialog),
+  {
+    ssr: false,
+    loading: () => <SuspenseView />,
+  },
+);
 
 export const InfoStep = ({ onNext }: { onNext: () => void }) => {
   const { isMobileSize } = useBreakpoint();
@@ -54,16 +68,20 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
         onClick={() => setTermsOpen(true)}
       />
 
-      <TermsBottomSheet
-        open={termsOpen && isMobileSize}
-        onOpenChange={setTermsOpen}
-        onComplete={handleTermsComplete}
-      />
-      <TermsDialog
-        open={termsOpen && !isMobileSize}
-        onOpenChange={setTermsOpen}
-        onComplete={handleTermsComplete}
-      />
+      {termsOpen && isMobileSize && (
+        <TermsBottomSheet
+          open
+          onOpenChange={setTermsOpen}
+          onComplete={handleTermsComplete}
+        />
+      )}
+      {termsOpen && !isMobileSize && (
+        <TermsDialog
+          open
+          onOpenChange={setTermsOpen}
+          onComplete={handleTermsComplete}
+        />
+      )}
     </VStack>
   );
 };
