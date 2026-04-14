@@ -1,0 +1,1 @@
+export { TermsContent } from './TermsContent';
