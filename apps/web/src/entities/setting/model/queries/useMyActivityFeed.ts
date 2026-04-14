@@ -35,10 +35,10 @@ const toMyActivityPostItem = (
   content: post.content,
   likeCount: post.numLike,
   commentCount: post.numComment,
-  isLiked: post.isLiked ?? activityType === 'favorites',
+  isLiked: activityType === 'favorites',
   avatarUrl: post.isAnonymous
     ? undefined
-    : (post.writerProfileImageUrl ?? undefined),
+    : (post.writerProfileImage?.profileImageUrl ?? undefined),
   images: post.postImageUrls,
   isAnonymous: post.isAnonymous,
   boardId: post.boardId,

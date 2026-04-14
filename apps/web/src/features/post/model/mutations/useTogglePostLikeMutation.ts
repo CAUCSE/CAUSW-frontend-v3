@@ -17,7 +17,13 @@ import { toast } from '@/shared/model';
 import { likePost, unlikePost } from '../../api';
 
 type MyActivityFeedInfiniteData = InfiniteData<
-  MyActivityFeedResponseDto,
+  Omit<MyActivityFeedResponseDto, 'posts'> & {
+    posts: Array<
+      MyActivityFeedResponseDto['posts'][number] & {
+        isLiked?: boolean;
+      }
+    >;
+  },
   string | undefined
 >;
 

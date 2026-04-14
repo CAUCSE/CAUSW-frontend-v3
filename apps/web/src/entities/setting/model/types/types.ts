@@ -28,13 +28,15 @@ export interface MyActivityPostItemDto {
   numComment: number;
   numLike: number;
   numFavorite: number;
-  isLiked?: boolean;
   isAnonymous: boolean;
   voteId: string | null;
   isDeleted: boolean;
   isCrawled: boolean;
   writerNickname: string;
-  writerProfileImageUrl: string | null;
+  writerProfileImage: {
+    profileImageType: string;
+    profileImageUrl: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   postImageUrls: string[];
