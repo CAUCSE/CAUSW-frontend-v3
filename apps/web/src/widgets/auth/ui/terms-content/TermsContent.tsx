@@ -52,7 +52,9 @@ export const TermsContent = ({
   const handleCompleteClick = async () => {
     if (!isAllRequiredTermsAgreed) return;
     await onSubmitTermsAgreement?.({
-      termsIds: requiredTermIds,
+      termsIds: Object.entries(agreements)
+        .filter(([_, checked]) => checked)
+        .map(([id]) => id),
     });
     onComplete?.();
     reset();
