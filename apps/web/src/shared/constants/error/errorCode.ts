@@ -8,4 +8,4 @@ export const noRTKCode = [
 ];
 
 //Access Token 거부
-export const noATKCode = ['AUTH_401_001'];
+export const noATKCode = ['AUTH_401_001', 'AUTH_401_004'];
