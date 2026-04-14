@@ -4,22 +4,17 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-export type EmailVerificationOnboardingStatus =
-  | 'EMAIL_VERIFICATION_REQUIRED'
-  | 'GUEST'
-  | 'ACADEMIC_CERTIFICATION_REQUIRED'
-  | 'ACTIVE'
-  | 'TERMS_REQUIRED';
+import type { OnboardingStatus } from '@/entities/auth/model/types';
+
+export type EmailVerificationOnboardingStatus = OnboardingStatus;
 
 export const useEmailVerificationGuard = (
-  onboardingStatus: EmailVerificationOnboardingStatus,
+  onboardingStatus: OnboardingStatus,
 ) => {
   const router = useRouter();
 
   useEffect(() => {
-    const redirectMap: Partial<
-      Record<EmailVerificationOnboardingStatus, string>
-    > = {
+    const redirectMap: Partial<Record<OnboardingStatus, string>> = {
       GUEST: '/auth/sign-up/oauth-additional-info',
       ACADEMIC_CERTIFICATION_REQUIRED: '/auth/enrollment-verification',
       ACTIVE: '/home',

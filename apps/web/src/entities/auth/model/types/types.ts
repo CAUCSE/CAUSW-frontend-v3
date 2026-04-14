@@ -26,6 +26,13 @@ export interface SigninResponseDto {
   profileImgUrl: string;
 }
 
+export type OnboardingStatus =
+  | 'TERMS_REQUIRED'
+  | 'EMAIL_VERIFICATION_REQUIRED'
+  | 'GUEST'
+  | 'ACADEMIC_CERTIFICATION_REQUIRED'
+  | 'ACTIVE';
+
 export type UserProfileImageType =
   | 'MALE_1'
   | 'MALE_2'
@@ -38,6 +45,7 @@ export interface UserResponseDto {
   id: string;
   name: string;
   nickname: string;
+  onboardingStatus: OnboardingStatus;
   profileImage: {
     profileImageType: UserProfileImageType;
     profileImageUrl: string;

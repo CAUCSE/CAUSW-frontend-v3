@@ -1,5 +1,7 @@
 'use client';
 
+import { OnboardingGuard } from '@/app/_provider';
+
 import { NavigationLayout } from '@/widgets/navigation-layout';
 
 export default function Layout({
@@ -11,8 +13,10 @@ export default function Layout({
 }) {
   return (
     <NavigationLayout>
-      {children}
-      {modal}
+      <OnboardingGuard>
+        {children}
+        {modal}
+      </OnboardingGuard>
     </NavigationLayout>
   );
 }
