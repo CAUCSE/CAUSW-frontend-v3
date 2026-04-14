@@ -9,3 +9,4 @@ export * from './useFindEmailMutation';
 export * from './useSendPasswordResetCodeMutation';
 export * from './useVerifyPasswordResetCodeMutation';
 export * from './useSubmitAdmissionMutation';
+export * from './useAgreeTermsMutation';
