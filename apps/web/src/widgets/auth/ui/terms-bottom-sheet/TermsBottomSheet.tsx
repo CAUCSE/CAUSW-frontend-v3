@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense } from 'react';
 
 import { BottomSheet } from '@causw/cds';
