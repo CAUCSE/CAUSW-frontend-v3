@@ -1,33 +1,34 @@
 import { create } from 'zustand';
 
 type TermsAgreementState = {
-  serviceTermsAgreed: boolean;
-  privacyPolicyAgreed: boolean;
-  thirdPartySharingAgreed: boolean;
-  setServiceTermsAgreed: (checked: boolean) => void;
-  setPrivacyPolicyAgreed: (checked: boolean) => void;
-  setThirdPartySharingAgreed: (checked: boolean) => void;
-  setAllRequiredTermsAgreed: (checked: boolean) => void;
+  agreements: Record<string, boolean>;
+  setAgreement: (type: string, checked: boolean) => void;
+  setAllRequiredTermsAgreed: (types: string[], checked: boolean) => void;
   reset: () => void;
 };
 
 const initialState = {
-  serviceTermsAgreed: false,
-  privacyPolicyAgreed: false,
-  thirdPartySharingAgreed: false,
+  agreements: {},
 };
 
 export const useTermsAgreementStore = create<TermsAgreementState>((set) => ({
   ...initialState,
-  setServiceTermsAgreed: (checked) => set({ serviceTermsAgreed: checked }),
-  setPrivacyPolicyAgreed: (checked) => set({ privacyPolicyAgreed: checked }),
-  setThirdPartySharingAgreed: (checked) =>
-    set({ thirdPartySharingAgreed: checked }),
-  setAllRequiredTermsAgreed: (checked) =>
-    set({
-      serviceTermsAgreed: checked,
-      privacyPolicyAgreed: checked,
-      thirdPartySharingAgreed: checked,
-    }),
+  setAgreement: (type, checked) =>
+    set((state) => ({
+      agreements: {
+        ...state.agreements,
+        [type]: checked,
+      },
+    })),
+  setAllRequiredTermsAgreed: (types, checked) =>
+    set((state) => ({
+      agreements: types.reduce<Record<string, boolean>>(
+        (acc, type) => ({
+          ...acc,
+          [type]: checked,
+        }),
+        { ...state.agreements },
+      ),
+    })),
   reset: () => set(initialState),
 }));
