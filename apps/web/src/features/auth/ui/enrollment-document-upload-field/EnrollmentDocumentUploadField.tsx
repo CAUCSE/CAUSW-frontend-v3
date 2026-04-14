@@ -1,24 +1,34 @@
+'use client';
+
 import { useRef } from 'react';
 
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import { Button, Camera, Field, Text } from '@causw/cds';
 
-import { type EnrollmentVerificationFormData } from '@/entities/auth';
+import {
+  ENROLLMENT_VERIFICATION_FORM_FIELD,
+  type EnrollmentVerificationFormData,
+} from '@/entities/auth';
 
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
-export const DocumentSection = () => {
+export const EnrollmentDocumentUploadField = () => {
   const imageFieldRef = useRef<ImageUploadFieldRef>(null);
   const {
     register,
     setValue,
-    watch,
     formState: { errors },
   } = useFormContext<EnrollmentVerificationFormData>();
+  const watchedContent = useWatch<EnrollmentVerificationFormData>({
+    name: ENROLLMENT_VERIFICATION_FORM_FIELD.content,
+  });
+  const content = typeof watchedContent === 'string' ? watchedContent : '';
+  const imageErrorMessage =
+    errors[ENROLLMENT_VERIFICATION_FORM_FIELD.images]?.message;
 
   return (
-    <Field className="flex flex-col gap-2" error={!!errors.images?.message}>
+    <Field className="flex flex-col gap-2" error={!!imageErrorMessage}>
       <Field.Label>증빙서류</Field.Label>
       <div className="flex flex-col gap-2">
         <Text
@@ -40,13 +50,13 @@ export const DocumentSection = () => {
             placeholder="내용을 입력해주세요."
             className="flex-1 resize-none bg-transparent font-sans text-sm text-gray-800 placeholder-gray-400 outline-none"
             maxLength={500}
-            {...register('content')}
+            {...register(ENROLLMENT_VERIFICATION_FORM_FIELD.content)}
           />
 
           <div className="mt-2">
             <ImageUploadField
               ref={imageFieldRef}
-              name="images"
+              name={ENROLLMENT_VERIFICATION_FORM_FIELD.images}
               setValue={setValue}
             />
           </div>
@@ -61,14 +71,14 @@ export const DocumentSection = () => {
               사진첨부
             </Button>
             <Text typography="body-16-regular" textColor="gray-400">
-              {watch('content')?.length || 0}/500
+              {content.length}/500
             </Text>
           </div>
         </div>
       </div>
-      <Field.ErrorDescription>
-        {errors.images?.message as string}
-      </Field.ErrorDescription>
+      {imageErrorMessage && (
+        <Field.ErrorDescription>{imageErrorMessage}</Field.ErrorDescription>
+      )}
     </Field>
   );
 };

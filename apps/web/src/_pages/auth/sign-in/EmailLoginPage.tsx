@@ -45,6 +45,9 @@ export const EmailLoginPage = () => {
     onError: (error) => {
       toast.error(extractErrorMessage(error, '로그인에 실패했습니다.'));
     },
+    onMutate: () => {
+      toast.loading('로그인 정보 확인 중...');
+    },
   });
 
   const onSubmit = (data: SigninRequestDto) => {

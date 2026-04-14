@@ -1,10 +1,14 @@
+'use client';
+
 import { Field, TextInput } from '@causw/cds';
 
-interface BaseInfoSectionProps {
+interface EnrollmentVerificationNameFieldProps {
   userName: string;
 }
 
-export const BaseInfoSection = ({ userName }: BaseInfoSectionProps) => {
+export const EnrollmentVerificationNameField = ({
+  userName,
+}: EnrollmentVerificationNameFieldProps) => {
   return (
     <Field disabled>
       <Field.Label>이름 (본명)</Field.Label>

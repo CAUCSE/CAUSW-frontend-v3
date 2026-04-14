@@ -1,4 +1,5 @@
 import { BASE_URL } from '@/shared/config';
+import { AUTH_API_PREFIX } from '@/shared/constants';
 import { type DefaultResponseField } from '@/shared/types';
 import { isMobile, isServer } from '@/shared/utils';
 
@@ -31,7 +32,7 @@ import {
 export class TokenManager {
   // Access Token 재발급
   static async refreshAccessToken(): Promise<string> {
-    const response = await fetch(`${BASE_URL}/api/v2/auth/refresh`, {
+    const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

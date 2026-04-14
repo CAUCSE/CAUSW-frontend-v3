@@ -6,9 +6,8 @@ import {
   type SignupResponseDto,
 } from '@/entities/auth';
 
+import { AUTH_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
-
-const AUTH_API_PREFIX = '/api/v2/auth';
 
 export const postHandler = [
   mswHttp.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {

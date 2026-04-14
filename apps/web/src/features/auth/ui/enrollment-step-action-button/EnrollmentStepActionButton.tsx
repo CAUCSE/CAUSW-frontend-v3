@@ -6,12 +6,13 @@ import type { StepCardData } from '@/entities/auth';
 
 interface EnrollmentStepActionButtonProps extends Pick<
   StepCardData,
-  'state' | 'buttonLabel'
+  'action' | 'state' | 'buttonLabel'
 > {
   onAction?: () => void;
 }
 
 export const EnrollmentStepActionButton = ({
+  action,
   state,
   buttonLabel,
   onAction,
@@ -19,7 +20,12 @@ export const EnrollmentStepActionButton = ({
   if (state !== 'active' || !buttonLabel) return null;
 
   return (
-    <CTAButton color="blue" fullWidth onClick={onAction}>
+    <CTAButton
+      color="blue"
+      fullWidth
+      disabled={action === 'edit'}
+      onClick={onAction}
+    >
       {buttonLabel}
     </CTAButton>
   );
