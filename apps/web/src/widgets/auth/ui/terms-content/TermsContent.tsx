@@ -90,7 +90,7 @@ export const TermsContent = ({
             </Checkbox.Label>
           </Checkbox>
           <Separator orientation="horizontal" />
-          {requiredTerms.map((term) => (
+          {terms.map((term) => (
             <HStack key={term.id} justify="center" align="center">
               <Checkbox
                 checked={Boolean(agreements[term.id])}
