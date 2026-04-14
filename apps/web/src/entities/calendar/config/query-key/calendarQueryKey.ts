@@ -1,4 +1,4 @@
-import { CalendarScheduleParams } from '../../model';
+import { type CalendarScheduleParams } from '../../model';
 
 export const calendarQueryKeys = {
   all: ['calendar'] as const,

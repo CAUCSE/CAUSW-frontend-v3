@@ -2,7 +2,7 @@
 
 import { Avatar, Comment, Heart, Menu } from '@causw/cds';
 
-import { PostCardItem } from '../model';
+import { type PostCardItem } from '../model';
 
 const DEFAULT_AVATAR_SRC =
   'https://avatars.githubusercontent.com/u/54893898?v=4';

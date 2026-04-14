@@ -4,7 +4,7 @@ import { Button, Chip, Close } from '@causw/cds';
 
 import {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
-  AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsAcademicStatusFilterOption,
 } from '@/entities/alumni-contacts';
 
 interface AlumniContactsAcademicStatusFilterChipProps {

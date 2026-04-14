@@ -1,5 +1,11 @@
 import { PostDetailPage } from '@/_pages/feed';
 
-export default function Page() {
-  return <PostDetailPage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ postId: string }>;
+}) {
+  const { postId } = await params;
+
+  return <PostDetailPage postId={postId} />;
 }

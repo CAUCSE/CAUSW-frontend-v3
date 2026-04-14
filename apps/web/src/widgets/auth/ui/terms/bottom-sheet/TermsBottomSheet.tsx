@@ -1,3 +1,5 @@
+'use client';
+
 import { BottomSheet } from '@causw/cds';
 
 import { TermsContent } from '../content/TermsContent';

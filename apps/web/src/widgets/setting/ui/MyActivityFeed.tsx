@@ -1,16 +1,16 @@
 'use client';
 
-import { RefObject } from 'react';
+import { type RefObject } from 'react';
 
 import { Tab } from '@causw/cds';
 
 import {
-  ActivityMode,
-  ActivityType,
-  MyActivityPostItem,
+  type ActivityMode,
+  type ActivityType,
+  type MyActivityPostItem,
 } from '@/entities/setting';
 
-import { SuspenseView, ActionHeader, NoDataView } from '@/shared/ui';
+import { ActionHeader, NoDataView, SuspenseView } from '@/shared/ui';
 
 import { ACTIVITY_TABS } from '../model';
 

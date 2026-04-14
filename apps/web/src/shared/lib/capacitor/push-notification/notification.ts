@@ -1,37 +1,24 @@
-import { PushNotifications, type Token } from '@capacitor/push-notifications';
+import type { PermissionState } from '@capacitor/core';
+import {
+  PushNotifications,
+  type PermissionStatus,
+} from '@capacitor/push-notifications';
 
 import { isMobile } from '@/shared/utils';
 
-type InitNotificationOptions = {
-  onToken: (token: string) => void;
-  onError?: (err: unknown) => void;
-};
+async function getPushNotificationPermissionState(): Promise<
+  PermissionState | 'unsupported'
+> {
+  if (!isMobile) return 'unsupported';
 
-let registered = false;
+  const permission: PermissionStatus =
+    await PushNotifications.checkPermissions();
 
-export async function initNotification({
-  onToken,
-  onError,
-}: InitNotificationOptions) {
-  if (!isMobile) return;
+  return permission.receive;
+}
 
-  //가드 : 한 번만 리스너 등록
-  if (registered) return;
-  registered = true;
+export async function isPushNotificationPermissionDenied() {
+  const status = await getPushNotificationPermissionState();
 
-  let perm = await PushNotifications.checkPermissions();
-  if (perm.receive === 'prompt') {
-    perm = await PushNotifications.requestPermissions();
-  }
-  if (perm.receive !== 'granted') return;
-
-  PushNotifications.addListener('registration', (t: Token) => {
-    onToken(t.value);
-  });
-
-  PushNotifications.addListener('registrationError', (e) => {
-    onError?.(e);
-  });
-
-  await PushNotifications.register();
+  return status === 'denied';
 }

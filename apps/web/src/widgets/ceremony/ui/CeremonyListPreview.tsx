@@ -46,7 +46,9 @@ function CeremonyListContent() {
             title={item.title}
             icon={getCeremonyIcon(item.category)}
             descriptions={[
-              `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`,
+              item.endDate
+                ? `${formatToMonthDay(item.startDate)} - ${formatToMonthDay(item.endDate)}`
+                : formatToMonthDay(item.startDate),
               item.category || item.type,
             ]}
           />
@@ -62,7 +64,7 @@ export function CeremonyListPreview() {
       <Flex className="desktop:flex hidden flex-col gap-2">
         <Text typography="title-22-bold">{COPY.HOME_CEREMONY_TITLE}</Text>
       </Flex>
-      <VStack className="w-full gap-5 rounded-[16px] bg-white p-5">
+      <VStack className="w-full gap-5 rounded-[1rem] bg-white p-5">
         <Text typography="subtitle-18-bold" className="desktop:hidden">
           {COPY.HOME_CEREMONY_TITLE}
         </Text>

@@ -15,7 +15,7 @@ import {
 
 import {
   CALENDAR_EVENTS_TYPE_MAP,
-  CalendarScheduleItem,
+  type CalendarScheduleItem,
   transformToCalendarEvents,
   useCalendarMonth,
   useCalendarSchedules,

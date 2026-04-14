@@ -5,13 +5,13 @@ import {
 } from '@tanstack/react-query';
 
 import {
-  AlumniContactsFilter,
+  type AlumniContactsFilter,
   AlumniContactsFilterSearchParam,
   alumniContactsQueryOptions,
 } from '@/entities/alumni-contacts';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
-import { NextSearchParams } from '@/shared/types';
+import { type NextSearchParams } from '@/shared/types';
 
 import { AlumniContactsListWrapper } from './AlumniContactsList';
 

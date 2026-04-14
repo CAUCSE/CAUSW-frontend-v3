@@ -1,6 +1,9 @@
 /** 경조사 승인 상태 */
 export type CeremonyState = 'ACCEPT' | 'REJECT' | 'AWAIT' | 'CLOSE';
 
+/** 경조사 상세 조회 컨텍스트 */
+export type CeremonyDetailContext = 'my' | 'general';
+
 /** 경조사 종류 (경사/조사) */
 export type CeremonyType = '경사' | '조사';
 
@@ -22,7 +25,7 @@ export interface CeremonyItem {
   type: CeremonyType;
   category: CeremonyCategory;
   startDate: string;
-  endDate: string;
+  endDate: string | null;
   startTime: string | null;
   endTime: string | null;
   state: CeremonyState;
@@ -99,6 +102,6 @@ export interface CeremonyDetailResponse {
   link: string | null;
   isSetAll: boolean | null;
   targetAdmissionYears: string[] | null;
-  state: CeremonyState;
+  state: CeremonyState | null;
   note: string | null;
 }

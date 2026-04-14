@@ -1,0 +1,1 @@
+export { SignUpEmailVerificationStepHeader } from './SignUpEmailVerificationStepHeader';

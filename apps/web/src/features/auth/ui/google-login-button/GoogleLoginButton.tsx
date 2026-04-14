@@ -8,24 +8,16 @@ import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
 
 import { googleNativeLogin } from '@/features/auth/api';
 
+import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
 import { extractErrorMessage, isMobile } from '@/shared/utils';
 
-type GoogleLoginButtonProps = ComponentProps<'button'> & {
-  clientId?: string;
-  redirectUri?: string;
-  state?: string;
-  scope?: string;
-};
+type GoogleLoginButtonProps = ComponentProps<'button'>;
 
 export const GoogleLoginButton = ({
   className,
   onClick,
-  clientId,
-  redirectUri,
-  state,
-  scope = 'openid email profile',
   ...props
 }: GoogleLoginButtonProps) => {
   const router = useRouter();
@@ -59,22 +51,14 @@ export const GoogleLoginButton = ({
       return;
     }
 
-    if (!clientId || !redirectUri) return;
-
-    const resolvedRedirectUri = redirectUri.startsWith('/')
-      ? `${window.location.origin}${redirectUri}`
-      : redirectUri;
-
-    const url = new URL('https://accounts.google.com/o/oauth2/v2/auth');
-    url.searchParams.set('client_id', clientId);
-    url.searchParams.set('redirect_uri', resolvedRedirectUri);
-    url.searchParams.set('response_type', 'code');
-    url.searchParams.set('scope', scope);
-    url.searchParams.set('prompt', 'consent');
-    url.searchParams.set('access_type', 'offline');
-    if (state) url.searchParams.set('state', state);
-
-    window.location.href = url.toString();
+    const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/google`);
+    if (ENVIRONMENT === 'local') {
+      oauthUrl.searchParams.set('env', 'local');
+    }
+    if (ENVIRONMENT === 'development') {
+      oauthUrl.searchParams.set('env', 'dev');
+    }
+    window.location.href = oauthUrl.toString();
   };
 
   return (

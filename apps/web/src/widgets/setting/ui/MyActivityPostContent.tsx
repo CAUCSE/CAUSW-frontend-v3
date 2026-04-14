@@ -1,13 +1,17 @@
-import { KeyboardEvent, MouseEvent } from 'react';
+import { type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import { Comment, Heart } from '@causw/cds';
 
-import { PostAction, PostHeader } from '@/features/post';
+import {
+  type PostAction,
+  PostHeader,
+  useTogglePostLikeMutation,
+} from '@/features/post';
 
 import { PostBody } from '@/entities/post';
-import { MyActivityPostItem } from '@/entities/setting';
+import { type MyActivityPostItem } from '@/entities/setting';
 
 import { IconCountButton } from '@/shared/ui';
 
@@ -17,6 +21,7 @@ type Props = {
 
 export const MyActivityPostContent = ({ post }: Props) => {
   const router = useRouter();
+  const { mutate: togglePostLike } = useTogglePostLikeMutation(post.postId);
 
   const handleAction = (_action: PostAction) => {
     // Keep the menu visible until my-feed actions are wired.
@@ -31,6 +36,10 @@ export const MyActivityPostContent = ({ post }: Props) => {
     return (target as HTMLElement | null)?.closest(
       'button, a, [role="menuitem"]',
     );
+  };
+
+  const handleLikeClick = () => {
+    togglePostLike(!post.isLiked);
   };
 
   const handleCardClick = (event: MouseEvent<HTMLElement>) => {
@@ -78,12 +87,13 @@ export const MyActivityPostContent = ({ post }: Props) => {
           <IconCountButton
             icon={<Heart />}
             count={post.likeCount}
-            disabled={true}
+            active={post.isLiked}
+            onClick={handleLikeClick}
           />
           <IconCountButton
             icon={<Comment />}
             count={post.commentCount}
-            disabled={true}
+            onClick={moveToPost}
           />
         </div>
       </div>

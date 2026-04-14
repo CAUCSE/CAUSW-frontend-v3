@@ -1,4 +1,8 @@
-import { FieldValues, Path, UseFormSetValue } from 'react-hook-form';
+import {
+  type FieldValues,
+  type Path,
+  type UseFormSetValue,
+} from 'react-hook-form';
 
 // TODO: API에 따라 수정 필요
 

@@ -7,10 +7,14 @@ import {
   MyActivityFeed,
   toActivityMode,
   toActivityTab,
-  useMyActivityFeed,
 } from '@/widgets/setting';
 
-import { ActivityType, MyActivityFeedPage } from '@/entities/setting';
+import {
+  type ActivityMode,
+  type ActivityType,
+  type MyActivityFeedPage,
+  useMyActivityFeed,
+} from '@/entities/setting';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui/provider';
@@ -27,7 +31,7 @@ const ActivityContent = ({
   onTabChange,
 }: {
   activeTab: ActivityType;
-  mode: 'list' | 'empty';
+  mode: ActivityMode;
   onBack: () => void;
   onTabChange: (tab: ActivityType) => void;
 }) => {

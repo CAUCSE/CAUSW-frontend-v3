@@ -1,11 +1,14 @@
 import { BASE_URL } from '@/shared/config';
-import { DefaultResponseField } from '@/shared/types';
+import { AUTH_API_PREFIX } from '@/shared/constants';
+import { type DefaultResponseField } from '@/shared/types';
 import { isMobile, isServer } from '@/shared/utils';
 
 import {
   getClientATK,
+  getClientAuthRefreshed,
   getClientRTK,
   removeClientATK,
+  removeClientAuthRefreshed,
   removeClientRTK,
   setClientATK,
 } from './auth-storage';
@@ -22,18 +25,18 @@ import {
   getServerRTK,
   removeServerATK,
   removeServerRTK,
+  setServerAuthRefreshed,
   setServerATK,
 } from './auth-storage.server';
 
 export class TokenManager {
   // Access Token 재발급
   static async refreshAccessToken(): Promise<string> {
-    const response = await fetch(`${BASE_URL}/api/v2/auth/refresh`, {
+    const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${await TokenManager.getAccessToken()}`,
-        Cookie: `refresh_token=${await TokenManager.getRefreshToken()}`,
+        Authorization: `Bearer any-token`,
       },
       credentials: 'include',
     });
@@ -98,6 +101,10 @@ export class TokenManager {
   static async setRefreshToken(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
+
+      if (!refreshToken) {
+        return;
+      }
       await setNativeRTK(refreshToken);
     }
   }
@@ -110,5 +117,19 @@ export class TokenManager {
     } else {
       removeClientRTK();
     }
+  }
+
+  static async setAuthRefreshed(): Promise<void> {
+    if (isServer) {
+      await setServerAuthRefreshed();
+    }
+  }
+
+  static async getAuthRefreshed(): Promise<boolean> {
+    return getClientAuthRefreshed();
+  }
+
+  static async removeAuthRefreshed(): Promise<void> {
+    removeClientAuthRefreshed();
   }
 }

@@ -2,45 +2,54 @@
 
 import { useState } from 'react';
 
-import { CommentAction } from '../types';
+import { type CommentAction } from '../../config';
+import { useDeleteCommentMutation, useDeleteReplyMutation } from '../mutations';
 
-export const useCommentMenuActions = (commentId: string | number) => {
-  const [isReportOpen, setIsReportOpen] = useState(false);
-  const [isBlockOpen, setIsBlockOpen] = useState(false);
+type ActiveModalType = CommentAction | null;
+
+export const useCommentMenuActions = (
+  postId: string,
+  targetId: string,
+  isReply?: boolean,
+) => {
+  const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
+
+  const { mutate: deleteComment } = useDeleteCommentMutation(postId);
+  const { mutate: deleteReply } = useDeleteReplyMutation(postId);
 
   const handleAction = (action: CommentAction) => {
-    switch (action) {
-      case 'report':
-        setIsReportOpen(true);
-        break;
-      case 'block':
-        setIsBlockOpen(true);
-        break;
-      case 'delete':
-        console.log(`id ${commentId} 댓글 삭제 API 호출`);
-        break;
-      default:
-        console.log(action);
+    setActiveModal(action);
+  };
+
+  const closeModal = () => setActiveModal(null);
+
+  const submitDelete = () => {
+    if (isReply) {
+      deleteReply(targetId);
+    } else {
+      deleteComment(targetId);
     }
+    closeModal();
   };
 
   const submitReport = () => {
-    console.log(`${commentId}번 댓글 신고 제출`);
-    setIsReportOpen(false);
+    console.log(`${targetId}번 댓글 신고 제출`);
+    // TODO: 신고 API mutation 호출
+    closeModal();
   };
 
   const submitBlock = () => {
-    console.log(`${commentId}번 댓글 작성자 차단`);
-    setIsBlockOpen(false);
+    console.log(`${targetId}번 댓글 작성자 차단`);
+    // TODO: 차단 API mutation 호출
+    closeModal();
   };
 
   return {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction,
+    closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   };
 };

@@ -1,76 +1,100 @@
 'use client';
 
-import { useState } from 'react';
-
 import { BlockUserModal } from '@/features/block';
-import { useCommentMenuActions } from '@/features/comment';
+import {
+  COMMENT_ACTION,
+  useCommentMenuActions,
+  useToggleReplyLikeMutation,
+} from '@/features/comment';
 import { ReportFlow } from '@/features/report';
 
-import { Comment, CommentCard, ReplyTarget } from '@/entities/comment';
+import {
+  type ChildComment,
+  CommentCard,
+  type ReplyTarget,
+} from '@/entities/comment';
+
+import { formatRelativeTime } from '@/shared/lib';
+import { ConfirmModal } from '@/shared/ui';
 
 import { CommentActionMenu } from './CommentActionMenu';
 
 interface ReplyItemProps {
-  reply: Comment;
+  postId: string;
+  reply: ChildComment;
   onReply: (target: ReplyTarget) => void;
 }
 
-export const ReplyItem = ({ reply, onReply }: ReplyItemProps) => {
+export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
+  const isInactive = reply.isDeleted || reply.isBlocked;
+
   const {
-    isReportOpen,
-    setIsReportOpen,
-    isBlockOpen,
-    setIsBlockOpen,
+    activeModal,
     handleAction: handleMenuAction,
+    closeModal,
     submitReport,
     submitBlock,
-  } = useCommentMenuActions(reply.id);
+    submitDelete,
+  } = useCommentMenuActions(postId, reply.id, true);
 
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const { mutate: toggleLike, isPending } = useToggleReplyLikeMutation(
+    postId,
+    reply.id,
+  );
 
   const handleLikeClick = () => {
-    if (isLiked) {
-      setIsLiked(false);
-      setLikeCount((prev) => prev - 1);
-    } else {
-      setIsLiked(true);
-      setLikeCount((prev) => prev + 1);
-    }
+    if (isPending || isInactive) return;
+    toggleLike(!reply.isChildCommentLike);
   };
 
   return (
     <>
       <CommentCard
         isReply
-        author={reply.author}
+        author={reply.displayWriterNickname}
+        profileImage={reply.writerProfileImage}
         content={reply.content}
-        time={reply.time}
-        isLiked={isLiked}
-        likeCount={likeCount}
+        time={formatRelativeTime(reply.createdAt)}
+        isDeleted={reply.isDeleted}
+        isBlocked={reply.isBlocked}
+        isLiked={reply.isChildCommentLike}
+        likeCount={reply.numLike}
         onLikeClick={handleLikeClick}
         onReplyClick={() =>
           onReply({
             id: reply.id,
-            author: reply.author,
+            author: reply.displayWriterNickname,
             content: reply.content,
           })
         }
         menuSlot={
-          <CommentActionMenu isMine={false} onAction={handleMenuAction} />
+          <CommentActionMenu
+            isMine={reply.isOwner}
+            onAction={handleMenuAction}
+          />
         }
       />
 
       <ReportFlow
-        open={isReportOpen}
-        setOpen={setIsReportOpen}
+        open={activeModal === COMMENT_ACTION.REPORT}
+        setOpen={closeModal}
         onSubmitReport={submitReport}
       />
 
       <BlockUserModal
-        open={isBlockOpen}
-        setOpen={setIsBlockOpen}
+        open={activeModal === COMMENT_ACTION.BLOCK}
+        setOpen={closeModal}
         onSubmitBlock={submitBlock}
+      />
+
+      <ConfirmModal
+        title="답글을 삭제하시겠어요?"
+        open={activeModal === COMMENT_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </>
   );
