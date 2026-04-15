@@ -1,4 +1,4 @@
-import { isMobile, isServer } from '@/shared/utils';
+import { isMobile, isServer } from '@/shared/config';
 
 import { getClientFCM, setClientFCM, removeClientFCM } from './fcm-storage';
 import {

@@ -1,4 +1,4 @@
-import { isAndroid, isMobile } from '@/shared/utils';
+import { isAndroid, isMobile } from '@/shared/config';
 
 export type SocialProvider = 'kakao' | 'apple' | 'google';
 

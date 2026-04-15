@@ -1,6 +1,5 @@
-import { BASE_URL } from '@/shared/config';
+import { BASE_URL, isMobile, isServer } from '@/shared/config';
 import { type DefaultResponseField } from '@/shared/types';
-import { isMobile, isServer } from '@/shared/utils';
 
 import {
   getClientATK,

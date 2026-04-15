@@ -8,10 +8,10 @@ import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
 
 import { appleNativeLogin } from '@/features/auth/api';
 
-import { BASE_URL, isLocal } from '@/shared/config';
+import { BASE_URL, isLocal, isMobile } from '@/shared/config';
 import { requestNativeSocialLogin } from '@/shared/lib/capacitor';
 import { toast } from '@/shared/model';
-import { extractErrorMessage, isMobile } from '@/shared/utils';
+import { extractErrorMessage } from '@/shared/utils';
 
 type AppleLoginButtonProps = ComponentProps<'button'>;
 

@@ -5,7 +5,7 @@ import {
   type Token,
 } from '@capacitor/push-notifications';
 
-import { isMobile } from '@/shared/utils';
+import { isMobile } from '@/shared/config';
 
 type InitNotificationOptions = {
   onToken: (token: string) => void;

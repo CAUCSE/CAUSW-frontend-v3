@@ -1,6 +1,4 @@
-import { Capacitor } from '@capacitor/core';
-
-import type { UpdateEnv } from '@/shared/config';
+import { getPlatform, type UpdateEnv } from '@/shared/config';
 
 import { compareSemver } from './compareVersion';
 import { fetchMinVersion } from './fetchMinVersion';
@@ -14,10 +12,6 @@ export interface ForceUpdateResult {
   storeUrlApp: string;
   storeUrlWeb: string;
   updateMessage: string;
-}
-
-function getPlatform(): 'ios' | 'android' | 'web' {
-  return Capacitor.getPlatform() as 'ios' | 'android' | 'web';
 }
 
 export async function checkForceUpdate(
