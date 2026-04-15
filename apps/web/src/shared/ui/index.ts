@@ -16,3 +16,4 @@ export * from './QuickMenu';
 export * from './IconCountButton';
 export * from './modal';
 export * from './header';
+export * from './profile-avatar';
