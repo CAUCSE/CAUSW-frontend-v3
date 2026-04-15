@@ -43,6 +43,7 @@ export type UserProfileImageType =
 
 export interface UserResponseDto {
   id: string;
+  email: string;
   name: string;
   nickname: string;
   onboardingStatus: OnboardingStatus;
