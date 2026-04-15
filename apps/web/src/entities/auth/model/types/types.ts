@@ -52,7 +52,6 @@ export interface UserResponseDto {
   };
   admissionYear: number;
   job: string;
-  onboardingStatus: OnboardingStatus;
   academicStatus: AcademicStatus;
 }
 
@@ -164,13 +163,6 @@ export interface SocialLoginAdditionalInfoRequestDto {
   phoneNumber: string;
   nickname: string;
 }
-
-export type OnboardingStatus =
-  | 'TERMS_REQUIRED'
-  | 'GUEST'
-  | 'ACADEMIC_CERTIFICATION_REQUIRED'
-  | 'EMAIL_VERIFICATION_REQUIRED'
-  | 'ACTIVE';
 
 type AcademicStatus =
   | 'ENROLLED'
