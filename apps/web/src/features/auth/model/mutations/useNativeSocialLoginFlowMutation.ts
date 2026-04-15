@@ -1,11 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
-import {
-  useNativeSocialLoginMutation,
-  useRequestNativeSocialTokenMutation,
-} from '@/features/auth';
+import { nativeSocialLogin } from '@/features/auth/api/post/session';
+import { routeAfterSignIn } from '@/features/auth/lib';
 
 import type {
   AuthResponseDto,
@@ -14,7 +14,10 @@ import type {
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
+import { TokenManager } from '@/shared/storage';
 import { extractErrorMessage } from '@/shared/utils';
+
+import { useRequestNativeSocialTokenMutation } from './useRequestNativeSocialTokenMutation';
 
 type NativeSocialLoginFlowVariables = {
   provider: NativeSocialLoginProvider;
@@ -28,9 +31,9 @@ type NativeSocialLoginFlowMutationOptions = Omit<
 export const useNativeSocialLoginFlowMutation = (
   options?: NativeSocialLoginFlowMutationOptions,
 ) => {
+  const router = useRouter();
   const requestNativeSocialTokenMutation =
     useRequestNativeSocialTokenMutation();
-  const nativeSocialLoginMutation = useNativeSocialLoginMutation();
   const { ...restOptions } = options ?? {};
 
   const onMutate: NonNullable<
@@ -49,7 +52,10 @@ export const useNativeSocialLoginFlowMutation = (
       Error,
       NativeSocialLoginFlowVariables
     >['onSuccess']
-  > = async () => {
+  > = async (data) => {
+    await TokenManager.setAccessToken(data.accessToken);
+    await TokenManager.setRefreshToken();
+    routeAfterSignIn(router, data.onboardingStatus);
     toast.success('로그인되었습니다.');
   };
 
@@ -85,7 +91,7 @@ export const useNativeSocialLoginFlowMutation = (
               idToken: tokens.idToken,
             };
 
-      return nativeSocialLoginMutation.mutateAsync(payload);
+      return nativeSocialLogin(payload);
     },
     onMutate,
     onSuccess,
