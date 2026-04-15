@@ -42,7 +42,13 @@ export const SettingSupportSection = () => {
           key={item.id}
           type="button"
           className={ROW_BUTTON_CLASS}
-          onClick={() => router.push(item.href)}
+          onClick={() => {
+            if (item.href.startsWith('http')) {
+              window.open(item.href, '_blank', 'noopener,noreferrer');
+            } else {
+              router.push(item.href);
+            }
+          }}
         >
           {SUPPORT_ICON_MAP[item.id]}
           <Text typography="body-16-regular" textColor="gray-800">
