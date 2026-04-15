@@ -1,8 +1,8 @@
-import { HttpResponse } from 'msw';
+import { HttpResponse, passthrough } from 'msw';
 
-import { USER_API_PREFIX } from '@/shared/constants';
 import { type UserMeResponseDto } from '@/entities/auth';
 
+import { USER_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
 const DUPLICATED_NICKNAMES = new Set(['admin', 'causw', 'test']);
 const DUPLICATED_PHONE_NUMBERS = new Set([
@@ -13,6 +13,7 @@ const DUPLICATED_PHONE_NUMBERS = new Set([
 
 export const getHandler = [
   mswHttp.get<UserMeResponseDto>(`${USER_API_PREFIX}/me`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: 'S000',

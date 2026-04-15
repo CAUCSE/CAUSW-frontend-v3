@@ -1,4 +1,4 @@
-import { HttpResponse } from 'msw';
+import { HttpResponse, passthrough } from 'msw';
 
 import { type AuthResponseDto } from '@/entities/auth';
 
@@ -8,6 +8,7 @@ const USER_API_PREFIX = '/api/v2/users';
 
 export const patchHandler = [
   mswHttp.patch<AuthResponseDto>(`${USER_API_PREFIX}/me/registration`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: 'S000',
