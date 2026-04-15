@@ -11,16 +11,19 @@ import {
   EmailVerificationStepResendSection,
   useEmailVerificationForm,
   useEmailVerificationGuard,
-  type EmailVerificationOnboardingStatus,
 } from '@/features/auth';
+
+import { useMyInfoSuspenseQuery } from '@/entities/auth';
 
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
 export const EmailVerificationPage = () => {
-  const email = 'younghyun7538@gmail.com';
-  // TODO: 내 정보 조회 API 연결 후 onboardingStatus 값을 실제 데이터로 교체
-  const onboardingStatus: EmailVerificationOnboardingStatus =
-    'EMAIL_VERIFICATION_REQUIRED';
+  const { data: myInfo } = useMyInfoSuspenseQuery();
+
+  useEmailVerificationGuard(myInfo.onboardingStatus);
+
+  const email = myInfo.email ?? '';
+
   const {
     methods,
     isSubmitEnabled,
@@ -30,8 +33,6 @@ export const EmailVerificationPage = () => {
   } = useEmailVerificationForm({
     email,
   });
-
-  useEmailVerificationGuard(onboardingStatus);
 
   return (
     <FormProvider {...methods}>

@@ -9,11 +9,13 @@ import type { OnboardingStatus } from '@/entities/auth/model/types';
 export type EmailVerificationOnboardingStatus = OnboardingStatus;
 
 export const useEmailVerificationGuard = (
-  onboardingStatus: OnboardingStatus,
+  onboardingStatus: OnboardingStatus | undefined,
 ) => {
   const router = useRouter();
 
   useEffect(() => {
+    if (onboardingStatus === undefined) return;
+
     const redirectMap: Partial<Record<OnboardingStatus, string>> = {
       GUEST: '/auth/sign-up/oauth-additional-info',
       ACADEMIC_CERTIFICATION_REQUIRED: '/auth/enrollment-verification',
