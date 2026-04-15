@@ -12,7 +12,11 @@ type SettingOverviewProps = {
 
 export const SettingOverview = ({ onNavigate }: SettingOverviewProps) => {
   return (
-    <VStack align="center" gap="md" className="w-full">
+    <VStack
+      align="center"
+      gap="md"
+      className="w-full px-5 py-7 md:px-0 md:py-0"
+    >
       <SettingProfileImageSection onNavigate={onNavigate} />
       <SettingProfileEditButton onNavigate={onNavigate} />
       <SettingActivitySection onNavigate={onNavigate} />

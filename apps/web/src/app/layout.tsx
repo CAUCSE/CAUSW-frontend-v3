@@ -16,6 +16,9 @@ import {
 export const metadata: Metadata = {
   title: '동문 네트워크',
   description: '동문 네트워크 서비스',
+  icons: {
+    icon: '/images/favicon-128.png',
+  },
   other: {
     ...getTraceData(), // Sentry 오류 로그 추적
   },

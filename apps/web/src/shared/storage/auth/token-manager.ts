@@ -1,4 +1,8 @@
 import { BASE_URL, isMobile, isServer } from '@/shared/config';
+import { AUTH_API_PREFIX } from '@/shared/constants';
+
+// eslint-disable-next-line
+import type { AuthResponseDto } from '@/entities/auth';
 import { type DefaultResponseField } from '@/shared/types';
 
 import {
@@ -29,8 +33,8 @@ import {
 
 export class TokenManager {
   // Access Token 재발급
-  static async refreshAccessToken(): Promise<string> {
-    const response = await fetch(`${BASE_URL}/api/v2/auth/refresh`, {
+  static async refreshAuth(): Promise<AuthResponseDto> {
+    const response = await fetch(`${BASE_URL}/${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,16 +43,13 @@ export class TokenManager {
       credentials: 'include',
     });
 
-    const data: DefaultResponseField<{
-      accessToken: string;
-      refreshToken: string;
-    }> = await response.json();
+    const data: DefaultResponseField<AuthResponseDto> = await response.json();
 
     if (!data.data?.accessToken) {
       throw new Error('No AccessToken');
     }
 
-    return data.data.accessToken;
+    return data.data;
   }
 
   // Access Token
@@ -99,6 +100,10 @@ export class TokenManager {
   static async setRefreshToken(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
+
+      if (!refreshToken) {
+        return;
+      }
       await setNativeRTK(refreshToken);
     }
   }

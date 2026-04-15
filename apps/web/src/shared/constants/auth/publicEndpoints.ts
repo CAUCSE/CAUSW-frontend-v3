@@ -1,4 +1,5 @@
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+import { AUTH_API_PREFIX } from '../urls/api-prefix';
 
 export type PublicEndpoint = {
   method: HttpMethod;
@@ -6,11 +7,12 @@ export type PublicEndpoint = {
 };
 
 export const PUBLIC_ENDPOINTS: PublicEndpoint[] = [
-  { method: 'POST', path: '/api/v2/auth/login' },
-  { method: 'POST', path: '/api/v2/auth/signup' },
-  { method: 'POST', path: '/api/v2/auth/email/send' },
-  { method: 'POST', path: '/api/v2/auth/email/verify' },
-  { method: 'POST', path: '/api/v2/auth/find-email' },
-  { method: 'POST', path: '/api/v2/auth/password-reset/send' },
-  { method: 'POST', path: '/api/v2/auth/password-reset/verify' },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/login` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/signup` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/email/send` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/email/verify` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/find-email` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/password-reset/send` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/password-reset/verify` },
+  { method: 'POST', path: `${AUTH_API_PREFIX}/login/native` },
 ];

@@ -2,8 +2,6 @@
 
 import { type PropsWithChildren, Suspense, use } from 'react';
 
-import { Capacitor } from '@capacitor/core';
-
 import { ENVIRONMENT } from '@/shared/config';
 
 declare global {
@@ -12,12 +10,19 @@ declare global {
       dispose(cb: () => void): void;
     };
   }
+  interface Window {
+    Capacitor?: {
+      isNativePlatform: () => boolean;
+    };
+  }
 }
 const isBrowser = typeof window !== 'undefined';
-const isNativePlatform = isBrowser && Capacitor.isNativePlatform();
-
+const isNativePlatform = isBrowser && !!window.Capacitor?.isNativePlatform();
 const shouldStartMSW =
-  ENVIRONMENT === 'development' && isBrowser && !isNativePlatform;
+  (ENVIRONMENT === 'development' || ENVIRONMENT === 'local') &&
+  isBrowser &&
+  !isNativePlatform;
+
 const startMockWorkerPromise = shouldStartMSW
   ? import('./browser').then(async ({ worker }) => {
       await worker.start({

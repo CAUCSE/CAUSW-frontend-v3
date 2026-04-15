@@ -58,6 +58,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "kakao",
                 requestId: requestId ?? "",
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "INVALID_PAYLOAD",
                 message: "Missing provider or requestId."
             )
@@ -76,6 +77,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: provider,
                 requestId: requestId,
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "UNSUPPORTED_PROVIDER",
                 message: "Unsupported provider on iOS bridge."
             )
@@ -91,6 +93,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                         provider: "kakao",
                         requestId: requestId,
                         accessToken: nil,
+                        idToken: nil,
                         errorCode: "KAKAO_LOGIN_CANCELLED",
                         message: "Kakao login cancelled."
                     )
@@ -100,6 +103,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                     provider: "kakao",
                     requestId: requestId,
                     accessToken: nil,
+                    idToken: nil,
                     errorCode: "KAKAO_LOGIN_FAILED",
                     message: error.localizedDescription
                 )
@@ -111,6 +115,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                     provider: "kakao",
                     requestId: requestId,
                     accessToken: nil,
+                    idToken: nil,
                     errorCode: "EMPTY_ACCESS_TOKEN",
                     message: "Kakao access token is empty."
                 )
@@ -121,6 +126,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "kakao",
                 requestId: requestId,
                 accessToken: accessToken,
+                idToken: nil,
                 errorCode: nil,
                 message: nil
             )
@@ -140,6 +146,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "google",
                 requestId: requestId,
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "GOOGLE_CLIENT_ID_MISSING",
                 message: "Google client id is missing."
             )
@@ -151,6 +158,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "google",
                 requestId: requestId,
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "PRESENTING_VIEW_CONTROLLER_MISSING",
                 message: "Unable to find presenting view controller."
             )
@@ -167,20 +175,22 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                     provider: "google",
                     requestId: requestId,
                     accessToken: nil,
+                    idToken: nil,
                     errorCode: "GOOGLE_LOGIN_FAILED",
                     message: error.localizedDescription
                 )
                 return
             }
 
-            guard let accessToken = result?.user.accessToken.tokenString,
-                  !accessToken.isEmpty else {
+            guard let idToken = result?.user.idToken?.tokenString,
+                  !idToken.isEmpty else {
                 self.dispatchSocialLoginResult(
                     provider: "google",
                     requestId: requestId,
                     accessToken: nil,
-                    errorCode: "EMPTY_ACCESS_TOKEN",
-                    message: "Google access token is empty."
+                    idToken: nil,
+                    errorCode: "EMPTY_ID_TOKEN",
+                    message: "Google id token is empty."
                 )
                 return
             }
@@ -188,7 +198,8 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             self.dispatchSocialLoginResult(
                 provider: "google",
                 requestId: requestId,
-                accessToken: accessToken,
+                accessToken: nil,
+                idToken: idToken,
                 errorCode: nil,
                 message: nil
             )
@@ -214,6 +225,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             provider: "apple",
             requestId: requestId,
             accessToken: nil,
+            idToken: nil,
             errorCode: "APPLE_LOGIN_UNAVAILABLE",
             message: "Apple login requires iOS 13 or later."
         )
@@ -228,6 +240,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "apple",
                 requestId: requestId,
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "APPLE_CREDENTIAL_MISSING",
                 message: "Apple credential is missing."
             )
@@ -241,7 +254,8 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "apple",
                 requestId: requestId,
                 accessToken: nil,
-                errorCode: "EMPTY_ACCESS_TOKEN",
+                idToken: nil,
+                errorCode: "EMPTY_ID_TOKEN",
                 message: "Apple identity token is empty."
             )
             return
@@ -250,7 +264,8 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
         dispatchSocialLoginResult(
             provider: "apple",
             requestId: requestId,
-            accessToken: identityToken,
+            accessToken: nil,
+            idToken: identityToken,
             errorCode: nil,
             message: nil
         )
@@ -265,6 +280,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 provider: "apple",
                 requestId: requestId,
                 accessToken: nil,
+                idToken: nil,
                 errorCode: "APPLE_LOGIN_CANCELLED",
                 message: "Apple login cancelled."
             )
@@ -275,6 +291,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             provider: "apple",
             requestId: requestId,
             accessToken: nil,
+            idToken: nil,
             errorCode: "APPLE_LOGIN_FAILED",
             message: error.localizedDescription
         )
@@ -288,6 +305,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
         provider: String,
         requestId: String,
         accessToken: String?,
+        idToken: String?,
         errorCode: String?,
         message: String?
     ) {
@@ -302,6 +320,9 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
 
         if let accessToken {
             payload["accessToken"] = accessToken
+        }
+        if let idToken {
+            payload["idToken"] = idToken
         }
         if let errorCode {
             payload["errorCode"] = errorCode
