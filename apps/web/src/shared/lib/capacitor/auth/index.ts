@@ -1,2 +1,5 @@
 export { requestNativeSocialLogin } from './nativeSocialBridge';
-export type { SocialProvider } from './nativeSocialBridge';
+export type {
+  NativeSocialLoginToken,
+  SocialProvider,
+} from './nativeSocialBridge';

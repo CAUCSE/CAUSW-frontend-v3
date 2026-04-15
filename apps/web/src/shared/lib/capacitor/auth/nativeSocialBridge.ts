@@ -11,13 +11,19 @@ type NativeSocialLoginResult = {
   provider: SocialProvider;
   requestId: string;
   accessToken?: string;
+  idToken?: string;
   errorCode?: string;
   message?: string;
 };
 
+export type NativeSocialLoginToken = {
+  accessToken?: string;
+  idToken?: string;
+};
+
 type PendingRequest = {
   provider: SocialProvider;
-  resolve: (value: string) => void;
+  resolve: (value: NativeSocialLoginToken) => void;
   reject: (reason?: unknown) => void;
   timer: ReturnType<typeof setTimeout>;
 };
@@ -123,6 +129,7 @@ const normalizeErrorMessage = (payload: NativeSocialLoginResult) => {
 
   if (
     errorCode === 'EMPTY_ACCESS_TOKEN' ||
+    errorCode === 'EMPTY_ID_TOKEN' ||
     errorCode === 'APPLE_CREDENTIAL_MISSING'
   ) {
     return '로그인 정보를 가져오지 못했습니다. 다시 시도해 주세요.';
@@ -143,12 +150,15 @@ const resolveFromPayload = (payload: NativeSocialLoginResult) => {
     return;
   }
 
-  if (!payload.accessToken) {
+  if (!payload.accessToken && !payload.idToken) {
     pending.reject(new Error(normalizeErrorMessage(payload)));
     return;
   }
 
-  pending.resolve(payload.accessToken);
+  pending.resolve({
+    accessToken: payload.accessToken,
+    idToken: payload.idToken,
+  });
 };
 
 const initializeBridgeHandler = () => {
@@ -207,7 +217,7 @@ export const requestNativeSocialLogin = (
   provider: SocialProvider,
   timeoutMs = DEFAULT_TIMEOUT_MS,
 ) =>
-  new Promise<string>((resolve, reject) => {
+  new Promise<NativeSocialLoginToken>((resolve, reject) => {
     if (!isMobile) {
       reject(new Error('모바일 환경에서만 소셜 로그인을 사용할 수 있습니다.'));
       return;
