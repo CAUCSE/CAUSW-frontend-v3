@@ -1,27 +1,53 @@
+'use client';
+
+import * as React from 'react';
+
 import { VStack } from '@causw/cds';
 
-import { ProfileImageEditButton } from '@/features/setting';
+import { ProfileImageEditDialog } from '@/widgets/setting';
 
-import { ProfileIdentity } from '@/entities/setting';
+import {
+  ProfileImageEditButton,
+  useProfileImageEdit,
+} from '@/features/setting';
 
-import { SETTING_PROFILE_IDENTITY } from '../../config';
+import { useMyInfoSuspenseQuery } from '@/entities/auth';
+import { ProfileInfo } from '@/entities/setting';
 
-type SettingProfileImageSectionProps = {
-  onNavigate: (href: string) => void;
-};
+export const SettingProfileImageSection = () => {
+  const { data: myInfo } = useMyInfoSuspenseQuery();
+  const [profileImageDialogOpen, setProfileImageDialogOpen] =
+    React.useState(false);
+  const { currentProfileImage, handleSubmitProfileImage } = useProfileImageEdit(
+    {
+      myInfo,
+    },
+  );
 
-export const SettingProfileImageSection = ({
-  onNavigate,
-}: SettingProfileImageSectionProps) => {
   return (
-    <VStack align="center" gap="xs">
-      <ProfileImageEditButton onNavigate={onNavigate} />
+    <>
+      <VStack align="center" gap="xs">
+        <ProfileImageEditButton
+          onClick={() => setProfileImageDialogOpen(true)}
+          profileImageType={currentProfileImage.profileImageType}
+          profileImageUrl={currentProfileImage.profileImageUrl}
+        />
 
-      <ProfileIdentity
-        name={SETTING_PROFILE_IDENTITY.name}
-        primaryInfo={SETTING_PROFILE_IDENTITY.primaryInfo}
-        secondaryInfo={SETTING_PROFILE_IDENTITY.secondaryInfo}
-      />
-    </VStack>
+        <ProfileInfo
+          name={myInfo.name}
+          admissionYear={myInfo.admissionYear}
+          job={myInfo.job}
+        />
+      </VStack>
+
+      {profileImageDialogOpen && (
+        <ProfileImageEditDialog
+          open={profileImageDialogOpen}
+          onOpenChange={setProfileImageDialogOpen}
+          initialValue={currentProfileImage}
+          onSubmit={handleSubmitProfileImage}
+        />
+      )}
+    </>
   );
 };

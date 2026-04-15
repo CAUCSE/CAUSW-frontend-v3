@@ -1,30 +1,21 @@
-'use client';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { SettingOverview } from '@/widgets/setting';
 
-import { useRouter } from 'next/navigation';
+import { authQueryOptions } from '@/entities/auth';
 
-import { NicknameChangeDialog, SettingOverview } from '@/widgets/setting';
+export async function SettingPage() {
+  const queryClient = new QueryClient();
 
-export function SettingPage() {
-  const router = useRouter();
-  const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
-
-  const handleNavigate = (href: string) => {
-    if (href === '/setting/nickname') {
-      setNicknameDialogOpen(true);
-      return;
-    }
-    router.push(href);
-  };
+  await queryClient.prefetchQuery(authQueryOptions.me());
 
   return (
-    <>
-      <SettingOverview onNavigate={handleNavigate} />
-      <NicknameChangeDialog
-        open={nicknameDialogOpen}
-        onOpenChange={setNicknameDialogOpen}
-      />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <SettingOverview />
+    </HydrationBoundary>
   );
 }
