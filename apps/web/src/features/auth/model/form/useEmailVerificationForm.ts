@@ -7,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 
 import {
+  authQueryKey,
   EMAIL_VERIFICATION_FORM_FIELD,
   emailVerificationSchema,
   useEmailVerificationAutoSendStore,
@@ -36,6 +38,8 @@ export const useEmailVerificationForm = ({ email }: { email: string }) => {
       [EMAIL_VERIFICATION_FORM_FIELD.emailVerificationCode]: '',
     },
   });
+
+  const queryClient = useQueryClient();
 
   const sendEmailVerificationCodeMutation =
     useSendEmailVerificationCodeMutation();
@@ -87,6 +91,7 @@ export const useEmailVerificationForm = ({ email }: { email: string }) => {
       {
         onSuccess: () => {
           router.push('/home');
+          queryClient.invalidateQueries({ queryKey: authQueryKey.me() });
         },
       },
     );
