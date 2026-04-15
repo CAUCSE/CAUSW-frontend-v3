@@ -1,4 +1,8 @@
+'use client';
+
 import { type ReactNode } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import {
   ChevronRight,
@@ -13,10 +17,6 @@ import { SETTING_OVERVIEW_TITLES } from '../../config';
 import { SETTING_SUPPORT_MENU_ITEMS } from '../../config';
 import type { SettingSupportMenuItem } from '../../model';
 
-type SettingSupportSectionProps = {
-  onNavigate: (href: string) => void;
-};
-
 const ROW_BUTTON_CLASS =
   'flex cursor-pointer w-full items-center gap-3.5 rounded-md p-2 text-left transition-colors hover:bg-gray-50 active:bg-gray-100';
 
@@ -26,9 +26,9 @@ const SUPPORT_ICON_MAP: Record<SettingSupportMenuItem['id'], ReactNode> = {
   terms: <DocumentColored />,
 };
 
-export const SettingSupportSection = ({
-  onNavigate,
-}: SettingSupportSectionProps) => {
+export const SettingSupportSection = () => {
+  const router = useRouter();
+
   return (
     <VStack
       gap="sm"
@@ -42,7 +42,7 @@ export const SettingSupportSection = ({
           key={item.id}
           type="button"
           className={ROW_BUTTON_CLASS}
-          onClick={() => onNavigate(item.href)}
+          onClick={() => router.push(item.href)}
         >
           {SUPPORT_ICON_MAP[item.id]}
           <Text typography="body-16-regular" textColor="gray-800">
