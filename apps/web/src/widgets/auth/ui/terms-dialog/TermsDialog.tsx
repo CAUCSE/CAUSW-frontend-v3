@@ -27,12 +27,7 @@ export const TermsDialog = ({
   onSubmitTermsAgreement,
 }: TermsDialogProps) => {
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(nextOpen) => {
-        if (nextOpen) onOpenChange(true);
-      }}
-    >
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <Dialog.Content
         className="py-8 focus:outline-none"
         onOpenAutoFocus={(event) => event.preventDefault()}
