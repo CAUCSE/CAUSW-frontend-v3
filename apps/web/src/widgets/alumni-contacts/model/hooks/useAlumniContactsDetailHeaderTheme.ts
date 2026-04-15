@@ -2,19 +2,28 @@
 
 import { useEffect, useState } from 'react';
 
+import { useAlumniContactsHeaderBoundaryContext } from '@/entities/alumni-contacts';
+
 import { getScrollContainer } from '@/shared/utils';
 
 export const useAlumniContactsDetailHeaderTheme = () => {
+  const { alumniContactsHeroRef } = useAlumniContactsHeaderBoundaryContext();
+
   const [changeHeaderTextColor, setChangeHeaderTextColor] =
     useState<boolean>(false);
-
-  const PROFILE_HEADER_HEIGHT = 400;
 
   useEffect(() => {
     const scrollContainer = getScrollContainer();
 
     const handleScroll = () => {
-      if ((scrollContainer?.scrollTop ?? 0) > PROFILE_HEADER_HEIGHT) {
+      if (!alumniContactsHeroRef.current) {
+        return;
+      }
+
+      if (
+        (scrollContainer?.scrollTop ?? 0) >
+        alumniContactsHeroRef.current.clientHeight
+      ) {
         setChangeHeaderTextColor(true);
       } else {
         setChangeHeaderTextColor(false);
@@ -25,7 +34,7 @@ export const useAlumniContactsDetailHeaderTheme = () => {
     return () => {
       scrollContainer?.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [alumniContactsHeroRef]);
 
   return {
     changeHeaderTextColor,
