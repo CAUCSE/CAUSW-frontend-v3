@@ -5,9 +5,8 @@ import {
   changeMyDefaultProfileImage,
 } from '@/features/setting/api';
 
-import type { ChangeMyProfileImageRequest } from '@/entities/setting';
-
 import { toast } from '@/shared/model';
+import type { ChangeMyProfileImageRequest } from '@/shared/types';
 import { extractErrorMessage } from '@/shared/utils';
 
 type ChangeMyProfileImageMutationOptions = Omit<
