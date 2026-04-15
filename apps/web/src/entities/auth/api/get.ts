@@ -16,7 +16,6 @@ export const getMyInfo = async () => {
   return API.get<UserResponseDto>(`${USER_API_PREFIX}/me`);
 };
 
-
 export const checkPhoneDuplicate = async (
   params: CheckPhoneDuplicateRequestDto,
 ) => {
@@ -29,8 +28,4 @@ export const checkNicknameDuplicate = async (
 ) => {
   const query = new URLSearchParams({ nickname: params.nickname });
   return API.get<null>(`${USER_API_PREFIX}/check-nickname?${query}`);
-};
-
-export const getMe = async () => {
-  return API.get<UserResponseDto>(`${USER_API_PREFIX}/me`);
 };

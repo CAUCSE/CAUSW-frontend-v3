@@ -44,6 +44,8 @@ export interface UserResponseDto {
   };
   admissionYear: number;
   job: string;
+  onboardingStatus: OnboardingStatus;
+  academicStatus: AcademicStatus;
 }
 
 export interface SignoutRequestDto {
@@ -157,27 +159,6 @@ type AcademicStatus =
   | 'EXPEL'
   | 'PROFESSOR'
   | 'UNDETERMINED';
-
-type UserProfileImageType =
-  | 'MALE_1'
-  | 'MALE_2'
-  | 'FEMALE_1'
-  | 'FEMALE_2'
-  | 'CUSTOM'
-  | 'GHOST';
-
-export interface UserMeResponseDto {
-  id: string;
-  name: string;
-  nickname: string;
-  profileImage: {
-    profileImageType: UserProfileImageType;
-    profileImageUrl: string;
-  };
-  admissionYear: number;
-  job: string;
-  onboardingStatus: OnboardingStatus;
-}
 
 export interface AuthResponseDto {
   accessToken: string;

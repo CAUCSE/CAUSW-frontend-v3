@@ -87,9 +87,6 @@ const config: CapacitorConfig = {
       backgroundColor: '#ffffff',
       overlaysWebView: true,
     },
-    CapacitorHttp: {
-      enabled: true,
-    },
     PushNotifications: {
       presentationOptions: ['badge', 'sound', 'alert'],
     },

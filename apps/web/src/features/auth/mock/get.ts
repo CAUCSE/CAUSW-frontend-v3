@@ -1,6 +1,6 @@
 import { HttpResponse, passthrough } from 'msw';
 
-import { type UserMeResponseDto } from '@/entities/auth';
+import { type UserResponseDto } from '@/entities/auth';
 
 import { USER_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
@@ -12,7 +12,7 @@ const DUPLICATED_PHONE_NUMBERS = new Set([
 ]);
 
 export const getHandler = [
-  mswHttp.get<UserMeResponseDto>(`${USER_API_PREFIX}/me`, () => {
+  mswHttp.get<UserResponseDto>(`${USER_API_PREFIX}/me`, () => {
     return passthrough();
     return HttpResponse.json(
       {
@@ -29,6 +29,7 @@ export const getHandler = [
           admissionYear: 2020,
           job: '개발자',
           onboardingStatus: 'ACADEMIC_CERTIFICATION_REQUIRED',
+          academicStatus: 'ENROLLED',
         },
       },
       { status: 200 },
