@@ -11,7 +11,7 @@ import {
   NotificationMobileHeader,
   // NotificationPopupCard,
 } from '@/widgets/notification';
-import { UserGreeting } from '@/widgets/user';
+import { UserGreetingHeader } from '@/widgets/user';
 
 import { QuickMenu } from '@/shared/ui';
 
@@ -30,7 +30,7 @@ export function HomePage() {
 
       {/* Desktop Greeting */}
       <div className="tablet:block hidden">
-        <UserGreeting />
+        <UserGreetingHeader />
       </div>
 
       <VStack className="desktop:gap-6 gap-4">

@@ -2,7 +2,7 @@ import { Skeleton, Text } from '@causw/cds';
 
 import { useGetMeQuery } from '@/features/auth';
 
-export function UserGreeting() {
+export function UserGreetingHeader() {
   const { data, isLoading } = useGetMeQuery();
 
   if (isLoading) {
