@@ -41,6 +41,7 @@ export interface UserResponseDto {
   id: string;
   email: string;
   name: string;
+  email: string;
   nickname: string;
   onboardingStatus: OnboardingStatus;
   profileImage: {
