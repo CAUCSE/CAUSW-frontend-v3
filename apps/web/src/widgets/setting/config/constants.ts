@@ -5,12 +5,6 @@ import {
   type SettingSupportMenuItem,
 } from '../model';
 
-export const SETTING_PROFILE_IDENTITY = {
-  name: '이름',
-  primaryInfo: '이메일',
-  secondaryInfo: '이메일',
-} as const;
-
 export const SETTING_OVERVIEW_TITLES = {
   account: '계정',
   support: '고객지원',
