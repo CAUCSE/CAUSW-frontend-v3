@@ -1,5 +1,4 @@
 'use client';
-
 import { Text, Toggle, VStack } from '@causw/cds';
 
 import { type CeremonyNotificationSettings } from '@/entities/notification';
