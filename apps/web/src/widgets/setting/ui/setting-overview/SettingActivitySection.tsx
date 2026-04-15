@@ -1,4 +1,8 @@
+'use client';
+
 import { Fragment, type ReactNode } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import {
   Box,
@@ -14,19 +18,15 @@ import type { ActivityType } from '@/entities/setting';
 
 import { SETTING_ACTIVITY_ITEMS } from '../../config';
 
-type SettingActivitySectionProps = {
-  onNavigate: (href: string) => void;
-};
-
 const ACTIVITY_ICON_MAP: Record<ActivityType, ReactNode> = {
   'my-posts': <PenColored />,
   'my-comments': <CommentColored />,
   favorites: <HeartColored />,
 };
 
-export const SettingActivitySection = ({
-  onNavigate,
-}: SettingActivitySectionProps) => {
+export const SettingActivitySection = () => {
+  const router = useRouter();
+
   return (
     <Box
       radius="lg"
@@ -38,7 +38,7 @@ export const SettingActivitySection = ({
             <button
               type="button"
               className="flex cursor-pointer flex-col items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-50 active:bg-gray-100"
-              onClick={() => onNavigate(item.href)}
+              onClick={() => router.push(item.href)}
             >
               {ACTIVITY_ICON_MAP[item.id]}
               <Text typography="body-14-medium" textColor="gray-700">
