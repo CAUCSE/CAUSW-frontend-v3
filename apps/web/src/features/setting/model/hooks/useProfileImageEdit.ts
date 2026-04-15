@@ -2,17 +2,13 @@ import { useMemo } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import {
-  authQueryKey,
-  type UserProfileImageType,
-  type UserResponseDto,
-} from '@/entities/auth';
-import type { ProfileImageEditValue } from '@/entities/setting';
+import { authQueryKey, type UserResponseDto } from '@/entities/auth';
 
 import {
   isCustomProfileImageType,
   isDefaultProfileImageType,
 } from '@/shared/lib/profile-image';
+import type { ProfileImageEditValue, UserProfileImageType } from '@/shared/types';
 
 import { useChangeMyProfileImageMutation } from '../mutations';
 
