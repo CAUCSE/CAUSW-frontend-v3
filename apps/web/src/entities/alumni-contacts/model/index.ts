@@ -1,7 +1,11 @@
-export { AlumniContactsAcademicFilterSheetModalContext } from './contexts';
+export {
+  AlumniContactsAcademicFilterSheetModalContext,
+  AlumniContactsHeaderBoundaryContext,
+} from './contexts';
 export {
   useAlumniContactsAcademicFilterSheetModalContext,
   useResetAlumniContactsFilter,
+  useAlumniContactsHeaderBoundaryContext,
 } from './hooks';
 export type {
   GetPaginatedAlumniContactsResponseDto,
@@ -10,3 +14,4 @@ export type {
   GetAlumniContactsDetailParam,
   GetMyAlumniContactsResponseDto,
 } from './types';
+export { alumniContactsEditSchema, type AlumniContactsEditForm } from './form';
