@@ -1,8 +1,4 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 import { SettingOverview } from '@/widgets/setting';
 
@@ -10,12 +6,7 @@ import { authQueryOptions } from '@/entities/auth';
 
 export async function SettingPage() {
   const queryClient = new QueryClient();
+  const myInfo = await queryClient.fetchQuery(authQueryOptions.me());
 
-  await queryClient.prefetchQuery(authQueryOptions.me());
-
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <SettingOverview />
-    </HydrationBoundary>
-  );
+  return <SettingOverview myInfo={myInfo} />;
 }
