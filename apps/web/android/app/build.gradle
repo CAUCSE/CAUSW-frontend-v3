@@ -7,8 +7,14 @@ android {
         applicationId "kr.co.causwv2.twa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+        //dev와 prod의 versionCode는 각각 아래 productFlavors에서 설정. 이 공통 값은 prod 기준(productFlavors의 prod가 바뀌면 이 값도 수정해주기)
+        //productFlavors에 값이 있으면 이 값은 오버라이드됨.
         versionCode 14
-        versionName "1.0.0"
+
+        //firebase remote config에서 사용하므로, 변경 시 firebase remote config의 default value도 함께 변경해야 함.
+        //dev & prod 공통
+        versionName "1.0.0" 
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -37,12 +43,15 @@ if (localPropertiesFile.exists()) {
         dev {
             dimension "env"
             applicationIdSuffix ".dev"              // => kr.co.causwv2.twa.dev
-            // versionNameSuffix "-dev"                // => 1.0-dev
             manifestPlaceholders = [appLabel: "DEV-크자회"]
+
+            versionCode 15
         }
         prod {
             dimension "env"
             manifestPlaceholders = [appLabel: "크자회(CCSSAA)"]
+
+            versionCode 14
         }
     }
 
