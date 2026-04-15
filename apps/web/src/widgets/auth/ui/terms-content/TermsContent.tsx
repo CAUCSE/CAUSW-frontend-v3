@@ -29,12 +29,12 @@ export const TermsContent = ({
   onSubmitTermsAgreement,
 }: TermsContentProps) => {
   const { data: terms } = useTermsQuery();
-  const { agreements, setAgreement, setAllRequiredTermsAgreed, reset } =
+  const { agreements, setAgreement, setAllTermsAgreed, reset } =
     useTermsAgreementStore(
       useShallow((state) => ({
         agreements: state.agreements,
         setAgreement: state.setAgreement,
-        setAllRequiredTermsAgreed: state.setAllRequiredTermsAgreed,
+        setAllTermsAgreed: state.setAllTermsAgreed,
         reset: state.reset,
       })),
     );
@@ -42,9 +42,11 @@ export const TermsContent = ({
     (state) => state.open,
   );
 
+  const termIds = terms.map((term) => term.id);
   const requiredTermIds = terms
     .filter((term) => term.isRequired)
     .map((term) => term.id);
+  const isAllTermsAgreed = termIds.every((id) => agreements[id]);
   const isAllRequiredTermsAgreed = requiredTermIds.every(
     (id) => agreements[id],
   );
@@ -79,10 +81,8 @@ export const TermsContent = ({
         </VStack>
         <VStack className="gap-5">
           <Checkbox
-            checked={isAllRequiredTermsAgreed}
-            onCheckedChange={(checked) =>
-              setAllRequiredTermsAgreed(requiredTermIds, checked)
-            }
+            checked={isAllTermsAgreed}
+            onCheckedChange={(checked) => setAllTermsAgreed(termIds, checked)}
           >
             <Checkbox.Indicator />
             <Checkbox.Label typography="subtitle-18-bold" textColor="gray-700">

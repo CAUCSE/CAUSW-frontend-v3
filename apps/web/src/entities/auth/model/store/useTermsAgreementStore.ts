@@ -3,7 +3,7 @@ import { create } from 'zustand';
 type TermsAgreementState = {
   agreements: Record<string, boolean>;
   setAgreement: (type: string, checked: boolean) => void;
-  setAllRequiredTermsAgreed: (types: string[], checked: boolean) => void;
+  setAllTermsAgreed: (types: string[], checked: boolean) => void;
   reset: () => void;
 };
 
@@ -20,7 +20,7 @@ export const useTermsAgreementStore = create<TermsAgreementState>((set) => ({
         [type]: checked,
       },
     })),
-  setAllRequiredTermsAgreed: (types, checked) =>
+  setAllTermsAgreed: (types, checked) =>
     set((state) => ({
       agreements: types.reduce<Record<string, boolean>>(
         (acc, type) => ({
