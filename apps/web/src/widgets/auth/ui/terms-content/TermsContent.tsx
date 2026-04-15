@@ -43,10 +43,11 @@ export const TermsContent = ({
     (state) => state.open,
   );
 
-  const requiredTerms = terms.filter((term) => term.isRequired);
-  const requiredTermIds = requiredTerms.map((term) => term.id);
-  const isAllRequiredTermsAgreed = requiredTerms.every(
-    (term) => agreements[term.id],
+  const requiredTermIds = terms
+    .filter((term) => term.isRequired)
+    .map((term) => term.id);
+  const isAllRequiredTermsAgreed = requiredTermIds.every(
+    (id) => agreements[id],
   );
 
   const handleCompleteClick = async () => {
@@ -101,7 +102,7 @@ export const TermsContent = ({
                   typography="body-16-medium"
                   textColor="gray-700"
                 >
-                  {term.isRequired ? '(필수) ' : ''}
+                  {term.isRequired ? '(필수) ' : '(선택) '}
                   {term.title}
                 </Checkbox.Label>
               </Checkbox>
