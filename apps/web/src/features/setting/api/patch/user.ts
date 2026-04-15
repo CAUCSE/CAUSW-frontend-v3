@@ -1,7 +1,6 @@
-import type { ChangeDefaultProfileImageRequest } from '@/entities/setting';
-
 import { API } from '@/shared/api';
 import { USER_API_PREFIX } from '@/shared/constants';
+import type { ChangeDefaultProfileImageRequest } from '@/shared/types';
 
 export const changeMyDefaultProfileImage = async (
   data: ChangeDefaultProfileImageRequest,
