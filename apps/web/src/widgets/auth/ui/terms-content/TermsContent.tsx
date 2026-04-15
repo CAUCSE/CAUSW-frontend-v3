@@ -10,8 +10,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { useTermsQuery } from '@/features/auth';
-
+import { useTermsQuery } from '@/entities/auth';
 import {
   useTermsAgreementStore,
   useTermsDetailDialogStore,
