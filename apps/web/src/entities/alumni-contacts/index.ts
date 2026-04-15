@@ -17,6 +17,8 @@ export {
   ALUMNI_CONTACTS_SNS_TYPE,
   ALUMNI_CONTACTS_SNS_TYPE_LABEL,
   type AlumniContactsSnsType,
+  ALUMNI_CONTACTS_EDIT_FORM_FIELD,
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -25,6 +27,10 @@ export {
   type GetPaginatedAlumniContactsResponseDto,
   type GetAlumniContactsQuery,
   type GetAlumniContactsDetailResponseDto,
+  alumniContactsEditSchema,
+  type AlumniContactsEditForm,
+  AlumniContactsHeaderBoundaryContext,
+  useAlumniContactsHeaderBoundaryContext,
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,
@@ -32,6 +38,7 @@ export {
   AlumniContactsDescription,
   AlumniContactsSnsLink,
   AlumniContactsSnsIcon,
+  AlumniContactsHeaderBoundaryProvider,
 } from './ui';
 export {
   AlumniContactsFilterSearchParam,

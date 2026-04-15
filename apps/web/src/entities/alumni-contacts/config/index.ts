@@ -28,3 +28,5 @@ export {
   ALUMNI_CONTACTS_SNS_TYPE_LABEL,
   type AlumniContactsSnsType,
 } from './alumniContactsSns';
+export { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from './alumniContactsEditFormField';
+export { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from './alumniContactsEditFormMaxLength';
