@@ -14,7 +14,11 @@ type SettingOverviewProps = {
 
 export const SettingOverview = ({ myInfo }: SettingOverviewProps) => {
   return (
-    <VStack align="center" gap="md" className="w-full">
+    <VStack
+      align="center"
+      gap="md"
+      className="w-full px-5 py-7 md:px-0 md:py-0"
+    >
       <SettingProfileImageSection myInfo={myInfo} />
       <SettingProfileEditButton />
       <SettingActivitySection />
