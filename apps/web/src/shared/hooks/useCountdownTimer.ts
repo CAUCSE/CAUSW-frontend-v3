@@ -27,13 +27,6 @@ export const useCountdownTimer = (
     clearTimer();
     setTimeLeft(initialSeconds);
     setIsRunning(true);
-  }, [initialSeconds, clearTimer]);
-
-  const reset = start;
-
-  useEffect(() => {
-    if (!isRunning) return;
-
     intervalRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -44,9 +37,11 @@ export const useCountdownTimer = (
         return prev - 1;
       });
     }, 1000);
+  }, [initialSeconds, clearTimer]);
 
-    return clearTimer;
-  }, [isRunning, clearTimer]);
+  const reset = start;
+
+  useEffect(() => clearTimer, [clearTimer]);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
