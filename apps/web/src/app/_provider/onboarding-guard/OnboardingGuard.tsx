@@ -19,10 +19,7 @@ import { useBreakpoint, useIsMounted } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
 const TermsBottomSheet = dynamic(
-  () =>
-    import('@/widgets/auth/ui/terms-bottom-sheet').then(
-      (mod) => mod.TermsBottomSheet,
-    ),
+  () => import('@/widgets/auth').then((mod) => mod.TermsBottomSheet),
   {
     ssr: false,
     loading: () => <SuspenseView />,
@@ -30,7 +27,7 @@ const TermsBottomSheet = dynamic(
 );
 
 const TermsDialog = dynamic(
-  () => import('@/widgets/auth/ui/terms-dialog').then((mod) => mod.TermsDialog),
+  () => import('@/widgets/auth').then((mod) => mod.TermsDialog),
   {
     ssr: false,
     loading: () => <SuspenseView />,
