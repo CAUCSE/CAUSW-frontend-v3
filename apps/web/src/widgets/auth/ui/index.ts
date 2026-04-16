@@ -29,5 +29,4 @@ export {
   FindAccountContainer,
   type FindAccountView,
 } from './find-account-container';
-export { PasswordEmailSent } from './password-email-sent';
 export { TemporaryPasswordIssued } from './temporary-password-issued';

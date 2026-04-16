@@ -34,10 +34,10 @@ export const FindAccountPage = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const isPasswordEmailSent = view.type === 'password-email-sent';
+  const isTemporaryPasswordIssued = view.type === 'temporary-password-issued';
 
   const handleBack = () => {
-    if (isPasswordEmailSent) {
+    if (isTemporaryPasswordIssued) {
       router.replace('/auth/sign-in');
     } else if (view.type !== 'form') {
       window.history.back();
@@ -56,7 +56,7 @@ export const FindAccountPage = () => {
           className="px-0"
         >
           <ActionHeader.BackButton onClick={handleBack}>
-            {isPasswordEmailSent ? '닫기' : '뒤로'}
+            {isTemporaryPasswordIssued ? '닫기' : '뒤로'}
           </ActionHeader.BackButton>
         </ActionHeader>
         <FindAccountContainer view={view} onViewChange={handleViewChange} />
