@@ -6,7 +6,11 @@ import {
   isSupported,
 } from 'firebase/remote-config';
 
-import { FIREBASE_CONFIG, type UpdateEnv } from '@/shared/config';
+import {
+  FIREBASE_CONFIG,
+  REMOTE_CONFIG_KEYS,
+  type UpdateEnv,
+} from '@/shared/config';
 import { QUERY_TIME } from '@/shared/constants';
 
 type Platform = 'ios' | 'android';
@@ -29,20 +33,24 @@ function getFirebaseApp() {
 
 function getMinimumVersionKey(env: UpdateEnv, platform: Platform): string {
   if (platform === 'ios') {
-    return env === 'dev' ? 'min_version_ios_dev' : 'min_version_ios_prod';
+    return env === 'dev'
+      ? REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_DEV
+      : REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_PROD;
   }
 
-  return env === 'dev' ? 'min_version_android_dev' : 'min_version_android_prod';
+  return env === 'dev'
+    ? REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_DEV
+    : REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_PROD;
 }
 
 function getStoreUrlAppKey(platform: Platform): string {
-  if (platform === 'ios') return 'ios_store_url_app';
-  return 'android_store_url_app';
+  if (platform === 'ios') return REMOTE_CONFIG_KEYS.IOS_STORE_URL_APP;
+  return REMOTE_CONFIG_KEYS.ANDROID_STORE_URL_APP;
 }
 
 function getStoreUrlWebKey(platform: Platform): string {
-  if (platform === 'ios') return 'ios_store_url_web';
-  return 'android_store_url_web';
+  if (platform === 'ios') return REMOTE_CONFIG_KEYS.IOS_STORE_URL_WEB;
+  return REMOTE_CONFIG_KEYS.ANDROID_STORE_URL_WEB;
 }
 
 export async function fetchMinVersion(
@@ -68,22 +76,25 @@ export async function fetchMinVersion(
     process.env.NODE_ENV === 'development' ? 0 : QUERY_TIME.RC_INTERVAL;
 
   remoteConfig.defaultConfig = {
-    force_update_enabled: 'false',
-    min_version_ios_dev: '0.0.0',
-    min_version_ios_prod: '0.0.0',
-    min_version_android_dev: '0.0.0',
-    min_version_android_prod: '0.0.0',
-    ios_store_url_app: '',
-    ios_store_url_web: '',
-    android_store_url_app: '',
-    android_store_url_web: '',
-    update_message_ko: '최신 버전으로 업데이트해주세요.',
+    [REMOTE_CONFIG_KEYS.FORCE_UPDATE_ENABLED]: 'false',
+    [REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_DEV]: '0.0.0',
+    [REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_PROD]: '0.0.0',
+    [REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_DEV]: '0.0.0',
+    [REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_PROD]: '0.0.0',
+    [REMOTE_CONFIG_KEYS.IOS_STORE_URL_APP]: '',
+    [REMOTE_CONFIG_KEYS.IOS_STORE_URL_WEB]: '',
+    [REMOTE_CONFIG_KEYS.ANDROID_STORE_URL_APP]: '',
+    [REMOTE_CONFIG_KEYS.ANDROID_STORE_URL_WEB]: '',
+    [REMOTE_CONFIG_KEYS.UPDATE_MESSAGE_KO]: '최신 버전으로 업데이트해주세요.',
   };
 
   await fetchAndActivate(remoteConfig);
 
   const forceUpdateEnabled =
-    getValue(remoteConfig, 'force_update_enabled').asString() === 'true';
+    getValue(
+      remoteConfig,
+      REMOTE_CONFIG_KEYS.FORCE_UPDATE_ENABLED,
+    ).asString() === 'true';
 
   const minimumVersionKey = getMinimumVersionKey(env, platform);
   const minimumVersion = getValue(remoteConfig, minimumVersionKey).asString();
@@ -98,7 +109,10 @@ export async function fetchMinVersion(
     getStoreUrlWebKey(platform),
   ).asString();
 
-  const updateMessage = getValue(remoteConfig, 'update_message_ko').asString();
+  const updateMessage = getValue(
+    remoteConfig,
+    REMOTE_CONFIG_KEYS.UPDATE_MESSAGE_KO,
+  ).asString();
 
   return {
     forceUpdateEnabled,
