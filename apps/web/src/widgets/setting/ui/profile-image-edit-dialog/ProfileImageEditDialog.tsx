@@ -149,7 +149,7 @@ export const ProfileImageEditDialog = ({
 
             <Flex align="center" gap="lg" className="">
               <ProfileAvatar
-                size="lg"
+                size={88}
                 profileImageType={selectedType}
                 profileImageUrl={previewUrl}
               />
@@ -163,7 +163,7 @@ export const ProfileImageEditDialog = ({
                       onClick={() => setSelectedType(type)}
                     >
                       <ProfileAvatar
-                        size="sm"
+                        size={40}
                         profileImageType={type}
                         className={
                           selectedType === type
@@ -181,7 +181,7 @@ export const ProfileImageEditDialog = ({
                       onClick={() => setSelectedType('CUSTOM')}
                     >
                       <ProfileAvatar
-                        size="sm"
+                        size={40}
                         profileImageType="CUSTOM"
                         profileImageUrl={customImageUrl}
                         className={
