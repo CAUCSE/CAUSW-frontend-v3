@@ -36,9 +36,8 @@ export const EmailLoginPage = () => {
       await TokenManager.setAccessToken(res.accessToken);
       await TokenManager.setRefreshToken();
 
-      await compareFCMToken();
-
       routeAfterSignIn(router, res.onboardingStatus);
+      void compareFCMToken();
     },
     onMutate: () => {
       toast.loading('로그인 정보 확인 중...');
