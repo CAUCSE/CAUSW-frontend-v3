@@ -29,7 +29,7 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
       }}
     >
       <Flex align="center" className="gap-3">
-        <Avatar size="44" src={img} />
+        <Avatar size={44} src={img} />
         <Box className="flex-1">
           <Box className="text-sm font-bold text-gray-700">{name}</Box>
           <Box className="text-xs text-gray-400">{email}</Box>

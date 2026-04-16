@@ -40,7 +40,7 @@ export const CommentCard = ({
       <HStack align={isInactive ? 'center' : 'start'} className="gap-3">
         {isInactive ? (
           <>
-            <Avatar size="36" className="my-1 shrink-0" />
+            <Avatar size={36} className="my-1 shrink-0" />
             <VStack gap="none">
               <Text typography="body-15-regular" textColor="gray-400">
                 {isDeleted ? '삭제된 댓글입니다' : '차단된 사용자의 댓글입니다'}
@@ -49,7 +49,7 @@ export const CommentCard = ({
           </>
         ) : (
           <>
-            <Avatar size="36" src={profileImage} className="my-1 shrink-0" />
+            <Avatar size={36} src={profileImage} className="my-1 shrink-0" />
             <VStack className="w-full gap-3">
               <VStack gap="none">
                 <HStack align="center" justify="between">
