@@ -1,0 +1,1 @@
+export { AlumniContactsContactVisibilityDialogTrigger } from './AlumniContactsContactVisibilityDialogTrigger';

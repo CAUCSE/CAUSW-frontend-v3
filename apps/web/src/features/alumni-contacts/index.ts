@@ -10,4 +10,9 @@ export {
   AlumniContactsContactActionButton,
   MyAlumniContactsEditButton,
   MyAlumniContactsSaveButton,
+  AlumniContactsContactVisibilityDialogTrigger,
+  AlumniContactsContactVisibilityToggle,
+  AlumniContactsEditFormSnsItem,
+  AlumniContactsDescriptionTextArea,
+  AlumniContactsSingleFieldAddButton,
 } from './ui';

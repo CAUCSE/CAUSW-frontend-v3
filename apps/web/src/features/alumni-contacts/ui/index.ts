@@ -9,3 +9,8 @@ export { MyAlumniContactsButton } from './my-alumni-contacts-button';
 export { AlumniContactsContactActionButton } from './alumni-contacts-contact-action-button';
 export { MyAlumniContactsEditButton } from './my-alumni-contacts-edit-button';
 export { MyAlumniContactsSaveButton } from './my-alumni-contacts-save-button';
+export { AlumniContactsContactVisibilityDialogTrigger } from './alumni-contacts-contact-visibility-dialog-trigger';
+export { AlumniContactsContactVisibilityToggle } from './alumni-contacts-contact-visibility-toggle';
+export { AlumniContactsEditFormSnsItem } from './alumni-contacts-edit-form-sns-item';
+export { AlumniContactsDescriptionTextArea } from './alumni-contacts-description-text-area';
+export { AlumniContactsSingleFieldAddButton } from './alumni-contacts-single-field-add-button';
