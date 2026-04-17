@@ -22,7 +22,7 @@ export const AlumniContactsSnsSection = ({
   }
 
   return (
-    <HStack gap="xl" className="overflow-x-auto">
+    <HStack gap="sm" className="overflow-x-auto">
       {socialLinks.map((socialLink) => {
         const snsType = getAlumniContactSnsType(socialLink);
 
