@@ -148,12 +148,13 @@ export const FindAccountContainer = ({
             onSendCode={async ({ name, email }) => {
               await sendResetCodeMutation.mutateAsync({ name, email });
             }}
-            onVerifyCode={async (data) => {
-              const { temporaryPassword } =
-                await verifyResetCodeMutation.mutateAsync(data);
+            onVerifyCode={async (data) =>
+              verifyResetCodeMutation.mutateAsync(data)
+            }
+            onResetPassword={({ email, temporaryPassword }) => {
               onViewChange({
                 type: 'temporary-password-issued',
-                email: data.email,
+                email,
                 temporaryPassword,
               });
             }}
