@@ -96,10 +96,13 @@ export const AdmissionYearSection = () => {
                 <TextInput
                   value={admissionYearInput}
                   onChange={(e) =>
-                    setAdmissionYearInput(e.target.value.replace(/\D/g, ''))
+                    setAdmissionYearInput(
+                      e.target.value.replace(/\D/g, '').slice(0, 4),
+                    )
                   }
-                  placeholder="학번을 입력해주세요."
+                  placeholder="입학년도를 입력해주세요. (예: 2026)"
                   inputMode="numeric"
+                  maxLength={4}
                   className="rounded-xl bg-gray-100"
                 />
               </Field>
@@ -113,7 +116,7 @@ export const AdmissionYearSection = () => {
               <CTAButton
                 color="dark"
                 fullWidth
-                disabled={!admissionYearInput.trim()}
+                disabled={!/^\d{4}$/.test(admissionYearInput)}
                 onClick={handleAddAdmissionYear}
               >
                 추가하기

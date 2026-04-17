@@ -73,7 +73,11 @@ export const toCreateCeremonyDto = (
       : null,
     relationType,
     familyRelation:
-      relationType === 'FAMILY' ? emptyToNull(form.familyRelation) : null,
+      relationType === 'FAMILY'
+        ? form.familyRelation === CUSTOM_VALUE
+          ? emptyToNull(form.customFamilyRelation)
+          : emptyToNull(form.familyRelation)
+        : null,
     alumniRelation:
       relationType === 'INSTEAD' ? emptyToNull(form.alumniRelation) : null,
     alumniName:
