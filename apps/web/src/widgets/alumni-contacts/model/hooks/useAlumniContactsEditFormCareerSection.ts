@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
+import { isNil } from 'es-toolkit';
+
 import {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditForm,
@@ -49,9 +51,9 @@ export const useAlumniContactsEditFormCareerSection = () => {
       endYear: isCurrent ? null : (endDate?.getFullYear() ?? null),
       endMonth: isCurrent
         ? null
-        : endDate?.getMonth()
-          ? endDate.getMonth() + 1
-          : null,
+        : isNil(endDate?.getMonth())
+          ? null
+          : endDate.getMonth() + 1,
     };
 
     const newCareerList = [...currentCareer, newCareer].sort(
