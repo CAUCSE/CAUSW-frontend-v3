@@ -168,7 +168,7 @@ export const FindPasswordForm = ({
               <CTAButton
                 type="button"
                 color="dark"
-                disabled={!canSendCode || isPending}
+                disabled={!canSendCode || isPending || isVerified}
                 onClick={handleSendCode}
                 className="w-[6.25rem]"
               >
