@@ -4,6 +4,7 @@ import { Button, Dialog, HStack, Text } from '@causw/cds';
 
 interface AlumniContactsSingleFieldDialogProps extends PropsWithChildren {
   isOpen: boolean;
+  ariaDescription: string;
   onOpenChange: (open: boolean) => void;
   title: string;
   canConfirm: boolean;
@@ -13,6 +14,7 @@ interface AlumniContactsSingleFieldDialogProps extends PropsWithChildren {
 
 export const AlumniContactsSingleFieldDialog = ({
   children,
+  ariaDescription,
   isOpen,
   onOpenChange,
   title,
@@ -28,6 +30,9 @@ export const AlumniContactsSingleFieldDialog = ({
             {title}
           </Text>
         </Dialog.Title>
+        <Dialog.Description className="sr-only">
+          {ariaDescription}
+        </Dialog.Description>
         {children}
         <Dialog.Footer>
           <HStack gap="sm" className="pt-6">

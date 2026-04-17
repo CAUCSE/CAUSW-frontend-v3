@@ -31,6 +31,7 @@ export const AlumniContactsInterestTechAddDialog = () => {
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="관심 기술 추가"
+        ariaDescription="관심 기술을 추가합니다."
         canConfirm={!!newInterestTech.trim()}
         onConfirm={handleClickAddButton}
         confirmButtonRef={addButtonRef}

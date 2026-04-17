@@ -31,6 +31,7 @@ export const AlumniContactsInterestDomainAddDialog = () => {
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="관심 도메인 추가"
+        ariaDescription="관심 도메인을 추가합니다."
         canConfirm={!!newInterestDomain.trim()}
         onConfirm={handleClickAddButton}
         confirmButtonRef={addButtonRef}

@@ -29,6 +29,9 @@ export const AlumniContactsDescriptionEditDialog = () => {
             소개글 수정하기
           </Text>
         </Dialog.Title>
+        <Dialog.Description className="sr-only">
+          소개글을 수정합니다.
+        </Dialog.Description>
         <AlumniContactsDescriptionTextArea
           value={currentDescription}
           onChange={handleDescriptionChange}

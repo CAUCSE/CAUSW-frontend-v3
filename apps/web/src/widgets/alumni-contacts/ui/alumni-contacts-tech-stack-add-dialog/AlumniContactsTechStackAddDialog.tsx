@@ -31,6 +31,7 @@ export const AlumniContactsTechStackAddDialog = () => {
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="기술스택 추가"
+        ariaDescription="기술스택을 추가합니다."
         canConfirm={!!newTechStack.trim()}
         onConfirm={handleClickAddButton}
         confirmButtonRef={addButtonRef}

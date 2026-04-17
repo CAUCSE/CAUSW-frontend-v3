@@ -26,6 +26,7 @@ export const AlumniContactsSnsAddDialog = () => {
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="링크 추가하기"
+        ariaDescription="SNS 링크를 추가합니다."
         canConfirm={!!newSocialLink.trim()}
         onConfirm={handleClickAddButton}
         confirmButtonRef={addButtonRef}

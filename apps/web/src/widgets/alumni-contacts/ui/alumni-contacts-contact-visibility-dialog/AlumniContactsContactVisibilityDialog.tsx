@@ -33,6 +33,9 @@ export const AlumniContactsContactVisibilityDialog = () => {
               전화 번호 공개 여부
             </Text>
           </Dialog.Title>
+          <Dialog.Description className="sr-only">
+            전화 번호 공개 여부를 설정합니다.
+          </Dialog.Description>
           <AlumniContactsContactVisibilityToggle
             checked={currentVisibility}
             onCheckedChange={handleToggleChange}
