@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Avatar, HStack, Text, VStack } from '@causw/cds';
 
 import { type GetAlumniContactsDetailResponseDto } from '../../model';
