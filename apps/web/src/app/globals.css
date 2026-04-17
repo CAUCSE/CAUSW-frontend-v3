@@ -99,6 +99,7 @@
     --z-index-dropdown: 500;
     --z-index-bottomsheet: 600;
     --z-index-modal: 1000;
+    --z-index-popover: 1100;
     --z-index-toast: 1500;
 
     --animate-toast-hide: toast-hide 100ms ease-in forwards;
