@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { VStack } from '@causw/cds';
 
 import {
@@ -24,7 +22,6 @@ export const AlumniContactsDetailHero = ({
           name={alumniContactsDetail.name}
           admissionYear={alumniContactsDetail.admissionYear}
           academicStatus={alumniContactsDetail.academicStatus}
-          job={alumniContactsDetail.job}
           profileImageUrl={alumniContactsDetail.profileImage.profileImageUrl}
         />
         <AlumniContactsDescription
