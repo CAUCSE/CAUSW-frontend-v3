@@ -6,6 +6,7 @@ export {
   useAlumniContactsAcademicFilterSheetModalContext,
   useResetAlumniContactsFilter,
   useAlumniContactsHeaderBoundaryContext,
+  useWatchAlumniContactsEditFormField,
 } from './hooks';
 export type {
   GetPaginatedAlumniContactsResponseDto,
