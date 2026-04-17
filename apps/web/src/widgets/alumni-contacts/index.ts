@@ -9,4 +9,5 @@ export {
   MyAlumniContactsMainServerComponent,
   AlumniContactsDetailMainLoadingView,
   MyAlumniContactsMainLoadingView,
+  AlumniContactsEditFormServerComponent,
 } from './ui';

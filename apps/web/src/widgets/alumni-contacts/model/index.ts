@@ -7,4 +7,10 @@ export {
   useAlumniContactsContactAction,
   useAlumniContactsDetailHeaderTheme,
   useAlumniContactsDetailSection,
+  useAlumniContactsContactVisibilityDialog,
+  useAlumniContactsSnsAddDialog,
+  useAlumniContactsDescriptionEditDialog,
+  useAlumniContactsTechStackAddDialog,
+  useAlumniContactsInterestTechAddDialog,
+  useAlumniContactsInterestDomainAddDialog,
 } from './hooks';
