@@ -7,6 +7,7 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
+import { AlumniContactsDetailInfoEmptyView } from '../alumni-contacts-detail-info-empty-view';
 import { AlumniContactsEtcLinkConfirmDialog } from '../alumni-contacts-etc-link-confirm-dialog';
 
 interface AlumniContactsSnsSectionProps {
@@ -16,6 +17,10 @@ interface AlumniContactsSnsSectionProps {
 export const AlumniContactsSnsSection = ({
   socialLinks,
 }: AlumniContactsSnsSectionProps) => {
+  if (socialLinks.length === 0) {
+    return <AlumniContactsDetailInfoEmptyView />;
+  }
+
   return (
     <HStack gap="xl" className="overflow-x-auto">
       {socialLinks.map((socialLink) => {

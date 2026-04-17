@@ -5,6 +5,8 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
+import { AlumniContactsDetailInfoEmptyView } from '../alumni-contacts-detail-info-empty-view';
+
 interface AlumniContactsCareerSectionProps {
   userCareer: GetAlumniContactsDetailResponseDto['userCareer'];
 }
@@ -12,6 +14,10 @@ interface AlumniContactsCareerSectionProps {
 export const AlumniContactsCareerSection = ({
   userCareer,
 }: AlumniContactsCareerSectionProps) => {
+  if (userCareer.length === 0) {
+    return <AlumniContactsDetailInfoEmptyView />;
+  }
+
   return (
     <VStack className="gap-5">
       {userCareer.map((career) => (

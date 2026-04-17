@@ -5,6 +5,8 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
+import { AlumniContactsDetailInfoEmptyView } from '../alumni-contacts-detail-info-empty-view';
+
 interface AlumniContactProjectSectionProps {
   userProject: GetAlumniContactsDetailResponseDto['userProject'];
 }
@@ -12,6 +14,9 @@ interface AlumniContactProjectSectionProps {
 export const AlumniContactProjectSection = ({
   userProject,
 }: AlumniContactProjectSectionProps) => {
+  if (userProject.length === 0) {
+    return <AlumniContactsDetailInfoEmptyView />;
+  }
   return (
     <VStack className="gap-5">
       {userProject.map((project) => (
