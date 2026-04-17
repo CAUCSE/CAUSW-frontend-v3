@@ -10,3 +10,4 @@ export { AlumniContactsDetailMainServerComponent } from './alumni-contacts-detai
 export { MyAlumniContactsMainServerComponent } from './my-alumni-contacts-main';
 export { AlumniContactsDetailMainLoadingView } from './alumni-contacts-detail-main';
 export { MyAlumniContactsMainLoadingView } from './my-alumni-contacts-main';
+export { AlumniContactsEditFormServerComponent } from './alumni-contacts-edit-form';
