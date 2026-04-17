@@ -23,7 +23,7 @@ export const AlumniContactsBasicInfo = ({
 
   return (
     <>
-      <Avatar src={profileImageUrl} size="80" />
+      <Avatar src={profileImageUrl} size={80} />
       <VStack gap="xs">
         <Text typography="title-24-bold" textColor="white">
           {name}
