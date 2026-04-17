@@ -15,8 +15,9 @@ export const useAdmissionYear = (
 
   const handleAddAdmissionYear = () => {
     const trimmed = admissionYearInput.trim();
+    if (!/^\d{4}$/.test(trimmed)) return;
     const current = getValues('admissionYears');
-    if (trimmed && !current.includes(trimmed)) {
+    if (!current.includes(trimmed)) {
       setValue('admissionYears', [...current, trimmed]);
     }
     setAdmissionYearInput('');

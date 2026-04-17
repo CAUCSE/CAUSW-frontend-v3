@@ -7,11 +7,18 @@ import { getTraceData } from '@causw/logger';
 import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 
 import { MSWComponent } from './_mock';
-import { AuthRefreshProvider, GlobalRoutingProvider } from './_provider';
+import {
+  AuthRefreshProvider,
+  ForceUpdateProvider,
+  GlobalRoutingProvider,
+} from './_provider';
 
 export const metadata: Metadata = {
   title: '동문 네트워크',
   description: '동문 네트워크 서비스',
+  icons: {
+    icon: '/images/favicon-128.png',
+  },
   other: {
     ...getTraceData(), // Sentry 오류 로그 추적
   },
@@ -28,9 +35,11 @@ export default function RootLayout({
         <MSWComponent>
           <QueryProviderWithDevtools>
             <Toaster />
-            <AuthRefreshProvider>
-              <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
-            </AuthRefreshProvider>
+            <ForceUpdateProvider>
+              <AuthRefreshProvider>
+                <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+              </AuthRefreshProvider>
+            </ForceUpdateProvider>
           </QueryProviderWithDevtools>
         </MSWComponent>
       </body>

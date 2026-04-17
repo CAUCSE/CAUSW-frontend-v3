@@ -16,7 +16,7 @@ export const PostCard = ({ post }: PostCardProps) => {
     <article className="rounded-lg bg-white p-4">
       <div className="mb-2 flex items-center gap-2.5">
         <Avatar
-          size="40"
+          size={40}
           src={DEFAULT_AVATAR_SRC}
           fallback={<span className="text-base">👩🏻</span>}
         />

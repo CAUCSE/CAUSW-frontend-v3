@@ -77,6 +77,7 @@ public class MainActivity extends BridgeActivity {
         String provider,
         String requestId,
         String accessToken,
+        String idToken,
         String errorCode,
         String message
     ) {
@@ -86,7 +87,8 @@ public class MainActivity extends BridgeActivity {
                 return;
             }
 
-            if (accessToken != null && !accessToken.isEmpty()) {
+            if ((accessToken != null && !accessToken.isEmpty())
+                || (idToken != null && !idToken.isEmpty())) {
                 Log.d(
                     SOCIAL_LOGIN_TAG,
                     "Social login success. provider="
@@ -95,6 +97,8 @@ public class MainActivity extends BridgeActivity {
                         + requestId
                         + ", accessToken="
                         + accessToken
+                        + ", idToken="
+                        + idToken
                 );
             } else if (errorCode != null) {
                 Log.e(
@@ -115,6 +119,7 @@ public class MainActivity extends BridgeActivity {
                 payload.put("provider", provider);
                 payload.put("requestId", requestId);
                 if (accessToken != null) payload.put("accessToken", accessToken);
+                if (idToken != null) payload.put("idToken", idToken);
                 if (errorCode != null) payload.put("errorCode", errorCode);
                 if (message != null) payload.put("message", message);
             } catch (JSONException e) {

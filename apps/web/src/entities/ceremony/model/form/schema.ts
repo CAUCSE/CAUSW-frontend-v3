@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { isValidTimeFormat, isEndDateTimeBeforeStart } from '@/shared/lib';
 import { phoneNumberSchema } from '@/shared/model/form';
 
+import { CUSTOM_VALUE } from '../../config';
 
 export const ceremonyFormSchema = z
   .object({
@@ -12,6 +13,7 @@ export const ceremonyFormSchema = z
 
     relationship: z.enum(['본인', '가족', '동문소식 대신 전달', '']),
     familyRelation: z.string(),
+    customFamilyRelation: z.string(),
     alumniName: z.string(),
     alumniAdmissionYear: z.string(),
     alumniRelation: z.string(),
@@ -44,7 +46,7 @@ export const ceremonyFormSchema = z
     }
 
     // category 필수 (custom일 때 customCategory 확인)
-    if (data.category === 'custom') {
+    if (data.category === CUSTOM_VALUE) {
       if (data.customCategory.trim() === '') {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -70,14 +72,22 @@ export const ceremonyFormSchema = z
     }
 
     // 시간 형식 검증
-    if (data.hasTime && data.startTime !== '' && !isValidTimeFormat(data.startTime)) {
+    if (
+      data.hasTime &&
+      data.startTime !== '' &&
+      !isValidTimeFormat(data.startTime)
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
         path: ['startTime'],
       });
     }
-    if (data.hasTime && data.endTime !== '' && !isValidTimeFormat(data.endTime)) {
+    if (
+      data.hasTime &&
+      data.endTime !== '' &&
+      !isValidTimeFormat(data.endTime)
+    ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: '올바른 시간 형식이 아닙니다. (00:00 ~ 23:59)',
@@ -90,7 +100,14 @@ export const ceremonyFormSchema = z
       const startTime = data.hasTime ? data.startTime : undefined;
       const endTime = data.hasTime ? data.endTime : undefined;
 
-      if (isEndDateTimeBeforeStart(data.startDate, data.endDate, startTime, endTime)) {
+      if (
+        isEndDateTimeBeforeStart(
+          data.startDate,
+          data.endDate,
+          startTime,
+          endTime,
+        )
+      ) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: '종료일은 시작일 이후여야 합니다.',
@@ -106,12 +123,23 @@ export const ceremonyFormSchema = z
         message: '관계를 선택해주세요.',
         path: ['relationship'],
       });
-    } else if (data.relationship === '가족' && data.familyRelation === '') {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: '상세 관계를 선택해주세요.',
-        path: ['familyRelation'],
-      });
+    } else if (data.relationship === '가족') {
+      if (data.familyRelation === '') {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '상세 관계를 선택해주세요.',
+          path: ['familyRelation'],
+        });
+      } else if (
+        data.familyRelation === CUSTOM_VALUE &&
+        data.customFamilyRelation.trim() === ''
+      ) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: '상세 관계를 입력해주세요.',
+          path: ['customFamilyRelation'],
+        });
+      }
     } else if (data.relationship === '동문소식 대신 전달') {
       if (data.alumniName.trim() === '') {
         ctx.addIssue({
@@ -154,6 +182,7 @@ export const CEREMONY_FORM_DEFAULT_VALUES: CeremonyFormData = {
   customCategory: '',
   relationship: '',
   familyRelation: '',
+  customFamilyRelation: '',
   alumniName: '',
   alumniAdmissionYear: '',
   alumniRelation: '',

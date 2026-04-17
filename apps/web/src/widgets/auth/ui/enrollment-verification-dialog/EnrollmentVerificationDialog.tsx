@@ -7,14 +7,13 @@ import { EnrollmentVerificationForm } from '../enrollment-verification-form';
 export interface EnrollmentVerificationDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  // name property value in real logic
-  userName?: string;
+  userName: string;
 }
 
 export const EnrollmentVerificationDialog = ({
   open,
   onOpenChange,
-  userName = '유지아', // Dummy initial
+  userName,
 }: EnrollmentVerificationDialogProps) => {
   const handleClose = () => onOpenChange(false);
 

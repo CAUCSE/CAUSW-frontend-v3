@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { OnboardingGuard } from '@/app/_provider';
+
 import { NavigationLayout } from '@/widgets/navigation-layout';
 
 export default function Layout({
@@ -13,8 +15,10 @@ export default function Layout({
 }) {
   return (
     <NavigationLayout>
-      <React.Fragment key="children">{children}</React.Fragment>
-      <React.Fragment key="modal">{modal}</React.Fragment>
+      <OnboardingGuard>
+        <React.Fragment key="children">{children}</React.Fragment>
+        <React.Fragment key="modal">{modal}</React.Fragment>
+      </OnboardingGuard>
     </NavigationLayout>
   );
 }

@@ -12,6 +12,7 @@ import { EnrollmentStepCard } from '../enrollment-step-card';
 
 interface EnrollmentStepperProps {
   status: EnrollmentStatus;
+  hasAdmission: boolean;
   rejectedReason?: string;
   actionHandlers: Record<EnrollmentAction, () => void>;
 }
@@ -23,10 +24,15 @@ interface EnrollmentStepperProps {
  */
 export const EnrollmentStepContainer = ({
   status,
+  hasAdmission,
   rejectedReason,
   actionHandlers,
 }: EnrollmentStepperProps) => {
-  const steps = getEnrollmentStepsByStatus(status, rejectedReason);
+  const steps = getEnrollmentStepsByStatus(
+    status,
+    hasAdmission,
+    rejectedReason,
+  );
 
   return (
     <VStack className="w-full gap-4">

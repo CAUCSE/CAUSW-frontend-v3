@@ -4,3 +4,7 @@ export {
   SIGN_UP_STEP_LEVEL_KEY,
   useSignUpStepGuard,
 } from './useSignUpStepGuard';
+export {
+  useEmailVerificationGuard,
+  type EmailVerificationOnboardingStatus,
+} from './useEmailVerificationGuard';

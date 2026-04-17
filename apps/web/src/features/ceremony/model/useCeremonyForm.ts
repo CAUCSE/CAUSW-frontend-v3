@@ -40,6 +40,7 @@ export const useCeremonyForm = () => {
   ) => {
     setValue('relationship', value);
     setValue('familyRelation', '');
+    setValue('customFamilyRelation', '');
     setValue('alumniName', '');
     setValue('alumniAdmissionYear', '');
     setValue('alumniRelation', '');
