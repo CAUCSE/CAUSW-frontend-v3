@@ -6,6 +6,7 @@ import {
 import { AlumniContactsEditFormCareerSection } from '../alumni-contacts-edit-form-career-section';
 import { AlumniContactsEditFormInterestDomainSection } from '../alumni-contacts-edit-form-interest-domain-section';
 import { AlumniContactsEditFormInterestTechSection } from '../alumni-contacts-edit-form-interest-tech-section';
+import { AlumniContactsEditFormProjectSection } from '../alumni-contacts-edit-form-project-section';
 import { AlumniContactsEditFormSnsSection } from '../alumni-contacts-edit-form-sns-section';
 import { AlumniContactsEditFormTechStackSection } from '../alumni-contacts-edit-form-tech-stack-section';
 
@@ -24,7 +25,7 @@ export const AlumniContactsEditFormDetailInfoContent = ({
     case ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.CAREER:
       return <AlumniContactsEditFormCareerSection />;
     case ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.PROJECT:
-      return null;
+      return <AlumniContactsEditFormProjectSection />;
     case ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.INTEREST_TECH:
       return <AlumniContactsEditFormInterestTechSection />;
     case ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.INTEREST_DOMAIN:
