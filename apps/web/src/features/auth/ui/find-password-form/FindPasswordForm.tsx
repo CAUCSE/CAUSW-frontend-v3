@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useForm, FormProvider } from 'react-hook-form';
 
@@ -14,7 +14,7 @@ import { useCountdownTimer } from '@/shared/hooks';
 import { RHFInput } from '@/shared/ui';
 
 type FindPasswordStep = 'idle' | 'codeSent';
-type VerifyStatus = 'idle' | 'success' | 'invalid' | 'expired';
+type VerifyStatus = 'idle' | 'success' | 'invalid';
 
 interface FindPasswordFormProps {
   onSendCode: (data: { name: string; email: string }) => Promise<void>;
@@ -39,8 +39,7 @@ export const FindPasswordForm = ({
     null,
   );
   const [isPending, setIsPending] = useState(false);
-  const { formattedTime, isExpired, start, reset } =
-    useCountdownTimer(TIMER_SECONDS);
+  const { formattedTime, isExpired, start } = useCountdownTimer(TIMER_SECONDS);
 
   const methods = useForm<FindPasswordFormData>({
     resolver: zodResolver(findPasswordSchema),
@@ -72,12 +71,7 @@ export const FindPasswordForm = ({
     !isExpired &&
     !isPending &&
     !isVerified;
-
-  useEffect(() => {
-    if (step === 'codeSent' && isExpired && !isVerified) {
-      setVerifyStatus('expired');
-    }
-  }, [isExpired, step, isVerified]);
+  const isExpiredStatus = step === 'codeSent' && isExpired && !isVerified;
 
   const handleSendCode = async () => {
     if (isPending) return;
@@ -85,11 +79,7 @@ export const FindPasswordForm = ({
     setIsPending(true);
     try {
       await onSendCode({ name, email });
-      if (step === 'idle') {
-        start();
-      } else {
-        reset();
-      }
+      start();
       setStep('codeSent');
       setVerifyStatus('idle');
       setTemporaryPassword(null);
@@ -137,13 +127,12 @@ export const FindPasswordForm = ({
   const verificationHelperText =
     verifyStatus === 'success'
       ? '인증이 완료되었습니다.'
-      : verifyStatus === 'invalid'
-        ? '잘못된 인증번호입니다.'
-        : verifyStatus === 'expired'
-          ? '인증 유효시간이 초과되었습니다.'
+      : isExpiredStatus
+        ? '인증 유효시간이 초과되었습니다.'
+        : verifyStatus === 'invalid'
+          ? '잘못된 인증번호입니다.'
           : null;
-  const verificationHasError =
-    verifyStatus === 'invalid' || verifyStatus === 'expired';
+  const verificationHasError = isExpiredStatus || verifyStatus === 'invalid';
 
   return (
     <FormProvider {...methods}>

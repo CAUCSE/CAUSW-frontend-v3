@@ -6,7 +6,6 @@ interface UseCountdownTimerReturn {
   isExpired: boolean;
   isRunning: boolean;
   start: () => void;
-  reset: () => void;
 }
 
 export const useCountdownTimer = (
@@ -39,8 +38,6 @@ export const useCountdownTimer = (
     }, 1000);
   }, [initialSeconds, clearTimer]);
 
-  const reset = start;
-
   useEffect(() => clearTimer, [clearTimer]);
 
   const minutes = Math.floor(timeLeft / 60);
@@ -48,5 +45,5 @@ export const useCountdownTimer = (
   const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
   const isExpired = timeLeft === 0 && !isRunning;
 
-  return { timeLeft, formattedTime, isExpired, isRunning, start, reset };
+  return { timeLeft, formattedTime, isExpired, isRunning, start };
 };
