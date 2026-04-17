@@ -1,9 +1,10 @@
-import { BASE_URL, isMobile, isServer } from '@/shared/config';
+import { BASE_URL } from '@/shared/config';
 import { AUTH_API_PREFIX } from '@/shared/constants';
+import { type DefaultResponseField } from '@/shared/types';
+import { isServer, isMobile } from '@/shared/utils';
 
 // eslint-disable-next-line
 import type { AuthResponseDto } from '@/entities/auth';
-import { type DefaultResponseField } from '@/shared/types';
 
 import {
   getClientATK,

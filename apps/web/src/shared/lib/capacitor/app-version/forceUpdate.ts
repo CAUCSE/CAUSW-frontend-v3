@@ -1,4 +1,4 @@
-import { getPlatform, type UpdateEnv } from '@/shared/config';
+import { getPlatform } from '@/shared/utils';
 
 import { compareSemver } from './compareVersion';
 import { fetchMinVersion } from './fetchMinVersion';
@@ -14,9 +14,7 @@ export interface ForceUpdateResult {
   updateMessage: string;
 }
 
-export async function checkForceUpdate(
-  env: UpdateEnv,
-): Promise<ForceUpdateResult> {
+export async function checkForceUpdate(): Promise<ForceUpdateResult> {
   const platform = getPlatform();
 
   if (platform === 'web') {
@@ -32,35 +30,8 @@ export async function checkForceUpdate(
   }
 
   const appInfo = await getAppVersion();
-  //TODO : prod올리기 전에 삭제
-  console.log(
-    'App Version Info-force:',
-    JSON.stringify(
-      {
-        name: appInfo.name,
-        id: appInfo.id,
-        build: appInfo.build,
-        version: appInfo.version,
-      },
-      null,
-      2,
-    ),
-  );
 
-  const remoteConfig = await fetchMinVersion(env, platform);
-
-  console.log(
-    '[RemoteConfig]',
-    JSON.stringify(
-      {
-        env,
-        platform,
-        ...remoteConfig,
-      },
-      null,
-      2,
-    ),
-  );
+  const remoteConfig = await fetchMinVersion(platform);
 
   const needUpdate =
     remoteConfig.forceUpdateEnabled &&
@@ -75,19 +46,6 @@ export async function checkForceUpdate(
     storeUrlWeb: remoteConfig.storeUrlWeb,
     updateMessage: remoteConfig.updateMessage,
   };
-
-  console.log(
-    '[ForceUpdateCheck]',
-    JSON.stringify(
-      {
-        env,
-        platform,
-        ...result,
-      },
-      null,
-      2,
-    ),
-  );
 
   return result;
 }

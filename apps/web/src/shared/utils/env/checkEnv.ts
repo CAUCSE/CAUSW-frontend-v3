@@ -1,5 +1,7 @@
 import { Capacitor } from '@capacitor/core';
 
+import { ENVIRONMENT } from '@/shared/config';
+
 export const isClient = typeof window !== 'undefined';
 export const isServer = typeof window === 'undefined';
 
@@ -15,3 +17,6 @@ export const isMobile = isClient && Capacitor.isNativePlatform();
 export const isIOS = isClient && getPlatform() === 'ios';
 export const isAndroid = isClient && getPlatform() === 'android';
 export const isWeb = isClient && !isMobile;
+
+export const isDevelopment = ENVIRONMENT !== 'production';
+export const isProduction = ENVIRONMENT == 'production';

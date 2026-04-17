@@ -6,8 +6,8 @@ import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
 
 import { useNativeSocialLoginFlowMutation } from '@/features/auth';
 
-import { BASE_URL, ENVIRONMENT, isMobile } from '@/shared/config';
-
+import { BASE_URL, ENVIRONMENT } from '@/shared/config';
+import { isMobile } from '@/shared/utils';
 type AppleLoginButtonProps = ComponentProps<'button'>;
 
 export const AppleLoginButton = ({

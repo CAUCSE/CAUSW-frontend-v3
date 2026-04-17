@@ -6,8 +6,8 @@ import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
 
 import { useNativeSocialLoginFlowMutation } from '@/features/auth';
 
-import { BASE_URL, ENVIRONMENT, isMobile } from '@/shared/config';
-
+import { BASE_URL, ENVIRONMENT } from '@/shared/config';
+import { isMobile } from '@/shared/utils';
 type GoogleLoginButtonProps = ComponentProps<'button'>;
 
 export const GoogleLoginButton = ({
