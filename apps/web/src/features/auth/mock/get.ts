@@ -20,6 +20,7 @@ export const getHandler = [
         message: '요청 처리 성공',
         data: {
           id: '550e8400-e29b-41d4-a716-446655440000',
+          email: 'mock@example.com',
           name: '모킹 이름',
           nickname: '모킹 닉네임',
           profileImage: {

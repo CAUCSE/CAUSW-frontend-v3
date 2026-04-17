@@ -26,6 +26,13 @@ export interface SigninResponseDto {
   profileImgUrl: string;
 }
 
+export type OnboardingStatus =
+  | 'TERMS_REQUIRED'
+  | 'EMAIL_VERIFICATION_REQUIRED'
+  | 'GUEST'
+  | 'ACADEMIC_CERTIFICATION_REQUIRED'
+  | 'ACTIVE';
+
 export type UserProfileImageType =
   | 'MALE_1'
   | 'MALE_2'
@@ -36,15 +43,16 @@ export type UserProfileImageType =
 
 export interface UserResponseDto {
   id: string;
+  email: string;
   name: string;
   nickname: string;
+  onboardingStatus: OnboardingStatus;
   profileImage: {
     profileImageType: UserProfileImageType;
     profileImageUrl: string;
   };
   admissionYear: number;
   job: string;
-  onboardingStatus: OnboardingStatus;
   academicStatus: AcademicStatus;
 }
 
@@ -81,6 +89,20 @@ export interface CheckPhoneDuplicateRequestDto {
 
 export interface CheckNicknameDuplicateRequestDto {
   nickname: string;
+}
+
+export interface TermResponseDto {
+  id: string;
+  title: string;
+  type: string;
+  isRequired: boolean;
+  version: number;
+  effectiveDate: string;
+  content: string;
+}
+
+export interface TermsAgreementRequestDto {
+  termsIds: string[];
 }
 
 export interface KakaoLoginRequestDto {
@@ -142,13 +164,6 @@ export interface SocialLoginAdditionalInfoRequestDto {
   phoneNumber: string;
   nickname: string;
 }
-
-export type OnboardingStatus =
-  | 'TERMS_REQUIRED'
-  | 'GUEST'
-  | 'ACADEMIC_CERTIFICATION_REQUIRED'
-  | 'EMAIL_VERIFICATION_REQUIRED'
-  | 'ACTIVE';
 
 type AcademicStatus =
   | 'ENROLLED'

@@ -6,6 +6,7 @@ import {
   type CheckNicknameDuplicateRequestDto,
   type CheckPhoneDuplicateRequestDto,
   type UserResponseDto,
+  type TermResponseDto
 } from '../model/types';
 
 export const getAdmissionState = async () => {
@@ -14,6 +15,10 @@ export const getAdmissionState = async () => {
 
 export const getMyInfo = async () => {
   return API.get<UserResponseDto>(`${USER_API_PREFIX}/me`);
+}
+
+export const getTerms = async () => {
+  return API.get<TermResponseDto[]>('/api/v2/terms');
 };
 
 export const checkPhoneDuplicate = async (

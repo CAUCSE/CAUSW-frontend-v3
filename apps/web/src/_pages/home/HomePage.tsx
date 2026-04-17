@@ -1,4 +1,5 @@
 'use client';
+
 import { VStack } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
@@ -19,6 +20,7 @@ import { QuickMenu } from '@/shared/ui';
 
 export function HomePage() {
   const isAlumni = true;
+
   return (
     <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 mx-auto w-full gap-2 px-4 pb-[2.125rem]">
       {/* Mobile Header */}

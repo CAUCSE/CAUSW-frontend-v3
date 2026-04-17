@@ -15,6 +15,7 @@ import type {
   PasswordResetSendRequestDto,
   PasswordResetVerifyRequestDto,
   PasswordResetVerifyResponseDto,
+  TermsAgreementRequestDto,
 } from '@/entities/auth';
 
 import { API } from '@/shared/api';
@@ -75,4 +76,8 @@ export const verifyPasswordResetCode = async (
     `${AUTH_API_PREFIX}/password-reset/verify`,
     data,
   );
+};
+
+export const agreeTerms = async (data: TermsAgreementRequestDto) => {
+  return API.post<null>('/api/v2/terms/agreements', data);
 };

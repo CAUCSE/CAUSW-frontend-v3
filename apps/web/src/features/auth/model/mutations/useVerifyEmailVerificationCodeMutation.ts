@@ -20,14 +20,17 @@ export const useVerifyEmailVerificationCodeMutation = (
     'mutationFn'
   >,
 ) => {
+  const { onSuccess: afterSuccess, ...restOptions } = options ?? {};
+
   return useMutation({
     mutationFn: (data: VerifyEmailVerificationCodeRequestDto) =>
       verifyEmailVerificationCode(data),
     onMutate: () => {
       toast.loading('인증 코드를 검증하고 있어요...');
     },
-    onSuccess: () => {
+    onSuccess: (data, variables, context, mutationContext) => {
       toast.success('이메일 인증이 완료되었습니다.');
+      afterSuccess?.(data, variables, context, mutationContext);
     },
     onError: (error) => {
       toast.error(
@@ -37,6 +40,6 @@ export const useVerifyEmailVerificationCodeMutation = (
         ),
       );
     },
-    ...options,
+    ...restOptions,
   });
 };
