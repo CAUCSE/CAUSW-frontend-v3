@@ -21,6 +21,7 @@ export const AlumniContactsDetailSectionTabs = ({
           <Button
             key={key}
             color="white"
+            type="button"
             onClick={() =>
               handleClickCategoryTab(key as AlumniContactsDetailSectionTabType)
             }

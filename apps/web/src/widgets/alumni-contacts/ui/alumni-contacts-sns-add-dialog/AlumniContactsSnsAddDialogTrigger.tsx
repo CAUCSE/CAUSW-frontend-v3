@@ -11,6 +11,7 @@ export const AlumniContactsSnsAddDialogTrigger = ({
     <Button
       className="group h-fit shrink-0 bg-transparent px-2 py-0 hover:bg-transparent!"
       onClick={onClick}
+      type="button"
     >
       <VStack className="gap-1.5">
         <HStack className="size-15 items-center justify-center rounded-xl bg-gray-100 group-hover:bg-gray-200">

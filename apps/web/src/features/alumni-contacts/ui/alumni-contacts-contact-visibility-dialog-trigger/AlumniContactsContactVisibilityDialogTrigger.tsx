@@ -32,6 +32,7 @@ export const AlumniContactsContactVisibilityDialogTrigger = ({
           color="gray"
           className="px-3 py-2"
           onClick={handleClickDialogTrigger}
+          type="button"
         >
           {content.icon}
           <Text typography="body-14-semibold" textColor="gray-500">
