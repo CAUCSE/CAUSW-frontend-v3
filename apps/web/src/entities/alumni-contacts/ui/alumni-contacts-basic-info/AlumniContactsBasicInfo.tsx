@@ -8,7 +8,6 @@ interface AlumniContactsBasicInfoProps {
   name: GetAlumniContactsDetailResponseDto['name'];
   admissionYear: GetAlumniContactsDetailResponseDto['admissionYear'];
   academicStatus: GetAlumniContactsDetailResponseDto['academicStatus'];
-  job: GetAlumniContactsDetailResponseDto['job'];
   profileImageUrl: GetAlumniContactsDetailResponseDto['profileImage']['profileImageUrl'];
 }
 
@@ -16,10 +15,9 @@ export const AlumniContactsBasicInfo = ({
   name,
   admissionYear,
   academicStatus,
-  job,
   profileImageUrl,
 }: AlumniContactsBasicInfoProps) => {
-  const userInfo = [admissionYear, academicStatus, job].filter((item) => item);
+  const userInfo = [admissionYear, academicStatus].filter((item) => item);
 
   return (
     <>

@@ -12,7 +12,6 @@ const periodSchema = z.array(
 );
 
 export const alumniContactsEditSchema = z.object({
-  job: z.string().min(0).max(30),
   description: z.string().min(0).max(100),
   isPhoneNumberVisible: z.boolean(),
   socialLinks: z.array(z.string()).min(0).max(10),

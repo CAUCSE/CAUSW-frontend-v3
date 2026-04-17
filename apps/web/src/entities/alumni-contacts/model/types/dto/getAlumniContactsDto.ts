@@ -6,7 +6,6 @@ interface GetAlumniContactsResponseDto {
   name: string;
   admissionYear: string;
   academicStatus: string;
-  hob: string;
   description: string;
 }
 

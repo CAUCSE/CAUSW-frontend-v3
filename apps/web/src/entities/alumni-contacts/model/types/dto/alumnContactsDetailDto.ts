@@ -35,7 +35,6 @@ export interface AlumniContactsDetailDto {
   name: string;
   admissionYear: string;
   academicStatus: string;
-  job: string;
   description: string;
   phoneNumber: string;
   isPhoneNumberVisible: boolean;
