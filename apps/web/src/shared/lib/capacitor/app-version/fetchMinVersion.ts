@@ -7,9 +7,9 @@ import {
 } from 'firebase/remote-config';
 
 import {
+  ENVIRONMENT,
   FIREBASE_CONFIG,
   REMOTE_CONFIG_KEYS,
-  type UpdateEnv,
 } from '@/shared/config';
 import { QUERY_TIME } from '@/shared/constants';
 
@@ -31,14 +31,16 @@ function getFirebaseApp() {
   return initializeApp(FIREBASE_CONFIG);
 }
 
-function getMinimumVersionKey(env: UpdateEnv, platform: Platform): string {
+function getMinimumVersionKey(platform: Platform): string {
+  const isDevelopment = ENVIRONMENT !== 'production';
+
   if (platform === 'ios') {
-    return env === 'dev'
+    return isDevelopment
       ? REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_DEV
       : REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_PROD;
   }
 
-  return env === 'dev'
+  return isDevelopment
     ? REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_DEV
     : REMOTE_CONFIG_KEYS.MIN_VERSION_ANDROID_PROD;
 }
@@ -54,7 +56,6 @@ function getStoreUrlWebKey(platform: Platform): string {
 }
 
 export async function fetchMinVersion(
-  env: UpdateEnv,
   platform: Platform,
 ): Promise<RemoteVersionConfig> {
   const supported = await isSupported().catch(() => false);
@@ -96,7 +97,7 @@ export async function fetchMinVersion(
       REMOTE_CONFIG_KEYS.FORCE_UPDATE_ENABLED,
     ).asString() === 'true';
 
-  const minimumVersionKey = getMinimumVersionKey(env, platform);
+  const minimumVersionKey = getMinimumVersionKey(platform);
   const minimumVersion = getValue(remoteConfig, minimumVersionKey).asString();
 
   const storeUrlApp = getValue(
