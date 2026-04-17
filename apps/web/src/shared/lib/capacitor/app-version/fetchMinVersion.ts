@@ -6,12 +6,9 @@ import {
   isSupported,
 } from 'firebase/remote-config';
 
-import {
-  ENVIRONMENT,
-  FIREBASE_CONFIG,
-  REMOTE_CONFIG_KEYS,
-} from '@/shared/config';
+import { FIREBASE_CONFIG, REMOTE_CONFIG_KEYS } from '@/shared/config';
 import { QUERY_TIME } from '@/shared/constants';
+import { isDevelopment } from '@/shared/utils';
 
 type Platform = 'ios' | 'android';
 
@@ -32,8 +29,6 @@ function getFirebaseApp() {
 }
 
 function getMinimumVersionKey(platform: Platform): string {
-  const isDevelopment = ENVIRONMENT !== 'production';
-
   if (platform === 'ios') {
     return isDevelopment
       ? REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_DEV

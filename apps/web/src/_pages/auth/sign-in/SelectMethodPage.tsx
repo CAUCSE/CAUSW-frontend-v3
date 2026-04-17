@@ -16,7 +16,7 @@ import {
   KakaoLoginButton,
 } from '@/features/auth';
 
-import { isAndroid } from '@/shared/config';
+import { isAndroid } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'apple' | 'google';
 

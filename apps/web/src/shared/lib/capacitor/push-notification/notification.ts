@@ -4,7 +4,7 @@ import {
   type PermissionStatus,
 } from '@capacitor/push-notifications';
 
-import { isMobile } from '@/shared/config';
+import { isMobile } from '@/shared/utils';
 
 async function getPushNotificationPermissionState(): Promise<
   PermissionState | 'unsupported'

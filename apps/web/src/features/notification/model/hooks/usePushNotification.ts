@@ -2,10 +2,10 @@ import { PushNotifications } from '@capacitor/push-notifications';
 
 import { useUpdateFCMToken } from '@/features/notification';
 
-import { isWeb } from '@/shared/config';
 import { MESSAGE } from '@/shared/constants';
 import { toast } from '@/shared/model';
 import { getNativeFCM, setNativeFCM } from '@/shared/storage';
+import { isWeb } from '@/shared/utils';
 
 //TODO : main에 올리기 전에 console 제거하기
 export const usePushNotification = () => {

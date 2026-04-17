@@ -1,6 +1,6 @@
-import { isServer } from '@/shared/config';
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
+import { isServer } from '@/shared/utils';
 import { isPublicEndpoint } from '@/shared/utils/auth';
 
 import { type BaseApiClient } from '../../instances';

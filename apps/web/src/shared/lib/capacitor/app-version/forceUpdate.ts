@@ -1,4 +1,4 @@
-import { getPlatform } from '@/shared/config';
+import { getPlatform } from '@/shared/utils';
 
 import { compareSemver } from './compareVersion';
 import { fetchMinVersion } from './fetchMinVersion';
