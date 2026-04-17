@@ -28,7 +28,11 @@ export const EnrollmentStepContainer = ({
   rejectedReason,
   actionHandlers,
 }: EnrollmentStepperProps) => {
-  const steps = getEnrollmentStepsByStatus(status, hasAdmission, rejectedReason);
+  const steps = getEnrollmentStepsByStatus(
+    status,
+    hasAdmission,
+    rejectedReason,
+  );
 
   return (
     <VStack className="w-full gap-4">

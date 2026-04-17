@@ -1,10 +1,9 @@
-import { BASE_URL } from '@/shared/config';
+import { BASE_URL, isMobile, isServer } from '@/shared/config';
 import { AUTH_API_PREFIX } from '@/shared/constants';
 
 // eslint-disable-next-line
 import type { AuthResponseDto } from '@/entities/auth';
 import { type DefaultResponseField } from '@/shared/types';
-import { isMobile, isServer } from '@/shared/utils';
 
 import {
   getClientATK,
@@ -35,7 +34,7 @@ import {
 export class TokenManager {
   // Access Token 재발급
   static async refreshAuth(): Promise<AuthResponseDto> {
-    const response = await fetch(`${BASE_URL}/api/v2/auth/refresh`, {
+    const response = await fetch(`${BASE_URL}/${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

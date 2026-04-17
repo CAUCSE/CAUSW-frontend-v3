@@ -11,14 +11,14 @@ import { Text, CTAButton, Flex, VStack, Separator, Checkbox } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { usePushNotification } from '@/features/notification';
 import { routeAfterSignIn, useSignInMutation } from '@/features/auth';
+import { usePushNotification } from '@/features/notification';
 
 import { type SigninRequestDto, signInSchema } from '@/entities/auth';
 
+import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
 import { ActionHeader, DesktopOnly, MobileOnly, RHFInput } from '@/shared/ui';
-import { toast } from '@/shared/model';
 
 export const EmailLoginPage = () => {
   const router = useRouter();
@@ -37,6 +37,7 @@ export const EmailLoginPage = () => {
       await TokenManager.setRefreshToken();
 
       routeAfterSignIn(router, res.onboardingStatus);
+      void compareFCMToken();
     },
     onMutate: () => {
       toast.loading('로그인 정보 확인 중...');

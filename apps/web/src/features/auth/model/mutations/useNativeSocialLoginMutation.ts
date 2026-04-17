@@ -24,7 +24,11 @@ export const useNativeSocialLoginMutation = (
   const { ...restOptions } = options ?? {};
 
   const onSuccess: NonNullable<
-    UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>['onSuccess']
+    UseMutationOptions<
+      AuthResponseDto,
+      Error,
+      NativeSocialLoginRequestDto
+    >['onSuccess']
   > = async (data) => {
     await TokenManager.setAccessToken(data.accessToken);
     await TokenManager.setRefreshToken();
@@ -32,7 +36,11 @@ export const useNativeSocialLoginMutation = (
   };
 
   const onError: NonNullable<
-    UseMutationOptions<AuthResponseDto, Error, NativeSocialLoginRequestDto>['onError']
+    UseMutationOptions<
+      AuthResponseDto,
+      Error,
+      NativeSocialLoginRequestDto
+    >['onError']
   > = async () => {};
 
   return useMutation({
