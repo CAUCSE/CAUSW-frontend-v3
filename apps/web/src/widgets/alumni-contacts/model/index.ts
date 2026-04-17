@@ -13,4 +13,9 @@ export {
   useAlumniContactsTechStackAddDialog,
   useAlumniContactsInterestTechAddDialog,
   useAlumniContactsInterestDomainAddDialog,
+  useAlumniContactsProfileEntryDialog,
+  useAlumniContactsEditFormCareerSection,
+  useAlumniContactsEditFormProjectSection,
+  useAlumniContactsEditForm,
 } from './hooks';
+export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
