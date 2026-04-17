@@ -12,3 +12,7 @@ export { useAlumniContactsDescriptionEditDialog } from './useAlumniContactsDescr
 export { useAlumniContactsTechStackAddDialog } from './useAlumniContactsTechStackAddDialog';
 export { useAlumniContactsInterestTechAddDialog } from './useAlumniContactsInterestTechAddDialog';
 export { useAlumniContactsInterestDomainAddDialog } from './useAlumniContactsInterestDomainAddDialog';
+export { useAlumniContactsProfileEntryDialog } from './useAlumniContactsProfileEntryDialog';
+export { useAlumniContactsEditFormCareerSection } from './useAlumniContactsEditFormCareerSection';
+export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEditFormProjectSection';
+export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';

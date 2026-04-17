@@ -15,4 +15,7 @@ export {
   AlumniContactsEditFormSnsItem,
   AlumniContactsDescriptionTextArea,
   AlumniContactsSingleFieldAddButton,
+  AlumniContactsProfileEntryDatePicker,
+  AlumniContactsProfileEntryCurrentToggle,
 } from './ui';
+export { putMyAlumniContacts } from './api';

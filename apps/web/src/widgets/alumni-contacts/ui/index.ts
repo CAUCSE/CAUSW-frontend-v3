@@ -11,3 +11,4 @@ export { MyAlumniContactsMainServerComponent } from './my-alumni-contacts-main';
 export { AlumniContactsDetailMainLoadingView } from './alumni-contacts-detail-main';
 export { MyAlumniContactsMainLoadingView } from './my-alumni-contacts-main';
 export { AlumniContactsEditFormServerComponent } from './alumni-contacts-edit-form';
+export { AlumniContactsEditFormLoadingView } from './alumni-contacts-edit-form';
