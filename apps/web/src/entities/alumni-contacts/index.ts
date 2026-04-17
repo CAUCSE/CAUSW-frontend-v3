@@ -20,6 +20,7 @@ export {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditFormField,
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
+  ALUMNI_CONTACTS_URL_PREFIX,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -33,6 +34,7 @@ export {
   AlumniContactsHeaderBoundaryContext,
   useAlumniContactsHeaderBoundaryContext,
   useWatchAlumniContactsEditFormField,
+  type AlumniContactsDetail,
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,

@@ -5,3 +5,4 @@ export type {
   GetMyAlumniContactsResponseDto,
 } from './dto';
 export type { GetAlumniContactsDetailParam } from './param';
+export type { AlumniContactsDetail } from './alumnContactsDetail';

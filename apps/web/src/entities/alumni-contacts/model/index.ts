@@ -14,5 +14,6 @@ export type {
   GetAlumniContactsQuery,
   GetAlumniContactsDetailParam,
   GetMyAlumniContactsResponseDto,
+  AlumniContactsDetail,
 } from './types';
 export { alumniContactsEditSchema, type AlumniContactsEditForm } from './form';

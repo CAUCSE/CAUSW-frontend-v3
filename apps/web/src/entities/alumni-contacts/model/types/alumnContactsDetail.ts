@@ -6,12 +6,12 @@ type ProfileImageUrl =
   | 'CUSTOM'
   | 'GHOST';
 
-interface ProfileImageDto {
+interface ProfileImage {
   profileImageType: ProfileImageUrl;
   profileImageUrl: string;
 }
 
-interface UserCareerResponse {
+interface UserCareer {
   id: string;
   startYear: number;
   startMonth: number;
@@ -20,7 +20,7 @@ interface UserCareerResponse {
   description: string;
 }
 
-interface UserProjectResponse {
+interface UserProject {
   id: string;
   startYear: number;
   startMonth: number;
@@ -29,9 +29,9 @@ interface UserProjectResponse {
   description: string;
 }
 
-export interface AlumniContactsDetailDto {
+export interface AlumniContactsDetail {
   id: string;
-  profileImage: ProfileImageDto;
+  profileImage: ProfileImage;
   name: string;
   admissionYear: string;
   academicStatus: string;
@@ -41,8 +41,8 @@ export interface AlumniContactsDetailDto {
   email: string;
   socialLinks: string[];
   userTechStack: string[];
-  userCareer: UserCareerResponse[];
-  userProject: UserProjectResponse[];
+  userCareer: UserCareer[];
+  userProject: UserProject[];
   userInterestTech: string[];
   userInterestDomain: string[];
 }
