@@ -192,9 +192,11 @@ export const FindPasswordForm = ({
                   maxLength={6}
                   className="flex-1"
                   rightIcon={
-                    <Text typography="body-16-regular" textColor="gray-400">
-                      {formattedTime}
-                    </Text>
+                    isVerified ? undefined : (
+                      <Text typography="body-16-regular" textColor="gray-400">
+                        {formattedTime}
+                      </Text>
+                    )
                   }
                 />
                 <CTAButton
