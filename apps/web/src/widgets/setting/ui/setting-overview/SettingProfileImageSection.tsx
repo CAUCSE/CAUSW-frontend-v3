@@ -11,16 +11,11 @@ import {
   useProfileImageEdit,
 } from '@/features/setting';
 
-import type { UserResponseDto } from '@/entities/auth';
+import { useMyInfoSuspenseQuery } from '@/entities/auth';
 import { ProfileInfo } from '@/entities/setting';
 
-type SettingProfileImageSectionProps = {
-  myInfo: UserResponseDto;
-};
-
-export const SettingProfileImageSection = ({
-  myInfo,
-}: SettingProfileImageSectionProps) => {
+export const SettingProfileImageSection = () => {
+  const { data: myInfo } = useMyInfoSuspenseQuery();
   const [profileImageDialogOpen, setProfileImageDialogOpen] =
     React.useState(false);
   const { currentProfileImage, handleSubmitProfileImage } = useProfileImageEdit(

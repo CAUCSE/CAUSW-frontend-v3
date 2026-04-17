@@ -1,12 +1,30 @@
-import { QueryClient } from '@tanstack/react-query';
+import { Suspense } from 'react';
 
-import { SettingOverview } from '@/widgets/setting';
+import { VStack } from '@causw/cds';
 
-import { authQueryOptions } from '@/entities/auth';
+import {
+  SettingAccountSection,
+  SettingActivitySection,
+  SettingProfileEditButton,
+  SettingProfileImageSectionServerComponent,
+  SettingProfileImageSectionSkeleton,
+  SettingSupportSection,
+} from '@/widgets/setting';
 
-export async function SettingPage() {
-  const queryClient = new QueryClient();
-  const myInfo = await queryClient.fetchQuery(authQueryOptions.me());
-
-  return <SettingOverview myInfo={myInfo} />;
-}
+export const SettingPage = () => {
+  return (
+    <VStack
+      align="center"
+      gap="md"
+      className="w-full px-5 py-7 md:px-0 md:py-0"
+    >
+      <Suspense fallback={<SettingProfileImageSectionSkeleton />}>
+        <SettingProfileImageSectionServerComponent />
+      </Suspense>
+      <SettingProfileEditButton />
+      <SettingActivitySection />
+      <SettingAccountSection />
+      <SettingSupportSection />
+    </VStack>
+  );
+};
