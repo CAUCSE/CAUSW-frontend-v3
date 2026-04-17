@@ -18,6 +18,7 @@ export {
   ALUMNI_CONTACTS_SNS_TYPE_LABEL,
   type AlumniContactsSnsType,
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
+  type AlumniContactsEditFormField,
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
 } from './config';
 export {
@@ -31,6 +32,7 @@ export {
   type AlumniContactsEditForm,
   AlumniContactsHeaderBoundaryContext,
   useAlumniContactsHeaderBoundaryContext,
+  useWatchAlumniContactsEditFormField,
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,

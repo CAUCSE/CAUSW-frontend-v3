@@ -1,5 +1,6 @@
+import { type ValueOf } from '@/shared/lib';
+
 export const ALUMNI_CONTACTS_EDIT_FORM_FIELD = {
-  JOB: 'job',
   DESCRIPTION: 'description',
   IS_PHONE_NUMBER_VISIBLE: 'isPhoneNumberVisible',
   SOCIAL_LINKS: 'socialLinks',
@@ -9,3 +10,7 @@ export const ALUMNI_CONTACTS_EDIT_FORM_FIELD = {
   USER_INTEREST_TECH: 'userInterestTech',
   USER_INTEREST_DOMAIN: 'userInterestDomain',
 } as const;
+
+export type AlumniContactsEditFormField = ValueOf<
+  typeof ALUMNI_CONTACTS_EDIT_FORM_FIELD
+>;
