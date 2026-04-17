@@ -1,3 +1,5 @@
+'use client';
+
 import { Text, Toggle, VStack } from '@causw/cds';
 
 import { type CommunityNotificationSettings } from '@/entities/notification';

@@ -23,6 +23,7 @@ export const EnrollmentStepCard = ({
   highlightText,
   rejectedReason,
   buttonLabel,
+  action,
   onAction,
 }: EnrollmentStepCardProps) => {
   return (
@@ -47,6 +48,7 @@ export const EnrollmentStepCard = ({
       />
 
       <EnrollmentStepActionButton
+        action={action}
         state={state}
         buttonLabel={buttonLabel}
         onAction={onAction}

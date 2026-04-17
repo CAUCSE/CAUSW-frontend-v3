@@ -1,14 +1,14 @@
 import { HttpResponse, passthrough } from 'msw';
 
 import {
+  type AuthResponseDto,
   type SigninResponseDto,
   type SignoutResponseDto,
   type SignupResponseDto,
 } from '@/entities/auth';
 
+import { AUTH_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
-
-const AUTH_API_PREFIX = '/api/v2/auth';
 
 export const postHandler = [
   mswHttp.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {
@@ -40,6 +40,26 @@ export const postHandler = [
           name: 'John Doe',
           email: 'john.doe@example.com',
           profileImgUrl: 'https://picsum.photos/seed/profile1/200/200',
+        },
+      },
+      { status: 201 },
+    );
+  }),
+  mswHttp.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login/native`, () => {
+    return HttpResponse.json(
+      {
+        code: '201',
+        message: 'Native social login successful',
+        data: {
+          accessToken: '1234567890',
+          name: '홍길동',
+          email: 'hong.gildong@example.com',
+          profileImage: {
+            profileImageType: 'CUSTOM',
+            profileImageUrl: 'https://cdn.example.com/profile/image.png',
+          },
+          onboardingStatus: 'GUEST',
+          academicStatus: 'UNDETERMINED',
         },
       },
       { status: 201 },

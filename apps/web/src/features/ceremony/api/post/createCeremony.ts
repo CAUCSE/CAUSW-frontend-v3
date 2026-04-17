@@ -9,7 +9,7 @@ export const createCeremony = (
   const formData = new FormData();
 
   formData.append(
-    'createCeremonyRequestDTO',
+    'ceremonyCreateRequest',
     new Blob([JSON.stringify(dto)], { type: 'application/json' }),
   );
 

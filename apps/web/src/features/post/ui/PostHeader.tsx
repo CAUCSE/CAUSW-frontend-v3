@@ -32,7 +32,7 @@ export const PostHeader = ({
   return (
     <Flex as="header" gap="none" align="center">
       <HStack gap="sm" align="center" className="flex-1 gap-2.5">
-        <Avatar size="40" src={avatarUrl} className="shrink-0" />
+        <Avatar size={40} src={avatarUrl} className="shrink-0" />
 
         <HStack gap="sm" align="center">
           <HStack gap="xs" align="center">

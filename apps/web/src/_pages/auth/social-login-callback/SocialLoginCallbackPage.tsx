@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Flex, Text } from '@causw/cds';
 
+import { routeAfterSignIn } from '@/features/auth';
+
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
 import { SuspenseView } from '@/shared/ui';
@@ -19,18 +21,10 @@ export const SocialLoginCallbackPage = () => {
     if (handledRef.current) return;
     handledRef.current = true;
 
-    const isFirstLogin = searchParams.get('isFirstLogin');
     const error = searchParams.get('error');
     const message = searchParams.get('message');
-    const isValidFirstLoginValue =
-      isFirstLogin === 'true' || isFirstLogin === 'false';
 
-    if (isFirstLogin) {
-      router.replace('/auth/sign-up/oauth-additional-info');
-      return;
-    }
-
-    if (error || !isValidFirstLoginValue) {
+    if (error) {
       toast.error(message ?? '잘못된 접근입니다.');
       router.replace('/auth/sign-in');
       return;
@@ -38,16 +32,10 @@ export const SocialLoginCallbackPage = () => {
 
     const handleCallback = async () => {
       try {
-        const newAccessToken = await TokenManager.refreshAccessToken();
-        await TokenManager.setAccessToken(newAccessToken);
+        const auth = await TokenManager.refreshAuth();
+        await TokenManager.setAccessToken(auth.accessToken);
         await TokenManager.setRefreshToken();
-
-        if (isFirstLogin === 'true') {
-          router.replace('/auth/enrollment-verification');
-          return;
-        }
-
-        router.replace('/home');
+        routeAfterSignIn(router, auth.onboardingStatus);
       } catch {
         toast.error('잘못된 인증 정보입니다.');
         router.replace('/auth/sign-in');

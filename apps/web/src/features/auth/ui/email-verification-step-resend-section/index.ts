@@ -1,0 +1,1 @@
+export { EmailVerificationStepResendSection } from './EmailVerificationStepResendSection';

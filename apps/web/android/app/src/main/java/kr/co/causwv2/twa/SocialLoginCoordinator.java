@@ -26,7 +26,7 @@ import kotlin.jvm.functions.Function2;
 
 final class SocialLoginCoordinator {
     interface ResultDispatcher {
-        void dispatch(String provider, String requestId, String accessToken, String errorCode, String message);
+        void dispatch(String provider, String requestId, String accessToken, String idToken, String errorCode, String message);
     }
 
     private static final String TAG = "SOCIAL_LOGIN";
@@ -62,17 +62,6 @@ final class SocialLoginCoordinator {
         String requestId = pendingGoogleRequestId != null ? pendingGoogleRequestId : "";
         pendingGoogleRequestId = null;
 
-        if (resultCode == Activity.RESULT_CANCELED) {
-            dispatcher.dispatch(
-                "google",
-                requestId,
-                null,
-                "GOOGLE_LOGIN_CANCELLED",
-                "Google login cancelled."
-            );
-            return true;
-        }
-
         try {
             GoogleSignInAccount account =
                 GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
@@ -83,19 +72,21 @@ final class SocialLoginCoordinator {
                     "google",
                     requestId,
                     null,
-                    "EMPTY_ACCESS_TOKEN",
+                    null,
+                    "EMPTY_ID_TOKEN",
                     "Google id token is empty."
                 );
                 return true;
             }
 
-            dispatcher.dispatch("google", requestId, idToken, null, null);
+            dispatcher.dispatch("google", requestId, null, idToken, null, null);
         } catch (ApiException e) {
             if (e.getStatusCode() == GoogleSignInStatusCodes.SIGN_IN_CANCELLED
                 || e.getStatusCode() == CommonStatusCodes.CANCELED) {
                 dispatcher.dispatch(
                     "google",
                     requestId,
+                    null,
                     null,
                     "GOOGLE_LOGIN_CANCELLED",
                     "Google login cancelled."
@@ -106,6 +97,8 @@ final class SocialLoginCoordinator {
                 TAG,
                 "Google login failed. statusCode="
                     + e.getStatusCode()
+                    + ", resultCode="
+                    + resultCode
                     + ", message="
                     + e.getMessage()
                     + ", packageName="
@@ -120,13 +113,16 @@ final class SocialLoginCoordinator {
                 "google",
                 requestId,
                 null,
+                null,
                 "GOOGLE_LOGIN_FAILED",
                 e.getStatusCode() + ": " + e.getMessage()
             );
         } catch (Exception e) {
             Log.e(
                 TAG,
-                "Google login failed with unexpected error. packageName="
+                "Google login failed with unexpected error. resultCode="
+                    + resultCode
+                    + ", packageName="
                     + activity.getPackageName()
                     + ", webClientId="
                     + googleWebClientId
@@ -137,6 +133,7 @@ final class SocialLoginCoordinator {
             dispatcher.dispatch(
                 "google",
                 requestId,
+                null,
                 null,
                 "GOOGLE_LOGIN_FAILED",
                 e.getMessage()
@@ -158,7 +155,7 @@ final class SocialLoginCoordinator {
         try {
             payload = new JSONObject(payloadJson);
         } catch (JSONException e) {
-            dispatcher.dispatch("kakao", "", null, "INVALID_PAYLOAD", "Invalid JSON payload.");
+            dispatcher.dispatch("kakao", "", null, null, "INVALID_PAYLOAD", "Invalid JSON payload.");
             return;
         }
 
@@ -169,6 +166,7 @@ final class SocialLoginCoordinator {
             dispatcher.dispatch(
                 "kakao",
                 requestId,
+                null,
                 null,
                 "INVALID_PAYLOAD",
                 "Missing provider or requestId."
@@ -191,6 +189,7 @@ final class SocialLoginCoordinator {
                 "apple",
                 requestId,
                 null,
+                null,
                 "APPLE_LOGIN_UNSUPPORTED",
                 "Apple login is not supported on Android."
             );
@@ -200,6 +199,7 @@ final class SocialLoginCoordinator {
         dispatcher.dispatch(
             provider,
             requestId,
+            null,
             null,
             "UNSUPPORTED_PROVIDER",
             "Unsupported provider on Android bridge."
@@ -221,6 +221,7 @@ final class SocialLoginCoordinator {
                     dispatcher.dispatch(
                         "kakao",
                         requestId,
+                        null,
                         null,
                         "KAKAO_LOGIN_CANCELLED",
                         "Kakao login cancelled."
@@ -246,6 +247,7 @@ final class SocialLoginCoordinator {
                         "kakao",
                         requestId,
                         null,
+                        null,
                         "KAKAO_LOGIN_CANCELLED",
                         "Kakao login cancelled."
                     );
@@ -256,6 +258,7 @@ final class SocialLoginCoordinator {
                         "kakao",
                         requestId,
                         null,
+                        null,
                         "KAKAO_LOGIN_ACCOUNT_REQUIRED",
                         "KakaoTalk account is not connected. Please log in with Kakao account."
                     );
@@ -264,6 +267,7 @@ final class SocialLoginCoordinator {
                 dispatcher.dispatch(
                     "kakao",
                     requestId,
+                    null,
                     null,
                     "KAKAO_LOGIN_FAILED",
                     error.getMessage()
@@ -284,13 +288,14 @@ final class SocialLoginCoordinator {
                 "kakao",
                 requestId,
                 null,
+                null,
                 "EMPTY_ACCESS_TOKEN",
                 "Kakao access token is empty."
             );
             return Unit.INSTANCE;
         }
 
-        dispatcher.dispatch("kakao", requestId, accessToken, null, null);
+        dispatcher.dispatch("kakao", requestId, accessToken, null, null, null);
         return Unit.INSTANCE;
     }
 
@@ -300,6 +305,7 @@ final class SocialLoginCoordinator {
             dispatcher.dispatch(
                 "google",
                 requestId,
+                null,
                 null,
                 "GOOGLE_CLIENT_ID_MISSING",
                 "Google web client id is missing."

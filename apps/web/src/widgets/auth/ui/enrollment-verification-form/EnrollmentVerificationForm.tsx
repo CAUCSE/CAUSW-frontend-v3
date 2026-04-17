@@ -1,71 +1,50 @@
 'use client';
 
-import { useForm, FormProvider } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider } from 'react-hook-form';
 
 import { Text, VStack } from '@causw/cds';
 
 import {
-  AcademicInfoSection,
-  BaseInfoSection,
-  DocumentSection,
+  EnrollmentDocumentUploadField,
+  EnrollmentVerificationEnrollmentYearField,
+  EnrollmentVerificationGraduationYearField,
+  EnrollmentVerificationMajorField,
+  EnrollmentVerificationNameField,
+  EnrollmentVerificationStateField,
+  EnrollmentVerificationStudentIdField,
+  useEnrollmentVerificationForm,
 } from '@/features/auth';
 
-import {
-  enrollmentVerificationSchema,
-  type EnrollmentVerificationFormData,
-} from '@/entities/auth';
-
-import { ActionHeader } from '@/shared/ui';
+import { EnrollmentVerificationActionHeader } from '../enrollment-verification-action-header';
 
 export interface EnrollmentVerificationFormProps {
-  userName?: string;
+  userName: string;
   onCancel: () => void;
   onSuccess: () => void;
 }
 
 export const EnrollmentVerificationForm = ({
-  userName = '유지아',
+  userName,
   onCancel,
   onSuccess,
 }: EnrollmentVerificationFormProps) => {
-  const methods = useForm<EnrollmentVerificationFormData>({
-    mode: 'onChange',
-    resolver: zodResolver(enrollmentVerificationSchema),
-    defaultValues: {
-      major: '',
-      enrollmentYear: '',
-      studentId: '',
-      enrollmentState: '',
-      content: '',
-      images: [],
+  const { methods, handleSubmit, isSubmitting } = useEnrollmentVerificationForm(
+    {
+      userName,
+      onSuccess,
     },
-  });
-
-  const onSubmit = (data: EnrollmentVerificationFormData) => {
-    // TODO: API 호출
-    console.log('Submitted data:', data);
-    onSuccess();
-  };
+  );
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(handleSubmit)}
         className="flex h-full w-full flex-col overflow-hidden"
       >
-        <ActionHeader>
-          <ActionHeader.BackButton type="button" onClick={onCancel}>
-            뒤로
-          </ActionHeader.BackButton>
-          <ActionHeader.ActionButton
-            type="submit"
-            disabled={!methods.formState.isValid}
-          >
-            제출하기
-          </ActionHeader.ActionButton>
-        </ActionHeader>
+        <EnrollmentVerificationActionHeader
+          isSubmitDisabled={!methods.formState.isValid || isSubmitting}
+          onCancel={onCancel}
+        />
 
         <VStack className="flex-1 gap-5 overflow-y-auto px-4 py-2 md:px-2 md:py-4">
           <Text typography="title-22-bold" textColor="gray-800">
@@ -73,9 +52,13 @@ export const EnrollmentVerificationForm = ({
           </Text>
 
           <VStack className="gap-10">
-            <BaseInfoSection userName={userName} />
-            <AcademicInfoSection />
-            <DocumentSection />
+            <EnrollmentVerificationNameField userName={userName} />
+            <EnrollmentVerificationMajorField />
+            <EnrollmentVerificationEnrollmentYearField />
+            <EnrollmentVerificationStudentIdField />
+            <EnrollmentVerificationStateField />
+            <EnrollmentVerificationGraduationYearField />
+            <EnrollmentDocumentUploadField />
           </VStack>
         </VStack>
       </form>

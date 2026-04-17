@@ -1,16 +1,33 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { FormProvider } from 'react-hook-form';
+
+import { useRouter } from 'next/navigation';
 
 import { AuthContainer, OauthAdditionalInfoForm } from '@/widgets/auth';
 
-import { useOauthAdditionalInfoForm } from '@/features/auth';
+import {
+  routeAfterSignIn,
+  useGetMeQuery,
+  useOauthAdditionalInfoForm,
+} from '@/features/auth';
 
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
 export const OauthAdditionalInfoPage = () => {
+  const router = useRouter();
+  const { data } = useGetMeQuery();
   const { methods, isSubmitEnabled, handlePhoneNumberChange, onSubmit } =
     useOauthAdditionalInfoForm();
+
+  useEffect(() => {
+    if (!data) return;
+    if (data.onboardingStatus !== 'GUEST') {
+      routeAfterSignIn(router, data.onboardingStatus);
+    }
+  }, [data, router]);
 
   return (
     <FormProvider {...methods}>

@@ -11,6 +11,7 @@ import {
   RELATIONSHIP_OPTIONS,
   FAMILY_RELATIONS,
   ALUMNI_RELATIONS,
+  CUSTOM_VALUE,
 } from '../config';
 
 interface RelationshipSectionProps {
@@ -22,15 +23,16 @@ export const RelationshipSection = ({
 }: RelationshipSectionProps) => {
   const { control, register } = useFormContext<CeremonyFormData>();
   const relationship = useWatch({ control, name: 'relationship' });
+  const familyRelation = useWatch({ control, name: 'familyRelation' });
 
   const options = RELATIONSHIP_OPTIONS.map((value) => ({
     label: value,
     value,
   }));
-  const familyRelationOptions = FAMILY_RELATIONS.map((value) => ({
-    label: value,
-    value,
-  }));
+  const familyRelationOptions = [
+    ...FAMILY_RELATIONS.map((value) => ({ label: value, value })),
+    { label: '직접 입력', value: CUSTOM_VALUE },
+  ];
   const alumniRelationOptions = ALUMNI_RELATIONS.map((value) => ({
     label: value,
     value,
@@ -48,13 +50,24 @@ export const RelationshipSection = ({
       />
 
       {relationship === '가족' && (
-        <div className="md:w-1/2">
-          <RHFTabSelect
-            label="상세 관계"
-            name="familyRelation"
-            options={familyRelationOptions}
-          />
-        </div>
+        <>
+          <div className="md:w-1/2">
+            <RHFTabSelect
+              label="상세 관계"
+              name="familyRelation"
+              options={familyRelationOptions}
+            />
+          </div>
+          {familyRelation === CUSTOM_VALUE && (
+            <Field>
+              <TextInput
+                {...register('customFamilyRelation')}
+                placeholder="상세 관계를 입력해주세요."
+                className="rounded-xl bg-white"
+              />
+            </Field>
+          )}
+        </>
       )}
 
       {relationship === '동문소식 대신 전달' && (
