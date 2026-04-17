@@ -34,7 +34,7 @@ import {
 export class TokenManager {
   // Access Token 재발급
   static async refreshAuth(): Promise<AuthResponseDto> {
-    const response = await fetch(`${BASE_URL}/${AUTH_API_PREFIX}/refresh`, {
+    const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
