@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import { CTAButton, Dialog, Text } from '@causw/cds';
 
-import { getUpdateEnv } from '@/shared/config';
 import { COPY, QUERY_STALE_TIME } from '@/shared/constants';
 import { checkForceUpdate, openAppStore } from '@/shared/lib';
 
@@ -15,28 +14,14 @@ export function ForceUpdateProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const updateEnv = getUpdateEnv();
-
   const { data, isError, isFetching, refetch } = useQuery({
-    queryKey: [...FORCE_UPDATE_QUERY_KEY, updateEnv],
-    queryFn: () => checkForceUpdate(updateEnv),
+    queryKey: FORCE_UPDATE_QUERY_KEY,
+    queryFn: () => checkForceUpdate(),
     staleTime: QUERY_STALE_TIME.INFINITY,
     refetchOnWindowFocus: 'always',
     retry: 1,
   });
-  //TODO : prod올리기 전에 삭제
-  console.log(
-    '[APP_ENV]',
-    JSON.stringify(
-      {
-        NEXT_PUBLIC_APP_ENV: process.env.NEXT_PUBLIC_APP_ENV,
 
-        updateEnv,
-      },
-      null,
-      2,
-    ),
-  );
   const isForceUpdateRequired = data?.needUpdate ?? false;
   const isInitialCheckFailed = isError && !data;
   const isOpen = isForceUpdateRequired || isInitialCheckFailed;

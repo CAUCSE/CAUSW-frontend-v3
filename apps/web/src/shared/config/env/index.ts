@@ -3,4 +3,4 @@ export * from './kakao';
 export * from './apple';
 export * from './google';
 export * from './environment';
-export * from './appEnvironment';
+export * from './firebase-config';
