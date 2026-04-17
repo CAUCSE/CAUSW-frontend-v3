@@ -62,6 +62,7 @@ export const AlumniContactsProfileEntryItem = ({
         </Text>
       </VStack>
       <Button
+        type="button"
         className="h-fit w-fit shrink-0 p-0 hover:bg-transparent!"
         onClick={onClickDelete}
       >

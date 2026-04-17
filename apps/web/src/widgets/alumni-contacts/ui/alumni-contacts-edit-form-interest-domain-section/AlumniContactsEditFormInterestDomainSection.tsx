@@ -40,6 +40,7 @@ export const AlumniContactsEditFormInterestDomainSection = () => {
             <Chip key={interestDomain} size="md" color="lightgray">
               {interestDomain}
               <Button
+                type="button"
                 className="h-fit w-fit p-0 hover:bg-transparent!"
                 onClick={() => handleDeleteInterestDomain(idx)}
               >

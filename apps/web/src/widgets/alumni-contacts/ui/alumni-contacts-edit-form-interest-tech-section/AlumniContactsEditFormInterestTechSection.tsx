@@ -39,6 +39,7 @@ export const AlumniContactsEditFormInterestTechSection = () => {
             <Chip key={interestTech} size="md" color="lightgray">
               {interestTech}
               <Button
+                type="button"
                 className="h-fit w-fit p-0 hover:bg-transparent!"
                 onClick={() => handleDeleteInterestTech(idx)}
               >
