@@ -159,7 +159,7 @@ export const FindPasswordForm = ({
                 color="dark"
                 disabled={!canSendCode || isPending || isVerified}
                 onClick={handleSendCode}
-                className="w-[6.25rem]"
+                className="w-25"
               >
                 {step === 'idle' ? '인증코드' : '재전송'}
               </CTAButton>
@@ -193,7 +193,7 @@ export const FindPasswordForm = ({
                   color="dark"
                   disabled={!canVerify}
                   onClick={handleVerify}
-                  className="w-[6.25rem]"
+                  className="w-25"
                 >
                   확인
                 </CTAButton>
