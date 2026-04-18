@@ -1,4 +1,4 @@
-import { HttpResponse } from 'msw';
+import { HttpResponse, passthrough } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
@@ -11,6 +11,7 @@ export const getHandler = [
   mswHttp.get<GetAlumniContactsDetailResponseDto, { id: string }>(
     `${ALUMNI_CONTACTS_URL_PREFIX}/:id`,
     ({ params }) => {
+      return passthrough();
       return HttpResponse.json({
         code: 'S000',
         message: '요청 처리 성공',
