@@ -27,7 +27,7 @@ export const AlumniContactsListServerComponent = async ({
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: QUERY_STALE_TIME.NONE,
+        staleTime: QUERY_STALE_TIME.SHORT,
       },
     },
   });
