@@ -1,138 +1,40 @@
 'use client';
 
-import { useState } from 'react';
-
-import { useForm, FormProvider } from 'react-hook-form';
-
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider } from 'react-hook-form';
 
 import { VStack, HStack, CTAButton, Field, TextInput, Text } from '@causw/cds';
 
-import { findPasswordSchema, type FindPasswordFormData } from '@/entities/auth';
+import { useFindPasswordForm } from '@/features/auth';
 
-import { useCountdownTimer } from '@/shared/hooks';
 import { RHFInput } from '@/shared/ui';
 
-type FindPasswordStep = 'idle' | 'codeSent';
-type VerifyStatus = 'idle' | 'success' | 'invalid';
-
 interface FindPasswordFormProps {
-  onSendCode: (data: { name: string; email: string }) => Promise<void>;
-  onVerifyCode: (data: {
-    name: string;
-    email: string;
-    verificationCode: string;
-  }) => Promise<{ temporaryPassword: string }>;
   onResetPassword: (data: { email: string; temporaryPassword: string }) => void;
 }
 
-const TIMER_SECONDS = 600;
-
 export const FindPasswordForm = ({
-  onSendCode,
-  onVerifyCode,
   onResetPassword,
 }: FindPasswordFormProps) => {
-  const [step, setStep] = useState<FindPasswordStep>('idle');
-  const [verifyStatus, setVerifyStatus] = useState<VerifyStatus>('idle');
-  const [temporaryPassword, setTemporaryPassword] = useState<string | null>(
-    null,
-  );
-  const [isPending, setIsPending] = useState(false);
-  const { formattedTime, isExpired, start } = useCountdownTimer(TIMER_SECONDS);
-
-  const methods = useForm<FindPasswordFormData>({
-    resolver: zodResolver(findPasswordSchema),
-    mode: 'onChange',
-    defaultValues: {
-      name: '',
-      email: '',
-      verificationCode: '',
-    },
-  });
+  const {
+    methods,
+    step,
+    formattedTime,
+    canSendCode,
+    canVerify,
+    isVerified,
+    isPending,
+    verificationHelperText,
+    verificationHasError,
+    handleSendCode,
+    handleVerify,
+    handleVerificationCodeChange,
+    handleResetPassword,
+  } = useFindPasswordForm({ onResetPassword });
 
   const {
     register,
-    watch,
     formState: { errors },
   } = methods;
-
-  const nameValue = watch('name');
-  const emailValue = watch('email');
-  const verificationCodeValue = watch('verificationCode') ?? '';
-
-  const isNameValid = !!nameValue && !errors.name;
-  const isEmailValid = !!emailValue && !errors.email;
-  const canSendCode = isNameValid && isEmailValid;
-  const isVerified = verifyStatus === 'success';
-  const canVerify =
-    step !== 'idle' &&
-    verificationCodeValue.length === 6 &&
-    !isExpired &&
-    !isPending &&
-    !isVerified;
-  const isExpiredStatus = step === 'codeSent' && isExpired && !isVerified;
-
-  const handleSendCode = async () => {
-    if (isPending) return;
-    const { name, email } = methods.getValues();
-    setIsPending(true);
-    try {
-      await onSendCode({ name, email });
-      start();
-      setStep('codeSent');
-      setVerifyStatus('idle');
-      setTemporaryPassword(null);
-      methods.setValue('verificationCode', '');
-    } catch {
-      /* mutation onError에서 토스트 처리 */
-    } finally {
-      setIsPending(false);
-    }
-  };
-
-  const handleVerify = async () => {
-    if (!canVerify) return;
-    const { name, email, verificationCode } = methods.getValues();
-    setIsPending(true);
-    try {
-      const { temporaryPassword: issued } = await onVerifyCode({
-        name,
-        email,
-        verificationCode,
-      });
-      setTemporaryPassword(issued);
-      setVerifyStatus('success');
-    } catch {
-      setVerifyStatus('invalid');
-    } finally {
-      setIsPending(false);
-    }
-  };
-
-  const handleVerificationCodeChange = () => {
-    if (verifyStatus === 'idle') return;
-    setVerifyStatus('idle');
-    if (temporaryPassword) {
-      setTemporaryPassword(null);
-    }
-  };
-
-  const handleResetPassword = () => {
-    if (!isVerified || !temporaryPassword) return;
-    const { email } = methods.getValues();
-    onResetPassword({ email, temporaryPassword });
-  };
-
-  const verificationHelperText =
-    verifyStatus === 'success'
-      ? '인증이 완료되었습니다.'
-      : isExpiredStatus
-        ? '인증 유효시간이 초과되었습니다.'
-        : verifyStatus === 'invalid'
-          ? '잘못된 인증번호입니다.'
-          : null;
-  const verificationHasError = isExpiredStatus || verifyStatus === 'invalid';
 
   return (
     <FormProvider {...methods}>
@@ -215,7 +117,7 @@ export const FindPasswordForm = ({
         <CTAButton
           type="button"
           color="dark"
-          disabled={!isVerified || !temporaryPassword}
+          disabled={!isVerified}
           onClick={handleResetPassword}
           className="w-full"
         >

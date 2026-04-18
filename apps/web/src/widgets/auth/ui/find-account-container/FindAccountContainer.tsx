@@ -9,8 +9,6 @@ import {
   FindEmailForm,
   FindPasswordForm,
   useFindEmailMutation,
-  useSendPasswordResetCodeMutation,
-  useVerifyPasswordResetCodeMutation,
 } from '@/features/auth';
 
 import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
@@ -43,8 +41,6 @@ export const FindAccountContainer = ({
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
 
   const findEmailMutation = useFindEmailMutation();
-  const sendResetCodeMutation = useSendPasswordResetCodeMutation();
-  const verifyResetCodeMutation = useVerifyPasswordResetCodeMutation();
 
   const handleBackToForm = () => {
     onViewChange({ type: 'form' });
@@ -145,12 +141,6 @@ export const FindAccountContainer = ({
 
         {activeTab === 'find-password' && (
           <FindPasswordForm
-            onSendCode={async ({ name, email }) => {
-              await sendResetCodeMutation.mutateAsync({ name, email });
-            }}
-            onVerifyCode={async (data) =>
-              verifyResetCodeMutation.mutateAsync(data)
-            }
             onResetPassword={({ email, temporaryPassword }) => {
               onViewChange({
                 type: 'temporary-password-issued',
