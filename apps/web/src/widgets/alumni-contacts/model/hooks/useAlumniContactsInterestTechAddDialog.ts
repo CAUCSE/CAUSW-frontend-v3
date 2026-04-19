@@ -80,6 +80,7 @@ export const useAlumniContactsInterestTechAddDialog = () => {
       },
     );
     setNewInterestTech('');
+    setIsOpen(false);
   };
 
   return {
