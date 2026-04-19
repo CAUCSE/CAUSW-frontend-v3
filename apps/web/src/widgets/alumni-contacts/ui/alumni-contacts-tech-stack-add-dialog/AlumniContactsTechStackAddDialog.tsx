@@ -4,28 +4,32 @@ import { TextInput } from '@causw/cds';
 
 import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 
-import { useAlumniContactsTechStackAddDialog } from '../../model';
+import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
+
+import { useAlumniContactsSingleFieldDialog } from '../../model';
 import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
 
 export const AlumniContactsTechStackAddDialog = () => {
   const {
     isOpen,
-    newTechStack,
+    newFieldValue: newTechStack,
     addButtonRef,
-    handleClickTrigger,
-    handleTechStackChange,
+    handleClickDialogTrigger,
+    handleOpenChange,
+    handleNewFieldValueChange: handleTechStackChange,
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
-    handleClickAddButton,
-    handleOpenChange,
-  } = useAlumniContactsTechStackAddDialog();
+    handleClickAddFieldValueButton: handleClickAddTechStackButton,
+  } = useAlumniContactsSingleFieldDialog({
+    fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_TECH_STACK,
+  });
 
   return (
     <>
       <AlumniContactsSingleFieldAddButton
         label="기술스택 추가"
-        onClick={handleClickTrigger}
+        onClick={handleClickDialogTrigger}
       />
       <AlumniContactsSingleFieldDialog
         isOpen={isOpen}
@@ -33,7 +37,7 @@ export const AlumniContactsTechStackAddDialog = () => {
         title="기술스택 추가"
         ariaDescription="기술스택을 추가합니다."
         canConfirm={!!newTechStack.trim()}
-        onConfirm={handleClickAddButton}
+        onConfirm={handleClickAddTechStackButton}
         confirmButtonRef={addButtonRef}
       >
         <TextInput

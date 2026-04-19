@@ -4,28 +4,32 @@ import { TextInput } from '@causw/cds';
 
 import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 
-import { useAlumniContactsInterestDomainAddDialog } from '../../model';
+import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
+
+import { useAlumniContactsSingleFieldDialog } from '../../model';
 import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
 
 export const AlumniContactsInterestDomainAddDialog = () => {
   const {
     isOpen,
-    newInterestDomain,
+    newFieldValue: newInterestDomain,
     addButtonRef,
-    handleClickTrigger,
+    handleClickDialogTrigger,
     handleOpenChange,
-    handleInterestDomainChange,
+    handleNewFieldValueChange: handleInterestDomainChange,
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
-    handleClickAddButton,
-  } = useAlumniContactsInterestDomainAddDialog();
+    handleClickAddFieldValueButton: handleClickAddInterestDomainButton,
+  } = useAlumniContactsSingleFieldDialog({
+    fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_DOMAIN,
+  });
 
   return (
     <>
       <AlumniContactsSingleFieldAddButton
         label="관심 도메인 추가"
-        onClick={handleClickTrigger}
+        onClick={handleClickDialogTrigger}
       />
       <AlumniContactsSingleFieldDialog
         isOpen={isOpen}
@@ -33,7 +37,7 @@ export const AlumniContactsInterestDomainAddDialog = () => {
         title="관심 도메인 추가"
         ariaDescription="관심 도메인을 추가합니다."
         canConfirm={!!newInterestDomain.trim()}
-        onConfirm={handleClickAddButton}
+        onConfirm={handleClickAddInterestDomainButton}
         confirmButtonRef={addButtonRef}
       >
         <TextInput

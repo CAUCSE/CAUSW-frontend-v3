@@ -9,10 +9,8 @@ export { useAlumniContactsDetailSection } from './useAlumniContactsDetailSection
 export { useAlumniContactsContactVisibilityDialog } from './useAlumniContactsContactVisibilityDialog';
 export { useAlumniContactsSnsAddDialog } from './useAlumniContactsSnsAddDialog';
 export { useAlumniContactsDescriptionEditDialog } from './useAlumniContactsDescriptionEditDialog';
-export { useAlumniContactsTechStackAddDialog } from './useAlumniContactsTechStackAddDialog';
-export { useAlumniContactsInterestTechAddDialog } from './useAlumniContactsInterestTechAddDialog';
-export { useAlumniContactsInterestDomainAddDialog } from './useAlumniContactsInterestDomainAddDialog';
 export { useAlumniContactsProfileEntryDialog } from './useAlumniContactsProfileEntryDialog';
 export { useAlumniContactsEditFormCareerSection } from './useAlumniContactsEditFormCareerSection';
 export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEditFormProjectSection';
 export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';
+export { useAlumniContactsSingleFieldDialog } from './useAlumniContactsSingleFieldDialog';

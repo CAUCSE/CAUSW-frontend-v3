@@ -10,13 +10,11 @@ export {
   useAlumniContactsContactVisibilityDialog,
   useAlumniContactsSnsAddDialog,
   useAlumniContactsDescriptionEditDialog,
-  useAlumniContactsTechStackAddDialog,
-  useAlumniContactsInterestTechAddDialog,
-  useAlumniContactsInterestDomainAddDialog,
   useAlumniContactsProfileEntryDialog,
   useAlumniContactsEditFormCareerSection,
   useAlumniContactsEditFormProjectSection,
   useAlumniContactsEditForm,
+  useAlumniContactsSingleFieldDialog,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';

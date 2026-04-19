@@ -4,28 +4,32 @@ import { TextInput } from '@causw/cds';
 
 import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 
-import { useAlumniContactsInterestTechAddDialog } from '../../model';
+import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
+
+import { useAlumniContactsSingleFieldDialog } from '../../model';
 import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
 
 export const AlumniContactsInterestTechAddDialog = () => {
   const {
     isOpen,
-    newInterestTech,
+    newFieldValue: newInterestTech,
     addButtonRef,
-    handleClickTrigger,
+    handleClickDialogTrigger,
     handleOpenChange,
-    handleInterestTechChange,
+    handleNewFieldValueChange: handleInterestTechChange,
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
-    handleClickAddButton,
-  } = useAlumniContactsInterestTechAddDialog();
+    handleClickAddFieldValueButton: handleClickAddInterestTechButton,
+  } = useAlumniContactsSingleFieldDialog({
+    fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_TECH,
+  });
 
   return (
     <>
       <AlumniContactsSingleFieldAddButton
         label="관심 기술 추가"
-        onClick={handleClickTrigger}
+        onClick={handleClickDialogTrigger}
       />
       <AlumniContactsSingleFieldDialog
         isOpen={isOpen}
@@ -33,7 +37,7 @@ export const AlumniContactsInterestTechAddDialog = () => {
         title="관심 기술 추가"
         ariaDescription="관심 기술을 추가합니다."
         canConfirm={!!newInterestTech.trim()}
-        onConfirm={handleClickAddButton}
+        onConfirm={handleClickAddInterestTechButton}
         confirmButtonRef={addButtonRef}
       >
         <TextInput
@@ -43,6 +47,7 @@ export const AlumniContactsInterestTechAddDialog = () => {
           onCompositionStart={handleCompositionStart}
           onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleEnterPress}
+          value={newInterestTech}
         />
       </AlumniContactsSingleFieldDialog>
     </>
