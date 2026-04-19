@@ -29,8 +29,8 @@ export const useCommentMenuActions = (
   const { mutate: deleteReply } = useDeleteReplyMutation(postId);
   const { mutate: reportComment } = useReportCommentMutation();
   const { mutate: reportReply } = useReportReplyMutation();
-  const { mutate: blockUserByComment } = useBlockUserByCommentMutation();
-  const { mutate: blockUserByReply } = useBlockUserByReplyMutation();
+  const { mutate: blockUserByComment } = useBlockUserByCommentMutation(postId);
+  const { mutate: blockUserByReply } = useBlockUserByReplyMutation(postId);
 
   const handleAction = (action: CommentAction) => {
     switch (action) {

@@ -1,22 +1,24 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useMutation } from '@tanstack/react-query';
+import { commentKeys } from '@/entities/comment';
 
 import { toast } from '@/shared/model';
 
 import { blockUserByReply } from '../../api';
 
-export const useBlockUserByReplyMutation = () => {
-  const router = useRouter();
+export const useBlockUserByReplyMutation = (postId: string) => {
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (childCommentId: string) => blockUserByReply(childCommentId),
 
     onSuccess: () => {
       toast.success('작성자를 차단했어요.');
-      router.push('/feed');
+      queryClient.invalidateQueries({
+        queryKey: commentKeys.post(postId),
+      });
     },
 
     onError: () => {
