@@ -1,3 +1,3 @@
-import { type AlumniContactsDetail } from '../alumnContactsDetail';
+import { type AlumniContactsDetail } from '../alumniContactsDetail';
 
 export type GetMyAlumniContactsResponseDto = AlumniContactsDetail;
