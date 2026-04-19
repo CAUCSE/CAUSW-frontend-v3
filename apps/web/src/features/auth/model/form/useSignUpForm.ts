@@ -24,6 +24,7 @@ export const useSignUpForm = () => {
       phoneNumber: '',
       nickname: '',
       emailVerificationCode: '',
+      agreedTermsIds: [],
     },
   });
 
@@ -36,6 +37,7 @@ export const useSignUpForm = () => {
         phoneNumber: data.phoneNumber,
         nickname: data.nickname,
         emailVerificationCode: data.emailVerificationCode,
+        agreedTermsIds: data.agreedTermsIds,
       },
       {
         onSuccess: () => {

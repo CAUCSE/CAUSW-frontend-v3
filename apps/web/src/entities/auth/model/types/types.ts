@@ -5,6 +5,7 @@ export interface SignupRequestDto {
   phoneNumber: string;
   nickname: string;
   emailVerificationCode: string;
+  agreedTermsIds: string[];
 }
 
 export interface SignupResponseDto {

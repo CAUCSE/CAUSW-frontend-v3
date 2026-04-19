@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { useFormContext } from 'react-hook-form';
+
 import dynamic from 'next/dynamic';
 
 import { Spacer, VStack } from '@causw/cds';
@@ -15,6 +17,12 @@ import {
   SignUpInfoStepPhoneNumberField,
   useSignUpInfoStep,
 } from '@/features/auth';
+
+import {
+  TERMS_FORM_FIELD,
+  type SignUpFormData,
+  type TermsAgreementRequestDto,
+} from '@/entities/auth';
 
 import { useBreakpoint } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
@@ -37,6 +45,7 @@ const TermsDialog = dynamic(
 
 export const InfoStep = ({ onNext }: { onNext: () => void }) => {
   const { isMobileSize } = useBreakpoint();
+  const { setValue } = useFormContext<SignUpFormData>();
   const {
     isNextEnabled,
     handlePhoneNumberChange,
@@ -48,6 +57,13 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
   const handleTermsComplete = () => {
     setTermsOpen(false);
     onNext();
+  };
+  const handleTermsSubmit = ({ termsIds }: TermsAgreementRequestDto) => {
+    setValue(TERMS_FORM_FIELD.agreedTermsIds, termsIds, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -73,6 +89,7 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
           open
           onOpenChange={setTermsOpen}
           onComplete={handleTermsComplete}
+          onSubmitTermsAgreement={handleTermsSubmit}
         />
       )}
       {termsOpen && !isMobileSize && (
@@ -80,6 +97,7 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
           open
           onOpenChange={setTermsOpen}
           onComplete={handleTermsComplete}
+          onSubmitTermsAgreement={handleTermsSubmit}
         />
       )}
     </VStack>

@@ -27,6 +27,10 @@ export const EMAIL_VERIFICATION_FORM_FIELD = Object.freeze({
   emailVerificationCode: 'emailVerificationCode',
 } as const);
 
+export const TERMS_FORM_FIELD = Object.freeze({
+  agreedTermsIds: 'agreedTermsIds',
+} as const);
+
 export const accountSchema = z
   .object({
     email: emailSchema,
@@ -50,10 +54,15 @@ export const emailVerificationSchema = z.object({
     .regex(/^[0-9A-Za-z]{6}$/, '인증 코드를 6자리 입력해주세요.'),
 });
 
+export const termsAgreementSchema = z.object({
+  [TERMS_FORM_FIELD.agreedTermsIds]: z.array(z.string()),
+});
+
 // 전체 스키마 (필요시 병합해서 사용)
 export const signUpSchema = accountSchema
   .and(infoSchema)
-  .and(emailVerificationSchema);
+  .and(emailVerificationSchema)
+  .and(termsAgreementSchema);
 
 export type AccountFormData = z.infer<typeof accountSchema>;
 export type InfoFormData = z.infer<typeof infoSchema>;
