@@ -20,7 +20,7 @@ export const AlumniContactProjectSection = ({
   return (
     <VStack className="gap-5">
       {userProject.map((project) => (
-        <HStack key={project.id}>
+        <HStack key={project.id} className="items-center">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
             <DocumentColored size={24} />
           </div>

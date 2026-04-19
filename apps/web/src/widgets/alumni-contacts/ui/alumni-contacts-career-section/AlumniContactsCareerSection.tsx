@@ -21,7 +21,7 @@ export const AlumniContactsCareerSection = ({
   return (
     <VStack className="gap-5">
       {userCareer.map((career) => (
-        <HStack key={career.id}>
+        <HStack key={career.id} className="items-center">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
             <BuildingColored size={24} />
           </div>
