@@ -9,8 +9,8 @@ import {
 
 export const ProfileEditPage = () => {
   return (
-    <div className="flex size-full justify-center">
-      <VStack className="w-full max-w-225 gap-0 md:px-8 md:py-6">
+    <div className="flex min-h-full w-full justify-center">
+      <VStack className="min-h-full w-full max-w-225 gap-0 md:px-8 md:py-6">
         <Suspense fallback={<AlumniContactsEditFormLoadingView />}>
           <AlumniContactsEditFormServerComponent />
         </Suspense>
