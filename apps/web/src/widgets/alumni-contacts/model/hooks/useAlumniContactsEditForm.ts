@@ -34,6 +34,7 @@ export const useAlumniContactsEditForm = () => {
   const { mutate: updateMyAlumniContacts, isPending } = useMutation({
     mutationFn: putMyAlumniContacts,
     onSuccess: async () => {
+      toast.success('수정이 완료되었습니다.');
       await queryClient.invalidateQueries({
         queryKey: alumniContactsQueryKeys.my(),
       });
@@ -41,6 +42,9 @@ export const useAlumniContactsEditForm = () => {
     },
     onError: () => {
       toast.error('수정에 실패했어요.');
+    },
+    onMutate: () => {
+      toast.loading('수정 중입니다...');
     },
   });
 
