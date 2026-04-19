@@ -7,6 +7,4 @@ export type AlumniContactsHeaderBoundaryContextProps = {
 };
 
 export const AlumniContactsHeaderBoundaryContext =
-  createContext<AlumniContactsHeaderBoundaryContextProps>({
-    alumniContactsHeroRef: { current: null },
-  });
+  createContext<AlumniContactsHeaderBoundaryContextProps | null>(null);
