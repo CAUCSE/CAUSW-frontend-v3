@@ -19,3 +19,4 @@ export {
   useAlumniContactsEditForm,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
+export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';
