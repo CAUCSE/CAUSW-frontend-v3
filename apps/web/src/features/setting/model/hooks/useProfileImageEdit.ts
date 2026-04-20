@@ -8,7 +8,7 @@ import {
   isCustomProfileImageType,
   isDefaultProfileImageType,
 } from '@/shared/lib/profile-image';
-import type { ProfileImageEditValue, UserProfileImageType } from '@/shared/types';
+import type { ProfileImageEditValue } from '@/shared/types';
 
 import { useChangeMyProfileImageMutation } from '../mutations';
 
@@ -25,9 +25,7 @@ export const useProfileImageEdit = ({
 
   const currentProfileImage = useMemo<ProfileImageEditValue>(
     () => ({
-      profileImageType:
-        myInfo?.profileImage.profileImageType ??
-        ('GHOST' as UserProfileImageType),
+      profileImageType: myInfo?.profileImage.profileImageType ?? 'GHOST',
       profileImageUrl: myInfo?.profileImage.profileImageUrl ?? null,
     }),
     [myInfo],
