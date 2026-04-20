@@ -45,7 +45,7 @@ export const AlumniContactsEditFormHero = ({
           name={myAlumniContacts.name}
           admissionYear={myAlumniContacts.admissionYear}
           academicStatus={myAlumniContacts.academicStatus}
-          profileImageUrl={myAlumniContacts.profileImage.profileImageUrl}
+          profileImage={myAlumniContacts.profileImage}
         />
         <AlumniContactsDescriptionEditDialog />
         <HStack gap="md">

@@ -36,7 +36,7 @@ export const getProfileImageUrl = ({
 }: ProfileImageProps) => {
   if (profileImageType === 'CUSTOM') {
     if (!profileImageUrl) {
-      return profileImageUrl;
+      return '';
     }
 
     return getOptimizedImageUrl(profileImageUrl, {
