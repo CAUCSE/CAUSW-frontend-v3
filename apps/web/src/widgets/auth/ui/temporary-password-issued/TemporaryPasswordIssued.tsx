@@ -2,14 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import {
-  Button,
-  CTAButton,
-  HStack,
-  SuccessColored,
-  Text,
-  VStack,
-} from '@causw/cds';
+import { Button, CTAButton, HStack, Text, VStack } from '@causw/cds';
 
 import { toast } from '@/shared/model';
 
@@ -33,9 +26,7 @@ export const TemporaryPasswordIssued = ({
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(temporaryPassword);
-    toast.success('비밀번호가 복사되었습니다.', {
-      icon: <SuccessColored size={20} />,
-    });
+    toast.success('비밀번호가 복사되었습니다.');
   };
 
   return (
