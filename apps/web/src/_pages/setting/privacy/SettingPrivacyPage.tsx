@@ -7,7 +7,8 @@ import {
   PrivacyActionSection,
   PrivacyBasicInfoSection,
   PrivacyEnrollmentStatusSection,
-  PrivacySocialSection,
+  // TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외)
+  // PrivacySocialSection,
 } from '@/widgets/setting';
 
 import {
@@ -90,7 +91,8 @@ const SettingPrivacyContent = () => {
         onChangeStatus={handleChangeStatus}
       />
 
-      <PrivacySocialSection />
+      {/* TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외) */}
+      {/* <PrivacySocialSection /> */}
 
       <PrivacyActionSection
         onLogout={handleLogout}
