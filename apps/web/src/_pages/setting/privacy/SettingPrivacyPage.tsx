@@ -7,6 +7,7 @@ import {
   PrivacyActionSection,
   PrivacyBasicInfoSection,
   PrivacyEnrollmentStatusSection,
+  PrivacySocialSection,
 } from '@/widgets/setting';
 
 import { getDepartmentLabel, useMyAccountSuspenseQuery } from '@/entities/user';
@@ -81,6 +82,8 @@ const SettingPrivacyContent = () => {
         academicStatus={account.academicStatus}
         onChangeStatus={handleChangeStatus}
       />
+
+      <PrivacySocialSection />
 
       <PrivacyActionSection
         onLogout={handleLogout}
