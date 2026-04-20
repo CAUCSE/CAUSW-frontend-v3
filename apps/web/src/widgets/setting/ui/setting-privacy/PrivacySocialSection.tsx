@@ -1,5 +1,3 @@
-'use client';
-
 import { Text, Toggle, VStack } from '@causw/cds';
 
 // TODO: SNS 계정 연동 조회/연동/해제 API 연결
