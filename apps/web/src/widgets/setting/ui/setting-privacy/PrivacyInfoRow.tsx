@@ -13,12 +13,16 @@ export const PrivacyInfoRow = ({
   value,
   action,
 }: PrivacyInfoRowProps) => (
-  <Flex justify="between" align="center" className="w-full">
-    <Text typography="body-16-medium" textColor="gray-500">
+  <Flex justify="between" align="center" className="w-full gap-3">
+    <Text typography="body-16-medium" textColor="gray-500" className="shrink-0">
       {label}
     </Text>
-    <Flex align="center" gap="sm">
-      <Text typography="subtitle-16-bold" textColor="gray-700">
+    <Flex align="center" gap="sm" className="min-w-0 flex-1 justify-end">
+      <Text
+        typography="subtitle-16-bold"
+        textColor="gray-700"
+        className="min-w-0 truncate text-right"
+      >
         {value}
       </Text>
       {action}
