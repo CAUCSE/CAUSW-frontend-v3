@@ -21,7 +21,7 @@ export const PrivacyEnrollmentStatusSection = ({
       label="학적 상태"
       value={ACCOUNT_ACADEMIC_STATUS_LABEL[academicStatus]}
       action={
-        <Button size="sm" onClick={onChangeStatus}>
+        <Button size="sm" onClick={onChangeStatus} aria-label="학적 상태 변경">
           변경
         </Button>
       }
