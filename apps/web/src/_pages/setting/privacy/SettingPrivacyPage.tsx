@@ -1,7 +1,10 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Text, VStack } from '@causw/cds';
 
+import { LogoutConfirmModal } from '@/widgets/auth';
 import {
   PrivacyAcademicInfoSection,
   PrivacyActionSection,
@@ -10,6 +13,8 @@ import {
   // TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외)
   // PrivacySocialSection,
 } from '@/widgets/setting';
+
+import { useLogout } from '@/features/auth';
 
 import {
   ACCOUNT_DEPARTMENT_LABEL,
@@ -39,18 +44,13 @@ export const SettingPrivacyPage = () => {
   );
 };
 
+/*
+  TODO: 회원탈퇴 API 준비 후 구현
+*/
 const SettingPrivacyContent = () => {
   const { data: account } = useMyAccountSuspenseQuery();
-
-  const handleLogout = () => {
-    // TODO: 로그아웃 로직 연결
-    console.log('로그아웃');
-  };
-
-  const handleWithdraw = () => {
-    // TODO: 회원탈퇴 로직 연결
-    console.log('회원탈퇴');
-  };
+  const logout = useLogout();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const handleChangePhoneNumber = () => {
     // TODO: 전화번호 변경 로직 연결
@@ -94,9 +94,12 @@ const SettingPrivacyContent = () => {
       {/* TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외) */}
       {/* <PrivacySocialSection /> */}
 
-      <PrivacyActionSection
-        onLogout={handleLogout}
-        onWithdraw={handleWithdraw}
+      <PrivacyActionSection onLogout={() => setLogoutModalOpen(true)} />
+
+      <LogoutConfirmModal
+        open={logoutModalOpen}
+        onOpenChange={setLogoutModalOpen}
+        onConfirm={logout}
       />
     </VStack>
   );
