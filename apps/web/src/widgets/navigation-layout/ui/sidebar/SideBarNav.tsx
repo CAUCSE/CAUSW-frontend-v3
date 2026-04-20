@@ -63,7 +63,7 @@ export function SidebarNav({ selected }: SidebarNavProps) {
       {/* FOOTER */}
       <Sidebar.Footer>
         {/* 데이터 변경 필요 */}
-        {/* TODO: api 연결 후 onLogout 기능 구현 필요 */}
+        {/* TODO: api 연결, features/auth의 useLogout 훅 + widgets/auth의 LogoutConfirmModal 사용 */}
         <FooterProfile
           img={''}
           name={'유지아'}
