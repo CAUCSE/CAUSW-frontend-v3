@@ -1,13 +1,7 @@
-type ProfileImageUrl =
-  | 'MALE_1'
-  | 'MALE_2'
-  | 'FEMALE_1'
-  | 'FEMALE_2'
-  | 'CUSTOM'
-  | 'GHOST';
+import { type UserProfileImageType } from '@/shared/types';
 
 interface ProfileImage {
-  profileImageType: ProfileImageUrl;
+  profileImageType: UserProfileImageType;
   profileImageUrl: string;
 }
 
