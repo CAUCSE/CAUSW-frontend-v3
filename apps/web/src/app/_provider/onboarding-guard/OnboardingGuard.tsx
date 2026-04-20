@@ -135,13 +135,16 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
             onSubmitTermsAgreement={handleSubmitTermsAgreement}
           />
         )}
-      <ProfileImageEditDialog
-        open
-        onOpenChange={() => undefined}
-        initialValue={currentProfileImage}
-        onSubmit={handleSubmitProfileImage}
-        requireSubmitToClose
-      />
+
+      {onboardingOverlay === ONBOARDING_OVERLAY.PROFILE_IMAGE_EDIT && (
+        <ProfileImageEditDialog
+          open
+          onOpenChange={() => undefined}
+          initialValue={currentProfileImage}
+          onSubmit={handleSubmitProfileImage}
+          requireSubmitToClose
+        />
+      )}
     </>
   );
 };
