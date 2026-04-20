@@ -1,8 +1,13 @@
-import { type PaginationDto } from '@/shared/types';
+import { type UserProfileImageType, type PaginationDto } from '@/shared/types';
+
+interface ProfileImage {
+  profileImageType: UserProfileImageType;
+  profileImageUrl: string;
+}
 
 interface GetAlumniContactsResponseDto {
   id: string;
-  profileImageUrl: string;
+  profileImage: ProfileImage;
   name: string;
   admissionYear: string;
   academicStatus: string;
