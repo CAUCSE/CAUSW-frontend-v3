@@ -1,6 +1,8 @@
 'use client';
 
-import { VStack } from '@causw/cds';
+import { Suspense } from 'react';
+
+import { Skeleton, VStack } from '@causw/cds';
 
 import { CalendarEventListPreview } from '@/widgets/calendar';
 import {
@@ -30,7 +32,9 @@ export function HomePage() {
 
       {/* Desktop Greeting */}
       <div className="tablet:block hidden">
-        <UserGreetingHeader />
+        <Suspense fallback={<Skeleton width={400} height={52} />}>
+          <UserGreetingHeader />
+        </Suspense>
       </div>
 
       <VStack className="desktop:gap-6 gap-4">
