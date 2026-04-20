@@ -53,7 +53,7 @@ export const SETTING_ACTIVITY_ITEMS: SettingActivityItem[] = [
 export const SETTING_ACCOUNT_MENU_ITEMS: SettingAccountMenuItem[] = [
   { id: 'notifications', label: '알림 설정', href: '/setting/notifications' },
   { id: 'nickname', label: '닉네임 변경', href: '/setting/nickname' },
-  { id: 'privacy', label: '개인 정보 관리', href: '/setting/privacy' },
+  { id: 'privacy', label: '계정 정보 관리', href: '/setting/privacy' },
   { id: 'password', label: '비밀번호 변경', href: '/setting/password' },
 ];
 

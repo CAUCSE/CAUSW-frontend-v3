@@ -1,23 +1,25 @@
-import { Flex, Text } from '@causw/cds';
+import { Flex, Text, VStack } from '@causw/cds';
 
 interface PrivacyAcademicInfoSectionProps {
-  studentId: string;
+  studentId: string | null;
   major: string;
-  enrollmentYear: string;
+  admissionYear: number;
+  graduationYear: number | null;
 }
 
 export const PrivacyAcademicInfoSection = ({
   studentId,
   major,
-  enrollmentYear,
+  admissionYear,
+  graduationYear,
 }: PrivacyAcademicInfoSectionProps) => (
-  <Flex className="flex-col gap-5 rounded-2xl bg-white p-5">
+  <VStack className="gap-5 rounded-2xl bg-white p-5">
     <Flex justify="between" align="center" className="w-full">
       <Text typography="body-16-medium" textColor="gray-500">
         학번
       </Text>
       <Text typography="subtitle-16-bold" textColor="gray-700">
-        {studentId}
+        {studentId ?? '-'}
       </Text>
     </Flex>
     <Flex justify="between" align="center" className="w-full">
@@ -33,8 +35,18 @@ export const PrivacyAcademicInfoSection = ({
         입학년도
       </Text>
       <Text typography="subtitle-16-bold" textColor="gray-700">
-        {enrollmentYear}
+        {admissionYear}
       </Text>
     </Flex>
-  </Flex>
+    {graduationYear !== null && (
+      <Flex justify="between" align="center" className="w-full">
+        <Text typography="body-16-medium" textColor="gray-500">
+          졸업년도
+        </Text>
+        <Text typography="subtitle-16-bold" textColor="gray-700">
+          {graduationYear}
+        </Text>
+      </Flex>
+    )}
+  </VStack>
 );

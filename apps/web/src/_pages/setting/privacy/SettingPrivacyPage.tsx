@@ -3,28 +3,39 @@
 import { Text, VStack } from '@causw/cds';
 
 import {
-  PrivacyActionSection,
   PrivacyAcademicInfoSection,
+  PrivacyActionSection,
   PrivacyBasicInfoSection,
   PrivacyEnrollmentStatusSection,
 } from '@/widgets/setting';
 
-import { ActionHeader } from '@/shared/ui';
+import { getDepartmentLabel, useMyAccountSuspenseQuery } from '@/entities/user';
+
+import {
+  ActionHeader,
+  HydrationSuspense,
+  QueryErrorBoundary,
+  SuspenseView,
+} from '@/shared/ui';
 
 export const SettingPrivacyPage = () => {
-  // TODO: 실제 유저 데이터 API 연결 필요
-  const user = {
-    name: '홍길동',
-    email: 'abced@cau.ac.kr',
-    studentId: '20201234',
-    major: '소프트웨어학부',
-    enrollmentYear: '2020',
-    enrollmentStatus: '재학',
-    completedSemesters: 5,
-    paidSemesters: 0,
-    remainingSemesters: 0,
-    currentSemesterFeeApplied: false,
-  };
+  return (
+    <VStack gap="sm" className="w-full">
+      <ActionHeader>
+        <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+      </ActionHeader>
+
+      <QueryErrorBoundary fallbackMessage="계정 정보를 불러오지 못했어요.">
+        <HydrationSuspense fallback={<SuspenseView />}>
+          <SettingPrivacyContent />
+        </HydrationSuspense>
+      </QueryErrorBoundary>
+    </VStack>
+  );
+};
+
+const SettingPrivacyContent = () => {
+  const { data: account } = useMyAccountSuspenseQuery();
 
   const handleLogout = () => {
     // TODO: 로그아웃 로직 연결
@@ -36,44 +47,45 @@ export const SettingPrivacyPage = () => {
     console.log('회원탈퇴');
   };
 
+  const handleChangePhoneNumber = () => {
+    // TODO: 전화번호 변경 로직 연결
+    console.log('전화번호 변경');
+  };
+
   const handleChangeStatus = () => {
     // TODO: 학적 상태 변경 로직 연결
     console.log('학적 상태 변경');
   };
 
   return (
-    <VStack gap="sm" className="w-full">
-      <ActionHeader>
-        <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
-      </ActionHeader>
+    <VStack gap="md" className="w-full px-4">
+      <Text typography="title-22-bold" textColor="gray-800">
+        계정 정보 관리
+      </Text>
 
-      <VStack gap="md" className="w-full px-4">
-        <Text typography="title-22-bold" textColor="gray-800">
-          개인정보 관리
-        </Text>
+      <PrivacyBasicInfoSection
+        name={account.name}
+        email={account.email}
+        phoneNumber={account.phoneNumber}
+        onChangePhoneNumber={handleChangePhoneNumber}
+      />
 
-        <PrivacyBasicInfoSection name={user.name} email={user.email} />
+      <PrivacyAcademicInfoSection
+        studentId={account.studentId}
+        major={getDepartmentLabel(account.department)}
+        admissionYear={account.admissionYear}
+        graduationYear={account.graduationYear}
+      />
 
-        <PrivacyAcademicInfoSection
-          studentId={user.studentId}
-          major={user.major}
-          enrollmentYear={user.enrollmentYear}
-        />
+      <PrivacyEnrollmentStatusSection
+        academicStatus={account.academicStatus}
+        onChangeStatus={handleChangeStatus}
+      />
 
-        <PrivacyEnrollmentStatusSection
-          enrollmentStatus={user.enrollmentStatus}
-          completedSemesters={user.completedSemesters}
-          paidSemesters={user.paidSemesters}
-          remainingSemesters={user.remainingSemesters}
-          currentSemesterFeeApplied={user.currentSemesterFeeApplied}
-          onChangeStatus={handleChangeStatus}
-        />
-
-        <PrivacyActionSection
-          onLogout={handleLogout}
-          onWithdraw={handleWithdraw}
-        />
-      </VStack>
+      <PrivacyActionSection
+        onLogout={handleLogout}
+        onWithdraw={handleWithdraw}
+      />
     </VStack>
   );
 };
