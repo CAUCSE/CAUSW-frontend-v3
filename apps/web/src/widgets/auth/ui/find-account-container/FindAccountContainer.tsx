@@ -9,15 +9,13 @@ import {
   FindEmailForm,
   FindPasswordForm,
   useFindEmailMutation,
-  useSendPasswordResetCodeMutation,
-  useVerifyPasswordResetCodeMutation,
 } from '@/features/auth';
 
 import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
 
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
-import { PasswordEmailSent } from '../password-email-sent';
+import { TemporaryPasswordIssued } from '../temporary-password-issued';
 
 type FindAccountTab = 'find-email' | 'find-password';
 
@@ -25,7 +23,11 @@ export type FindAccountView =
   | { type: 'form' }
   | { type: 'result'; data: EmailFindResponse; name: string }
   | { type: 'not-found' }
-  | { type: 'password-email-sent'; email: string };
+  | {
+      type: 'temporary-password-issued';
+      email: string;
+      temporaryPassword: string;
+    };
 
 interface FindAccountContainerProps {
   view: FindAccountView;
@@ -39,8 +41,6 @@ export const FindAccountContainer = ({
   const [activeTab, setActiveTab] = useState<FindAccountTab>('find-email');
 
   const findEmailMutation = useFindEmailMutation();
-  const sendResetCodeMutation = useSendPasswordResetCodeMutation();
-  const verifyResetCodeMutation = useVerifyPasswordResetCodeMutation();
 
   const handleBackToForm = () => {
     onViewChange({ type: 'form' });
@@ -78,8 +78,13 @@ export const FindAccountContainer = ({
     return <FindEmailNotFound onRetry={handleBackToForm} />;
   }
 
-  if (view.type === 'password-email-sent') {
-    return <PasswordEmailSent email={view.email} />;
+  if (view.type === 'temporary-password-issued') {
+    return (
+      <TemporaryPasswordIssued
+        email={view.email}
+        temporaryPassword={view.temporaryPassword}
+      />
+    );
   }
 
   return (
@@ -136,12 +141,12 @@ export const FindAccountContainer = ({
 
         {activeTab === 'find-password' && (
           <FindPasswordForm
-            onSendCode={async ({ name, email }) => {
-              await sendResetCodeMutation.mutateAsync({ name, email });
-            }}
-            onVerifyCode={async (data) => {
-              await verifyResetCodeMutation.mutateAsync(data);
-              onViewChange({ type: 'password-email-sent', email: data.email });
+            onResetPassword={({ email, temporaryPassword }) => {
+              onViewChange({
+                type: 'temporary-password-issued',
+                email,
+                temporaryPassword,
+              });
             }}
           />
         )}
