@@ -7,10 +7,3 @@ export const ACCOUNT_DEPARTMENT_LABEL: Record<AccountDepartment, string> = {
   DEPT_OF_CSE: '컴퓨터공학과',
   DEPT_OF_CS: '전산학과',
 };
-
-export const getDepartmentLabel = (
-  department: AccountDepartment | null,
-): string => {
-  if (!department) return '-';
-  return ACCOUNT_DEPARTMENT_LABEL[department];
-};

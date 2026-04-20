@@ -10,7 +10,10 @@ import {
   PrivacySocialSection,
 } from '@/widgets/setting';
 
-import { getDepartmentLabel, useMyAccountSuspenseQuery } from '@/entities/user';
+import {
+  ACCOUNT_DEPARTMENT_LABEL,
+  useMyAccountSuspenseQuery,
+} from '@/entities/user';
 
 import {
   ActionHeader,
@@ -73,7 +76,11 @@ const SettingPrivacyContent = () => {
 
       <PrivacyAcademicInfoSection
         studentId={account.studentId}
-        major={getDepartmentLabel(account.department)}
+        major={
+          account.department
+            ? ACCOUNT_DEPARTMENT_LABEL[account.department]
+            : '-'
+        }
         admissionYear={account.admissionYear}
         graduationYear={account.graduationYear}
       />
