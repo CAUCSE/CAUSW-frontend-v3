@@ -1,1 +1,1 @@
-export const PROFILE_EDIT_HREF = '/setting/profile';
+export const PROFILE_EDIT_HREF = '/profile/edit';

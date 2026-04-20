@@ -7,4 +7,15 @@ export {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
   MyAlumniContactsButton,
+  AlumniContactsContactActionButton,
+  MyAlumniContactsEditButton,
+  MyAlumniContactsSaveButton,
+  AlumniContactsContactVisibilityDialogTrigger,
+  AlumniContactsContactVisibilityToggle,
+  AlumniContactsEditFormSnsItem,
+  AlumniContactsDescriptionTextArea,
+  AlumniContactsSingleFieldAddButton,
+  AlumniContactsProfileEntryDatePicker,
+  AlumniContactsProfileEntryCurrentToggle,
 } from './ui';
+export { putMyAlumniContacts } from './api';

@@ -6,11 +6,11 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
+import { EmailVerificationPage } from '@/_pages/auth';
+
 import { authQueryOptions } from '@/entities/auth';
 
 import { SuspenseView } from '@/shared/ui';
-
-import { EmailVerificationPage } from '@/_pages/auth';
 
 export default async function Page() {
   const queryClient = new QueryClient();

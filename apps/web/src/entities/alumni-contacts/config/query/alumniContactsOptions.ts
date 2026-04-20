@@ -1,7 +1,16 @@
-import { infiniteQueryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
-import { getAlumniContacts } from '../../api';
-import { type GetAlumniContactsQuery } from '../../types';
+import { QUERY_GC_TIME, QUERY_STALE_TIME } from '@/shared/constants';
+
+import {
+  getAlumniContacts,
+  getAlumniContactsDetail,
+  getMyAlumniContacts,
+} from '../../api';
+import {
+  type GetAlumniContactsDetailParam,
+  type GetAlumniContactsQuery,
+} from '../../model';
 
 import { alumniContactsQueryKeys } from './alumniContactsKeys';
 
@@ -13,5 +22,19 @@ export const alumniContactsQueryOptions = {
       initialPageParam: 0,
       getNextPageParam: (lastPage) =>
         lastPage.hasNext ? lastPage.currentPage + 1 : undefined,
+    }),
+  detail: (param: GetAlumniContactsDetailParam) =>
+    queryOptions({
+      queryKey: alumniContactsQueryKeys.detail(param),
+      queryFn: () => getAlumniContactsDetail(param),
+      staleTime: QUERY_STALE_TIME.LONG,
+      gcTime: QUERY_GC_TIME.LONG,
+    }),
+  my: () =>
+    queryOptions({
+      queryKey: alumniContactsQueryKeys.my(),
+      queryFn: () => getMyAlumniContacts(),
+      staleTime: QUERY_STALE_TIME.LONG,
+      gcTime: QUERY_GC_TIME.LONG,
     }),
 };

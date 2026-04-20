@@ -11,7 +11,10 @@ export { EnrollmentVerificationForm } from './enrollment-verification-form';
 export * from './enrollment-step-card';
 export * from './enrollment-step-card-header';
 export { TermsBottomSheet } from './terms-bottom-sheet';
-export { TermsDetailContent, type TermsDetailContentTerm } from './terms-detail-content';
+export {
+  TermsDetailContent,
+  type TermsDetailContentTerm,
+} from './terms-detail-content';
 export { TermsDetailDialog } from './terms-detail-dialog';
 export { TermsDialog } from './terms-dialog';
 export { SessionKeepConfirmModal } from './session-keep-confirm-modal';

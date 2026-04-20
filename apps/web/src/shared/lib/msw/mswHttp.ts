@@ -9,31 +9,55 @@ import {
 import { BASE_URL } from '@/shared/config';
 import { type DefaultResponseField } from '@/shared/types';
 
-type MswResolver<T, U extends DefaultBodyType> = HttpResponseResolver<
-  PathParams,
-  U,
-  DefaultResponseField<T>
+type MswResolver<
+  ResponseType,
+  RequestBodyType extends DefaultBodyType,
+  Params extends PathParams<keyof Params> = PathParams,
+> = HttpResponseResolver<
+  Params,
+  RequestBodyType,
+  DefaultResponseField<ResponseType>
 >;
 
 export const mswHttp = {
-  get: <T, RequestBodyType extends DefaultBodyType = DefaultBodyType>(
+  get: <
+    ResponseType,
+    Params extends PathParams<keyof Params> = PathParams,
+    RequestBodyType extends DefaultBodyType = DefaultBodyType,
+  >(
     url: string,
-    resolver: MswResolver<T, RequestBodyType>,
+    resolver: MswResolver<ResponseType, RequestBodyType, Params>,
   ): HttpHandler => http.get(`${BASE_URL}${url}`, resolver),
-  post: <T, RequestBodyType extends DefaultBodyType = DefaultBodyType>(
+  post: <
+    ResponseType,
+    Params extends PathParams<keyof Params> = PathParams,
+    RequestBodyType extends DefaultBodyType = DefaultBodyType,
+  >(
     url: string,
-    resolver: MswResolver<T, RequestBodyType>,
+    resolver: MswResolver<ResponseType, RequestBodyType, Params>,
   ): HttpHandler => http.post(`${BASE_URL}${url}`, resolver),
-  put: <T, RequestBodyType extends DefaultBodyType = DefaultBodyType>(
+  put: <
+    ResponseType,
+    Params extends PathParams<keyof Params> = PathParams,
+    RequestBodyType extends DefaultBodyType = DefaultBodyType,
+  >(
     url: string,
-    resolver: MswResolver<T, RequestBodyType>,
+    resolver: MswResolver<ResponseType, RequestBodyType, Params>,
   ): HttpHandler => http.put(`${BASE_URL}${url}`, resolver),
-  delete: <T, RequestBodyType extends DefaultBodyType = DefaultBodyType>(
+  delete: <
+    ResponseType,
+    Params extends PathParams<keyof Params> = PathParams,
+    RequestBodyType extends DefaultBodyType = DefaultBodyType,
+  >(
     url: string,
-    resolver: MswResolver<T, RequestBodyType>,
+    resolver: MswResolver<ResponseType, RequestBodyType, Params>,
   ): HttpHandler => http.delete(`${BASE_URL}${url}`, resolver),
-  patch: <T, RequestBodyType extends DefaultBodyType = DefaultBodyType>(
+  patch: <
+    ResponseType,
+    Params extends PathParams<keyof Params> = PathParams,
+    RequestBodyType extends DefaultBodyType = DefaultBodyType,
+  >(
     url: string,
-    resolver: MswResolver<T, RequestBodyType>,
+    resolver: MswResolver<ResponseType, RequestBodyType, Params>,
   ): HttpHandler => http.patch(`${BASE_URL}${url}`, resolver),
 };

@@ -1,12 +1,14 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
-import type {
-  GetAlumniContactsQuery,
-  GetPaginatedAlumniContactsResponseDto,
-} from '../types';
-
-const URL_PREFIX = '/api/v2/users-info';
+import { ALUMNI_CONTACTS_URL_PREFIX } from '../config';
+import {
+  type GetAlumniContactsDetailResponseDto,
+  type GetAlumniContactsDetailParam,
+  type GetAlumniContactsQuery,
+  type GetPaginatedAlumniContactsResponseDto,
+  type GetMyAlumniContactsResponseDto,
+} from '../model';
 
 export const getAlumniContacts = async (
   query: GetAlumniContactsQuery,
@@ -22,9 +24,29 @@ export const getAlumniContacts = async (
 
   queryString.append('pageNum', pageNum.toString());
 
-  const url = withQuery(URL_PREFIX, queryString.toString());
+  const url = withQuery(ALUMNI_CONTACTS_URL_PREFIX, queryString.toString());
 
   const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+
+  return response;
+};
+
+export const getAlumniContactsDetail = async (
+  param: GetAlumniContactsDetailParam,
+) => {
+  const { alumniContactsId } = param;
+
+  const url = `${ALUMNI_CONTACTS_URL_PREFIX}/${alumniContactsId}`;
+
+  const response = await API.get<GetAlumniContactsDetailResponseDto>(url);
+
+  return response;
+};
+
+export const getMyAlumniContacts = async () => {
+  const url = `${ALUMNI_CONTACTS_URL_PREFIX}/me`;
+
+  const response = await API.get<GetMyAlumniContactsResponseDto>(url);
 
   return response;
 };

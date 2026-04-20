@@ -1,0 +1,23 @@
+import { type ValueOf } from '@/shared/lib';
+
+export const ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE = {
+  SNS: 'sns',
+  TECH_STACK: 'techStack',
+  CAREER: 'career',
+  PROJECT: 'project',
+  INTEREST_TECH: 'interestTech',
+  INTEREST_DOMAIN: 'interestDomain',
+} as const;
+
+export type AlumniContactsDetailSectionTabType = ValueOf<
+  typeof ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE
+>;
+
+export const ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL = {
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.SNS]: 'SNS',
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.TECH_STACK]: '기술 스택',
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.CAREER]: '경력 사항',
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.PROJECT]: '대표 프로젝트',
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.INTEREST_TECH]: '관심 기술',
+  [ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE.INTEREST_DOMAIN]: '관심 도메인',
+} as const;

@@ -1,0 +1,1 @@
+export { AlumniContactsDetailSectionTabs } from './AlumniContactsDetailSectionTabs';

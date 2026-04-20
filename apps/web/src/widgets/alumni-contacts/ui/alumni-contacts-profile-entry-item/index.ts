@@ -1,0 +1,1 @@
+export { AlumniContactsProfileEntryItem } from './AlumniContactsProfileEntryItem';

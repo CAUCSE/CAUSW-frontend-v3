@@ -46,8 +46,5 @@ export const removeServerRTK = async (): Promise<void> => {
 
 export const setServerAuthRefreshed = async (): Promise<void> => {
   const cookieStore = await getCookieStore();
-  cookieStore.set(
-    STORAGE_AUTH_REFRESHED_KEY,
-    AUTH_REFRESHED_STORAGE_VALUE,
-  );
+  cookieStore.set(STORAGE_AUTH_REFRESHED_KEY, AUTH_REFRESHED_STORAGE_VALUE);
 };

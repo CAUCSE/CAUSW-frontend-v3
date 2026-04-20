@@ -6,3 +6,13 @@ export { AlumniContactsAcademicFilterSheetModalTrigger } from './alumni-contacts
 export { AlumniContactsAcademicStatusFilterChip } from './alumni-contacts-academic-status-filter-chip';
 export { AlumniContactsAdmissionYearFilterChip } from './alumni-contacts-admission-year-filter-chip';
 export { MyAlumniContactsButton } from './my-alumni-contacts-button';
+export { AlumniContactsContactActionButton } from './alumni-contacts-contact-action-button';
+export { MyAlumniContactsEditButton } from './my-alumni-contacts-edit-button';
+export { MyAlumniContactsSaveButton } from './my-alumni-contacts-save-button';
+export { AlumniContactsContactVisibilityDialogTrigger } from './alumni-contacts-contact-visibility-dialog-trigger';
+export { AlumniContactsContactVisibilityToggle } from './alumni-contacts-contact-visibility-toggle';
+export { AlumniContactsEditFormSnsItem } from './alumni-contacts-edit-form-sns-item';
+export { AlumniContactsDescriptionTextArea } from './alumni-contacts-description-text-area';
+export { AlumniContactsSingleFieldAddButton } from './alumni-contacts-single-field-add-button';
+export { AlumniContactsProfileEntryDatePicker } from './alumni-contacts-profile-entry-date-picker';
+export { AlumniContactsProfileEntryCurrentToggle } from './alumni-contacts-profile-entry-current-toggle';

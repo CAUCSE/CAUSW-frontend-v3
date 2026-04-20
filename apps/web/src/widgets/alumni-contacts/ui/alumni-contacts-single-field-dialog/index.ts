@@ -1,0 +1,1 @@
+export { AlumniContactsSingleFieldDialog } from './AlumniContactsSingleFieldDialog';

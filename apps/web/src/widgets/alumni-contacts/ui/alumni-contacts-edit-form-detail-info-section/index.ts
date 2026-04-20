@@ -1,0 +1,1 @@
+export { AlumniContactsEditFormDetailInfoSection } from './AlumniContactsEditFormDetailInfoSection';

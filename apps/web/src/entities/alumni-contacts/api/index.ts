@@ -1,1 +1,5 @@
-export { getAlumniContacts } from './get';
+export {
+  getAlumniContacts,
+  getAlumniContactsDetail,
+  getMyAlumniContacts,
+} from './get';

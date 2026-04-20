@@ -83,6 +83,11 @@ const eslintConfig = defineConfig([
               position: 'after',
             },
             {
+              pattern: '@/_pages/**',
+              group: 'internal',
+              position: 'after',
+            },
+            {
               pattern: '@/widgets/**',
               group: 'internal',
               position: 'after',

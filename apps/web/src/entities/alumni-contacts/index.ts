@@ -8,18 +8,46 @@ export {
   type AlumniContactsFilter,
   alumniContactsQueryOptions,
   alumniContactsQueryKeys,
+  ALUMNI_CONTACTS_CONTACT_ACTION,
+  ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
+  type AlumniContactsContactActionType,
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_TYPE,
+  type AlumniContactsDetailSectionTabType,
+  ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL,
+  ALUMNI_CONTACTS_SNS_TYPE,
+  ALUMNI_CONTACTS_SNS_TYPE_LABEL,
+  type AlumniContactsSnsType,
+  ALUMNI_CONTACTS_EDIT_FORM_FIELD,
+  type AlumniContactsEditFormField,
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
+  ALUMNI_CONTACTS_URL_PREFIX,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
   useAlumniContactsAcademicFilterSheetModalContext,
   useResetAlumniContactsFilter,
+  type GetPaginatedAlumniContactsResponseDto,
+  type GetAlumniContactsQuery,
+  type GetAlumniContactsDetailResponseDto,
+  alumniContactsEditSchema,
+  type AlumniContactsEditForm,
+  AlumniContactsHeaderBoundaryContext,
+  useAlumniContactsHeaderBoundaryContext,
+  useWatchAlumniContactsEditFormField,
+  type AlumniContactsDetail,
 } from './model';
-export { AlumniContactsAcademicFilterSheetModalProvider } from './ui';
+export {
+  AlumniContactsAcademicFilterSheetModalProvider,
+  AlumniContactsBasicInfo,
+  AlumniContactsDescription,
+  AlumniContactsSnsLink,
+  AlumniContactsSnsIcon,
+  AlumniContactsHeaderBoundaryProvider,
+} from './ui';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
+  formatAlumniContactsPeriod,
+  getAlumniContactSnsType,
 } from './lib';
-export type {
-  GetPaginatedAlumniContactsResponseDto,
-  GetAlumniContactsQuery,
-} from './types';
+export { alumniContactsHandler } from './mock';
