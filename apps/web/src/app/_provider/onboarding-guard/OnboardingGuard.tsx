@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
@@ -80,7 +80,8 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
   const onboardingRedirectPath = onboardingStatus
     ? REDIRECT_PATH_BY_STATUS[onboardingStatus]
     : undefined;
-  const onboardingOverlay: OnboardingOverlay | null = (() => {
+
+  const onboardingOverlay: OnboardingOverlay | null = useMemo(() => {
     if (!isMounted || onboardingRedirectPath) {
       return null;
     }
@@ -94,7 +95,7 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
     }
 
     return null;
-  })();
+  }, [onboardingStatus]);
 
   const agreeTermsMutation = useAgreeTermsMutation({
     onSuccess: async () => {
