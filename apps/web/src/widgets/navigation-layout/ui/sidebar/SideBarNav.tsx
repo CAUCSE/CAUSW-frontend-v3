@@ -80,9 +80,9 @@ export function SidebarNav({ selected }: SidebarNavProps) {
         )}
         {user && !isLoading && (
           <FooterProfile
-            img={profileImageUrl ?? ''}
-            name={user?.name ?? ''}
-            email={user?.email ?? ''}
+            img={profileImageUrl}
+            name={user.name}
+            email={user.email}
             onLogout={() => {}}
           />
         )}{' '}

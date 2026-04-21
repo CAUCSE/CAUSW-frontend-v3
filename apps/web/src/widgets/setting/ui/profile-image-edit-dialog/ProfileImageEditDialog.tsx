@@ -7,6 +7,7 @@ import {
   Dialog,
   Flex,
   HStack,
+  mergeStyles,
   Plus,
   Text,
   VStack,
@@ -159,17 +160,16 @@ export const ProfileImageEditDialog = ({
                     <button
                       key={type}
                       type="button"
-                      className="rounded-2xl p-0.5"
+                      className="cursor-pointer rounded-2xl p-0.5"
                       onClick={() => setSelectedType(type)}
                     >
                       <ProfileAvatar
                         size={40}
                         profileImageType={type}
-                        className={
-                          selectedType === type
-                            ? 'ring-2 ring-gray-900 ring-offset-2'
-                            : ''
-                        }
+                        className={mergeStyles(
+                          selectedType === type &&
+                            'ring-2 ring-gray-900 ring-offset-2',
+                        )}
                       />
                     </button>
                   ))}
@@ -177,25 +177,24 @@ export const ProfileImageEditDialog = ({
                   {customImageUrl && (
                     <button
                       type="button"
-                      className="rounded-2xl p-0.5"
+                      className="cursor-pointer rounded-2xl p-0.5"
                       onClick={() => setSelectedType('CUSTOM')}
                     >
                       <ProfileAvatar
                         size={40}
                         profileImageType="CUSTOM"
                         profileImageUrl={customImageUrl}
-                        className={
-                          selectedType === 'CUSTOM'
-                            ? 'ring-2 ring-gray-900 ring-offset-2'
-                            : ''
-                        }
+                        className={mergeStyles(
+                          selectedType === 'CUSTOM' &&
+                            'ring-2 ring-gray-900 ring-offset-2',
+                        )}
                       />
                     </button>
                   )}
 
                   <button
                     type="button"
-                    className="rounded-2xl p-0.5"
+                    className="cursor-pointer rounded-2xl p-0.5"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-gray-100 text-gray-500">
