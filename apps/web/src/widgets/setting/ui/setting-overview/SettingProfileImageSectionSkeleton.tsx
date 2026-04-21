@@ -1,4 +1,4 @@
-import { HStack, Separator, Skeleton, VStack } from '@causw/cds';
+import { HStack, Skeleton, VStack } from '@causw/cds';
 
 import { DesktopOnly, MobileOnly } from '@/shared/ui';
 
@@ -15,8 +15,6 @@ export const SettingProfileImageSectionSkeleton = () => {
         <VStack align="center" gap="xs">
           <Skeleton width={122} height={20} className="rounded-sm" />
           <HStack gap="sm" align="center">
-            <Skeleton width={64} height={20} className="rounded-sm" />
-            <Separator orientation="vertical" className="gray-400 h-2" />
             <Skeleton width={64} height={20} className="rounded-sm" />
           </HStack>
         </VStack>
