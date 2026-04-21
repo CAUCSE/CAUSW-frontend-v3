@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { authQueryKey, type UserResponseDto } from '@/entities/auth';
 
+import { PROFILE_IMAGE_ACTION_MODE } from '@/shared/constants';
 import {
   isCustomProfileImageType,
   isDefaultProfileImageType,
@@ -47,12 +48,12 @@ export const useProfileImageEdit = ({
       }
 
       await changeMyProfileImageMutation.mutateAsync({
-        mode: 'custom',
+        mode: PROFILE_IMAGE_ACTION_MODE.CUSTOM,
         image: value.customImageFile,
       });
     } else if (isDefaultProfileImageType(value.profileImageType)) {
       await changeMyProfileImageMutation.mutateAsync({
-        mode: 'default',
+        mode: PROFILE_IMAGE_ACTION_MODE.DEFAULT,
         profileImageType: value.profileImageType,
       });
     }

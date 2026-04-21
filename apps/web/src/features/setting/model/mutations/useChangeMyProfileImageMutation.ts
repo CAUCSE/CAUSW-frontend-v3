@@ -5,6 +5,7 @@ import {
   changeMyDefaultProfileImage,
 } from '@/features/setting/api';
 
+import { PROFILE_IMAGE_ACTION_MODE } from '@/shared/constants';
 import { toast } from '@/shared/model';
 import type { ChangeMyProfileImageRequest } from '@/shared/types';
 import { extractErrorMessage } from '@/shared/utils';
@@ -23,7 +24,7 @@ export const useChangeMyProfileImageMutation = (
 
   return useMutation({
     mutationFn: (data: ChangeMyProfileImageRequest) => {
-      if (data.mode === 'default') {
+      if (data.mode === PROFILE_IMAGE_ACTION_MODE.DEFAULT) {
         return changeMyDefaultProfileImage({
           profileImageType: data.profileImageType,
         });

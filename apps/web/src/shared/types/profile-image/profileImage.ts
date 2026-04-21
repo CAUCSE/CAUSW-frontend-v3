@@ -1,3 +1,5 @@
+import type { PROFILE_IMAGE_ACTION_MODE } from '@/shared/constants';
+
 export type UserProfileImageType =
   | 'MALE_1'
   | 'MALE_2'
@@ -17,11 +19,11 @@ export interface ChangeDefaultProfileImageRequest {
 
 export type ChangeMyProfileImageRequest =
   | {
-      mode: 'default';
+      mode: (typeof PROFILE_IMAGE_ACTION_MODE)['DEFAULT'];
       profileImageType: DefaultProfileImageType;
     }
   | {
-      mode: 'custom';
+      mode: (typeof PROFILE_IMAGE_ACTION_MODE)['CUSTOM'];
       image: File;
     };
 
