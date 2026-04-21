@@ -50,11 +50,7 @@ export const useProfileImageEdit = ({
         mode: 'custom',
         image: value.customImageFile,
       });
-    } else {
-      if (!isDefaultProfileImageType(value.profileImageType)) {
-        return;
-      }
-
+    } else if (isDefaultProfileImageType(value.profileImageType)) {
       await changeMyProfileImageMutation.mutateAsync({
         mode: 'default',
         profileImageType: value.profileImageType,
