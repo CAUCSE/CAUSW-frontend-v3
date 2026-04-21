@@ -79,7 +79,7 @@ const config: CapacitorConfig = {
       enabled: false,
     },
     CapacitorHttp: {
-      enabled: true,
+      enabled: false,
     },
     //260315- 여기까지
     StatusBar: {
