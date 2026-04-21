@@ -1,7 +1,8 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 
-import { Bell, ErrorColored, HStack, Text } from '@causw/cds';
+import { Bell, ErrorColored, HStack } from '@causw/cds';
 
 import { useUnreadNotificationCnt } from '@/entities/notification';
 
@@ -10,10 +11,20 @@ import { StatusDot, QueryErrorBoundary } from '@/shared/ui';
 
 export function NotificationMobileHeader() {
   return (
-    <HStack className="w-full justify-between bg-gray-100 px-1 py-2">
-      <Text typography="subtitle-18-bold" color="gray-400">
-        크자회 Logo
-      </Text>
+    <HStack
+      align="center"
+      justify="between"
+      className="h-[45px] w-full bg-gray-100 px-1 py-2"
+    >
+      <Image
+        src="/images/ccssaa-logo.png"
+        alt="CCSSAA 로고"
+        width={112}
+        height={17}
+        priority
+        unoptimized
+        className="h-[17px] w-[112px]"
+      />
 
       <QueryErrorBoundary
         FallbackComponent={() => (

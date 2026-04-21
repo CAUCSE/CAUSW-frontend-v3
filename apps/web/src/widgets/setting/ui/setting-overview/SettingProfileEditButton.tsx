@@ -1,11 +1,11 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
 import { ProfileEditButton } from '@/features/setting';
 
-type SettingProfileEditButtonProps = {
-  onNavigate: (href: string) => void;
-};
+export const SettingProfileEditButton = () => {
+  const router = useRouter();
 
-export const SettingProfileEditButton = ({
-  onNavigate,
-}: SettingProfileEditButtonProps) => {
-  return <ProfileEditButton onNavigate={onNavigate} />;
+  return <ProfileEditButton onNavigate={(href) => router.push(href)} />;
 };

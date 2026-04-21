@@ -13,13 +13,18 @@ import {
   EventCard,
   NoDataView,
   QueryErrorBoundary,
+  SuspenseView,
 } from '@/shared/ui';
 
 function CeremonyListContent() {
-  const { data } = useUpcomingCeremonies();
+  const { data, isLoading } = useUpcomingCeremonies();
   const ceremonies = data?.content || [];
 
   const isEmpty = ceremonies.length === 0;
+
+  if (isLoading) {
+    return <SuspenseView />;
+  }
 
   if (isEmpty) {
     return (

@@ -23,13 +23,15 @@ import {
 
 import { COPY, ROUTES } from '@/shared/constants';
 import { checkIsUpcoming, formatDateRangeDash } from '@/shared/lib';
-import { EventCard, NoDataView } from '@/shared/ui';
+import { EventCard, NoDataView, SuspenseView } from '@/shared/ui';
 
 export function CalendarEventListPreview() {
   const { viewMonth, setViewMonth, scheduleApiParams, currentMonth } =
     useCalendarMonth();
 
-  const { data: schedulesItems = [] } = useCalendarSchedules(scheduleApiParams);
+  const { data: schedulesItems = [], isLoading } = useCalendarSchedules(scheduleApiParams);
+
+
   return (
     <VStack>
       {/* Desktop Calendar */}
@@ -75,6 +77,8 @@ export function CalendarEventListPreview() {
                 />
               );
             })
+          ) : isLoading ? (
+            <SuspenseView/>
           ) : (
             <NoDataView>
               <NoDataView.Icon>

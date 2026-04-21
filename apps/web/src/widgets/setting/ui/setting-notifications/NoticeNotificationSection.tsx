@@ -1,5 +1,4 @@
 'use client';
-
 import { Text, Toggle, VStack } from '@causw/cds';
 
 import { type ServiceNotificationSettings } from '@/entities/notification';

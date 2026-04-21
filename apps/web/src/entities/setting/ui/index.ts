@@ -1,2 +1,2 @@
-export * from './profile-identity';
 export * from './setting-terms-list';
+export * from './profile-info';

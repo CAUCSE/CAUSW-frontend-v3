@@ -4,6 +4,8 @@ import { Avatar, ChevronRight, HStack, Text, VStack } from '@causw/cds';
 
 import type { GetPaginatedAlumniContactsResponseDto } from '@/entities/alumni-contacts';
 
+import { getProfileImageUrl } from '@/shared/lib';
+
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
@@ -14,11 +16,17 @@ interface AlumniContactsListItemProps {
 export const AlumniContactsListItem = ({
   item,
 }: AlumniContactsListItemProps) => {
+  const profileImageUrl = getProfileImageUrl({
+    profileImageType: item.profileImage.profileImageType,
+    profileImageUrl: item.profileImage.profileImageUrl,
+    width: 64,
+  });
+
   return (
     <Link href={`/alumni-contacts/${item.id}`} key={item.id}>
       <li className="flex min-w-60 gap-3 rounded-md bg-white p-4">
         <HStack className="grow gap-5">
-          <Avatar src={item.profileImageUrl} size={64} className="shrink-0" />
+          <Avatar src={profileImageUrl} size={64} className="shrink-0" />
           <VStack gap="none" className="grow">
             <Text
               typography="subtitle-16-bold"

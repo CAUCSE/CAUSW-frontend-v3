@@ -1,4 +1,19 @@
+import Image from 'next/image';
+
+import { Flex } from '@causw/cds';
+
 export function SideBarHeader() {
-  /* TODO: 이미지 로고 대체 예정 */
-  return <span className="px-2.5 font-bold text-blue-500">크자회 Logo</span>;
+  return (
+    <Flex align="center" justify="start" className="px-4">
+      <Image
+        src="/images/ccssaa-logo.png"
+        alt="CCSSAA 로고"
+        width={112}
+        height={17}
+        priority
+        unoptimized
+        className="h-[17px] w-[112px]"
+      />
+    </Flex>
+  );
 }
