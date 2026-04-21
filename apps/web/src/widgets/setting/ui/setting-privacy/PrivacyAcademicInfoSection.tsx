@@ -1,40 +1,26 @@
-import { Flex, Text } from '@causw/cds';
+import { VStack } from '@causw/cds';
+
+import { PrivacyInfoRow } from './PrivacyInfoRow';
 
 interface PrivacyAcademicInfoSectionProps {
-  studentId: string;
+  studentId: string | null;
   major: string;
-  enrollmentYear: string;
+  admissionYear: number;
+  graduationYear: number | null;
 }
 
 export const PrivacyAcademicInfoSection = ({
   studentId,
   major,
-  enrollmentYear,
+  admissionYear,
+  graduationYear,
 }: PrivacyAcademicInfoSectionProps) => (
-  <Flex className="flex-col gap-5 rounded-2xl bg-white p-5">
-    <Flex justify="between" align="center" className="w-full">
-      <Text typography="body-16-medium" textColor="gray-500">
-        학번
-      </Text>
-      <Text typography="subtitle-16-bold" textColor="gray-700">
-        {studentId}
-      </Text>
-    </Flex>
-    <Flex justify="between" align="center" className="w-full">
-      <Text typography="body-16-medium" textColor="gray-500">
-        학부(학과)
-      </Text>
-      <Text typography="subtitle-16-bold" textColor="gray-700">
-        {major}
-      </Text>
-    </Flex>
-    <Flex justify="between" align="center" className="w-full">
-      <Text typography="body-16-medium" textColor="gray-500">
-        입학년도
-      </Text>
-      <Text typography="subtitle-16-bold" textColor="gray-700">
-        {enrollmentYear}
-      </Text>
-    </Flex>
-  </Flex>
+  <VStack className="gap-5 rounded-2xl bg-white p-5">
+    <PrivacyInfoRow label="학번" value={studentId ?? '-'} />
+    <PrivacyInfoRow label="학부(학과)" value={major} />
+    <PrivacyInfoRow label="입학년도" value={admissionYear} />
+    {graduationYear !== null && (
+      <PrivacyInfoRow label="졸업년도" value={graduationYear} />
+    )}
+  </VStack>
 );

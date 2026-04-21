@@ -1,30 +1,35 @@
-import { Flex, Text, VStack } from '@causw/cds';
+import { Button, VStack } from '@causw/cds';
+
+import { PrivacyInfoRow } from './PrivacyInfoRow';
 
 interface PrivacyBasicInfoSectionProps {
   name: string;
   email: string;
+  phoneNumber: string | null;
+  onChangePhoneNumber: () => void;
 }
 
 export const PrivacyBasicInfoSection = ({
   name,
   email,
+  phoneNumber,
+  onChangePhoneNumber,
 }: PrivacyBasicInfoSectionProps) => (
   <VStack className="gap-5 rounded-2xl bg-white p-5">
-    <Flex justify="between" align="center" className="w-full">
-      <Text typography="body-16-medium" textColor="gray-500">
-        이름
-      </Text>
-      <Text typography="subtitle-16-bold" textColor="gray-700">
-        {name}
-      </Text>
-    </Flex>
-    <Flex justify="between" align="center" className="w-full">
-      <Text typography="body-16-medium" textColor="gray-500">
-        이메일
-      </Text>
-      <Text typography="subtitle-16-bold" textColor="gray-700">
-        {email}
-      </Text>
-    </Flex>
+    <PrivacyInfoRow label="이름" value={name} />
+    <PrivacyInfoRow label="이메일" value={email} />
+    <PrivacyInfoRow
+      label="전화번호"
+      value={phoneNumber ?? '-'}
+      action={
+        <Button
+          size="sm"
+          onClick={onChangePhoneNumber}
+          aria-label="전화번호 변경"
+        >
+          변경
+        </Button>
+      }
+    />
   </VStack>
 );
