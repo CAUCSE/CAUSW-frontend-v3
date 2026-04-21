@@ -6,6 +6,7 @@ import { Text, VStack } from '@causw/cds';
 
 import { LogoutConfirmModal } from '@/widgets/auth';
 import {
+  PhoneNumberChangeNoticeModal,
   PrivacyAcademicInfoSection,
   PrivacyActionSection,
   PrivacyBasicInfoSection,
@@ -51,10 +52,10 @@ const SettingPrivacyContent = () => {
   const { data: account } = useMyAccountSuspenseQuery();
   const logout = useLogout();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [phoneNoticeOpen, setPhoneNoticeOpen] = useState(false);
 
   const handleChangePhoneNumber = () => {
-    // TODO: 전화번호 변경 로직 연결
-    console.log('전화번호 변경');
+    setPhoneNoticeOpen(true);
   };
 
   const handleChangeStatus = () => {
@@ -100,6 +101,11 @@ const SettingPrivacyContent = () => {
         open={logoutModalOpen}
         onOpenChange={setLogoutModalOpen}
         onConfirm={logout}
+      />
+
+      <PhoneNumberChangeNoticeModal
+        open={phoneNoticeOpen}
+        onOpenChange={setPhoneNoticeOpen}
       />
     </VStack>
   );
