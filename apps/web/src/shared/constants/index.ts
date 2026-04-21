@@ -8,3 +8,4 @@ export * from './quick-menu';
 export * from './auth/publicEndpoints';
 export * from './form';
 export * from './urls';
+export * from './contact';
