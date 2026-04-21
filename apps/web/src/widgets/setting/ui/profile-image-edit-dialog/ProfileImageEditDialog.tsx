@@ -11,7 +11,10 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { DEFAULT_PROFILE_IMAGE_TYPES } from '@/shared/constants';
+import {
+  ACCEPTED_IMAGE_TYPES,
+  DEFAULT_PROFILE_IMAGE_TYPES,
+} from '@/shared/constants';
 import type { ProfileImageEditValue } from '@/shared/types';
 import { ProfileAvatar } from '@/shared/ui';
 
@@ -138,7 +141,7 @@ export const ProfileImageEditDialog = ({
             <input
               ref={fileInputRef}
               type="file"
-              accept="image/*"
+              accept={ACCEPTED_IMAGE_TYPES}
               className="hidden"
               onChange={handleCustomImageChange}
             />

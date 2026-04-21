@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
+import { toast } from '@/shared/model';
 import type {
   ProfileImageEditValue,
   UserProfileImageType,
@@ -20,6 +22,9 @@ export const useProfileImageEditDialog = ({
   onSubmit,
   requireSubmitToClose,
 }: UseProfileImageEditDialogParams) => {
+  const acceptedImageTypes = ACCEPTED_IMAGE_TYPES.split(',').map((type) =>
+    type.trim(),
+  );
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const objectUrlRef = useRef<string | null>(null);
   const allowCloseRef = useRef(false);
@@ -82,6 +87,14 @@ export const useProfileImageEditDialog = ({
       return;
     }
 
+    if (!acceptedImageTypes.includes(file.type)) {
+      toast.error(
+        '이미지 파일만 업로드할 수 있습니다. PNG 또는 JPG 파일을 선택해 주세요.',
+      );
+      event.target.value = '';
+      return;
+    }
+
     if (objectUrlRef.current) {
       URL.revokeObjectURL(objectUrlRef.current);
     }
@@ -92,6 +105,7 @@ export const useProfileImageEditDialog = ({
     setSelectedType('CUSTOM');
     setCustomImageFile(file);
     setCustomImageUrl(nextObjectUrl);
+    event.target.value = '';
   };
 
   const handleSubmit = async () => {
