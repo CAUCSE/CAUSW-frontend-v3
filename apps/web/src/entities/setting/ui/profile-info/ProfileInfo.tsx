@@ -1,3 +1,5 @@
+import { isNil } from 'es-toolkit';
+
 import { HStack, Separator, Text, VStack } from '@causw/cds';
 
 type ProfileInfoProps = {
@@ -8,7 +10,7 @@ type ProfileInfoProps = {
 
 export const ProfileInfo = ({ name, admissionYear, job }: ProfileInfoProps) => {
   const formattedAdmissionYear =
-    admissionYear != null ? `${admissionYear}학번` : undefined;
+    !isNil(admissionYear) && `${admissionYear}학번`;
 
   return (
     <VStack align="center" gap="xs">
