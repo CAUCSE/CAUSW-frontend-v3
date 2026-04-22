@@ -1,3 +1,5 @@
+import type { UserProfileImageType } from '@/shared/types';
+
 export interface SignupRequestDto {
   email: string;
   password: string;
@@ -33,14 +35,6 @@ export type OnboardingStatus =
   | 'GUEST'
   | 'ACADEMIC_CERTIFICATION_REQUIRED'
   | 'ACTIVE';
-
-export type UserProfileImageType =
-  | 'MALE_1'
-  | 'MALE_2'
-  | 'FEMALE_1'
-  | 'FEMALE_2'
-  | 'CUSTOM'
-  | 'GHOST';
 
 export interface UserResponseDto {
   id: string;

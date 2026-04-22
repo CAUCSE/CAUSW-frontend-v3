@@ -1,1 +1,1 @@
-export * from './UserGreeting';
+export * from './ui/user-greeting-header';

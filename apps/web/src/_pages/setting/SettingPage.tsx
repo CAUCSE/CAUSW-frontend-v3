@@ -1,30 +1,30 @@
-'use client';
+import { Suspense } from 'react';
 
-import { useState } from 'react';
+import { VStack } from '@causw/cds';
 
-import { useRouter } from 'next/navigation';
+import {
+  SettingAccountSection,
+  SettingActivitySection,
+  SettingProfileEditButton,
+  SettingProfileImageSectionServerComponent,
+  SettingProfileImageSectionSkeleton,
+  SettingSupportSection,
+} from '@/widgets/setting';
 
-import { NicknameChangeDialog, SettingOverview } from '@/widgets/setting';
-
-export function SettingPage() {
-  const router = useRouter();
-  const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
-
-  const handleNavigate = (href: string) => {
-    if (href === '/setting/nickname') {
-      setNicknameDialogOpen(true);
-      return;
-    }
-    router.push(href);
-  };
-
+export const SettingPage = () => {
   return (
-    <>
-      <SettingOverview onNavigate={handleNavigate} />
-      <NicknameChangeDialog
-        open={nicknameDialogOpen}
-        onOpenChange={setNicknameDialogOpen}
-      />
-    </>
+    <VStack
+      align="center"
+      gap="md"
+      className="w-full px-5 py-7 md:px-0 md:py-0"
+    >
+      <Suspense fallback={<SettingProfileImageSectionSkeleton />}>
+        <SettingProfileImageSectionServerComponent />
+      </Suspense>
+      <SettingProfileEditButton />
+      <SettingActivitySection />
+      <SettingAccountSection />
+      <SettingSupportSection />
+    </VStack>
   );
-}
+};

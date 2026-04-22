@@ -2,22 +2,31 @@ import React from 'react';
 
 import { Avatar, HStack, Text, VStack } from '@causw/cds';
 
+import { getProfileImageUrl } from '@/shared/lib';
+
 import { type GetAlumniContactsDetailResponseDto } from '../../model';
 
 interface AlumniContactsBasicInfoProps {
   name: GetAlumniContactsDetailResponseDto['name'];
   admissionYear: GetAlumniContactsDetailResponseDto['admissionYear'];
   academicStatus: GetAlumniContactsDetailResponseDto['academicStatus'];
-  profileImageUrl: GetAlumniContactsDetailResponseDto['profileImage']['profileImageUrl'];
+  profileImage: GetAlumniContactsDetailResponseDto['profileImage'];
 }
 
 export const AlumniContactsBasicInfo = ({
   name,
   admissionYear,
   academicStatus,
-  profileImageUrl,
+  profileImage,
 }: AlumniContactsBasicInfoProps) => {
   const userInfo = [admissionYear, academicStatus].filter((item) => item);
+  const profileImageUrl = profileImage
+    ? getProfileImageUrl({
+        profileImageType: profileImage.profileImageType,
+        profileImageUrl: profileImage.profileImageUrl,
+        width: 80,
+      })
+    : '';
 
   return (
     <>

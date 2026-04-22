@@ -38,63 +38,63 @@ export const CommentCard = ({
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
       <HStack align={isInactive ? 'center' : 'start'} className="gap-3">
+        <Avatar
+          size={36}
+          src={profileImage}
+          className="my-1 shrink-0"
+          isRestricted={isBlocked}
+        />
         {isInactive ? (
-          <>
-            <Avatar size={36} className="my-1 shrink-0" />
+          <VStack gap="none">
+            <Text typography="body-15-regular" textColor="gray-400">
+              {isDeleted ? '삭제된 댓글입니다' : '차단된 사용자의 댓글입니다'}
+            </Text>
+          </VStack>
+        ) : (
+          <VStack className="w-full gap-3">
             <VStack gap="none">
-              <Text typography="body-15-regular" textColor="gray-400">
-                {isDeleted ? '삭제된 댓글입니다' : '차단된 사용자의 댓글입니다'}
+              <HStack align="center" justify="between">
+                <HStack gap="sm" align="center">
+                  <Text typography="body-15-semibold" textColor="gray-800">
+                    {author}
+                  </Text>
+                  <Text typography="body-15-regular" textColor="gray-500">
+                    {time}
+                  </Text>
+                </HStack>
+
+                {menuSlot}
+              </HStack>
+              <Text
+                typography="body-15-regular"
+                textColor="gray-800"
+                className="whitespace-pre-wrap"
+              >
+                {content}
               </Text>
             </VStack>
-          </>
-        ) : (
-          <>
-            <Avatar size={36} src={profileImage} className="my-1 shrink-0" />
-            <VStack className="w-full gap-3">
-              <VStack gap="none">
-                <HStack align="center" justify="between">
-                  <HStack gap="sm" align="center">
-                    <Text typography="body-15-semibold" textColor="gray-800">
-                      {author}
-                    </Text>
-                    <Text typography="body-15-regular" textColor="gray-500">
-                      {time}
-                    </Text>
-                  </HStack>
 
-                  {menuSlot}
-                </HStack>
-                <Text
-                  typography="body-15-regular"
-                  textColor="gray-800"
-                  className="whitespace-pre-wrap"
+            <HStack align="center" justify={isReply ? 'end' : 'between'}>
+              {!isReply && (
+                <button
+                  type="button"
+                  onClick={onReplyClick}
+                  className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
                 >
-                  {content}
-                </Text>
-              </VStack>
+                  <Text typography="body-14-medium" textColor="gray-400">
+                    답글달기
+                  </Text>
+                </button>
+              )}
 
-              <HStack align="center" justify={isReply ? 'end' : 'between'}>
-                {!isReply && (
-                  <button
-                    type="button"
-                    onClick={onReplyClick}
-                    className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
-                  >
-                    <Text typography="body-14-medium" textColor="gray-400">
-                      답글달기
-                    </Text>
-                  </button>
-                )}
-
-                <IconCountButton
-                  icon={<Heart />}
-                  count={likeCount}
-                  active={isLiked}
-                  onClick={onLikeClick}
-                />
-              </HStack>
-            </VStack>
-          </>
+              <IconCountButton
+                icon={<Heart />}
+                count={likeCount}
+                active={isLiked}
+                onClick={onLikeClick}
+              />
+            </HStack>
+          </VStack>
         )}
       </HStack>
     </article>

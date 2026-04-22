@@ -5,12 +5,6 @@ import {
   type SettingSupportMenuItem,
 } from '../model';
 
-export const SETTING_PROFILE_IDENTITY = {
-  name: '이름',
-  primaryInfo: '이메일',
-  secondaryInfo: '이메일',
-} as const;
-
 export const SETTING_OVERVIEW_TITLES = {
   account: '계정',
   support: '고객지원',
@@ -59,6 +53,10 @@ export const SETTING_ACCOUNT_MENU_ITEMS: SettingAccountMenuItem[] = [
 
 export const SETTING_SUPPORT_MENU_ITEMS: SettingSupportMenuItem[] = [
   // { id: 'notices', label: '공지사항', href: '/setting/notices' },
-  { id: 'report', label: '건의/오류 제보하기', href: '/setting/report' },
+  {
+    id: 'report',
+    label: '건의/오류 제보하기',
+    href: 'https://docs.google.com/forms/d/1bUrlhnQjmPYkwsae40NR3YsX9nONPYY9E6FAjBBFDIU/edit',
+  },
   { id: 'terms', label: '이용약관 확인', href: '/setting/terms' },
 ];

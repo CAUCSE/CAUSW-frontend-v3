@@ -1,15 +1,15 @@
-import { Button, Camera, Checkbox, HStack, Vote } from '@causw/cds';
+import { Button, Camera, Checkbox, HStack } from '@causw/cds';
 
 interface PostWriteFooterProps {
   onClickPhoto: () => void;
-  onClickVote: () => void;
+  // onClickVote: () => void;
   isAnonymous: boolean;
   onChangeAnonymous: (checked: boolean) => void;
 }
 
 export const PostWriteFooter = ({
   onClickPhoto,
-  onClickVote,
+  // onClickVote,
   isAnonymous,
   onChangeAnonymous,
 }: PostWriteFooterProps) => {
@@ -20,10 +20,11 @@ export const PostWriteFooter = ({
           <Camera active size={16} />
           사진첨부
         </Button>
+        {/* TODO: 투표 기능 API 구현/연동 완료 시 주석 해제
         <Button type="button" onClick={onClickVote} className="text-gray-500">
           <Vote active size={16} />
           투표
-        </Button>
+        </Button> */}
       </HStack>
       <Checkbox
         checked={isAnonymous}

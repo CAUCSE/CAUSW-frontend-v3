@@ -1,7 +1,10 @@
 'use client';
 
-import { VStack, Sidebar } from '@causw/cds';
+import { VStack, Sidebar, Skeleton } from '@causw/cds';
 
+import { useGetMeQuery } from '@/features/auth';
+
+import { getProfileImageUrl } from '@/shared/lib';
 import { QueryErrorBoundary } from '@/shared/ui';
 
 import {
@@ -20,6 +23,16 @@ type SidebarNavProps = {
 };
 
 export function SidebarNav({ selected }: SidebarNavProps) {
+  const { data: user, isLoading } = useGetMeQuery();
+
+  const profileImageUrl = user?.profileImage
+    ? getProfileImageUrl({
+        profileImageType: user.profileImage.profileImageType,
+        profileImageUrl: user.profileImage.profileImageUrl,
+        width: 44,
+      })
+    : '';
+
   return (
     <Sidebar selected={selected}>
       {/* HEADER */}
@@ -62,14 +75,18 @@ export function SidebarNav({ selected }: SidebarNavProps) {
 
       {/* FOOTER */}
       <Sidebar.Footer>
-        {/* 데이터 변경 필요 */}
         {/* TODO: api 연결, features/auth의 useLogout 훅 + widgets/auth의 LogoutConfirmModal 사용 */}
-        <FooterProfile
-          img={''}
-          name={'유지아'}
-          email={'djdkwnl@cau.ac.kr'}
-          onLogout={() => {}}
-        />
+        {isLoading && (
+          <Skeleton tone="neutral" width={227} height={60}></Skeleton>
+        )}
+        {user && !isLoading && (
+          <FooterProfile
+            img={profileImageUrl}
+            name={user.name}
+            email={user.email}
+            onLogout={() => {}}
+          />
+        )}{' '}
       </Sidebar.Footer>
     </Sidebar>
   );

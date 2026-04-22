@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useAgreeTermsMutation } from '@/features/auth';
+import { useProfileImageEdit } from '@/features/setting';
 
 import { authQueryKey, authQueryOptions } from '@/entities/auth/config/query';
 import type {
@@ -34,11 +35,27 @@ const TermsDialog = dynamic(
   },
 );
 
+const ProfileImageEditDialog = dynamic(
+  () => import('@/widgets/setting').then((mod) => mod.ProfileImageEditDialog),
+  {
+    ssr: false,
+    loading: () => <SuspenseView />,
+  },
+);
+
 const REDIRECT_PATH_BY_STATUS: Partial<Record<OnboardingStatus, string>> = {
   EMAIL_VERIFICATION_REQUIRED: '/auth/email-verification',
   GUEST: '/auth/sign-up/oauth-additional-info',
   ACADEMIC_CERTIFICATION_REQUIRED: '/auth/enrollment-verification',
 };
+
+const ONBOARDING_OVERLAY = {
+  TERMS_AGREEMENT: 'TERMS_AGREEMENT',
+  PROFILE_IMAGE_EDIT: 'PROFILE_IMAGE_EDIT',
+} as const;
+
+type OnboardingOverlay =
+  (typeof ONBOARDING_OVERLAY)[keyof typeof ONBOARDING_OVERLAY];
 
 interface OnboardingGuardProps {
   children: React.ReactNode;
@@ -53,11 +70,32 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
     ...authQueryOptions.me(),
     enabled: isMounted,
   });
+  const { currentProfileImage, handleSubmitProfileImage } = useProfileImageEdit(
+    {
+      myInfo,
+    },
+  );
+
   const onboardingStatus = myInfo?.onboardingStatus;
-  const redirectPath = onboardingStatus
+  const onboardingRedirectPath = onboardingStatus
     ? REDIRECT_PATH_BY_STATUS[onboardingStatus]
     : undefined;
-  const shouldShowTermsAgreement = onboardingStatus === 'TERMS_REQUIRED';
+
+  const onboardingOverlay: OnboardingOverlay | null = useMemo(() => {
+    if (!isMounted || onboardingRedirectPath) {
+      return null;
+    }
+
+    if (onboardingStatus === 'TERMS_REQUIRED') {
+      return ONBOARDING_OVERLAY.TERMS_AGREEMENT;
+    }
+
+    if (myInfo?.profileImage.profileImageType === 'GHOST') {
+      return ONBOARDING_OVERLAY.PROFILE_IMAGE_EDIT;
+    }
+
+    return null;
+  }, [onboardingStatus]);
 
   const agreeTermsMutation = useAgreeTermsMutation({
     onSuccess: async () => {
@@ -74,26 +112,38 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
   };
 
   useEffect(() => {
-    if (redirectPath) {
-      router.replace(redirectPath);
+    if (onboardingRedirectPath) {
+      router.replace(onboardingRedirectPath);
     }
-  }, [redirectPath, router]);
+  }, [onboardingRedirectPath, router]);
 
   return (
     <>
       {children}
-      {shouldShowTermsAgreement && isMobileSize && (
-        <TermsBottomSheet
+      {onboardingOverlay === ONBOARDING_OVERLAY.TERMS_AGREEMENT &&
+        isMobileSize && (
+          <TermsBottomSheet
+            open
+            onOpenChange={() => undefined}
+            onSubmitTermsAgreement={handleSubmitTermsAgreement}
+          />
+        )}
+      {onboardingOverlay === ONBOARDING_OVERLAY.TERMS_AGREEMENT &&
+        !isMobileSize && (
+          <TermsDialog
+            open
+            onOpenChange={() => undefined}
+            onSubmitTermsAgreement={handleSubmitTermsAgreement}
+          />
+        )}
+
+      {onboardingOverlay === ONBOARDING_OVERLAY.PROFILE_IMAGE_EDIT && (
+        <ProfileImageEditDialog
           open
           onOpenChange={() => undefined}
-          onSubmitTermsAgreement={handleSubmitTermsAgreement}
-        />
-      )}
-      {shouldShowTermsAgreement && !isMobileSize && (
-        <TermsDialog
-          open
-          onOpenChange={() => undefined}
-          onSubmitTermsAgreement={handleSubmitTermsAgreement}
+          initialValue={currentProfileImage}
+          onSubmit={handleSubmitProfileImage}
+          requireSubmitToClose
         />
       )}
     </>
