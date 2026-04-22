@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -55,6 +55,7 @@ export const useSignUpStepGuard = ({
   onResetToAccount,
 }: UseSignUpStepGuardParams) => {
   const router = useRouter();
+  const hasHandledReloadRef = useRef(false);
 
   useEffect(() => {
     const navigationEntry = performance.getEntriesByType('navigation')[0] as
@@ -62,9 +63,11 @@ export const useSignUpStepGuard = ({
       | undefined;
 
     if (
+      !hasHandledReloadRef.current &&
       navigationEntry?.type === 'reload' &&
       initialStep !== SIGN_UP_STEP.Account
     ) {
+      hasHandledReloadRef.current = true;
       setAllowedStepLevel(SIGN_UP_STEP_LEVEL[SIGN_UP_STEP.Account]);
       onResetToAccount?.();
       return;

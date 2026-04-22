@@ -1,5 +1,7 @@
 'use client';
 
+import { useCallback } from 'react';
+
 import { FormProvider } from 'react-hook-form';
 
 import { useFunnel } from '@use-funnel/browser';
@@ -36,11 +38,13 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
       context: {},
     },
   });
+  const handleResetToAccount = useCallback(() => {
+    funnel.history.replace(SIGN_UP_STEP.Account);
+  }, [funnel.history]);
+
   const { allowEmailVerificationStep, allowInfoStep } = useSignUpStepGuard({
     initialStep,
-    onResetToAccount: () => {
-      funnel.history.replace(SIGN_UP_STEP.Account);
-    },
+    onResetToAccount: handleResetToAccount,
   });
   const { methods, handleSubmit } = useSignUpForm();
 
