@@ -6,6 +6,7 @@ import { Text, VStack } from '@causw/cds';
 
 import { LogoutConfirmModal } from '@/widgets/auth';
 import {
+  PRIVACY_ACTION_TYPE,
   PhoneNumberChangeNoticeModal,
   PrivacyAcademicInfoSection,
   PrivacyActionSection,
@@ -95,7 +96,14 @@ const SettingPrivacyContent = () => {
       {/* TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외) */}
       {/* <PrivacySocialSection /> */}
 
-      <PrivacyActionSection onLogout={() => setLogoutModalOpen(true)} />
+      <PrivacyActionSection
+        actions={[
+          {
+            type: PRIVACY_ACTION_TYPE.LOGOUT,
+            onClick: () => setLogoutModalOpen(true),
+          },
+        ]}
+      />
 
       <LogoutConfirmModal
         open={logoutModalOpen}
