@@ -43,13 +43,19 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
               suppressHydrationWarning
               className="cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-200 active:bg-gray-300"
               onClick={(e) => e.stopPropagation()}
+              onPointerDown={(e) => e.stopPropagation()}
             >
               <Menu active size={20} />
             </button>
           </Dropdown.Trigger>
 
-          <Dropdown.Content align="end">
+          <Dropdown.Content
+            align="end"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => e.stopPropagation()}
+          >
             <Dropdown.Item
+              data-profile-menu-action="true"
               className="justify-center px-10 py-2.5 text-base font-bold"
               onSelect={(e) => {
                 e.preventDefault?.();

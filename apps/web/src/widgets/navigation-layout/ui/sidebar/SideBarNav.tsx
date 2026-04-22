@@ -1,8 +1,12 @@
 'use client';
 
+import { useState } from 'react';
+
 import { VStack, Sidebar, Skeleton } from '@causw/cds';
 
-import { useGetMeQuery } from '@/features/auth';
+import { LogoutConfirmModal } from '@/widgets/auth';
+
+import { useGetMeQuery, useLogout } from '@/features/auth';
 
 import { getProfileImageUrl } from '@/shared/lib';
 import { QueryErrorBoundary } from '@/shared/ui';
@@ -24,6 +28,8 @@ type SidebarNavProps = {
 
 export function SidebarNav({ selected }: SidebarNavProps) {
   const { data: user, isLoading } = useGetMeQuery();
+  const logout = useLogout();
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const profileImageUrl = user?.profileImage
     ? getProfileImageUrl({
@@ -75,7 +81,6 @@ export function SidebarNav({ selected }: SidebarNavProps) {
 
       {/* FOOTER */}
       <Sidebar.Footer>
-        {/* TODO: api 연결, features/auth의 useLogout 훅 + widgets/auth의 LogoutConfirmModal 사용 */}
         {isLoading && (
           <Skeleton tone="neutral" width={227} height={60}></Skeleton>
         )}
@@ -84,9 +89,15 @@ export function SidebarNav({ selected }: SidebarNavProps) {
             img={profileImageUrl}
             name={user.name}
             email={user.email}
-            onLogout={() => {}}
+            onLogout={() => setLogoutModalOpen(true)}
           />
-        )}{' '}
+        )}
+
+        <LogoutConfirmModal
+          open={logoutModalOpen}
+          onOpenChange={setLogoutModalOpen}
+          onConfirm={logout}
+        />
       </Sidebar.Footer>
     </Sidebar>
   );
