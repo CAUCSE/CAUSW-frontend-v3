@@ -2,6 +2,8 @@
 
 import { FormProvider } from 'react-hook-form';
 
+import { useRouter } from 'next/navigation';
+
 import { CTAButton, VStack } from '@causw/cds';
 
 import { AuthContainer, EmailVerificationHeader } from '@/widgets/auth';
@@ -34,11 +36,17 @@ export const EmailVerificationPage = () => {
     email,
   });
 
+  const router = useRouter();
+
   return (
     <FormProvider {...methods}>
       <MobileOnly>
         <ActionHeader>
-          <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+          <ActionHeader.BackButton
+            onClick={() => router.replace('/auth/sign-in')}
+          >
+            뒤로
+          </ActionHeader.BackButton>
         </ActionHeader>
       </MobileOnly>
 
@@ -46,7 +54,11 @@ export const EmailVerificationPage = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <DesktopOnly>
             <ActionHeader className="mb-10 px-0">
-              <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+              <ActionHeader.BackButton
+                onClick={() => router.replace('/auth/sign-in')}
+              >
+                뒤로
+              </ActionHeader.BackButton>
             </ActionHeader>
           </DesktopOnly>
 
