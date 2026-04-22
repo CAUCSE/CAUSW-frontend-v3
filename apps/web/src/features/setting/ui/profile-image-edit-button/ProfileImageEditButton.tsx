@@ -22,19 +22,19 @@ export const ProfileImageEditButton = ({
     >
       <MobileOnly>
         <ProfileAvatar
-        size={80}
-        profileImageType={profileImageType}
-        profileImageUrl={profileImageUrl}
-        className="my-1 shrink-0"
+          size={80}
+          profileImageType={profileImageType}
+          profileImageUrl={profileImageUrl}
+          className="my-1 shrink-0"
         />
       </MobileOnly>
       <DesktopOnly>
-      <ProfileAvatar
-        size={120}
-        profileImageType={profileImageType}
-        profileImageUrl={profileImageUrl}
-        className="my-1 shrink-0"
-      />
+        <ProfileAvatar
+          size={120}
+          profileImageType={profileImageType}
+          profileImageUrl={profileImageUrl}
+          className="my-1 shrink-0"
+        />
       </DesktopOnly>
       <Float floatType="absolute" right={0} bottom={0}>
         <div className="flex h-6 w-6 items-center justify-center rounded-full bg-black p-1.5">

@@ -1,0 +1,1 @@
+export { PhoneNumberChangeNoticeModal } from './PhoneNumberChangeNoticeModal';

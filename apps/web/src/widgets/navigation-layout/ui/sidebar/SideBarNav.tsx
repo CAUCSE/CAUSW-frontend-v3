@@ -75,6 +75,7 @@ export function SidebarNav({ selected }: SidebarNavProps) {
 
       {/* FOOTER */}
       <Sidebar.Footer>
+        {/* TODO: api 연결, features/auth의 useLogout 훅 + widgets/auth의 LogoutConfirmModal 사용 */}
         {isLoading && (
           <Skeleton tone="neutral" width={227} height={60}></Skeleton>
         )}

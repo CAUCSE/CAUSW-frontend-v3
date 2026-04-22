@@ -29,8 +29,8 @@ export function CalendarEventListPreview() {
   const { viewMonth, setViewMonth, scheduleApiParams, currentMonth } =
     useCalendarMonth();
 
-  const { data: schedulesItems = [], isLoading } = useCalendarSchedules(scheduleApiParams);
-
+  const { data: schedulesItems = [], isLoading } =
+    useCalendarSchedules(scheduleApiParams);
 
   return (
     <VStack>
@@ -78,7 +78,7 @@ export function CalendarEventListPreview() {
               );
             })
           ) : isLoading ? (
-            <SuspenseView/>
+            <SuspenseView />
           ) : (
             <NoDataView>
               <NoDataView.Icon>

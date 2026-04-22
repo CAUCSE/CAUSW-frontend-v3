@@ -74,6 +74,12 @@ export const useSignOutMutation = (
 ) => {
   return useMutation({
     mutationFn: (data: SignoutRequestDto) => signout(data),
+    onMutate: () => {
+      toast.loading('로그아웃 중...');
+    },
+    onSuccess: () => {
+      toast.success('로그아웃되었습니다.');
+    },
     onError: (error: Error) => {
       toast.error(extractErrorMessage(error, '로그아웃에 실패했습니다.'));
     },

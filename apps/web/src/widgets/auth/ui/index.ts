@@ -18,6 +18,7 @@ export {
 export { TermsDetailDialog } from './terms-detail-dialog';
 export { TermsDialog } from './terms-dialog';
 export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
+export { LogoutConfirmModal } from './logout-confirm-modal';
 export { SignInImageSection } from './sign-in-image-section';
 export { OauthAdditionalInfoForm } from './oauth-additional-info-form';
 export { OauthAdditionalInfoNotice } from './oauth-additional-info-notice';
