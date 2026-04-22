@@ -45,7 +45,7 @@ export const NotificationListSection = () => {
 
   return (
     <VStack as="section" gap="md" className="px-4">
-      <Text typography="title-22-bold" textColor="gray-700">
+      <Text typography="title-22-bold" textColor="gray-700" className="pl-1">
         알림
       </Text>
       <NotificationItemList notifications={unReadNotifications} />
