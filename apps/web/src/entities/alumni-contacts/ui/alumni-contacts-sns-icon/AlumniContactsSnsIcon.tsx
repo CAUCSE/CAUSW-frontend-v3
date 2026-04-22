@@ -1,5 +1,5 @@
 import {
-  BlindqLogo,
+  BlinqLogo,
   DaumCafeLogo,
   FacebookLogo,
   GithubLogo,
@@ -72,7 +72,7 @@ export const AlumniContactsSnsIcon = ({
     case ALUMNI_CONTACTS_SNS_TYPE.HIHELLO:
       return <HiHelloLogo size={24} />;
     case ALUMNI_CONTACTS_SNS_TYPE.BLINQ:
-      return <BlindqLogo size={24} />;
+      return <BlinqLogo size={24} />;
     case ALUMNI_CONTACTS_SNS_TYPE.POPL:
       return <PoplLogo size={24} />;
     default:
