@@ -12,6 +12,7 @@ export interface SignupRequestDto {
 
 export interface SignupResponseDto {
   accessToken: string;
+  refreshToken: string;
   name: string;
   email: string;
   profileImgUrl: string;
@@ -24,6 +25,7 @@ export interface SigninRequestDto {
 
 export interface SigninResponseDto {
   accessToken: string;
+  refreshToken: string;
   name: string;
   email: string;
   profileImgUrl: string;
@@ -126,6 +128,7 @@ type AcademicStatus =
 
 export interface AuthResponseDto {
   accessToken: string;
+  refreshToken: string;
   name: string;
   email: string;
   profileImage: {
@@ -134,14 +137,6 @@ export interface AuthResponseDto {
   };
   onboardingStatus: OnboardingStatus;
   academicStatus: AcademicStatus;
-}
-
-/** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
-export interface GoogleLoginResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
 }
 
 export interface FindEmailRequestDto {
