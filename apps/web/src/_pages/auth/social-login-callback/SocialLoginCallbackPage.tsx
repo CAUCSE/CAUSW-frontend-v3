@@ -38,8 +38,7 @@ export const SocialLoginCallbackPage = () => {
           throw new Error('No RefreshToken');
         }
 
-        await TokenManager.setRefreshToken(refreshToken);
-        const auth = await TokenManager.refreshAuth();
+        const auth = await TokenManager.refreshAuth(refreshToken);
         await TokenManager.setAccessToken(auth.accessToken);
         await TokenManager.setRefreshToken(auth.refreshToken);
         routeAfterSignIn(router, auth.onboardingStatus);

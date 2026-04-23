@@ -36,9 +36,7 @@ import {
 
 export class TokenManager {
   // Access Token 재발급
-  static async refreshAuth(): Promise<AuthResponseDto> {
-    const refreshToken = await this.getRefreshToken();
-
+  static async refreshAuth(refreshToken: string): Promise<AuthResponseDto> {
     const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
@@ -115,14 +113,13 @@ export class TokenManager {
     }
   }
 
-  static async syncRefreshToken(): Promise<void> {
+  static async syncTokens(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
+      const accessToken = getClientATK();
 
-      if (!refreshToken) {
-        return;
-      }
       await setNativeRTK(refreshToken);
+      await setNativeATK(accessToken);
     }
   }
 
