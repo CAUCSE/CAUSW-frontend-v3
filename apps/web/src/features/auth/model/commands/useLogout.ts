@@ -2,8 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useQueryClient } from '@tanstack/react-query';
-
+import { CLEAR_QUERY_PARAM, CLEAR_QUERY_PARAM_VALUE } from '@/shared/constants';
 import { TokenManager, getNativeFCM, removeNativeFCM } from '@/shared/storage';
 import { isMobile } from '@/shared/utils';
 
@@ -11,7 +10,6 @@ import { useSignOutMutation } from '../mutations';
 
 export const useLogout = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const signOutMutation = useSignOutMutation();
 
   return async () => {
@@ -24,7 +22,8 @@ export const useLogout = () => {
     if (isMobile) {
       await removeNativeFCM();
     }
-    queryClient.clear();
-    router.push('/auth/sign-in');
+    await router.replace(
+      `/auth/sign-in?${CLEAR_QUERY_PARAM}=${CLEAR_QUERY_PARAM_VALUE}`,
+    );
   };
 };
