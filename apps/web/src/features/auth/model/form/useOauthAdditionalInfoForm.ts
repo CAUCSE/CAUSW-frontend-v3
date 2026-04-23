@@ -9,33 +9,43 @@ import { useSocialRegistrationMutation } from '@/features/auth';
 import {
   OAUTH_ADDITIONAL_INFO_FORM_FIELD,
   infoSchema,
-  type InfoFormData,
+  TERMS_FORM_FIELD,
+  termsAgreementSchema,
+  type SocialLoginAdditionalInfoRequestDto,
 } from '@/entities/auth';
 
 import { usePhoneNumberChangeHandler } from '@/shared/hooks';
 
 export const useOauthAdditionalInfoForm = () => {
   const socialRegistrationMutation = useSocialRegistrationMutation();
-  const methods = useForm<InfoFormData>({
-    resolver: zodResolver(infoSchema),
+  const methods = useForm<SocialLoginAdditionalInfoRequestDto>({
+    resolver: zodResolver(infoSchema.and(termsAgreementSchema)),
     mode: 'onBlur',
     defaultValues: {
       name: '',
       phoneNumber: '',
       nickname: '',
+      agreedTermsIds: [],
     },
   });
 
   const isSubmitEnabled = methods.formState.isValid;
 
-  const { handlePhoneNumberChange } = usePhoneNumberChangeHandler<InfoFormData>(
-    {
+  const { handlePhoneNumberChange } =
+    usePhoneNumberChangeHandler<SocialLoginAdditionalInfoRequestDto>({
       setValue: methods.setValue,
       fieldName: OAUTH_ADDITIONAL_INFO_FORM_FIELD.phoneNumber,
-    },
-  );
+    });
 
-  const onSubmit = async (data: InfoFormData) => {
+  const setAgreedTermsIds = (agreedTermsIds: string[]) => {
+    methods.setValue(TERMS_FORM_FIELD.agreedTermsIds, agreedTermsIds, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
+  const onSubmit = async (data: SocialLoginAdditionalInfoRequestDto) => {
     await socialRegistrationMutation.mutateAsync(data);
   };
 
@@ -43,6 +53,7 @@ export const useOauthAdditionalInfoForm = () => {
     methods,
     isSubmitEnabled,
     handlePhoneNumberChange,
+    setAgreedTermsIds,
     onSubmit,
   };
 };

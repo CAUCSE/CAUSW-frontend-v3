@@ -158,6 +158,7 @@ export interface SocialLoginAdditionalInfoRequestDto {
   name: string;
   phoneNumber: string;
   nickname: string;
+  agreedTermsIds: string[];
 }
 
 type AcademicStatus =
