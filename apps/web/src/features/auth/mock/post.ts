@@ -19,6 +19,7 @@ export const postHandler = [
         message: 'Signup successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: 'John Doe',
           email: 'john.doe@example.com',
           profileImgUrl: 'https://picsum.photos/seed/profile1/200/200',
@@ -37,6 +38,7 @@ export const postHandler = [
         message: 'Login successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: 'John Doe',
           email: 'john.doe@example.com',
           profileImgUrl: 'https://picsum.photos/seed/profile1/200/200',
@@ -52,6 +54,7 @@ export const postHandler = [
         message: 'Native social login successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: '홍길동',
           email: 'hong.gildong@example.com',
           profileImage: {

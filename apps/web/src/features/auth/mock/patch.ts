@@ -15,6 +15,7 @@ export const patchHandler = [
         message: '요청 처리 성공',
         data: {
           accessToken: 'test',
+          refreshToken: 'refresh-test',
           name: 'test',
           email: 'test',
           profileImage: {
