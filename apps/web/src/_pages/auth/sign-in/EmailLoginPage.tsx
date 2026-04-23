@@ -34,7 +34,7 @@ export const EmailLoginPage = () => {
   const signInMutation = useSignInMutation({
     onSuccess: async (res) => {
       await TokenManager.setAccessToken(res.accessToken);
-      await TokenManager.setRefreshToken();
+      await TokenManager.setRefreshToken(res.refreshToken);
 
       routeAfterSignIn(router, res.onboardingStatus);
       void compareFCMToken();
