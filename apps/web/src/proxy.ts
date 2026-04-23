@@ -10,6 +10,10 @@ import {
 import { TokenManager } from './shared/storage';
 import { isAuthRoute, shouldRefreshAccessToken } from './shared/utils/auth';
 
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
+};
+
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
