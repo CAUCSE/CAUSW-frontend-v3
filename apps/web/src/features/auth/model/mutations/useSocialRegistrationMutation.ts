@@ -12,6 +12,7 @@ import type {
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
+import { TokenManager } from '@/shared/storage';
 import { extractErrorMessage } from '@/shared/utils';
 
 import { routeAfterSignIn } from '../../lib';
@@ -35,7 +36,9 @@ export const useSocialRegistrationMutation = (
     onMutate: () => {
       toast.loading('추가 정보를 저장하고 있어요...');
     },
-    onSuccess: (data: AuthResponseDto) => {
+    onSuccess: async (data: AuthResponseDto) => {
+      await TokenManager.setAccessToken(data.accessToken);
+      await TokenManager.setRefreshToken(data.refreshToken);
       toast.success('추가 정보 입력이 완료되었습니다.');
       routeAfterSignIn(router, data.onboardingStatus);
     },
