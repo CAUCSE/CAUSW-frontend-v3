@@ -20,6 +20,7 @@ import type {
 
 import { API } from '@/shared/api';
 import { AUTH_API_PREFIX } from '@/shared/constants';
+import { TokenManager } from '@/shared/storage';
 
 export const signup = async (data: SignupRequestDto) => {
   return API.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, data);
@@ -30,7 +31,13 @@ export const signin = async (data: SigninRequestDto) => {
 };
 
 export const signout = async (data: SignoutRequestDto) => {
-  return API.post<SignoutResponseDto>(`${AUTH_API_PREFIX}/logout`, data);
+  const refreshToken = await TokenManager.getRefreshToken();
+
+  return API.post<SignoutResponseDto>(`${AUTH_API_PREFIX}/logout`, data, {
+    headers: {
+      'Refresh-Authorization': `Bearer ${refreshToken}`,
+    },
+  });
 };
 
 export const sendEmailVerificationCode = async (
