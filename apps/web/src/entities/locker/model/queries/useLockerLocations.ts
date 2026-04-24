@@ -2,13 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
-import { getLockerLocations } from '../../api';
-import { lockerQueryKey } from '../../config';
+import { lockerQueryOptions } from '../../config';
 
 export const useLockerLocations = () => {
   return useQuery({
-    queryKey: lockerQueryKey.locations(),
-    queryFn: getLockerLocations,
+    ...lockerQueryOptions.locations(),
     staleTime: QUERY_STALE_TIME.SHORT,
   });
 };
