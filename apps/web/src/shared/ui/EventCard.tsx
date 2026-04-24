@@ -30,6 +30,13 @@ export function EventCard({
   className,
   rightElement,
 }: EventCardProps) {
+  const TITLE_INTERACTIVE_TEXT_STYLES =
+    'transition-colors group-hover:text-gray-400 group-active:text-gray-400';
+  const DESCRIPTION_INTERACTIVE_TEXT_STYLES =
+    'transition-colors group-hover:text-gray-300 group-active:text-gray-300';
+  const CHEVRON_INTERACTIVE_STYLES =
+    'transition-colors fill-gray-400 group-hover:fill-gray-300 group-active:fill-gray-300';
+
   const CardContent = (
     <HStack
       className={mergeStyles(
@@ -48,14 +55,26 @@ export function EventCard({
         </div>
 
         <VStack className={'flex-1 justify-center gap-0 overflow-hidden'}>
-          <Text typography="subtitle-16-bold" className="truncate">
+          <Text
+            typography="subtitle-16-bold"
+            className={mergeStyles('truncate', TITLE_INTERACTIVE_TEXT_STYLES)}
+          >
             {title}
           </Text>
-          <HStack className="items-center gap-1 text-sm text-gray-400">
+          <HStack
+            className={mergeStyles(
+              'items-center gap-1 text-sm text-gray-400',
+              DESCRIPTION_INTERACTIVE_TEXT_STYLES,
+            )}
+          >
             {descriptions.map((desc, idx) => (
               <React.Fragment key={idx}>
                 {typeof desc === 'string' ? (
-                  <Text typography="body-14-regular" textColor="gray-400">
+                  <Text
+                    typography="body-14-regular"
+                    textColor="gray-400"
+                    className={DESCRIPTION_INTERACTIVE_TEXT_STYLES}
+                  >
                     {desc}
                   </Text>
                 ) : (
@@ -75,7 +94,9 @@ export function EventCard({
       <div className="flex shrink-0 items-center justify-center">
         {rightElement
           ? rightElement
-          : link && <ChevronRight size={14} className="text-gray-400" />}
+          : link && (
+              <ChevronRight size={14} className={CHEVRON_INTERACTIVE_STYLES} />
+            )}
       </div>
     </HStack>
   );
@@ -83,7 +104,7 @@ export function EventCard({
   if (!link) return CardContent;
 
   return (
-    <Link href={link} className="w-full cursor-pointer">
+    <Link href={link} className="group w-full cursor-pointer">
       {CardContent}
     </Link>
   );
