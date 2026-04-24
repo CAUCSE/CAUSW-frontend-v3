@@ -1,13 +1,4 @@
-import {
-  Bell,
-  Board,
-  Book,
-  Contacts,
-  Home,
-  Pen,
-  Question,
-  Setting,
-} from '@causw/cds';
+import { Bell, Board, Book, Contacts, Home, Pen, Setting } from '@causw/cds';
 
 import { type BottomNavItem, type SidebarItem } from './types';
 
@@ -40,12 +31,12 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
 ];
 
 export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
-  {
-    key: 'info',
-    label: '크자회 소개',
-    icon: <Question size={18} />,
-    href: '/info',
-  },
+  // {
+  //   key: 'info',
+  //   label: '크자회 소개',
+  //   icon: <Question size={18} />,
+  //   href: '/info',
+  // },
   {
     key: 'notifications',
     label: '알림',
