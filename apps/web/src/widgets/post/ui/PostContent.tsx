@@ -46,7 +46,7 @@ export const PostContent = ({ post }: PostContentProps) => {
         <PostHeader
           authorName={post.displayWriterNickname}
           createdAt={post.createdAt}
-          avatarUrl={post.writerProfileImage}
+          profileImage={post.writerProfileImage}
           // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
           // isOfficial={}
           isMine={post.isOwner}

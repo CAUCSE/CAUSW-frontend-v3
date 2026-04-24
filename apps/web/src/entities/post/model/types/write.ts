@@ -1,5 +1,5 @@
 /* 게시글 작성 */
-export interface PostImage {
+export interface PostMetaImage {
   order: number;
   fileIndex: number;
   isRepresentative: boolean;
@@ -9,7 +9,7 @@ export interface PostCreateRequestDto {
   content: string;
   boardId: string;
   isAnonymous: boolean;
-  iamges: PostImage[];
+  images: PostMetaImage[];
 }
 
 export interface PostCreateResponseDto {
