@@ -1,4 +1,4 @@
-import { ChevronRight } from '@causw/cds';
+import { ChevronRight, mergeStyles } from '@causw/cds';
 
 import { getCeremonyIcon } from '../config';
 import type { CeremonyItem } from '../model';
@@ -63,19 +63,28 @@ export const CeremonyListItem = ({ item, onClick }: CeremonyListItemProps) => {
 
       <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
         <span
-          className={`typo-subtitle-16-bold w-full truncate text-left text-gray-700 ${TITLE_INTERACTIVE_TEXT_STYLES}`}
+          className={mergeStyles(
+            'typo-subtitle-16-bold w-full truncate text-left text-gray-700',
+            TITLE_INTERACTIVE_TEXT_STYLES,
+          )}
         >
           {title}
         </span>
         <div className="flex items-center gap-2">
           <span
-            className={`typo-body-14-regular text-gray-400 ${DESCRIPTION_INTERACTIVE_TEXT_STYLES}`}
+            className={mergeStyles(
+              'typo-body-14-regular text-gray-400',
+              DESCRIPTION_INTERACTIVE_TEXT_STYLES,
+            )}
           >
             {formatDateRange(startDate, endDate, startTime, endTime)}
           </span>
           <span className="h-2 w-px bg-gray-200" />
           <span
-            className={`typo-body-14-regular text-gray-400 ${DESCRIPTION_INTERACTIVE_TEXT_STYLES}`}
+            className={mergeStyles(
+              'typo-body-14-regular text-gray-400',
+              DESCRIPTION_INTERACTIVE_TEXT_STYLES,
+            )}
           >
             {type}
           </span>
@@ -84,7 +93,7 @@ export const CeremonyListItem = ({ item, onClick }: CeremonyListItemProps) => {
 
       <ChevronRight
         size={14}
-        className={`shrink-0 ${CHEVRON_INTERACTIVE_STYLES}`}
+        className={mergeStyles('shrink-0', CHEVRON_INTERACTIVE_STYLES)}
       />
     </button>
   );
