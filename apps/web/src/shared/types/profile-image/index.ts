@@ -3,5 +3,6 @@ export type {
   ChangeMyProfileImageRequest,
   DefaultProfileImageType,
   ProfileImageEditValue,
+  ProfileImageValue,
   UserProfileImageType,
 } from './profileImage';

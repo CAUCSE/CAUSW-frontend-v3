@@ -2,11 +2,9 @@
 import { authHandler } from '@/features/auth/mock';
 
 import { alumniContactsHandler } from '@/entities/alumni-contacts';
-import { boardsHandler } from '@/entities/feed';
 import { notificationHandler } from '@/entities/notification';
 
 export const handlers = [
-  ...boardsHandler,
   ...notificationHandler,
   ...authHandler,
   ...alumniContactsHandler,
