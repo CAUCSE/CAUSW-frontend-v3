@@ -1,3 +1,5 @@
+import { Info } from '@causw/cds';
+
 import type { LockerPhase } from '@/entities/locker';
 
 import { getPeriodLabel, PHASE_LABEL } from '../model';
@@ -14,9 +16,7 @@ export const LockerNoticeCard = ({
   return (
     <section className="flex flex-col gap-[0.625rem]">
       <div className="flex items-center gap-1 px-1">
-        <span className="flex h-4 w-4 items-center justify-center rounded-full bg-gray-300 text-[0.625rem] font-bold text-white">
-          i
-        </span>
+        <Info className="text-gray-300" size={16} />
         <p className="text-base font-bold tracking-[-0.02rem] text-gray-700">
           사물함 기간 안내
         </p>
