@@ -43,7 +43,7 @@ export type LockerDetailItemStatus = 'AVAILABLE' | 'UNAVAILABLE' | 'MINE';
 export type LockerDetailItem = {
   lockerId: string;
   number: string;
-  status: LockerDetailItemStatus | string;
+  status: LockerDetailItemStatus;
 };
 
 export type LockerLocationDetailResponse = {
