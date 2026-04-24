@@ -1,6 +1,6 @@
 'use client';
 
-import { Dialog, mergeStyles } from '@causw/cds';
+import { Dialog } from '@causw/cds';
 
 import { LockerActionPanel } from '@/features/locker-control';
 
@@ -9,143 +9,29 @@ import type { LockerMyResponse } from '@/entities/locker';
 import { useBreakpoint } from '@/shared/hooks';
 import { ActionHeader } from '@/shared/ui';
 
-import {
-  getFloorNameFromDisplayName,
-  getLockerCellClassName,
-  type ActiveFloor,
-  type LockerGridItem,
-} from '../model';
+import { type ActiveFloor, type LockerGridItem } from '../model';
 
-import { LockerInfoCard } from './LockerInfoCard';
+import { LockerPanelContent } from './LockerPanelContent';
 
-const LockerSelectionGrid = ({
-  lockers,
-  onSelect,
-  selectedLockerId,
-}: {
-  lockers: LockerGridItem[];
-  onSelect: (lockerId: string) => void;
-  selectedLockerId: string | null;
-}) => {
-  return (
-    <div className="desktop:gap-3 grid grid-cols-5 gap-2">
-      {lockers.map((locker) => {
-        const isSelected = selectedLockerId === locker.lockerId;
-        const isClickable = locker.viewStatus === 'available';
-
-        return (
-          <button
-            key={locker.lockerId}
-            type="button"
-            disabled={!isClickable}
-            onClick={() => isClickable && onSelect(locker.lockerId)}
-            className={mergeStyles(
-              'flex h-[4.3125rem] items-center justify-center rounded-md text-lg tracking-[-0.0225rem] transition-colors',
-              isClickable ? 'cursor-pointer' : 'cursor-not-allowed',
-              getLockerCellClassName(locker.viewStatus, isSelected),
-            )}
-          >
-            {locker.lockerNumber}
-          </button>
-        );
-      })}
-    </div>
-  );
-};
-
-const LockerLegend = () => {
-  const items = [
-    { label: '선택 불가', className: 'bg-gray-300' },
-    { label: '선택 가능', className: 'border border-gray-300 bg-white' },
-    { label: '내 사물함', className: 'bg-blue-500' },
-  ];
-
-  return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      {items.map((item) => (
-        <div key={item.label} className="flex items-center gap-1.5">
-          <span
-            className={mergeStyles(
-              'h-[1.125rem] w-[1.125rem] rounded',
-              item.className,
-            )}
-          />
-          <span className="text-sm font-medium tracking-[-0.0175rem] text-gray-500">
-            {item.label}
-          </span>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const LockerPanelContent = ({
-  availableCount,
-  currentLocker,
-  errorMessage,
-  floorName,
-  isActionAvailable,
-  isLoading,
-  lockers,
-  onSelectLocker,
-  selectedLockerId,
-  totalCount,
-}: {
+interface LockerSelectionOverlayProps {
   availableCount: number;
+  canApply: boolean;
+  canExtend: boolean;
   currentLocker: LockerMyResponse | null;
   errorMessage: string | null;
-  floorName: string;
-  isActionAvailable: boolean;
+  floor: ActiveFloor | null;
   isLoading: boolean;
+  isPending: boolean;
   lockers: LockerGridItem[];
+  onApply: () => void;
+  onExtend: () => void;
+  onOpenChange: (open: boolean) => void;
+  onReturn: () => void;
   onSelectLocker: (lockerId: string) => void;
+  open: boolean;
   selectedLockerId: string | null;
   totalCount: number;
-}) => {
-  return (
-    <div className="flex flex-col gap-6 bg-gray-100">
-      <div className="px-1">
-        <h2 className="text-[1.375rem] font-bold tracking-[-0.0275rem] text-gray-700">
-          {floorName}
-        </h2>
-      </div>
-
-      {currentLocker &&
-        getFloorNameFromDisplayName(currentLocker.displayName) ===
-          floorName && <LockerInfoCard assignment={currentLocker} />}
-
-      <section className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3 px-1">
-          <p className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
-            {isLoading ? (
-              '사물함 정보를 불러오는 중이에요.'
-            ) : isActionAvailable ? (
-              <>
-                잔여 <span className="text-blue-700">{availableCount}개</span> /
-                전체 {totalCount}개
-              </>
-            ) : (
-              '사물함 신청기간이 아니에요.'
-            )}
-          </p>
-          <LockerLegend />
-        </div>
-
-        {errorMessage ? (
-          <div className="rounded-lg bg-white px-4 py-5 text-sm text-red-500">
-            {errorMessage}
-          </div>
-        ) : (
-          <LockerSelectionGrid
-            lockers={lockers}
-            onSelect={onSelectLocker}
-            selectedLockerId={selectedLockerId}
-          />
-        )}
-      </section>
-    </div>
-  );
-};
+}
 
 export const LockerSelectionOverlay = ({
   availableCount,
@@ -165,25 +51,7 @@ export const LockerSelectionOverlay = ({
   open,
   selectedLockerId,
   totalCount,
-}: {
-  availableCount: number;
-  canApply: boolean;
-  canExtend: boolean;
-  currentLocker: LockerMyResponse | null;
-  errorMessage: string | null;
-  floor: ActiveFloor | null;
-  isLoading: boolean;
-  isPending: boolean;
-  lockers: LockerGridItem[];
-  onApply: () => void;
-  onExtend: () => void;
-  onOpenChange: (open: boolean) => void;
-  onReturn: () => void;
-  onSelectLocker: (lockerId: string) => void;
-  open: boolean;
-  selectedLockerId: string | null;
-  totalCount: number;
-}) => {
+}: LockerSelectionOverlayProps) => {
   const { isMobileSize } = useBreakpoint();
 
   if (!floor) return null;
