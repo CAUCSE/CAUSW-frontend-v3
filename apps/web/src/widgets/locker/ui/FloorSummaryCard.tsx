@@ -1,12 +1,16 @@
+import { LockerApplyButton } from '@/features/locker-control';
+
 import type { LockerLocationSummary } from '@/entities/locker';
+
+interface FloorSummaryCardProps {
+  onOpen: (floor: LockerLocationSummary) => void;
+  summary: LockerLocationSummary;
+}
 
 export const FloorSummaryCard = ({
   onOpen,
   summary,
-}: {
-  onOpen: (floor: LockerLocationSummary) => void;
-  summary: LockerLocationSummary;
-}) => {
+}: FloorSummaryCardProps) => {
   const progressRatio = Math.min(
     summary.totalCount > 0 ? summary.availableCount / summary.totalCount : 0,
     1,
@@ -35,13 +39,7 @@ export const FloorSummaryCard = ({
         </p>
       </div>
 
-      <button
-        type="button"
-        onClick={() => onOpen(summary)}
-        className="mt-4 flex h-[3.25rem] w-full cursor-pointer items-center justify-center rounded-lg bg-blue-100 px-2 text-[0.9375rem] font-semibold tracking-[-0.01875rem] text-blue-700"
-      >
-        사물함 신청하기
-      </button>
+      <LockerApplyButton onClick={() => onOpen(summary)} />
     </article>
   );
 };

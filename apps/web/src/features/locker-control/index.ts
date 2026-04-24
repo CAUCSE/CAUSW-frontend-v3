@@ -1,2 +1,2 @@
 export { useLockerControl } from './model';
-export { LockerActionPanel } from './ui';
+export { LockerActionPanel, LockerApplyButton } from './ui';
