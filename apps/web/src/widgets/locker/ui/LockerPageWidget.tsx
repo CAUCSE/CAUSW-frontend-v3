@@ -20,10 +20,12 @@ export const LockerPageWidget = () => {
     canExtend,
     currentLocker,
     handleApply,
+    handleAutoReturnedNoticeClose,
     handleExtend,
     handleOpenFloor,
     handleReturn,
     handleSelectionOpenChange,
+    hasAutoReturnedNotice,
     initialError,
     isPending,
     isSelectionOpen,
@@ -93,7 +95,6 @@ export const LockerPageWidget = () => {
 
         <LockerNoticeCard
           endAt={periodStatusQuery.data?.endAt}
-          phase={periodStatusQuery.data?.phase}
           startAt={periodStatusQuery.data?.startAt}
         />
       </div>
@@ -107,7 +108,7 @@ export const LockerPageWidget = () => {
           activeFloorError
             ? extractErrorMessage(
                 activeFloorError,
-                '층 정보를 불러오지 못했어요.',
+                '층별 정보를 불러오지 못했어요.',
               )
             : null
         }
@@ -116,12 +117,14 @@ export const LockerPageWidget = () => {
         isPending={isPending}
         lockers={activeFloorLockers}
         onApply={handleApply}
+        onAcknowledgeAutoReturnedNotice={handleAutoReturnedNoticeClose}
         onExtend={handleExtend}
         onOpenChange={handleSelectionOpenChange}
         onReturn={handleReturn}
         onSelectLocker={setSelectedLockerId}
         open={isSelectionOpen}
         selectedLockerId={selectedLockerId}
+        shouldShowAutoReturnedNotice={hasAutoReturnedNotice}
         totalCount={activeFloorTotalCount}
       />
     </>
