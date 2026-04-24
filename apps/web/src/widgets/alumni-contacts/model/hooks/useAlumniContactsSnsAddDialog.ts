@@ -1,14 +1,21 @@
 'use client';
 
-import { type ChangeEvent, type KeyboardEvent, useRef, useState } from 'react';
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { useFormContext } from 'react-hook-form';
 
-import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
 import {
+  ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditForm,
   useWatchAlumniContactsEditFormField,
-} from '@/entities/alumni-contacts/model';
+} from '@/entities/alumni-contacts';
+import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT } from '@/entities/alumni-contacts/config';
 
 export const useAlumniContactsSnsAddDialog = () => {
   const { setValue } = useFormContext<AlumniContactsEditForm>();
@@ -19,7 +26,14 @@ export const useAlumniContactsSnsAddDialog = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [newSocialLink, setNewSocialLink] = useState<string>('');
+
   const addButtonRef = useRef<HTMLButtonElement>(null);
+
+  const canAdd = useMemo(() => {
+    return (
+      socialLinks.length < ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT.SOCIAL_LINKS
+    );
+  }, [socialLinks]);
 
   const handleClickTrigger = () => {
     setIsOpen(true);
@@ -62,6 +76,7 @@ export const useAlumniContactsSnsAddDialog = () => {
     isOpen,
     newSocialLink,
     addButtonRef,
+    canAdd,
     handleClickTrigger,
     handleOpenChange,
     handleNewSocialLinkChange,

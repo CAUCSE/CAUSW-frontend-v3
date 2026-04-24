@@ -2,7 +2,7 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import { HStack } from '@causw/cds';
+import { HStack, Text, VStack } from '@causw/cds';
 
 import { AlumniContactsEditFormSnsItem } from '@/features/alumni-contacts';
 
@@ -35,17 +35,28 @@ export const AlumniContactsEditFormSnsSection = () => {
   };
 
   return (
-    <HStack gap="sm" className="overflow-x-auto pt-3 pr-3">
-      <AlumniContactsSnsAddDialog />
-      {socialLinks.map((socialLink) => {
-        return (
-          <AlumniContactsEditFormSnsItem
-            key={socialLink}
-            socialLink={socialLink}
-            onClickDelete={() => handleDeleteSocialLink(socialLink)}
-          />
-        );
-      })}
-    </HStack>
+    <VStack className="w-full gap-3">
+      <HStack gap="sm" className="overflow-x-auto pt-3 pr-3">
+        {socialLinks.map((socialLink) => {
+          return (
+            <AlumniContactsEditFormSnsItem
+              key={socialLink}
+              socialLink={socialLink}
+              onClickDelete={() => handleDeleteSocialLink(socialLink)}
+            />
+          );
+        })}
+      </HStack>
+      <VStack gap="sm">
+        <AlumniContactsSnsAddDialog />
+        <Text
+          typography="body-14-regular"
+          textColor="gray-400"
+          className="text-center"
+        >
+          최대 10개까지 등록 가능합니다.
+        </Text>
+      </VStack>
+    </VStack>
   );
 };

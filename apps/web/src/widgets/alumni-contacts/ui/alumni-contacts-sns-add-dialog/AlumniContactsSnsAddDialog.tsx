@@ -2,10 +2,10 @@
 
 import { TextInput } from '@causw/cds';
 
+import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
+
 import { useAlumniContactsSnsAddDialog } from '../../model';
 import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
-
-import { AlumniContactsSnsAddDialogTrigger } from './AlumniContactsSnsAddDialogTrigger';
 
 export const AlumniContactsSnsAddDialog = () => {
   const {
@@ -13,6 +13,7 @@ export const AlumniContactsSnsAddDialog = () => {
     newSocialLink,
     addButtonRef,
     handleClickTrigger,
+    canAdd,
     handleNewSocialLinkChange,
     handleOpenChange,
     handleEnterPress,
@@ -21,7 +22,11 @@ export const AlumniContactsSnsAddDialog = () => {
 
   return (
     <>
-      <AlumniContactsSnsAddDialogTrigger onClick={handleClickTrigger} />
+      <AlumniContactsSingleFieldAddButton
+        label="SNS 추가"
+        onClick={handleClickTrigger}
+        disabled={!canAdd}
+      />
       <AlumniContactsSingleFieldDialog
         isOpen={isOpen}
         onOpenChange={handleOpenChange}

@@ -32,4 +32,7 @@ export {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditFormField,
 } from './alumniContactsEditFormField';
-export { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from './alumniContactsEditFormMaxLength';
+export {
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT,
+} from './alumniContactsEditFormLimit';
