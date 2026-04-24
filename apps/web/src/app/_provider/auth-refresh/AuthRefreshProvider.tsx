@@ -16,9 +16,10 @@ export function AuthRefreshProvider({ children }: PropsWithChildren) {
       if (!authRefreshed) {
         return;
       }
-
-      await TokenManager.syncTokens();
-      await TokenManager.removeAuthRefreshed();
+      Promise.all([
+        TokenManager.syncTokens(),
+        TokenManager.removeAuthRefreshed(),
+      ]);
     };
 
     void syncRefreshToken();
