@@ -1,8 +1,15 @@
 /* 게시글 작성 */
+export interface PostImage {
+  order: number;
+  fileIndex: number;
+  isRepresentative: boolean;
+}
+
 export interface PostCreateRequestDto {
   content: string;
   boardId: string;
   isAnonymous: boolean;
+  iamges: PostImage[];
 }
 
 export interface PostCreateResponseDto {

@@ -7,21 +7,21 @@ import { API } from '@/shared/api';
 
 /* 게시글 작성 */
 export const createPost = (
-  postCreateRequest: PostCreateRequestDto,
-  attachImageList?: File[],
+  request: PostCreateRequestDto,
+  imageFiles?: File[],
 ) => {
   const formData = new FormData();
 
   formData.append(
-    'postCreateRequest',
-    new Blob([JSON.stringify(postCreateRequest)], {
+    'request',
+    new Blob([JSON.stringify(request)], {
       type: 'application/json',
     }),
   );
 
-  if (attachImageList && attachImageList.length > 0) {
-    attachImageList.forEach((file) => {
-      formData.append('attachImageList', file);
+  if (imageFiles && imageFiles.length > 0) {
+    imageFiles.forEach((file) => {
+      formData.append('images', file);
     });
   }
 
