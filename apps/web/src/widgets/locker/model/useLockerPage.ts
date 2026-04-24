@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useLockerControl } from '@/features/locker-control';
+import { useLockerControl } from '@/features/locker';
 
 import type { LockerLocationSummary } from '@/entities/locker';
 import {

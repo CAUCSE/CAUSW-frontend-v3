@@ -2,7 +2,7 @@
 
 import { Dialog } from '@causw/cds';
 
-import { LockerActionPanel } from '@/features/locker-control';
+import { LockerActionPanel } from '@/features/locker';
 
 import type { LockerMyResponse } from '@/entities/locker';
 

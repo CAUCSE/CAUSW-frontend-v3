@@ -1,4 +1,4 @@
-import { LockerApplyButton } from '@/features/locker-control';
+import { LockerApplyButton } from '@/features/locker';
 
 import type { LockerLocationSummary } from '@/entities/locker';
 
