@@ -10,23 +10,9 @@ export interface SignupRequestDto {
   agreedTermsIds: string[];
 }
 
-export interface SignupResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
-}
-
 export interface SigninRequestDto {
   email: string;
   password: string;
-}
-
-export interface SigninResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
 }
 
 export type OnboardingStatus =
@@ -100,52 +86,6 @@ export interface TermsAgreementRequestDto {
   termsIds: string[];
 }
 
-export interface KakaoLoginRequestDto {
-  /** 카카오 OAuth 인가 코드 */
-  code: string;
-}
-
-export interface KakaoNativeLoginRequestDto {
-  /** Native SDK에서 받은 카카오 액세스 토큰 */
-  accessToken: string;
-}
-
-/** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
-export interface KakaoLoginResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
-}
-
-export interface AppleLoginRequestDto {
-  /** Apple OAuth 인가 코드 */
-  code: string;
-}
-
-export interface AppleNativeLoginRequestDto {
-  /** Native SDK에서 받은 Apple 액세스 토큰 */
-  accessToken: string;
-}
-
-/** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
-export interface AppleLoginResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
-}
-
-export interface GoogleLoginRequestDto {
-  /** Google OAuth 인가 코드 */
-  code: string;
-}
-
-export interface GoogleNativeLoginRequestDto {
-  /** Native SDK에서 받은 Google 액세스 토큰 */
-  accessToken: string;
-}
-
 export type NativeSocialLoginProvider = 'kakao' | 'apple' | 'google';
 
 export interface NativeSocialLoginRequestDto {
@@ -173,6 +113,7 @@ type AcademicStatus =
 
 export interface AuthResponseDto {
   accessToken: string;
+  refreshToken: string;
   name: string;
   email: string;
   profileImage: {
@@ -181,14 +122,6 @@ export interface AuthResponseDto {
   };
   onboardingStatus: OnboardingStatus;
   academicStatus: AcademicStatus;
-}
-
-/** SigninResponseDto와 동일한 구조를 공유하되, 추후 필드 확장을 위해 분리 */
-export interface GoogleLoginResponseDto {
-  accessToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
 }
 
 export interface FindEmailRequestDto {

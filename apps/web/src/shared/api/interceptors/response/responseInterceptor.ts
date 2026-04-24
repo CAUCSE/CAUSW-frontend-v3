@@ -3,11 +3,12 @@ import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { isPublicEndpoint } from '@/shared/utils/auth';
 import {
   isAccessTokenError,
+  isPublicEndpoint,
+  isServer,
   parseCustomErrorCode,
-} from '@/shared/utils/auth/errorHandler';
+} from '@/shared/utils';
 
 import { type BaseApiClient } from '../../instances';
 
@@ -39,6 +40,10 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
       // Access Token 만료 시 + 이전 에러코드 값 포함
       if (shouldHandleAccessTokenRefresh) {
+        if (isServer) {
+          throw error;
+        }
+
         if (apiWrapper.getIsRefreshing()) {
           return new Promise((resolve, reject) => {
             apiWrapper.addToRefreshQueue({
@@ -63,12 +68,12 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
         try {
           apiWrapper.setIsRefreshing(true);
 
-          const { accessToken: newAccessToken } =
-            await TokenManager.refreshAuth();
+          const refreshToken = await TokenManager.getRefreshToken();
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+            await TokenManager.refreshAuth(refreshToken);
 
           await TokenManager.setAccessToken(newAccessToken);
-          await TokenManager.setRefreshToken();
-          await TokenManager.setAuthRefreshed();
+          await TokenManager.setRefreshToken(newRefreshToken);
 
           apiWrapper.processRefreshQueue(newAccessToken);
 

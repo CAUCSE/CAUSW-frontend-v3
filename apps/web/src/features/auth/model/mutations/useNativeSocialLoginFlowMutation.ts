@@ -54,7 +54,7 @@ export const useNativeSocialLoginFlowMutation = (
     >['onSuccess']
   > = async (data) => {
     await TokenManager.setAccessToken(data.accessToken);
-    await TokenManager.setRefreshToken();
+    await TokenManager.setRefreshToken(data.refreshToken);
     routeAfterSignIn(router, data.onboardingStatus);
     toast.success('로그인되었습니다.');
   };

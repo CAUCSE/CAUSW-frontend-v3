@@ -1,4 +1,4 @@
-import { DesktopOnly, LogoHeader } from '@/shared/ui';
+import { ClearQueryProvider, DesktopOnly, LogoHeader } from '@/shared/ui';
 
 export default function AuthLayout({
   children,
@@ -10,7 +10,7 @@ export default function AuthLayout({
       <DesktopOnly>
         <LogoHeader></LogoHeader>
       </DesktopOnly>
-      {children}
+      <ClearQueryProvider>{children}</ClearQueryProvider>
     </>
   );
 }

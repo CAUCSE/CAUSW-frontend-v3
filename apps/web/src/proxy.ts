@@ -1,17 +1,32 @@
 import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+import {
+  STORAGE_ACCESS_KEY,
+  STORAGE_REFRESH_KEY,
+  STORAGE_AUTH_REFRESHED_KEY,
+  AUTH_REFRESHED_STORAGE_VALUE,
+} from './shared/config';
 import { TokenManager } from './shared/storage';
+import { isAuthRoute, shouldRefreshAccessToken } from './shared/utils';
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
+};
 
 export async function proxy(request: NextRequest) {
-  if (request.nextUrl.pathname === '/') {
+  const { pathname } = request.nextUrl;
+
+  if (pathname === '/') {
     return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   }
 
-  // TODO: 실제 경로 맞춰서 세분화
-  const privateRoutes = ['/home', '/feed', '/contacts', '/user'];
-  const accessToken = await TokenManager.getAccessToken();
-  const refreshToken = await TokenManager.getRefreshToken();
+  if (isAuthRoute(pathname)) {
+    return NextResponse.next();
+  }
+
+  const accessToken = request.cookies.get(STORAGE_ACCESS_KEY)?.value ?? '';
+  const refreshToken = request.cookies.get(STORAGE_REFRESH_KEY)?.value ?? '';
 
   const { device } = userAgent(request);
 
@@ -20,12 +35,24 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
   if (!accessToken && !refreshToken) {
-    if (
-      privateRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
-    ) {
+    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+  }
+
+  if (refreshToken && (!accessToken || shouldRefreshAccessToken(accessToken))) {
+    try {
+      const refreshedAuth = await TokenManager.refreshAuth(refreshToken);
+
+      const response = NextResponse.next();
+      response.cookies.set(STORAGE_ACCESS_KEY, refreshedAuth.accessToken);
+      response.cookies.set(STORAGE_REFRESH_KEY, refreshedAuth.refreshToken);
+      response.cookies.set(
+        STORAGE_AUTH_REFRESHED_KEY,
+        AUTH_REFRESHED_STORAGE_VALUE,
+      );
+      return response;
+    } catch {
       return NextResponse.redirect(new URL('/auth/sign-in', request.url));
     }
-    return NextResponse.next();
   }
 
   return NextResponse.next();

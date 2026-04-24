@@ -1,17 +1,12 @@
 import { HttpResponse, passthrough } from 'msw';
 
-import {
-  type AuthResponseDto,
-  type SigninResponseDto,
-  type SignoutResponseDto,
-  type SignupResponseDto,
-} from '@/entities/auth';
+import { type AuthResponseDto, type SignoutResponseDto } from '@/entities/auth';
 
 import { AUTH_API_PREFIX } from '@/shared/constants';
 import { mswHttp } from '@/shared/lib';
 
 export const postHandler = [
-  mswHttp.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {
+  mswHttp.post<AuthResponseDto>(`${AUTH_API_PREFIX}/signup`, () => {
     return passthrough();
     return HttpResponse.json(
       {
@@ -19,9 +14,15 @@ export const postHandler = [
         message: 'Signup successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: 'John Doe',
           email: 'john.doe@example.com',
-          profileImgUrl: 'https://picsum.photos/seed/profile1/200/200',
+          profileImage: {
+            profileImageType: 'CUSTOM',
+            profileImageUrl: 'https://picsum.photos/seed/profile1/200/200',
+          },
+          onboardingStatus: 'GUEST',
+          academicStatus: 'UNDETERMINED',
         },
       },
       {
@@ -29,7 +30,7 @@ export const postHandler = [
       },
     );
   }),
-  mswHttp.post<SigninResponseDto>(`${AUTH_API_PREFIX}/login`, () => {
+  mswHttp.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login`, () => {
     return passthrough();
     return HttpResponse.json(
       {
@@ -37,9 +38,15 @@ export const postHandler = [
         message: 'Login successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: 'John Doe',
           email: 'john.doe@example.com',
-          profileImgUrl: 'https://picsum.photos/seed/profile1/200/200',
+          profileImage: {
+            profileImageType: 'CUSTOM',
+            profileImageUrl: 'https://picsum.photos/seed/profile1/200/200',
+          },
+          onboardingStatus: 'GUEST',
+          academicStatus: 'UNDETERMINED',
         },
       },
       { status: 201 },
@@ -52,6 +59,7 @@ export const postHandler = [
         message: 'Native social login successful',
         data: {
           accessToken: '1234567890',
+          refreshToken: 'refresh-1234567890',
           name: '홍길동',
           email: 'hong.gildong@example.com',
           profileImage: {

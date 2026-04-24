@@ -32,10 +32,20 @@ export const SocialLoginCallbackPage = () => {
 
     const handleCallback = async () => {
       try {
-        const auth = await TokenManager.refreshAuth();
-        await TokenManager.setAccessToken(auth.accessToken);
-        await TokenManager.setRefreshToken();
-        routeAfterSignIn(router, auth.onboardingStatus);
+        const refreshToken = searchParams.get('refreshToken');
+
+        if (!refreshToken) {
+          throw new Error('No RefreshToken');
+        }
+
+        const {
+          accessToken,
+          refreshToken: newRefreshToken,
+          onboardingStatus,
+        } = await TokenManager.refreshAuth(refreshToken);
+        await TokenManager.setAccessToken(accessToken);
+        await TokenManager.setRefreshToken(newRefreshToken);
+        routeAfterSignIn(router, onboardingStatus);
       } catch {
         toast.error('잘못된 인증 정보입니다.');
         router.replace('/auth/sign-in');

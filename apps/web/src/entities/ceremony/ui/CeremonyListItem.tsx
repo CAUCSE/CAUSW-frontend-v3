@@ -1,4 +1,4 @@
-import { ChevronRight } from '@causw/cds';
+import { ChevronRight, mergeStyles } from '@causw/cds';
 
 import { getCeremonyIcon } from '../config';
 import type { CeremonyItem } from '../model';
@@ -44,31 +44,57 @@ const formatDateRange = (
 export const CeremonyListItem = ({ item, onClick }: CeremonyListItemProps) => {
   const { title, category, type, startDate, endDate, startTime, endTime } =
     item;
+  const TITLE_INTERACTIVE_TEXT_STYLES =
+    'transition-colors group-hover:text-gray-400 group-active:text-gray-400';
+  const DESCRIPTION_INTERACTIVE_TEXT_STYLES =
+    'transition-colors group-hover:text-gray-300 group-active:text-gray-300';
+  const CHEVRON_INTERACTIVE_STYLES =
+    'transition-colors fill-gray-300 group-hover:fill-gray-300 group-active:fill-gray-300';
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full cursor-pointer items-center gap-5 rounded-xl bg-white p-4"
+      className="group flex w-full cursor-pointer items-center gap-5 rounded-xl bg-white p-4"
     >
       <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gray-100">
         {getCeremonyIcon(category)}
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-        <span className="typo-subtitle-16-bold w-full truncate text-left text-gray-700">
+        <span
+          className={mergeStyles(
+            'typo-subtitle-16-bold w-full truncate text-left text-gray-700',
+            TITLE_INTERACTIVE_TEXT_STYLES,
+          )}
+        >
           {title}
         </span>
         <div className="flex items-center gap-2">
-          <span className="typo-body-14-regular text-gray-400">
+          <span
+            className={mergeStyles(
+              'typo-body-14-regular text-gray-400',
+              DESCRIPTION_INTERACTIVE_TEXT_STYLES,
+            )}
+          >
             {formatDateRange(startDate, endDate, startTime, endTime)}
           </span>
           <span className="h-2 w-px bg-gray-200" />
-          <span className="typo-body-14-regular text-gray-400">{type}</span>
+          <span
+            className={mergeStyles(
+              'typo-body-14-regular text-gray-400',
+              DESCRIPTION_INTERACTIVE_TEXT_STYLES,
+            )}
+          >
+            {type}
+          </span>
         </div>
       </div>
 
-      <ChevronRight size={14} className="shrink-0 fill-gray-300" />
+      <ChevronRight
+        size={14}
+        className={mergeStyles('shrink-0', CHEVRON_INTERACTIVE_STYLES)}
+      />
     </button>
   );
 };

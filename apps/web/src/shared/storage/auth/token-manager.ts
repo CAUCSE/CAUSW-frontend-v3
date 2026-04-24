@@ -14,6 +14,7 @@ import {
   removeClientAuthRefreshed,
   removeClientRTK,
   setClientATK,
+  setClientRTK,
 } from './auth-storage';
 import {
   getNativeATK,
@@ -30,18 +31,19 @@ import {
   removeServerRTK,
   setServerAuthRefreshed,
   setServerATK,
+  setServerRTK,
 } from './auth-storage.server';
 
 export class TokenManager {
   // Access Token 재발급
-  static async refreshAuth(): Promise<AuthResponseDto> {
+  static async refreshAuth(refreshToken: string): Promise<AuthResponseDto> {
     const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer any-token`,
+        Authorization: `Bearer t`,
+        'Refresh-Authorization': `Bearer ${refreshToken}`,
       },
-      credentials: 'include',
     });
 
     const data: DefaultResponseField<AuthResponseDto> = await response.json();
@@ -66,11 +68,12 @@ export class TokenManager {
 
   static async setAccessToken(token: string): Promise<void> {
     if (isServer) {
-      return await setServerATK(token);
+      await setServerATK(token);
     } else if (isMobile) {
-      return await setNativeATK(token);
+      await setNativeATK(token);
+      setClientATK(token);
     } else {
-      return setClientATK(token);
+      setClientATK(token);
     }
   }
 
@@ -79,6 +82,7 @@ export class TokenManager {
       await removeServerATK();
     } else if (isMobile) {
       await removeNativeATK();
+      removeClientATK();
     } else {
       removeClientATK();
     }
@@ -98,14 +102,24 @@ export class TokenManager {
   /**
    * @description 모바일 환경에서는 쿠키가 유실될 수 있기 때문에(백그라운드 종료) 서버에서 세팅해준 refresh_token을 security Storage로 옮기는 작업을 합니다.
    */
-  static async setRefreshToken(): Promise<void> {
+  static async setRefreshToken(token: string): Promise<void> {
+    if (isServer) {
+      await setServerRTK(token);
+    } else if (isMobile) {
+      await setNativeRTK(token);
+      setClientRTK(token);
+    } else {
+      setClientRTK(token);
+    }
+  }
+
+  static async syncTokens(): Promise<void> {
     if (isMobile) {
       const refreshToken = getClientRTK();
+      const accessToken = getClientATK();
 
-      if (!refreshToken) {
-        return;
-      }
       await setNativeRTK(refreshToken);
+      await setNativeATK(accessToken);
     }
   }
 
@@ -114,6 +128,7 @@ export class TokenManager {
       await removeServerRTK();
     } else if (isMobile) {
       await removeNativeRTK();
+      removeClientRTK();
     } else {
       removeClientRTK();
     }

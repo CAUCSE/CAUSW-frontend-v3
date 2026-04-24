@@ -11,12 +11,18 @@ export function AuthRefreshProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!TokenManager.getAuthRefreshed()) {
-      return;
-    }
+    const syncRefreshToken = async () => {
+      const authRefreshed = await TokenManager.getAuthRefreshed();
+      if (!authRefreshed) {
+        return;
+      }
+      Promise.all([
+        TokenManager.syncTokens(),
+        TokenManager.removeAuthRefreshed(),
+      ]);
+    };
 
-    TokenManager.setRefreshToken();
-    TokenManager.removeAuthRefreshed();
+    void syncRefreshToken();
   }, [pathname]);
 
   return <>{children}</>;
