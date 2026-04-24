@@ -1,5 +1,4 @@
 import type {
-  SignupResponseDto,
   SignoutResponseDto,
   SignupRequestDto,
   SigninRequestDto,
@@ -23,7 +22,7 @@ import { AUTH_API_PREFIX } from '@/shared/constants';
 import { TokenManager } from '@/shared/storage';
 
 export const signup = async (data: SignupRequestDto) => {
-  return API.post<SignupResponseDto>(`${AUTH_API_PREFIX}/signup`, data);
+  return API.post<AuthResponseDto>(`${AUTH_API_PREFIX}/signup`, data);
 };
 
 export const signin = async (data: SigninRequestDto) => {

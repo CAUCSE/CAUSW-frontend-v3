@@ -6,7 +6,6 @@ import type {
   SigninRequestDto,
   SignupRequestDto,
   SignoutRequestDto,
-  SignupResponseDto,
   SignoutResponseDto,
   AuthResponseDto,
 } from '@/entities/auth';
@@ -15,7 +14,7 @@ import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
 type SignUpMutationOptions = Omit<
-  UseMutationOptions<SignupResponseDto, Error, SignupRequestDto>,
+  UseMutationOptions<AuthResponseDto, Error, SignupRequestDto>,
   'mutationFn' | 'onMutate' | 'onSuccess' | 'onError'
 >;
 

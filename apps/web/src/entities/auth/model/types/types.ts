@@ -10,25 +10,9 @@ export interface SignupRequestDto {
   agreedTermsIds: string[];
 }
 
-export interface SignupResponseDto {
-  accessToken: string;
-  refreshToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
-}
-
 export interface SigninRequestDto {
   email: string;
   password: string;
-}
-
-export interface SigninResponseDto {
-  accessToken: string;
-  refreshToken: string;
-  name: string;
-  email: string;
-  profileImgUrl: string;
 }
 
 export type OnboardingStatus =
