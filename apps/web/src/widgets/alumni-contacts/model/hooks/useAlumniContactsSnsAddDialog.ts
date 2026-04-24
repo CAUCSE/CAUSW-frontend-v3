@@ -35,6 +35,15 @@ export const useAlumniContactsSnsAddDialog = () => {
     );
   }, [socialLinks]);
 
+  const SNS_URL_PREFIX = 'https://';
+
+  const isValid = useMemo(() => {
+    if (newSocialLink.trim() === '') {
+      return true;
+    }
+    return newSocialLink.startsWith(SNS_URL_PREFIX);
+  }, [newSocialLink]);
+
   const handleClickTrigger = () => {
     setIsOpen(true);
   };
@@ -61,12 +70,15 @@ export const useAlumniContactsSnsAddDialog = () => {
       return;
     }
 
+    // 중복 SNS 링크 덮어쓰기
+    const currentSocialLinkSet = new Set(socialLinks);
+    currentSocialLinkSet.add(newSocialLink);
+
     setValue(
       ALUMNI_CONTACTS_EDIT_FORM_FIELD.SOCIAL_LINKS,
-      [...socialLinks, newSocialLink].sort((a, b) => a.localeCompare(b)),
+      Array.from(currentSocialLinkSet).sort((a, b) => a.localeCompare(b)),
       {
         shouldValidate: true,
-        shouldDirty: true,
       },
     );
     setNewSocialLink('');
@@ -75,6 +87,7 @@ export const useAlumniContactsSnsAddDialog = () => {
   return {
     isOpen,
     newSocialLink,
+    isValid,
     addButtonRef,
     canAdd,
     handleClickTrigger,
