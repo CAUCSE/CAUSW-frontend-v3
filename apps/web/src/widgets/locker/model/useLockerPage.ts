@@ -12,7 +12,7 @@ import {
   useMyLocker,
 } from '@/entities/locker';
 
-import { getLockerViewStatus } from './lib';
+import { getLockerViewStatus } from './lockerStatus';
 import type { ActiveFloor, LockerGridItem } from './types';
 
 export const useLockerPage = () => {
