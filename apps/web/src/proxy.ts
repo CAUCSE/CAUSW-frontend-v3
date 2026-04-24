@@ -8,7 +8,7 @@ import {
   AUTH_REFRESHED_STORAGE_VALUE,
 } from './shared/config';
 import { TokenManager } from './shared/storage';
-import { isAuthRoute, shouldRefreshAccessToken } from './shared/utils/auth';
+import { isAuthRoute, shouldRefreshAccessToken } from './shared/utils';
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],

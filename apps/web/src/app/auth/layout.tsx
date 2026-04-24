@@ -1,5 +1,4 @@
-import { DesktopOnly, LogoHeader } from '@/shared/ui';
-import { ClearQueryProvider } from '@/shared/ui/provider';
+import { ClearQueryProvider, DesktopOnly, LogoHeader } from '@/shared/ui';
 
 export default function AuthLayout({
   children,

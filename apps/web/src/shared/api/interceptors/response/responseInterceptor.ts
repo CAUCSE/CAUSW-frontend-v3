@@ -3,12 +3,12 @@ import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { isServer } from '@/shared/utils';
-import { isPublicEndpoint } from '@/shared/utils/auth';
 import {
   isAccessTokenError,
+  isPublicEndpoint,
+  isServer,
   parseCustomErrorCode,
-} from '@/shared/utils/auth/errorHandler';
+} from '@/shared/utils';
 
 import { type BaseApiClient } from '../../instances';
 

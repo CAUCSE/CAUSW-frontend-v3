@@ -1,7 +1,6 @@
 import { useAuthStore, AuthError } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
-import { isServer } from '@/shared/utils';
-import { isPublicEndpoint } from '@/shared/utils/auth';
+import { isPublicEndpoint, isServer } from '@/shared/utils';
 
 import { type BaseApiClient } from '../../instances';
 
