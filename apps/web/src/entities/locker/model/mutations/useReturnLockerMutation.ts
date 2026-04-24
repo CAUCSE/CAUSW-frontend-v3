@@ -12,14 +12,6 @@ export const useReturnLockerMutation = () => {
     mutationFn: deleteLockerAssignment,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: lockerQueryKey.all });
-      await Promise.all([
-        queryClient.refetchQueries({ queryKey: lockerQueryKey.me() }),
-        queryClient.refetchQueries({ queryKey: lockerQueryKey.locations() }),
-        queryClient.refetchQueries({
-          queryKey: [...lockerQueryKey.all, 'location'],
-          type: 'active',
-        }),
-      ]);
     },
   });
 };
