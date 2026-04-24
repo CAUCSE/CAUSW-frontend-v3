@@ -80,10 +80,8 @@ export const useLockerPage = () => {
     activeFloorAvailableCount:
       activeFloorSummary?.availableCount ??
       activeFloorDetail?.summary.availableCount ??
-      activeFloorLockers.filter(
-        (locker) =>
-          locker.viewStatus === 'available' || locker.viewStatus === 'mine',
-      ).length,
+      activeFloorLockers.filter((locker) => locker.viewStatus === 'available')
+        .length,
     activeFloorError: lockerLocationDetailQuery.error,
     activeFloorLockers,
     activeFloorTotalCount:
