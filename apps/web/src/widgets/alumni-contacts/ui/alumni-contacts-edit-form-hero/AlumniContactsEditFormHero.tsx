@@ -48,7 +48,7 @@ export const AlumniContactsEditFormHero = ({
           profileImage={myAlumniContacts.profileImage}
         />
         <AlumniContactsDescriptionEditDialog />
-        <HStack gap="md">
+        <HStack gap="md" className="overflow-x-auto">
           <AlumniContactsContactVisibilityDialog />
           <AlumniContactsEmail email={myAlumniContacts.email} />
         </HStack>
