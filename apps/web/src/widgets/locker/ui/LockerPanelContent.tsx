@@ -9,26 +9,28 @@ import { LockerSelectionGrid } from './LockerSelectionGrid';
 interface LockerPanelContentProps {
   availableCount: number;
   currentLocker: LockerMyResponse | null;
+  disableAvailableLockers?: boolean;
   errorMessage: string | null;
   floorName: string;
-  isActionAvailable: boolean;
   isLoading: boolean;
   lockers: LockerGridItem[];
   onSelectLocker: (lockerId: string) => void;
   selectedLockerId: string | null;
+  statusMessage: string | null;
   totalCount: number;
 }
 
 export const LockerPanelContent = ({
   availableCount,
   currentLocker,
+  disableAvailableLockers = false,
   errorMessage,
   floorName,
-  isActionAvailable,
   isLoading,
   lockers,
   onSelectLocker,
   selectedLockerId,
+  statusMessage,
   totalCount,
 }: LockerPanelContentProps) => {
   return (
@@ -45,18 +47,22 @@ export const LockerPanelContent = ({
 
       <section className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 px-1">
-          <p className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
-            {isLoading ? (
-              '사물함 정보를 불러오는 중이에요.'
-            ) : isActionAvailable ? (
-              <>
-                잔여 <span className="text-blue-700">{availableCount}개</span> /
-                전체 {totalCount}개
-              </>
-            ) : (
-              '사물함 신청기간이 아니에요.'
-            )}
-          </p>
+          {statusMessage ? (
+            <p className="text-[1.75rem] font-bold tracking-[-0.035rem] text-gray-700">
+              {statusMessage}
+            </p>
+          ) : (
+            <p className="text-lg font-bold tracking-[-0.0225rem] text-gray-700">
+              {isLoading ? (
+                '사물함 정보를 불러오는 중이에요.'
+              ) : (
+                <>
+                  잔여 <span className="text-blue-700">{availableCount}개</span>{' '}
+                  / 전체 {totalCount}개
+                </>
+              )}
+            </p>
+          )}
           <LockerLegend />
         </div>
 
@@ -66,6 +72,7 @@ export const LockerPanelContent = ({
           </div>
         ) : (
           <LockerSelectionGrid
+            disableAvailableLockers={disableAvailableLockers}
             lockers={lockers}
             onSelect={onSelectLocker}
             selectedLockerId={selectedLockerId}

@@ -15,6 +15,7 @@ export const LockerPageWidget = () => {
     activeFloorAvailableCount,
     activeFloorError,
     activeFloorLockers,
+    activeFloorStatusMessage,
     activeFloorTotalCount,
     canApply,
     canExtend,
@@ -104,6 +105,9 @@ export const LockerPageWidget = () => {
         canApply={canApply}
         canExtend={canExtend}
         currentLocker={currentLocker}
+        disableAvailableLockers={
+          activeFloorStatusMessage !== null && currentLocker === null
+        }
         errorMessage={
           activeFloorError
             ? extractErrorMessage(
@@ -124,6 +128,7 @@ export const LockerPageWidget = () => {
         onSelectLocker={setSelectedLockerId}
         open={isSelectionOpen}
         selectedLockerId={selectedLockerId}
+        statusMessage={activeFloorStatusMessage}
         shouldShowAutoReturnedNotice={hasAutoReturnedNotice}
         totalCount={activeFloorTotalCount}
       />

@@ -13,7 +13,7 @@ import {
 } from '@/entities/locker';
 
 import { getLockerViewStatus } from './lockerStatus';
-import type { ActiveFloor, LockerGridItem } from './types';
+import type { ActiveFloor, LockerGridItem, LockerPolicyPhase } from './types';
 
 const LAST_LOCKER_ASSIGNMENT_STORAGE_KEY = 'locker:last-assignment';
 
@@ -47,6 +47,8 @@ export const useLockerPage = () => {
     ) ?? null;
   const resolvedSelectedLockerId =
     selectedLockerId ?? currentLockerInActiveFloor?.lockerId ?? null;
+  const activeFloorPhase: LockerPolicyPhase =
+    periodStatusQuery.data?.phase ?? 'CLOSED';
   const activeFloorLockers: LockerGridItem[] = (
     activeFloorDetail?.lockers ?? []
   )
@@ -138,6 +140,13 @@ export const useLockerPage = () => {
     setAutoReturnedNoticeKey(null);
   };
 
+  const activeFloorStatusMessage =
+    !currentLocker && !activeFloorDetail?.currentPolicy.canApply
+      ? activeFloorPhase === 'READY'
+        ? '사물함 신청 가능 전이에요.'
+        : '사물함 신청기간이 아니에요.'
+      : null;
+
   return {
     activeFloor,
     activeFloorAvailableCount:
@@ -147,6 +156,8 @@ export const useLockerPage = () => {
         .length,
     activeFloorError: lockerLocationDetailQuery.error,
     activeFloorLockers,
+    activeFloorPhase,
+    activeFloorStatusMessage,
     activeFloorTotalCount:
       activeFloorSummary?.totalCount ??
       activeFloorDetail?.summary.totalCount ??

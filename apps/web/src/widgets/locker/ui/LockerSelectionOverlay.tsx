@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Dialog } from '@causw/cds';
+import { Close, Dialog, mergeStyles } from '@causw/cds';
 
 import { LockerActionPanel } from '@/features/locker';
 
@@ -21,6 +21,7 @@ interface LockerSelectionOverlayProps {
   canApply: boolean;
   canExtend: boolean;
   currentLocker: LockerMyResponse | null;
+  disableAvailableLockers?: boolean;
   errorMessage: string | null;
   floor: ActiveFloor | null;
   isLoading: boolean;
@@ -34,6 +35,7 @@ interface LockerSelectionOverlayProps {
   onSelectLocker: (lockerId: string) => void;
   open: boolean;
   selectedLockerId: string | null;
+  statusMessage: string | null;
   shouldShowAutoReturnedNotice: boolean;
   totalCount: number;
 }
@@ -43,6 +45,7 @@ export const LockerSelectionOverlay = ({
   canApply,
   canExtend,
   currentLocker,
+  disableAvailableLockers = false,
   errorMessage,
   floor,
   isLoading,
@@ -56,6 +59,7 @@ export const LockerSelectionOverlay = ({
   onSelectLocker,
   open,
   selectedLockerId,
+  statusMessage,
   shouldShowAutoReturnedNotice,
   totalCount,
 }: LockerSelectionOverlayProps) => {
@@ -66,20 +70,21 @@ export const LockerSelectionOverlay = ({
 
   const isCurrentLockerInActiveFloor = Boolean(
     currentLocker?.lockerId &&
-    lockers.some((locker) => locker.lockerId === currentLocker.lockerId),
+      lockers.some((locker) => locker.lockerId === currentLocker.lockerId),
   );
 
   const panelContent = (
     <LockerPanelContent
       availableCount={availableCount}
       currentLocker={currentLocker}
+      disableAvailableLockers={disableAvailableLockers}
       errorMessage={errorMessage}
       floorName={floor.floorName}
-      isActionAvailable={canApply || canExtend}
       isLoading={isLoading}
       lockers={lockers}
       onSelectLocker={onSelectLocker}
       selectedLockerId={selectedLockerId}
+      statusMessage={statusMessage}
       totalCount={totalCount}
     />
   );
@@ -171,8 +176,21 @@ export const LockerSelectionOverlay = ({
           aria-describedby={undefined}
         >
           <Dialog.Title hidden>{floor.floorName} 사물함 선택</Dialog.Title>
+          <button
+            type="button"
+            onClick={() => handleOverlayOpenChange(false)}
+            className="absolute top-7 right-7 z-10 text-gray-600 transition-colors hover:text-gray-700"
+            aria-label="사물함 선택 모달 닫기"
+          >
+            <Close size={24} />
+          </button>
           <div className="flex max-h-[calc(100vh-80px)] min-h-0 flex-col">
-            <div className="min-h-0 flex-1 overflow-y-auto p-8 pb-6">
+            <div
+              className={mergeStyles(
+                'min-h-0 flex-1 overflow-y-auto p-8 pb-6',
+                currentLocker ? 'pt-8' : 'pt-10',
+              )}
+            >
               {panelContent}
             </div>
             <div className="shrink-0 px-8 pt-2 pb-8">{actionPanel}</div>

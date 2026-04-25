@@ -7,6 +7,8 @@ export type ActiveFloor = {
 
 export type LockerStatus = 'available' | 'disabled' | 'mine';
 
+export type LockerPolicyPhase = 'READY' | 'APPLY' | 'EXTEND' | 'CLOSED';
+
 export type LockerGridItem = LockerDetailItem & {
   lockerNumber: number;
   viewStatus: LockerStatus;

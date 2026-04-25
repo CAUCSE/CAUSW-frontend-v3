@@ -6,8 +6,12 @@ export const getLockerCellClassName = (
   status: LockerStatus,
   isSelected: boolean,
 ) => {
-  if (status === 'mine' || isSelected) {
+  if (status === 'mine') {
     return 'bg-blue-500 text-gray-50 font-bold';
+  }
+
+  if (isSelected) {
+    return 'border-2 border-blue-700 bg-white font-bold text-blue-700';
   }
 
   if (status === 'disabled') {
