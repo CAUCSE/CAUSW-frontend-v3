@@ -8,21 +8,21 @@ import { API } from '@/shared/api';
 /* 게시글 수정 */
 export const updatePost = (
   postId: string,
-  postUpdateRequest: PostUpdateRequestDto,
-  attachImageList?: File[],
+  request: PostUpdateRequestDto,
+  imageFiles?: File[],
 ) => {
   const formData = new FormData();
 
   formData.append(
-    'postUpdateRequest',
-    new Blob([JSON.stringify(postUpdateRequest)], {
+    'request',
+    new Blob([JSON.stringify(request)], {
       type: 'application/json',
     }),
   );
 
-  if (attachImageList && attachImageList.length > 0) {
-    attachImageList.forEach((file) => {
-      formData.append('attachImageList', file);
+  if (imageFiles && imageFiles.length > 0) {
+    imageFiles.forEach((file) => {
+      formData.append('images', file);
     });
   }
 

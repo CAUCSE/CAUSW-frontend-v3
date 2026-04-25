@@ -29,4 +29,5 @@ export interface ImageUploadFieldProps<T extends FieldValues> {
   resetTrigger?: boolean;
   showMainBadge?: boolean;
   children?: React.ReactNode;
+  initialImages?: string[];
 }
