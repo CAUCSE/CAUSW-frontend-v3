@@ -2,6 +2,8 @@
 
 import { HStack, Mail, Text, VStack } from '@causw/cds';
 
+import { AlumniContactsDescriptionTextArea } from '@/features/alumni-contacts';
+
 import { AlumniContactsBasicInfo } from '@/entities/alumni-contacts';
 import {
   useAlumniContactsHeaderBoundaryContext,
@@ -9,7 +11,6 @@ import {
 } from '@/entities/alumni-contacts/model';
 
 import { AlumniContactsContactVisibilityDialog } from '../alumni-contacts-contact-visibility-dialog';
-import { AlumniContactsDescriptionEditDialog } from '../alumni-contacts-description-edit-dialog';
 
 interface AlumniContactsEmailProps {
   email: string;
@@ -47,7 +48,7 @@ export const AlumniContactsEditFormHero = ({
           academicStatus={myAlumniContacts.academicStatus}
           profileImage={myAlumniContacts.profileImage}
         />
-        <AlumniContactsDescriptionEditDialog />
+        <AlumniContactsDescriptionTextArea />
         <HStack gap="md" className="overflow-x-auto">
           <AlumniContactsContactVisibilityDialog />
           <AlumniContactsEmail email={myAlumniContacts.email} />

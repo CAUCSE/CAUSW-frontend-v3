@@ -1,38 +1,29 @@
 'use client';
 
-import { type RefObject, type ChangeEventHandler } from 'react';
+import { Pen, TextArea } from '@causw/cds';
 
-import { Text, TextArea } from '@causw/cds';
+import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from '@/entities/alumni-contacts';
 
-interface AlumniContactsDescriptionTextAreaProps {
-  value: string;
-  onChange: ChangeEventHandler<HTMLTextAreaElement>;
-  maxLength: number;
-  ref: RefObject<HTMLTextAreaElement | null>;
-}
+import { useAlumniContactsDescriptionTextArea } from '../../model';
 
-export const AlumniContactsDescriptionTextArea = ({
-  value,
-  onChange,
-  maxLength,
-  ref,
-}: AlumniContactsDescriptionTextAreaProps) => {
+export const AlumniContactsDescriptionTextArea = () => {
+  const { field, handleTextAreaChange, textareaRef } =
+    useAlumniContactsDescriptionTextArea();
   return (
-    <TextArea className="bg-gray-100">
+    <TextArea className="flex items-center gap-2 bg-[#FFFFFF1A] px-3 py-2.5 focus-within:ring-gray-500">
       <TextArea.Input
-        value={value}
         placeholder="소개글을 입력해주세요."
         resize={false}
-        maxLength={maxLength}
-        onChange={onChange}
-        className="max-h-45"
-        ref={ref}
+        maxLength={ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.DESCRIPTION}
+        className="min-h-0 grow text-white caret-white"
+        value={field.value}
+        onChange={handleTextAreaChange}
+        onBlur={field.onBlur}
+        ref={textareaRef}
       />
-      <TextArea.Footer className="text-right">
-        <Text typography="body-16-regular" textColor="gray-400">
-          {value.length}/{maxLength}
-        </Text>
-      </TextArea.Footer>
+      <div className="shrink-0 self-end">
+        <Pen size={12} color="gray-200" />
+      </div>
     </TextArea>
   );
 };
