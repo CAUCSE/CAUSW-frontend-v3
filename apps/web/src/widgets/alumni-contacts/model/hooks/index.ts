@@ -6,9 +6,7 @@ export { useAlumniContactsListScrollTop } from './useAlumniContactsListScrollTop
 export { useAlumniContactsContactAction } from './useAlumniContactsContactAction';
 export { useAlumniContactsDetailHeaderTheme } from './useAlumniContactsDetailHeaderTheme';
 export { useAlumniContactsDetailSection } from './useAlumniContactsDetailSection';
-export { useAlumniContactsContactVisibilityDialog } from './useAlumniContactsContactVisibilityDialog';
 export { useAlumniContactsSnsAddDialog } from './useAlumniContactsSnsAddDialog';
-export { useAlumniContactsDescriptionEditDialog } from './useAlumniContactsDescriptionEditDialog';
 export { useAlumniContactsProfileEntryDialog } from './useAlumniContactsProfileEntryDialog';
 export { useAlumniContactsEditFormCareerSection } from './useAlumniContactsEditFormCareerSection';
 export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEditFormProjectSection';

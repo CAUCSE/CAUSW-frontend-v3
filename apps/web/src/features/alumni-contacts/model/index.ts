@@ -3,4 +3,5 @@ export {
   useAlumniContactsAcademicStatusFilterButton,
   useAlumniContactsSortFilter,
   useAlumniContactsDescriptionTextArea,
+  useAlumniContactsContactVisibilityToggleButton,
 } from './hooks';
