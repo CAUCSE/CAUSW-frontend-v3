@@ -7,14 +7,14 @@ export {
   useAlumniContactsContactAction,
   useAlumniContactsDetailHeaderTheme,
   useAlumniContactsDetailSection,
-  useAlumniContactsContactVisibilityDialog,
   useAlumniContactsSnsAddDialog,
-  useAlumniContactsDescriptionEditDialog,
-  useAlumniContactsProfileEntryDialog,
+  useAlumniContactsProfileEntryAddDialog,
   useAlumniContactsEditFormCareerSection,
   useAlumniContactsEditFormProjectSection,
   useAlumniContactsEditForm,
-  useAlumniContactsSingleFieldDialog,
+  useAlumniContactsSingleFieldAddDialog,
+  useAlumniContactsSingleFieldEditDialog,
+  useAlumniContactsProfileEntryEditDialog,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';

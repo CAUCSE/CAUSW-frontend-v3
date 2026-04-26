@@ -1,0 +1,1 @@
+export { AlumniContactsInterestDomainEditDialog } from './AlumniContactsInterestDomainEditDialog';

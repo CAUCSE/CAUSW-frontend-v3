@@ -1,15 +1,23 @@
 'use client';
 
-import { Button, Dialog, HStack, Text, TextInput, VStack } from '@causw/cds';
+import {
+  Button,
+  Close,
+  Dialog,
+  HStack,
+  Text,
+  TextInput,
+  VStack,
+} from '@causw/cds';
 
 import {
   AlumniContactsProfileEntryCurrentToggle,
   AlumniContactsProfileEntryDatePicker,
 } from '@/features/alumni-contacts';
 
-import { useAlumniContactsProfileEntryDialog } from '../../model';
+import { useAlumniContactsProfileEntryAddDialog } from '../../model';
 
-interface AlumniContactsProfileEntryDialogProps {
+interface AlumniContactsProfileEntryAddDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -25,7 +33,7 @@ interface AlumniContactsProfileEntryDialogProps {
   ) => void;
 }
 
-export const AlumniContactsProfileEntryDialog = ({
+export const AlumniContactsProfileEntryAddDialog = ({
   isOpen,
   onOpenChange,
   title,
@@ -34,7 +42,7 @@ export const AlumniContactsProfileEntryDialog = ({
   maxLength,
   toggleLabel,
   onClickAddButton,
-}: AlumniContactsProfileEntryDialogProps) => {
+}: AlumniContactsProfileEntryAddDialogProps) => {
   const {
     newEntry,
     startDate,
@@ -42,6 +50,7 @@ export const AlumniContactsProfileEntryDialog = ({
     isCurrent,
     canAdd,
     addButtonRef,
+    handleInitialFocus,
     handleOpenChange,
     handleNewEntryChange,
     handleEntryEnterPress,
@@ -50,8 +59,9 @@ export const AlumniContactsProfileEntryDialog = ({
     handleStartDateChange,
     handleEndDateChange,
     handleToggleChange,
-  } = useAlumniContactsProfileEntryDialog({
+  } = useAlumniContactsProfileEntryAddDialog({
     maxLength,
+    isOpen,
     onOpenChange,
   });
 
@@ -63,9 +73,19 @@ export const AlumniContactsProfileEntryDialog = ({
           {ariaDescription}
         </Dialog.Description>
         <VStack gap="sm">
-          <Text typography="subtitle-18-bold" textColor="gray-700">
-            {title}
-          </Text>
+          <HStack className="items-center justify-between px-1 py-[5.5px]">
+            <Text typography="subtitle-18-bold" textColor="gray-700">
+              {title}
+            </Text>
+            <Dialog.Close asChild>
+              <Button
+                color="gray"
+                className="h-fit w-fit bg-transparent p-0 hover:bg-transparent!"
+              >
+                <Close size={20} color="gray-600" />
+              </Button>
+            </Dialog.Close>
+          </HStack>
           <TextInput
             placeholder={placeholder}
             className="bg-gray-100"
@@ -75,6 +95,7 @@ export const AlumniContactsProfileEntryDialog = ({
             onKeyDown={handleEntryEnterPress}
             value={newEntry}
             maxLength={maxLength}
+            ref={handleInitialFocus}
           />
         </VStack>
         <VStack gap="sm">
@@ -103,31 +124,22 @@ export const AlumniContactsProfileEntryDialog = ({
           />
         </VStack>
         <Dialog.Footer>
-          <HStack gap="sm">
-            <Dialog.Close asChild>
-              <Button color="gray" className="h-13 flex-1 rounded-md">
-                <Text typography="body-15-semibold" textColor="gray-600">
-                  닫기
-                </Text>
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close
-              asChild
-              onClick={() =>
-                onClickAddButton?.(newEntry, isCurrent, startDate, endDate)
-              }
+          <Dialog.Close
+            asChild
+            onClick={() =>
+              onClickAddButton?.(newEntry, isCurrent, startDate, endDate)
+            }
+          >
+            <Button
+              className="h-13 w-full rounded-md bg-gray-700 text-white hover:bg-gray-800! disabled:bg-gray-200! disabled:[&_span]:text-gray-300!"
+              disabled={!canAdd}
+              ref={addButtonRef}
             >
-              <Button
-                className="h-13 flex-1 rounded-md bg-gray-700 text-white hover:bg-gray-800! disabled:bg-gray-200! disabled:[&_span]:text-gray-300!"
-                disabled={!canAdd}
-                ref={addButtonRef}
-              >
-                <Text typography="body-15-semibold" textColor="white">
-                  추가하기
-                </Text>
-              </Button>
-            </Dialog.Close>
-          </HStack>
+              <Text typography="body-15-semibold" textColor="white">
+                추가하기
+              </Text>
+            </Button>
+          </Dialog.Close>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>

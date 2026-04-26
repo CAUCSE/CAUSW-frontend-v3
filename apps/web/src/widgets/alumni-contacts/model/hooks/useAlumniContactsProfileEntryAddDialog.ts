@@ -4,20 +4,24 @@ import {
   type ChangeEvent,
   type CompositionEvent,
   type KeyboardEvent,
+  useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 
-interface UseAlumniContactsProfileEntryDialogProps {
+interface UseAlumniContactsProfileEntryAddDialogProps {
   maxLength?: number;
+  isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const useAlumniContactsProfileEntryDialog = ({
+export const useAlumniContactsProfileEntryAddDialog = ({
   maxLength,
+  isOpen,
   onOpenChange,
-}: UseAlumniContactsProfileEntryDialogProps) => {
+}: UseAlumniContactsProfileEntryAddDialogProps) => {
   const [newEntry, setNewEntry] = useState<string>('');
 
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
@@ -35,13 +39,24 @@ export const useAlumniContactsProfileEntryDialog = ({
     return newEntry.trim() !== '' && startDate && endDate;
   }, [newEntry, startDate, endDate, isCurrent]);
 
-  const handleOpenChange = (open: boolean) => {
-    if (!open) {
+  useEffect(() => {
+    const initializeFieldValue = () => {
       setNewEntry('');
       setStartDate(undefined);
       setEndDate(undefined);
       setIsCurrent(false);
+    };
+
+    if (isOpen) {
+      initializeFieldValue();
     }
+  }, [isOpen]);
+
+  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
+    element?.focus();
+  }, []);
+
+  const handleOpenChange = (open: boolean) => {
     onOpenChange(open);
   };
 
@@ -96,6 +111,7 @@ export const useAlumniContactsProfileEntryDialog = ({
     isCurrent,
     canAdd,
     addButtonRef,
+    handleInitialFocus,
     handleOpenChange,
     handleNewEntryChange,
     handleEntryEnterPress,

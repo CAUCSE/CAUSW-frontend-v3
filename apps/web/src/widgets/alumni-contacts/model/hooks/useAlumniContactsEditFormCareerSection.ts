@@ -7,6 +7,7 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditForm,
+  useWatchAlumniContactsEditFormField,
 } from '@/entities/alumni-contacts';
 
 import { createAlumniContactsProfileEntry } from '../createAlumniContactsProfileEntry';
@@ -14,10 +15,14 @@ import { sortAlumniContactsProfileEntry } from '../sortAlumniContactsProfileEntr
 
 export const useAlumniContactsEditFormCareerSection = () => {
   const { control, getValues } = useFormContext<AlumniContactsEditForm>();
-  const { fields, remove, replace } = useFieldArray({
+  const { replace } = useFieldArray({
     control,
     name: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_CAREER,
   });
+
+  const userCareer = useWatchAlumniContactsEditFormField(
+    ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_CAREER,
+  );
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -58,16 +63,11 @@ export const useAlumniContactsEditFormCareerSection = () => {
     return;
   };
 
-  const handleClickDeleteCareer = (idx: number) => {
-    remove(idx);
-  };
-
   return {
-    fields,
+    userCareer,
     isOpen,
     handleClickAddButton,
     handleOpenChange,
     handleClickAddCareer,
-    handleClickDeleteCareer,
   };
 };

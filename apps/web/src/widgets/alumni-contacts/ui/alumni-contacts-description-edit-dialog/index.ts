@@ -1,1 +1,0 @@
-export { AlumniContactsDescriptionEditDialog } from './AlumniContactsDescriptionEditDialog';

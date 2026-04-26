@@ -4,6 +4,8 @@ import {
   type ChangeEvent,
   type CompositionEvent,
   type KeyboardEvent,
+  useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -18,7 +20,7 @@ import {
   useWatchAlumniContactsEditFormField,
 } from '@/entities/alumni-contacts';
 
-interface UseAlumniContactsSingleFieldDialogProps {
+interface UseAlumniContactsSingleFieldAddDialogProps {
   fieldName:
     | typeof ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_TECH_STACK
     | typeof ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_TECH
@@ -26,10 +28,10 @@ interface UseAlumniContactsSingleFieldDialogProps {
   maxLength?: number;
 }
 
-export const useAlumniContactsSingleFieldDialog = ({
+export const useAlumniContactsSingleFieldAddDialog = ({
   fieldName,
   maxLength,
-}: UseAlumniContactsSingleFieldDialogProps) => {
+}: UseAlumniContactsSingleFieldAddDialogProps) => {
   const { setValue } = useFormContext<AlumniContactsEditForm>();
 
   const fieldValue = useWatchAlumniContactsEditFormField(fieldName);
@@ -40,14 +42,25 @@ export const useAlumniContactsSingleFieldDialog = ({
   const addButtonRef = useRef<HTMLButtonElement>(null);
   const isComposingRef = useRef(false);
 
+  useEffect(() => {
+    const initializeFieldValue = () => {
+      setNewFieldValue('');
+    };
+
+    if (isOpen) {
+      initializeFieldValue();
+    }
+  }, [isOpen]);
+
+  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
+    element?.focus();
+  }, []);
+
   const handleClickDialogTrigger = () => {
     setIsOpen(true);
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      setNewFieldValue('');
-    }
     setIsOpen(open);
   };
 
@@ -92,9 +105,13 @@ export const useAlumniContactsSingleFieldDialog = ({
       return;
     }
 
+    const newFieldValueSet = new Set(fieldValue);
+
+    newFieldValueSet.add(newFieldValue);
+
     setValue(
       fieldName,
-      [...fieldValue, newFieldValue].sort((a, b) => a.localeCompare(b)),
+      Array.from(newFieldValueSet).sort((a, b) => a.localeCompare(b, 'en-US')),
       {
         shouldValidate: true,
         shouldDirty: true,
@@ -108,6 +125,7 @@ export const useAlumniContactsSingleFieldDialog = ({
     isOpen,
     newFieldValue,
     addButtonRef,
+    handleInitialFocus,
     handleClickDialogTrigger,
     handleOpenChange,
     handleNewFieldValueChange,

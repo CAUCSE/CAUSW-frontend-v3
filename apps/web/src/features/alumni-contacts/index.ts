@@ -11,11 +11,12 @@ export {
   MyAlumniContactsEditButton,
   MyAlumniContactsSaveButton,
   AlumniContactsContactVisibilityDialogTrigger,
-  AlumniContactsContactVisibilityToggle,
   AlumniContactsEditFormSnsItem,
-  AlumniContactsDescriptionTextArea,
   AlumniContactsSingleFieldAddButton,
   AlumniContactsProfileEntryDatePicker,
   AlumniContactsProfileEntryCurrentToggle,
+  AlumniContactsDescriptionTextArea,
+  AlumniContactsContactVisibilityToggleButton,
+  AlumniContactsFieldEditButton,
 } from './ui';
 export { putMyAlumniContacts } from './api';

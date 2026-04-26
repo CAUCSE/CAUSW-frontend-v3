@@ -6,11 +6,11 @@ export { useAlumniContactsListScrollTop } from './useAlumniContactsListScrollTop
 export { useAlumniContactsContactAction } from './useAlumniContactsContactAction';
 export { useAlumniContactsDetailHeaderTheme } from './useAlumniContactsDetailHeaderTheme';
 export { useAlumniContactsDetailSection } from './useAlumniContactsDetailSection';
-export { useAlumniContactsContactVisibilityDialog } from './useAlumniContactsContactVisibilityDialog';
 export { useAlumniContactsSnsAddDialog } from './useAlumniContactsSnsAddDialog';
-export { useAlumniContactsDescriptionEditDialog } from './useAlumniContactsDescriptionEditDialog';
-export { useAlumniContactsProfileEntryDialog } from './useAlumniContactsProfileEntryDialog';
+export { useAlumniContactsProfileEntryAddDialog } from './useAlumniContactsProfileEntryAddDialog';
 export { useAlumniContactsEditFormCareerSection } from './useAlumniContactsEditFormCareerSection';
 export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEditFormProjectSection';
 export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';
-export { useAlumniContactsSingleFieldDialog } from './useAlumniContactsSingleFieldDialog';
+export { useAlumniContactsSingleFieldAddDialog } from './useAlumniContactsSingleFieldAddDialog';
+export { useAlumniContactsSingleFieldEditDialog } from './useAlumniContactsSingleFieldEditDialog';
+export { useAlumniContactsProfileEntryEditDialog } from './useAlumniContactsProfileEntryEditDialog';
