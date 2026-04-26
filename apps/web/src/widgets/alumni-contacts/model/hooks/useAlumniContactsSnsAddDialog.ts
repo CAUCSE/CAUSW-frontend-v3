@@ -2,6 +2,7 @@
 
 import {
   type ChangeEvent,
+  type CompositionEvent,
   type KeyboardEvent,
   useMemo,
   useRef,
@@ -28,6 +29,7 @@ export const useAlumniContactsSnsAddDialog = () => {
   const [newSocialLink, setNewSocialLink] = useState<string>('');
 
   const addButtonRef = useRef<HTMLButtonElement>(null);
+  const isComposingRef = useRef(false);
 
   const canAdd = useMemo(() => {
     return (
@@ -59,7 +61,20 @@ export const useAlumniContactsSnsAddDialog = () => {
     setNewSocialLink(event.target.value);
   };
 
+  const handleCompositionStart = () => {
+    isComposingRef.current = true;
+  };
+
+  const handleCompositionEnd = (event: CompositionEvent<HTMLInputElement>) => {
+    isComposingRef.current = false;
+    setNewSocialLink(event.currentTarget.value);
+  };
+
   const handleEnterPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.nativeEvent.isComposing || isComposingRef.current) {
+      return;
+    }
+
     if (event.key === 'Enter') {
       addButtonRef.current?.click();
     }
@@ -93,6 +108,8 @@ export const useAlumniContactsSnsAddDialog = () => {
     handleClickTrigger,
     handleOpenChange,
     handleNewSocialLinkChange,
+    handleCompositionStart,
+    handleCompositionEnd,
     handleEnterPress,
     handleClickAddButton,
   };
