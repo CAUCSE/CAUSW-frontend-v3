@@ -2,8 +2,7 @@
 
 import { type ChangeEvent, useLayoutEffect, useRef } from 'react';
 
-import { useFormContext } from 'react-hook-form';
-import { useController } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 
 import {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
