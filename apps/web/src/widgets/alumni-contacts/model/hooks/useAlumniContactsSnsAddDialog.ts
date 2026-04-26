@@ -81,7 +81,7 @@ export const useAlumniContactsSnsAddDialog = () => {
   };
 
   const handleClickAddButton = () => {
-    if (newSocialLink.trim() === '') {
+    if (newSocialLink.trim() === '' || !isValid || !canAdd) {
       return;
     }
 
@@ -96,6 +96,7 @@ export const useAlumniContactsSnsAddDialog = () => {
       ),
       {
         shouldValidate: true,
+        shouldDirty: true,
       },
     );
     setNewSocialLink('');
