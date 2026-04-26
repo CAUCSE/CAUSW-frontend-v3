@@ -8,7 +8,7 @@ import {
   requestNativeSocialLogin,
   type NativeSocialLoginToken,
   type SocialProvider,
-} from '@/shared/lib/native';
+} from '@/shared/lib/capacitor';
 
 type NativeSocialBridgeVariables = Pick<
   NativeSocialLoginRequestDto,

@@ -2,7 +2,7 @@ import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
 import { getFCMTokenKey } from '@/shared/utils';
 
-import { hasNativeKey } from '../native';
+import { hasNativeKey } from '../capacitor';
 
 const fcmTokenKey = getFCMTokenKey();
 
