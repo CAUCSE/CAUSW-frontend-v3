@@ -25,20 +25,19 @@ export function ForceUpdateProvider({
     retry: 1,
   });
   useEffect(() => {
-    let cleanup: (() => void) | undefined;
-
-    void App.addListener('appStateChange', ({ isActive }) => {
-      if (isActive) {
-        void refetch();
-      }
-    }).then((listener) => {
-      cleanup = () => {
-        void listener.remove();
-      };
-    });
+    const listenerPromise = App.addListener(
+      'appStateChange',
+      ({ isActive }) => {
+        if (isActive) {
+          void refetch();
+        }
+      },
+    );
 
     return () => {
-      cleanup?.();
+      void listenerPromise.then((listener) => {
+        void listener.remove();
+      });
     };
   }, [refetch]);
   const isForceUpdateRequired = data?.needUpdate ?? false;
