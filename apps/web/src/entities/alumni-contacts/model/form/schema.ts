@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from '../../config';
+import {
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
+  ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT,
+} from '../../config';
 
 const periodSchema = z.array(
   z.object({
@@ -28,7 +31,7 @@ export const alumniContactsEditSchema = z.object({
   socialLinks: z
     .array(z.string())
     .min(0)
-    .max(ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.SOCIAL_LINKS),
+    .max(ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT.SOCIAL_LINKS),
   userTechStack: z.array(z.string()),
   userCareer: careerSchema,
   userProject: projectSchema,
