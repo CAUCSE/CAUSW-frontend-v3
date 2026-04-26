@@ -165,6 +165,7 @@ export const useAlumniContactsProfileEntryEditDialog = ({
     );
 
     const updateProfileEntry = createAlumniContactsProfileEntry({
+      id: currentProfileEntry.id,
       entry: currentFieldValue,
       isCurrent,
       startDate: currentStartDate,

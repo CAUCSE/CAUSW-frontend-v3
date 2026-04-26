@@ -1,14 +1,17 @@
 export const createAlumniContactsProfileEntry = ({
+  id,
   entry,
   isCurrent,
   startDate,
   endDate,
 }: {
+  id?: string;
   entry: string;
   isCurrent: boolean;
   startDate: Date;
   endDate?: Date;
 }) => ({
+  id,
   description: entry,
   startYear: startDate.getFullYear(),
   startMonth: startDate.getMonth() + 1,
