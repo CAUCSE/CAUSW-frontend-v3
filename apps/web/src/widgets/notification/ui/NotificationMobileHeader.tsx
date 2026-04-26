@@ -7,6 +7,7 @@ import { Bell, ErrorColored, HStack } from '@causw/cds';
 import { useUnreadNotificationCnt } from '@/entities/notification';
 
 import { ROUTES } from '@/shared/constants';
+import { useIsMounted } from '@/shared/hooks';
 import { StatusDot, QueryErrorBoundary } from '@/shared/ui';
 
 export function NotificationMobileHeader() {
@@ -43,6 +44,7 @@ export function NotificationMobileHeader() {
 }
 
 function NotificationBell() {
+  const isMounted = useIsMounted();
   const { data } = useUnreadNotificationCnt();
   const hasUnreadNotification = (data?.notificationLogCount ?? 0) > 0;
 
@@ -50,7 +52,7 @@ function NotificationBell() {
     <Link href={ROUTES.NOTIFICATION} className="relative">
       <Bell size={24} color="gray-400" />
       <StatusDot
-        show={hasUnreadNotification}
+        show={isMounted && hasUnreadNotification}
         top={-2}
         right={-1}
         className="h-[0.313rem] w-[0.313rem] bg-red-400"
