@@ -16,7 +16,7 @@ export {
   AlumniContactsProfileEntryDatePicker,
   AlumniContactsProfileEntryCurrentToggle,
   AlumniContactsDescriptionTextArea,
-  AlumniContactsContactVisibiltyToggleButton,
+  AlumniContactsContactVisibilityToggleButton,
   AlumniContactsFieldEditButton,
 } from './ui';
 export { putMyAlumniContacts } from './api';

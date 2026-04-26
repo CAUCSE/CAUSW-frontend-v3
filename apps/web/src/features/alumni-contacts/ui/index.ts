@@ -15,5 +15,5 @@ export { AlumniContactsSingleFieldAddButton } from './alumni-contacts-single-fie
 export { AlumniContactsProfileEntryDatePicker } from './alumni-contacts-profile-entry-date-picker';
 export { AlumniContactsProfileEntryCurrentToggle } from './alumni-contacts-profile-entry-current-toggle';
 export { AlumniContactsDescriptionTextArea } from './alumni-contacts-description-text-area';
-export { AlumniContactsContactVisibiltyToggleButton } from './alumni-contacts-contact-visibility-toggle-button';
+export { AlumniContactsContactVisibilityToggleButton } from './alumni-contacts-contact-visibility-toggle-button';
 export { AlumniContactsFieldEditButton } from './alumni-contacts-field-edit-button';

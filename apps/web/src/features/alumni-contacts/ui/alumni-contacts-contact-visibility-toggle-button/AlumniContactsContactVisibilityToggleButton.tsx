@@ -4,7 +4,7 @@ import { Button, Eye, EyeOff, Text } from '@causw/cds';
 
 import { useAlumniContactsContactVisibilityToggleButton } from '../../model';
 
-export const AlumniContactsContactVisibiltyToggleButton = () => {
+export const AlumniContactsContactVisibilityToggleButton = () => {
   const { isPhoneNumberVisible, handleClickButton } =
     useAlumniContactsContactVisibilityToggleButton();
 

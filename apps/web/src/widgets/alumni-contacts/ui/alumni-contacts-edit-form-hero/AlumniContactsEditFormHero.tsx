@@ -3,7 +3,7 @@
 import { HStack, Mail, Text, VStack } from '@causw/cds';
 
 import {
-  AlumniContactsContactVisibiltyToggleButton,
+  AlumniContactsContactVisibilityToggleButton,
   AlumniContactsDescriptionTextArea,
 } from '@/features/alumni-contacts';
 
@@ -51,7 +51,7 @@ export const AlumniContactsEditFormHero = ({
         />
         <AlumniContactsDescriptionTextArea />
         <HStack gap="md" className="overflow-x-auto">
-          <AlumniContactsContactVisibiltyToggleButton />
+          <AlumniContactsContactVisibilityToggleButton />
           <AlumniContactsEmail email={myAlumniContacts.email} />
         </HStack>
       </VStack>

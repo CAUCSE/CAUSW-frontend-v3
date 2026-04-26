@@ -1,1 +1,1 @@
-export { AlumniContactsContactVisibiltyToggleButton } from './AlumniContactsContactVisibiltyToggleButton';
+export { AlumniContactsContactVisibilityToggleButton } from './AlumniContactsContactVisibilityToggleButton';
