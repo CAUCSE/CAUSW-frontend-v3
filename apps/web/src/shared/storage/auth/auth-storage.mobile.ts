@@ -1,8 +1,15 @@
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
 
 import { NATIVE_ACCESS_KEY, NATIVE_REFRESH_KEY } from '@/shared/config';
+
+import { hasNativeKey } from '../capacitor';
+
 export const getNativeATK = async (): Promise<string> => {
   try {
+    if (!(await hasNativeKey(NATIVE_ACCESS_KEY))) {
+      return '';
+    }
+
     const { value } = await SecureStoragePlugin.get({
       key: NATIVE_ACCESS_KEY,
     });
@@ -14,6 +21,10 @@ export const getNativeATK = async (): Promise<string> => {
 
 export const getNativeRTK = async (): Promise<string> => {
   try {
+    if (!(await hasNativeKey(NATIVE_REFRESH_KEY))) {
+      return '';
+    }
+
     const { value } = await SecureStoragePlugin.get({
       key: NATIVE_REFRESH_KEY,
     });
