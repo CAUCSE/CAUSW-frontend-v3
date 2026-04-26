@@ -33,7 +33,11 @@ export const SettingProfileImageSection = () => {
           profileImageUrl={currentProfileImage.profileImageUrl}
         />
 
-        <ProfileInfo name={myInfo.name} admissionYear={myInfo.admissionYear} />
+        <ProfileInfo
+          name={myInfo.name}
+          admissionYear={myInfo.admissionYear}
+          academicStatus={myInfo.academicStatus}
+        />
       </VStack>
 
       {profileImageDialogOpen && (
