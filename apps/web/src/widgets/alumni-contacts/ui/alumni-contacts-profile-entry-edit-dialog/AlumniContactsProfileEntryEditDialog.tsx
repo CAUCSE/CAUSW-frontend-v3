@@ -48,6 +48,7 @@ export const AlumniContactsProfileEntryEditDialog = ({
     isCurrent,
     canSave,
     saveButtonRef,
+    handleInitialFocus,
     handleClickDialogTrigger,
     handleOpenChange,
     handleFieldValueChange,
@@ -102,6 +103,7 @@ export const AlumniContactsProfileEntryEditDialog = ({
               onKeyDown={handleEnterPress}
               value={currentFieldValue}
               maxLength={maxLength}
+              ref={handleInitialFocus}
             />
           </VStack>
           <VStack gap="sm">
