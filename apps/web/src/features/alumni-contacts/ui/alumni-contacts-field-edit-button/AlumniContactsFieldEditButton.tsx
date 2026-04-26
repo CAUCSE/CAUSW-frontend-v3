@@ -20,7 +20,7 @@ export const AlumniContactsFieldEditButton = ({
       onClick={onClick}
       type="button"
       className={mergeStyles(
-        'h-fit w-fit p-0 hover:bg-transparent!',
+        'h-fit w-fit bg-transparent p-0 hover:bg-transparent!',
         className,
       )}
       aria-label={ariaLabel}
