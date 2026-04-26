@@ -20,6 +20,7 @@ export { TermsDialog } from './terms-dialog';
 export { SessionKeepConfirmModal } from './session-keep-confirm-modal';
 export { LogoutConfirmModal } from './logout-confirm-modal';
 export { SignInImageSection } from './sign-in-image-section';
+export { SignInButtonsSkeleton } from './sign-in-buttons-skeleton';
 export { OauthAdditionalInfoForm } from './oauth-additional-info-form';
 export { OauthAdditionalInfoNotice } from './oauth-additional-info-notice';
 export { EmailVerificationHeader } from './email-verification-header';

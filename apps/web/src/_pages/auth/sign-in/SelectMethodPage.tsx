@@ -6,22 +6,30 @@ import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
-import { MethodSelectContainer, SessionKeepConfirmModal } from '@/widgets/auth';
-import { SignInImageSection } from '@/widgets/auth';
+import {
+  MethodSelectContainer,
+  SessionKeepConfirmModal,
+  SignInButtonsSkeleton,
+  SignInImageSection,
+} from '@/widgets/auth';
 
 import {
   AppleLoginButton,
   EmailLoginButton,
   GoogleLoginButton,
   KakaoLoginButton,
+  useRestoreMobileAuth,
 } from '@/features/auth';
 
+import { useIsMounted } from '@/shared/hooks';
 import { isAndroid } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'apple' | 'google';
 
 export const SelectMethodPage = () => {
   const router = useRouter();
+  const isMounted = useIsMounted();
+  useRestoreMobileAuth();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [pendingProvider, setPendingProvider] = useState<SocialProvider | null>(
     null,
@@ -83,28 +91,34 @@ export const SelectMethodPage = () => {
             </Text>
           </VStack>
 
-          <VStack className="w-full gap-3">
-            <KakaoLoginButton
-              data-social-provider="kakao"
-              onClick={handleSocialButtonClick('kakao')}
-            />
+          {isMounted ? (
+            <VStack className="min-h-[252px] w-full gap-3">
+              <>
+                <KakaoLoginButton
+                  data-social-provider="kakao"
+                  onClick={handleSocialButtonClick('kakao')}
+                />
 
-            {!isAndroid && (
-              <AppleLoginButton
-                data-social-provider="apple"
-                onClick={handleSocialButtonClick('apple')}
-              />
-            )}
+                {!isAndroid && (
+                  <AppleLoginButton
+                    data-social-provider="apple"
+                    onClick={handleSocialButtonClick('apple')}
+                  />
+                )}
 
-            <GoogleLoginButton
-              data-social-provider="google"
-              onClick={handleSocialButtonClick('google')}
-            />
+                <GoogleLoginButton
+                  data-social-provider="google"
+                  onClick={handleSocialButtonClick('google')}
+                />
 
-            <EmailLoginButton
-              onClick={() => router.push('/auth/sign-in/email')}
-            />
-          </VStack>
+                <EmailLoginButton
+                  onClick={() => router.push('/auth/sign-in/email')}
+                />
+              </>
+            </VStack>
+          ) : (
+            <SignInButtonsSkeleton />
+          )}
         </VStack>
       </MethodSelectContainer>
     </>
