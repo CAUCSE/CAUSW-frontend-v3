@@ -97,9 +97,13 @@ export const useAlumniContactsSingleFieldAddDialog = ({
       return;
     }
 
+    const newFieldValueSet = new Set(fieldValue);
+
+    newFieldValueSet.add(newFieldValue);
+
     setValue(
       fieldName,
-      [...fieldValue, newFieldValue].sort((a, b) => a.localeCompare(b)),
+      Array.from(newFieldValueSet).sort((a, b) => a.localeCompare(b, 'en-US')),
       {
         shouldValidate: true,
         shouldDirty: true,
