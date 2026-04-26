@@ -11,4 +11,4 @@ export { useAlumniContactsProfileEntryDialog } from './useAlumniContactsProfileE
 export { useAlumniContactsEditFormCareerSection } from './useAlumniContactsEditFormCareerSection';
 export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEditFormProjectSection';
 export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';
-export { useAlumniContactsSingleFieldDialog } from './useAlumniContactsSingleFieldDialog';
+export { useAlumniContactsSingleFieldAddDialog } from './useAlumniContactsSingleFieldAddDialog';

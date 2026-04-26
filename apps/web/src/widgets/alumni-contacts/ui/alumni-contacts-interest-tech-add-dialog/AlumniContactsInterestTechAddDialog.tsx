@@ -6,7 +6,7 @@ import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 
 import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
 
-import { useAlumniContactsSingleFieldDialog } from '../../model';
+import { useAlumniContactsSingleFieldAddDialog } from '../../model';
 import { AlumniContactsSingleFieldAddDialog } from '../alumni-contacts-single-field-add-dialog';
 
 export const AlumniContactsInterestTechAddDialog = () => {
@@ -22,7 +22,7 @@ export const AlumniContactsInterestTechAddDialog = () => {
     handleEnterPress,
     handleInitialFocus,
     handleClickAddFieldValueButton: handleClickAddInterestTechButton,
-  } = useAlumniContactsSingleFieldDialog({
+  } = useAlumniContactsSingleFieldAddDialog({
     fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_TECH,
   });
 

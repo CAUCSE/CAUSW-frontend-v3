@@ -19,7 +19,7 @@ import {
   useWatchAlumniContactsEditFormField,
 } from '@/entities/alumni-contacts';
 
-interface UseAlumniContactsSingleFieldDialogProps {
+interface UseAlumniContactsSingleFieldAddDialogProps {
   fieldName:
     | typeof ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_TECH_STACK
     | typeof ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_TECH
@@ -27,10 +27,10 @@ interface UseAlumniContactsSingleFieldDialogProps {
   maxLength?: number;
 }
 
-export const useAlumniContactsSingleFieldDialog = ({
+export const useAlumniContactsSingleFieldAddDialog = ({
   fieldName,
   maxLength,
-}: UseAlumniContactsSingleFieldDialogProps) => {
+}: UseAlumniContactsSingleFieldAddDialogProps) => {
   const { setValue } = useFormContext<AlumniContactsEditForm>();
 
   const fieldValue = useWatchAlumniContactsEditFormField(fieldName);

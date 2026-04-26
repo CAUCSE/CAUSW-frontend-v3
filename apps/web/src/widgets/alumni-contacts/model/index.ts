@@ -12,7 +12,7 @@ export {
   useAlumniContactsEditFormCareerSection,
   useAlumniContactsEditFormProjectSection,
   useAlumniContactsEditForm,
-  useAlumniContactsSingleFieldDialog,
+  useAlumniContactsSingleFieldAddDialog,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';
