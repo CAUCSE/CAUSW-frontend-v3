@@ -25,7 +25,7 @@ export const AlumniContactsSingleFieldAddDialog = ({
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <Dialog.Content className="w-80 gap-2 md:w-105">
-        <HStack className="justify-between px-1 py-[5.5px]">
+        <HStack className="items-center justify-between px-1 py-[5.5px]">
           <Dialog.Title>
             <Text typography="subtitle-18-bold" textColor="gray-700">
               {title}
