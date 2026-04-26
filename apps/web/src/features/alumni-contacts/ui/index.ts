@@ -16,3 +16,4 @@ export { AlumniContactsProfileEntryDatePicker } from './alumni-contacts-profile-
 export { AlumniContactsProfileEntryCurrentToggle } from './alumni-contacts-profile-entry-current-toggle';
 export { AlumniContactsDescriptionTextArea } from './alumni-contacts-description-text-area';
 export { AlumniContactsContactVisibiltyToggleButton } from './alumni-contacts-contact-visibility-toggle-button';
+export { AlumniContactsFieldEditButton } from './alumni-contacts-field-edit-button';
