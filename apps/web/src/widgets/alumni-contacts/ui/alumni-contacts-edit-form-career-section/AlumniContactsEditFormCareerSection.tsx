@@ -13,27 +13,31 @@ import { AlumniContactsProfileEntryItem } from '../alumni-contacts-profile-entry
 
 export const AlumniContactsEditFormCareerSection = () => {
   const {
-    fields,
+    userCareer,
     isOpen,
     handleClickAddButton,
     handleOpenChange,
     handleClickAddCareer,
-    handleClickDeleteCareer,
   } = useAlumniContactsEditFormCareerSection();
 
   return (
     <VStack className="w-full pt-3">
       <VStack className="gap-5">
-        {fields.map((field, idx) => (
+        {userCareer.map((career, idx) => (
           <AlumniContactsProfileEntryItem
-            key={field.id}
-            type={ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.CAREER}
-            description={field.description}
-            startYear={field.startYear}
-            startMonth={field.startMonth}
-            endYear={field.endYear}
-            endMonth={field.endMonth}
-            onClickDelete={() => handleClickDeleteCareer(idx)}
+            key={career.id ?? idx}
+            type={ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.USER_CAREER}
+            description={career.description}
+            startYear={career.startYear}
+            startMonth={career.startMonth}
+            endYear={career.endYear}
+            endMonth={career.endMonth}
+            fieldIndex={idx}
+            maxLength={ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.CAREER_DESCRIPTION}
+            title="경력 수정하기"
+            ariaDescription="경력 사항을 수정합니다."
+            placeholder="회사명을 입력해주세요"
+            deleteButtonLabel="경력 삭제"
           />
         ))}
       </VStack>

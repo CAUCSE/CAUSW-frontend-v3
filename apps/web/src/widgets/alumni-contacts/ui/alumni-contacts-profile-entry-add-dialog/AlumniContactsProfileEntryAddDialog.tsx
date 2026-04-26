@@ -50,6 +50,7 @@ export const AlumniContactsProfileEntryAddDialog = ({
     isCurrent,
     canAdd,
     addButtonRef,
+    handleInitialFocus,
     handleOpenChange,
     handleNewEntryChange,
     handleEntryEnterPress,
@@ -93,6 +94,7 @@ export const AlumniContactsProfileEntryAddDialog = ({
             onKeyDown={handleEntryEnterPress}
             value={newEntry}
             maxLength={maxLength}
+            ref={handleInitialFocus}
           />
         </VStack>
         <VStack gap="sm">

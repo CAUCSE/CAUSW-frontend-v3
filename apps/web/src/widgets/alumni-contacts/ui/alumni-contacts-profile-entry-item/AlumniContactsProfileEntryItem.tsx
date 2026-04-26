@@ -4,10 +4,8 @@ import { isNil } from 'es-toolkit';
 
 import {
   BuildingColored,
-  Button,
   DocumentColored,
   HStack,
-  Minus,
   Text,
   VStack,
 } from '@causw/cds';
@@ -16,6 +14,7 @@ import {
   ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE,
   type AlumniContactsProfileEntryType,
 } from '../../config';
+import { AlumniContactsProfileEntryEditDialog } from '../alumni-contacts-profile-entry-edit-dialog';
 
 interface AlumniContactsProfileEntryItemProps {
   type: AlumniContactsProfileEntryType;
@@ -24,7 +23,12 @@ interface AlumniContactsProfileEntryItemProps {
   startMonth: number;
   endYear?: number | null;
   endMonth?: number | null;
-  onClickDelete?: () => void;
+  fieldIndex: number;
+  maxLength?: number;
+  title: string;
+  ariaDescription: string;
+  placeholder: string;
+  deleteButtonLabel: string;
 }
 
 export const AlumniContactsProfileEntryItem = ({
@@ -34,16 +38,23 @@ export const AlumniContactsProfileEntryItem = ({
   startMonth,
   endYear,
   endMonth,
-  onClickDelete,
+  fieldIndex,
+  maxLength,
+  title,
+  ariaDescription,
+  placeholder,
+  deleteButtonLabel,
 }: AlumniContactsProfileEntryItemProps) => {
   const Icon = useMemo(() => {
-    return type === ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.CAREER
+    return type === ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.USER_CAREER
       ? BuildingColored
       : DocumentColored;
   }, [type]);
 
   const currentLabel =
-    type === ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.CAREER ? '재직 중' : '진행 중';
+    type === ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.USER_CAREER
+      ? '재직 중'
+      : '진행 중';
 
   return (
     <HStack gap="md" className="items-center">
@@ -61,13 +72,16 @@ export const AlumniContactsProfileEntryItem = ({
             : `${endYear}년${endMonth}월`}
         </Text>
       </VStack>
-      <Button
-        type="button"
-        className="h-fit w-fit shrink-0 p-0 hover:bg-transparent!"
-        onClick={onClickDelete}
-      >
-        <Minus size={18} color="red-400" />
-      </Button>
+      <AlumniContactsProfileEntryEditDialog
+        fieldIndex={fieldIndex}
+        fieldName={type}
+        maxLength={maxLength}
+        title={title}
+        ariaDescription={ariaDescription}
+        placeholder={placeholder}
+        toggleLabel={currentLabel}
+        deleteButtonLabel={deleteButtonLabel}
+      />
     </HStack>
   );
 };

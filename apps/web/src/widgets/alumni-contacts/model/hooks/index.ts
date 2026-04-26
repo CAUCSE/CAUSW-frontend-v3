@@ -13,3 +13,4 @@ export { useAlumniContactsEditFormProjectSection } from './useAlumniContactsEdit
 export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';
 export { useAlumniContactsSingleFieldAddDialog } from './useAlumniContactsSingleFieldAddDialog';
 export { useAlumniContactsSingleFieldEditDialog } from './useAlumniContactsSingleFieldEditDialog';
+export { useAlumniContactsProfileEntryEditDialog } from './useAlumniContactsProfileEntryEditDialog';

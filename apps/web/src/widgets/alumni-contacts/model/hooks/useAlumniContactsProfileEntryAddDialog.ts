@@ -4,6 +4,7 @@ import {
   type ChangeEvent,
   type CompositionEvent,
   type KeyboardEvent,
+  useCallback,
   useMemo,
   useRef,
   useState,
@@ -34,6 +35,10 @@ export const useAlumniContactsProfileEntryAddDialog = ({
     }
     return newEntry.trim() !== '' && startDate && endDate;
   }, [newEntry, startDate, endDate, isCurrent]);
+
+  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
+    element?.focus();
+  }, []);
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {
@@ -96,6 +101,7 @@ export const useAlumniContactsProfileEntryAddDialog = ({
     isCurrent,
     canAdd,
     addButtonRef,
+    handleInitialFocus,
     handleOpenChange,
     handleNewEntryChange,
     handleEntryEnterPress,

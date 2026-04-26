@@ -13,27 +13,31 @@ import { AlumniContactsProfileEntryItem } from '../alumni-contacts-profile-entry
 
 export const AlumniContactsEditFormProjectSection = () => {
   const {
-    fields,
+    userProject,
     isOpen,
     handleClickAddButton,
     handleOpenChange,
     handleClickAddProject,
-    handleClickDeleteProject,
   } = useAlumniContactsEditFormProjectSection();
 
   return (
     <VStack className="w-full pt-3">
       <VStack className="gap-5">
-        {fields.map((field, idx) => (
+        {userProject.map((project, idx) => (
           <AlumniContactsProfileEntryItem
-            key={field.id}
-            type={ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.PROJECT}
-            description={field.description}
-            startYear={field.startYear}
-            startMonth={field.startMonth}
-            endYear={field.endYear}
-            endMonth={field.endMonth}
-            onClickDelete={() => handleClickDeleteProject(idx)}
+            key={project.id ?? idx}
+            type={ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE.USER_PROJECT}
+            description={project.description}
+            startYear={project.startYear}
+            startMonth={project.startMonth}
+            endYear={project.endYear}
+            endMonth={project.endMonth}
+            fieldIndex={idx}
+            maxLength={ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.PROJECT_DESCRIPTION}
+            title="대표 프로젝트 수정하기"
+            ariaDescription="대표 프로젝트를 수정합니다."
+            placeholder="대표 프로젝트를 입력해주세요."
+            deleteButtonLabel="프로젝트 삭제"
           />
         ))}
       </VStack>
