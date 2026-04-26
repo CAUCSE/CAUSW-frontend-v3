@@ -4,6 +4,7 @@ import {
   type ChangeEvent,
   type KeyboardEvent,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -41,6 +42,16 @@ export const useAlumniContactsSingleFieldEditDialog = ({
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const isComposingRef = useRef<boolean>(false);
 
+  useEffect(() => {
+    const initializeFieldValue = () => {
+      setCurrentFieldValue(fieldValue[fieldItemIndex]);
+    };
+
+    if (isOpen) {
+      initializeFieldValue();
+    }
+  }, [fieldValue, fieldItemIndex, isOpen]);
+
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
   }, []);
@@ -50,9 +61,6 @@ export const useAlumniContactsSingleFieldEditDialog = ({
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      setCurrentFieldValue(fieldValue[fieldItemIndex]);
-    }
     setIsOpen(open);
   };
 

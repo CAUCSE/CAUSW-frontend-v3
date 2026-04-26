@@ -5,6 +5,7 @@ import {
   type CompositionEvent,
   type KeyboardEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -81,16 +82,8 @@ export const useAlumniContactsProfileEntryEditDialog = ({
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const isComposingRef = useRef<boolean>(false);
 
-  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
-    element?.focus();
-  }, []);
-
-  const handleClickDialogTrigger = () => {
-    setIsOpen(true);
-  };
-
-  const handleOpenChange = (open: boolean) => {
-    if (open) {
+  useEffect(() => {
+    const initializeFieldValue = () => {
       setCurrentFieldValue(currentProfileEntry.description);
       setCurrentStartDate(
         createDate(
@@ -105,8 +98,22 @@ export const useAlumniContactsProfileEntryEditDialog = ({
         isNil(currentProfileEntry.endYear) ||
           isNil(currentProfileEntry.endMonth),
       );
-    }
+    };
 
+    if (isOpen) {
+      initializeFieldValue();
+    }
+  }, [isOpen, currentProfileEntry]);
+
+  const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
+    element?.focus();
+  }, []);
+
+  const handleClickDialogTrigger = () => {
+    setIsOpen(true);
+  };
+
+  const handleOpenChange = (open: boolean) => {
     setIsOpen(open);
   };
 

@@ -4,6 +4,7 @@ import {
   type ChangeEvent,
   type CompositionEvent,
   type KeyboardEvent,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -46,14 +47,21 @@ export const useAlumniContactsSnsAddDialog = () => {
     return newSocialLink.startsWith(SNS_URL_PREFIX);
   }, [newSocialLink]);
 
+  useEffect(() => {
+    const initializeNewSocialLink = () => {
+      setNewSocialLink('');
+    };
+
+    if (isOpen) {
+      initializeNewSocialLink();
+    }
+  }, [isOpen]);
+
   const handleClickTrigger = () => {
     setIsOpen(true);
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      setNewSocialLink('');
-    }
     setIsOpen(open);
   };
 

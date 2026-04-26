@@ -61,6 +61,7 @@ export const AlumniContactsProfileEntryAddDialog = ({
     handleToggleChange,
   } = useAlumniContactsProfileEntryAddDialog({
     maxLength,
+    isOpen,
     onOpenChange,
   });
 

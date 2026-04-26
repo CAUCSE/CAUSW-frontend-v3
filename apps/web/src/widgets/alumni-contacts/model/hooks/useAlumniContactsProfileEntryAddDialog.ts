@@ -5,6 +5,7 @@ import {
   type CompositionEvent,
   type KeyboardEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -12,11 +13,13 @@ import {
 
 interface UseAlumniContactsProfileEntryAddDialogProps {
   maxLength?: number;
+  isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export const useAlumniContactsProfileEntryAddDialog = ({
   maxLength,
+  isOpen,
   onOpenChange,
 }: UseAlumniContactsProfileEntryAddDialogProps) => {
   const [newEntry, setNewEntry] = useState<string>('');
@@ -36,17 +39,24 @@ export const useAlumniContactsProfileEntryAddDialog = ({
     return newEntry.trim() !== '' && startDate && endDate;
   }, [newEntry, startDate, endDate, isCurrent]);
 
+  useEffect(() => {
+    const initializeFieldValue = () => {
+      setNewEntry('');
+      setStartDate(undefined);
+      setEndDate(undefined);
+      setIsCurrent(false);
+    };
+
+    if (isOpen) {
+      initializeFieldValue();
+    }
+  }, [isOpen]);
+
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
   }, []);
 
   const handleOpenChange = (open: boolean) => {
-    if (!open) {
-      setNewEntry('');
-      setStartDate(undefined);
-      setEndDate(undefined);
-      setIsCurrent(false);
-    }
     onOpenChange(open);
   };
 
