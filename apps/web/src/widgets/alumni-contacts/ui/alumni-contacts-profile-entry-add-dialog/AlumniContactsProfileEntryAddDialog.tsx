@@ -7,9 +7,9 @@ import {
   AlumniContactsProfileEntryDatePicker,
 } from '@/features/alumni-contacts';
 
-import { useAlumniContactsProfileEntryDialog } from '../../model';
+import { useAlumniContactsProfileEntryAddDialog } from '../../model';
 
-interface AlumniContactsProfileEntryDialogProps {
+interface AlumniContactsProfileEntryAddDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -25,7 +25,7 @@ interface AlumniContactsProfileEntryDialogProps {
   ) => void;
 }
 
-export const AlumniContactsProfileEntryDialog = ({
+export const AlumniContactsProfileEntryAddDialog = ({
   isOpen,
   onOpenChange,
   title,
@@ -34,7 +34,7 @@ export const AlumniContactsProfileEntryDialog = ({
   maxLength,
   toggleLabel,
   onClickAddButton,
-}: AlumniContactsProfileEntryDialogProps) => {
+}: AlumniContactsProfileEntryAddDialogProps) => {
   const {
     newEntry,
     startDate,
@@ -50,7 +50,7 @@ export const AlumniContactsProfileEntryDialog = ({
     handleStartDateChange,
     handleEndDateChange,
     handleToggleChange,
-  } = useAlumniContactsProfileEntryDialog({
+  } = useAlumniContactsProfileEntryAddDialog({
     maxLength,
     onOpenChange,
   });

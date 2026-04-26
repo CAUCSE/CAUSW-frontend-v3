@@ -1,1 +1,0 @@
-export { AlumniContactsProfileEntryDialog } from './AlumniContactsProfileEntryDialog';

@@ -8,7 +8,7 @@ export {
   useAlumniContactsDetailHeaderTheme,
   useAlumniContactsDetailSection,
   useAlumniContactsSnsAddDialog,
-  useAlumniContactsProfileEntryDialog,
+  useAlumniContactsProfileEntryAddDialog,
   useAlumniContactsEditFormCareerSection,
   useAlumniContactsEditFormProjectSection,
   useAlumniContactsEditForm,

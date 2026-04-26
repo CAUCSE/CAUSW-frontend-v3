@@ -9,15 +9,15 @@ import {
   useState,
 } from 'react';
 
-interface UseAlumniContactsProfileEntryDialogProps {
+interface UseAlumniContactsProfileEntryAddDialogProps {
   maxLength?: number;
   onOpenChange: (open: boolean) => void;
 }
 
-export const useAlumniContactsProfileEntryDialog = ({
+export const useAlumniContactsProfileEntryAddDialog = ({
   maxLength,
   onOpenChange,
-}: UseAlumniContactsProfileEntryDialogProps) => {
+}: UseAlumniContactsProfileEntryAddDialogProps) => {
   const [newEntry, setNewEntry] = useState<string>('');
 
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);

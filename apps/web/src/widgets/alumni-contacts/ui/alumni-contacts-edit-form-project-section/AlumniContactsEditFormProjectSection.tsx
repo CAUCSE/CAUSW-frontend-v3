@@ -8,7 +8,7 @@ import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from '@/entities/alumni-contacts
 
 import { ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE } from '../../config';
 import { useAlumniContactsEditFormProjectSection } from '../../model';
-import { AlumniContactsProfileEntryDialog } from '../alumni-contacts-profile-entry-dialog';
+import { AlumniContactsProfileEntryAddDialog } from '../alumni-contacts-profile-entry-add-dialog';
 import { AlumniContactsProfileEntryItem } from '../alumni-contacts-profile-entry-item';
 
 export const AlumniContactsEditFormProjectSection = () => {
@@ -41,7 +41,7 @@ export const AlumniContactsEditFormProjectSection = () => {
         label="대표 프로젝트 추가"
         onClick={handleClickAddButton}
       />
-      <AlumniContactsProfileEntryDialog
+      <AlumniContactsProfileEntryAddDialog
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="대표 프로젝트 추가하기"

@@ -8,7 +8,7 @@ import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH } from '@/entities/alumni-contacts
 
 import { ALUMNI_CONTACTS_PROFILE_ENTRY_TYPE } from '../../config';
 import { useAlumniContactsEditFormCareerSection } from '../../model';
-import { AlumniContactsProfileEntryDialog } from '../alumni-contacts-profile-entry-dialog';
+import { AlumniContactsProfileEntryAddDialog } from '../alumni-contacts-profile-entry-add-dialog';
 import { AlumniContactsProfileEntryItem } from '../alumni-contacts-profile-entry-item';
 
 export const AlumniContactsEditFormCareerSection = () => {
@@ -41,7 +41,7 @@ export const AlumniContactsEditFormCareerSection = () => {
         label="경력 사항 추가"
         onClick={handleClickAddButton}
       />
-      <AlumniContactsProfileEntryDialog
+      <AlumniContactsProfileEntryAddDialog
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="경력 추가하기"
