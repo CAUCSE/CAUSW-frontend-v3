@@ -67,7 +67,7 @@ export const AlumniContactsSnsAddDialog = () => {
                 <Button
                   onClick={handleClickAddButton}
                   className="h-13 flex-1 rounded-md bg-gray-700 text-white hover:bg-gray-800! disabled:bg-gray-200! disabled:[&_span]:text-gray-300!"
-                  disabled={!canAdd}
+                  disabled={!isValid || newSocialLink.trim() === ''}
                   ref={addButtonRef}
                 >
                   <Text typography="body-15-semibold" textColor="white">
