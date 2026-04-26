@@ -7,7 +7,7 @@ import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
 
 import { useAlumniContactsSingleFieldDialog } from '../../model';
-import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
+import { AlumniContactsSingleFieldAddDialog } from '../alumni-contacts-single-field-add-dialog';
 
 export const AlumniContactsInterestDomainAddDialog = () => {
   const {
@@ -20,6 +20,7 @@ export const AlumniContactsInterestDomainAddDialog = () => {
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
+    handleInitialFocus,
     handleClickAddFieldValueButton: handleClickAddInterestDomainButton,
   } = useAlumniContactsSingleFieldDialog({
     fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_INTEREST_DOMAIN,
@@ -31,7 +32,7 @@ export const AlumniContactsInterestDomainAddDialog = () => {
         label="관심 도메인 추가"
         onClick={handleClickDialogTrigger}
       />
-      <AlumniContactsSingleFieldDialog
+      <AlumniContactsSingleFieldAddDialog
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="관심 도메인 추가"
@@ -48,8 +49,9 @@ export const AlumniContactsInterestDomainAddDialog = () => {
           onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleEnterPress}
           value={newInterestDomain}
+          ref={handleInitialFocus}
         />
-      </AlumniContactsSingleFieldDialog>
+      </AlumniContactsSingleFieldAddDialog>
     </>
   );
 };

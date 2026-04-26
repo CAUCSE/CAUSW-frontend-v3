@@ -7,7 +7,7 @@ import { AlumniContactsSingleFieldAddButton } from '@/features/alumni-contacts';
 import { ALUMNI_CONTACTS_EDIT_FORM_FIELD } from '@/entities/alumni-contacts';
 
 import { useAlumniContactsSingleFieldDialog } from '../../model';
-import { AlumniContactsSingleFieldDialog } from '../alumni-contacts-single-field-dialog';
+import { AlumniContactsSingleFieldAddDialog } from '../alumni-contacts-single-field-add-dialog';
 
 export const AlumniContactsTechStackAddDialog = () => {
   const {
@@ -20,6 +20,7 @@ export const AlumniContactsTechStackAddDialog = () => {
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
+    handleInitialFocus,
     handleClickAddFieldValueButton: handleClickAddTechStackButton,
   } = useAlumniContactsSingleFieldDialog({
     fieldName: ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_TECH_STACK,
@@ -31,7 +32,7 @@ export const AlumniContactsTechStackAddDialog = () => {
         label="기술스택 추가"
         onClick={handleClickDialogTrigger}
       />
-      <AlumniContactsSingleFieldDialog
+      <AlumniContactsSingleFieldAddDialog
         isOpen={isOpen}
         onOpenChange={handleOpenChange}
         title="기술스택 추가"
@@ -48,8 +49,9 @@ export const AlumniContactsTechStackAddDialog = () => {
           onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleEnterPress}
           value={newTechStack}
+          ref={handleInitialFocus}
         />
-      </AlumniContactsSingleFieldDialog>
+      </AlumniContactsSingleFieldAddDialog>
     </>
   );
 };
