@@ -10,8 +10,10 @@ export const updateFCMToken = async (
   const refreshToken = await TokenManager.getRefreshToken();
 
   await API.post(URI, payload, {
-    headers: {
-      'Refresh-Authorization': `Bearer ${refreshToken}`,
-    },
+    headers: refreshToken
+      ? {
+          'Refresh-Authorization': `Bearer ${refreshToken}`,
+        }
+      : {},
   });
 };
