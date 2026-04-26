@@ -1,1 +1,1 @@
-export { useRestoreMobileAuth } from './useAuthBootstrap';
+export { useRestoreMobileAuth } from './useRestoreMobileAuth';
