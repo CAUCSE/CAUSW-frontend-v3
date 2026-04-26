@@ -1,4 +1,4 @@
-import { HttpResponse } from 'msw';
+import { HttpResponse, passthrough } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
@@ -15,6 +15,8 @@ export const getHandler = [
   mswHttp.get<GetNotificationsResponseDto[]>(
     `${NOTIFICATIONS_API_PREFIX}/log`,
     ({ request }) => {
+      return passthrough();
+
       const url = new URL(request.url);
       const isRead = url.searchParams.get('isRead');
       if (isRead === 'true') {
