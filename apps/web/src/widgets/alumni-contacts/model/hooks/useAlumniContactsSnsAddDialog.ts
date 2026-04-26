@@ -91,7 +91,9 @@ export const useAlumniContactsSnsAddDialog = () => {
 
     setValue(
       ALUMNI_CONTACTS_EDIT_FORM_FIELD.SOCIAL_LINKS,
-      Array.from(currentSocialLinkSet).sort((a, b) => a.localeCompare(b)),
+      Array.from(currentSocialLinkSet).sort((a, b) =>
+        a.localeCompare(b, 'en-US'),
+      ),
       {
         shouldValidate: true,
       },
