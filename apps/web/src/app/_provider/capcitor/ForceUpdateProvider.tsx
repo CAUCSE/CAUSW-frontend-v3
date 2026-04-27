@@ -1,5 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
+
+import { App } from '@capacitor/app';
 import { useQuery } from '@tanstack/react-query';
 
 import { CTAButton, Dialog, Text } from '@causw/cds';
@@ -21,7 +24,22 @@ export function ForceUpdateProvider({
     refetchOnWindowFocus: 'always',
     retry: 1,
   });
+  useEffect(() => {
+    const listenerPromise = App.addListener(
+      'appStateChange',
+      ({ isActive }) => {
+        if (isActive) {
+          void refetch();
+        }
+      },
+    );
 
+    return () => {
+      void listenerPromise.then((listener) => {
+        void listener.remove();
+      });
+    };
+  }, [refetch]);
   const isForceUpdateRequired = data?.needUpdate ?? false;
   const isInitialCheckFailed = isError && !data;
   const isOpen = isForceUpdateRequired || isInitialCheckFailed;

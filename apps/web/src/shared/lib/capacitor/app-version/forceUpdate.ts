@@ -1,7 +1,8 @@
 import { getPlatform } from '@/shared/utils';
 
+import { fetchMinVersion } from '../../firebase/app-version';
+
 import { compareSemver } from './compareVersion';
-import { fetchMinVersion } from './fetchMinVersion';
 import { getAppVersion } from './getAppVersion';
 
 export interface ForceUpdateResult {
