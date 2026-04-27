@@ -1,4 +1,4 @@
 ﻿// @/widgets/board
 // 게시판 관련 화면 조합
 
-export { FeedHeader } from './ui';
+export { FeedHeader, FeedMainServerComponent } from './ui';
