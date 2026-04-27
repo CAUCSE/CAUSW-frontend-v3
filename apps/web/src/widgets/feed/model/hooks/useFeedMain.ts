@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -28,8 +28,8 @@ export const useFeedMain = () => {
     [data.boards],
   );
 
-  const [selectedTab, setSelectedTab] = useState<string>(() =>
-    getValidSelectedTab(searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB)),
+  const selectedTab = getValidSelectedTab(
+    searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB),
   );
 
   const feedListRef = useRef<HTMLUListElement | null>(null);
@@ -48,7 +48,7 @@ export const useFeedMain = () => {
   }, [getValidSelectedTab, router, pathname, searchParams]);
 
   const filteredBoardIds = useMemo(() => {
-    if (selectedTab === 'all') {
+    if (selectedTab === FEED_LIST_TAB.ALL) {
       return data.boards.map((board) => board.id);
     }
     return data.boards
@@ -57,8 +57,6 @@ export const useFeedMain = () => {
   }, [selectedTab, data.boards]);
 
   const handleTabChange = (value: string) => {
-    setSelectedTab(value);
-
     feedListRef.current?.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -66,11 +64,11 @@ export const useFeedMain = () => {
 
     const params = new URLSearchParams(searchParams.toString());
 
-    if (params.get('tab') === value) {
+    if (params.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB) === value) {
       return;
     }
 
-    params.set('tab', value);
+    params.set(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB, value);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
