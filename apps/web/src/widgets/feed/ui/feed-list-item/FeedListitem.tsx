@@ -5,7 +5,12 @@ import Link from 'next/link';
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
-import { POST_ACTION, PostHeader, usePostMenuActions } from '@/features/post';
+import {
+  POST_ACTION,
+  PostActionMenu,
+  PostHeader,
+  usePostMenuActions,
+} from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
 import {
@@ -28,7 +33,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
   } = usePostMenuActions(post.postId);
 
   return (
-    <>
+    <VStack className="relative">
       <Link href={`/feed/${post.postId}`}>
         <VStack key={post.postId} gap="sm" className="rounded-lg bg-white p-4">
           <PostHeader
@@ -39,6 +44,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
             // isOfficial={}
             isMine={post.isOwner}
             onAction={handleMenuAction}
+            hideActionMenu
           />
           <PostBody
             content={post.content}
@@ -53,6 +59,10 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
           />
         </VStack>
       </Link>
+      {/* a태그 > button태그 문제로 인해 메뉴 버튼을 따로 빼서 처리함 */}
+      <div className="absolute top-6.5 right-5">
+        <PostActionMenu isMine={post.isOwner} onAction={handleMenuAction} />
+      </div>
       <BlockUserModal
         open={activeModal === POST_ACTION.BLOCK}
         setOpen={closeModal}
@@ -63,6 +73,6 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         setOpen={closeModal}
         onSubmitReport={submitReport}
       />
-    </>
+    </VStack>
   );
 };

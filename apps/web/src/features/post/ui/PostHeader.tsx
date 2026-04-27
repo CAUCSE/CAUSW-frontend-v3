@@ -14,6 +14,7 @@ interface PostHeaderProps {
   isOfficial?: boolean;
   isMine: boolean;
   onAction: (action: PostAction) => void;
+  hideActionMenu?: boolean;
 }
 
 /**
@@ -29,6 +30,7 @@ export const PostHeader = ({
   isOfficial = false,
   isMine,
   onAction,
+  hideActionMenu = false,
 }: PostHeaderProps) => {
   const profileImageUrl = profileImage
     ? getProfileImageUrl({
@@ -57,7 +59,9 @@ export const PostHeader = ({
         </HStack>
       </HStack>
 
-      <PostActionMenu isMine={isMine} onAction={onAction} />
+      {!hideActionMenu && (
+        <PostActionMenu isMine={isMine} onAction={onAction} />
+      )}
     </Flex>
   );
 };
