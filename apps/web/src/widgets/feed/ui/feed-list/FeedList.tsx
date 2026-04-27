@@ -2,51 +2,37 @@
 
 import { type RefObject } from 'react';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
-
 import { VStack } from '@causw/cds';
 
-import { type Board } from '@/entities/feed';
-import { postQueryOptions } from '@/entities/post';
+import { type GetPostsResponseDto } from '@/entities/post';
 
-import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
 import { FeedListitem } from '../feed-list-item';
 
 interface FeedListProps {
-  boardIds: Board['id'][];
+  posts?: GetPostsResponseDto['posts'];
+  isFetchingNextPage: boolean;
+  hasNextPage: boolean;
+  targetRef: RefObject<HTMLDivElement | null>;
   ref: RefObject<HTMLUListElement | null>;
 }
 
-export const FeedList = ({ boardIds, ref }: FeedListProps) => {
-  const {
-    data: posts,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    ...postQueryOptions.list({ boardIds, size: 20 }),
-    select: (data) => data.pages.flatMap((page) => page.posts),
-  });
-
-  const { targetRef } = useInfiniteScroll({
-    intersectionCallback: (entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
-  });
-
-  if (isLoading) {
-    return <SuspenseView />;
+export const FeedList = ({
+  posts,
+  isFetchingNextPage,
+  hasNextPage,
+  targetRef,
+  ref,
+}: FeedListProps) => {
+  // TODO: empty view 추가 필요
+  if (!posts || posts.length === 0) {
+    return <></>;
   }
 
   return (
     <VStack
-      className="min-h-0 flex-1 overflow-y-auto px-4 md:px-0"
+      className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       ref={ref}
       as="ul"
     >

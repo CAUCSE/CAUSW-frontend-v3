@@ -4,7 +4,7 @@ import { Tab, VStack } from '@causw/cds';
 
 import { FEED_LIST_TAB } from '../../config';
 import { useFeedMain } from '../../model';
-import { FeedList } from '../feed-list';
+import { FeedListWrapper } from '../feed-list';
 
 export const FeedMain = () => {
   const {
@@ -31,7 +31,7 @@ export const FeedMain = () => {
           ))}
         </Tab.List>
       </Tab.Root>
-      <FeedList boardIds={filteredBoardIds} ref={feedListRef} />
+      <FeedListWrapper boardIds={filteredBoardIds} ref={feedListRef} />
     </VStack>
   );
 };

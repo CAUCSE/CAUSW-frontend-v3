@@ -1,1 +1,1 @@
-export { FeedList } from './FeedList';
+export { FeedListWrapper } from './FeedListWrapper';
