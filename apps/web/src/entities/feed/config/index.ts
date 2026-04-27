@@ -1,1 +1,1 @@
-export * from './query-key';
+export { boardQueryKeys, boardQueryOptions } from './query';
