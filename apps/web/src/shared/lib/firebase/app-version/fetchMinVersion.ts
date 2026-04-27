@@ -68,9 +68,9 @@ export async function fetchMinVersion(
   const app = getFirebaseApp();
   const remoteConfig = getRemoteConfig(app);
 
-  remoteConfig.settings.minimumFetchIntervalMillis =
-    process.env.NODE_ENV === 'development' ? 0 : QUERY_TIME.RC_INTERVAL;
-
+  remoteConfig.settings.minimumFetchIntervalMillis = isDevelopment
+    ? 0
+    : QUERY_TIME.RC_INTERVAL;
   remoteConfig.defaultConfig = {
     [REMOTE_CONFIG_KEYS.FORCE_UPDATE_ENABLED]: 'false',
     [REMOTE_CONFIG_KEYS.MIN_VERSION_IOS_DEV]: '0.0.0',
