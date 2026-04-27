@@ -1,6 +1,6 @@
 import { getPlatform } from '@/shared/utils';
 
-import { fetchMinVersion } from '../../firebase/app-version';
+import { fetchMinVersion } from '../../firebase';
 
 import { compareSemver } from './compareVersion';
 import { getAppVersion } from './getAppVersion';
