@@ -12,8 +12,8 @@ import { updatePost } from '../../api';
 
 interface UpdatePostParams {
   postId: string;
-  postUpdateRequest: PostUpdateRequestDto;
-  attachImageList?: File[];
+  request: PostUpdateRequestDto;
+  images?: File[];
 }
 
 export const useUpdatePostMutation = () => {
@@ -21,12 +21,8 @@ export const useUpdatePostMutation = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: ({
-      postId,
-      postUpdateRequest,
-      attachImageList,
-    }: UpdatePostParams) =>
-      updatePost(postId, postUpdateRequest, attachImageList),
+    mutationFn: ({ postId, request, images }: UpdatePostParams) =>
+      updatePost(postId, request, images),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
       router.back();

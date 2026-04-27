@@ -32,3 +32,8 @@ export interface ProfileImageEditValue {
   profileImageUrl?: string | null;
   customImageFile?: File | null;
 }
+
+export interface ProfileImageValue {
+  profileImageType: UserProfileImageType;
+  profileImageUrl?: string | null;
+}
