@@ -8,3 +8,4 @@ export * from './kakao-map';
 export { mswHttp } from './msw';
 export * from './timeValidation';
 export * from './type-utils';
+export * from './firebase';
