@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { type GetPostResponseDto, postKeys } from '@/entities/post';
+import { type GetPostResponseDto, postQueryKeys } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
@@ -17,14 +17,16 @@ export const useTogglePostLikeMutation = (postId: string) => {
     },
 
     onMutate: async (isPostLike: boolean) => {
-      await queryClient.cancelQueries({ queryKey: postKeys.detail(postId) });
+      await queryClient.cancelQueries({
+        queryKey: postQueryKeys.detail(postId),
+      });
 
       const previous = queryClient.getQueryData<GetPostResponseDto>(
-        postKeys.detail(postId),
+        postQueryKeys.detail(postId),
       );
 
       queryClient.setQueryData(
-        postKeys.detail(postId),
+        postQueryKeys.detail(postId),
         (old: GetPostResponseDto | undefined) => {
           if (!old) return old;
 
@@ -42,12 +44,15 @@ export const useTogglePostLikeMutation = (postId: string) => {
     onError: (_err, _variables, context) => {
       toast.error('좋아요 처리에 실패했어요.');
       if (context?.previous) {
-        queryClient.setQueryData(postKeys.detail(postId), context.previous);
+        queryClient.setQueryData(
+          postQueryKeys.detail(postId),
+          context.previous,
+        );
       }
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: postKeys.detail(postId) });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(postId) });
     },
   });
 };

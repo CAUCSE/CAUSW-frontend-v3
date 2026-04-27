@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { postKeys, type PostUpdateRequestDto } from '@/entities/post';
+import { postQueryKeys, type PostUpdateRequestDto } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
@@ -28,7 +28,7 @@ export const useUpdatePostMutation = () => {
     }: UpdatePostParams) =>
       updatePost(postId, postUpdateRequest, attachImageList),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: postKeys.all });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
       router.back();
     },
     onError: (error) => {
