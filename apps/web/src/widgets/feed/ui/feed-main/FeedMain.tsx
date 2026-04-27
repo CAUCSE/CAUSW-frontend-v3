@@ -22,7 +22,7 @@ export const FeedMain = () => {
         value={selectedTab}
         onValueChange={handleTabChange}
       >
-        <Tab.List>
+        <Tab.List className="px-5 md:px-0">
           <Tab.TabItem value={FEED_LIST_TAB.ALL}>전체</Tab.TabItem>
           {boards.map((board) => (
             <Tab.TabItem key={board.id} value={board.id}>

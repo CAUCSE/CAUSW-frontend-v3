@@ -45,7 +45,11 @@ export const FeedList = ({ boardIds, ref }: FeedListProps) => {
   }
 
   return (
-    <VStack className="min-h-0 flex-1 overflow-y-auto" ref={ref} as="ul">
+    <VStack
+      className="min-h-0 flex-1 overflow-y-auto px-4 md:px-0"
+      ref={ref}
+      as="ul"
+    >
       {posts?.map((post) => (
         <li key={post.postId}>
           <FeedListitem post={post} />
