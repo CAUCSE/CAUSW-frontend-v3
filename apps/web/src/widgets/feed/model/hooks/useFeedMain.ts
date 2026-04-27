@@ -6,6 +6,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetAvailableBoards } from '@/entities/feed';
 
+import { useBreakpoint } from '@/shared/hooks';
+
 import { FEED_LIST_TAB, FEED_LIST_TAB_SEARCH_PARAM_KEY } from '../../config';
 
 export const useFeedMain = () => {
@@ -14,6 +16,8 @@ export const useFeedMain = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const { isMobileSize } = useBreakpoint();
 
   const getValidSelectedTab = useCallback(
     (tab: string | null) => {
@@ -57,10 +61,26 @@ export const useFeedMain = () => {
   }, [selectedTab, data.boards]);
 
   const handleTabChange = (value: string) => {
-    feedListRef.current?.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (!feedListRef.current) {
+      return;
+    }
+
+    // 모바일일 때는 PullToRefresh 컴포넌트의 스크롤 컨테이너를 스크롤 시킴
+    if (isMobileSize) {
+      const scrollContainer = feedListRef.current.closest(
+        '.feed-list-scroll-container',
+      );
+
+      scrollContainer?.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      feedListRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
 
     const params = new URLSearchParams(searchParams.toString());
 

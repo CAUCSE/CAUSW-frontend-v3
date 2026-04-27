@@ -53,7 +53,7 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
     return (
       <>
         <PullToRefresh
-          className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden"
+          className="feed-list-scroll-container min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden"
           onRefresh={async () => {
             await refetch();
           }}
