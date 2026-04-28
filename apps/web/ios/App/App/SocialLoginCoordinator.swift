@@ -10,6 +10,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
     private let socialLoginMessageHandlerNames = ["causwSocialLogin", "socialLogin"]
     private let kakaoNativeAppKeyProvider: () -> String
     private let googleClientIdProvider: () -> String
+    private let googleServerClientIdProvider: () -> String
     private let windowProvider: () -> UIWindow?
     private let webViewProvider: () -> WKWebView?
 
@@ -18,11 +19,13 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
     init(
         kakaoNativeAppKeyProvider: @escaping () -> String,
         googleClientIdProvider: @escaping () -> String,
+        googleServerClientIdProvider: @escaping () -> String,
         windowProvider: @escaping () -> UIWindow?,
         webViewProvider: @escaping () -> WKWebView?
     ) {
         self.kakaoNativeAppKeyProvider = kakaoNativeAppKeyProvider
         self.googleClientIdProvider = googleClientIdProvider
+        self.googleServerClientIdProvider = googleServerClientIdProvider
         self.windowProvider = windowProvider
         self.webViewProvider = webViewProvider
     }
@@ -141,12 +144,14 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
 
     private func loginWithGoogle(requestId: String) {
         let googleClientId = googleClientIdProvider()
+        let googleServerClientId = googleServerClientIdProvider()
         guard !googleClientId.isEmpty else {
             dispatchSocialLoginResult(
                 provider: "google",
                 requestId: requestId,
                 accessToken: nil,
                 idToken: nil,
+                authorizationCode: nil,
                 errorCode: "GOOGLE_CLIENT_ID_MISSING",
                 message: "Google client id is missing."
             )
@@ -159,13 +164,17 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 requestId: requestId,
                 accessToken: nil,
                 idToken: nil,
+                authorizationCode: nil,
                 errorCode: "PRESENTING_VIEW_CONTROLLER_MISSING",
                 message: "Unable to find presenting view controller."
             )
             return
         }
 
-        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: googleClientId)
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(
+            clientID: googleClientId,
+            serverClientID: googleServerClientId.isEmpty ? nil : googleServerClientId
+        )
 
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
             guard let self else { return }
@@ -176,6 +185,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                     requestId: requestId,
                     accessToken: nil,
                     idToken: nil,
+                    authorizationCode: nil,
                     errorCode: "GOOGLE_LOGIN_FAILED",
                     message: error.localizedDescription
                 )
@@ -189,8 +199,23 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                     requestId: requestId,
                     accessToken: nil,
                     idToken: nil,
+                    authorizationCode: nil,
                     errorCode: "EMPTY_ID_TOKEN",
                     message: "Google id token is empty."
+                )
+                return
+            }
+
+            guard let authorizationCode = result?.serverAuthCode,
+                  !authorizationCode.isEmpty else {
+                self.dispatchSocialLoginResult(
+                    provider: "google",
+                    requestId: requestId,
+                    accessToken: nil,
+                    idToken: nil,
+                    authorizationCode: nil,
+                    errorCode: "EMPTY_AUTHORIZATION_CODE",
+                    message: "Google authorization code is empty."
                 )
                 return
             }
@@ -200,6 +225,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 requestId: requestId,
                 accessToken: nil,
                 idToken: idToken,
+                authorizationCode: authorizationCode,
                 errorCode: nil,
                 message: nil
             )
@@ -226,6 +252,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             requestId: requestId,
             accessToken: nil,
             idToken: nil,
+            authorizationCode: nil,
             errorCode: "APPLE_LOGIN_UNAVAILABLE",
             message: "Apple login requires iOS 13 or later."
         )
@@ -241,6 +268,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 requestId: requestId,
                 accessToken: nil,
                 idToken: nil,
+                authorizationCode: nil,
                 errorCode: "APPLE_CREDENTIAL_MISSING",
                 message: "Apple credential is missing."
             )
@@ -255,8 +283,24 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 requestId: requestId,
                 accessToken: nil,
                 idToken: nil,
+                authorizationCode: nil,
                 errorCode: "EMPTY_ID_TOKEN",
                 message: "Apple identity token is empty."
+            )
+            return
+        }
+
+        guard let authorizationCodeData = appleCredential.authorizationCode,
+              let authorizationCode = String(data: authorizationCodeData, encoding: .utf8),
+              !authorizationCode.isEmpty else {
+            dispatchSocialLoginResult(
+                provider: "apple",
+                requestId: requestId,
+                accessToken: nil,
+                idToken: nil,
+                authorizationCode: nil,
+                errorCode: "EMPTY_AUTHORIZATION_CODE",
+                message: "Apple authorization code is empty."
             )
             return
         }
@@ -266,6 +310,8 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             requestId: requestId,
             accessToken: nil,
             idToken: identityToken,
+            authorizationCode: authorizationCode,
+            platform: "ios",
             errorCode: nil,
             message: nil
         )
@@ -281,6 +327,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
                 requestId: requestId,
                 accessToken: nil,
                 idToken: nil,
+                authorizationCode: nil,
                 errorCode: "APPLE_LOGIN_CANCELLED",
                 message: "Apple login cancelled."
             )
@@ -292,6 +339,7 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             requestId: requestId,
             accessToken: nil,
             idToken: nil,
+            authorizationCode: nil,
             errorCode: "APPLE_LOGIN_FAILED",
             message: error.localizedDescription
         )
@@ -306,11 +354,29 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
         requestId: String,
         accessToken: String?,
         idToken: String?,
+        authorizationCode: String? = nil,
+        codeVerifier: String? = nil,
+        platform: String? = nil,
         errorCode: String?,
         message: String?
     ) {
         guard let webView = webViewProvider() else {
             return
+        }
+
+        if accessToken != nil || idToken != nil || authorizationCode != nil {
+            print(
+                """
+                소셜 로그인 성공
+                provider=\(provider)
+                requestId=\(requestId)
+                accessToken=\(accessToken ?? "nil")
+                idToken=\(idToken ?? "nil")
+                authorizationCode=\(authorizationCode ?? "nil")
+                codeVerifier=\(codeVerifier ?? "nil")
+                platform=\(platform ?? "nil")
+                """
+            )
         }
 
         var payload: [String: Any] = [
@@ -323,6 +389,15 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
         }
         if let idToken {
             payload["idToken"] = idToken
+        }
+        if let authorizationCode {
+            payload["authorizationCode"] = authorizationCode
+        }
+        if let codeVerifier {
+            payload["codeVerifier"] = codeVerifier
+        }
+        if let platform {
+            payload["platform"] = platform
         }
         if let errorCode {
             payload["errorCode"] = errorCode

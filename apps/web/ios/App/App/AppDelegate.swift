@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             googleClientIdProvider: { [weak self] in
                 self?.infoPlistString(forKey: "CAUSWGoogleClientID") ?? ""
             },
+            googleServerClientIdProvider: { [weak self] in
+                self?.infoPlistString(forKey: "CAUSWGoogleServerClientID") ?? ""
+            },
             windowProvider: { [weak self] in
                 self?.window
             },
