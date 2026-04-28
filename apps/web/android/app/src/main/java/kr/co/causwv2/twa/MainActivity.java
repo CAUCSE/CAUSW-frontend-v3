@@ -78,6 +78,9 @@ public class MainActivity extends BridgeActivity {
         String requestId,
         String accessToken,
         String idToken,
+        String authorizationCode,
+        String codeVerifier,
+        String platform,
         String errorCode,
         String message
     ) {
@@ -88,17 +91,18 @@ public class MainActivity extends BridgeActivity {
             }
 
             if ((accessToken != null && !accessToken.isEmpty())
-                || (idToken != null && !idToken.isEmpty())) {
+                || (idToken != null && !idToken.isEmpty())
+                || (authorizationCode != null && !authorizationCode.isEmpty())) {
                 Log.d(
                     SOCIAL_LOGIN_TAG,
-                    "Social login success. provider="
-                        + provider
-                        + ", requestId="
-                        + requestId
-                        + ", accessToken="
-                        + accessToken
-                        + ", idToken="
-                        + idToken
+                    "소셜 로그인 성공"
+                        + "\nprovider=" + provider
+                        + "\nrequestId=" + requestId
+                        + "\naccessToken=" + accessToken
+                        + "\nidToken=" + idToken
+                        + "\nauthorizationCode=" + authorizationCode
+                        + "\ncodeVerifier=" + codeVerifier
+                        + "\nplatform=" + platform
                 );
             } else if (errorCode != null) {
                 Log.e(
@@ -120,6 +124,9 @@ public class MainActivity extends BridgeActivity {
                 payload.put("requestId", requestId);
                 if (accessToken != null) payload.put("accessToken", accessToken);
                 if (idToken != null) payload.put("idToken", idToken);
+                if (authorizationCode != null) payload.put("authorizationCode", authorizationCode);
+                if (codeVerifier != null) payload.put("codeVerifier", codeVerifier);
+                if (platform != null) payload.put("platform", platform);
                 if (errorCode != null) payload.put("errorCode", errorCode);
                 if (message != null) payload.put("message", message);
             } catch (JSONException e) {

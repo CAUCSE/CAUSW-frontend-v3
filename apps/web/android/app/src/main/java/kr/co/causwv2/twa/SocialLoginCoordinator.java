@@ -26,7 +26,17 @@ import kotlin.jvm.functions.Function2;
 
 final class SocialLoginCoordinator {
     interface ResultDispatcher {
-        void dispatch(String provider, String requestId, String accessToken, String idToken, String errorCode, String message);
+        void dispatch(
+            String provider,
+            String requestId,
+            String accessToken,
+            String idToken,
+            String authorizationCode,
+            String codeVerifier,
+            String platform,
+            String errorCode,
+            String message
+        );
     }
 
     private static final String TAG = "SOCIAL_LOGIN";
@@ -43,6 +53,51 @@ final class SocialLoginCoordinator {
         this.activity = activity;
         this.dispatcher = dispatcher;
         this.googleWebClientId = googleWebClientId;
+    }
+
+    private void dispatch(
+        String provider,
+        String requestId,
+        String accessToken,
+        String idToken,
+        String errorCode,
+        String message
+    ) {
+        dispatcher.dispatch(
+            provider,
+            requestId,
+            accessToken,
+            idToken,
+            null,
+            null,
+            null,
+            errorCode,
+            message
+        );
+    }
+
+    private void dispatch(
+        String provider,
+        String requestId,
+        String accessToken,
+        String idToken,
+        String authorizationCode,
+        String codeVerifier,
+        String platform,
+        String errorCode,
+        String message
+    ) {
+        dispatcher.dispatch(
+            provider,
+            requestId,
+            accessToken,
+            idToken,
+            authorizationCode,
+            codeVerifier,
+            platform,
+            errorCode,
+            message
+        );
     }
 
     void registerJavascriptInterfaces(WebView webView) {
@@ -66,9 +121,10 @@ final class SocialLoginCoordinator {
             GoogleSignInAccount account =
                 GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class);
             String idToken = account != null ? account.getIdToken() : null;
+            String authorizationCode = account != null ? account.getServerAuthCode() : null;
 
             if (idToken == null || idToken.isEmpty()) {
-                dispatcher.dispatch(
+                dispatch(
                     "google",
                     requestId,
                     null,
@@ -79,11 +135,33 @@ final class SocialLoginCoordinator {
                 return true;
             }
 
-            dispatcher.dispatch("google", requestId, null, idToken, null, null);
+            if (authorizationCode == null || authorizationCode.isEmpty()) {
+                dispatch(
+                    "google",
+                    requestId,
+                    null,
+                    null,
+                    "EMPTY_AUTHORIZATION_CODE",
+                    "Google authorization code is empty."
+                );
+                return true;
+            }
+
+            dispatch(
+                "google",
+                requestId,
+                null,
+                idToken,
+                authorizationCode,
+                null,
+                "android",
+                null,
+                null
+            );
         } catch (ApiException e) {
             if (e.getStatusCode() == GoogleSignInStatusCodes.SIGN_IN_CANCELLED
                 || e.getStatusCode() == CommonStatusCodes.CANCELED) {
-                dispatcher.dispatch(
+                dispatch(
                     "google",
                     requestId,
                     null,
@@ -109,7 +187,7 @@ final class SocialLoginCoordinator {
                     + requestId,
                 e
             );
-            dispatcher.dispatch(
+            dispatch(
                 "google",
                 requestId,
                 null,
@@ -130,7 +208,7 @@ final class SocialLoginCoordinator {
                     + requestId,
                 e
             );
-            dispatcher.dispatch(
+            dispatch(
                 "google",
                 requestId,
                 null,
@@ -155,7 +233,7 @@ final class SocialLoginCoordinator {
         try {
             payload = new JSONObject(payloadJson);
         } catch (JSONException e) {
-            dispatcher.dispatch("kakao", "", null, null, "INVALID_PAYLOAD", "Invalid JSON payload.");
+            dispatch("kakao", "", null, null, "INVALID_PAYLOAD", "Invalid JSON payload.");
             return;
         }
 
@@ -163,7 +241,7 @@ final class SocialLoginCoordinator {
         String requestId = payload.optString("requestId", "");
 
         if (provider.isEmpty() || requestId.isEmpty()) {
-            dispatcher.dispatch(
+            dispatch(
                 "kakao",
                 requestId,
                 null,
@@ -185,7 +263,7 @@ final class SocialLoginCoordinator {
         }
 
         if ("apple".equals(provider)) {
-            dispatcher.dispatch(
+            dispatch(
                 "apple",
                 requestId,
                 null,
@@ -196,7 +274,7 @@ final class SocialLoginCoordinator {
             return;
         }
 
-        dispatcher.dispatch(
+        dispatch(
             provider,
             requestId,
             null,
@@ -218,7 +296,7 @@ final class SocialLoginCoordinator {
         Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
             if (error != null) {
                 if (isKakaoLoginCancelled(error)) {
-                    dispatcher.dispatch(
+                    dispatch(
                         "kakao",
                         requestId,
                         null,
@@ -243,7 +321,7 @@ final class SocialLoginCoordinator {
         Function2<OAuthToken, Throwable, Unit> callback = (token, error) -> {
             if (error != null) {
                 if (isKakaoLoginCancelled(error)) {
-                    dispatcher.dispatch(
+                    dispatch(
                         "kakao",
                         requestId,
                         null,
@@ -254,7 +332,7 @@ final class SocialLoginCoordinator {
                     return Unit.INSTANCE;
                 }
                 if (fallbackFromTalk && isKakaoTalkAccountNotConnected(error)) {
-                    dispatcher.dispatch(
+                    dispatch(
                         "kakao",
                         requestId,
                         null,
@@ -264,7 +342,7 @@ final class SocialLoginCoordinator {
                     );
                     return Unit.INSTANCE;
                 }
-                dispatcher.dispatch(
+                dispatch(
                     "kakao",
                     requestId,
                     null,
@@ -284,7 +362,7 @@ final class SocialLoginCoordinator {
     private Unit handleKakaoToken(String requestId, OAuthToken token) {
         String accessToken = token != null ? token.getAccessToken() : null;
         if (accessToken == null || accessToken.isEmpty()) {
-            dispatcher.dispatch(
+            dispatch(
                 "kakao",
                 requestId,
                 null,
@@ -295,14 +373,14 @@ final class SocialLoginCoordinator {
             return Unit.INSTANCE;
         }
 
-        dispatcher.dispatch("kakao", requestId, accessToken, null, null, null);
+        dispatch("kakao", requestId, accessToken, null, null, null);
         return Unit.INSTANCE;
     }
 
     private void loginWithGoogle(String requestId) {
         Log.d(TAG, "Google login requested. requestId=" + requestId);
         if (googleWebClientId == null || googleWebClientId.isEmpty()) {
-            dispatcher.dispatch(
+            dispatch(
                 "google",
                 requestId,
                 null,
@@ -316,6 +394,7 @@ final class SocialLoginCoordinator {
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestIdToken(googleWebClientId)
+            .requestServerAuthCode(googleWebClientId)
             .build();
 
         googleSignInClient = GoogleSignIn.getClient(activity, options);
