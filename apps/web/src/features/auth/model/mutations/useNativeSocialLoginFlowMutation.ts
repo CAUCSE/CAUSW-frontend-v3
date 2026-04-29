@@ -6,6 +6,7 @@ import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
 import { nativeSocialLogin } from '@/features/auth/api/post/session';
 import { routeAfterSignIn } from '@/features/auth/lib';
+import { usePushNotification } from '@/features/notification';
 
 import type {
   AuthResponseDto,
@@ -34,6 +35,7 @@ export const useNativeSocialLoginFlowMutation = (
   const router = useRouter();
   const requestNativeSocialTokenMutation =
     useRequestNativeSocialTokenMutation();
+  const { compareFCMToken } = usePushNotification();
   const { ...restOptions } = options ?? {};
 
   const onMutate: NonNullable<
@@ -55,6 +57,7 @@ export const useNativeSocialLoginFlowMutation = (
   > = async (data) => {
     await TokenManager.setAccessToken(data.accessToken);
     await TokenManager.setRefreshToken(data.refreshToken);
+    await compareFCMToken();
     routeAfterSignIn(router, data.onboardingStatus);
     toast.success('로그인되었습니다.');
   };
@@ -95,11 +98,11 @@ export const useNativeSocialLoginFlowMutation = (
                 codeVerifier: tokens.codeVerifier ?? null,
               }
             : {
-              provider,
-              idToken: tokens.idToken,
-              authorizationCode: tokens.authorizationCode,
-              codeVerifier: tokens.codeVerifier ?? null,
-            };
+                provider,
+                idToken: tokens.idToken,
+                authorizationCode: tokens.authorizationCode,
+                codeVerifier: tokens.codeVerifier ?? null,
+              };
 
       return nativeSocialLogin(payload);
     },

@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Flex, Text } from '@causw/cds';
 
 import { routeAfterSignIn } from '@/features/auth';
+import { usePushNotification } from '@/features/notification';
 
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
@@ -16,6 +17,7 @@ export const SocialLoginCallbackPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const handledRef = useRef(false);
+  const { compareFCMToken } = usePushNotification();
 
   useEffect(() => {
     if (handledRef.current) return;
@@ -45,6 +47,7 @@ export const SocialLoginCallbackPage = () => {
         } = await TokenManager.refreshAuth(refreshToken);
         await TokenManager.setAccessToken(accessToken);
         await TokenManager.setRefreshToken(newRefreshToken);
+        await compareFCMToken();
         routeAfterSignIn(router, onboardingStatus);
       } catch {
         toast.error('잘못된 인증 정보입니다.');
