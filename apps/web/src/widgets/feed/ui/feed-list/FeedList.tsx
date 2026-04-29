@@ -25,6 +25,7 @@ export const FeedList = ({
   targetRef,
   ref,
 }: FeedListProps) => {
+  console.log({ posts });
   // TODO: empty view 추가 필요
   if (!posts || posts.length === 0) {
     return <></>;
@@ -32,7 +33,7 @@ export const FeedList = ({
 
   return (
     <VStack
-      className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       ref={ref}
       as="ul"
     >
