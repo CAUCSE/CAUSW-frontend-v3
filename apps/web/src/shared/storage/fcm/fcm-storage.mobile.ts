@@ -24,5 +24,11 @@ export const setNativeFCM = async (token: string): Promise<void> => {
 };
 
 export const removeNativeFCM = async (): Promise<void> => {
-  await SecureStoragePlugin.remove({ key: fcmTokenKey });
+  try {
+    if (!(await hasNativeKey(fcmTokenKey))) {
+      return;
+    }
+
+    await SecureStoragePlugin.remove({ key: fcmTokenKey });
+  } catch {}
 };
