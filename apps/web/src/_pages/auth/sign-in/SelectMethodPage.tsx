@@ -22,6 +22,7 @@ import {
 } from '@/features/auth';
 
 import { useIsMounted } from '@/shared/hooks';
+import { QueryClientClearProvider } from '@/shared/ui';
 import { isAndroid } from '@/shared/utils';
 
 type SocialProvider = 'kakao' | 'apple' | 'google';
@@ -69,7 +70,7 @@ export const SelectMethodPage = () => {
   };
 
   return (
-    <>
+    <QueryClientClearProvider>
       <MethodSelectContainer>
         <SessionKeepConfirmModal
           open={confirmModalOpen}
@@ -121,6 +122,6 @@ export const SelectMethodPage = () => {
           )}
         </VStack>
       </MethodSelectContainer>
-    </>
+    </QueryClientClearProvider>
   );
 };

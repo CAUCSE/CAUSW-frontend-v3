@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { CLEAR_QUERY_PARAM, CLEAR_QUERY_PARAM_VALUE } from '@/shared/constants';
 import { TokenManager, getNativeFCM, removeNativeFCM } from '@/shared/storage';
 import { isMobile } from '@/shared/utils';
 
@@ -22,8 +21,6 @@ export const useLogout = () => {
     if (isMobile) {
       await removeNativeFCM();
     }
-    await router.replace(
-      `/auth/sign-in?${CLEAR_QUERY_PARAM}=${CLEAR_QUERY_PARAM_VALUE}`,
-    );
+    await router.replace('/auth/sign-in');
   };
 };
