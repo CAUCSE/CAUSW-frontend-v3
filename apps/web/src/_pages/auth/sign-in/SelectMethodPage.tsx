@@ -1,14 +1,11 @@
 'use client';
 
-import { useRef, useState } from 'react';
-
 import { useRouter } from 'next/navigation';
 
 import { Text, VStack } from '@causw/cds';
 
 import {
   MethodSelectContainer,
-  SessionKeepConfirmModal,
   SignInButtonsSkeleton,
   SignInImageSection,
 } from '@/widgets/auth';
@@ -25,58 +22,14 @@ import { useIsMounted } from '@/shared/hooks';
 import { QueryClientClearProvider } from '@/shared/ui';
 import { isAndroid } from '@/shared/utils';
 
-type SocialProvider = 'kakao' | 'apple' | 'google';
-
 export const SelectMethodPage = () => {
   const router = useRouter();
   const isMounted = useIsMounted();
   useRestoreMobileAuth();
-  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const [pendingProvider, setPendingProvider] = useState<SocialProvider | null>(
-    null,
-  );
-  const sessionKeepPreferenceRef = useRef<boolean | null>(null);
-
-  const handleSocialButtonClick =
-    (provider: SocialProvider): React.MouseEventHandler<HTMLButtonElement> =>
-    (event) => {
-      if (sessionKeepPreferenceRef.current !== null) return;
-
-      event.preventDefault();
-      setPendingProvider(provider);
-      setConfirmModalOpen(true);
-    };
-
-  const handleConfirm = (shouldKeepSession: boolean) => {
-    sessionKeepPreferenceRef.current = shouldKeepSession;
-    setConfirmModalOpen(false);
-
-    if (!pendingProvider) return;
-
-    const selector = `button[data-social-provider="${pendingProvider}"]`;
-    setPendingProvider(null);
-
-    queueMicrotask(() => {
-      const targetButton = document.querySelector<HTMLButtonElement>(selector);
-      targetButton?.click();
-    });
-  };
-
-  const handleConfirmModalOpenChange = (open: boolean) => {
-    setConfirmModalOpen(open);
-    if (!open && sessionKeepPreferenceRef.current === null) {
-      setPendingProvider(null);
-    }
-  };
 
   return (
     <QueryClientClearProvider>
       <MethodSelectContainer>
-        <SessionKeepConfirmModal
-          open={confirmModalOpen}
-          onOpenChange={handleConfirmModalOpenChange}
-          onConfirm={handleConfirm}
-        />
         <VStack className="gap-12 md:gap-20">
           <VStack justify="center" align="center" className="w-full gap-8">
             <SignInImageSection />
@@ -95,22 +48,11 @@ export const SelectMethodPage = () => {
           {isMounted ? (
             <VStack className="min-h-[252px] w-full gap-3">
               <>
-                <KakaoLoginButton
-                  data-social-provider="kakao"
-                  onClick={handleSocialButtonClick('kakao')}
-                />
+                <KakaoLoginButton />
 
-                {!isAndroid && (
-                  <AppleLoginButton
-                    data-social-provider="apple"
-                    onClick={handleSocialButtonClick('apple')}
-                  />
-                )}
+                {!isAndroid && <AppleLoginButton />}
 
-                <GoogleLoginButton
-                  data-social-provider="google"
-                  onClick={handleSocialButtonClick('google')}
-                />
+                <GoogleLoginButton />
 
                 <EmailLoginButton
                   onClick={() => router.push('/auth/sign-in/email')}
