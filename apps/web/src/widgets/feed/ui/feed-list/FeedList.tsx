@@ -10,6 +10,8 @@ import { SuspenseView } from '@/shared/ui';
 
 import { FeedListitem } from '../feed-list-item';
 
+import { FeedListEmptyView } from './FeedListEmptyView';
+
 interface FeedListProps {
   posts?: GetPostsResponseDto['posts'];
   isFetchingNextPage: boolean;
@@ -25,10 +27,9 @@ export const FeedList = ({
   targetRef,
   ref,
 }: FeedListProps) => {
-  console.log({ posts });
   // TODO: empty view 추가 필요
   if (!posts || posts.length === 0) {
-    return <></>;
+    return <FeedListEmptyView />;
   }
 
   return (
