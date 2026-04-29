@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { commentKeys, type GetCommentsResponseDto } from '@/entities/comment';
-import { postKeys } from '@/entities/post';
+import { postQueryKeys } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
@@ -77,7 +77,7 @@ export const useDeleteReplyMutation = (postId: string) => {
         queryKey: commentKeys.post(postId),
       });
       queryClient.invalidateQueries({
-        queryKey: postKeys.detail(postId),
+        queryKey: postQueryKeys.detail(postId),
       });
     },
   });

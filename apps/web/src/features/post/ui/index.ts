@@ -6,3 +6,4 @@ export * from './PostWriteForm';
 export * from './PostEditForm';
 export * from './PostActionMenu';
 export * from './PostHeader';
+export * from './PostWriteFloadingActionButton';

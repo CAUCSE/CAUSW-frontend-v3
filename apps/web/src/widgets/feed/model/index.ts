@@ -1,0 +1,1 @@
+export { useFeedMain } from './hooks';

@@ -20,9 +20,10 @@ export const PostEditForm = ({ postId, onClose }: PostEditFormProps) => {
         content: post.content,
         boardId: post.boardId,
         isAnonymous: post.isAnonymous,
-        images: [],
+        images: (post.fileUrlList || []) as unknown as File[],
         vote: null,
       }}
+      initialImages={post.fileUrlList}
     />
   );
 };

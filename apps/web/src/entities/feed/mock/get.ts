@@ -2,12 +2,12 @@ import { HttpResponse } from 'msw';
 
 import { mswHttp } from '@/shared/lib';
 
-import { type BoardAvailableListResponseDto } from '../../model';
+import { type GetAvailableBoardListResponseDto } from '../model';
 
 const BOARDS_API_PREFIX = '/api/v2/boards';
 
 export const getHandler = [
-  mswHttp.get<BoardAvailableListResponseDto>(
+  mswHttp.get<GetAvailableBoardListResponseDto>(
     `${BOARDS_API_PREFIX}/available`,
     () => {
       return HttpResponse.json(

@@ -1,4 +1,4 @@
-import { type PaginationDto } from '@/shared/types';
+import { type ProfileImageValue, type PaginationDto } from '@/shared/types';
 
 export interface BaseComment {
   id: string;
@@ -10,7 +10,7 @@ export interface BaseComment {
   writerNickname: string;
   displayWriterNickname: string;
   writerAdmissionYear: number;
-  writerProfileImage: string;
+  writerProfileImage: ProfileImageValue;
   updatable: boolean;
   deletable: boolean;
   isBlocked: boolean;

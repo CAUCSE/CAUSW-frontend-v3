@@ -7,7 +7,11 @@ import { FormProvider } from 'react-hook-form';
 import { Box, Dialog, VStack } from '@causw/cds';
 
 import { type Board, useGetAvailableBoards } from '@/entities/feed';
-import { type PostCreateFormValues, usePostCreateForm } from '@/entities/post';
+import {
+  type PostCreateFormValues,
+  type PostUpdateFormValues,
+  usePostCreateForm,
+} from '@/entities/post';
 
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
@@ -24,12 +28,14 @@ interface PostWriteFormProps {
   onClose: (isDirty: boolean) => void;
   postId?: string;
   initialData?: Partial<PostCreateFormValues>;
+  initialImages?: string[];
 }
 
 export const PostWriteForm = ({
   onClose,
   postId,
   initialData,
+  initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
   const { data: boardData } = useGetAvailableBoards();
@@ -58,19 +64,39 @@ export const PostWriteForm = ({
 
   const onSubmit = async (data: PostCreateFormValues) => {
     if (isEdit) {
-      const updateDto = mapPostUpdateFormToDto(data);
+      const imageData = data.images as {
+        existingImages?: string[];
+        newImageFiles?: File[];
+      };
+
+      const existingImages = imageData?.existingImages ?? [];
+      const newImageFiles = imageData?.newImageFiles ?? [];
+
+      const updateData: PostUpdateFormValues = {
+        ...data,
+        existingImages,
+        newImageFiles,
+      };
+
+      const updateDto = mapPostUpdateFormToDto(updateData);
 
       updatePost({
         postId,
-        postUpdateRequest: updateDto,
-        attachImageList: data.images,
+        request: updateDto,
+        images: newImageFiles,
       });
     } else {
+      const imageData = data.images as {
+        existingImages?: string[];
+        newImageFiles?: File[];
+      };
+      const newImageFiles = imageData?.newImageFiles ?? [];
+
       const createDto = mapPostCreateFormToDto(data);
 
       createPost({
-        postCreateRequest: createDto,
-        attachImageList: data.images,
+        request: createDto,
+        images: newImageFiles,
       });
     }
   };
@@ -121,6 +147,7 @@ export const PostWriteForm = ({
             name="images"
             setValue={setValue}
             showMainBadge
+            initialImages={initialImages}
           />
         </Box>
 

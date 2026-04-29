@@ -1,6 +1,7 @@
 import { Avatar, Flex, HStack, OfficialColored, Text } from '@causw/cds';
 
-import { formatRelativeTime } from '@/shared/lib';
+import { formatRelativeTime, getProfileImageUrl } from '@/shared/lib';
+import { type ProfileImageValue } from '@/shared/types';
 
 import { type PostAction } from '../config';
 
@@ -9,10 +10,11 @@ import { PostActionMenu } from './PostActionMenu';
 interface PostHeaderProps {
   authorName: string;
   createdAt: string;
-  avatarUrl?: string;
+  profileImage?: ProfileImageValue;
   isOfficial?: boolean;
   isMine: boolean;
   onAction: (action: PostAction) => void;
+  hideActionMenu?: boolean;
 }
 
 /**
@@ -24,15 +26,24 @@ interface PostHeaderProps {
 export const PostHeader = ({
   authorName,
   createdAt,
-  avatarUrl,
+  profileImage,
   isOfficial = false,
   isMine,
   onAction,
+  hideActionMenu = false,
 }: PostHeaderProps) => {
+  const profileImageUrl = profileImage
+    ? getProfileImageUrl({
+        profileImageType: profileImage.profileImageType,
+        profileImageUrl: profileImage.profileImageUrl,
+        width: 40,
+      })
+    : '';
+
   return (
     <Flex as="header" gap="none" align="center">
       <HStack gap="sm" align="center" className="flex-1 gap-2.5">
-        <Avatar size={40} src={avatarUrl} className="shrink-0" />
+        <Avatar size={40} src={profileImageUrl} className="shrink-0" />
 
         <HStack gap="sm" align="center">
           <HStack gap="xs" align="center">
@@ -48,7 +59,9 @@ export const PostHeader = ({
         </HStack>
       </HStack>
 
-      <PostActionMenu isMine={isMine} onAction={onAction} />
+      {!hideActionMenu && (
+        <PostActionMenu isMine={isMine} onAction={onAction} />
+      )}
     </Flex>
   );
 };

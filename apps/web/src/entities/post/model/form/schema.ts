@@ -41,6 +41,10 @@ export const postCreateSchema = z
   });
 
 export type PostCreateFormValues = z.infer<typeof postCreateSchema>;
+export type PostUpdateFormValues = PostCreateFormValues & {
+  existingImages?: string[];
+  newImageFiles?: File[];
+};
 
 export const usePostCreateForm = (
   defaultValues?: Partial<PostCreateFormValues>,
