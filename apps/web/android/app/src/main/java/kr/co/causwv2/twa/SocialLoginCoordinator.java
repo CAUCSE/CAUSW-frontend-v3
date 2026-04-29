@@ -228,7 +228,6 @@ final class SocialLoginCoordinator {
     }
 
     private void handleSocialLoginRequest(String payloadJson) {
-        Log.d(TAG, "Bridge request received. payload=" + payloadJson);
         final JSONObject payload;
         try {
             payload = new JSONObject(payloadJson);
@@ -378,7 +377,6 @@ final class SocialLoginCoordinator {
     }
 
     private void loginWithGoogle(String requestId) {
-        Log.d(TAG, "Google login requested. requestId=" + requestId);
         if (googleWebClientId == null || googleWebClientId.isEmpty()) {
             dispatch(
                 "google",
@@ -401,15 +399,7 @@ final class SocialLoginCoordinator {
         pendingGoogleRequestId = requestId;
 
         googleSignInClient.signOut().addOnCompleteListener(task -> {
-            Log.d(
-                TAG,
-                "Google signOut completed. success="
-                    + task.isSuccessful()
-                    + ", requestId="
-                    + requestId
-            );
             Intent signInIntent = googleSignInClient.getSignInIntent();
-            Log.d(TAG, "Launching Google sign-in intent. requestId=" + requestId);
             activity.startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
         });
     }

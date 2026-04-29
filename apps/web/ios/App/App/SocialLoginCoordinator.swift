@@ -364,21 +364,6 @@ final class SocialLoginCoordinator: NSObject, WKScriptMessageHandler, ASAuthoriz
             return
         }
 
-        if accessToken != nil || idToken != nil || authorizationCode != nil {
-            print(
-                """
-                소셜 로그인 성공
-                provider=\(provider)
-                requestId=\(requestId)
-                accessToken=\(accessToken ?? "nil")
-                idToken=\(idToken ?? "nil")
-                authorizationCode=\(authorizationCode ?? "nil")
-                codeVerifier=\(codeVerifier ?? "nil")
-                platform=\(platform ?? "nil")
-                """
-            )
-        }
-
         var payload: [String: Any] = [
             "provider": provider,
             "requestId": requestId
