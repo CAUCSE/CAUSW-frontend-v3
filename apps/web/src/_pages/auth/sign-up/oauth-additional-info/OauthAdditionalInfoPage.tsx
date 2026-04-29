@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { AuthContainer, OauthAdditionalInfoForm } from '@/widgets/auth';
 
 import {
+  resetAuthAndRouteToSignIn,
   routeAfterSignIn,
   useGetMeQuery,
   useOauthAdditionalInfoForm,
@@ -74,11 +75,17 @@ export const OauthAdditionalInfoPage = () => {
     methods.handleSubmit(onSubmit)();
   };
 
+  const handleBack = () => {
+    resetAuthAndRouteToSignIn(router);
+  };
+
   return (
     <FormProvider {...methods}>
       <MobileOnly>
         <ActionHeader>
-          <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+          <ActionHeader.BackButton onClick={handleBack}>
+            뒤로
+          </ActionHeader.BackButton>
         </ActionHeader>
       </MobileOnly>
 
@@ -86,7 +93,9 @@ export const OauthAdditionalInfoPage = () => {
         <form onSubmit={methods.handleSubmit(handleOpenTerms)}>
           <DesktopOnly>
             <ActionHeader className="mb-10 px-0">
-              <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
+              <ActionHeader.BackButton onClick={handleBack}>
+                뒤로
+              </ActionHeader.BackButton>
             </ActionHeader>
           </DesktopOnly>
 
