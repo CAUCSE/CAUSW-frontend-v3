@@ -86,9 +86,19 @@ export const useNativeSocialLoginFlowMutation = (
               provider,
               accessToken: tokens.accessToken,
             }
-          : {
+          : provider === 'apple'
+            ? {
+                provider,
+                platform: tokens.platform,
+                idToken: tokens.idToken,
+                authorizationCode: tokens.authorizationCode,
+                codeVerifier: tokens.codeVerifier ?? null,
+              }
+            : {
               provider,
               idToken: tokens.idToken,
+              authorizationCode: tokens.authorizationCode,
+              codeVerifier: tokens.codeVerifier ?? null,
             };
 
       return nativeSocialLogin(payload);
