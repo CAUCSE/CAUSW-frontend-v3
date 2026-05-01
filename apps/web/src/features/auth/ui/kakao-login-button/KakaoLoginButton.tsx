@@ -4,9 +4,11 @@ import type { ComponentProps } from 'react';
 
 import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
 
-import { useNativeSocialLoginFlowMutation } from '@/features/auth';
+import {
+  getSocialOauthUrl,
+  useNativeSocialLoginFlowMutation,
+} from '@/features/auth';
 
-import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 import { isMobile } from '@/shared/utils';
 type KakaoLoginButtonProps = ComponentProps<'button'>;
 
@@ -28,15 +30,7 @@ export const KakaoLoginButton = ({
       return;
     }
 
-    const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/kakao`);
-    if (ENVIRONMENT === 'local') {
-      oauthUrl.searchParams.set('env', 'local');
-    }
-    if (ENVIRONMENT === 'development') {
-      oauthUrl.searchParams.set('env', 'dev');
-    }
-
-    window.location.href = oauthUrl.toString();
+    window.location.href = getSocialOauthUrl('kakao');
   };
 
   return (
