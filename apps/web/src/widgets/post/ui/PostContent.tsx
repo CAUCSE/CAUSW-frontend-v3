@@ -55,7 +55,7 @@ export const PostContent = ({ post }: PostContentProps) => {
         <PostBody
           content={post.content}
           images={post.fileUrlList}
-          // isHtml={post.isHtml}
+          isHtml={post.isCrawled}
         />
       </VStack>
 

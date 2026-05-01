@@ -47,7 +47,8 @@ export const PostBody = ({
   const textRef = useRef<HTMLElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
-  const sanitizedHtml = isHtml ? sanitizeHtml(content) : '';
+  const shouldRenderAsHtml = isHtml || containsHtmlTags(content);
+  const sanitizedHtml = shouldRenderAsHtml ? sanitizeHtml(content) : '';
   const collapseStyles = isCollapsed
     ? {
         display: '-webkit-box',
@@ -70,7 +71,7 @@ export const PostBody = ({
   return (
     <VStack gap="md">
       <VStack gap="sm" align="start">
-        {isHtml ? (
+        {shouldRenderAsHtml ? (
           <Text
             ref={textRef as RefObject<HTMLDivElement>}
             as="div"
@@ -105,4 +106,9 @@ export const PostBody = ({
       {images.length > 0 && <PostImage images={images} />}
     </VStack>
   );
+};
+
+const containsHtmlTags = (text: string) => {
+  const htmlRegex = /<\/?[a-z][\s\S]*>/i;
+  return htmlRegex.test(text);
 };
