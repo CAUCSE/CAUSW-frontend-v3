@@ -13,7 +13,7 @@ interface PostBodyProps {
   images?: string[];
   isCollapsed?: boolean;
   maxLines?: number;
-  onExpand?: () => void;
+  onExpand?: (e: React.MouseEvent) => void;
   showExpandButton?: boolean;
   isHtml?: boolean;
 }

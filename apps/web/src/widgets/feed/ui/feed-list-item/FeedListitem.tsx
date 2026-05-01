@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import Link from 'next/link';
 
 import { VStack } from '@causw/cds';
@@ -24,6 +26,13 @@ interface FeedListitemProps {
 }
 
 export const FeedListitem = ({ post }: FeedListitemProps) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const handleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsExpanded(true);
+  };
+
   const {
     activeModal,
     handleAction: handleMenuAction,
@@ -50,6 +59,10 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
             content={post.content}
             images={post.postImageUrls}
             isHtml={post.isCrawled}
+            isCollapsed={!isExpanded}
+            maxLines={12}
+            showExpandButton={true}
+            onExpand={handleExpand}
           />
           <PostFooter
             numLike={post.numLike}
