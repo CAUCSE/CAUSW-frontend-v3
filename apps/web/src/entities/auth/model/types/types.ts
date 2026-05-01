@@ -90,8 +90,11 @@ export type NativeSocialLoginProvider = 'kakao' | 'apple' | 'google';
 
 export interface NativeSocialLoginRequestDto {
   provider: NativeSocialLoginProvider;
+  platform?: 'ios' | 'android';
   accessToken?: string;
   idToken?: string;
+  authorizationCode?: string;
+  codeVerifier?: string | null;
 }
 
 export interface SocialLoginAdditionalInfoRequestDto {

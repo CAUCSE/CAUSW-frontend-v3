@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             googleClientIdProvider: { [weak self] in
                 self?.infoPlistString(forKey: "CAUSWGoogleClientID") ?? ""
             },
+            googleServerClientIdProvider: { [weak self] in
+                self?.infoPlistString(forKey: "CAUSWGoogleServerClientID") ?? ""
+            },
             windowProvider: { [weak self] in
                 self?.window
             },
@@ -40,9 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         KakaoSDK.initSDK(appKey: infoPlistString(forKey: "CAUSWKakaoNativeAppKey"))
         FirebaseApp.configure()
         pushNotificationHandler.configure(application: application)
-        
-        print("✅ Running bundle id:", Bundle.main.bundleIdentifier ?? "nil")
-        print("✅ Display name:", Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") ?? "nil")
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleDeviceOrientationDidChange),
@@ -95,7 +96,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               bridgeViewController.webView != nil else {
             return
         }
-        print("🌐 WebView current URL:", bridgeViewController.webView?.url?.absoluteString ?? "nil")
         window?.backgroundColor = .white
         safeAreaManager.configureBridgeWebViewAppearance()
         socialLoginCoordinator.registerMessageHandlers()

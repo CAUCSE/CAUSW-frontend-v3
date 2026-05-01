@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Text, CTAButton, Flex, VStack, Separator, Checkbox } from '@causw/cds';
+import { Text, CTAButton, Flex, VStack, Separator } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
@@ -94,17 +94,6 @@ export const EmailLoginPage = () => {
               placeholder="비밀번호를 입력해주세요."
               typography="body-16-regular"
             />
-
-            <Checkbox className="w-fit">
-              <Checkbox.Indicator />
-              <Checkbox.Label
-                as="span"
-                typography="body-15-semibold"
-                textColor="gray-700"
-              >
-                로그인 상태 유지
-              </Checkbox.Label>
-            </Checkbox>
 
             <CTAButton color="dark" fullWidth type="submit">
               로그인

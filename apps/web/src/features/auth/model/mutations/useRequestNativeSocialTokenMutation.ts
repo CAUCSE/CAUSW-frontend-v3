@@ -36,8 +36,16 @@ const validateTokens = (
     throw new Error('Google id token을 가져오지 못했습니다.');
   }
 
+  if (provider === 'google' && !tokens.authorizationCode) {
+    throw new Error('Google authorization code를 가져오지 못했습니다.');
+  }
+
   if (provider === 'apple' && !tokens.idToken) {
     throw new Error('Apple id token을 가져오지 못했습니다.');
+  }
+
+  if (provider === 'apple' && !tokens.authorizationCode) {
+    throw new Error('Apple authorization code를 가져오지 못했습니다.');
   }
 
   return tokens;

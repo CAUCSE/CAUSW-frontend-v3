@@ -11,6 +11,7 @@ import { AuthContainer, EmailVerificationHeader } from '@/widgets/auth';
 import {
   EmailVerificationStepCodeField,
   EmailVerificationStepResendSection,
+  resetAuthAndRouteToSignIn,
   useEmailVerificationForm,
   useEmailVerificationGuard,
 } from '@/features/auth';
@@ -37,14 +38,15 @@ export const EmailVerificationPage = () => {
   });
 
   const router = useRouter();
+  const handleBack = () => {
+    resetAuthAndRouteToSignIn(router);
+  };
 
   return (
     <FormProvider {...methods}>
       <MobileOnly>
         <ActionHeader>
-          <ActionHeader.BackButton
-            onClick={() => router.replace('/auth/sign-in')}
-          >
+          <ActionHeader.BackButton onClick={handleBack}>
             뒤로
           </ActionHeader.BackButton>
         </ActionHeader>
@@ -54,9 +56,7 @@ export const EmailVerificationPage = () => {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <DesktopOnly>
             <ActionHeader className="mb-10 px-0">
-              <ActionHeader.BackButton
-                onClick={() => router.replace('/auth/sign-in')}
-              >
+              <ActionHeader.BackButton onClick={handleBack}>
                 뒤로
               </ActionHeader.BackButton>
             </ActionHeader>

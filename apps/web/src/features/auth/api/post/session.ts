@@ -60,8 +60,11 @@ export const verifyEmailVerificationCode = async (
 export const nativeSocialLogin = async (data: NativeSocialLoginRequestDto) => {
   return API.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login/native`, {
     provider: data.provider,
+    platform: data.platform,
     accessToken: data.accessToken,
     idToken: data.idToken,
+    authorizationCode: data.authorizationCode,
+    codeVerifier: data.codeVerifier,
   });
 };
 

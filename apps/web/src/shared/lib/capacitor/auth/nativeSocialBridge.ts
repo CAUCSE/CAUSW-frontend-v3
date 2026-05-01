@@ -10,15 +10,21 @@ type NativeSocialLoginRequest = {
 type NativeSocialLoginResult = {
   provider: SocialProvider;
   requestId: string;
+  platform?: 'ios' | 'android';
   accessToken?: string;
   idToken?: string;
+  authorizationCode?: string;
+  codeVerifier?: string | null;
   errorCode?: string;
   message?: string;
 };
 
 export type NativeSocialLoginToken = {
+  platform?: 'ios' | 'android';
   accessToken?: string;
   idToken?: string;
+  authorizationCode?: string;
+  codeVerifier?: string | null;
 };
 
 type PendingRequest = {
@@ -130,6 +136,7 @@ const normalizeErrorMessage = (payload: NativeSocialLoginResult) => {
   if (
     errorCode === 'EMPTY_ACCESS_TOKEN' ||
     errorCode === 'EMPTY_ID_TOKEN' ||
+    errorCode === 'EMPTY_AUTHORIZATION_CODE' ||
     errorCode === 'APPLE_CREDENTIAL_MISSING'
   ) {
     return '로그인 정보를 가져오지 못했습니다. 다시 시도해 주세요.';
@@ -150,14 +157,17 @@ const resolveFromPayload = (payload: NativeSocialLoginResult) => {
     return;
   }
 
-  if (!payload.accessToken && !payload.idToken) {
+  if (!payload.accessToken && !payload.idToken && !payload.authorizationCode) {
     pending.reject(new Error(normalizeErrorMessage(payload)));
     return;
   }
 
   pending.resolve({
+    platform: payload.platform,
     accessToken: payload.accessToken,
     idToken: payload.idToken,
+    authorizationCode: payload.authorizationCode,
+    codeVerifier: payload.codeVerifier,
   });
 };
 

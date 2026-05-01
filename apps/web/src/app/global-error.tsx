@@ -25,6 +25,7 @@ export default function GlobalError({
             error={error}
             resetErrorBoundary={reset}
             errorMessage="치명적인 오류가 발생했습니다."
+            showGoHomeButton
           />
         </div>
       </body>
