@@ -31,6 +31,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleExpand = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
     setIsExpanded(true);
   };
