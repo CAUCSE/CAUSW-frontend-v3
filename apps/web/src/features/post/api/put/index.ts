@@ -20,11 +20,9 @@ export const updatePost = (
     }),
   );
 
-  if (imageFiles && imageFiles.length > 0) {
-    imageFiles.forEach((file) => {
-      formData.append('images', file);
-    });
-  }
+  imageFiles?.forEach((file) => {
+    formData.append('images', file);
+  });
 
   const data = API.put<PostUpdateResponseDto>(
     `/api/v2/posts/${postId}`,
