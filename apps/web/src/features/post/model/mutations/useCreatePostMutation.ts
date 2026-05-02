@@ -27,11 +27,7 @@ export const useCreatePostMutation = () => {
     mutationFn: ({ request, images }) => createPost(request, images),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
-
-      router.back();
-      setTimeout(() => {
-        router.push(`/feed/${data.id}`);
-      }, 0);
+      router.replace(`/feed/${data.id}`);
     },
     onError: (error) => {
       toast.error('게시글 작성에 실패했어요.');
