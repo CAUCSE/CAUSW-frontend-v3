@@ -6,7 +6,6 @@ export const NATIVE_REFRESH_KEY = 'refresh_token';
 export const STORAGE_AUTH_REFRESHED_KEY = 'auth_refreshed';
 export const AUTH_REFRESHED_STORAGE_VALUE = '1';
 export const STORAGE_SESSION_PERSIST_KEY = 'session_persist';
-export const SESSION_PERSIST_STORAGE_VALUE = '1';
 export const SESSION_COOKIE_EXPIRES_DAYS = 90;
 
 //firebase에서 변수 이름 변경하면 아래 키 값도 변경 필요
