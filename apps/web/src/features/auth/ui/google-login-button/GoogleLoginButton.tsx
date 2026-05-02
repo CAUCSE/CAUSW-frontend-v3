@@ -3,41 +3,16 @@
 import type { ComponentProps } from 'react';
 
 import { Flex, GoogleLogo, mergeStyles } from '@causw/cds';
-
-import {
-  getSocialOauthUrl,
-  useNativeSocialLoginFlowMutation,
-} from '@/features/auth';
-
-import { isMobile } from '@/shared/utils';
 type GoogleLoginButtonProps = ComponentProps<'button'>;
 
 export const GoogleLoginButton = ({
   className,
-  onClick,
   ...props
 }: GoogleLoginButtonProps) => {
-  const nativeSocialLoginFlowMutation = useNativeSocialLoginFlowMutation();
-
-  const handleLogin: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    onClick?.(e);
-
-    if (e.defaultPrevented) return;
-    if (isMobile) {
-      nativeSocialLoginFlowMutation.mutate({
-        provider: 'google',
-      });
-      return;
-    }
-
-    window.location.href = getSocialOauthUrl('google');
-  };
-
   return (
     <button
       type="button"
       {...props}
-      onClick={handleLogin}
       className={mergeStyles(
         'typo-body-15-semibold h-[54px] w-full cursor-pointer rounded-md border border-gray-200 bg-white px-6 text-gray-800 transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
         className,
