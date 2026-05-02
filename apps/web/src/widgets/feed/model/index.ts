@@ -1,1 +1,1 @@
-export { useFeedMain } from './hooks';
+export { useFeedMain, useFeedRecentSearchKeywordSection } from './hooks';
