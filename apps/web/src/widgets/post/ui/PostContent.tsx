@@ -82,7 +82,7 @@ export const PostContent = ({ post }: PostContentProps) => {
       />
 
       <ConfirmModal
-        title="답글을 삭제하시겠어요?"
+        title="게시글을 삭제하시겠어요?"
         open={activeModal === POST_ACTION.DELETE}
         onOpenChange={closeModal}
         onConfirm={submitDelete}

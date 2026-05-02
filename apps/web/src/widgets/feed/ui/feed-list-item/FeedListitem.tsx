@@ -21,6 +21,8 @@ import {
   type GetPostsResponseDto,
 } from '@/entities/post';
 
+import { ConfirmModal } from '@/shared/ui/modal';
+
 interface FeedListitemProps {
   post: GetPostsResponseDto['posts'][number];
 }
@@ -39,6 +41,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
     closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   } = usePostMenuActions(post.postId);
 
   return (
@@ -85,6 +88,15 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         open={activeModal === POST_ACTION.REPORT}
         setOpen={closeModal}
         onSubmitReport={submitReport}
+      />
+      <ConfirmModal
+        title="게시글을 삭제하시겠어요?"
+        open={activeModal === POST_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </VStack>
   );
