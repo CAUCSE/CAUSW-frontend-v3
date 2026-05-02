@@ -92,7 +92,7 @@ export const PostWriteForm = ({
       };
       const newImageFiles = imageData?.newImageFiles ?? [];
 
-      const createDto = mapPostCreateFormToDto(data);
+      const createDto = mapPostCreateFormToDto(data, newImageFiles);
 
       createPost({
         request: createDto,
