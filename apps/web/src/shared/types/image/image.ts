@@ -30,4 +30,10 @@ export interface ImageUploadFieldProps<T extends FieldValues> {
   showMainBadge?: boolean;
   children?: React.ReactNode;
   initialImages?: string[];
+  onInvalidTypeFile?: () => void;
+  onInvalidSizeFile?: () => void;
+  mapValue?: (value: {
+    existingImages: string[];
+    newImageFiles: File[];
+  }) => Parameters<UseFormSetValue<T>>[1];
 }
