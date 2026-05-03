@@ -92,12 +92,9 @@ export const useDeletePostMutation = () => {
       }
     },
 
-    onSettled: (_data, _error, postId) => {
+    onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: postQueryKeys.all,
-      });
-      queryClient.invalidateQueries({
-        queryKey: postQueryKeys.detail(postId),
       });
     },
   });
