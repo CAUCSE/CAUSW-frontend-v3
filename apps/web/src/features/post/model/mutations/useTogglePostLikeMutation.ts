@@ -52,7 +52,7 @@ export const useTogglePostLikeMutation = (postId: string) => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: postQueryKeys.detail(postId) });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
     },
   });
 };
