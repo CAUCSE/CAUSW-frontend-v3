@@ -26,8 +26,13 @@ export const useCreatePostMutation = () => {
   return useMutation<PostCreateResponseDto, Error, CreatePostParams>({
     mutationFn: ({ request, images }) => createPost(request, images),
     onSuccess: (data) => {
+      toast.success('게시글이 작성되었어요.');
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
-      router.replace(`/feed/${data.id}`);
+
+      router.back();
+      requestAnimationFrame(() => {
+        router.push(`/feed/${data.id}`);
+      });
     },
     onError: (error) => {
       toast.error('게시글 작성에 실패했어요.');
