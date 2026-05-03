@@ -11,15 +11,7 @@ export interface ProfileImageDto {
   profileImageUrl: string | null;
 }
 
-export type AccountAcademicStatus =
-  | 'ENROLLED'
-  | 'LEAVE_OF_ABSENCE'
-  | 'GRADUATED'
-  | 'DROPPED_OUT'
-  | 'SUSPEND'
-  | 'EXPEL'
-  | 'PROFESSOR'
-  | 'UNDETERMINED';
+export type AccountAcademicStatus = 'ENROLLED' | 'GRADUATED';
 
 export type AccountOnboardingStatus =
   | 'TERMS_REQUIRED'
