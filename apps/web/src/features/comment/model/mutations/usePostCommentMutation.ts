@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { commentKeys } from '@/entities/comment';
+import { postQueryKeys } from '@/entities/post';
 
 import { toast } from '@/shared/model';
 
@@ -18,6 +19,7 @@ export const usePostCommentMutation = () => {
       queryClient.invalidateQueries({
         queryKey: commentKeys.post(variables.postId),
       });
+      queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
     },
 
     onError: () => {

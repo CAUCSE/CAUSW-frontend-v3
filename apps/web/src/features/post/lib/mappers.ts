@@ -21,12 +21,13 @@ const mapFilesToPostMetaImages = (files?: File[]): PostMetaImage[] => {
 
 export const mapPostCreateFormToDto = (
   data: PostCreateFormValues,
+  newImageFiles: File[],
 ): PostCreateRequestDto => {
   return {
     content: data.content,
     boardId: data.boardId,
     isAnonymous: data.isAnonymous,
-    images: mapFilesToPostMetaImages(data.images),
+    images: mapFilesToPostMetaImages(newImageFiles),
   };
 };
 

@@ -26,10 +26,10 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   }: Omit<ImageUploadFieldProps<T>, 'label' | 'errorMessage' | 'children'>,
   ref: React.ForwardedRef<ImageUploadFieldRef>,
 ) => {
-  const [previews, setPreviews] = React.useState<string[]>(initialImages);
+  const [previews, setPreviews] = React.useState<string[]>(initialImages); // 화면에 표시할 이미지 URL 목록 (기존 URL + 새 파일의 blob URL 순서)
   const [existingImages, setExistingImages] =
-    React.useState<string[]>(initialImages);
-  const [files, setFiles] = React.useState<File[]>([]);
+    React.useState<string[]>(initialImages); // 서버에 이미 존재하는 기존 이미지 URL 목록
+  const [files, setFiles] = React.useState<File[]>([]); // 새로 업로드할 이미지 파일 객체 목록
   const inputRef = React.useRef<HTMLInputElement>(null);
   const previewsRef = React.useRef<string[]>([]);
 
@@ -108,25 +108,15 @@ const ImageUploadFieldInner = <T extends FieldValues>(
 
   const handleRemoveExisting = (index: number) => {
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
-    setPreviews((prev) => {
-      const newPreviews = prev.filter((_, i) => {
-        const existingCount = existingImages.length;
-        return i >= existingCount || prev[i] !== existingImages[index];
-      });
-      return newPreviews.filter(
-        (url) => !existingImages.includes(url) || url !== existingImages[index],
-      );
-    });
+    setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleRemoveNew = (index: number) => {
-    const newImageStartIndex = existingImages.length;
-    const newImageIndex = index - newImageStartIndex;
-    if (newImageIndex >= 0) {
-      URL.revokeObjectURL(previews[index]);
-      setFiles((prev) => prev.filter((_, i) => i !== newImageIndex));
-      setPreviews((prev) => prev.filter((_, i) => i !== index));
-    }
+    const previewIndex = existingImages.length + index;
+
+    URL.revokeObjectURL(previews[previewIndex]);
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setPreviews((prev) => prev.filter((_, i) => i !== previewIndex));
   };
 
   if (previews.length === 0 && existingImages.length === 0) {
@@ -157,7 +147,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
         {existingImages.map((url, index) => (
           <div
             key={`existing-${url}-${index}`}
-            className="relative h-25 w-25 shrink-0 overflow-hidden rounded-lg bg-gray-200"
+            className="relative size-25 shrink-0 overflow-hidden rounded-lg bg-gray-200"
           >
             <Image
               src={url}
@@ -191,7 +181,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
           return (
             <div
               key={`new-${previewIndex}`}
-              className="relative h-25 w-25 shrink-0 overflow-hidden rounded-lg bg-gray-200"
+              className="relative size-25 shrink-0 overflow-hidden rounded-lg bg-gray-200"
             >
               <Image
                 src={previews[previewIndex]}
