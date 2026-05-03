@@ -6,6 +6,8 @@ import { isServer, isMobile } from '@/shared/utils';
 // eslint-disable-next-line
 import type { AuthResponseDto } from '@/entities/auth';
 
+import { AuthOptionManager } from '../auth-options';
+
 import {
   getClientATK,
   getClientAuthRefreshed,
@@ -35,7 +37,9 @@ import {
 } from './auth-storage.server';
 
 export class TokenManager {
-  // Access Token 재발급
+  /**
+   * @description Access Token 재발급
+   */
   static async refreshAuth(refreshToken: string): Promise<AuthResponseDto> {
     const response = await fetch(`${BASE_URL}${AUTH_API_PREFIX}/refresh`, {
       method: 'POST',
@@ -68,12 +72,21 @@ export class TokenManager {
 
   static async setAccessToken(token: string): Promise<void> {
     if (isServer) {
-      await setServerATK(token);
+      await setServerATK(
+        token,
+        await AuthOptionManager.getServerCookieOptions(),
+      );
     } else if (isMobile) {
       await setNativeATK(token);
-      setClientATK(token);
+      await setClientATK(
+        token,
+        await AuthOptionManager.getClientCookieOptions(),
+      );
     } else {
-      setClientATK(token);
+      await setClientATK(
+        token,
+        await AuthOptionManager.getClientCookieOptions(),
+      );
     }
   }
 
@@ -100,16 +113,26 @@ export class TokenManager {
   }
 
   /**
-   * @description 모바일 환경에서는 쿠키가 유실될 수 있기 때문에(백그라운드 종료) 서버에서 세팅해준 refresh_token을 security Storage로 옮기는 작업을 합니다.
+   * @description 모바일 환경에서는 쿠키가 유실될 수 있기 때문에(백그라운드 종료)
+   * 서버에서 세팅해준 refresh_token을 security Storage로 옮기는 작업을 합니다.
    */
   static async setRefreshToken(token: string): Promise<void> {
     if (isServer) {
-      await setServerRTK(token);
+      await setServerRTK(
+        token,
+        await AuthOptionManager.getServerCookieOptions(),
+      );
     } else if (isMobile) {
       await setNativeRTK(token);
-      setClientRTK(token);
+      await setClientRTK(
+        token,
+        await AuthOptionManager.getClientCookieOptions(),
+      );
     } else {
-      setClientRTK(token);
+      await setClientRTK(
+        token,
+        await AuthOptionManager.getClientCookieOptions(),
+      );
     }
   }
 

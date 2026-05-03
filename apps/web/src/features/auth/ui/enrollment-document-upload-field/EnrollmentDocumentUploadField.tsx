@@ -11,6 +11,7 @@ import {
   type EnrollmentVerificationFormData,
 } from '@/entities/auth';
 
+import { toast } from '@/shared/model';
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
 export const EnrollmentDocumentUploadField = () => {
@@ -58,6 +59,15 @@ export const EnrollmentDocumentUploadField = () => {
               ref={imageFieldRef}
               name={ENROLLMENT_VERIFICATION_FORM_FIELD.images}
               setValue={setValue}
+              mapValue={({ newImageFiles }) => newImageFiles}
+              onInvalidTypeFile={() => {
+                toast.error(
+                  'JPG, JPEG, PNG, GIF, BMP 형식의 이미지 파일만 첨부할 수 있습니다.',
+                );
+              }}
+              onInvalidSizeFile={() => {
+                toast.error('이미지 파일은 각 5MB 이하만 첨부할 수 있습니다.');
+              }}
             />
           </div>
 

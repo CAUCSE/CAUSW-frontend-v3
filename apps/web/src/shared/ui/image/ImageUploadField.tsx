@@ -23,6 +23,9 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     resetTrigger,
     showMainBadge = false,
     initialImages = [],
+    onInvalidTypeFile,
+    onInvalidSizeFile,
+    mapValue,
   }: Omit<ImageUploadFieldProps<T>, 'label' | 'errorMessage' | 'children'>,
   ref: React.ForwardedRef<ImageUploadFieldRef>,
 ) => {
@@ -57,7 +60,15 @@ const ImageUploadFieldInner = <T extends FieldValues>(
       setPreviews(initialImages);
       setExistingImages(initialImages);
       setFiles([]);
-      setValue(name, [] as Parameters<typeof setValue>[1]);
+      setValue(
+        name,
+        (mapValue
+          ? mapValue({
+              existingImages: initialImages,
+              newImageFiles: [],
+            })
+          : []) as Parameters<typeof setValue>[1],
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resetTrigger]);
@@ -66,10 +77,15 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   React.useEffect(() => {
     setValue(
       name,
-      {
-        existingImages,
-        newImageFiles: files,
-      } as Parameters<typeof setValue>[1],
+      (mapValue
+        ? mapValue({
+            existingImages,
+            newImageFiles: files,
+          })
+        : {
+            existingImages,
+            newImageFiles: files,
+          }) as Parameters<typeof setValue>[1],
       {
         shouldValidate: files.length > 0,
         shouldDirty: true,
@@ -84,18 +100,33 @@ const ImageUploadFieldInner = <T extends FieldValues>(
 
     const validFiles: File[] = [];
     const newPreviews: string[] = [];
+    let hasInvalidTypeFile = false;
+    let hasInvalidSizeFile = false;
 
     for (const file of selectedFiles) {
       if (files.length + validFiles.length >= maxFiles) break;
 
-      if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) continue;
+      if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) {
+        hasInvalidSizeFile = true;
+        continue;
+      }
 
       const ext = file.name.split('.').pop()?.toLowerCase();
-      if (!ext || !IMAGE_UPLOAD_RULES.ALLOWED_EXTENSIONS.includes(ext))
+      if (!ext || !IMAGE_UPLOAD_RULES.ALLOWED_EXTENSIONS.includes(ext)) {
+        hasInvalidTypeFile = true;
         continue;
+      }
 
       validFiles.push(file);
       newPreviews.push(URL.createObjectURL(file));
+    }
+
+    if (hasInvalidTypeFile) {
+      onInvalidTypeFile?.();
+    }
+
+    if (hasInvalidSizeFile) {
+      onInvalidSizeFile?.();
     }
 
     setFiles((prev) => [...prev, ...validFiles]);

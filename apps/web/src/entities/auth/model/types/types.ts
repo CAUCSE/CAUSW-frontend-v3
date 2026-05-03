@@ -104,15 +104,7 @@ export interface SocialLoginAdditionalInfoRequestDto {
   agreedTermsIds: string[];
 }
 
-type AcademicStatus =
-  | 'ENROLLED'
-  | 'LEAVE_OF_ABSENCE'
-  | 'GRADUATED'
-  | 'DROPPED_OUT'
-  | 'SUSPEND'
-  | 'EXPEL'
-  | 'PROFESSOR'
-  | 'UNDETERMINED';
+type AcademicStatus = 'ENROLLED' | 'GRADUATED';
 
 export interface AuthResponseDto {
   accessToken: string;
