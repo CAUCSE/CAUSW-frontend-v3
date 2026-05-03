@@ -2,7 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 
-import { TokenManager, getNativeFCM, removeNativeFCM } from '@/shared/storage';
+import {
+  AuthOptionManager,
+  TokenManager,
+  getNativeFCM,
+  removeNativeFCM,
+} from '@/shared/storage';
 import { isMobile } from '@/shared/utils';
 
 import { useSignOutMutation } from '../mutations';
@@ -18,6 +23,7 @@ export const useLogout = () => {
 
     await TokenManager.removeAccessToken();
     await TokenManager.removeRefreshToken();
+    await AuthOptionManager.removeSessionPersist();
     if (isMobile) {
       await removeNativeFCM();
     }
