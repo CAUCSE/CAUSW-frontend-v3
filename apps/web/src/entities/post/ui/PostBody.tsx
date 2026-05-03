@@ -13,7 +13,7 @@ interface PostBodyProps {
   images?: string[];
   isCollapsed?: boolean;
   maxLines?: number;
-  onExpand?: (e: React.MouseEvent) => void;
+  onExpand?: () => void;
   showExpandButton?: boolean;
   isHtml?: boolean;
 }
@@ -47,8 +47,7 @@ export const PostBody = ({
   const textRef = useRef<HTMLElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
-  const shouldRenderAsHtml = isHtml || containsHtmlTags(content);
-  const sanitizedHtml = shouldRenderAsHtml ? sanitizeHtml(content) : '';
+  const sanitizedHtml = isHtml ? sanitizeHtml(content) : '';
   const collapseStyles = isCollapsed
     ? {
         display: '-webkit-box',
@@ -71,7 +70,7 @@ export const PostBody = ({
   return (
     <VStack gap="md">
       <VStack gap="sm" align="start">
-        {shouldRenderAsHtml ? (
+        {isHtml ? (
           <Text
             ref={textRef as RefObject<HTMLDivElement>}
             as="div"
@@ -106,9 +105,4 @@ export const PostBody = ({
       {images.length > 0 && <PostImage images={images} />}
     </VStack>
   );
-};
-
-const containsHtmlTags = (text: string) => {
-  const htmlRegex = /<\/?[a-z][\s\S]*>/i;
-  return htmlRegex.test(text);
 };
