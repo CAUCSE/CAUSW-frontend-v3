@@ -38,7 +38,7 @@ export const FeedRecentSearchKeywordSection = () => {
           전체 삭제
         </Button>
       </HStack>
-      <HStack gap="sm" align="center" className="overflow-x-auto">
+      <HStack gap="sm" align="center" className="flex-wrap">
         {recentSearchKeywords.map((keyword, idx) => (
           <FeedRecentSearchKeywordChip
             key={keyword}
