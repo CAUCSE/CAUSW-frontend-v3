@@ -30,7 +30,7 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    ...postQueryOptions.list({ boardIds, size: 20 }),
+    ...postQueryOptions.list({ boardIds }),
     select: (data) => data.pages.flatMap((page) => page.posts),
   });
 

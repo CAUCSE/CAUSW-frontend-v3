@@ -32,7 +32,6 @@ export const FeedSearchResultList = () => {
   } = useInfiniteQuery({
     ...postQueryOptions.list({
       boardIds,
-      size: 20,
       keyword: feedSearchKeyword,
     }),
     select: (data) => data.pages.flatMap((page) => page.posts),
