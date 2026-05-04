@@ -1,25 +1,43 @@
-'use client';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
 import { HStack, VStack } from '@causw/cds';
 
 import {
   FeedRecentSearchKeywordSection,
   FeedSearchHeader,
+  FeedSearchResultList,
 } from '@/widgets/feed';
 
-import { useSyncFeedKeywordFromSearchParam } from '@/entities/feed';
+import { boardQueryOptions } from '@/entities/feed';
 
-export const FeedSearchPage = () => {
-  useSyncFeedKeywordFromSearchParam();
+import { QUERY_STALE_TIME } from '@/shared/constants';
+
+export const FeedSearchPage = async () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: QUERY_STALE_TIME.DEFAULT,
+      },
+    },
+  });
+
+  await queryClient.prefetchQuery(boardQueryOptions.available());
 
   return (
-    <HStack className="size-full min-h-0 justify-center overflow-hidden">
-      <VStack className="min-h-0 w-full py-4 md:px-8 md:py-6 xl:w-225">
-        <VStack className="min-h-0 flex-1 gap-3">
-          <FeedSearchHeader />
-          <FeedRecentSearchKeywordSection />
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <HStack className="size-full min-h-0 justify-center overflow-hidden">
+        <VStack className="min-h-0 w-full py-4 md:px-8 md:py-6 xl:w-225">
+          <VStack className="min-h-0 flex-1 gap-3">
+            <FeedSearchHeader />
+            <FeedRecentSearchKeywordSection />
+            <FeedSearchResultList />
+          </VStack>
         </VStack>
-      </VStack>
-    </HStack>
+      </HStack>
+    </HydrationBoundary>
   );
 };

@@ -1,0 +1,1 @@
+export { FeedSearchResultList } from './FeedSearchResultList';
