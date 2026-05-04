@@ -70,7 +70,7 @@ export const useFeedSearchInput = () => {
 
       setRecentSearchKeywords((prev) => [
         trimmedCurrentKeyword,
-        ...prev.filter((k) => k !== trimmedCurrentKeyword),
+        ...prev.filter((k) => k !== trimmedCurrentKeyword).slice(0, 9),
       ]);
     }
   };

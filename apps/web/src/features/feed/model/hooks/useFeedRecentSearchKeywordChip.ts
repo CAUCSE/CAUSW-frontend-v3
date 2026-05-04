@@ -29,7 +29,7 @@ export const useFeedRecentSearchKeywordChip = ({
     setFeedSearchKeyword(keyword);
     setRecentSearchKeywords((prev) => [
       keyword,
-      ...prev.filter((k) => k !== keyword),
+      ...prev.filter((k) => k !== keyword).slice(0, 9),
     ]);
   };
 
