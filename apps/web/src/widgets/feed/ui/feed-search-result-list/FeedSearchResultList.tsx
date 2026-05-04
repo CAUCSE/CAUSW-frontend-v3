@@ -35,6 +35,7 @@ export const FeedSearchResultList = () => {
       keyword: feedSearchKeyword,
     }),
     select: (data) => data.pages.flatMap((page) => page.posts),
+    enabled: !!feedSearchKeyword,
   });
 
   const { targetRef } = useInfiniteScroll({
