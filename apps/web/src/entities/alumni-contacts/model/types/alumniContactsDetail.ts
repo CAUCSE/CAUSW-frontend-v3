@@ -29,7 +29,7 @@ export interface AlumniContactsDetail {
   name: string;
   admissionYear: string;
   academicStatus: string;
-  description: string;
+  description?: string;
   phoneNumber: string;
   isPhoneNumberVisible: boolean;
   email: string;
