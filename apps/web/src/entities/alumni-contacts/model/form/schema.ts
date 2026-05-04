@@ -26,7 +26,8 @@ export const alumniContactsEditSchema = z.object({
   description: z
     .string()
     .min(0)
-    .max(ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.DESCRIPTION),
+    .max(ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.DESCRIPTION)
+    .nullable(),
   isPhoneNumberVisible: z.boolean(),
   socialLinks: z
     .array(z.string())
