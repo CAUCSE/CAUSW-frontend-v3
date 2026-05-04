@@ -19,7 +19,6 @@ export const getNativeATK = async (): Promise<string> => {
   }
 };
 
-
 export const getNativeRTK = async (): Promise<string> => {
   try {
     if (!(await hasNativeKey(NATIVE_REFRESH_KEY))) {
@@ -44,9 +43,21 @@ export const setNativeRTK = async (token: string): Promise<void> => {
 };
 
 export const removeNativeATK = async (): Promise<void> => {
-  await SecureStoragePlugin.remove({ key: NATIVE_ACCESS_KEY });
+  try {
+    if (!(await hasNativeKey(NATIVE_ACCESS_KEY))) {
+      return;
+    }
+
+    await SecureStoragePlugin.remove({ key: NATIVE_ACCESS_KEY });
+  } catch {}
 };
 
 export const removeNativeRTK = async (): Promise<void> => {
-  await SecureStoragePlugin.remove({ key: NATIVE_REFRESH_KEY });
+  try {
+    if (!(await hasNativeKey(NATIVE_REFRESH_KEY))) {
+      return;
+    }
+
+    await SecureStoragePlugin.remove({ key: NATIVE_REFRESH_KEY });
+  } catch {}
 };

@@ -5,8 +5,13 @@ import {
   ENROLLMENT_VERIFICATION_FORM_FIELD,
 } from '@/entities/auth/config';
 
+import { ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
+
 const MIN_ENROLLMENT_YEAR = 1950;
 const MAX_ENROLLMENT_YEAR = new Date().getFullYear();
+const ACCEPTED_IMAGE_TYPE_LIST = ACCEPTED_IMAGE_TYPES.split(',').map((type) =>
+  type.trim(),
+);
 
 const yearSchema = (label: '입학년도' | '졸업년도') =>
   z
@@ -44,6 +49,27 @@ export const enrollmentVerificationSchema = z
       .optional(),
   })
   .superRefine((data, ctx) => {
+    const images = data[ENROLLMENT_VERIFICATION_FORM_FIELD.images];
+
+    if (!images || images.length === 0) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [ENROLLMENT_VERIFICATION_FORM_FIELD.images],
+        message: '증빙서류 이미지를 최소 1장 첨부해주세요.',
+      });
+    }
+
+    if (
+      images &&
+      !images.every((file) => ACCEPTED_IMAGE_TYPE_LIST.includes(file.type))
+    ) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [ENROLLMENT_VERIFICATION_FORM_FIELD.images],
+        message: 'JPG, JPEG, PNG, GIF, BMP 이미지 파일만 첨부할 수 있습니다.',
+      });
+    }
+
     if (
       data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState] !==
       ENROLLMENT_VERIFICATION_ACADEMIC_STATUS.GRADUATED.value

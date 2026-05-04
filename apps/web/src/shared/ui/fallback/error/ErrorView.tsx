@@ -1,15 +1,23 @@
+'use client';
+
 import { type FallbackProps } from 'react-error-boundary';
 
-import { Button, ErrorColored, Spacer, Text, VStack } from '@causw/cds';
+import { useRouter } from 'next/navigation';
+
+import { Button, ErrorColored, HStack, Spacer, Text, VStack } from '@causw/cds';
 
 interface ErrorViewProps extends FallbackProps {
   errorMessage?: string;
+  showGoHomeButton?: boolean;
 }
 
 export function ErrorView({
   errorMessage,
   resetErrorBoundary,
+  showGoHomeButton = false,
 }: ErrorViewProps) {
+  const router = useRouter();
+
   return (
     <VStack
       align="center"
@@ -23,9 +31,16 @@ export function ErrorView({
         {errorMessage || '문제가 발생했어요'}
       </Text>
       <Spacer size={10} />
-      <Button onClick={resetErrorBoundary} color="red">
-        다시 시도
-      </Button>
+      <HStack gap="sm">
+        <Button onClick={resetErrorBoundary} color="red">
+          다시 시도
+        </Button>
+        {showGoHomeButton && (
+          <Button onClick={() => router.push('/home')} color="gray">
+            홈으로
+          </Button>
+        )}
+      </HStack>
     </VStack>
   );
 }

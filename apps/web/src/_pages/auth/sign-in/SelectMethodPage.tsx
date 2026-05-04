@@ -1,6 +1,7 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import type { MouseEventHandler } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -16,66 +17,55 @@ import {
 import {
   AppleLoginButton,
   EmailLoginButton,
+  getSocialOauthUrl,
   GoogleLoginButton,
   KakaoLoginButton,
+  useNativeSocialLoginFlowMutation,
   useRestoreMobileAuth,
 } from '@/features/auth';
 
-import { useIsMounted } from '@/shared/hooks';
-import { isAndroid } from '@/shared/utils';
+import type { NativeSocialLoginProvider } from '@/entities/auth';
 
-type SocialProvider = 'kakao' | 'apple' | 'google';
+import { useIsMounted } from '@/shared/hooks';
+import { AuthOptionManager } from '@/shared/storage';
+import { QueryClientClearProvider } from '@/shared/ui';
+import { isAndroid, isMobile } from '@/shared/utils';
+
+type DesktopSocialProvider = 'kakao' | 'apple' | 'google';
 
 export const SelectMethodPage = () => {
   const router = useRouter();
   const isMounted = useIsMounted();
-  useRestoreMobileAuth();
+  const nativeSocialLoginFlowMutation = useNativeSocialLoginFlowMutation();
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
-  const [pendingProvider, setPendingProvider] = useState<SocialProvider | null>(
-    null,
-  );
-  const sessionKeepPreferenceRef = useRef<boolean | null>(null);
+  const [pendingProvider, setPendingProvider] =
+    useState<DesktopSocialProvider | null>(null);
+  useRestoreMobileAuth();
 
-  const handleSocialButtonClick =
-    (provider: SocialProvider): React.MouseEventHandler<HTMLButtonElement> =>
-    (event) => {
-      if (sessionKeepPreferenceRef.current !== null) return;
+  const handleSocialLogin =
+    (provider: NativeSocialLoginProvider): MouseEventHandler<HTMLButtonElement> =>
+    () => {
+      if (isMobile) {
+        nativeSocialLoginFlowMutation.mutate({ provider });
+        return;
+      }
 
-      event.preventDefault();
       setPendingProvider(provider);
       setConfirmModalOpen(true);
     };
 
-  const handleConfirm = (shouldKeepSession: boolean) => {
-    sessionKeepPreferenceRef.current = shouldKeepSession;
-    setConfirmModalOpen(false);
-
-    if (!pendingProvider) return;
-
-    const selector = `button[data-social-provider="${pendingProvider}"]`;
-    setPendingProvider(null);
-
-    queueMicrotask(() => {
-      const targetButton = document.querySelector<HTMLButtonElement>(selector);
-      targetButton?.click();
-    });
-  };
-
-  const handleConfirmModalOpenChange = (open: boolean) => {
-    setConfirmModalOpen(open);
-    if (!open && sessionKeepPreferenceRef.current === null) {
-      setPendingProvider(null);
+  const handleConfirmSessionPersist = async (persist: boolean) => {
+    if (!pendingProvider) {
+      return;
     }
+
+    await AuthOptionManager.setSessionPersist(persist);
+    window.location.href = getSocialOauthUrl(pendingProvider);
   };
 
   return (
-    <>
+    <QueryClientClearProvider>
       <MethodSelectContainer>
-        <SessionKeepConfirmModal
-          open={confirmModalOpen}
-          onOpenChange={handleConfirmModalOpenChange}
-          onConfirm={handleConfirm}
-        />
         <VStack className="gap-12 md:gap-20">
           <VStack justify="center" align="center" className="w-full gap-8">
             <SignInImageSection />
@@ -94,22 +84,13 @@ export const SelectMethodPage = () => {
           {isMounted ? (
             <VStack className="min-h-[252px] w-full gap-3">
               <>
-                <KakaoLoginButton
-                  data-social-provider="kakao"
-                  onClick={handleSocialButtonClick('kakao')}
-                />
+                <KakaoLoginButton onClick={handleSocialLogin('kakao')} />
 
                 {!isAndroid && (
-                  <AppleLoginButton
-                    data-social-provider="apple"
-                    onClick={handleSocialButtonClick('apple')}
-                  />
+                  <AppleLoginButton onClick={handleSocialLogin('apple')} />
                 )}
 
-                <GoogleLoginButton
-                  data-social-provider="google"
-                  onClick={handleSocialButtonClick('google')}
-                />
+                <GoogleLoginButton onClick={handleSocialLogin('google')} />
 
                 <EmailLoginButton
                   onClick={() => router.push('/auth/sign-in/email')}
@@ -120,7 +101,14 @@ export const SelectMethodPage = () => {
             <SignInButtonsSkeleton />
           )}
         </VStack>
+        <SessionKeepConfirmModal
+          open={confirmModalOpen}
+          onOpenChange={setConfirmModalOpen}
+          onConfirm={(value) => {
+            void handleConfirmSessionPersist(value);
+          }}
+        />
       </MethodSelectContainer>
-    </>
+    </QueryClientClearProvider>
   );
 };

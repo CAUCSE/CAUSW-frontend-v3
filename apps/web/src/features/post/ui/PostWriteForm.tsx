@@ -63,15 +63,15 @@ export const PostWriteForm = ({
     boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
+    const imageData = data.images as {
+      existingImages?: string[];
+      newImageFiles?: File[];
+    };
+
+    const existingImages = imageData?.existingImages ?? [];
+    const newImageFiles = imageData?.newImageFiles ?? [];
+
     if (isEdit) {
-      const imageData = data.images as {
-        existingImages?: string[];
-        newImageFiles?: File[];
-      };
-
-      const existingImages = imageData?.existingImages ?? [];
-      const newImageFiles = imageData?.newImageFiles ?? [];
-
       const updateData: PostUpdateFormValues = {
         ...data,
         existingImages,
@@ -86,13 +86,7 @@ export const PostWriteForm = ({
         images: newImageFiles,
       });
     } else {
-      const imageData = data.images as {
-        existingImages?: string[];
-        newImageFiles?: File[];
-      };
-      const newImageFiles = imageData?.newImageFiles ?? [];
-
-      const createDto = mapPostCreateFormToDto(data);
+      const createDto = mapPostCreateFormToDto(data, newImageFiles);
 
       createPost({
         request: createDto,

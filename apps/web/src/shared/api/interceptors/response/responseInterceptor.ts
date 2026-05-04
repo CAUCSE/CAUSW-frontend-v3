@@ -2,7 +2,7 @@ import { type ApiResponse, isApiError } from '@causw/api-client';
 import { reportApiError } from '@causw/logger';
 
 import { useAuthStore, AuthError } from '@/shared/model';
-import { TokenManager } from '@/shared/storage';
+import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import {
   isAccessTokenError,
   isPublicEndpoint,
@@ -74,6 +74,7 @@ export const setResponseInterceptors = (apiWrapper: BaseApiClient) => {
 
           await TokenManager.setAccessToken(newAccessToken);
           await TokenManager.setRefreshToken(newRefreshToken);
+          await AuthOptionManager.refreshSessionPersist();
 
           apiWrapper.processRefreshQueue(newAccessToken);
 

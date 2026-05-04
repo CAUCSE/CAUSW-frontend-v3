@@ -1,3 +1,5 @@
+import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+
 import {
   AUTH_REFRESHED_STORAGE_VALUE,
   STORAGE_ACCESS_KEY,
@@ -24,14 +26,20 @@ export const getServerRTK = async (): Promise<string> => {
   return rtk?.value ?? '';
 };
 
-export const setServerATK = async (token: string): Promise<void> => {
+export const setServerATK = async (
+  token: string,
+  cookieOptions?: Partial<ResponseCookie>,
+): Promise<void> => {
   const cookieStore = await getCookieStore();
-  cookieStore.set(STORAGE_ACCESS_KEY, token);
+  cookieStore.set(STORAGE_ACCESS_KEY, token, cookieOptions);
 };
 
-export const setServerRTK = async (token: string): Promise<void> => {
+export const setServerRTK = async (
+  token: string,
+  cookieOptions?: Partial<ResponseCookie>,
+): Promise<void> => {
   const cookieStore = await getCookieStore();
-  cookieStore.set(STORAGE_REFRESH_KEY, token);
+  cookieStore.set(STORAGE_REFRESH_KEY, token, cookieOptions);
 };
 
 export const removeServerATK = async (): Promise<void> => {

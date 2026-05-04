@@ -3,10 +3,6 @@ export const ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION = {
     label: '재학생',
     value: 'ENROLLED',
   },
-  LEAVE_OF_ABSENCE: {
-    label: '휴학생',
-    value: 'LEAVE_OF_ABSENCE',
-  },
   GRADUATED: {
     label: '졸업생',
     value: 'GRADUATED',

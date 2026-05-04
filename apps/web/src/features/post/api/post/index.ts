@@ -19,11 +19,9 @@ export const createPost = (
     }),
   );
 
-  if (imageFiles && imageFiles.length > 0) {
-    imageFiles.forEach((file) => {
-      formData.append('images', file);
-    });
-  }
+  imageFiles?.forEach((file) => {
+    formData.append('images', file);
+  });
 
   const data = API.post<PostCreateResponseDto>(`/api/v2/posts`, formData, {
     headers: {

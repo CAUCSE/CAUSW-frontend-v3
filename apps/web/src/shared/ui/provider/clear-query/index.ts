@@ -1,1 +1,0 @@
-export { ClearQueryProvider } from './ClearQueryProvider';

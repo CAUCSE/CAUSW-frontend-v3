@@ -1,11 +1,8 @@
-//TODO: 기능 구현 완료되면 필요한 로그 빼고 삭제하기
-//TODO : 로그인 연결 후 알림 창 알림 잘 뜨는지 확인
-//TODO : 취소 버튼 눌러서 앱 종료 deprecated된거 확인하기
 package kr.co.causwv2.twa;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log; // ⭐️ 추가
+import android.util.Log;
 import android.webkit.WebView;
 
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -15,7 +12,6 @@ import kr.co.causw.R;
 
 import com.getcapacitor.BridgeActivity;
 import com.kakao.sdk.common.KakaoSdk;
-import com.kakao.sdk.common.util.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +22,6 @@ public class MainActivity extends BridgeActivity {
 
     private SocialLoginCoordinator socialLoginCoordinator;
     private SafeAreaInsetsManager safeAreaInsetsManager;
-    private PushNotificationHelper pushNotificationHelper;
     private BackPressHandler backPressHandler;
 
     @Override
@@ -45,7 +40,6 @@ public class MainActivity extends BridgeActivity {
         String kakaoNativeAppKey = getString(R.string.kakao_native_app_key);
         String googleWebClientId = getString(R.string.google_web_client_id);
         KakaoSdk.init(this, kakaoNativeAppKey);
-        Log.d(SOCIAL_LOGIN_TAG, "Kakao key hash: " + Utility.INSTANCE.getKeyHash(this));
 
         socialLoginCoordinator = new SocialLoginCoordinator(
             this,
@@ -57,9 +51,6 @@ public class MainActivity extends BridgeActivity {
             webView.getSettings().setTextZoom(100);
             socialLoginCoordinator.registerJavascriptInterfaces(webView);
         }
-
-        pushNotificationHelper = new PushNotificationHelper();
-        pushNotificationHelper.fetchAndLogToken();
 
         backPressHandler = new BackPressHandler(this, webView);
     }
@@ -78,6 +69,9 @@ public class MainActivity extends BridgeActivity {
         String requestId,
         String accessToken,
         String idToken,
+        String authorizationCode,
+        String codeVerifier,
+        String platform,
         String errorCode,
         String message
     ) {
@@ -87,20 +81,7 @@ public class MainActivity extends BridgeActivity {
                 return;
             }
 
-            if ((accessToken != null && !accessToken.isEmpty())
-                || (idToken != null && !idToken.isEmpty())) {
-                Log.d(
-                    SOCIAL_LOGIN_TAG,
-                    "Social login success. provider="
-                        + provider
-                        + ", requestId="
-                        + requestId
-                        + ", accessToken="
-                        + accessToken
-                        + ", idToken="
-                        + idToken
-                );
-            } else if (errorCode != null) {
+            if (errorCode != null) {
                 Log.e(
                     SOCIAL_LOGIN_TAG,
                     "Social login failed. provider="
@@ -120,6 +101,9 @@ public class MainActivity extends BridgeActivity {
                 payload.put("requestId", requestId);
                 if (accessToken != null) payload.put("accessToken", accessToken);
                 if (idToken != null) payload.put("idToken", idToken);
+                if (authorizationCode != null) payload.put("authorizationCode", authorizationCode);
+                if (codeVerifier != null) payload.put("codeVerifier", codeVerifier);
+                if (platform != null) payload.put("platform", platform);
                 if (errorCode != null) payload.put("errorCode", errorCode);
                 if (message != null) payload.put("message", message);
             } catch (JSONException e) {

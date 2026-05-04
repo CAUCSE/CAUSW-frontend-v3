@@ -23,12 +23,18 @@ export const getClientRTK = (): string => {
   return rtk;
 };
 
-export const setClientATK = (token: string) => {
-  Cookies.set(STORAGE_ACCESS_KEY, token);
+export const setClientATK = async (
+  token: string,
+  cookieOptions?: Cookies.CookieAttributes,
+) => {
+  Cookies.set(STORAGE_ACCESS_KEY, token, cookieOptions);
 };
 
-export const setClientRTK = (token: string) => {
-  Cookies.set(STORAGE_REFRESH_KEY, token);
+export const setClientRTK = async (
+  token: string,
+  cookieOptions?: Cookies.CookieAttributes,
+) => {
+  Cookies.set(STORAGE_REFRESH_KEY, token, cookieOptions);
 };
 
 export const removeClientATK = () => {

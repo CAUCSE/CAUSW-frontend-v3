@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { CTAButton } from '@causw/cds';
+import { type CTAButton, Text } from '@causw/cds';
 
 type EmailLoginButtonProps = ComponentProps<typeof CTAButton>;
 
@@ -9,8 +9,13 @@ export const EmailLoginButton = ({
   ...props
 }: EmailLoginButtonProps) => {
   return (
-    <CTAButton color="white" fullWidth {...props}>
+    <Text
+      textColor="gray-500"
+      typography="body-15-medium"
+      className="mt-1 cursor-pointer text-center"
+      {...props}
+    >
       {children ?? '이메일로 시작하기'}
-    </CTAButton>
+    </Text>
   );
 };

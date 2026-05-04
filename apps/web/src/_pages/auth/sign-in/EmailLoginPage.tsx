@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import { useForm, FormProvider } from 'react-hook-form';
 
 import Link from 'next/link';
@@ -14,25 +16,28 @@ import { AuthContainer } from '@/widgets/auth';
 import { routeAfterSignIn, useSignInMutation } from '@/features/auth';
 import { usePushNotification } from '@/features/notification';
 
-import { type SigninRequestDto, signInSchema } from '@/entities/auth';
+import { type SignInFormData, signInSchema } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
-import { TokenManager } from '@/shared/storage';
+import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import { ActionHeader, DesktopOnly, MobileOnly, RHFInput } from '@/shared/ui';
 
 export const EmailLoginPage = () => {
   const router = useRouter();
-  const methods = useForm<SigninRequestDto>({
+  const rememberMeRef = useRef(false);
+  const methods = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
     mode: 'onBlur',
     defaultValues: {
       email: '',
       password: '',
+      rememberMe: false,
     },
   });
   const { compareFCMToken } = usePushNotification();
   const signInMutation = useSignInMutation({
     onSuccess: async (res) => {
+      await AuthOptionManager.setSessionPersist(rememberMeRef.current);
       await TokenManager.setAccessToken(res.accessToken);
       await TokenManager.setRefreshToken(res.refreshToken);
 
@@ -44,9 +49,12 @@ export const EmailLoginPage = () => {
     },
   });
 
-  const onSubmit = (data: SigninRequestDto) => {
-    console.log('Sign In Data:', data);
-    signInMutation.mutate(data);
+  const onSubmit = (data: SignInFormData) => {
+    rememberMeRef.current = !!data.rememberMe;
+    signInMutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (
@@ -95,10 +103,17 @@ export const EmailLoginPage = () => {
               typography="body-16-regular"
             />
 
-            <Checkbox className="w-fit">
+            <Checkbox
+              checked={methods.watch('rememberMe') ?? false}
+              onCheckedChange={(checked) => {
+                methods.setValue('rememberMe', !!checked, {
+                  shouldDirty: true,
+                  shouldTouch: true,
+                });
+              }}
+            >
               <Checkbox.Indicator />
               <Checkbox.Label
-                as="span"
                 typography="body-15-semibold"
                 textColor="gray-700"
               >

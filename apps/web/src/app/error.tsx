@@ -39,6 +39,7 @@ export default function ErrorPage({
         error={error}
         resetErrorBoundary={handleReset}
         errorMessage="페이지를 불러오는 중 문제가 발생했습니다."
+        showGoHomeButton
       />
     </div>
   );
