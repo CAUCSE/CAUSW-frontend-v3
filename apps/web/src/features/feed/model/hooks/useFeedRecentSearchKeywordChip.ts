@@ -19,9 +19,7 @@ export const useFeedRecentSearchKeywordChip = ({
 }: UseFeedRecentSearchKeywordChipProps) => {
   const { setFeedSearchKeyword } = useFeedSearchKeyword();
 
-  const [recentSearchKeywords, setRecentSearchKeywords] = useLocalStorage<
-    string[]
-  >(
+  const [, setRecentSearchKeywords] = useLocalStorage<string[]>(
     FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
     FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
     { initializeWithValue: false },
@@ -29,13 +27,10 @@ export const useFeedRecentSearchKeywordChip = ({
 
   const handleClickRecentSearchKeyword = () => {
     setFeedSearchKeyword(keyword);
-
-    const updatedRecentSearchKeywords = [
+    setRecentSearchKeywords((prev) => [
       keyword,
-      ...recentSearchKeywords.filter((k) => k !== keyword),
-    ];
-
-    setRecentSearchKeywords(updatedRecentSearchKeywords);
+      ...prev.filter((k) => k !== keyword),
+    ]);
   };
 
   const handleRemoveRecentSearchKeyword = (
@@ -43,7 +38,7 @@ export const useFeedRecentSearchKeywordChip = ({
     index: number,
   ) => {
     event.stopPropagation();
-    setRecentSearchKeywords(recentSearchKeywords.filter((_, i) => i !== index));
+    setRecentSearchKeywords((prev) => prev.filter((_, i) => i !== index));
   };
 
   return {

@@ -19,9 +19,7 @@ import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
 import { useLocalStorage } from '@/shared/hooks';
 
 export const useFeedSearchInput = () => {
-  const [recentSearchKeywords, setRecentSearchKeywords] = useLocalStorage<
-    string[]
-  >(
+  const [, setRecentSearchKeywords] = useLocalStorage<string[]>(
     FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
     FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
     { initializeWithValue: false },
@@ -68,12 +66,11 @@ export const useFeedSearchInput = () => {
     }
 
     if (event.key === 'Enter') {
-      const updatedRecentSearchKeywords = [
+      setRecentSearchKeywords((prev) => [
         trimmedCurrentKeyword,
-        ...recentSearchKeywords.filter((k) => k !== trimmedCurrentKeyword),
-      ];
+        ...prev.filter((k) => k !== trimmedCurrentKeyword),
+      ]);
 
-      setRecentSearchKeywords(updatedRecentSearchKeywords);
       setFeedSearchKeyword(trimmedCurrentKeyword);
     }
   };
