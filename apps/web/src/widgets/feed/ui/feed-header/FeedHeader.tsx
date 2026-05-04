@@ -1,4 +1,4 @@
-import { HStack, Text } from '@causw/cds';
+import { HStack, Link, Search, Text } from '@causw/cds';
 
 export const FeedHeader = () => {
   return (
@@ -18,9 +18,9 @@ export const FeedHeader = () => {
         커뮤니티
       </Text>
 
-      {/* <Link href="/feed/search">
+      <Link href="/feed/search">
         <Search size={20} color="gray-700" />
-      </Link> */}
+      </Link>
     </HStack>
   );
 };
