@@ -30,6 +30,10 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+    def googleWebClientId = localProperties.getProperty(
+        'googleWebClientId',
+        '1086770319771-hp040om1msg7r4o25u895b1pos47jkjt.apps.googleusercontent.com'
+    )
     signingConfigs {
         release {
             storeFile file(localProperties.getProperty('storeFile'))
@@ -47,21 +51,37 @@ if (localPropertiesFile.exists()) {
 
             resValue "string", "package_name", "kr.co.causwv2.twa.dev"
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa.dev"
-            manifestPlaceholders = [appLabel: "DEV-크자회"]
+            resValue "string", "kakao_native_app_key", "0d6f887e12de1e823fc6d021e90da922"
+            resValue "string", "google_web_client_id", googleWebClientId
+            manifestPlaceholders = [
+                appLabel: "DEV-크자회",
+                kakaoScheme: "kakao0d6f887e12de1e823fc6d021e90da922"
+            ]
 
-            versionCode 16
+            versionCode 20
         }
         prod {
             dimension "env"
             resValue "string", "package_name", "kr.co.causwv2.twa"
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa"
-            manifestPlaceholders = [appLabel: "크자회(CCSSAA)"]
+            resValue "string", "kakao_native_app_key", "4535709d7c684cff31a42bb2b522eed9"
+            resValue "string", "google_web_client_id", googleWebClientId
+            manifestPlaceholders = [
+                appLabel: "크자회(CCSSAA)",
+                kakaoScheme: "kakao4535709d7c684cff31a42bb2b522eed9"
+            ]
 
             versionCode 14
         }
     }
 
     buildTypes {
+        debug {
+            resValue "string", "kakao_native_app_key", "466439d207f1dc696c747e41d127d1d0"
+            manifestPlaceholders = [
+                kakaoScheme: "kakao466439d207f1dc696c747e41d127d1d0"
+            ]
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
