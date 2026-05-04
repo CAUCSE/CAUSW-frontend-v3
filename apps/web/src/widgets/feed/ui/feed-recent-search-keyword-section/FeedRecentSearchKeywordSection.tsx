@@ -4,6 +4,8 @@ import { Button, HStack, Text, VStack } from '@causw/cds';
 
 import { FeedRecentSearchKeywordChip } from '@/features/feed';
 
+import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
+
 import { useFeedRecentSearchKeywordSection } from '../../model';
 
 import { FeedRecentSearchKeywordSectionEmptyView } from './FeedRecentSearchKeywordSectionEmptyView';
@@ -11,6 +13,12 @@ import { FeedRecentSearchKeywordSectionEmptyView } from './FeedRecentSearchKeywo
 export const FeedRecentSearchKeywordSection = () => {
   const { recentSearchKeywords, handleRemoveAllRecentSearchKeywords } =
     useFeedRecentSearchKeywordSection();
+
+  const { feedSearchKeyword } = useFeedSearchKeyword();
+
+  if (feedSearchKeyword) {
+    return null;
+  }
 
   if (recentSearchKeywords.length === 0) {
     return <FeedRecentSearchKeywordSectionEmptyView />;
