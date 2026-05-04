@@ -27,7 +27,6 @@ export const FeedList = ({
   targetRef,
   ref,
 }: FeedListProps) => {
-  // TODO: empty view 추가 필요
   if (!posts || posts.length === 0) {
     return <FeedListEmptyView />;
   }
