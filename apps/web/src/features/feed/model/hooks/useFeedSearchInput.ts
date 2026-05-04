@@ -66,12 +66,12 @@ export const useFeedSearchInput = () => {
     }
 
     if (event.key === 'Enter') {
+      setFeedSearchKeyword(trimmedCurrentKeyword);
+
       setRecentSearchKeywords((prev) => [
         trimmedCurrentKeyword,
         ...prev.filter((k) => k !== trimmedCurrentKeyword),
       ]);
-
-      setFeedSearchKeyword(trimmedCurrentKeyword);
     }
   };
 
