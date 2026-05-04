@@ -1,2 +1,1 @@
-export { useSyncFeedKeywordFromSearchParam } from './useSyncFeedKeywordFromSearchParam';
-export { useUpdateFeedKeywordSearchParam } from './useUpdateFeedKeywordSearchParam';
+export { useFeedSearchKeyword } from './useFeedSearchKeyword';
