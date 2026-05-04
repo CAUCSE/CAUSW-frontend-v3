@@ -10,14 +10,11 @@ import {
   useState,
 } from 'react';
 
-import { useSearchParams } from 'next/navigation';
-
 import {
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
-  FEED_SEARCH_KEYWORD_SEARCH_PARAM_KEY,
-  useUpdateFeedKeywordSearchParam,
 } from '@/entities/feed';
+import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
 
 import { useLocalStorage } from '@/shared/hooks';
 
@@ -30,22 +27,17 @@ export const useFeedSearchInput = () => {
     { initializeWithValue: false },
   );
 
-  const searchParams = useSearchParams();
-
-  const { updateFeedKeywordSearchParam, removeFeedKeywordSearchParam } =
-    useUpdateFeedKeywordSearchParam();
-
-  const searchParamKeyword =
-    searchParams.get(FEED_SEARCH_KEYWORD_SEARCH_PARAM_KEY) ?? '';
+  const { feedSearchKeyword, setFeedSearchKeyword, removeFeedSearchKeyword } =
+    useFeedSearchKeyword();
 
   const [currentKeyword, setCurrentKeyword] =
-    useState<string>(searchParamKeyword);
+    useState<string>(feedSearchKeyword);
 
   const isComposingRef = useRef(false);
 
   useEffect(() => {
-    setCurrentKeyword(searchParamKeyword);
-  }, [searchParamKeyword]);
+    setCurrentKeyword(feedSearchKeyword);
+  }, [feedSearchKeyword]);
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
@@ -82,13 +74,13 @@ export const useFeedSearchInput = () => {
       ];
 
       setRecentSearchKeywords(updatedRecentSearchKeywords);
-      updateFeedKeywordSearchParam(trimmedCurrentKeyword);
+      setFeedSearchKeyword(trimmedCurrentKeyword);
     }
   };
 
   const handleClearKeyword = () => {
     setCurrentKeyword('');
-    removeFeedKeywordSearchParam();
+    removeFeedSearchKeyword();
   };
 
   return {

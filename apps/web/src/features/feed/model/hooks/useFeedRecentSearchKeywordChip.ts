@@ -5,8 +5,8 @@ import { type MouseEvent } from 'react';
 import {
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
-  useUpdateFeedKeywordSearchParam,
 } from '@/entities/feed';
+import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
 
 import { useLocalStorage } from '@/shared/hooks';
 
@@ -17,7 +17,7 @@ interface UseFeedRecentSearchKeywordChipProps {
 export const useFeedRecentSearchKeywordChip = ({
   keyword,
 }: UseFeedRecentSearchKeywordChipProps) => {
-  const { updateFeedKeywordSearchParam } = useUpdateFeedKeywordSearchParam();
+  const { setFeedSearchKeyword } = useFeedSearchKeyword();
 
   const [recentSearchKeywords, setRecentSearchKeywords] = useLocalStorage<
     string[]
@@ -28,7 +28,7 @@ export const useFeedRecentSearchKeywordChip = ({
   );
 
   const handleClickRecentSearchKeyword = () => {
-    updateFeedKeywordSearchParam(keyword);
+    setFeedSearchKeyword(keyword);
 
     const updatedRecentSearchKeywords = [
       keyword,
