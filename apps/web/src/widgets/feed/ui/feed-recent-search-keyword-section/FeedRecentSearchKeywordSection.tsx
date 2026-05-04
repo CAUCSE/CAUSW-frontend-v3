@@ -25,7 +25,7 @@ export const FeedRecentSearchKeywordSection = () => {
   }
 
   return (
-    <VStack gap="md" className="py-6" as="section">
+    <VStack gap="md" className="px-4 py-6 md:px-0" as="section">
       <HStack gap="none" align="center" justify="between" className="px-1">
         <Text typography="subtitle-16-bold" textColor="gray-700">
           최근 검색어
