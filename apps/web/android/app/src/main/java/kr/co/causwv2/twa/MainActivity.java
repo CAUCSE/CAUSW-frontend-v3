@@ -38,13 +38,13 @@ public class MainActivity extends BridgeActivity {
         safeAreaInsetsManager.setup();
 
         String kakaoNativeAppKey = getString(R.string.kakao_native_app_key);
-        String googleWebClientId = getString(R.string.google_web_client_id);
+        String googleServerClientId = getString(R.string.google_server_client_id);
         KakaoSdk.init(this, kakaoNativeAppKey);
 
         socialLoginCoordinator = new SocialLoginCoordinator(
             this,
             this::dispatchSocialLoginResult,
-            googleWebClientId
+            googleServerClientId
         );
 
         if (webView != null) {
