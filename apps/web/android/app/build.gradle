@@ -65,7 +65,7 @@ if (localPropertiesFile.exists()) {
                 kakaoScheme: kakaoSchemeDevRelease
             ]
 
-            versionCode 20
+            versionCode 21
         }
         prod {
             dimension "env"
