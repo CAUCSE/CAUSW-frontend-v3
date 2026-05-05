@@ -1,5 +1,5 @@
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-import { AUTH_API_PREFIX } from '../urls/api-prefix';
+import { AUTH_API_PREFIX, USER_API_PREFIX } from '../urls/api-prefix';
 
 export type PublicEndpoint = {
   method: HttpMethod;
@@ -16,4 +16,6 @@ export const PUBLIC_ENDPOINTS: PublicEndpoint[] = [
   { method: 'POST', path: `${AUTH_API_PREFIX}/password-reset/verify` },
   { method: 'POST', path: `${AUTH_API_PREFIX}/login/native` },
   { method: 'GET', path: '/api/v2/terms' },
+  { method: 'GET', path: `${USER_API_PREFIX}/check-nickname` },
+  { method: 'GET', path: `${USER_API_PREFIX}/check-phone` },
 ];
