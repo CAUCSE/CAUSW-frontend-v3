@@ -1,15 +1,17 @@
-name: Discord PR Review Notification
+name: 디스코드 PR 리뷰 승인 및 변경 요청에 대한 알림
 on:
   pull_request_review:
     types: [submitted]
 
 jobs:
   notify:
+    # 봇이 작성한 리뷰는 알림 제외
+    if: github.event.review.user.type != 'Bot'
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord Notification
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.PR_BOT_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_PR_REVIEW_WEBHOOK_URL }}
           REVIEW_STATE: ${{ github.event.review.state }}
           REVIEW_BODY: ${{ github.event.review.body }}
           REVIEW_AUTHOR: ${{ github.event.review.user.login }}
@@ -32,16 +34,6 @@ jobs:
               REVIEW_TYPE="🔄 변경 요청"
               EMBED_COLOR=15158332
               MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 변경 요청이 있습니다!"
-              ;;
-            "commented")
-              REVIEW_TYPE="💬 리뷰 코멘트"
-              EMBED_COLOR=5814783
-              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 새로운 리뷰가 달렸습니다!"
-              ;;
-            *)
-              REVIEW_TYPE="📝 리뷰"
-              EMBED_COLOR=10181046
-              MESSAGE="<@&${DISCORD_ROLE_ID}> **${PR_AUTHOR}**님에게 새로운 리뷰가 달렸습니다!"
               ;;
           esac
           

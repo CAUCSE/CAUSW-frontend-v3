@@ -1,0 +1,126 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "kr.co.causw"
+    compileSdk rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "kr.co.causwv2.twa"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        //dev와 prod의 versionCode는 각각 아래 productFlavors에서 설정. 이 공통 값은 prod 기준(productFlavors의 prod가 바뀌면 이 값도 수정해주기)
+        //productFlavors에 값이 있으면 이 값은 오버라이드됨.
+        //dev 수정할때는 아래 line.52에서 수정하는 것을 권장. prod 수정할 때는 이 값과 line.60의 값을 함께 수정해야 함.
+        versionCode 14
+
+        //firebase remote config에서 사용하므로, 변경 시 firebase remote config의 default value도 함께 변경해야 함.
+        //dev & prod 공통
+        versionName "1.0.0" 
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+    def googleServerClientId = localProperties.getProperty('googleServerClientId')
+    def googleAndroidClientIdDebug = localProperties.getProperty('googleAndroidClientIdDebug')
+    def googleAndroidClientIdDevRelease = localProperties.getProperty('googleAndroidClientIdDevRelease')
+    def googleAndroidClientIdProdRelease = localProperties.getProperty('googleAndroidClientIdProdRelease')
+    def kakaoNativeAppKeyDebug = localProperties.getProperty('kakaoNativeAppKeyDebug')
+    def kakaoNativeAppKeyDevRelease = localProperties.getProperty('kakaoNativeAppKeyDevRelease')
+    def kakaoNativeAppKeyProdRelease = localProperties.getProperty('kakaoNativeAppKeyProdRelease')
+    def kakaoSchemeDebug = localProperties.getProperty('kakaoSchemeDebug')
+    def kakaoSchemeDevRelease = localProperties.getProperty('kakaoSchemeDevRelease')
+    def kakaoSchemeProdRelease = localProperties.getProperty('kakaoSchemeProdRelease')
+    signingConfigs {
+        release {
+            storeFile file(localProperties.getProperty('storeFile'))
+            storePassword localProperties.getProperty('storePassword')
+            keyAlias localProperties.getProperty('keyAlias')
+            keyPassword localProperties.getProperty('keyPassword')
+        }
+    }
+    flavorDimensions "env"
+
+   productFlavors {
+        dev {
+            dimension "env"
+            applicationIdSuffix ".dev"              // => kr.co.causwv2.twa.dev
+
+            resValue "string", "package_name", "kr.co.causwv2.twa.dev"
+            resValue "string", "custom_url_scheme", "kr.co.causwv2.twa.dev"
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyDevRelease
+            resValue "string", "google_android_client_id", googleAndroidClientIdDevRelease
+            resValue "string", "google_server_client_id", googleServerClientId
+            manifestPlaceholders = [
+                appLabel: "DEV-크자회",
+                kakaoScheme: kakaoSchemeDevRelease
+            ]
+
+            versionCode 21
+        }
+        prod {
+            dimension "env"
+            resValue "string", "package_name", "kr.co.causwv2.twa"
+            resValue "string", "custom_url_scheme", "kr.co.causwv2.twa"
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyProdRelease
+            resValue "string", "google_android_client_id", googleAndroidClientIdProdRelease
+            resValue "string", "google_server_client_id", googleServerClientId
+            manifestPlaceholders = [
+                appLabel: "크자회(CCSSAA)",
+                kakaoScheme: kakaoSchemeProdRelease
+            ]
+
+            versionCode 14
+        }
+    }
+
+    buildTypes {
+        debug {
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyDebug
+            resValue "string", "google_android_client_id", googleAndroidClientIdDebug
+            manifestPlaceholders = [
+                kakaoScheme: kakaoSchemeDebug
+            ]
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.1.2')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+    implementation 'com.kakao.sdk:v2-user:2.11.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+
+apply plugin: 'com.google.gms.google-services'

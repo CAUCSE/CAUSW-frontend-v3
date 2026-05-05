@@ -1,6 +1,7 @@
 {
   "extends": "@causw/typescript-config/nextjs.json",
   "compilerOptions": {
+    "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
     }

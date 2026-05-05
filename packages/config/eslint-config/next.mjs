@@ -1,9 +1,10 @@
+import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import prettier from 'eslint-config-prettier/flat';
+import checkFile from 'eslint-plugin-check-file';
 import importPlugin from 'eslint-plugin-import';
-import fsdPlugin from '@yh-kim/eslint-plugin-fsd';
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -14,8 +15,24 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       import: importPlugin,
+      'check-file': checkFile,
     },
     rules: {
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          fixStyle: 'inline-type-imports',
+        },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
       'import/order': [
         'error',
         {
@@ -66,6 +83,11 @@ const eslintConfig = defineConfig([
               position: 'after',
             },
             {
+              pattern: '@/_pages/**',
+              group: 'internal',
+              position: 'after',
+            },
+            {
               pattern: '@/widgets/**',
               group: 'internal',
               position: 'after',
@@ -94,6 +116,68 @@ const eslintConfig = defineConfig([
           },
         },
       ],
+      'check-file/folder-naming-convention': [
+        'error',
+        {
+          'src/app/**/': 'NEXT_JS_APP_ROUTER_CASE',
+          'src/!(app)/**/': 'KEBAB_CASE',
+        },
+        {
+          ignoreWords: ['_pages'],
+        },
+      ],
+    },
+  },
+  // App Router page 규칙
+  {
+    files: ['**/src/app/**/page.{js,jsx,ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ExportDefaultDeclaration > ArrowFunctionExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > FunctionExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector:
+            'ExportDefaultDeclaration > FunctionDeclaration[id.name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > Identifier[name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > CallExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector:
+            'ExportDefaultDeclaration > ClassDeclaration[id.name!="Page"]',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+        {
+          selector: 'ExportDefaultDeclaration > ClassExpression',
+          message:
+            'App Router page must default export a component named "Page".',
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/\\(\\.\\)feed/**'],
+    rules: {
+      'check-file/folder-naming-convention': 'off',
     },
   },
 ]);

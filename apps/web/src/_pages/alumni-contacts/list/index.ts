@@ -1,0 +1,1 @@
+export { AlumniContactsListPage } from './AlumniContactsListPage';

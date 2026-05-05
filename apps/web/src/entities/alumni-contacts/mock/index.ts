@@ -1,0 +1,1 @@
+export { alumniContactsHandler } from './handler';

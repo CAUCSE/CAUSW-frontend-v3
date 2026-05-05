@@ -1,0 +1,1 @@
+export { NoDataView } from './NoDataView';

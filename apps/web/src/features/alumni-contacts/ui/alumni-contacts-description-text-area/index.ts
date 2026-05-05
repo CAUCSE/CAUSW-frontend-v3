@@ -1,0 +1,1 @@
+export { AlumniContactsDescriptionTextArea } from './AlumniContactsDescriptionTextArea';

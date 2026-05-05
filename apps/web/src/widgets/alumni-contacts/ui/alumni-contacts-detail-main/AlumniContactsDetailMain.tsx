@@ -1,0 +1,40 @@
+'use client';
+
+import { useSuspenseQuery } from '@tanstack/react-query';
+
+import { VStack } from '@causw/cds';
+
+import {
+  alumniContactsQueryOptions,
+  useAlumniContactsHeaderBoundaryContext,
+} from '@/entities/alumni-contacts';
+
+import { AlumniContactsDetailHero } from '../alumni-contacts-detail-hero';
+import { AlumniContactsDetailSection } from '../alumni-contacts-detail-section';
+interface AlumniContactsDetailMainProps {
+  alumniContactsId: string;
+}
+
+export const AlumniContactsDetailMain = ({
+  alumniContactsId,
+}: AlumniContactsDetailMainProps) => {
+  const { data: alumniContactsDetail } = useSuspenseQuery(
+    alumniContactsQueryOptions.detail({ alumniContactsId }),
+  );
+
+  const { alumniContactsHeroRef } = useAlumniContactsHeaderBoundaryContext();
+
+  return (
+    <>
+      <VStack
+        className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]"
+        ref={alumniContactsHeroRef}
+      >
+        <AlumniContactsDetailHero alumniContactsDetail={alumniContactsDetail} />
+      </VStack>
+      <AlumniContactsDetailSection
+        alumniContactsDetail={alumniContactsDetail}
+      />
+    </>
+  );
+};

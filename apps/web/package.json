@@ -7,22 +7,62 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "sync:ios:dev": "APP_ENV=dev DEVICE_ENV=ios npx cap sync ios",
+    "sync:ios:prod": "APP_ENV=prod DEVICE_ENV=ios npx cap sync ios",
+    "sync:android:dev": "APP_ENV=dev DEVICE_ENV=android npx cap sync android",
+    "sync:android:prod": "APP_ENV=prod DEVICE_ENV=android npx cap sync android",
+    "sync:ios:local-dev": "APP_ENV=local-dev DEVICE_ENV=ios npx cap sync ios",
+    "sync:ios:local-prod": "APP_ENV=local-prod DEVICE_ENV=ios npx cap sync ios",
+    "sync:android:local-dev": "APP_ENV=local-dev DEVICE_ENV=android npx cap sync android",
+    "sync:android:local-prod": "APP_ENV=local-prod DEVICE_ENV=android npx cap sync android"
   },
   "dependencies": {
+    "@capacitor/app": "^7.1.1",
+    "@capacitor/app-launcher": "^7",
+    "@capacitor/browser": "^7",
+    "@capacitor/cli": "7.4.2",
+    "@capacitor/core": "7.4.2",
+    "@capacitor/push-notifications": "^7.0.4",
+    "@capacitor/status-bar": "^7.0.4",
+    "@causw/api-client": "workspace:*",
     "@causw/cds": "workspace:*",
+    "@causw/logger": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-query": "catalog:default",
+    "@types/js-cookie": "^3.0.6",
+    "@use-funnel/browser": "^0.0.16",
+    "capacitor-secure-storage-plugin": "0.12.0",
+    "dompurify": "^3.4.0",
+    "es-toolkit": "^1.45.1",
+    "firebase": "^12.11.0",
+    "import-in-the-middle": "^2.0.6",
+    "isomorphic-dompurify": "^3.0.0",
+    "js-cookie": "^3.0.5",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
+    "react-error-boundary": "catalog:default",
     "react-hook-form": "catalog:default",
+    "require-in-the-middle": "^8.0.1",
+    "tailwind-variants": "^3.2.2",
     "zod": "catalog:default",
     "zustand": "catalog:default"
   },
   "devDependencies": {
+    "@capacitor/android": "7.4.2",
+    "@capacitor/ios": "7.4.2",
     "@causw/eslint-config": "workspace:*",
     "@causw/prettier-config": "workspace:*",
     "@causw/typescript-config": "workspace:*",
-    "autoprefixer": "^10.4.23"
+    "@tanstack/react-query-devtools": "catalog:default",
+    "@types/kakao-js-sdk": "^1.39.5",
+    "autoprefixer": "catalog:default",
+    "msw": "^2.12.10"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

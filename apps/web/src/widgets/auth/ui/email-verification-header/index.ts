@@ -1,0 +1,1 @@
+export { EmailVerificationHeader } from './EmailVerificationHeader';
