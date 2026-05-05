@@ -30,7 +30,7 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
-    def googleWebClientId = localProperties.getProperty('googleWebClientId')
+    def googleServerClientId = localProperties.getProperty('googleServerClientId')
     def googleAndroidClientIdDebug = localProperties.getProperty('googleAndroidClientIdDebug')
     def googleAndroidClientIdDevRelease = localProperties.getProperty('googleAndroidClientIdDevRelease')
     def googleAndroidClientIdProdRelease = localProperties.getProperty('googleAndroidClientIdProdRelease')
@@ -59,7 +59,7 @@ if (localPropertiesFile.exists()) {
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa.dev"
             resValue "string", "kakao_native_app_key", kakaoNativeAppKeyDevRelease
             resValue "string", "google_android_client_id", googleAndroidClientIdDevRelease
-            resValue "string", "google_web_client_id", googleWebClientId
+            resValue "string", "google_server_client_id", googleServerClientId
             manifestPlaceholders = [
                 appLabel: "DEV-크자회",
                 kakaoScheme: kakaoSchemeDevRelease
@@ -73,7 +73,7 @@ if (localPropertiesFile.exists()) {
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa"
             resValue "string", "kakao_native_app_key", kakaoNativeAppKeyProdRelease
             resValue "string", "google_android_client_id", googleAndroidClientIdProdRelease
-            resValue "string", "google_web_client_id", googleWebClientId
+            resValue "string", "google_server_client_id", googleServerClientId
             manifestPlaceholders = [
                 appLabel: "크자회(CCSSAA)",
                 kakaoScheme: kakaoSchemeProdRelease
