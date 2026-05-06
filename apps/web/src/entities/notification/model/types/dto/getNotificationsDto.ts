@@ -1,7 +1,7 @@
 /**
  * 커뮤니티, 공식, 시스템, 경조사 알림
  */
-type NotificationType = 'COMMUNITY' | 'OFFICIAL' | 'SYSTEM' | 'CEREMONY';
+type NotificationType = 'COMMUNITY' | 'OFFICIAL' | 'SYSTEM' | 'CEREMONY_V2';
 
 export interface GetNotificationsResponseDto {
   notificationLogId: string;
