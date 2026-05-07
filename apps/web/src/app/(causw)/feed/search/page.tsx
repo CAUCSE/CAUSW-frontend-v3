@@ -1,3 +1,5 @@
+import { FeedSearchPage } from '@/_pages/feed';
+
 export default function Page() {
-  return <div>FeedSearchPage</div>;
+  return <FeedSearchPage />;
 }
