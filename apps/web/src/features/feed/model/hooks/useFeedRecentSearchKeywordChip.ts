@@ -5,8 +5,8 @@ import { type MouseEvent } from 'react';
 import {
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
+  useFeedSearchKeyword,
 } from '@/entities/feed';
-import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
 
 import { useLocalStorage } from '@/shared/hooks';
 

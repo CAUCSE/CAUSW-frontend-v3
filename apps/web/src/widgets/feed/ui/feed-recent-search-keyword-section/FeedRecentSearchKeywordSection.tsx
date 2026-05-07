@@ -4,7 +4,7 @@ import { Button, HStack, Text, VStack } from '@causw/cds';
 
 import { FeedRecentSearchKeywordChip } from '@/features/feed';
 
-import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
+import { useFeedSearchKeyword } from '@/entities/feed';
 
 import { useFeedRecentSearchKeywordSection } from '../../model';
 
