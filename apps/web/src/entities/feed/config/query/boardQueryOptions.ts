@@ -12,5 +12,6 @@ export const boardQueryOptions = {
       queryKey: boardQueryKeys.available(),
       queryFn: getAvailableBoards,
       staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
     }),
 };
