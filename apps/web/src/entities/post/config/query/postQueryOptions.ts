@@ -35,6 +35,7 @@ export const postQueryOptions = {
       getNextPageParam: (lastPage) =>
         lastPage.nextCursor ? lastPage.nextCursor : undefined,
       staleTime: QUERY_STALE_TIME.NONE,
+      throwOnError: true,
     }),
 
   myFeed: (
