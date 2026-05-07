@@ -8,9 +8,10 @@ import { ImageSlider, ImageViewer } from '@/shared/ui';
 
 interface PostImageProps {
   images: string[];
+  enableViewer?: boolean;
 }
 
-export const PostImage = ({ images }: PostImageProps) => {
+export const PostImage = ({ images, enableViewer = true }: PostImageProps) => {
   const [viewerState, setViewerState] = useState({
     isOpen: false,
     activeIndex: 0,
@@ -34,9 +35,12 @@ export const PostImage = ({ images }: PostImageProps) => {
 
   return (
     <Grid columns={1}>
-      <ImageSlider images={images} onImageClick={handleImageClick} />
+      <ImageSlider
+        images={images}
+        onImageClick={enableViewer ? handleImageClick : undefined}
+      />
 
-      {viewerState.isOpen && (
+      {enableViewer && viewerState.isOpen && (
         <ImageViewer
           images={images}
           initialIndex={viewerState.activeIndex}
