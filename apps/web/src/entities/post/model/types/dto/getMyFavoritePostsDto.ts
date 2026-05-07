@@ -1,6 +1,6 @@
 import { type PostResponseDto } from './postResponseDto';
 
-export interface GetPostsResponseDto {
+export interface GetMyFavoritePostsResponseDto {
   posts: PostResponseDto[];
   nextCursor?: string;
 }

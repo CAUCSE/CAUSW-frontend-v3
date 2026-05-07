@@ -1,3 +1,3 @@
 export { useGetAvailableBoards } from './queries';
 export type { Board, GetAvailableBoardListResponseDto } from './types';
-export { useFeedSearchKeyword } from './hooks';
+export { useFeedSearchKeyword, useMyFeedView } from './hooks';

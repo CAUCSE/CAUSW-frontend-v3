@@ -1,5 +1,16 @@
 export * from './detail';
 export * from './write';
 export * from './update';
-export { type GetPostResponseDto, type GetPostsResponseDto } from './dto';
-export { type GetPostsQuery } from './query';
+export type {
+  GetPostsResponseDto,
+  GetPostResponseDto,
+  GetMyPostsResponseDto,
+  GetMyFavoritePostsResponseDto,
+  GetMyCommentedPostsResponseDto,
+} from './dto';
+export type {
+  GetPostsQuery,
+  GetMyPostsQuery,
+  GetMyFavoritePostsQuery,
+  GetMyCommentedPostsQuery,
+} from './query';
