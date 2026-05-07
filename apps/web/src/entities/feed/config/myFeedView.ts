@@ -9,9 +9,9 @@ export const MY_FEED_VIEW = {
 } as const;
 
 export const MY_FEED_VIEW_LABEL = {
-  MY_POSTS: '내가 쓴 글',
-  MY_COMMENTS: '댓글 단 글',
-  FAVORITES: '찜한 글',
+  [MY_FEED_VIEW.MY_POSTS]: '내가 쓴 글',
+  [MY_FEED_VIEW.MY_COMMENTS]: '댓글 단 글',
+  [MY_FEED_VIEW.FAVORITES]: '찜한 글',
 } as const;
 
 export type MyFeedView = ValueOf<typeof MY_FEED_VIEW>;

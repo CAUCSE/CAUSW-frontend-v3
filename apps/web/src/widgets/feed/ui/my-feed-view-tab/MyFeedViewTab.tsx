@@ -31,7 +31,7 @@ export const MyFeedViewTab = () => {
         <Tab.List>
           {Object.entries(MY_FEED_VIEW).map(([key, value]) => (
             <Tab.TabItem key={key} value={value}>
-              {MY_FEED_VIEW_LABEL[key as keyof typeof MY_FEED_VIEW_LABEL]}
+              {MY_FEED_VIEW_LABEL[value]}
             </Tab.TabItem>
           ))}
         </Tab.List>
