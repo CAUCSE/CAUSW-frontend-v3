@@ -40,13 +40,11 @@ export function CalendarEventList() {
   const { data: schedulesItems = [] } = useCalendarSchedules(scheduleApiParams);
 
   const { upcomingItems, pastItems } = useMemo(() => {
-    const tabFiltered = schedulesItems.filter(
-      (item) => selectedTab === 'ALL' || item.type === selectedTab,
-    );
-    // const tabFiltered = schedulesItems.filter((item) => {
-    //   if (selectedTab === 'ALL') return item.type !== 'HOLIDAY';
-    //   return item.type === selectedTab;
-    // });
+    // 전체 탭에서만 휴일(HOLIDAY) 제외, 나머지 탭에서는 백엔드에서 휴일 제외해서 내려줌
+    const tabFiltered = schedulesItems.filter((item) => {
+      if (selectedTab === 'ALL') return item.type !== 'HOLIDAY';
+      return item.type === selectedTab;
+    });
 
     return {
       upcomingItems: tabFiltered.filter((item) => checkIsUpcoming(item.end)),

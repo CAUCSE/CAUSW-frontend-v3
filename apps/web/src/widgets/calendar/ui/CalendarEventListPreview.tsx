@@ -32,6 +32,11 @@ export function CalendarEventListPreview() {
   const { data: schedulesItems = [], isLoading } =
     useCalendarSchedules(scheduleApiParams);
 
+  // 전체 일정 데이터에 공휴일 일정 포함되어 미리보기에서는 제외
+  const previewItems = schedulesItems
+    .filter((item) => item.type !== 'HOLIDAY')
+    .slice(0, 4);
+
   return (
     <VStack>
       {/* Desktop Calendar */}
@@ -54,8 +59,8 @@ export function CalendarEventListPreview() {
             month={currentMonth}
           />
 
-          {schedulesItems.length > 0 ? (
-            schedulesItems.slice(0, 4).map((item: CalendarScheduleItem) => {
+          {previewItems.length > 0 ? (
+            previewItems.map((item: CalendarScheduleItem) => {
               const upcomingStatus = checkIsUpcoming(item.end);
 
               return (
