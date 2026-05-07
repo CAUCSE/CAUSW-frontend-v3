@@ -4,8 +4,7 @@ import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
-import { boardQueryOptions } from '@/entities/feed';
-import { useFeedSearchKeyword } from '@/entities/feed/model/hooks';
+import { boardQueryOptions, useFeedSearchKeyword } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';

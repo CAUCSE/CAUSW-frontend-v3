@@ -8,6 +8,7 @@ export {
 } from './config';
 export {
   useGetAvailableBoards,
+  useFeedSearchKeyword,
   type Board,
   type GetAvailableBoardListResponseDto,
 } from './model';
