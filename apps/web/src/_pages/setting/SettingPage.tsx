@@ -4,6 +4,7 @@ import { VStack } from '@causw/cds';
 
 import {
   SettingAccountSection,
+  SettingActivitySection,
   SettingProfileEditButton,
   SettingProfileImageSectionServerComponent,
   SettingProfileImageSectionSkeleton,
@@ -21,7 +22,7 @@ export const SettingPage = () => {
         <SettingProfileImageSectionServerComponent />
       </Suspense>
       <SettingProfileEditButton />
-      {/* <SettingActivitySection /> */}
+      <SettingActivitySection />
       <SettingAccountSection />
       <SettingSupportSection />
     </VStack>
