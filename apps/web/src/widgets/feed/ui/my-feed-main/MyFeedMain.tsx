@@ -2,9 +2,9 @@ import { Suspense } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { type MyFeedView } from '@/entities/feed';
+import { MY_FEED_VIEW_LABEL, type MyFeedView } from '@/entities/feed';
 
-import { SuspenseView } from '@/shared/ui';
+import { QueryErrorBoundary, SuspenseView } from '@/shared/ui';
 
 import { MyFeedListServerComponent } from '../my-feed-list';
 import { MyFeedViewTab } from '../my-feed-view-tab';
@@ -17,9 +17,13 @@ export const MyFeedMain = ({ myFeedView }: MyFeedMainProps) => {
   return (
     <VStack gap="none" className="h-0 min-h-0 flex-1 overflow-hidden">
       <MyFeedViewTab />
-      <Suspense fallback={<SuspenseView />}>
-        <MyFeedListServerComponent myFeedView={myFeedView} />
-      </Suspense>
+      <QueryErrorBoundary
+        fallbackMessage={`${MY_FEED_VIEW_LABEL[myFeedView]} 목록을 불러오지 못했어요.`}
+      >
+        <Suspense fallback={<SuspenseView />}>
+          <MyFeedListServerComponent myFeedView={myFeedView} />
+        </Suspense>
+      </QueryErrorBoundary>
     </VStack>
   );
 };
