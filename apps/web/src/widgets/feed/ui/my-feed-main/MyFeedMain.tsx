@@ -1,15 +1,25 @@
-'use client';
+import { Suspense } from 'react';
 
-import { Tab } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-export const MyFeedMain = () => {
+import { type MyFeedView } from '@/entities/feed';
+
+import { SuspenseView } from '@/shared/ui';
+
+import { MyFeedListServerComponent } from '../my-feed-list';
+import { MyFeedViewTab } from '../my-feed-view-tab';
+
+interface MyFeedMainProps {
+  myFeedView: MyFeedView;
+}
+
+export const MyFeedMain = ({ myFeedView }: MyFeedMainProps) => {
   return (
-    <Tab.Root variant="chip" value="my-posts">
-      <Tab.List>
-        <Tab.TabItem value="my-posts">내가 쓴 글</Tab.TabItem>
-        <Tab.TabItem value="my-comments">댓글 단 글</Tab.TabItem>
-        <Tab.TabItem value="favorites">좋아요한 글</Tab.TabItem>
-      </Tab.List>
-    </Tab.Root>
+    <VStack gap="none" className="h-0 min-h-0 flex-1 overflow-hidden">
+      <MyFeedViewTab />
+      <Suspense fallback={<SuspenseView />}>
+        <MyFeedListServerComponent myFeedView={myFeedView} />
+      </Suspense>
+    </VStack>
   );
 };
