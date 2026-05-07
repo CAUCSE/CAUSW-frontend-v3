@@ -28,7 +28,6 @@ export function CeremonyRegisterBanner() {
         </VStack>
 
         <HStack className="items-center gap-5">
-          {/* TODO : 아이콘 안깨지는지 확인 */}
           <EnvelopeColored className="shrink-0" size={80} />
           <ChevronRight size={16} color="white" className="shrink-0" />
         </HStack>
