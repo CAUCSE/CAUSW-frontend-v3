@@ -1,9 +1,14 @@
 export const ROUTES = Object.freeze({
   NOTIFICATION: '/notification',
   LOCKER: '/locker',
+  HOME: '/home',
   SCHEDULE: '/home/calendar',
   CEREMONY: '/ceremony',
   FEED: '/feed',
+  REGISTER_FEED: '/feed/write',
+  ALUMNI_CONTACTS: '/alumni-contacts',
+  PROFILE: '/profile',
+  SETTING: '/setting',
 } as const);
 
 export const EXTERNAL_ROUTES = Object.freeze({
