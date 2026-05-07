@@ -24,7 +24,7 @@ export const useAlumniContactsDescriptionTextArea = () => {
     const textarea = textareaRef.current;
     if (!textarea) return;
 
-    if (field.value.length === 0) {
+    if (!field.value || field.value.length === 0) {
       textarea.style.height = '24px';
       return;
     }

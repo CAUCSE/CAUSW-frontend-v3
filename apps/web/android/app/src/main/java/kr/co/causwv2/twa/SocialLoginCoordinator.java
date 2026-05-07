@@ -44,15 +44,15 @@ final class SocialLoginCoordinator {
 
     private final Activity activity;
     private final ResultDispatcher dispatcher;
-    private final String googleWebClientId;
+    private final String googleServerClientId;
 
     private String pendingGoogleRequestId = null;
     private GoogleSignInClient googleSignInClient = null;
 
-    SocialLoginCoordinator(Activity activity, ResultDispatcher dispatcher, String googleWebClientId) {
+    SocialLoginCoordinator(Activity activity, ResultDispatcher dispatcher, String googleServerClientId) {
         this.activity = activity;
         this.dispatcher = dispatcher;
-        this.googleWebClientId = googleWebClientId;
+        this.googleServerClientId = googleServerClientId;
     }
 
     private void dispatch(
@@ -182,7 +182,7 @@ final class SocialLoginCoordinator {
                     + ", packageName="
                     + activity.getPackageName()
                     + ", webClientId="
-                    + googleWebClientId
+                    + googleServerClientId
                     + ", requestId="
                     + requestId,
                 e
@@ -203,7 +203,7 @@ final class SocialLoginCoordinator {
                     + ", packageName="
                     + activity.getPackageName()
                     + ", webClientId="
-                    + googleWebClientId
+                    + googleServerClientId
                     + ", requestId="
                     + requestId,
                 e
@@ -377,7 +377,7 @@ final class SocialLoginCoordinator {
     }
 
     private void loginWithGoogle(String requestId) {
-        if (googleWebClientId == null || googleWebClientId.isEmpty()) {
+        if (googleServerClientId == null || googleServerClientId.isEmpty()) {
             dispatch(
                 "google",
                 requestId,
@@ -391,8 +391,8 @@ final class SocialLoginCoordinator {
 
         GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(googleWebClientId)
-            .requestServerAuthCode(googleWebClientId)
+            .requestIdToken(googleServerClientId)
+            .requestServerAuthCode(googleServerClientId)
             .build();
 
         googleSignInClient = GoogleSignIn.getClient(activity, options);

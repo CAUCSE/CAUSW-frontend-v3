@@ -16,7 +16,7 @@ export const AlumniContactsDescriptionTextArea = () => {
         resize={false}
         maxLength={ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.DESCRIPTION}
         className="min-h-0 grow text-white caret-white"
-        value={field.value}
+        value={field.value ?? ''}
         onChange={handleTextAreaChange}
         onBlur={field.onBlur}
         ref={textareaRef}

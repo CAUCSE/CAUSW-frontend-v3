@@ -10,11 +10,11 @@ android {
         //dev와 prod의 versionCode는 각각 아래 productFlavors에서 설정. 이 공통 값은 prod 기준(productFlavors의 prod가 바뀌면 이 값도 수정해주기)
         //productFlavors에 값이 있으면 이 값은 오버라이드됨.
         //dev 수정할때는 아래 line.52에서 수정하는 것을 권장. prod 수정할 때는 이 값과 line.60의 값을 함께 수정해야 함.
-        versionCode 14
+        versionCode 18
 
         //firebase remote config에서 사용하므로, 변경 시 firebase remote config의 default value도 함께 변경해야 함.
         //dev & prod 공통
-        versionName "1.0.0" 
+        versionName "12.1.1" 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -30,6 +30,16 @@ if (localPropertiesFile.exists()) {
         localProperties.load(reader)
     }
 }
+    def googleServerClientId = localProperties.getProperty('googleServerClientId')
+    def googleAndroidClientIdDebug = localProperties.getProperty('googleAndroidClientIdDebug')
+    def googleAndroidClientIdDevRelease = localProperties.getProperty('googleAndroidClientIdDevRelease')
+    def googleAndroidClientIdProdRelease = localProperties.getProperty('googleAndroidClientIdProdRelease')
+    def kakaoNativeAppKeyDebug = localProperties.getProperty('kakaoNativeAppKeyDebug')
+    def kakaoNativeAppKeyDevRelease = localProperties.getProperty('kakaoNativeAppKeyDevRelease')
+    def kakaoNativeAppKeyProdRelease = localProperties.getProperty('kakaoNativeAppKeyProdRelease')
+    def kakaoSchemeDebug = localProperties.getProperty('kakaoSchemeDebug')
+    def kakaoSchemeDevRelease = localProperties.getProperty('kakaoSchemeDevRelease')
+    def kakaoSchemeProdRelease = localProperties.getProperty('kakaoSchemeProdRelease')
     signingConfigs {
         release {
             storeFile file(localProperties.getProperty('storeFile'))
@@ -47,21 +57,40 @@ if (localPropertiesFile.exists()) {
 
             resValue "string", "package_name", "kr.co.causwv2.twa.dev"
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa.dev"
-            manifestPlaceholders = [appLabel: "DEV-크자회"]
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyDevRelease
+            resValue "string", "google_android_client_id", googleAndroidClientIdDevRelease
+            resValue "string", "google_server_client_id", googleServerClientId
+            manifestPlaceholders = [
+                appLabel: "DEV-크자회",
+                kakaoScheme: kakaoSchemeDevRelease
+            ]
 
-            versionCode 16
+            versionCode 21
         }
         prod {
             dimension "env"
             resValue "string", "package_name", "kr.co.causwv2.twa"
             resValue "string", "custom_url_scheme", "kr.co.causwv2.twa"
-            manifestPlaceholders = [appLabel: "크자회(CCSSAA)"]
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyProdRelease
+            resValue "string", "google_android_client_id", googleAndroidClientIdProdRelease
+            resValue "string", "google_server_client_id", googleServerClientId
+            manifestPlaceholders = [
+                appLabel: "크자회(CCSSAA)",
+                kakaoScheme: kakaoSchemeProdRelease
+            ]
 
-            versionCode 14
+            versionCode 18
         }
     }
 
     buildTypes {
+        debug {
+            resValue "string", "kakao_native_app_key", kakaoNativeAppKeyDebug
+            resValue "string", "google_android_client_id", googleAndroidClientIdDebug
+            manifestPlaceholders = [
+                kakaoScheme: kakaoSchemeDebug
+            ]
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

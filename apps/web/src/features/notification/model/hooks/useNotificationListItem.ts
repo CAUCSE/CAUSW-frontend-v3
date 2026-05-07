@@ -28,7 +28,7 @@ export const useNotificationListItem = () => {
       return;
     }
 
-    if (notification.noticeType === NOTIFICATION_TYPE.CEREMONY.type) {
+    if (notification.noticeType === NOTIFICATION_TYPE.CEREMONY_V2.type) {
       router.push(`/ceremony/${notification.targetId}`);
       return;
     }

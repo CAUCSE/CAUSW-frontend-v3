@@ -27,7 +27,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-06T00:28:07.444547',
-    noticeType: 'CEREMONY',
+    noticeType: 'CEREMONY_V2',
   },
   {
     notificationLogId: 'a60b4c6d-a140-4e0a-be33-f6b7e2213107',
@@ -63,7 +63,7 @@ const baseContent = [
     targetId: 'eaf2cafd-0726-4d51-b55c-f887b393ca13',
     targetParentId: '73247d42-da47-4a8c-86a6-2d4b0db23613',
     createdAt: '2026-03-02T01:31:56.3099',
-    noticeType: 'CEREMONY',
+    noticeType: 'CEREMONY_V2',
   },
   {
     notificationLogId: 'd78726e8-8966-434a-b168-139fcf01f2a8',
@@ -126,7 +126,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:43:41.368632',
-    noticeType: 'CEREMONY',
+    noticeType: 'CEREMONY_V2',
   },
   {
     notificationLogId: '66439c46-20cd-4b2a-bcbc-867bfbafba99',
@@ -162,7 +162,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-23T20:37:50.480154',
-    noticeType: 'CEREMONY',
+    noticeType: 'CEREMONY_V2',
   },
   {
     notificationLogId: '114ed498-2914-4e27-a898-51fffa34ed12',
@@ -180,7 +180,7 @@ const baseContent = [
     targetId: 'b6f8253f-f045-4866-a253-943e3c3ad919',
     targetParentId: 'cf26d6f7-ef3d-452e-8b2c-081f19f752d2',
     createdAt: '2026-02-14T23:46:28.553914',
-    noticeType: 'CEREMONY',
+    noticeType: 'CEREMONY_V2',
   },
 ];
 

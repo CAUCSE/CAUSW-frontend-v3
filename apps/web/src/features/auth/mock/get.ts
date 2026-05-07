@@ -37,6 +37,7 @@ export const getHandler = [
     );
   }),
   mswHttp.get<null>(`${USER_API_PREFIX}/check-phone`, ({ request }) => {
+    return passthrough();
     const { searchParams } = new URL(request.url);
     const phoneNumber = (searchParams.get('phoneNumber') ?? '').trim();
 
@@ -72,6 +73,7 @@ export const getHandler = [
     );
   }),
   mswHttp.get<null>(`${USER_API_PREFIX}/check-nickname`, ({ request }) => {
+    return passthrough();
     const { searchParams } = new URL(request.url);
     const nickname = (searchParams.get('nickname') ?? '').trim().toLowerCase();
 

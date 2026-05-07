@@ -12,7 +12,7 @@ export function getNotificationPopupLink(data: NotificationLatestResponse) {
       }
       return `${ROUTES.FEED}/${targetId}`;
 
-    case 'CEREMONY':
+    case 'CEREMONY_V2':
       return `${ROUTES.CEREMONY}/${targetId}`;
 
     case 'BOARD':
