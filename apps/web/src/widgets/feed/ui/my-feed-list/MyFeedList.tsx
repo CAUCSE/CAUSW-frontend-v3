@@ -14,6 +14,8 @@ import { SuspenseView } from '@/shared/ui';
 
 import { FeedListitem } from '../feed-list-item';
 
+import { MyFeedListEmptyView } from './MyFeedListEmptyView';
+
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
 
@@ -45,6 +47,10 @@ export const MyFeedList = () => {
 
   if (isLoading) {
     return <SuspenseView />;
+  }
+
+  if (!data || data?.length === 0) {
+    return <MyFeedListEmptyView myFeedView={myFeedView} />;
   }
 
   return (
