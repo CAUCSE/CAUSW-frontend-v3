@@ -79,7 +79,7 @@ export function CalendarEventListPreview() {
                   ]}
                   link={
                     item.targetPostId
-                      ? `/${ROUTES.FEED}/${item.targetPostId}`
+                      ? `${ROUTES.FEED}/${item.targetPostId}`
                       : null
                   }
                 />

@@ -107,6 +107,7 @@ function ScheduleSection({
   emptyMessage: string;
   isUpcomingSection: boolean;
 }) {
+  console.log(items);
   return (
     <VStack className="flex-1 gap-3">
       <Text typography="subtitle-16-bold">{title}</Text>
@@ -116,9 +117,7 @@ function ScheduleSection({
             <EventCard
               key={item.id}
               link={
-                item.targetPostId
-                  ? `/${ROUTES.FEED}/${item.targetPostId}`
-                  : null
+                item.targetPostId ? `${ROUTES.FEED}/${item.targetPostId}` : null
               }
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
