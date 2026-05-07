@@ -39,7 +39,7 @@ export const SETTING_ACTIVITY_ITEMS: SettingActivityItem[] = [
   },
   {
     id: 'favorites',
-    label: '좋아요한 글',
+    label: '찜한 글',
     href: createMyFeedUrl('favorites'),
   },
 ];
