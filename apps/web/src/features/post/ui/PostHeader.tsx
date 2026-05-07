@@ -54,7 +54,9 @@ export const PostHeader = ({
           </HStack>
 
           <Text typography="body-16-regular" textColor="gray-500">
-            {formatRelativeTime(createdAt)}
+            <span suppressHydrationWarning>
+              {formatRelativeTime(createdAt)}
+            </span>
           </Text>
         </HStack>
       </HStack>
