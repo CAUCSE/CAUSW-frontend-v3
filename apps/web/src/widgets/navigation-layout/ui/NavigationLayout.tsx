@@ -16,7 +16,6 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const sidebarSelected = pickSidebarKey(pathname);
   const showBottomNav = isBottomNavVisible(pathname);
   const bottomSelected = pickBottomNavKey(pathname);
-  const isMyFeedPage = pathname === '/setting/my-feed';
 
   return (
     <div className="flex h-screen">
@@ -29,8 +28,7 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       <main
         id="main-scroll-container"
         className={mergeStyles(
-          'min-h-0 flex-1 bg-gray-100',
-          isMyFeedPage ? 'overflow-hidden' : 'overflow-y-auto',
+          'min-h-0 flex-1 overflow-y-auto bg-gray-100',
           showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
         )}
       >
