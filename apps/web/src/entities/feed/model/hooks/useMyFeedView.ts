@@ -5,9 +5,8 @@ import { useCallback, useMemo } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
-  isMyFeedView,
-  MY_FEED_VIEW,
   MY_FEED_VIEW_SEARCH_PARAM_KEY,
+  normalizeMyFeedView,
   type MyFeedView,
 } from '../../config';
 
@@ -18,11 +17,8 @@ export const useMyFeedView = () => {
 
   const myFeedView = useMemo(() => {
     const view = searchParams.get(MY_FEED_VIEW_SEARCH_PARAM_KEY);
-    if (!view || !isMyFeedView(view)) {
-      return MY_FEED_VIEW.MY_POSTS;
-    }
 
-    return view;
+    return normalizeMyFeedView(view);
   }, [searchParams]);
 
   const setMyFeedView = useCallback(

@@ -19,3 +19,11 @@ export type MyFeedView = ValueOf<typeof MY_FEED_VIEW>;
 export const isMyFeedView = (view: string): view is MyFeedView => {
   return Object.values(MY_FEED_VIEW).includes(view as MyFeedView);
 };
+
+export const normalizeMyFeedView = (view?: string | null): MyFeedView => {
+  if (!view || !isMyFeedView(view)) {
+    return MY_FEED_VIEW.MY_POSTS;
+  }
+
+  return view;
+};

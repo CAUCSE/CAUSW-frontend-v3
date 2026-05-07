@@ -10,6 +10,7 @@ export {
   MY_FEED_VIEW_LABEL,
   type MyFeedView,
   isMyFeedView,
+  normalizeMyFeedView,
 } from './config';
 export {
   useGetAvailableBoards,
