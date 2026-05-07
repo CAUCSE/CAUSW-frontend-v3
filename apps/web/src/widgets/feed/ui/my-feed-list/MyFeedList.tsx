@@ -16,12 +16,16 @@ import { FeedListitem } from '../feed-list-item';
 
 import { MyFeedListEmptyView } from './MyFeedListEmptyView';
 
+const MY_FEED_LIST_DEFAULT_SIZE = 20;
+
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
 
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useInfiniteQuery({
-      ...postQueryOptions.myFeed(myFeedView, { size: 20 }),
+      ...postQueryOptions.myFeed(myFeedView, {
+        size: MY_FEED_LIST_DEFAULT_SIZE,
+      }),
       select: (data) => data.pages.flatMap((page) => page.posts),
     });
 
