@@ -19,6 +19,7 @@ export interface GetPostResponseDto {
   isPostFavorite: boolean;
   updatable: boolean;
   deletable: boolean;
+  isOfficial: boolean;
   createdAt: string;
   updatedAt: string;
   boardId: string;
