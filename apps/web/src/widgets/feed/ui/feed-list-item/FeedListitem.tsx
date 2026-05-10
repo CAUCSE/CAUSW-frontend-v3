@@ -74,8 +74,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
           authorName={post.writerNickname}
           createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
-          // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
-          // isOfficial={}
+          isOfficial={post.isOfficial}
           isMine={post.isOwner}
           onAction={handleMenuAction}
           hideActionMenu
@@ -89,8 +88,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         <PostFooter
           numLike={post.numLike}
           numComment={post.numComment}
-          /* TODO: isPostLike props 추가 필요 */
-          // isPostLike={false}
+          isPostLike={post.isPostLike}
         />
       </VStack>
       {/* a태그 > button태그 문제로 인해 메뉴 버튼을 따로 빼서 처리함 */}
