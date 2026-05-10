@@ -9,6 +9,7 @@ export {
 export {
   useGetAvailableBoards,
   useFeedSearchKeyword,
+  useFeedSearchPendingKeywordContext,
   type Board,
   type GetAvailableBoardListResponseDto,
 } from './model';

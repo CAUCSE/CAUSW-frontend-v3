@@ -6,6 +6,7 @@ import {
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
   useFeedSearchKeyword,
+  useFeedSearchPendingKeywordContext,
 } from '@/entities/feed';
 
 import { useLocalStorage } from '@/shared/hooks';
@@ -25,8 +26,12 @@ export const useFeedRecentSearchKeywordChip = ({
     { initializeWithValue: false },
   );
 
+  const { setPendingSearchKeyword } = useFeedSearchPendingKeywordContext();
+
   const handleClickRecentSearchKeyword = () => {
     setFeedSearchKeyword(keyword);
+    setPendingSearchKeyword(keyword);
+
     setRecentSearchKeywords((prev) => [
       keyword,
       ...prev.filter((k) => k !== keyword).slice(0, 9),

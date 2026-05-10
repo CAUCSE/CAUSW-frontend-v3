@@ -12,7 +12,10 @@ import {
   FeedSearchResultList,
 } from '@/widgets/feed';
 
-import { boardQueryOptions } from '@/entities/feed';
+import {
+  boardQueryOptions,
+  FeedSearchPendingKeywordProvider,
+} from '@/entities/feed';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
@@ -32,8 +35,10 @@ export const FeedSearchPage = async () => {
       <HStack className="size-full min-h-0 justify-center overflow-hidden">
         <VStack className="min-h-0 w-full py-4 md:px-8 md:py-6 xl:w-225">
           <VStack className="min-h-0 flex-1 gap-3">
-            <FeedSearchHeader />
-            <FeedRecentSearchKeywordSection />
+            <FeedSearchPendingKeywordProvider>
+              <FeedSearchHeader />
+              <FeedRecentSearchKeywordSection />
+            </FeedSearchPendingKeywordProvider>
             <FeedSearchResultList />
           </VStack>
         </VStack>

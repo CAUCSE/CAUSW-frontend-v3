@@ -4,7 +4,10 @@ import { Button, HStack, Text, VStack } from '@causw/cds';
 
 import { FeedRecentSearchKeywordChip } from '@/features/feed';
 
-import { useFeedSearchKeyword } from '@/entities/feed';
+import {
+  useFeedSearchKeyword,
+  useFeedSearchPendingKeywordContext,
+} from '@/entities/feed';
 
 import { useFeedRecentSearchKeywordSection } from '../../model';
 
@@ -15,8 +18,9 @@ export const FeedRecentSearchKeywordSection = () => {
     useFeedRecentSearchKeywordSection();
 
   const { feedSearchKeyword } = useFeedSearchKeyword();
+  const { pendingSearchKeyword } = useFeedSearchPendingKeywordContext();
 
-  if (feedSearchKeyword) {
+  if (feedSearchKeyword || pendingSearchKeyword) {
     return null;
   }
 
