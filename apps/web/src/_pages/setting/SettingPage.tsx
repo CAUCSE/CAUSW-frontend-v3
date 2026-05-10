@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { VStack } from '@causw/cds';
+import { Spacer, VStack } from '@causw/cds';
 
 import {
   SettingAccountSection,
@@ -10,6 +10,8 @@ import {
   SettingProfileImageSectionSkeleton,
   SettingSupportSection,
 } from '@/widgets/setting';
+
+import { DesktopOnly, MobileOnly } from '@/shared/ui';
 
 export const SettingPage = () => {
   return (
@@ -25,6 +27,12 @@ export const SettingPage = () => {
       <SettingActivitySection />
       <SettingAccountSection />
       <SettingSupportSection />
+      <MobileOnly>
+        <Spacer size={16} />
+      </MobileOnly>
+      <DesktopOnly>
+        <Spacer size={4} />
+      </DesktopOnly>
     </VStack>
   );
 };

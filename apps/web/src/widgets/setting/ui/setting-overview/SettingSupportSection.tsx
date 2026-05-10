@@ -30,10 +30,7 @@ export const SettingSupportSection = () => {
   const router = useRouter();
 
   return (
-    <VStack
-      gap="sm"
-      className="flex h-full w-full rounded-lg bg-white px-4 py-5"
-    >
+    <VStack gap="sm" className="flex w-full rounded-lg bg-white px-4 py-5">
       <Text typography="subtitle-18-bold" className="px-2">
         {SETTING_OVERVIEW_TITLES.support}
       </Text>
