@@ -7,6 +7,7 @@ export type {
   GetMyPostsResponseDto,
   GetMyFavoritePostsResponseDto,
   GetMyCommentedPostsResponseDto,
+  PostResponseDto,
 } from './dto';
 export type {
   GetPostsQuery,
