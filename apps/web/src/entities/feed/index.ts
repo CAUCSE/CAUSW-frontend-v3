@@ -16,6 +16,7 @@ export {
   useGetAvailableBoards,
   useFeedSearchKeyword,
   useMyFeedView,
+  useFeedSearchPendingKeywordContext,
   type Board,
   type GetAvailableBoardListResponseDto,
 } from './model';
