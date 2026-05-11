@@ -1,53 +1,46 @@
 'use client';
 
-import { useMemo, type KeyboardEvent, type MouseEvent } from 'react';
+import { type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
 import { type PostResponseDto } from '@/entities/post';
 
-export const usePostListItem = (post: PostResponseDto) => {
+export const usePostListItem = () => {
   const router = useRouter();
 
-  const moveToPost = () => {
-    router.push(`/feed/${post.postId}`);
+  const moveToPost = (postId: PostResponseDto['postId']) => {
+    router.push(`/feed/${postId}`);
   };
 
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
+  const handleCardClick = (
+    event: MouseEvent<HTMLDivElement>,
+    postId: PostResponseDto['postId'],
+  ) => {
     const target = event.target as HTMLElement;
     if (target.closest('a, button')) {
       return;
     }
 
-    moveToPost();
+    moveToPost(postId);
   };
 
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+  const handleCardKeyDown = (
+    event: KeyboardEvent<HTMLDivElement>,
+    postId: PostResponseDto['postId'],
+  ) => {
     if (event.target !== event.currentTarget) {
       return;
     }
 
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      moveToPost();
+      moveToPost(postId);
     }
   };
-
-  const authorName = useMemo(() => {
-    if (post.isOfficial) {
-      return post.writerNickname;
-    }
-
-    if (post.isAnonymous) {
-      return '익명';
-    }
-
-    return post.writerNickname;
-  }, [post.isOfficial, post.isAnonymous, post.writerNickname]);
 
   return {
     handleCardClick,
     handleCardKeyDown,
-    authorName,
   };
 };

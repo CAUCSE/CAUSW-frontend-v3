@@ -35,8 +35,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
     submitDelete,
   } = usePostMenuActions(post.postId);
 
-  const { handleCardClick, handleCardKeyDown, authorName } =
-    usePostListItem(post);
+  const { handleCardClick, handleCardKeyDown } = usePostListItem();
 
   return (
     <VStack className="relative">
@@ -45,11 +44,11 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         className="cursor-pointer rounded-lg bg-white p-4"
         role="link"
         tabIndex={0}
-        onClick={handleCardClick}
-        onKeyDown={handleCardKeyDown}
+        onClick={(event) => handleCardClick(event, post.postId)}
+        onKeyDown={(event) => handleCardKeyDown(event, post.postId)}
       >
         <PostHeader
-          authorName={authorName}
+          authorName={post.writerNickname}
           createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
           isOfficial={post.isOfficial}
