@@ -60,28 +60,29 @@ export const useFeedMain = () => {
       .map((board) => board.id);
   }, [selectedTab, data.boards]);
 
-  const handleTabChange = (value: string) => {
-    if (!feedListRef.current) {
+  const initializeScroll = () => {
+    const feedList = feedListRef.current;
+    if (!feedList) {
       return;
     }
 
     // 모바일일 때는 PullToRefresh 컴포넌트의 스크롤 컨테이너를 스크롤 시킴
     if (isMobileSize) {
-      const scrollContainer = feedListRef.current.closest(
-        '.feed-list-scroll-container',
-      );
+      const scrollContainer = feedList.closest('.feed-list-scroll-container');
 
       scrollContainer?.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     } else {
-      feedListRef.current.scrollTo({
+      feedList.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     }
+  };
 
+  const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
     if (params.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB) === value) {
@@ -90,6 +91,8 @@ export const useFeedMain = () => {
 
     params.set(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB, value);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+
+    initializeScroll();
   };
 
   return {

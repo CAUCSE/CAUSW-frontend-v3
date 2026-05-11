@@ -1,0 +1,1 @@
+export { FeedSearchPendingKeywordProvider } from './FeedSearchPendingKeywordProvider';

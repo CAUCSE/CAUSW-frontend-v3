@@ -10,6 +10,8 @@ import { SuspenseView } from '@/shared/ui';
 
 import { FeedListitem } from '../feed-list-item';
 
+import { FeedListEmptyView } from './FeedListEmptyView';
+
 interface FeedListProps {
   posts?: GetPostsResponseDto['posts'];
   isFetchingNextPage: boolean;
@@ -25,14 +27,13 @@ export const FeedList = ({
   targetRef,
   ref,
 }: FeedListProps) => {
-  // TODO: empty view 추가 필요
   if (!posts || posts.length === 0) {
-    return <></>;
+    return <FeedListEmptyView />;
   }
 
   return (
     <VStack
-      className="min-h-0 w-full min-w-0 max-w-full flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       ref={ref}
       as="ul"
     >
