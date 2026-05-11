@@ -1,6 +1,6 @@
 'use client';
 
-import { type KeyboardEvent, type MouseEvent } from 'react';
+import { useMemo, type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -60,6 +60,18 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
     }
   };
 
+  const authorName = useMemo(() => {
+    if (post.isOfficial) {
+      return post.writerNickname;
+    }
+
+    if (post.isAnonymous) {
+      return '익명';
+    }
+
+    return post.writerNickname;
+  }, [post.isOfficial, post.isAnonymous, post.writerNickname]);
+
   return (
     <VStack className="relative">
       <VStack
@@ -71,7 +83,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         onKeyDown={handleCardKeyDown}
       >
         <PostHeader
-          authorName={post.writerNickname}
+          authorName={authorName}
           createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
           isOfficial={post.isOfficial}
