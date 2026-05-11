@@ -47,8 +47,7 @@ export const PostContent = ({ post }: PostContentProps) => {
           authorName={post.displayWriterNickname}
           createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
-          // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
-          // isOfficial={}
+          isOfficial={post.isOfficial}
           isMine={post.isOwner}
           onAction={handleMenuAction}
         />
