@@ -1,5 +1,5 @@
 import {
-  buildMyFeedHref,
+  createMyFeedUrl,
   type SettingAccountMenuItem,
   type SettingActivityItem,
   type SettingSupportMenuItem,
@@ -30,17 +30,17 @@ export const SETTING_ACTIVITY_ITEMS: SettingActivityItem[] = [
   {
     id: 'my-posts',
     label: '내가 쓴 글',
-    href: buildMyFeedHref('my-posts', 'list'),
+    href: createMyFeedUrl('my-posts'),
   },
   {
     id: 'my-comments',
     label: '댓글 단 글',
-    href: buildMyFeedHref('my-comments', 'list'),
+    href: createMyFeedUrl('my-comments'),
   },
   {
     id: 'favorites',
-    label: '좋아요한 글',
-    href: buildMyFeedHref('favorites', 'list'),
+    label: '찜한 글',
+    href: createMyFeedUrl('favorites'),
   },
 ];
 

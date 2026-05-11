@@ -1,1 +1,1 @@
-﻿export * from './getMyActivityFeed';
+export {};

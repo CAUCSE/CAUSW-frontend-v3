@@ -7,4 +7,6 @@ export {
   FeedSearchHeader,
   FeedRecentSearchKeywordSection,
   FeedSearchResultList,
+  MyFeedHeader,
+  MyFeedMain,
 } from './ui';

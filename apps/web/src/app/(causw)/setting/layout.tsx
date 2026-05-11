@@ -6,8 +6,10 @@ export default function SettingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Flex justify="center" align="start" className="min-h-screen w-full">
-      <Flex className="w-full max-w-[900px] md:px-8 md:py-6">{children}</Flex>
+    <Flex justify="center" align="start" className="h-full min-h-0 w-full">
+      <Flex className="h-full min-h-0 w-full max-w-[900px] md:px-8 md:py-6">
+        {children}
+      </Flex>
     </Flex>
   );
 }

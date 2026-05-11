@@ -28,7 +28,7 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       <main
         id="main-scroll-container"
         className={mergeStyles(
-          'flex-1 overflow-y-auto bg-gray-100',
+          'min-h-0 flex-1 overflow-y-auto bg-gray-100',
           showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
         )}
       >

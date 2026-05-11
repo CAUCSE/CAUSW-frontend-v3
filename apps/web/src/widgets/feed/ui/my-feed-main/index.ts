@@ -1,0 +1,1 @@
+export { MyFeedMain } from './MyFeedMain';

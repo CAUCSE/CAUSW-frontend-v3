@@ -11,6 +11,7 @@ import { PostImage } from './PostImage';
 interface PostBodyProps {
   content: string;
   images?: string[];
+  enableImageViewer?: boolean;
   isCollapsed?: boolean;
   maxLines?: number;
   onExpand?: () => void;
@@ -38,6 +39,7 @@ interface PostBodyProps {
 export const PostBody = ({
   content,
   images = [],
+  enableImageViewer = true,
   isCollapsed = false,
   maxLines = 12,
   onExpand,
@@ -102,7 +104,9 @@ export const PostBody = ({
         )}
       </VStack>
 
-      {images.length > 0 && <PostImage images={images} />}
+      {images.length > 0 && (
+        <PostImage images={images} enableViewer={enableImageViewer} />
+      )}
     </VStack>
   );
 };

@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import {
   dehydrate,
   HydrationBoundary,
@@ -18,6 +20,7 @@ import {
 } from '@/entities/feed';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
+import { QueryErrorBoundary, SuspenseView } from '@/shared/ui';
 
 export const FeedSearchPage = async () => {
   const queryClient = new QueryClient({
@@ -39,7 +42,11 @@ export const FeedSearchPage = async () => {
               <FeedSearchHeader />
               <FeedRecentSearchKeywordSection />
             </FeedSearchPendingKeywordProvider>
-            <FeedSearchResultList />
+            <QueryErrorBoundary fallbackMessage="검색 결과를 불러오지 못했어요.">
+              <Suspense fallback={<SuspenseView />}>
+                <FeedSearchResultList />
+              </Suspense>
+            </QueryErrorBoundary>
           </VStack>
         </VStack>
       </HStack>
