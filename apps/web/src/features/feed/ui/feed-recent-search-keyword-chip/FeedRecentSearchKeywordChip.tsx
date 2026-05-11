@@ -29,10 +29,15 @@ export const FeedRecentSearchKeywordChip = ({
         </Chip>
       </Button>
       <Button
-        className="absolute top-1/2 right-3 h-fit w-fit -translate-y-1/2 bg-transparent p-0 hover:bg-transparent!"
+        className="group absolute top-1/2 right-3 h-fit w-fit -translate-y-1/2 bg-transparent p-0 hover:bg-transparent!"
         onClick={(event) => handleRemoveRecentSearchKeyword(event, index)}
       >
-        <Close size={14} color="gray-400" />
+        <Close size={14} color="gray-400" className="group-hover:hidden" />
+        <Close
+          size={14}
+          color="gray-600"
+          className="hidden group-hover:block"
+        />
       </Button>
     </div>
   );

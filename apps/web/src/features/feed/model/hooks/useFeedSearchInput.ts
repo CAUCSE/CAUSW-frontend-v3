@@ -14,6 +14,7 @@ import {
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
   useFeedSearchKeyword,
+  useFeedSearchPendingKeywordContext,
 } from '@/entities/feed';
 
 import { useLocalStorage } from '@/shared/hooks';
@@ -25,6 +26,9 @@ export const useFeedSearchInput = () => {
     { initializeWithValue: false },
   );
 
+  const { setPendingSearchKeyword, clearPendingSearchKeyword } =
+    useFeedSearchPendingKeywordContext();
+
   const { feedSearchKeyword, setFeedSearchKeyword, removeFeedSearchKeyword } =
     useFeedSearchKeyword();
 
@@ -34,8 +38,15 @@ export const useFeedSearchInput = () => {
   const isComposingRef = useRef(false);
 
   useEffect(() => {
-    setCurrentKeyword(feedSearchKeyword);
-  }, [feedSearchKeyword]);
+    const updateFeedSearchKeyword = () => {
+      setCurrentKeyword(feedSearchKeyword);
+
+      if (feedSearchKeyword.trim().length === 0) {
+        clearPendingSearchKeyword();
+      }
+    };
+    updateFeedSearchKeyword();
+  }, [feedSearchKeyword, clearPendingSearchKeyword]);
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
@@ -67,6 +78,7 @@ export const useFeedSearchInput = () => {
 
     if (event.key === 'Enter') {
       setFeedSearchKeyword(trimmedCurrentKeyword);
+      setPendingSearchKeyword(trimmedCurrentKeyword);
 
       setRecentSearchKeywords((prev) => [
         trimmedCurrentKeyword,
@@ -78,6 +90,7 @@ export const useFeedSearchInput = () => {
   const handleClearKeyword = () => {
     setCurrentKeyword('');
     removeFeedSearchKeyword();
+    clearPendingSearchKeyword();
   };
 
   return {

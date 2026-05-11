@@ -9,7 +9,6 @@ import { BOTTOM_NAV_ITEMS, type BottomNavKey } from '../model';
 type Props = {
   selected: BottomNavKey;
 };
-//TODO : 바텀 네비게이션 디자인 시스템 수정 후 확인 (배경 색 및 box-shadow)
 
 export function BottomNav({ selected }: Props) {
   return (
