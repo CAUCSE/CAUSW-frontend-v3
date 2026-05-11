@@ -1,9 +1,5 @@
 'use client';
 
-import { useMemo, type KeyboardEvent, type MouseEvent } from 'react';
-
-import { useRouter } from 'next/navigation';
-
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
@@ -21,56 +17,26 @@ import {
   type GetPostsResponseDto,
 } from '@/entities/post';
 
+import { ConfirmModal } from '@/shared/ui';
+
+import { usePostListItem } from '../../model';
+
 interface FeedListitemProps {
   post: GetPostsResponseDto['posts'][number];
 }
 
 export const FeedListitem = ({ post }: FeedListitemProps) => {
-  const router = useRouter();
-
   const {
     activeModal,
     handleAction: handleMenuAction,
     closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   } = usePostMenuActions(post.postId);
 
-  const moveToPost = () => {
-    router.push(`/feed/${post.postId}`);
-  };
-
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.closest('a, button')) {
-      return;
-    }
-
-    moveToPost();
-  };
-
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.target !== event.currentTarget) {
-      return;
-    }
-
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      moveToPost();
-    }
-  };
-
-  const authorName = useMemo(() => {
-    if (post.isOfficial) {
-      return post.writerNickname;
-    }
-
-    if (post.isAnonymous) {
-      return '익명';
-    }
-
-    return post.writerNickname;
-  }, [post.isOfficial, post.isAnonymous, post.writerNickname]);
+  const { handleCardClick, handleCardKeyDown, authorName } =
+    usePostListItem(post);
 
   return (
     <VStack className="relative">
@@ -116,6 +82,15 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         open={activeModal === POST_ACTION.REPORT}
         setOpen={closeModal}
         onSubmitReport={submitReport}
+      />
+      <ConfirmModal
+        title="게시글을 삭제하시겠어요?"
+        open={activeModal === POST_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </VStack>
   );
