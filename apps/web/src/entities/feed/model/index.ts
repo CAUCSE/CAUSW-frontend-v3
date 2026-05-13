@@ -4,6 +4,5 @@ export {
   useFeedSearchKeyword,
   useMyFeedView,
   useFeedSearchPendingKeywordContext,
-  useMyFeedView,
 } from './hooks';
 export { FeedSearchPendingKeywordContext } from './contexts';
