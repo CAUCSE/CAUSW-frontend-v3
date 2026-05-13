@@ -11,4 +11,3 @@ export * from './type-utils';
 export * from './firebase';
 export * from './auth-cookie';
 export * from './auth-cookie.server';
-export { canUseAutoFocus } from './canUseAutoFocus';

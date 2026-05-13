@@ -8,7 +8,7 @@ import { debounce } from 'es-toolkit';
 
 import { ALUMNI_CONTACTS_FILTER } from '@/entities/alumni-contacts';
 
-import { canUseAutoFocus } from '@/shared/lib';
+import { canUseAutoFocus } from '@/shared/utils';
 
 export const useAlumniContactsSearchInput = () => {
   const router = useRouter();
