@@ -62,6 +62,11 @@ export const useFeedSearchInput = () => {
   };
 
   const handleTextInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.value.length === 0) {
+      removeFeedSearchKeyword();
+      clearPendingSearchKeyword();
+    }
+
     setCurrentKeyword(event.target.value);
   };
 
