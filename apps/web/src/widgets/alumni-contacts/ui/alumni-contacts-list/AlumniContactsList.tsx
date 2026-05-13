@@ -46,7 +46,7 @@ const AlumniContactsList = ({
 }: AlumniContactsListProps) => {
   return (
     <ul
-      className="mb-20 grid min-h-0 grid-cols-1 gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
+      className="mb-20 grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
       ref={ref}
     >
       {data?.map((item) => (
