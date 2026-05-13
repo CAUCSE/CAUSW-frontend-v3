@@ -8,6 +8,8 @@ import { debounce } from 'es-toolkit';
 
 import { ALUMNI_CONTACTS_FILTER } from '@/entities/alumni-contacts';
 
+import { canUseAutoFocus } from '@/shared/lib';
+
 export const useAlumniContactsSearchInput = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -18,6 +20,10 @@ export const useAlumniContactsSearchInput = () => {
   );
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
+    if (!canUseAutoFocus()) {
+      return;
+    }
+
     element?.focus();
   }, []);
 
