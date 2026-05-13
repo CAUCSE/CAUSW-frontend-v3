@@ -29,10 +29,12 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
       }}
     >
       <Flex align="center" className="gap-3">
-        <Avatar size={44} src={img} />
-        <Box className="flex-1">
-          <Box className="text-sm font-bold text-gray-700">{name}</Box>
-          <Box className="text-xs text-gray-400">{email}</Box>
+        <div className="shrink-0">
+          <Avatar size={44} src={img} />
+        </div>
+        <Box className="min-w-0 flex-1">
+          <Box className="truncate text-sm font-bold text-gray-700">{name}</Box>
+          <Box className="truncate text-xs text-gray-400">{email}</Box>
         </Box>
         <Dropdown>
           <Dropdown.Trigger asChild>
@@ -41,7 +43,7 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
               aria-label="menu"
               // radix ui app router 노운 이슈로 인한 문제 해결을 위한 코드
               suppressHydrationWarning
-              className="cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-200 active:bg-gray-300"
+              className="shrink-0 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-200 active:bg-gray-300"
               onClick={(e) => e.stopPropagation()}
               onPointerDown={(e) => e.stopPropagation()}
             >
