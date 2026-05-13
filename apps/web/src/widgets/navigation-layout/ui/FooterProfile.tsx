@@ -33,8 +33,12 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
           <Avatar size={44} src={img} />
         </div>
         <Box className="min-w-0 flex-1">
-          <Box className="truncate text-sm font-bold text-gray-700">{name}</Box>
-          <Box className="truncate text-xs text-gray-400">{email}</Box>
+          <Box className="typo-subtitle-16-bold truncate text-gray-700">
+            {name}
+          </Box>
+          <Box className="typo-caption-12-semibold truncate text-gray-400">
+            {email}
+          </Box>
         </Box>
         <Dropdown>
           <Dropdown.Trigger asChild>
