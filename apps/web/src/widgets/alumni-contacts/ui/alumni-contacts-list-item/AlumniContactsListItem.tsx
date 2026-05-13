@@ -26,7 +26,7 @@ export const AlumniContactsListItem = ({
     <li>
       <Link
         href={`/alumni-contacts/${item.id}`}
-        className="flex h-27.5 min-w-0 gap-3 rounded-md bg-white px-4"
+        className="flex h-27.5 min-w-0 rounded-md bg-white px-4"
       >
         <HStack className="min-w-0 grow gap-5" align="center">
           <Avatar src={profileImageUrl} size={64} className="shrink-0" />
