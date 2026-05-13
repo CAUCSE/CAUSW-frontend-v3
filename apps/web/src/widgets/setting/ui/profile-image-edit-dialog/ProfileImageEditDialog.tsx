@@ -58,6 +58,9 @@ export const ProfileImageEditDialog = ({
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <Dialog.Content
         className="w-[320px] overflow-hidden rounded-2xl bg-white px-4 py-4 md:w-[420px]"
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+        }}
         onPointerDownOutside={(event) => {
           if (requireSubmitToClose) {
             event.preventDefault();
