@@ -1,15 +1,18 @@
+import { Suspense } from 'react';
+
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
 
-import { MyFeedList } from '@/widgets/feed/ui/my-feed-list/MyFeedList';
-
 import { type MyFeedView } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
+import { SuspenseView } from '@/shared/ui';
+
+import { MyFeedList } from './MyFeedList';
 
 interface MyFeedListServerComponentProps {
   myFeedView: MyFeedView;
@@ -32,7 +35,9 @@ export const MyFeedListServerComponent = async ({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MyFeedList />
+      <Suspense fallback={<SuspenseView />}>
+        <MyFeedList />
+      </Suspense>
     </HydrationBoundary>
   );
 };

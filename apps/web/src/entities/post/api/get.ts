@@ -1,5 +1,5 @@
 import { API } from '@/shared/api';
-import { withQuery } from '@/shared/utils';
+import { createQueryString, withQuery } from '@/shared/utils';
 
 import { POST_API_PREFIX } from '../config';
 import {
@@ -22,38 +22,18 @@ export const getPost = async (postId: string): Promise<GetPostResponseDto> => {
 };
 
 export const getPosts = async (query: GetPostsQuery, cursor?: string) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      searchParams.append(key, value);
-    }
-  });
-
-  if (cursor) {
-    searchParams.append('cursor', cursor);
-  }
-
-  const url = withQuery(POST_API_PREFIX, searchParams.toString());
+  const url = withQuery(POST_API_PREFIX, createQueryString(query, { cursor }));
 
   const data = await API.get<GetPostsResponseDto>(url);
   return data;
 };
 
 export const getMyPosts = async (query: GetMyPostsQuery, cursor?: string) => {
-  const searchParams = new URLSearchParams();
+  const url = withQuery(
+    `${POST_API_PREFIX}/me`,
+    createQueryString(query, { cursor }),
+  );
 
-  Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      searchParams.append(key, value);
-    }
-  });
-
-  if (cursor) {
-    searchParams.append('cursor', cursor);
-  }
-
-  const url = withQuery(`${POST_API_PREFIX}/me`, searchParams.toString());
   const data = await API.get<GetMyPostsResponseDto>(url);
   return data;
 };
@@ -62,20 +42,9 @@ export const getMyCommentedPosts = async (
   query: GetMyCommentedPostsQuery,
   cursor?: string,
 ) => {
-  const searchParams = new URLSearchParams();
-  Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      searchParams.append(key, value);
-    }
-  });
-
-  if (cursor) {
-    searchParams.append('cursor', cursor);
-  }
-
   const url = withQuery(
     `${POST_API_PREFIX}/me/commented`,
-    searchParams.toString(),
+    createQueryString(query, { cursor }),
   );
 
   const data = await API.get<GetMyCommentedPostsResponseDto>(url);
@@ -86,19 +55,10 @@ export const getMyFavoritePosts = async (
   query: GetMyFavoritePostsQuery,
   cursor?: string,
 ) => {
-  const searchParams = new URLSearchParams();
-
-  Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      searchParams.append(key, value);
-    }
-  });
-
-  if (cursor) {
-    searchParams.append('cursor', cursor);
-  }
-
-  const url = withQuery(`${POST_API_PREFIX}/me/liked`, searchParams.toString());
+  const url = withQuery(
+    `${POST_API_PREFIX}/me/liked`,
+    createQueryString(query, { cursor }),
+  );
 
   const data = await API.get<GetMyFavoritePostsResponseDto>(url);
   return data;

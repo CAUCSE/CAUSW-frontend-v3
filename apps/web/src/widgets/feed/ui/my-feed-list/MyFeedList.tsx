@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
@@ -21,8 +21,8 @@ const MY_FEED_LIST_DEFAULT_SIZE = 20;
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
 
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useInfiniteQuery({
+  const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
+    useSuspenseInfiniteQuery({
       ...postQueryOptions.myFeed(myFeedView, {
         size: MY_FEED_LIST_DEFAULT_SIZE,
       }),
@@ -49,11 +49,7 @@ export const MyFeedList = () => {
     }
   }, [myFeedView]);
 
-  if (isLoading) {
-    return <SuspenseView />;
-  }
-
-  if (!data || data?.length === 0) {
+  if (data.length === 0) {
     return <MyFeedListEmptyView myFeedView={myFeedView} />;
   }
 

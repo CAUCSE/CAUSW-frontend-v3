@@ -1,9 +1,5 @@
 'use client';
 
-import { type KeyboardEvent, type MouseEvent } from 'react';
-
-import { useRouter } from 'next/navigation';
-
 import { VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
@@ -21,44 +17,25 @@ import {
   type GetPostsResponseDto,
 } from '@/entities/post';
 
+import { ConfirmModal } from '@/shared/ui';
+
+import { usePostListItem } from '../../model';
+
 interface FeedListitemProps {
   post: GetPostsResponseDto['posts'][number];
 }
 
 export const FeedListitem = ({ post }: FeedListitemProps) => {
-  const router = useRouter();
-
   const {
     activeModal,
     handleAction: handleMenuAction,
     closeModal,
     submitReport,
     submitBlock,
+    submitDelete,
   } = usePostMenuActions(post.postId);
 
-  const moveToPost = () => {
-    router.push(`/feed/${post.postId}`);
-  };
-
-  const handleCardClick = (event: MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.closest('a, button')) {
-      return;
-    }
-
-    moveToPost();
-  };
-
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.target !== event.currentTarget) {
-      return;
-    }
-
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      moveToPost();
-    }
-  };
+  const { handleCardClick, handleCardKeyDown } = usePostListItem();
 
   return (
     <VStack className="relative">
@@ -67,15 +44,14 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         className="cursor-pointer rounded-lg bg-white p-4"
         role="link"
         tabIndex={0}
-        onClick={handleCardClick}
-        onKeyDown={handleCardKeyDown}
+        onClick={(event) => handleCardClick(event, post.postId)}
+        onKeyDown={(event) => handleCardKeyDown(event, post.postId)}
       >
         <PostHeader
           authorName={post.writerNickname}
           createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
-          // TODO: 작성자 이름 오른쪽 체크 표시 여부 필요
-          // isOfficial={}
+          isOfficial={post.isOfficial}
           isMine={post.isOwner}
           onAction={handleMenuAction}
           hideActionMenu
@@ -89,8 +65,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         <PostFooter
           numLike={post.numLike}
           numComment={post.numComment}
-          /* TODO: isPostLike props 추가 필요 */
-          // isPostLike={false}
+          isPostLike={post.isPostLike}
         />
       </VStack>
       {/* a태그 > button태그 문제로 인해 메뉴 버튼을 따로 빼서 처리함 */}
@@ -106,6 +81,15 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         open={activeModal === POST_ACTION.REPORT}
         setOpen={closeModal}
         onSubmitReport={submitReport}
+      />
+      <ConfirmModal
+        title="게시글을 삭제하시겠어요?"
+        open={activeModal === POST_ACTION.DELETE}
+        onOpenChange={closeModal}
+        onConfirm={submitDelete}
+        confirmText="삭제하기"
+        titleTypo="subtitle-16-bold"
+        confirmColor="red"
       />
     </VStack>
   );

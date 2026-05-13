@@ -53,7 +53,7 @@ export const useFeedMain = () => {
 
   const filteredBoardIds = useMemo(() => {
     if (selectedTab === FEED_LIST_TAB.ALL) {
-      return data.boards.map((board) => board.id);
+      return [];
     }
     return data.boards
       .filter((board) => board.id === selectedTab)
