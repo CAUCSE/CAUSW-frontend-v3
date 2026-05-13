@@ -10,6 +10,8 @@ import { useSignUpMutation } from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
+import { TokenManager } from '@/shared/storage';
+
 export const useSignUpForm = () => {
   const router = useRouter();
   const signUpMutation = useSignUpMutation();
@@ -40,7 +42,9 @@ export const useSignUpForm = () => {
         agreedTermsIds: data.agreedTermsIds,
       },
       {
-        onSuccess: () => {
+        onSuccess: async (response) => {
+          await TokenManager.setAccessToken(response.accessToken);
+          await TokenManager.setRefreshToken(response.refreshToken);
           router.replace('/auth/enrollment-verification');
         },
       },
