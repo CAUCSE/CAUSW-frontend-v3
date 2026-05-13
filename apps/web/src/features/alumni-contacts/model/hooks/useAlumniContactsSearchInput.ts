@@ -20,11 +20,11 @@ export const useAlumniContactsSearchInput = () => {
   );
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
-    if (!canUseAutoFocus()) {
+    if (!element || !canUseAutoFocus()) {
       return;
     }
 
-    element?.focus();
+    element.focus();
   }, []);
 
   const debouncedSetKeywordParam = useMemo(
