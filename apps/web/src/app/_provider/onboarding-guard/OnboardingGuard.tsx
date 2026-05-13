@@ -77,6 +77,7 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
   );
 
   const onboardingStatus = myInfo?.onboardingStatus;
+  const profileImageType = myInfo?.profileImage.profileImageType;
   const onboardingRedirectPath = onboardingStatus
     ? REDIRECT_PATH_BY_STATUS[onboardingStatus]
     : undefined;
@@ -90,12 +91,12 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
       return ONBOARDING_OVERLAY.TERMS_AGREEMENT;
     }
 
-    if (myInfo?.profileImage.profileImageType === 'GHOST') {
+    if (profileImageType === 'GHOST') {
       return ONBOARDING_OVERLAY.PROFILE_IMAGE_EDIT;
     }
 
     return null;
-  }, [onboardingStatus]);
+  }, [isMounted, onboardingStatus, profileImageType]);
 
   const agreeTermsMutation = useAgreeTermsMutation({
     onSuccess: async () => {
