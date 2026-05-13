@@ -24,10 +24,10 @@ export const AlumniContactsListItem = ({
 
   return (
     <Link href={`/alumni-contacts/${item.id}`} key={item.id}>
-      <li className="flex min-w-60 gap-3 rounded-md bg-white p-4">
-        <HStack className="grow gap-5">
+      <li className="flex h-27.5 min-w-0 gap-3 rounded-md bg-white px-4">
+        <HStack className="min-w-0 grow gap-5" align="center">
           <Avatar src={profileImageUrl} size={64} className="shrink-0" />
-          <VStack gap="none" className="grow">
+          <VStack gap="none" className="min-w-0 grow">
             <Text
               typography="subtitle-16-bold"
               textColor="gray-700"
