@@ -15,7 +15,7 @@ export const AlumniContactsAcademicFilterModal = ({
 }: AlumniContactsAcademicFilterModalProps) => {
   return (
     <Modal open={open} onOpenChange={onOpenChange}>
-      <Modal.Title className="sr-only">
+      <Modal.Title className="sr-only w-0">
         동문 수첩 학번, 재학 상태 필터 선택 모달창
       </Modal.Title>
       <Modal.Content className="items-start p-6">
