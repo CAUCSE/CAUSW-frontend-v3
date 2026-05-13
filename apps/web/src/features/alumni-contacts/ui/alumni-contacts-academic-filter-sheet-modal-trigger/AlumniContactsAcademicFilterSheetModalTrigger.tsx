@@ -13,7 +13,7 @@ export const AlumniContactsAcademicFilterSheetModalTrigger = ({
     onClick?.();
   };
   return (
-    <Button asChild onClick={handleClick}>
+    <Button asChild onClick={handleClick} className="h-fit w-fit p-0">
       <HStack gap="sm" className="typo-body-15-medium items-center">
         <Chip color="white" size="md" className="cursor-pointer">
           학번 <ArrowDown size={14} color="gray-400" />
