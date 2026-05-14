@@ -48,7 +48,7 @@ export const SettingActivitySection = () => {
             {index < SETTING_ACTIVITY_ITEMS.length - 1 && (
               <Separator
                 orientation="vertical"
-                className="h-6 shrink-0 self-center"
+                className="mx-0 h-6 shrink-0 self-center"
               />
             )}
           </Fragment>
