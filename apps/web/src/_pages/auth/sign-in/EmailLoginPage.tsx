@@ -21,6 +21,7 @@ import { type SignInFormData, signInSchema } from '@/entities/auth';
 import { toast } from '@/shared/model';
 import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import { ActionHeader, DesktopOnly, MobileOnly, RHFInput } from '@/shared/ui';
+import { isMobile } from '@/shared/utils';
 
 export const EmailLoginPage = () => {
   const router = useRouter();
@@ -103,23 +104,25 @@ export const EmailLoginPage = () => {
               typography="body-16-regular"
             />
 
-            <Checkbox
-              checked={methods.watch('rememberMe') ?? false}
-              onCheckedChange={(checked) => {
-                methods.setValue('rememberMe', !!checked, {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                });
-              }}
-            >
-              <Checkbox.Indicator />
-              <Checkbox.Label
-                typography="body-15-semibold"
-                textColor="gray-700"
+            {!isMobile && (
+              <Checkbox
+                checked={methods.watch('rememberMe') ?? false}
+                onCheckedChange={(checked) => {
+                  methods.setValue('rememberMe', !!checked, {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                  });
+                }}
               >
-                로그인 상태 유지
-              </Checkbox.Label>
-            </Checkbox>
+                <Checkbox.Indicator />
+                <Checkbox.Label
+                  typography="body-15-semibold"
+                  textColor="gray-700"
+                >
+                  로그인 상태 유지
+                </Checkbox.Label>
+              </Checkbox>
+            )}
 
             <CTAButton color="dark" fullWidth type="submit">
               로그인

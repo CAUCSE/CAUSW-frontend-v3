@@ -12,8 +12,8 @@ import type {
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
-import { TokenManager } from '@/shared/storage';
-import { extractErrorMessage } from '@/shared/utils';
+import { AuthOptionManager, TokenManager } from '@/shared/storage';
+import { extractErrorMessage, isMobile } from '@/shared/utils';
 
 import { routeAfterSignIn } from '../../lib';
 
@@ -37,6 +37,9 @@ export const useSocialRegistrationMutation = (
       toast.loading('추가 정보를 저장하고 있어요...');
     },
     onSuccess: async (data: AuthResponseDto) => {
+      if (isMobile) {
+        await AuthOptionManager.setSessionPersist(true);
+      }
       await TokenManager.setAccessToken(data.accessToken);
       await TokenManager.setRefreshToken(data.refreshToken);
       toast.success('추가 정보 입력이 완료되었습니다.');
