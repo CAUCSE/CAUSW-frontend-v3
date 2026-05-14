@@ -8,7 +8,7 @@ import { debounce } from 'es-toolkit';
 
 import { ALUMNI_CONTACTS_FILTER } from '@/entities/alumni-contacts';
 
-import { canUseAutoFocus } from '@/shared/utils';
+import { isMobile } from '@/shared/utils';
 
 export const useAlumniContactsSearchInput = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ export const useAlumniContactsSearchInput = () => {
   );
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
-    if (!element || !canUseAutoFocus()) {
+    if (!element || isMobile) {
       return;
     }
 
