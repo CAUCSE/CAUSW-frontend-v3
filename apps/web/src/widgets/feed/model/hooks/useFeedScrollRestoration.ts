@@ -38,6 +38,7 @@ export const useFeedScrollRestoration = ({
       (post) => post.postId === scrollRestorationTarget,
     );
 
+    // 게시글 캐시 데이터에 복원 대상 게시글이 없으면 초기화
     if (!scrollRestorationTarget || !hasScrollRestorationTarget) {
       removeScrollRestoration();
       return;
