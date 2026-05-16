@@ -2,7 +2,7 @@ import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
 import { MY_FEED_VIEW, type MyFeedView } from '@/entities/feed';
 
-import { QUERY_STALE_TIME } from '@/shared/constants';
+import { QUERY_GC_TIME, QUERY_STALE_TIME } from '@/shared/constants';
 
 import {
   getMyCommentedPosts,
@@ -34,7 +34,8 @@ export const postQueryOptions = {
       initialPageParam: '',
       getNextPageParam: (lastPage) =>
         lastPage.nextCursor ? lastPage.nextCursor : undefined,
-      staleTime: QUERY_STALE_TIME.NONE,
+      staleTime: QUERY_STALE_TIME.SHORT,
+      gcTime: QUERY_GC_TIME.LONG,
       throwOnError: true,
     }),
 
@@ -59,7 +60,8 @@ export const postQueryOptions = {
       initialPageParam: '',
       getNextPageParam: (lastPage) =>
         lastPage.nextCursor ? lastPage.nextCursor : undefined,
-      staleTime: QUERY_STALE_TIME.NONE,
+      staleTime: QUERY_STALE_TIME.SHORT,
+      gcTime: QUERY_GC_TIME.LONG,
       throwOnError: true,
     }),
 };
