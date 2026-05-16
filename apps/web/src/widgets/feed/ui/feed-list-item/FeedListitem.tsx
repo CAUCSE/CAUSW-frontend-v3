@@ -38,7 +38,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
   const { handleCardClick, handleCardKeyDown } = usePostListItem();
 
   return (
-    <VStack className="relative">
+    <VStack className="relative" id={post.postId}>
       <VStack
         gap="sm"
         className="cursor-pointer rounded-lg bg-white p-4"

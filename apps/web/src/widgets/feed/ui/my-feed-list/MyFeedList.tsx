@@ -12,6 +12,7 @@ import { postQueryOptions } from '@/entities/post';
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
+import { useFeedScrollRestoration } from '../../model';
 import { FeedListitem } from '../feed-list-item';
 
 import { MyFeedListEmptyView } from './MyFeedListEmptyView';
@@ -21,7 +22,7 @@ const MY_FEED_LIST_DEFAULT_SIZE = 20;
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
 
-  const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
+  const { data, isFetchingNextPage, isSuccess, hasNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery({
       ...postQueryOptions.myFeed(myFeedView, {
         size: MY_FEED_LIST_DEFAULT_SIZE,
@@ -48,6 +49,11 @@ export const MyFeedList = () => {
       });
     }
   }, [myFeedView]);
+
+  useFeedScrollRestoration({
+    enabled: isSuccess,
+    posts: data,
+  });
 
   if (data.length === 0) {
     return <MyFeedListEmptyView myFeedView={myFeedView} />;
