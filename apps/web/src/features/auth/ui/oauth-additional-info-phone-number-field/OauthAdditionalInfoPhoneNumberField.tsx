@@ -6,10 +6,12 @@ import { RHFInput } from '@/shared/ui';
 
 type PhoneNumberFieldProps = {
   onPhoneNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPhoneNumberBlur: () => void;
 };
 
 export const OauthAdditionalInfoPhoneNumberField = ({
   onPhoneNumberChange,
+  onPhoneNumberBlur,
 }: PhoneNumberFieldProps) => {
   return (
     <RHFInput
@@ -19,6 +21,7 @@ export const OauthAdditionalInfoPhoneNumberField = ({
       typography="body-16-regular"
       maxLength={13}
       onChange={onPhoneNumberChange}
+      onBlur={onPhoneNumberBlur}
     />
   );
 };

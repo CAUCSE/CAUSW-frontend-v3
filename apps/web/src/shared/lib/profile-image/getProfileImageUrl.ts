@@ -26,6 +26,7 @@ const DEFAULT_PROFILE_IMAGE_URL_MAP: Record<
 > = {
   ...DEFAULT_PROFILE_AVATAR_PATHS,
   GHOST: '/images/profile/MALE_1.svg',
+  UNSET: '/images/profile/MALE_1.svg',
 };
 
 export const getProfileImageUrl = ({
