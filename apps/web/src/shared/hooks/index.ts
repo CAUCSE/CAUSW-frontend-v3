@@ -10,3 +10,4 @@ export * from './useLocalStorage';
 export * from './useEventListener';
 export * from './useEventCallback';
 export * from './useIsomorphicLayoutEffect';
+export * from './useSessionStorage';

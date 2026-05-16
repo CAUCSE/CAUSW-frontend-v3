@@ -17,6 +17,7 @@ export {
   useFeedSearchKeyword,
   useMyFeedView,
   useFeedSearchPendingKeywordContext,
+  useGetFeedScrollRestorationStorageKey,
   type Board,
   type GetAvailableBoardListResponseDto,
 } from './model';
