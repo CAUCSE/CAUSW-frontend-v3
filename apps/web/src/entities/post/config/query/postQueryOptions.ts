@@ -34,7 +34,7 @@ export const postQueryOptions = {
       initialPageParam: '',
       getNextPageParam: (lastPage) =>
         lastPage.nextCursor ? lastPage.nextCursor : undefined,
-      staleTime: QUERY_STALE_TIME.SHORT,
+      staleTime: QUERY_STALE_TIME.NONE,
       gcTime: QUERY_GC_TIME.LONG,
       throwOnError: true,
     }),
@@ -60,7 +60,7 @@ export const postQueryOptions = {
       initialPageParam: '',
       getNextPageParam: (lastPage) =>
         lastPage.nextCursor ? lastPage.nextCursor : undefined,
-      staleTime: QUERY_STALE_TIME.SHORT,
+      staleTime: QUERY_STALE_TIME.NONE,
       gcTime: QUERY_GC_TIME.LONG,
       throwOnError: true,
     }),
