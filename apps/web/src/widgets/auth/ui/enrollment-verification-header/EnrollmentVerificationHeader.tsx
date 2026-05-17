@@ -16,7 +16,7 @@ export const EnrollmentVerificationHeader = () => {
         textColor="gray-600"
         className="leading-relaxed whitespace-pre-wrap"
       >
-        서비스를 계속해서 이용하러면{'\n'}
+        서비스를 계속해서 이용하려면{'\n'}
         <Text typography="subtitle-18-bold" textColor="blue-700">
           재학정보
         </Text>
