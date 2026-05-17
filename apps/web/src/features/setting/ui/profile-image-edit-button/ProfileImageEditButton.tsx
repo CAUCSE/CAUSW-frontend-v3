@@ -33,7 +33,7 @@ export const ProfileImageEditButton = ({
           size={120}
           profileImageType={profileImageType}
           profileImageUrl={profileImageUrl}
-          className="my-1 shrink-0"
+          className="my-1 shrink-0 rounded-3xl"
         />
       </DesktopOnly>
       <Float floatType="absolute" right={0} bottom={0}>
