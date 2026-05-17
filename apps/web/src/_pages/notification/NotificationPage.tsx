@@ -11,7 +11,10 @@ import {
 export function NotificationPage() {
   return (
     <div className="flex w-full justify-center">
-      <VStack gap="sm" className="w-full max-w-225 md:px-8 md:py-6">
+      <VStack
+        gap="sm"
+        className="w-full max-w-225 pb-[calc(env(safe-area-inset-bottom)+16px)] md:px-8 md:py-6"
+      >
         <NotificationListActionHeader />
         <Suspense fallback={<NotificationListSectionLoadingView />}>
           <NotificationListSectionServerComponent />
