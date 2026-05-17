@@ -10,7 +10,22 @@ export const useImageUpload = () => {
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
 
   const handleSetPhotoFiles = useCallback((_name: string, value: unknown) => {
-    setPhotoFiles(value as File[]);
+    if (Array.isArray(value)) {
+      setPhotoFiles(value);
+      return;
+    }
+
+    if (
+      value &&
+      typeof value === 'object' &&
+      'newImageFiles' in value &&
+      Array.isArray(value.newImageFiles)
+    ) {
+      setPhotoFiles(value.newImageFiles);
+      return;
+    }
+
+    setPhotoFiles([]);
   }, []);
 
   const resetImageUpload = () => {
