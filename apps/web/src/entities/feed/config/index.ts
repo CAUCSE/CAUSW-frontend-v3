@@ -12,3 +12,4 @@ export {
   isMyFeedView,
   normalizeMyFeedView,
 } from './myFeedView';
+export { FEED_SCROLL_RESTORATION_STORAGE_KEY } from './feedScrollRestorationStorageKey';

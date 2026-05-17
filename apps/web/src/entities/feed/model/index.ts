@@ -4,5 +4,6 @@ export {
   useFeedSearchKeyword,
   useMyFeedView,
   useFeedSearchPendingKeywordContext,
+  useGetFeedScrollRestorationStorageKey,
 } from './hooks';
 export { FeedSearchPendingKeywordContext } from './contexts';

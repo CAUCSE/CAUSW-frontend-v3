@@ -10,6 +10,7 @@ import { postQueryOptions } from '@/entities/post';
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
+import { useFeedScrollRestoration } from '../../model';
 import { FeedListitem } from '../feed-list-item';
 
 import { FeedSearchResultListEmptyView } from './FeedSearchResultListEmptyView';
@@ -25,6 +26,7 @@ export const FeedSearchResultList = () => {
   const {
     data: posts,
     isLoading,
+    isSuccess,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -44,6 +46,11 @@ export const FeedSearchResultList = () => {
         fetchNextPage();
       }
     },
+  });
+
+  useFeedScrollRestoration({
+    enabled: isSuccess,
+    posts,
   });
 
   if (!feedSearchKeyword) {
