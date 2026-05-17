@@ -70,7 +70,7 @@ export const formatRelativeTime = (time: string | Date) => {
   const diffSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
   const absDiff = Math.abs(diffSeconds);
 
-  const isFuture = diffSeconds < 0;
+  const isFuture = diffSeconds < -5;
 
   if (absDiff < 60) {
     return isFuture ? '잠시 후' : '방금 전';
