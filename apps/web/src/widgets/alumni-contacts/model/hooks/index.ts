@@ -14,5 +14,5 @@ export { useAlumniContactsEditForm } from './useAlumniContactsEditForm';
 export { useAlumniContactsSingleFieldAddDialog } from './useAlumniContactsSingleFieldAddDialog';
 export { useAlumniContactsSingleFieldEditDialog } from './useAlumniContactsSingleFieldEditDialog';
 export { useAlumniContactsProfileEntryEditDialog } from './useAlumniContactsProfileEntryEditDialog';
-export { useAlumniContactsListItem } from './useAlumniContactsListItem';
 export { useAlumniContactsScrollRestoration } from './useAlumniContactsScrollRestoration';
+export { useAlumniContactsScrollSave } from './useAlumniContactsScrollSave';

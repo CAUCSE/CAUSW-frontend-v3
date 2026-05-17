@@ -12,7 +12,7 @@ import { useSessionStorage } from '@/shared/hooks';
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
-export const useAlumniContactsListItem = () => {
+export const useAlumniContactsScrollSave = () => {
   const [, setAlumniContactsScrollRestoration] =
     useSessionStorage<AlumniContactsScrollRestorationState>(
       ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY.LIST,

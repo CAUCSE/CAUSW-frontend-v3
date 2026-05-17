@@ -21,6 +21,7 @@ import { ScrollTopButton, SuspenseView } from '@/shared/ui';
 import {
   useAlumniContactsListScrollTop,
   useAlumniContactsScrollRestoration,
+  useAlumniContactsScrollSave,
 } from '../../model';
 import { AlumniContactsListItem } from '../alumni-contacts-list-item';
 
@@ -49,13 +50,20 @@ const AlumniContactsList = ({
   targetRef,
   ref,
 }: AlumniContactsListProps) => {
+  const { handleNavigateToAlumniContacts } = useAlumniContactsScrollSave();
+
   return (
     <ul
       className="mb-20 grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
       ref={ref}
     >
       {data?.map((item) => (
-        <AlumniContactsListItem key={item.id} item={item} query={query} />
+        <AlumniContactsListItem
+          key={item.id}
+          item={item}
+          query={query}
+          onNavigate={handleNavigateToAlumniContacts}
+        />
       ))}
       {!isLoading && !isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full" />

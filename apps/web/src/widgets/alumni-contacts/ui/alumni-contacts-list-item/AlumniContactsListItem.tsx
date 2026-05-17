@@ -11,19 +11,22 @@ import {
 
 import { getProfileImageUrl } from '@/shared/lib';
 
-import { useAlumniContactsListItem } from '../../model';
-
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
 interface AlumniContactsListItemProps {
   item: AlumniContactsListItem;
   query: GetAlumniContactsQuery;
+  onNavigate: (
+    alumniContactsId: AlumniContactsListItem['id'],
+    query: GetAlumniContactsQuery,
+  ) => void;
 }
 
 export const AlumniContactsListItem = ({
   item,
   query,
+  onNavigate,
 }: AlumniContactsListItemProps) => {
   const profileImageUrl = getProfileImageUrl({
     profileImageType: item.profileImage.profileImageType,
@@ -31,13 +34,11 @@ export const AlumniContactsListItem = ({
     width: 64,
   });
 
-  const { handleNavigateToAlumniContacts } = useAlumniContactsListItem();
-
   return (
     <li id={item.id}>
       <Link
         href={`/alumni-contacts/${item.id}`}
-        onNavigate={() => handleNavigateToAlumniContacts(item.id, query)}
+        onNavigate={() => onNavigate(item.id, query)}
         className="flex h-27.5 min-w-0 rounded-md bg-white px-4"
       >
         <HStack className="min-w-0 grow gap-5" align="center">
