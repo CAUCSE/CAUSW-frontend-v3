@@ -34,6 +34,19 @@ interface FindAccountContainerProps {
   onViewChange: (view: FindAccountView) => void;
 }
 
+const normalizeFindEmailFormData = (formData: FindEmailFormData) => ({
+  name: formData.name.replace(/\s/g, ''),
+  phoneNumber: formData.phoneNumber.trim(),
+});
+
+const hasFindEmailResult = (
+  data: EmailFindResponse | null | undefined,
+): data is EmailFindResponse => {
+  if (!data) return false;
+
+  return !!data.email?.trim() || (data.socialAccounts?.length ?? 0) > 0;
+};
+
 export const FindAccountContainer = ({
   view,
   onViewChange,
@@ -52,9 +65,16 @@ export const FindAccountContainer = ({
   };
 
   const handleFindEmail = (formData: FindEmailFormData) => {
-    findEmailMutation.mutate(formData, {
+    const normalizedFormData = normalizeFindEmailFormData(formData);
+
+    findEmailMutation.mutate(normalizedFormData, {
       onSuccess: (data) => {
-        onViewChange({ type: 'result', data, name: formData.name });
+        if (!hasFindEmailResult(data)) {
+          onViewChange({ type: 'not-found' });
+          return;
+        }
+
+        onViewChange({ type: 'result', data, name: normalizedFormData.name });
       },
       onError: (error) => {
         if (error instanceof ApiError && error.status && error.status < 500) {
