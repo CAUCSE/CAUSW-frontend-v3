@@ -6,3 +6,4 @@ export type {
 } from './dto';
 export type { GetAlumniContactsDetailParam } from './param';
 export type { AlumniContactsDetail } from './alumniContactsDetail';
+export type { AlumniContactsScrollRestorationState } from './alumniContactsScrollRestorationState';
