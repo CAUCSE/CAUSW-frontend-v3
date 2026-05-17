@@ -44,8 +44,14 @@ const SOCIAL_ICON_MAP: Record<
   },
 };
 
-const formatDate = (dateStr: string) => {
+const formatDate = (dateStr?: string | null) => {
+  if (!dateStr) return '-';
+
   return dateStr.replace(/-/g, '. ');
+};
+
+const getSocialProvider = (provider: SocialProvider) => {
+  return SOCIAL_ICON_MAP[provider] ?? { icon: null, label: provider };
 };
 
 interface FindEmailResultProps {
@@ -61,8 +67,12 @@ export const FindEmailResult = ({
 }: FindEmailResultProps) => {
   const router = useRouter();
 
-  const hasEmail = !!data.email;
-  const hasSocial = data.socialAccounts.length > 0;
+  const email = data.email?.trim();
+  const socialAccounts = Array.isArray(data.socialAccounts)
+    ? data.socialAccounts
+    : [];
+  const hasEmail = !!email;
+  const hasSocial = socialAccounts.length > 0;
 
   return (
     <VStack className="w-full gap-10">
@@ -83,7 +93,7 @@ export const FindEmailResult = ({
                 이메일
               </Text>
               <Text typography="subtitle-16-bold" textColor="gray-700">
-                {data.email}
+                {email}
               </Text>
             </HStack>
             <HStack className="items-center justify-between">
@@ -107,17 +117,18 @@ export const FindEmailResult = ({
               연동된 소셜 계정
             </Text>
             <VStack className="gap-5 rounded-[1rem] bg-white p-5">
-              {data.socialAccounts.map((account) => {
-                const social = SOCIAL_ICON_MAP[account.provider];
+              {socialAccounts.map((account, index) => {
+                const social = getSocialProvider(account.provider);
                 return (
                   <HStack
-                    key={`${account.provider}-${account.createdAt}`}
+                    key={`${account.provider}-${account.createdAt ?? index}`}
                     className="items-center gap-3"
                   >
                     {social.icon}
                     <Text typography="body-14-regular" textColor="gray-600">
                       {social.label} 연동 계정 (가입일:{' '}
                       {formatDate(account.createdAt)})
+                      {account.onboardingStatus === 'GUEST' && ' - 가입 미완료'}
                     </Text>
                   </HStack>
                 );
