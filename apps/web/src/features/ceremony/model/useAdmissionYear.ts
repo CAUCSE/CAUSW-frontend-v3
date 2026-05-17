@@ -18,7 +18,10 @@ export const useAdmissionYear = (
     if (!/^\d{4}$/.test(trimmed)) return;
     const current = getValues('admissionYears');
     if (!current.includes(trimmed)) {
-      setValue('admissionYears', [...current, trimmed]);
+      setValue('admissionYears', [...current, trimmed], {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     }
     setAdmissionYearInput('');
     setShowAdmissionYearModal(false);
@@ -29,6 +32,7 @@ export const useAdmissionYear = (
     setValue(
       'admissionYears',
       current.filter((y) => y !== year),
+      { shouldDirty: true, shouldValidate: true },
     );
   };
 
