@@ -55,13 +55,11 @@ export const useAlumniContactsScrollRestoration = ({
       updateIsScrollRestoring(false);
     };
 
-    updateIsScrollRestoring(true);
-
     if (!enabled || !data) {
-      updateIsScrollRestoring(false);
       return;
     }
 
+    updateIsScrollRestoring(true);
     const rawScrollRestorationTarget = sessionStorage.getItem(
       ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY.LIST,
     );
