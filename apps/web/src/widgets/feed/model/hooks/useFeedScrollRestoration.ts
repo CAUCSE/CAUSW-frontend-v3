@@ -30,9 +30,13 @@ export const useFeedScrollRestoration = ({
   useEffect(() => {
     if (!enabled || !posts) return;
 
-    const scrollRestorationTarget = sessionStorage
-      .getItem(feedScrollRestorationStorageKey)
-      ?.replaceAll('"', '');
+    const rawScrollRestorationTarget = sessionStorage.getItem(
+      feedScrollRestorationStorageKey,
+    );
+
+    const scrollRestorationTarget = rawScrollRestorationTarget
+      ? JSON.parse(rawScrollRestorationTarget)
+      : null;
 
     const hasScrollRestorationTarget = posts.some(
       (post) => post.postId === scrollRestorationTarget,
