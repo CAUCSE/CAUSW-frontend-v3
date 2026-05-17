@@ -1,20 +1,29 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Avatar, ChevronRight, HStack, Text, VStack } from '@causw/cds';
 
-import type { GetPaginatedAlumniContactsResponseDto } from '@/entities/alumni-contacts';
+import {
+  type GetAlumniContactsQuery,
+  type GetPaginatedAlumniContactsResponseDto,
+} from '@/entities/alumni-contacts';
 
 import { getProfileImageUrl } from '@/shared/lib';
+
+import { useAlumniContactsListItem } from '../../model';
 
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
 interface AlumniContactsListItemProps {
   item: AlumniContactsListItem;
+  query: GetAlumniContactsQuery;
 }
 
 export const AlumniContactsListItem = ({
   item,
+  query,
 }: AlumniContactsListItemProps) => {
   const profileImageUrl = getProfileImageUrl({
     profileImageType: item.profileImage.profileImageType,
@@ -22,10 +31,13 @@ export const AlumniContactsListItem = ({
     width: 64,
   });
 
+  const { handleNavigateToAlumniContacts } = useAlumniContactsListItem();
+
   return (
-    <li>
+    <li id={item.id}>
       <Link
         href={`/alumni-contacts/${item.id}`}
+        onNavigate={() => handleNavigateToAlumniContacts(item.id, query)}
         className="flex h-27.5 min-w-0 rounded-md bg-white px-4"
       >
         <HStack className="min-w-0 grow gap-5" align="center">

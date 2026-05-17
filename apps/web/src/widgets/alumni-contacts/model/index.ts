@@ -15,6 +15,8 @@ export {
   useAlumniContactsSingleFieldAddDialog,
   useAlumniContactsSingleFieldEditDialog,
   useAlumniContactsProfileEntryEditDialog,
+  useAlumniContactsListItem,
+  useAlumniContactsScrollRestoration,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';
