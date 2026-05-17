@@ -1,9 +1,20 @@
 import { z } from 'zod';
 
-import { isValidTimeFormat, isEndDateTimeBeforeStart } from '@/shared/lib';
-import { phoneNumberSchema } from '@/shared/model/form';
+import {
+  isValidTimeFormat,
+  isEndDateTimeBeforeStart,
+  isDateBeforeToday,
+} from '@/shared/lib';
 
 import { CUSTOM_VALUE } from '../../config';
+
+const CEREMONY_PHONE_MESSAGE =
+  '문의 연락처는 010-1234-5678 형식으로 입력해주세요.';
+const ceremonyPhoneSchema = z
+  .string()
+  .min(11, CEREMONY_PHONE_MESSAGE)
+  .max(13, CEREMONY_PHONE_MESSAGE)
+  .regex(/^01(?:0|1|[6-9])-(\d{3}|\d{4})-\d{4}$/, CEREMONY_PHONE_MESSAGE);
 
 export const ceremonyFormSchema = z
   .object({
@@ -32,7 +43,7 @@ export const ceremonyFormSchema = z
     postalCode: z.string(),
     address: z.string(),
     detailAddress: z.string(),
-    phone: z.union([z.literal(''), phoneNumberSchema]),
+    phone: z.union([z.literal(''), ceremonyPhoneSchema]),
     relatedLink: z.string(),
   })
   .superRefine((data, ctx) => {
@@ -67,6 +78,12 @@ export const ceremonyFormSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: '시작일을 선택해주세요.',
+        path: ['startDate'],
+      });
+    } else if (isDateBeforeToday(data.startDate)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: '시작일은 오늘 이전일 수 없습니다.',
         path: ['startDate'],
       });
     }

@@ -58,8 +58,7 @@ export const CeremonyCreateDialog = ({
     onOpenChange(nextOpen);
   };
 
-  const handleSubmit = () => {
-    const formValues = form.methods.getValues();
+  const handleSubmit = form.methods.handleSubmit((formValues) => {
     const dto = toCreateCeremonyDto(formValues);
 
     mutation.mutate(
@@ -72,7 +71,7 @@ export const CeremonyCreateDialog = ({
         },
       },
     );
-  };
+  });
 
   const canSubmit = form.isValid && !mutation.isPending;
 
