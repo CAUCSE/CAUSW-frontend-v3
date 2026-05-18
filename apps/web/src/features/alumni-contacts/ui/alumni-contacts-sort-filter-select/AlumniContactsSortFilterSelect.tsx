@@ -25,15 +25,23 @@ export const AlumniContactsSortFilterSelect = () => {
         </Select.Value>
       </Select.Trigger>
       <Select.Content>
-        {Object.values(ALUMNI_CONTACTS_SORT_FILTER_OPTION).map((option) => (
-          <Select.Item
-            key={option.value}
-            value={option.value}
-            className="cursor-pointer"
-          >
-            <Text typography="body-16-regular">{option.label}</Text>
-          </Select.Item>
-        ))}
+        {Object.values(ALUMNI_CONTACTS_SORT_FILTER_OPTION).map((option) => {
+          const isSelected = option.value === sortType;
+          return (
+            <Select.Item
+              key={option.value}
+              value={option.value}
+              className="cursor-pointer"
+            >
+              <Text
+                typography={isSelected ? 'subtitle-16-bold' : 'body-16-regular'}
+                textColor={isSelected ? 'gray-800' : 'gray-500'}
+              >
+                {option.label}
+              </Text>
+            </Select.Item>
+          );
+        })}
       </Select.Content>
     </Select>
   );
