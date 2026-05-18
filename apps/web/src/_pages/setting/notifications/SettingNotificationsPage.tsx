@@ -73,10 +73,7 @@ const SettingNotificationContent = () => {
   }, []);
 
   return (
-    <VStack
-      gap="md"
-      className="w-full px-4 pb-[calc(env(safe-area-inset-bottom)+16px)]"
-    >
+    <VStack gap="md" className="w-full px-4 pb-4">
       <Text typography="title-22-bold">{SETTING_NOTIFICATIONS.title}</Text>
       {isPushNotificationDenied && <PushNotificationPermissionNotice />}
       <CommunityNotificationSection
