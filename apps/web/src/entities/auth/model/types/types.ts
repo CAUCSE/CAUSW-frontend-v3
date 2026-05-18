@@ -128,13 +128,14 @@ export type SocialProvider = 'KAKAO' | 'APPLE' | 'GOOGLE';
 
 export interface SocialAccountSummary {
   provider: SocialProvider;
-  createdAt: string;
+  createdAt?: string | null;
+  onboardingStatus?: OnboardingStatus;
 }
 
 export interface EmailFindResponse {
-  email: string;
-  createdAt: string;
-  socialAccounts: SocialAccountSummary[];
+  email?: string | null;
+  createdAt?: string | null;
+  socialAccounts?: SocialAccountSummary[] | null;
 }
 
 export interface PasswordResetSendRequestDto {
