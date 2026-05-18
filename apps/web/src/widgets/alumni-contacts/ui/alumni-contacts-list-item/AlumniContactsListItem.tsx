@@ -73,7 +73,7 @@ export const AlumniContactsListItem = ({
             {item.description && item.description.length > 0 && (
               <Text
                 typography="body-15-regular"
-                text-color="gray-700"
+                textColor="gray-700"
                 className="line-clamp-1"
                 as="p"
               >
