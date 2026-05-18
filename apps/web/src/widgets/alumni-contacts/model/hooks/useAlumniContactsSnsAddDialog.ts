@@ -15,6 +15,7 @@ import { useFormContext } from 'react-hook-form';
 import {
   ALUMNI_CONTACTS_EDIT_FORM_FIELD,
   type AlumniContactsEditForm,
+  getValidAlumniContactsSocialLinkUrl,
   useWatchAlumniContactsEditFormField,
 } from '@/entities/alumni-contacts';
 import { ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT } from '@/entities/alumni-contacts/config';
@@ -38,13 +39,11 @@ export const useAlumniContactsSnsAddDialog = () => {
     );
   }, [socialLinks]);
 
-  const SNS_URL_PREFIX = 'https://';
-
   const isValid = useMemo(() => {
     if (newSocialLink.trim() === '') {
       return true;
     }
-    return newSocialLink.startsWith(SNS_URL_PREFIX);
+    return getValidAlumniContactsSocialLinkUrl(newSocialLink) !== null;
   }, [newSocialLink]);
 
   useEffect(() => {
@@ -95,7 +94,7 @@ export const useAlumniContactsSnsAddDialog = () => {
 
     // 중복 SNS 링크 덮어쓰기
     const currentSocialLinkSet = new Set(socialLinks);
-    currentSocialLinkSet.add(newSocialLink);
+    currentSocialLinkSet.add(newSocialLink.trim());
 
     setValue(
       ALUMNI_CONTACTS_EDIT_FORM_FIELD.SOCIAL_LINKS,

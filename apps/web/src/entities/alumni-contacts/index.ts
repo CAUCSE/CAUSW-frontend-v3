@@ -52,5 +52,6 @@ export {
   checkAlumniContactsFilterSearchParamValidation,
   formatAlumniContactsPeriod,
   getAlumniContactSnsType,
+  getValidAlumniContactsSocialLinkUrl,
 } from './lib';
 export { alumniContactsHandler } from './mock';
