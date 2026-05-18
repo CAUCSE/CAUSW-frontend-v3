@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 //TODO : NoDataView ui확인필요 (@영현님 : NoDataView 일반화 해주신다고 했음)
 import {
