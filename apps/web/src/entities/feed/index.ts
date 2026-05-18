@@ -14,6 +14,7 @@ export {
 } from './config';
 export {
   useGetAvailableBoards,
+  useGetWritableBoards,
   useFeedSearchKeyword,
   useMyFeedView,
   useFeedSearchPendingKeywordContext,

@@ -17,6 +17,7 @@ interface PostWriteBodyProps {
   vote: VoteWriteValue | null;
   setVote: (vote: VoteWriteValue | null) => void;
   isEdit?: boolean;
+  hideBoardSelector?: boolean;
 }
 
 export const PostWriteBody = ({
@@ -27,6 +28,7 @@ export const PostWriteBody = ({
   vote,
   setVote,
   isEdit,
+  hideBoardSelector,
 }: PostWriteBodyProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -60,19 +62,23 @@ export const PostWriteBody = ({
         msOverflowStyle: 'auto',
       }}
     >
-      <Chip
-        asChild
-        color="lightgray"
-        className={mergeStyles(
-          'transition-color mx-4 w-fit shrink-0 md:mt-4',
-          !isEdit ? 'cursor-pointer hover:bg-gray-200 active:bg-gray-200' : '',
-        )}
-      >
-        <button onClick={onSelectorClick} disabled={isEdit}>
-          {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
-          <ArrowDown size={14} color="gray-500" />
-        </button>
-      </Chip>
+      {!hideBoardSelector && (
+        <Chip
+          asChild
+          color="lightgray"
+          className={mergeStyles(
+            'transition-color mx-4 w-fit shrink-0 md:mt-4',
+            !isEdit
+              ? 'cursor-pointer hover:bg-gray-200 active:bg-gray-200'
+              : '',
+          )}
+        >
+          <button onClick={onSelectorClick} disabled={isEdit}>
+            {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
+            <ArrowDown size={14} color="gray-500" />
+          </button>
+        </Chip>
+      )}
 
       <VStack gap="lg" className="mx-5 my-4">
         <TextArea className="p-0 ring-0 focus-within:ring-0">
