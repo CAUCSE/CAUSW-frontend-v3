@@ -20,11 +20,11 @@ export const nameSchema = z.string().min(1, '이름을 입력해주세요.');
 
 export const phoneNumberSchema = z
   .string()
-  .min(11, '올바른 전화번호 형식이 아닙니다.')
-  .max(13, '올바른 전화번호 형식이 아닙니다.')
+  .min(11, '연락처는 010-1234-5678 형식으로 입력해주세요.')
+  .max(13, '연락처는 010-1234-5678 형식으로 입력해주세요.')
   .regex(
     /^01(?:0|1|[6-9])-(\d{3}|\d{4})-\d{4}$/,
-    '올바른 연락처 형식이 아닙니다.',
+    '연락처는 010-1234-5678 형식으로 입력해주세요.',
   );
 
 export const nicknameSchema = z

@@ -20,6 +20,7 @@ export const useCeremonyForm = () => {
   });
 
   const { control, setValue, reset } = methods;
+  const validateOptions = { shouldDirty: true, shouldValidate: true };
 
   // --- 닫기 확인 ---
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
@@ -30,20 +31,20 @@ export const useCeremonyForm = () => {
 
   // --- Handlers ---
   const handleTypeChange = (type: CeremonyType) => {
-    setValue('ceremonyType', type);
-    setValue('category', '');
-    setValue('customCategory', '');
+    setValue('ceremonyType', type, validateOptions);
+    setValue('category', '', validateOptions);
+    setValue('customCategory', '', validateOptions);
   };
 
   const handleRelationshipChange = (
     value: CeremonyFormData['relationship'],
   ) => {
-    setValue('relationship', value);
-    setValue('familyRelation', '');
-    setValue('customFamilyRelation', '');
-    setValue('alumniName', '');
-    setValue('alumniAdmissionYear', '');
-    setValue('alumniRelation', '');
+    setValue('relationship', value, validateOptions);
+    setValue('familyRelation', '', validateOptions);
+    setValue('customFamilyRelation', '', validateOptions);
+    setValue('alumniName', '', validateOptions);
+    setValue('alumniAdmissionYear', '', validateOptions);
+    setValue('alumniRelation', '', validateOptions);
   };
 
   // --- 폼 초기화 ---

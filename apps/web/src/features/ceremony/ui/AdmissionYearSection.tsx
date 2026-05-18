@@ -18,7 +18,12 @@ import { FormSection } from '@/shared/ui/form-section';
 import { useAdmissionYear } from '../model/useAdmissionYear';
 
 export const AdmissionYearSection = () => {
-  const { control, getValues, setValue } = useFormContext<CeremonyFormData>();
+  const {
+    control,
+    getValues,
+    setValue,
+    formState: { errors },
+  } = useFormContext<CeremonyFormData>();
   const {
     showAdmissionYearModal,
     setShowAdmissionYearModal,
@@ -67,13 +72,26 @@ export const AdmissionYearSection = () => {
             control={control}
             name="notifyAll"
             render={({ field }) => (
-              <Checkbox checked={field.value} onCheckedChange={field.onChange}>
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={(checked) => {
+                  field.onChange(!!checked);
+                }}
+              >
                 <Checkbox.Indicator />
                 <Checkbox.Label>모든 학번에게 알림 전송</Checkbox.Label>
               </Checkbox>
             )}
           />
         </div>
+        <Field
+          className="flex flex-col gap-2"
+          error={!!errors.admissionYears?.message}
+        >
+          <Field.ErrorDescription>
+            {errors.admissionYears?.message}
+          </Field.ErrorDescription>
+        </Field>
       </FormSection>
 
       <Modal
