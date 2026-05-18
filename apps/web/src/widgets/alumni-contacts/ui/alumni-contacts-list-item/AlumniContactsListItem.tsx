@@ -70,7 +70,7 @@ export const AlumniContactsListItem = ({
                 </Text>
               </HStack>
             </VStack>
-            {item.description && item.description.length > 0 && (
+            {item.description && (
               <Text
                 typography="body-15-regular"
                 textColor="gray-700"
