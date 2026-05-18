@@ -132,12 +132,7 @@ export const PostWriteForm = ({
         gap="none"
         className="h-full"
       >
-        <PostWriteHeader
-          isSubmitActive={
-            isValid && !isCreatePostPending && !isUpdatePostPending
-          }
-          onBack={handleBack}
-        />
+        <PostWriteHeader isSubmitActive={isValid} onBack={handleBack} />
 
         <PostWriteBody
           onSelectorClick={() => setSelectorOpen(true)}
