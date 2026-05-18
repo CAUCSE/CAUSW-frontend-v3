@@ -17,3 +17,4 @@ export * from './IconCountButton';
 export * from './modal';
 export * from './header';
 export * from './profile-avatar';
+export * from './scroll-top-button';

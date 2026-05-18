@@ -22,6 +22,7 @@ export {
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT,
   ALUMNI_CONTACTS_URL_PREFIX,
+  ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -36,6 +37,7 @@ export {
   useAlumniContactsHeaderBoundaryContext,
   useWatchAlumniContactsEditFormField,
   type AlumniContactsDetail,
+  type AlumniContactsScrollRestorationState,
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,

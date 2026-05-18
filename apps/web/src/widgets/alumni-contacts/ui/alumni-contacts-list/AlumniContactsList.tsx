@@ -11,24 +11,29 @@ import { PullToRefresh } from '@causw/cds';
 import {
   AlumniContactsFilterSearchParam,
   alumniContactsQueryOptions,
+  type GetAlumniContactsQuery,
   type GetPaginatedAlumniContactsResponseDto,
 } from '@/entities/alumni-contacts';
 
-import { QUERY_STALE_TIME } from '@/shared/constants';
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
-import { SuspenseView } from '@/shared/ui';
-import { ScrollTopButton } from '@/shared/ui/scroll-top-button';
+import { ScrollTopButton, SuspenseView } from '@/shared/ui';
 
-import { useAlumniContactsListScrollTop } from '../../model';
+import {
+  useAlumniContactsListScrollTop,
+  useAlumniContactsScrollRestoration,
+  useAlumniContactsScrollSave,
+} from '../../model';
 import { AlumniContactsListItem } from '../alumni-contacts-list-item';
 
 import { AlumniContactsListEmptyView } from './AlumniContactsListEmptyView';
+import { AlumniContactsListLoadingView } from './AlumniContactsListLoadingView';
 
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
 
 interface AlumniContactsListProps {
   data?: AlumniContactsListItem[];
+  query: GetAlumniContactsQuery;
   isLoading: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
@@ -38,19 +43,27 @@ interface AlumniContactsListProps {
 
 const AlumniContactsList = ({
   data,
+  query,
   isLoading,
   isFetchingNextPage,
   hasNextPage,
   targetRef,
   ref,
 }: AlumniContactsListProps) => {
+  const { handleNavigateToAlumniContacts } = useAlumniContactsScrollSave();
+
   return (
     <ul
       className="mb-20 grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
       ref={ref}
     >
       {data?.map((item) => (
-        <AlumniContactsListItem key={item.id} item={item} />
+        <AlumniContactsListItem
+          key={item.id}
+          item={item}
+          query={query}
+          onNavigate={handleNavigateToAlumniContacts}
+        />
       ))}
       {!isLoading && !isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full" />
@@ -76,13 +89,13 @@ export const AlumniContactsListWrapper = () => {
   const {
     data,
     isLoading,
+    isSuccess,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
     ...alumniContactsQueryOptions.list(query),
-    staleTime: QUERY_STALE_TIME.NONE,
     select: (data) => data.pages.flatMap((page) => page.content),
   });
 
@@ -102,8 +115,20 @@ export const AlumniContactsListWrapper = () => {
     handleClickScrollTop,
   } = useAlumniContactsListScrollTop();
 
+  const { isScrollRestoring } = useAlumniContactsScrollRestoration({
+    data,
+    query,
+    enabled: isSuccess,
+    hasNextPage,
+    fetchNextPage,
+  });
+
   if (!data || data?.length === 0) {
     return <AlumniContactsListEmptyView />;
+  }
+
+  if (isScrollRestoring) {
+    return <AlumniContactsListLoadingView />;
   }
 
   if (isMobileSize) {
@@ -117,6 +142,7 @@ export const AlumniContactsListWrapper = () => {
         >
           <AlumniContactsList
             data={data}
+            query={query}
             isLoading={isLoading}
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}
@@ -135,6 +161,7 @@ export const AlumniContactsListWrapper = () => {
     <>
       <AlumniContactsList
         data={data}
+        query={query}
         isLoading={isLoading}
         isFetchingNextPage={isFetchingNextPage}
         hasNextPage={hasNextPage}
