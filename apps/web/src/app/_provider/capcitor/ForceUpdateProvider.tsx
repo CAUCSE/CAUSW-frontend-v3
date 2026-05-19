@@ -1,16 +1,41 @@
 'use client';
 
 import { useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { App } from '@capacitor/app';
+import { PushNotifications } from '@capacitor/push-notifications';
 import { useQuery } from '@tanstack/react-query';
 
 import { CTAButton, Dialog, Text } from '@causw/cds';
 
 import { COPY, QUERY_STALE_TIME } from '@/shared/constants';
 import { checkForceUpdate, openAppStore } from '@/shared/lib';
+import { isAndroid } from '@/shared/utils';
 
 const FORCE_UPDATE_QUERY_KEY = ['force-update'] as const;
+
+/** AndroidManifest `default_notification_channel_id` 와 동일 */
+const ANDROID_DEFAULT_NOTIFICATION_CHANNEL_ID = 'default_channel_id';
+
+export function PushNotificationChannelProvider({
+  children,
+}: PropsWithChildren) {
+  useEffect(() => {
+    if (!isAndroid) {
+      return;
+    }
+
+    void PushNotifications.createChannel({
+      id: ANDROID_DEFAULT_NOTIFICATION_CHANNEL_ID,
+      name: '알림',
+      importance: 4,
+      vibration: true,
+    });
+  }, []);
+
+  return <>{children}</>;
+}
 
 export function ForceUpdateProvider({
   children,

@@ -11,6 +11,7 @@ import {
   AuthRefreshProvider,
   ForceUpdateProvider,
   GlobalRoutingProvider,
+  PushNotificationChannelProvider,
 } from './_provider';
 
 export const metadata: Metadata = {
@@ -36,9 +37,11 @@ export default function RootLayout({
           <QueryProviderWithDevtools>
             <Toaster />
             <ForceUpdateProvider>
-              <AuthRefreshProvider>
-                <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
-              </AuthRefreshProvider>
+              <PushNotificationChannelProvider>
+                <AuthRefreshProvider>
+                  <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+                </AuthRefreshProvider>
+              </PushNotificationChannelProvider>
             </ForceUpdateProvider>
           </QueryProviderWithDevtools>
         </MSWComponent>
