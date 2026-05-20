@@ -54,7 +54,7 @@ const AlumniContactsList = ({
 
   return (
     <ul
-      className="mb-20 grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:mb-5 md:grid-cols-2"
+      className="grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:grid-cols-2"
       ref={ref}
     >
       {data?.map((item) => (
@@ -74,6 +74,7 @@ const AlumniContactsList = ({
             <SuspenseView />
           </div>
         ))}
+      <div className="col-span-1 h-1 md:col-span-2" />
     </ul>
   );
 };
