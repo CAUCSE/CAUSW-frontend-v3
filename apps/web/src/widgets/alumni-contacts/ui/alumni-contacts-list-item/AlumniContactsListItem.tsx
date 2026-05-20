@@ -43,32 +43,43 @@ export const AlumniContactsListItem = ({
       >
         <HStack className="min-w-0 grow gap-5" align="center">
           <Avatar src={profileImageUrl} size={64} className="shrink-0" />
-          <VStack gap="none" className="min-w-0 grow">
-            <Text
-              typography="subtitle-16-bold"
-              textColor="gray-700"
-              className="truncate"
-            >
-              {item.name}
-            </Text>
-            <HStack className="min-w-0 items-center gap-2">
+          <VStack gap="xs" className="min-w-0 grow" justify="center">
+            <VStack className="gap-0.5">
               <Text
-                typography="body-14-regular"
-                textColor="gray-400"
-                className="min-w-0 truncate"
+                typography="subtitle-16-bold"
+                textColor="gray-700"
+                className="truncate"
               >
-                {item.admissionYear}
+                {item.name}
               </Text>
-              <div className="h-2 w-px shrink-0 bg-gray-200" />
+              <HStack className="min-w-0 items-center gap-2">
+                <Text
+                  typography="body-14-regular"
+                  textColor="gray-400"
+                  className="min-w-0 truncate"
+                >
+                  {item.admissionYear}
+                </Text>
+                <div className="h-2 w-px shrink-0 bg-gray-200" />
+                <Text
+                  typography="body-14-regular"
+                  textColor="gray-400"
+                  className="min-w-0 truncate"
+                >
+                  {item.academicStatus}
+                </Text>
+              </HStack>
+            </VStack>
+            {item.description && (
               <Text
-                typography="body-14-regular"
-                textColor="gray-400"
-                className="min-w-0 truncate"
+                typography="body-15-regular"
+                textColor="gray-700"
+                className="line-clamp-1"
+                as="p"
               >
-                {item.academicStatus}
+                {item.description}
               </Text>
-            </HStack>
-            <p className="line-clamp-1">{item.description}</p>
+            )}
           </VStack>
           <ChevronRight
             size={12}

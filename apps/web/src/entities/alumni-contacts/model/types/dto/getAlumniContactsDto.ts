@@ -11,7 +11,7 @@ interface GetAlumniContactsResponseDto {
   name: string;
   admissionYear: string;
   academicStatus: string;
-  description: string;
+  description: string | null;
 }
 
 export type GetPaginatedAlumniContactsResponseDto = PaginationDto<
