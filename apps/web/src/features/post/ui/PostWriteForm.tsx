@@ -42,8 +42,10 @@ export const PostWriteForm = ({
   const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
-  const { mutate: createPost } = useCreatePostMutation();
-  const { mutate: updatePost } = useUpdatePostMutation();
+  const { mutate: createPost, isPending: isCreatePostPending } =
+    useCreatePostMutation();
+  const { mutate: updatePost, isPending: isUpdatePostPending } =
+    useUpdatePostMutation();
 
   const {
     handleSubmit,
@@ -80,6 +82,10 @@ export const PostWriteForm = ({
 
       const updateDto = mapPostUpdateFormToDto(updateData);
 
+      if (isUpdatePostPending) {
+        return;
+      }
+
       updatePost({
         postId,
         request: updateDto,
@@ -87,6 +93,10 @@ export const PostWriteForm = ({
       });
     } else {
       const createDto = mapPostCreateFormToDto(data, newImageFiles);
+
+      if (isCreatePostPending) {
+        return;
+      }
 
       createPost({
         request: createDto,
