@@ -4,7 +4,6 @@ export { useAlumniContactsAdmissionYearFilterSelectGroup } from './useAlumniCont
 export { useAlumniContactsAcademicFilterSheetModalTrigger } from './useAlumniContactsAcademicFilterSheetModalTrigger';
 export { useAlumniContactsListScrollTop } from './useAlumniContactsListScrollTop';
 export { useAlumniContactsContactAction } from './useAlumniContactsContactAction';
-export { useAlumniContactsDetailHeaderTheme } from './useAlumniContactsDetailHeaderTheme';
 export { useAlumniContactsDetailSection } from './useAlumniContactsDetailSection';
 export { useAlumniContactsSnsAddDialog } from './useAlumniContactsSnsAddDialog';
 export { useAlumniContactsProfileEntryAddDialog } from './useAlumniContactsProfileEntryAddDialog';
