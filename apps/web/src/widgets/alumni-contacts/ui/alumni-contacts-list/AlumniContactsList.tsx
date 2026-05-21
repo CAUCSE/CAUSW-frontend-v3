@@ -74,7 +74,7 @@ const AlumniContactsList = ({
             <SuspenseView />
           </div>
         ))}
-      <div className="col-span-1 h-1 md:col-span-2" />
+      <li className="col-span-1 h-1 md:col-span-2" />
     </ul>
   );
 };
