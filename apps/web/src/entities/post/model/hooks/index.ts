@@ -1,0 +1,1 @@
+export { useLinkifiedText } from './useLinkifiedText';
