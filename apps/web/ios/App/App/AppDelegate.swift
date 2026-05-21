@@ -2,11 +2,16 @@ import UIKit
 import Capacitor
 import FirebaseCore
 import KakaoSDKCommon
+import WebKit
+
+private let minimumLaunchOverlayDisplayTime: TimeInterval = 0.25
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
+    private var webViewLoadingObserver: NSKeyValueObservation?
+    private var webViewProgressObserver: NSKeyValueObservation?
+    private var hasCompletedInitialWebViewLoad = false
 
     private lazy var safeAreaManager: SafeAreaManager = {
         SafeAreaManager(bridgeViewControllerProvider: { [weak self] in
@@ -35,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     private let pushNotificationHandler = PushNotificationHandler()
+    private let launchOverlayCoordinator = LaunchOverlayCoordinator()
 
     func application(
         _ application: UIApplication,
@@ -93,12 +99,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configureBridgeWebView() {
         guard let bridgeViewController = bridgeViewController(),
-              bridgeViewController.webView != nil else {
+              let webView = bridgeViewController.webView else {
             return
         }
-        window?.backgroundColor = .white
-        safeAreaManager.configureBridgeWebViewAppearance()
+        let overlayContainerView: UIView = window ?? bridgeViewController.view
+        launchOverlayCoordinator.installOverlayIfNeeded(in: overlayContainerView)
+        observeInitialWebViewLoad(for: webView)
+        window?.backgroundColor = .black
+        safeAreaManager.configureBridgeWebViewAppearance(backgroundColor: .black)
         socialLoginCoordinator.registerMessageHandlers()
+    }
+
+    private func observeInitialWebViewLoad(for webView: WKWebView) {
+        hasCompletedInitialWebViewLoad = false
+        webViewLoadingObserver?.invalidate()
+        webViewProgressObserver?.invalidate()
+
+        let dismissIfReady = { [weak self, weak webView] in
+            guard let self, let webView else { return }
+            guard !self.hasCompletedInitialWebViewLoad else { return }
+            guard webView.url != nil else { return }
+            guard !webView.isLoading, webView.estimatedProgress >= 1 else { return }
+
+            self.hasCompletedInitialWebViewLoad = true
+            self.window?.backgroundColor = .white
+            self.safeAreaManager.configureBridgeWebViewAppearance(backgroundColor: .white)
+            self.safeAreaManager.startSafeAreaRecalculationCycle()
+            self.launchOverlayCoordinator.dismissOverlay()
+            self.webViewLoadingObserver?.invalidate()
+            self.webViewProgressObserver?.invalidate()
+        }
+
+        webViewLoadingObserver = webView.observe(\.isLoading, options: [.new]) { _, _ in
+            dismissIfReady()
+        }
+
+        webViewProgressObserver = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
+            dismissIfReady()
+        }
     }
 
     private func isUnsupportedUpsideDownEvent(_ orientation: UIDeviceOrientation) -> Bool {
@@ -162,5 +200,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
         pushNotificationHandler.didFailToRegisterForRemoteNotifications(with: error)
+    }
+}
+
+final class LaunchOverlayCoordinator: NSObject {
+    private weak var overlayView: UIView?
+    private var overlayShownAt: CFTimeInterval = CACurrentMediaTime()
+
+    func installOverlayIfNeeded(in containerView: UIView) {
+        guard overlayView == nil else { return }
+
+        let overlay = UIView()
+        overlay.translatesAutoresizingMaskIntoConstraints = false
+        overlay.backgroundColor = .black
+
+        let imageView = UIImageView(image: UIImage(named: "LogoSplash"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+
+        overlay.addSubview(imageView)
+        containerView.addSubview(overlay)
+
+        NSLayoutConstraint.activate([
+            overlay.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            overlay.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            overlay.topAnchor.constraint(equalTo: containerView.topAnchor),
+            overlay.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            imageView.centerXAnchor.constraint(equalTo: overlay.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: overlay.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 288),
+            imageView.heightAnchor.constraint(equalToConstant: 288),
+        ])
+
+        overlayView = overlay
+        overlayShownAt = CACurrentMediaTime()
+    }
+
+    func dismissOverlay(animated: Bool = false) {
+        guard let overlayView else { return }
+
+        let elapsed = CACurrentMediaTime() - overlayShownAt
+        if elapsed < minimumLaunchOverlayDisplayTime {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (minimumLaunchOverlayDisplayTime - elapsed)) {
+                self.dismissOverlay(animated: animated)
+            }
+            return
+        }
+
+        let removeOverlay = {
+            overlayView.removeFromSuperview()
+            self.overlayView = nil
+        }
+
+        guard animated else {
+            removeOverlay()
+            return
+        }
+
+        UIView.animate(withDuration: 0.18, animations: {
+            overlayView.alpha = 0
+        }, completion: { _ in
+            removeOverlay()
+        })
     }
 }
