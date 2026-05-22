@@ -8,10 +8,7 @@ import {
 } from '@/features/alumni-contacts';
 
 import { AlumniContactsBasicInfo } from '@/entities/alumni-contacts';
-import {
-  useAlumniContactsHeaderBoundaryContext,
-  type GetMyAlumniContactsResponseDto,
-} from '@/entities/alumni-contacts/model';
+import { type GetMyAlumniContactsResponseDto } from '@/entities/alumni-contacts/model';
 
 interface AlumniContactsEmailProps {
   email: string;
@@ -35,13 +32,8 @@ interface AlumniContactsEditFormHeroProps {
 export const AlumniContactsEditFormHero = ({
   myAlumniContacts,
 }: AlumniContactsEditFormHeroProps) => {
-  const { alumniContactsHeroRef } = useAlumniContactsHeaderBoundaryContext();
-
   return (
-    <VStack
-      className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]"
-      ref={alumniContactsHeroRef}
-    >
+    <VStack className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]">
       <VStack className="gap-4 p-6">
         <AlumniContactsBasicInfo
           name={myAlumniContacts.name}

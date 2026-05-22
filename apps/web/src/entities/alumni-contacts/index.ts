@@ -33,8 +33,6 @@ export {
   type GetAlumniContactsDetailResponseDto,
   alumniContactsEditSchema,
   type AlumniContactsEditForm,
-  AlumniContactsHeaderBoundaryContext,
-  useAlumniContactsHeaderBoundaryContext,
   useWatchAlumniContactsEditFormField,
   type AlumniContactsDetail,
   type AlumniContactsScrollRestorationState,
@@ -45,7 +43,6 @@ export {
   AlumniContactsDescription,
   AlumniContactsSnsLink,
   AlumniContactsSnsIcon,
-  AlumniContactsHeaderBoundaryProvider,
 } from './ui';
 export {
   AlumniContactsFilterSearchParam,

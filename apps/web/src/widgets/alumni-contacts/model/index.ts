@@ -5,7 +5,6 @@ export {
   useAlumniContactsAcademicFilterSheetModalTrigger,
   useAlumniContactsListScrollTop,
   useAlumniContactsContactAction,
-  useAlumniContactsDetailHeaderTheme,
   useAlumniContactsDetailSection,
   useAlumniContactsSnsAddDialog,
   useAlumniContactsProfileEntryAddDialog,

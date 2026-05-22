@@ -4,10 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
-import {
-  alumniContactsQueryOptions,
-  useAlumniContactsHeaderBoundaryContext,
-} from '@/entities/alumni-contacts';
+import { alumniContactsQueryOptions } from '@/entities/alumni-contacts';
 
 import { AlumniContactsDetailHero } from '../alumni-contacts-detail-hero';
 import { AlumniContactsDetailSection } from '../alumni-contacts-detail-section';
@@ -22,14 +19,9 @@ export const AlumniContactsDetailMain = ({
     alumniContactsQueryOptions.detail({ alumniContactsId }),
   );
 
-  const { alumniContactsHeroRef } = useAlumniContactsHeaderBoundaryContext();
-
   return (
     <>
-      <VStack
-        className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]"
-        ref={alumniContactsHeroRef}
-      >
+      <VStack className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]">
         <AlumniContactsDetailHero alumniContactsDetail={alumniContactsDetail} />
       </VStack>
       <AlumniContactsDetailSection

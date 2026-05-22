@@ -4,10 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import {
-  AlumniContactsHeaderBoundaryProvider,
-  alumniContactsQueryOptions,
-} from '@/entities/alumni-contacts';
+import { alumniContactsQueryOptions } from '@/entities/alumni-contacts';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
@@ -25,9 +22,7 @@ export const AlumniContactsEditFormServerComponent = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <AlumniContactsHeaderBoundaryProvider>
-        <AlumniContactsEditForm />
-      </AlumniContactsHeaderBoundaryProvider>
+      <AlumniContactsEditForm />
     </HydrationBoundary>
   );
 };

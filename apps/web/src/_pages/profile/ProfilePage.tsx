@@ -10,8 +10,6 @@ import {
 
 import { MyAlumniContactsEditButton } from '@/features/alumni-contacts';
 
-import { AlumniContactsHeaderBoundaryProvider } from '@/entities/alumni-contacts';
-
 export function ProfilePage() {
   return (
     <div className="flex min-h-full w-full justify-center">
@@ -20,12 +18,10 @@ export function ProfilePage() {
           gap="none"
           className="bg-[#4C688F] pt-4 md:rounded-t-lg md:rounded-b-xl"
         >
-          <AlumniContactsHeaderBoundaryProvider>
-            <AlumniContactsHeader action={<MyAlumniContactsEditButton />} />
-            <Suspense fallback={<MyAlumniContactsMainLoadingView />}>
-              <MyAlumniContactsMainServerComponent />
-            </Suspense>
-          </AlumniContactsHeaderBoundaryProvider>
+          <AlumniContactsHeader action={<MyAlumniContactsEditButton />} />
+          <Suspense fallback={<MyAlumniContactsMainLoadingView />}>
+            <MyAlumniContactsMainServerComponent />
+          </Suspense>
         </VStack>
       </VStack>
     </div>
