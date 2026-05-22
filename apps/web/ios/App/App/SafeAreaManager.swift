@@ -12,18 +12,18 @@ final class SafeAreaManager {
         self.bridgeViewControllerProvider = bridgeViewControllerProvider
     }
 
-    func configureBridgeWebViewAppearance() {
+    func configureBridgeWebViewAppearance(backgroundColor: UIColor = .white) {
         guard let bridgeViewController = bridgeViewControllerProvider(),
               let webView = bridgeViewController.webView else {
             return
         }
 
-        bridgeViewController.view.backgroundColor = .white
+        bridgeViewController.view.backgroundColor = backgroundColor
         webView.allowsBackForwardNavigationGestures = true
         webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.isOpaque = true
-        webView.backgroundColor = .white
-        webView.scrollView.backgroundColor = .white
+        webView.backgroundColor = backgroundColor
+        webView.scrollView.backgroundColor = backgroundColor
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.autoresizingMask = []
         webView.alpha = 1
