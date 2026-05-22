@@ -1,10 +1,18 @@
 'use client';
 
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import {
+  type CSSProperties,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { Text, VStack } from '@causw/cds';
 
 import { sanitizeHtml } from '@/shared/lib/sanitizer';
+
+import { useLinkifiedText } from '../model';
 
 import { PostImage } from './PostImage';
 
@@ -50,7 +58,7 @@ export const PostBody = ({
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   const sanitizedHtml = isHtml ? sanitizeHtml(content) : '';
-  const collapseStyles = isCollapsed
+  const collapseStyles: CSSProperties | undefined = isCollapsed
     ? {
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical' as const,
@@ -58,6 +66,8 @@ export const PostBody = ({
         overflow: 'hidden',
       }
     : undefined;
+
+  const { linkifiedContent } = useLinkifiedText({ content, isHtml });
 
   useEffect(() => {
     const el = textRef.current;
@@ -92,7 +102,7 @@ export const PostBody = ({
             className="break-all whitespace-pre-wrap"
             style={collapseStyles}
           >
-            {content}
+            {linkifiedContent}
           </Text>
         )}
 
