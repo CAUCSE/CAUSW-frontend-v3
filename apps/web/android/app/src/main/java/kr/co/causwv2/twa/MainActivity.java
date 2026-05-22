@@ -79,18 +79,6 @@ public class MainActivity extends BridgeActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        AppVisibilityTracker.setForeground(true);
-    }
-
-    @Override
-    public void onPause() {
-        AppVisibilityTracker.setForeground(false);
-        super.onPause();
-    }
-
     private void dispatchSocialLoginResult(
         String provider,
         String requestId,
@@ -164,7 +152,6 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onDestroy() {
-        AppVisibilityTracker.setForeground(false);
         super.onDestroy();
         if (backPressHandler != null) {
             backPressHandler.cleanup();
