@@ -14,6 +14,7 @@ export const PUBLIC_ENDPOINTS: PublicEndpoint[] = [
   { method: 'POST', path: `${AUTH_API_PREFIX}/find-email` },
   { method: 'POST', path: `${AUTH_API_PREFIX}/password-reset/send` },
   { method: 'POST', path: `${AUTH_API_PREFIX}/password-reset/verify` },
+  { method: 'POST', path: `${USER_API_PREFIX}/password-change` },
   { method: 'POST', path: `${AUTH_API_PREFIX}/login/native` },
   { method: 'GET', path: '/api/v2/terms' },
   { method: 'GET', path: `${USER_API_PREFIX}/check-nickname` },

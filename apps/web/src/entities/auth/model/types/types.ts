@@ -153,6 +153,13 @@ export interface PasswordResetVerifyResponseDto {
   temporaryPassword: string;
 }
 
+export interface PasswordResetChangeRequestDto {
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+}
+
 export type AdmissionDepartment =
   | 'DEPT_OF_AI'
   | 'SCHOOL_OF_SW'
@@ -166,7 +173,7 @@ export interface AdmissionCreateRequestPayloadDto {
   name: string;
   requestedDepartment: AdmissionDepartment;
   requestedAdmissionYear: number;
-  requestedStudentId: string;
+  requestedStudentId: string | null;
   requestedAcademicStatus: AdmissionAcademicStatus;
   graduationYear?: number;
   description?: string;

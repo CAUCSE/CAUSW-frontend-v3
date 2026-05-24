@@ -32,10 +32,7 @@ export const enrollmentVerificationSchema = z
       .min(1, '학과를 선택해주세요.'),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentYear]: yearSchema('입학년도'),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear]: z.string().optional(),
-    [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: z
-      .string()
-      .min(1, '학번을 입력해주세요.')
-      .regex(/^\d+$/, '학번은 숫자만 입력 가능합니다.'),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: z.string().optional(),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState]: z
       .string()
       .min(1, '재학 분류를 선택해주세요.'),
@@ -50,6 +47,9 @@ export const enrollmentVerificationSchema = z
   })
   .superRefine((data, ctx) => {
     const images = data[ENROLLMENT_VERIFICATION_FORM_FIELD.images];
+    const enrollmentState =
+      data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState];
+    const studentId = data[ENROLLMENT_VERIFICATION_FORM_FIELD.studentId];
 
     if (!images || images.length === 0) {
       ctx.addIssue({
@@ -71,10 +71,28 @@ export const enrollmentVerificationSchema = z
     }
 
     if (
-      data[ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState] !==
+      enrollmentState !==
       ENROLLMENT_VERIFICATION_ACADEMIC_STATUS.GRADUATED.value
-    )
+    ) {
+      if (!studentId) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId],
+          message: '학번을 입력해주세요.',
+        });
+        return;
+      }
+
+      if (!/^\d+$/.test(studentId)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId],
+          message: '학번은 숫자만 입력 가능합니다.',
+        });
+      }
+
       return;
+    }
 
     const result = yearSchema('졸업년도').safeParse(
       data[ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear],

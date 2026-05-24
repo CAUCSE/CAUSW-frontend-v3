@@ -9,7 +9,7 @@ import { usePasswordChangeForm } from '@/features/setting';
 import { ActionHeader, RHFPasswordInput } from '@/shared/ui';
 
 export const SettingPasswordPage = () => {
-  const { methods, onSubmit, isSubmitting } = usePasswordChangeForm();
+  const { methods, onSubmit, isReady, isSubmitting } = usePasswordChangeForm();
 
   return (
     <VStack className="w-full">
@@ -46,7 +46,7 @@ export const SettingPasswordPage = () => {
               color="dark"
               fullWidth
               type="submit"
-              disabled={!methods.formState.isValid || isSubmitting}
+              disabled={!methods.formState.isValid || !isReady || isSubmitting}
             >
               {isSubmitting ? '변경 중...' : '변경하기'}
             </CTAButton>

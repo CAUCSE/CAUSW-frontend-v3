@@ -10,6 +10,7 @@ export type MyActivityFeed = {
 };
 
 export interface PasswordChangeRequest {
+  email: string;
   currentPassword: string;
   newPassword: string;
   newPasswordConfirm: string;

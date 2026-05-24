@@ -15,9 +15,13 @@ import { RHFPasswordInput } from '@/shared/ui';
 
 interface ResetPasswordFormProps {
   onSubmit: (data: ResetPasswordFormData) => void;
+  isSubmitting?: boolean;
 }
 
-export const ResetPasswordForm = ({ onSubmit }: ResetPasswordFormProps) => {
+export const ResetPasswordForm = ({
+  onSubmit,
+  isSubmitting = false,
+}: ResetPasswordFormProps) => {
   const methods = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
     mode: 'onChange',
@@ -62,8 +66,13 @@ export const ResetPasswordForm = ({ onSubmit }: ResetPasswordFormProps) => {
           />
         </VStack>
 
-        <CTAButton color="dark" fullWidth type="submit" disabled={!isValid}>
-          비밀번호 변경
+        <CTAButton
+          color="dark"
+          fullWidth
+          type="submit"
+          disabled={!isValid || isSubmitting}
+        >
+          {isSubmitting ? '변경 중...' : '비밀번호 변경'}
         </CTAButton>
       </VStack>
     </FormProvider>
