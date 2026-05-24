@@ -1,0 +1,1 @@
+export { FeedRecentSearchKeywordSection } from './FeedRecentSearchKeywordSection';

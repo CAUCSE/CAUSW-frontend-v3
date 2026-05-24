@@ -5,15 +5,30 @@ import { useUpdateFCMToken } from '@/features/notification';
 import { MESSAGE } from '@/shared/constants';
 import { toast } from '@/shared/model';
 import { getNativeFCM, setNativeFCM } from '@/shared/storage';
-import { isWeb } from '@/shared/utils';
+import { isAndroid, isWeb } from '@/shared/utils';
 
-//TODO : main에 올리기 전에 console 제거하기
+const ANDROID_DEFAULT_NOTIFICATION_CHANNEL_ID = 'default_channel_id';
+const ANDROID_DEFAULT_NOTIFICATION_CHANNEL_IMPORTANCE_HIGH = 4;
+
 export const usePushNotification = () => {
   const updateFCMTokenMutation = useUpdateFCMToken();
+
+  const ensureAndroidNotificationChannel = async () => {
+    if (!isAndroid) return;
+
+    await PushNotifications.createChannel({
+      id: ANDROID_DEFAULT_NOTIFICATION_CHANNEL_ID,
+      name: '알림',
+      importance: ANDROID_DEFAULT_NOTIFICATION_CHANNEL_IMPORTANCE_HIGH,
+      vibration: true,
+    });
+  };
 
   const compareFCMToken = async (): Promise<void> => {
     try {
       if (isWeb) return;
+
+      await ensureAndroidNotificationChannel();
 
       let permStatus = await PushNotifications.checkPermissions();
 
@@ -47,8 +62,7 @@ export const usePushNotification = () => {
 
             await setNativeFCM(clientFCMToken);
             toast.success(MESSAGE.PUSH_NOTIFICATION.SUCCESS);
-          } catch (error) {
-            console.log('[PN] registration handler error', error);
+          } catch {
             toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
           } finally {
             await registrationListener.remove();
@@ -59,8 +73,7 @@ export const usePushNotification = () => {
 
       const registrationErrorListener = await PushNotifications.addListener(
         'registrationError',
-        async (err) => {
-          console.log('[PN] registrationError', err);
+        async () => {
           toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
 
           await registrationListener.remove();
@@ -69,8 +82,7 @@ export const usePushNotification = () => {
       );
 
       await PushNotifications.register();
-    } catch (error) {
-      console.log('[PN] compareFCMToken error', error);
+    } catch {
       toast.error(MESSAGE.PUSH_NOTIFICATION.UNKNOWN_ERROR);
     }
   };

@@ -14,6 +14,8 @@ import { postQueryOptions } from '@/entities/post';
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
+import { useFeedScrollRestoration } from '../../model';
+
 import { FeedList } from './FeedList';
 
 interface FeedListWrapperProps {
@@ -25,12 +27,13 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
   const {
     data: posts,
     isLoading,
+    isSuccess,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    ...postQueryOptions.list({ boardIds, size: 20 }),
+    ...postQueryOptions.list({ boardIds }),
     select: (data) => data.pages.flatMap((page) => page.posts),
   });
 
@@ -41,6 +44,11 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
         fetchNextPage();
       }
     },
+  });
+
+  useFeedScrollRestoration({
+    enabled: isSuccess,
+    posts,
   });
 
   const { isMobileSize } = useBreakpoint();

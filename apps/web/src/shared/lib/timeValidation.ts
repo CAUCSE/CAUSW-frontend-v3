@@ -18,6 +18,9 @@ export const isValidTimeFormat = (value: string): boolean => {
 
 const toDateOnly = (date: Date): number => new Date(date).setHours(0, 0, 0, 0);
 
+export const isDateBeforeToday = (date: Date): boolean =>
+  toDateOnly(date) < toDateOnly(new Date());
+
 /**
  * 종료일시가 시작 일시보다 이전인지 판단
  * - 날짜가 다르면 날짜만으로 비교

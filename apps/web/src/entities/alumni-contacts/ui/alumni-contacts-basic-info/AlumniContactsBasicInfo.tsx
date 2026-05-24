@@ -30,7 +30,11 @@ export const AlumniContactsBasicInfo = ({
 
   return (
     <>
-      <Avatar src={profileImageUrl} size={80} />
+      <Avatar
+        src={profileImageUrl}
+        size={80}
+        className="[&>span]:md:rounded-[32px]"
+      />
       <VStack gap="xs">
         <Text typography="title-24-bold" textColor="white">
           {name}

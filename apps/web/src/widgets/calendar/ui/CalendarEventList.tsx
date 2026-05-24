@@ -21,7 +21,7 @@ import {
   useCalendarSchedules,
 } from '@/entities/calendar';
 
-import { COPY } from '@/shared/constants';
+import { COPY, ROUTES } from '@/shared/constants';
 import { checkIsUpcoming, formatDateRangeDash } from '@/shared/lib';
 import {
   ErrorView,
@@ -40,9 +40,11 @@ export function CalendarEventList() {
   const { data: schedulesItems = [] } = useCalendarSchedules(scheduleApiParams);
 
   const { upcomingItems, pastItems } = useMemo(() => {
-    const tabFiltered = schedulesItems.filter(
-      (item) => selectedTab === 'ALL' || item.type === selectedTab,
-    );
+    // 전체 탭에서만 휴일(HOLIDAY) 제외, 나머지 탭에서는 백엔드에서 휴일 제외해서 내려줌
+    const tabFiltered = schedulesItems.filter((item) => {
+      if (selectedTab === 'ALL') return item.type !== 'HOLIDAY';
+      return item.type === selectedTab;
+    });
 
     return {
       upcomingItems: tabFiltered.filter((item) => checkIsUpcoming(item.end)),
@@ -113,8 +115,9 @@ function ScheduleSection({
           items.map((item) => (
             <EventCard
               key={item.id}
-              // TODO : target link 실제 주소에 맞게 수정
-              link={`/board/boardId/${item.targetPostId}`}
+              link={
+                item.targetPostId ? `${ROUTES.FEED}/${item.targetPostId}` : null
+              }
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={

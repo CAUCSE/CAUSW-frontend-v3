@@ -15,8 +15,8 @@ import type {
 } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
-import { TokenManager } from '@/shared/storage';
-import { extractErrorMessage } from '@/shared/utils';
+import { AuthOptionManager, TokenManager } from '@/shared/storage';
+import { extractErrorMessage, isMobile } from '@/shared/utils';
 
 import { useRequestNativeSocialTokenMutation } from './useRequestNativeSocialTokenMutation';
 
@@ -55,6 +55,9 @@ export const useNativeSocialLoginFlowMutation = (
       NativeSocialLoginFlowVariables
     >['onSuccess']
   > = async (data) => {
+    if (isMobile) {
+      await AuthOptionManager.setSessionPersist(true);
+    }
     await TokenManager.setAccessToken(data.accessToken);
     await TokenManager.setRefreshToken(data.refreshToken);
     await compareFCMToken();

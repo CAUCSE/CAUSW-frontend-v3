@@ -34,9 +34,8 @@ export const useCreatePostMutation = () => {
         router.push(`/feed/${data.id}`);
       });
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('게시글 작성에 실패했어요.');
-      console.error(error);
     },
   });
 };

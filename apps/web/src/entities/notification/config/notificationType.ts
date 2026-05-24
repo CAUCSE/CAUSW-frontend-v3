@@ -9,8 +9,8 @@ export const NOTIFICATION_TYPE = {
     type: 'OFFICIAL',
     label: '공식계정 글 알림',
   },
-  CEREMONY: {
-    type: 'CEREMONY',
+  CEREMONY_V2: {
+    type: 'CEREMONY_V2',
     label: '경조사 알림',
   },
   SYSTEM: {

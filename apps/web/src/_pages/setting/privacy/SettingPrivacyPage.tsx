@@ -61,7 +61,6 @@ const SettingPrivacyContent = () => {
 
   const handleChangeStatus = () => {
     // TODO: 학적 상태 변경 로직 연결
-    console.log('학적 상태 변경');
   };
 
   return (

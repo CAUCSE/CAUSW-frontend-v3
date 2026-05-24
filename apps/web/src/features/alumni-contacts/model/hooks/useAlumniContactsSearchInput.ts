@@ -8,6 +8,8 @@ import { debounce } from 'es-toolkit';
 
 import { ALUMNI_CONTACTS_FILTER } from '@/entities/alumni-contacts';
 
+import { isMobile } from '@/shared/utils';
+
 export const useAlumniContactsSearchInput = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -18,7 +20,11 @@ export const useAlumniContactsSearchInput = () => {
   );
 
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
-    element?.focus();
+    if (!element || isMobile) {
+      return;
+    }
+
+    element.focus();
   }, []);
 
   const debouncedSetKeywordParam = useMemo(

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { Button, ErrorColored, HStack, Spacer, Text, VStack } from '@causw/cds';
 
+import { TokenManager } from '@/shared/storage';
+
 interface ErrorViewProps extends FallbackProps {
   errorMessage?: string;
   showGoHomeButton?: boolean;
@@ -17,7 +19,14 @@ export function ErrorView({
   showGoHomeButton = false,
 }: ErrorViewProps) {
   const router = useRouter();
-
+  const routeToHome = async () => {
+    await Promise.all([
+      TokenManager.removeAccessToken(),
+      TokenManager.removeRefreshToken(),
+    ]);
+    resetErrorBoundary();
+    router.push('/auth/sign-in');
+  };
   return (
     <VStack
       align="center"
@@ -32,12 +41,15 @@ export function ErrorView({
       </Text>
       <Spacer size={10} />
       <HStack gap="sm">
-        <Button onClick={resetErrorBoundary} color="red">
+        <Button
+          onClick={() => (resetErrorBoundary(), router.refresh())}
+          color="red"
+        >
           다시 시도
         </Button>
         {showGoHomeButton && (
-          <Button onClick={() => router.push('/home')} color="gray">
-            홈으로
+          <Button onClick={routeToHome} color="gray">
+            로그인 화면으로
           </Button>
         )}
       </HStack>

@@ -14,24 +14,25 @@ const END_DATE_ERROR_MESSAGE = '종료일은 시작일 이후여야 합니다.';
 
 export const DateTimeSection = () => {
   const { control, setValue, getValues } = useFormContext<CeremonyFormData>();
+  const validateOptions = { shouldDirty: true, shouldValidate: true };
   const [hasEndDate, hasTime] = useWatch({
     control,
     name: ['hasEndDate', 'hasTime'],
   });
 
   const handleEndDateToggle = (checked: boolean) => {
-    setValue('hasEndDate', checked);
-    if (!checked) setValue('endDate', undefined);
+    setValue('hasEndDate', checked, validateOptions);
+    if (!checked) setValue('endDate', undefined, validateOptions);
   };
 
   const handleTimeToggle = (checked: boolean) => {
-    setValue('hasTime', checked);
+    setValue('hasTime', checked, validateOptions);
     if (checked) {
-      setValue('startTime', getValues('startTime') ?? '');
-      setValue('endTime', getValues('endTime') ?? '');
+      setValue('startTime', getValues('startTime') ?? '', validateOptions);
+      setValue('endTime', getValues('endTime') ?? '', validateOptions);
     } else {
-      setValue('startTime', '');
-      setValue('endTime', '');
+      setValue('startTime', '', validateOptions);
+      setValue('endTime', '', validateOptions);
     }
   };
 
@@ -74,13 +75,13 @@ export const DateTimeSection = () => {
   const handleTimeChange =
     (field: 'startTime' | 'endTime') =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(field, e.target.value);
+      setValue(field, e.target.value, validateOptions);
     };
 
   const handleTimeBlur = (field: 'startTime' | 'endTime') => () => {
     const rawValue = getValues(field);
     if (rawValue) {
-      setValue(field, formatTime(rawValue));
+      setValue(field, formatTime(rawValue), validateOptions);
     }
     checkEndBeforeStart();
   };
@@ -94,17 +95,25 @@ export const DateTimeSection = () => {
             <Controller
               control={control}
               name="startDate"
-              render={({ field }) => (
-                <DatePicker
-                  value={field.value}
-                  onValueChange={(date) =>
-                    handleStartDateChange(date, field.onChange)
-                  }
-                  placeholder="연도-월-일"
-                  dateFormat="yyyy-MM-dd"
-                  className="w-full rounded-xl bg-white"
-                  contentClassName="z-modal"
-                />
+              render={({ field, fieldState }) => (
+                <Field
+                  className="flex flex-col gap-2"
+                  error={!!fieldState.error?.message}
+                >
+                  <DatePicker
+                    value={field.value}
+                    onValueChange={(date) =>
+                      handleStartDateChange(date, field.onChange)
+                    }
+                    placeholder="연도-월-일"
+                    dateFormat="yyyy-MM-dd"
+                    className="w-full rounded-xl bg-white"
+                    contentClassName="z-modal"
+                  />
+                  <Field.ErrorDescription>
+                    {fieldState.error?.message}
+                  </Field.ErrorDescription>
+                </Field>
               )}
             />
           </div>
@@ -116,8 +125,11 @@ export const DateTimeSection = () => {
                   <Controller
                     control={control}
                     name="startTime"
-                    render={({ field }) => (
-                      <Field>
+                    render={({ field, fieldState }) => (
+                      <Field
+                        className="flex flex-col gap-2"
+                        error={!!fieldState.error?.message}
+                      >
                         <TextInput
                           value={field.value}
                           onChange={handleTimeChange('startTime')}
@@ -127,6 +139,9 @@ export const DateTimeSection = () => {
                           inputMode="numeric"
                           className="rounded-xl bg-white"
                         />
+                        <Field.ErrorDescription>
+                          {fieldState.error?.message}
+                        </Field.ErrorDescription>
                       </Field>
                     )}
                   />
@@ -134,17 +149,25 @@ export const DateTimeSection = () => {
                   <Controller
                     control={control}
                     name="endDate"
-                    render={({ field }) => (
-                      <DatePicker
-                        value={field.value}
-                        onValueChange={(date) =>
-                          handleEndDateChange(date, field.onChange)
-                        }
-                        placeholder="연도-월-일"
-                        dateFormat="yyyy-MM-dd"
-                        className="w-full rounded-xl bg-white"
-                        contentClassName="z-modal"
-                      />
+                    render={({ field, fieldState }) => (
+                      <Field
+                        className="flex flex-col gap-2"
+                        error={!!fieldState.error?.message}
+                      >
+                        <DatePicker
+                          value={field.value}
+                          onValueChange={(date) =>
+                            handleEndDateChange(date, field.onChange)
+                          }
+                          placeholder="연도-월-일"
+                          dateFormat="yyyy-MM-dd"
+                          className="w-full rounded-xl bg-white"
+                          contentClassName="z-modal"
+                        />
+                        <Field.ErrorDescription>
+                          {fieldState.error?.message}
+                        </Field.ErrorDescription>
+                      </Field>
                     )}
                   />
                 )}
@@ -160,17 +183,25 @@ export const DateTimeSection = () => {
               <Controller
                 control={control}
                 name="endDate"
-                render={({ field }) => (
-                  <DatePicker
-                    value={field.value}
-                    onValueChange={(date) =>
-                      handleEndDateChange(date, field.onChange)
-                    }
-                    placeholder="연도-월-일"
-                    dateFormat="yyyy-MM-dd"
-                    className="w-full rounded-xl bg-white"
-                    contentClassName="z-modal"
-                  />
+                render={({ field, fieldState }) => (
+                  <Field
+                    className="flex flex-col gap-2"
+                    error={!!fieldState.error?.message}
+                  >
+                    <DatePicker
+                      value={field.value}
+                      onValueChange={(date) =>
+                        handleEndDateChange(date, field.onChange)
+                      }
+                      placeholder="연도-월-일"
+                      dateFormat="yyyy-MM-dd"
+                      className="w-full rounded-xl bg-white"
+                      contentClassName="z-modal"
+                    />
+                    <Field.ErrorDescription>
+                      {fieldState.error?.message}
+                    </Field.ErrorDescription>
+                  </Field>
                 )}
               />
             </div>
@@ -178,8 +209,11 @@ export const DateTimeSection = () => {
             <Controller
               control={control}
               name="endTime"
-              render={({ field }) => (
-                <Field className="min-w-0 flex-1">
+              render={({ field, fieldState }) => (
+                <Field
+                  className="flex min-w-0 flex-1 flex-col gap-2"
+                  error={!!fieldState.error?.message}
+                >
                   <TextInput
                     value={field.value}
                     onChange={handleTimeChange('endTime')}
@@ -189,6 +223,9 @@ export const DateTimeSection = () => {
                     inputMode="numeric"
                     className="rounded-xl bg-white"
                   />
+                  <Field.ErrorDescription>
+                    {fieldState.error?.message}
+                  </Field.ErrorDescription>
                 </Field>
               )}
             />

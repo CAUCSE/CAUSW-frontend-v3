@@ -36,3 +36,4 @@ export {
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT,
 } from './alumniContactsEditFormLimit';
+export { ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY } from './alumniContactsScrollRestorationStorageKey';

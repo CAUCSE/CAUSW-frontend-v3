@@ -22,6 +22,9 @@ export const alumniContactsQueryOptions = {
       initialPageParam: 0,
       getNextPageParam: (lastPage) =>
         lastPage.hasNext ? lastPage.currentPage + 1 : undefined,
+      staleTime: QUERY_STALE_TIME.NONE,
+      gcTime: QUERY_GC_TIME.LONG,
+      throwOnError: true,
     }),
   detail: (param: GetAlumniContactsDetailParam) =>
     queryOptions({

@@ -1,3 +1,5 @@
+'use client';
+
 import { RatioChart } from '@causw/cds';
 
 import { formatVoteStatus } from '../lib';

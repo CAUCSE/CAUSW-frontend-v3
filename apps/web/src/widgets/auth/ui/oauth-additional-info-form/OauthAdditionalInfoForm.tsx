@@ -14,11 +14,15 @@ import {
 type OauthAdditionalInfoFormProps = {
   isSubmitEnabled: boolean;
   onPhoneNumberChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPhoneNumberBlur: () => void;
+  onNicknameBlur: () => void;
 };
 
 export const OauthAdditionalInfoForm = ({
   isSubmitEnabled,
   onPhoneNumberChange,
+  onPhoneNumberBlur,
+  onNicknameBlur,
 }: OauthAdditionalInfoFormProps) => {
   return (
     <VStack className="gap-10">
@@ -33,8 +37,9 @@ export const OauthAdditionalInfoForm = ({
           <OauthAdditionalInfoNameField />
           <OauthAdditionalInfoPhoneNumberField
             onPhoneNumberChange={onPhoneNumberChange}
+            onPhoneNumberBlur={onPhoneNumberBlur}
           />
-          <OauthAdditionalInfoNicknameField />
+          <OauthAdditionalInfoNicknameField onNicknameBlur={onNicknameBlur} />
         </VStack>
       </VStack>
 

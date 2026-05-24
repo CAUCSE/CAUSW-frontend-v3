@@ -66,7 +66,7 @@ Axios와 유사한 방식으로 요청(Request)과 응답(Response)을 가로채
 
 ```typescript
 client.interceptors.request.register((config) => {
-  console.log(`[Request] ${config.options.method} ${config.url}`);
+  sendRequestMetric(config.options.method, config.url);
 
   // 예: 토큰이 있다면 헤더에 추가
   const token = localStorage.getItem('accessToken');
@@ -88,11 +88,11 @@ client.interceptors.request.register((config) => {
 ```typescript
 client.interceptors.response.register(
   (response) => {
-    console.log(`[Response] ${response.status} ${response.url}`);
+    trackResponse(response.status, response.url);
     return response;
   },
   (error) => {
-    console.error('[Response Error]', error);
+    reportResponseError(error);
     return Promise.reject(error);
   }
 );
@@ -111,10 +111,9 @@ try {
   await client.get('/error-endpoint');
 } catch (error) {
   if (error instanceof ApiError) {
-    console.error('API Error:', error.status, error.statusText);
-    console.error('Error Data:', error.data);
+    handleApiError(error.status, error.statusText, error.data);
   } else {
-    console.error('Unknown Error:', error);
+    handleUnknownError(error);
   }
 }
 ```
@@ -131,16 +130,15 @@ try {
 } catch (error) {
   // ApiError인지 확인
   if (isApiError(error)) {
-    console.error('Status:', error.status);
-    console.error('Status Text:', error.statusText);
+    handleApiStatus(error.status, error.statusText);
     
     // 응답 데이터가 있는지 확인
     if (hasResponse(error)) {
-      console.error('Response Data:', error.data);
+      handleResponseData(error.data);
     }
   } else {
     // 네트워크 에러 등 다른 에러
-    console.error('Unknown Error:', error);
+    handleUnknownError(error);
   }
 }
 ```
@@ -163,11 +161,10 @@ try {
 } catch (error) {
   if (isApiError(error) && hasResponseOfType<ErrorResponse>(error)) {
     // error.data가 ErrorResponse 타입임을 보장
-    console.error('Error Message:', error.data.message);
-    console.error('Error Code:', error.data.code);
+    handleErrorSummary(error.data.message, error.data.code);
     
     if (error.data.details) {
-      console.error('Validation Errors:', error.data.details);
+      handleValidationErrors(error.data.details);
     }
   }
 }
@@ -190,7 +187,7 @@ try {
 } catch (error) {
   if (isApiError(error) && hasResponseOfType(error, isErrorResponse)) {
     // error.data가 ErrorResponse 타입임을 보장
-    console.error(error.data.message);
+    handleErrorMessage(error.data.message);
   }
 }
 ```

@@ -1,18 +1,14 @@
-﻿import { MyFeedPage } from '@/_pages/setting';
+import { MyFeedPage } from '@/_pages/setting';
 
-type SearchParams = {
-  view?: string;
-  mode?: string;
-};
+import { normalizeMyFeedView } from '@/entities/feed';
 
-const Page = async ({
+import { type NextSearchParams } from '@/shared/types';
+
+export default async function Page({
   searchParams,
 }: {
-  searchParams?: Promise<SearchParams>;
-}) => {
-  const resolvedSearchParams = await searchParams;
-
-  return <MyFeedPage searchParams={resolvedSearchParams} />;
-};
-
-export default Page;
+  searchParams: NextSearchParams<'view'>;
+}) {
+  const { view } = await searchParams;
+  return <MyFeedPage view={normalizeMyFeedView(view as string)} />;
+}

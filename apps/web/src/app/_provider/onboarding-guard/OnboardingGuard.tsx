@@ -77,12 +77,19 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
   );
 
   const onboardingStatus = myInfo?.onboardingStatus;
+  const profileImageType =
+    myInfo?.profileImage.profileImageType === 'GHOST'
+      ? 'UNSET'
+      : myInfo?.profileImage.profileImageType;
   const onboardingRedirectPath = onboardingStatus
     ? REDIRECT_PATH_BY_STATUS[onboardingStatus]
     : undefined;
 
   const onboardingOverlay: OnboardingOverlay | null = useMemo(() => {
-    if (!isMounted || onboardingRedirectPath) {
+    if (
+      !isMounted ||
+      (onboardingStatus && REDIRECT_PATH_BY_STATUS[onboardingStatus])
+    ) {
       return null;
     }
 
@@ -90,12 +97,12 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
       return ONBOARDING_OVERLAY.TERMS_AGREEMENT;
     }
 
-    if (myInfo?.profileImage.profileImageType === 'GHOST') {
+    if (profileImageType === 'UNSET') {
       return ONBOARDING_OVERLAY.PROFILE_IMAGE_EDIT;
     }
 
     return null;
-  }, [onboardingStatus]);
+  }, [isMounted, onboardingStatus, profileImageType]);
 
   const agreeTermsMutation = useAgreeTermsMutation({
     onSuccess: async () => {
@@ -141,7 +148,11 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
         <ProfileImageEditDialog
           open
           onOpenChange={() => undefined}
-          initialValue={currentProfileImage}
+          initialValue={{
+            ...currentProfileImage,
+            profileImageType:
+              profileImageType ?? currentProfileImage.profileImageType,
+          }}
           onSubmit={handleSubmitProfileImage}
           requireSubmitToClose
         />

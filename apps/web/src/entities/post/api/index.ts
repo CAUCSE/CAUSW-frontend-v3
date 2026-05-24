@@ -1,1 +1,7 @@
-export { getPost, getPosts } from './get';
+export {
+  getPost,
+  getPosts,
+  getMyPosts,
+  getMyFavoritePosts,
+  getMyCommentedPosts,
+} from './get';

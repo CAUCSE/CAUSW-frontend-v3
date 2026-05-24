@@ -128,13 +128,14 @@ export type SocialProvider = 'KAKAO' | 'APPLE' | 'GOOGLE';
 
 export interface SocialAccountSummary {
   provider: SocialProvider;
-  createdAt: string;
+  createdAt?: string | null;
+  onboardingStatus?: OnboardingStatus;
 }
 
 export interface EmailFindResponse {
-  email: string;
-  createdAt: string;
-  socialAccounts: SocialAccountSummary[];
+  email?: string | null;
+  createdAt?: string | null;
+  socialAccounts?: SocialAccountSummary[] | null;
 }
 
 export interface PasswordResetSendRequestDto {
@@ -152,6 +153,13 @@ export interface PasswordResetVerifyResponseDto {
   temporaryPassword: string;
 }
 
+export interface PasswordResetChangeRequestDto {
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirm: string;
+}
+
 export type AdmissionDepartment =
   | 'DEPT_OF_AI'
   | 'SCHOOL_OF_SW'
@@ -165,7 +173,7 @@ export interface AdmissionCreateRequestPayloadDto {
   name: string;
   requestedDepartment: AdmissionDepartment;
   requestedAdmissionYear: number;
-  requestedStudentId: string;
+  requestedStudentId: string | null;
   requestedAcademicStatus: AdmissionAcademicStatus;
   graduationYear?: number;
   description?: string;

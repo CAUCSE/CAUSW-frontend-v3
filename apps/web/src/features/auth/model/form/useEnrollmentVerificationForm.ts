@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSubmitAdmissionMutation } from '@/features/auth';
 
 import {
+  ENROLLMENT_VERIFICATION_ACADEMIC_STATUS,
   enrollmentVerificationSchema,
   type AdmissionAcademicStatus,
   type AdmissionDepartment,
@@ -38,12 +39,17 @@ export const useEnrollmentVerificationForm = ({
   });
 
   const handleSubmit = (data: EnrollmentVerificationFormData) => {
+    const isGraduated =
+      data.enrollmentState ===
+      ENROLLMENT_VERIFICATION_ACADEMIC_STATUS.GRADUATED.value;
+    const requestedStudentId = isGraduated ? null : (data.studentId ?? '');
+
     submitAdmissionMutation.mutate({
       request: {
         name: userName,
         requestedDepartment: data.major as AdmissionDepartment,
         requestedAdmissionYear: Number(data.enrollmentYear),
-        requestedStudentId: data.studentId,
+        requestedStudentId,
         requestedAcademicStatus:
           data.enrollmentState as AdmissionAcademicStatus,
         graduationYear: data.graduationYear

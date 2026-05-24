@@ -9,7 +9,11 @@ import { RHFTabSelect } from '@/shared/ui';
 import { CATEGORY_MAP, CUSTOM_VALUE } from '../config';
 
 export const CategorySection = () => {
-  const { register, watch } = useFormContext<CeremonyFormData>();
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<CeremonyFormData>();
   const ceremonyType = watch('ceremonyType');
   const category = watch('category');
 
@@ -27,12 +31,18 @@ export const CategorySection = () => {
       <RHFTabSelect name="category" label="상세 분류" options={options} />
 
       {isCustom && (
-        <Field>
+        <Field
+          className="flex flex-col gap-2"
+          error={!!errors.customCategory?.message}
+        >
           <TextInput
             {...register('customCategory')}
             placeholder={`${ceremonyType}를 입력해주세요.`}
             className="rounded-xl bg-white"
           />
+          <Field.ErrorDescription>
+            {errors.customCategory?.message}
+          </Field.ErrorDescription>
         </Field>
       )}
     </>

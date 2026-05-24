@@ -30,14 +30,14 @@ export const SettingActivitySection = () => {
   return (
     <Box
       radius="lg"
-      className="flex h-full w-full justify-center bg-white px-4 py-3"
+      className="flex h-fit w-full justify-center bg-white px-4 py-3"
     >
-      <HStack gap="md">
+      <HStack gap="md" className="h-fit">
         {SETTING_ACTIVITY_ITEMS.map((item, index) => (
           <Fragment key={item.id}>
             <button
               type="button"
-              className="flex cursor-pointer flex-col items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-50 active:bg-gray-100"
+              className="flex h-fit cursor-pointer flex-col items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-50 active:bg-gray-100"
               onClick={() => router.push(item.href)}
             >
               {ACTIVITY_ICON_MAP[item.id]}
@@ -46,7 +46,10 @@ export const SettingActivitySection = () => {
               </Text>
             </button>
             {index < SETTING_ACTIVITY_ITEMS.length - 1 && (
-              <Separator orientation="vertical" />
+              <Separator
+                orientation="vertical"
+                className="mx-0 h-6 shrink-0 self-center"
+              />
             )}
           </Fragment>
         ))}

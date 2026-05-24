@@ -1,0 +1,1 @@
+export { MyFeedPage } from './MyFeedPage';

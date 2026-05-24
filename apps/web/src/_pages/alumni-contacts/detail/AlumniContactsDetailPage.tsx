@@ -8,8 +8,6 @@ import {
   AlumniContactsHeader,
 } from '@/widgets/alumni-contacts';
 
-import { AlumniContactsHeaderBoundaryProvider } from '@/entities/alumni-contacts';
-
 interface AlumniContactsDetailPageProps {
   alumniContactsId: string;
 }
@@ -24,14 +22,12 @@ export const AlumniContactsDetailPage = ({
           gap="none"
           className="bg-[#4C688F] pt-4 md:rounded-t-lg md:rounded-b-xl"
         >
-          <AlumniContactsHeaderBoundaryProvider>
-            <AlumniContactsHeader />
-            <Suspense fallback={<AlumniContactsDetailMainLoadingView />}>
-              <AlumniContactsDetailMainServerComponent
-                alumniContactsId={alumniContactsId}
-              />
-            </Suspense>
-          </AlumniContactsHeaderBoundaryProvider>
+          <AlumniContactsHeader />
+          <Suspense fallback={<AlumniContactsDetailMainLoadingView />}>
+            <AlumniContactsDetailMainServerComponent
+              alumniContactsId={alumniContactsId}
+            />
+          </Suspense>
         </VStack>
       </VStack>
     </div>

@@ -4,6 +4,7 @@ import {
   ALUMNI_CONTACTS_SNS_TYPE,
   AlumniContactsSnsLink,
   getAlumniContactSnsType,
+  getValidAlumniContactsSocialLinkUrl,
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
@@ -25,8 +26,10 @@ export const AlumniContactsSnsSection = ({
     <HStack gap="sm" className="overflow-x-auto">
       {socialLinks.map((socialLink) => {
         const snsType = getAlumniContactSnsType(socialLink);
+        const isValidSocialLink =
+          getValidAlumniContactsSocialLinkUrl(socialLink) !== null;
 
-        if (snsType === ALUMNI_CONTACTS_SNS_TYPE.ETC) {
+        if (snsType === ALUMNI_CONTACTS_SNS_TYPE.ETC || !isValidSocialLink) {
           return (
             <AlumniContactsEtcLinkConfirmDialog
               key={socialLink}

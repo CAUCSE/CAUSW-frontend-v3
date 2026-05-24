@@ -30,7 +30,7 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
-    "turbo": "^2.3.0",
+    "turbo": "^2.9.14",
     "typescript": "^5"
   },
   "lint-staged": {

@@ -5,7 +5,6 @@ export {
   useAlumniContactsAcademicFilterSheetModalTrigger,
   useAlumniContactsListScrollTop,
   useAlumniContactsContactAction,
-  useAlumniContactsDetailHeaderTheme,
   useAlumniContactsDetailSection,
   useAlumniContactsSnsAddDialog,
   useAlumniContactsProfileEntryAddDialog,
@@ -15,6 +14,8 @@ export {
   useAlumniContactsSingleFieldAddDialog,
   useAlumniContactsSingleFieldEditDialog,
   useAlumniContactsProfileEntryEditDialog,
+  useAlumniContactsScrollRestoration,
+  useAlumniContactsScrollSave,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';

@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { emailSchema, passwordSchema } from '@/shared/model';
+import { emailSchema } from '@/shared/model';
 
 export const signInSchema = z.object({
   email: emailSchema,
-  password: passwordSchema,
+  password: z.string().min(1, '비밀번호를 입력해주세요.'),
   rememberMe: z.boolean().optional(),
 });
 

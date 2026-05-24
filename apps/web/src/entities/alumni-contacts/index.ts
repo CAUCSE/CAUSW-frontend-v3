@@ -22,6 +22,7 @@ export {
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH,
   ALUMNI_CONTACTS_EDIT_FORM_MAX_LIMIT,
   ALUMNI_CONTACTS_URL_PREFIX,
+  ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
@@ -32,10 +33,9 @@ export {
   type GetAlumniContactsDetailResponseDto,
   alumniContactsEditSchema,
   type AlumniContactsEditForm,
-  AlumniContactsHeaderBoundaryContext,
-  useAlumniContactsHeaderBoundaryContext,
   useWatchAlumniContactsEditFormField,
   type AlumniContactsDetail,
+  type AlumniContactsScrollRestorationState,
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,
@@ -43,12 +43,12 @@ export {
   AlumniContactsDescription,
   AlumniContactsSnsLink,
   AlumniContactsSnsIcon,
-  AlumniContactsHeaderBoundaryProvider,
 } from './ui';
 export {
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
   formatAlumniContactsPeriod,
   getAlumniContactSnsType,
+  getValidAlumniContactsSocialLinkUrl,
 } from './lib';
 export { alumniContactsHandler } from './mock';

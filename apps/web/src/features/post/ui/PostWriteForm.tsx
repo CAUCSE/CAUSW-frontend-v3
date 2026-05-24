@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { type Board, useGetAvailableBoards } from '@/entities/feed';
+import { type Board, useGetWritableBoards } from '@/entities/feed';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,
@@ -38,11 +38,14 @@ export const PostWriteForm = ({
   initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
-  const { data: boardData } = useGetAvailableBoards();
+  const { data: boardData } = useGetWritableBoards();
+  const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
-  const { mutate: createPost } = useCreatePostMutation();
-  const { mutate: updatePost } = useUpdatePostMutation();
+  const { mutate: createPost, isPending: isCreatePostPending } =
+    useCreatePostMutation();
+  const { mutate: updatePost, isPending: isUpdatePostPending } =
+    useUpdatePostMutation();
 
   const {
     handleSubmit,
@@ -59,8 +62,7 @@ export const PostWriteForm = ({
   const imageUploadRef = useRef<ImageUploadFieldRef>(null);
   const [selectorOpen, setSelectorOpen] = useState(false);
 
-  const selectedBoard =
-    boardData?.boards.find((b) => b.id === currentBoardId) ?? null;
+  const selectedBoard = boards.find((b) => b.id === currentBoardId) ?? null;
 
   const onSubmit = async (data: PostCreateFormValues) => {
     const imageData = data.images as {
@@ -80,6 +82,10 @@ export const PostWriteForm = ({
 
       const updateDto = mapPostUpdateFormToDto(updateData);
 
+      if (isUpdatePostPending) {
+        return;
+      }
+
       updatePost({
         postId,
         request: updateDto,
@@ -87,6 +93,10 @@ export const PostWriteForm = ({
       });
     } else {
       const createDto = mapPostCreateFormToDto(data, newImageFiles);
+
+      if (isCreatePostPending) {
+        return;
+      }
 
       createPost({
         request: createDto,
@@ -107,6 +117,12 @@ export const PostWriteForm = ({
       onClose(isDirty);
     }
   };
+
+  useEffect(() => {
+    if (boards.length === 1 && !currentBoardId) {
+      setValue('boardId', boards[0].id, { shouldValidate: true });
+    }
+  }, [boards, currentBoardId, setValue]);
 
   return (
     <FormProvider {...form}>
@@ -133,6 +149,7 @@ export const PostWriteForm = ({
             setValue('vote', val, { shouldValidate: true, shouldDirty: true })
           }
           isEdit={isEdit}
+          hideBoardSelector={boards.length === 1}
         />
 
         <Box className="m-5 mb-0">

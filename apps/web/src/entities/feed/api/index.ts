@@ -1,1 +1,1 @@
-export { getAvailableBoards } from './get';
+export { getAvailableBoards, getWritableBoards } from './get';

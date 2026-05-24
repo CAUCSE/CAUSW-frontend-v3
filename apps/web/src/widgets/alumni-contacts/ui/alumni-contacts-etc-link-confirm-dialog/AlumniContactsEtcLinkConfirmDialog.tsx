@@ -4,6 +4,7 @@ import {
   ALUMNI_CONTACTS_SNS_TYPE,
   ALUMNI_CONTACTS_SNS_TYPE_LABEL,
   AlumniContactsSnsIcon,
+  getValidAlumniContactsSocialLinkUrl,
 } from '@/entities/alumni-contacts';
 
 interface AlumniContactsEtcLinkConfirmDialogProps {
@@ -14,9 +15,15 @@ export const AlumniContactsEtcLinkConfirmDialog = ({
   socialLink,
 }: AlumniContactsEtcLinkConfirmDialogProps) => {
   const snsType = ALUMNI_CONTACTS_SNS_TYPE.ETC;
+  const socialLinkUrl = getValidAlumniContactsSocialLinkUrl(socialLink);
+  const isValidSocialLink = socialLinkUrl !== null;
 
   const handleOpenEtcLink = () => {
-    window.open(socialLink, '_blank');
+    if (!socialLinkUrl) {
+      return;
+    }
+
+    window.open(socialLinkUrl.href, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -35,25 +42,54 @@ export const AlumniContactsEtcLinkConfirmDialog = ({
           </Text>
         </Button>
       </Dialog.Trigger>
-      <Dialog.Content>
+      <Dialog.Content className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)]! max-w-80! gap-4 overflow-y-auto md:max-w-105!">
         <Dialog.Title>
           <Text typography="subtitle-18-bold" textColor="gray-800">
-            신뢰할 수 없는 링크입니다
+            {isValidSocialLink
+              ? '신뢰할 수 없는 링크입니다'
+              : '올바르지 않은 링크입니다'}
           </Text>
         </Dialog.Title>
-        <Text typography="body-14-regular" textColor="gray-600">
-          <Text typography="body-14-regular" textColor="blue-500">
+        <Dialog.Description className="sr-only">
+          기타 링크 이동 확인
+        </Dialog.Description>
+        <div className="min-w-0">
+          <Text typography="body-14-regular" textColor="gray-600">
+            {isValidSocialLink
+              ? '다음 링크로 이동하시겠습니까?'
+              : '이동할 수 없는 링크입니다.'}
+          </Text>
+          <Text
+            typography="body-14-regular"
+            textColor={isValidSocialLink ? 'blue-500' : 'red-400'}
+            className="mt-2 block max-h-32 min-w-0 overflow-y-auto rounded-md bg-gray-50 px-3 py-2 break-all"
+          >
             {socialLink}
           </Text>
-          로 이동하시겠습니까? 이동하시려면 확인 버튼을 눌러주세요.
-        </Text>
+          {isValidSocialLink && (
+            <Text
+              typography="body-14-regular"
+              textColor="gray-600"
+              className="mt-2 block break-keep"
+            >
+              이동하시려면 확인 버튼을 눌러주세요.
+            </Text>
+          )}
+        </div>
         <Dialog.Footer>
-          <HStack gap="md" className="justify-end">
+          <HStack gap="sm" className="justify-end pt-2">
             <Dialog.Close asChild>
-              <Button color="gray">취소</Button>
+              <Button color="gray" className="h-11 flex-1 rounded-md">
+                취소
+              </Button>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <Button color="red" onClick={handleOpenEtcLink}>
+              <Button
+                color="red"
+                onClick={handleOpenEtcLink}
+                disabled={!isValidSocialLink}
+                className="h-11 flex-1 rounded-md"
+              >
                 확인
               </Button>
             </Dialog.Close>

@@ -1,0 +1,1 @@
+export { MyFeedHeader } from './MyFeedHeader';

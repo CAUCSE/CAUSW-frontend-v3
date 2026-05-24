@@ -1,16 +1,25 @@
 'use client';
 
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import {
+  type CSSProperties,
+  type RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { Text, VStack } from '@causw/cds';
 
 import { sanitizeHtml } from '@/shared/lib/sanitizer';
+
+import { useLinkifiedText } from '../model';
 
 import { PostImage } from './PostImage';
 
 interface PostBodyProps {
   content: string;
   images?: string[];
+  enableImageViewer?: boolean;
   isCollapsed?: boolean;
   maxLines?: number;
   onExpand?: () => void;
@@ -38,6 +47,7 @@ interface PostBodyProps {
 export const PostBody = ({
   content,
   images = [],
+  enableImageViewer = true,
   isCollapsed = false,
   maxLines = 12,
   onExpand,
@@ -48,7 +58,7 @@ export const PostBody = ({
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   const sanitizedHtml = isHtml ? sanitizeHtml(content) : '';
-  const collapseStyles = isCollapsed
+  const collapseStyles: CSSProperties | undefined = isCollapsed
     ? {
         display: '-webkit-box',
         WebkitBoxOrient: 'vertical' as const,
@@ -56,6 +66,8 @@ export const PostBody = ({
         overflow: 'hidden',
       }
     : undefined;
+
+  const { linkifiedContent } = useLinkifiedText({ content, isHtml });
 
   useEffect(() => {
     const el = textRef.current;
@@ -79,6 +91,7 @@ export const PostBody = ({
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             suppressHydrationWarning
             style={collapseStyles}
+            className="break-all [&_a]:break-all [&_img]:h-auto [&_img]:max-w-full"
           />
         ) : (
           <Text
@@ -86,10 +99,10 @@ export const PostBody = ({
             as="p"
             typography="body-16-regular"
             textColor="gray-800"
-            className="whitespace-pre-wrap"
+            className="break-all whitespace-pre-wrap"
             style={collapseStyles}
           >
-            {content}
+            {linkifiedContent}
           </Text>
         )}
 
@@ -102,7 +115,9 @@ export const PostBody = ({
         )}
       </VStack>
 
-      {images.length > 0 && <PostImage images={images} />}
+      {images.length > 0 && (
+        <PostImage images={images} enableViewer={enableImageViewer} />
+      )}
     </VStack>
   );
 };

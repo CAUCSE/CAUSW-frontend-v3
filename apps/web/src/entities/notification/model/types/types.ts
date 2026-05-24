@@ -13,7 +13,7 @@ export interface NotificationLatestResponse {
 export type NotificationType =
   | 'POST'
   | 'COMMENT'
-  | 'CEREMONY'
+  | 'CEREMONY_V2'
   | 'BOARD'
   | 'ADMISSION';
 

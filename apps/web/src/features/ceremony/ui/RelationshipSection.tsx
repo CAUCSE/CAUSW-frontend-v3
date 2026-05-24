@@ -21,7 +21,11 @@ interface RelationshipSectionProps {
 export const RelationshipSection = ({
   onRelationshipChange,
 }: RelationshipSectionProps) => {
-  const { control, register } = useFormContext<CeremonyFormData>();
+  const {
+    control,
+    register,
+    formState: { errors },
+  } = useFormContext<CeremonyFormData>();
   const relationship = useWatch({ control, name: 'relationship' });
   const familyRelation = useWatch({ control, name: 'familyRelation' });
 
@@ -59,12 +63,18 @@ export const RelationshipSection = ({
             />
           </div>
           {familyRelation === CUSTOM_VALUE && (
-            <Field>
+            <Field
+              className="flex flex-col gap-2"
+              error={!!errors.customFamilyRelation?.message}
+            >
               <TextInput
                 {...register('customFamilyRelation')}
                 placeholder="상세 관계를 입력해주세요."
                 className="rounded-xl bg-white"
               />
+              <Field.ErrorDescription>
+                {errors.customFamilyRelation?.message}
+              </Field.ErrorDescription>
             </Field>
           )}
         </>
@@ -73,22 +83,34 @@ export const RelationshipSection = ({
       {relationship === '동문소식 대신 전달' && (
         <>
           <FormSection title="대상 성함">
-            <Field>
+            <Field
+              className="flex flex-col gap-2"
+              error={!!errors.alumniName?.message}
+            >
               <TextInput
                 {...register('alumniName')}
                 placeholder="대상 성함을 입력해주세요."
                 className="rounded-xl bg-white"
               />
+              <Field.ErrorDescription>
+                {errors.alumniName?.message}
+              </Field.ErrorDescription>
             </Field>
           </FormSection>
 
           <FormSection title="동문 학번 (입학년도)">
-            <Field>
+            <Field
+              className="flex flex-col gap-2"
+              error={!!errors.alumniAdmissionYear?.message}
+            >
               <TextInput
                 {...register('alumniAdmissionYear')}
                 placeholder="동문 학번을 입력해주세요."
                 className="rounded-xl bg-white"
               />
+              <Field.ErrorDescription>
+                {errors.alumniAdmissionYear?.message}
+              </Field.ErrorDescription>
             </Field>
           </FormSection>
           <div className="md:w-1/2">

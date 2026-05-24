@@ -10,8 +10,9 @@ import { routeAfterSignIn } from '@/features/auth';
 import { usePushNotification } from '@/features/notification';
 
 import { toast } from '@/shared/model';
-import { TokenManager } from '@/shared/storage';
+import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import { SuspenseView } from '@/shared/ui';
+import { isMobile } from '@/shared/utils';
 
 export const SocialLoginCallbackPage = () => {
   const router = useRouter();
@@ -45,6 +46,9 @@ export const SocialLoginCallbackPage = () => {
           refreshToken: newRefreshToken,
           onboardingStatus,
         } = await TokenManager.refreshAuth(refreshToken);
+        if (isMobile) {
+          await AuthOptionManager.setSessionPersist(true);
+        }
         await TokenManager.setAccessToken(accessToken);
         await TokenManager.setRefreshToken(newRefreshToken);
         await compareFCMToken();

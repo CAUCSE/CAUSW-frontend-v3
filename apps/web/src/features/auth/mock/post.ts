@@ -53,6 +53,7 @@ export const postHandler = [
     );
   }),
   mswHttp.post<AuthResponseDto>(`${AUTH_API_PREFIX}/login/native`, () => {
+    return passthrough();
     return HttpResponse.json(
       {
         code: '201',

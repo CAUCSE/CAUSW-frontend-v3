@@ -6,7 +6,8 @@ export type UserProfileImageType =
   | 'FEMALE_1'
   | 'FEMALE_2'
   | 'CUSTOM'
-  | 'GHOST';
+  | 'GHOST'
+  | 'UNSET';
 
 export type DefaultProfileImageType = Extract<
   UserProfileImageType,

@@ -50,6 +50,8 @@ export const OauthAdditionalInfoPage = () => {
     methods,
     isSubmitEnabled,
     handlePhoneNumberChange,
+    handlePhoneNumberBlur,
+    handleNicknameBlur,
     setAgreedTermsIds,
     onSubmit,
   } = useOauthAdditionalInfoForm();
@@ -102,6 +104,8 @@ export const OauthAdditionalInfoPage = () => {
           <OauthAdditionalInfoForm
             isSubmitEnabled={isSubmitEnabled}
             onPhoneNumberChange={handlePhoneNumberChange}
+            onPhoneNumberBlur={handlePhoneNumberBlur}
+            onNicknameBlur={handleNicknameBlur}
           />
         </form>
 
