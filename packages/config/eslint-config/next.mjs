@@ -18,6 +18,7 @@ const eslintConfig = defineConfig([
       'check-file': checkFile,
     },
     rules: {
+      'no-console': 'error',
       '@typescript-eslint/consistent-type-imports': [
         'error',
         {

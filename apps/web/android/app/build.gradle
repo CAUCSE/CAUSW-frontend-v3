@@ -10,11 +10,11 @@ android {
         //dev와 prod의 versionCode는 각각 아래 productFlavors에서 설정. 이 공통 값은 prod 기준(productFlavors의 prod가 바뀌면 이 값도 수정해주기)
         //productFlavors에 값이 있으면 이 값은 오버라이드됨.
         //dev 수정할때는 아래 line.52에서 수정하는 것을 권장. prod 수정할 때는 이 값과 line.60의 값을 함께 수정해야 함.
-        versionCode 19
+        versionCode 20
 
         //firebase remote config에서 사용하므로, 변경 시 firebase remote config의 default value도 함께 변경해야 함.
         //dev & prod 공통
-        versionName "12.1.1" 
+        versionName "12.1.2" 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -79,7 +79,7 @@ if (localPropertiesFile.exists()) {
                 kakaoScheme: kakaoSchemeProdRelease
             ]
 
-            versionCode 19
+            versionCode 20
         }
     }
 
