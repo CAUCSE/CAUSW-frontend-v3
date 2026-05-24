@@ -41,15 +41,15 @@ const urlMapper: Record<
   dev: {
     appId: 'kr.co.causw.dev',
     appName: '크자회(CCSSAA)-개발계',
-    ios: 'https://causw-v3-web-dev.vercel.app/',
-    android: 'https://causw-v3-web-dev.vercel.app/',
+    ios: 'https://dev.causw.co.kr/',
+    android: 'https://dev.causw.co.kr/',
     cleartext: false,
   },
   prod: {
     appId: 'kr.co.causw',
     appName: '크자회(CCSSAA)',
-    ios: 'https://causw-v3-web.vercel.app/',
-    android: 'https://causw-v3-web.vercel.app/',
+    ios: 'https://www.causw.co.kr/',
+    android: 'https://www.causw.co.kr/',
     cleartext: false,
   },
 };
