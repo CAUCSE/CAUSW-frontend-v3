@@ -3,7 +3,9 @@
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@tanstack/react-query';
 
+import { authQueryOptions } from '@/entities/auth';
 import {
   passwordChangeFormSchema,
   type PasswordChangeFormData,
@@ -12,6 +14,7 @@ import {
 import { useChangeMyPasswordMutation } from '../mutations';
 
 export const usePasswordChangeForm = () => {
+  const { data: me } = useQuery(authQueryOptions.me());
   const methods = useForm<PasswordChangeFormData>({
     mode: 'onChange',
     resolver: zodResolver(passwordChangeFormSchema),
@@ -28,7 +31,12 @@ export const usePasswordChangeForm = () => {
   });
 
   const onSubmit = (data: PasswordChangeFormData) => {
+    if (!me?.email) {
+      return;
+    }
+
     changePasswordMutation.mutate({
+      email: me.email,
       currentPassword: data.currentPassword,
       newPassword: data.nextPassword,
       newPasswordConfirm: data.confirmPassword,
@@ -38,6 +46,7 @@ export const usePasswordChangeForm = () => {
   return {
     methods,
     onSubmit,
+    isReady: !!me?.email,
     isSubmitting: changePasswordMutation.isPending,
   };
 };

@@ -4,6 +4,11 @@ import { useRouter } from 'next/navigation';
 
 import { Button, CTAButton, HStack, Text, VStack } from '@causw/cds';
 
+import {
+  clearPasswordResetContext,
+  setPasswordResetContext,
+} from '@/features/auth';
+
 import { toast } from '@/shared/model';
 
 interface TemporaryPasswordIssuedProps {
@@ -27,6 +32,16 @@ export const TemporaryPasswordIssued = ({
   const handleCopy = async () => {
     await navigator.clipboard.writeText(temporaryPassword);
     toast.success('비밀번호가 복사되었습니다.');
+  };
+
+  const handleSignIn = () => {
+    clearPasswordResetContext();
+    router.push('/auth/sign-in');
+  };
+
+  const handleResetPassword = () => {
+    setPasswordResetContext({ email, temporaryPassword });
+    router.replace('/auth/reset-password');
   };
 
   return (
@@ -68,17 +83,13 @@ export const TemporaryPasswordIssued = ({
       </VStack>
 
       <HStack className="w-full gap-2">
-        <CTAButton
-          color="white"
-          className="flex-1"
-          onClick={() => router.push('/auth/sign-in')}
-        >
+        <CTAButton color="white" className="flex-1" onClick={handleSignIn}>
           로그인
         </CTAButton>
         <CTAButton
           color="dark"
           className="flex-1"
-          onClick={() => router.replace('/auth/reset-password')}
+          onClick={handleResetPassword}
         >
           비밀번호 재설정
         </CTAButton>

@@ -14,11 +14,12 @@ import type {
   PasswordResetSendRequestDto,
   PasswordResetVerifyRequestDto,
   PasswordResetVerifyResponseDto,
+  PasswordResetChangeRequestDto,
   TermsAgreementRequestDto,
 } from '@/entities/auth';
 
 import { API } from '@/shared/api';
-import { AUTH_API_PREFIX } from '@/shared/constants';
+import { AUTH_API_PREFIX, USER_API_PREFIX } from '@/shared/constants';
 import { TokenManager } from '@/shared/storage';
 
 export const signup = async (data: SignupRequestDto) => {
@@ -85,6 +86,10 @@ export const verifyPasswordResetCode = async (
     `${AUTH_API_PREFIX}/password-reset/verify`,
     data,
   );
+};
+
+export const resetPassword = async (data: PasswordResetChangeRequestDto) => {
+  return API.post<null>(`${USER_API_PREFIX}/password-change`, data);
 };
 
 export const agreeTerms = async (data: TermsAgreementRequestDto) => {
