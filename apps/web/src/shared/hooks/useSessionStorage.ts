@@ -54,8 +54,7 @@ export function useSessionStorage<T>(
       let parsed: unknown;
       try {
         parsed = JSON.parse(value);
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
+      } catch {
         return defaultValue; // Return initialValue if parsing fails
       }
 
@@ -78,8 +77,7 @@ export function useSessionStorage<T>(
     try {
       const raw = window.sessionStorage.getItem(key);
       return raw ? deserializer(raw) : initialValueToUse;
-    } catch (error) {
-      console.warn(`Error reading sessionStorage key “${key}”:`, error);
+    } catch {
       return initialValueToUse;
     }
   }, [initialValue, key, deserializer]);
@@ -97,9 +95,7 @@ export function useSessionStorage<T>(
   const setValue: Dispatch<SetStateAction<T>> = useEventCallback((value) => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
-        `Tried setting sessionStorage key “${key}” even though environment is not a client`,
-      );
+      return;
     }
 
     try {
@@ -114,17 +110,13 @@ export function useSessionStorage<T>(
 
       // We dispatch a custom event so every similar useSessionStorage hook is notified
       window.dispatchEvent(new StorageEvent('session-storage', { key }));
-    } catch (error) {
-      console.warn(`Error setting sessionStorage key “${key}”:`, error);
-    }
+    } catch {}
   });
 
   const removeValue = useEventCallback(() => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
-        `Tried removing sessionStorage key “${key}” even though environment is not a client`,
-      );
+      return;
     }
 
     const defaultValue =

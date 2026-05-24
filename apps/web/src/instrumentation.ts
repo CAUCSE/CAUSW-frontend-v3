@@ -8,7 +8,6 @@ export async function register() {
     if (ENVIRONMENT === 'development' || ENVIRONMENT === 'local') {
       const { server } = await import('./app/_mock/server');
       server.listen();
-      console.log('Server Mock Started');
     }
   }
 

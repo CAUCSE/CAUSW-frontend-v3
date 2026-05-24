@@ -15,7 +15,7 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
  *
  * @example
  * const handleClick = useEventCallback(() => {
- *   console.log(count); // 항상 최신 count 참조
+ *   updateLatestCount(count); // 항상 최신 count 참조
  * });
  *
  * @param fn - 이벤트 핸들러 함수

@@ -7,7 +7,7 @@ import { ApiError } from '../errors/ApiError';
  *   await apiClient.get('/endpoint');
  * } catch (error) {
  *   if (isApiError(error)) {
- *     console.log(error.status, error.data);
+ *     handleApiError(error.status, error.data);
  *   }
  * }
  */
@@ -22,7 +22,7 @@ export function isApiError(error: unknown): error is ApiError {
  *   await apiClient.get('/endpoint');
  * } catch (error) {
  *   if (isApiError(error) && hasResponse(error)) {
- *     console.log(error.data);
+ *     handleApiErrorData(error.data);
  *   }
  * }
  */
@@ -44,7 +44,7 @@ export function hasResponse(
  *   await apiClient.get('/endpoint');
  * } catch (error) {
  *   if (isApiError(error) && hasResponseOfType<ErrorResponse>(error)) {
- *     console.log(error.data.message, error.data.code);
+ *     handleTypedApiError(error.data.message, error.data.code);
  *   }
  * }
  */

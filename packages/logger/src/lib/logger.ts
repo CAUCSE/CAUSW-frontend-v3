@@ -33,9 +33,7 @@ export function captureSentry(
       scope.setFingerprint([type, extra.errorCode || 'generic']);
       return scope;
     });
-  } catch {
-    console.warn('Sentry capture failed');
-  }
+  } catch {}
 }
 
 /**

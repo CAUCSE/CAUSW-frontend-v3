@@ -21,39 +21,19 @@ export async function openAppStore({
       const { completed } = await AppLauncher.openUrl({
         url: appUrl,
       });
-      //TODO : prod올리기 전에 삭제
-      console.log(
-        '[openStore] AppLauncher result',
-        JSON.stringify({
-          url: appUrl,
-          completed,
-        }),
-      );
 
       if (completed) return;
     }
-  } catch (launcherError) {
-    console.error('[openStore] AppLauncher.openUrl failed', launcherError);
-  }
+  } catch {}
 
   try {
     if (webUrl) {
-      //TODO : prod올리기 전에 삭제
-      console.log(
-        '[openStore] fallback to Browser.open',
-        JSON.stringify({
-          url: webUrl,
-        }),
-      );
-
       await Browser.open({
         url: webUrl,
       });
       return;
     }
-  } catch (browserError) {
-    console.log('[openStore] Browser.open failed', browserError);
-  }
+  } catch {}
 
   try {
     if (typeof window !== 'undefined' && webUrl) {

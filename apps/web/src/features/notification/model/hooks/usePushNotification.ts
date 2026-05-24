@@ -10,7 +10,6 @@ import { isAndroid, isWeb } from '@/shared/utils';
 const ANDROID_DEFAULT_NOTIFICATION_CHANNEL_ID = 'default_channel_id';
 const ANDROID_DEFAULT_NOTIFICATION_CHANNEL_IMPORTANCE_HIGH = 4;
 
-//TODO : main에 올리기 전에 console 제거하기
 export const usePushNotification = () => {
   const updateFCMTokenMutation = useUpdateFCMToken();
 
@@ -63,8 +62,7 @@ export const usePushNotification = () => {
 
             await setNativeFCM(clientFCMToken);
             toast.success(MESSAGE.PUSH_NOTIFICATION.SUCCESS);
-          } catch (error) {
-            console.log('[PN] registration handler error', error);
+          } catch {
             toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
           } finally {
             await registrationListener.remove();
@@ -75,8 +73,7 @@ export const usePushNotification = () => {
 
       const registrationErrorListener = await PushNotifications.addListener(
         'registrationError',
-        async (err) => {
-          console.log('[PN] registrationError', err);
+        async () => {
           toast.error(MESSAGE.PUSH_NOTIFICATION.REGISTER_ERROR);
 
           await registrationListener.remove();
@@ -85,8 +82,7 @@ export const usePushNotification = () => {
       );
 
       await PushNotifications.register();
-    } catch (error) {
-      console.log('[PN] compareFCMToken error', error);
+    } catch {
       toast.error(MESSAGE.PUSH_NOTIFICATION.UNKNOWN_ERROR);
     }
   };
