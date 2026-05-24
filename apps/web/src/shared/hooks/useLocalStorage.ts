@@ -79,8 +79,7 @@ export function useLocalStorage<T>(
       let parsed: unknown;
       try {
         parsed = JSON.parse(value);
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
+      } catch {
         return defaultValue; // Return initialValue if parsing fails
       }
 
@@ -103,8 +102,7 @@ export function useLocalStorage<T>(
     try {
       const raw = window.localStorage.getItem(key);
       return raw ? deserializer(raw) : initialValueToUse;
-    } catch (error) {
-      console.warn(`Error reading localStorage key “${key}”:`, error);
+    } catch {
       return initialValueToUse;
     }
   }, [initialValue, key, deserializer]);
@@ -122,9 +120,7 @@ export function useLocalStorage<T>(
   const setValue: Dispatch<SetStateAction<T>> = useEventCallback((value) => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
-        `Tried setting localStorage key “${key}” even though environment is not a client`,
-      );
+      return;
     }
 
     try {
@@ -139,17 +135,13 @@ export function useLocalStorage<T>(
 
       // We dispatch a custom event so every similar useLocalStorage hook is notified
       window.dispatchEvent(new StorageEvent('local-storage', { key }));
-    } catch (error) {
-      console.warn(`Error setting localStorage key “${key}”:`, error);
-    }
+    } catch {}
   });
 
   const removeValue = useEventCallback(() => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
-        `Tried removing localStorage key “${key}” even though environment is not a client`,
-      );
+      return;
     }
 
     const defaultValue =

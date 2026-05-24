@@ -27,9 +27,8 @@ export const useUpdatePostMutation = () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
       router.back();
     },
-    onError: (error) => {
+    onError: () => {
       toast.error('게시글 수정에 실패했어요.');
-      console.error(error);
     },
   });
 };

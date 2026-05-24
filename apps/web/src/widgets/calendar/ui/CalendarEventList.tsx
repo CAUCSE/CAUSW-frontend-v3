@@ -107,7 +107,6 @@ function ScheduleSection({
   emptyMessage: string;
   isUpcomingSection: boolean;
 }) {
-  console.log(items);
   return (
     <VStack className="flex-1 gap-3">
       <Text typography="subtitle-16-bold">{title}</Text>
