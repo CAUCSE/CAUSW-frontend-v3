@@ -166,7 +166,7 @@ export interface AdmissionCreateRequestPayloadDto {
   name: string;
   requestedDepartment: AdmissionDepartment;
   requestedAdmissionYear: number;
-  requestedStudentId: string;
+  requestedStudentId: string | null;
   requestedAcademicStatus: AdmissionAcademicStatus;
   graduationYear?: number;
   description?: string;
