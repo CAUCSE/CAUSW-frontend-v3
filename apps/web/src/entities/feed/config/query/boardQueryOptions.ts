@@ -8,7 +8,7 @@ import { type GetAvailableBoardListQuery } from '../../model';
 import { boardQueryKeys } from './boardQueryKeys';
 
 export const boardQueryOptions = {
-  available: (query: GetAvailableBoardListQuery) =>
+  available: (query: GetAvailableBoardListQuery = {}) =>
     queryOptions({
       queryKey: boardQueryKeys.available(query),
       queryFn: () => getAvailableBoards(query),

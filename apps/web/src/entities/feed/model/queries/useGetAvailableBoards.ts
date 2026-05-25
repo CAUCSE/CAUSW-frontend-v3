@@ -9,7 +9,7 @@ interface UseGetAvailableBoardsProps {
 }
 
 export const useGetAvailableBoards = ({
-  isTab = false,
-}: UseGetAvailableBoardsProps) => {
+  isTab,
+}: UseGetAvailableBoardsProps = {}) => {
   return useSuspenseQuery(boardQueryOptions.available({ isTab }));
 };

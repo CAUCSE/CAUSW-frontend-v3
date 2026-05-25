@@ -8,7 +8,9 @@ import {
   type GetAvailableBoardListQuery,
 } from '../model';
 
-export const getAvailableBoards = async (query: GetAvailableBoardListQuery) => {
+export const getAvailableBoards = async (
+  query: GetAvailableBoardListQuery = {},
+) => {
   const url = withQuery(
     `${BOARDS_API_PREFIX}/available`,
     createQueryString(query),
