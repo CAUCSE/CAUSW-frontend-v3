@@ -1,6 +1,6 @@
 'use client';
 
-import { type KeyboardEvent, type MouseEvent } from 'react';
+import { useState, type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -22,6 +22,12 @@ export const usePostListItem = () => {
       initializeWithValue: false,
     },
   );
+
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const handleExpand = () => {
+    setIsExpanded(true);
+  };
 
   const moveToPost = (postId: PostResponseDto['postId']) => {
     setScrollRestoration(postId);
@@ -57,5 +63,7 @@ export const usePostListItem = () => {
   return {
     handleCardClick,
     handleCardKeyDown,
+    isExpanded,
+    handleExpand,
   };
 };

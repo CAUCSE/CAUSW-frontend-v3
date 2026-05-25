@@ -1,6 +1,6 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import Script from 'next/script';
 
@@ -20,14 +20,14 @@ const SOCIAL_PREVIEW_IMAGE = '/images/social-preview.png';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.causw.co.kr'),
-  title: '동문 네트워크',
-  description: '동문 네트워크 서비스',
+  title: '크자회(CCSSAA)',
+  description: '크자회, 중앙대학교 소프트웨어대학 동문을 위한 서비스',
   icons: {
     icon: '/images/favicon-128.png',
   },
   openGraph: {
-    title: '동문 네트워크',
-    description: '동문 네트워크 서비스',
+    title: '크자회(CCSSAA)',
+    description: '크자회, 중앙대학교 소프트웨어대학 동문을 위한 서비스',
     siteName: '동문 네트워크',
     images: [
       {
@@ -42,13 +42,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    description: '동문 네트워크 서비스',
+    description: '크자회, 중앙대학교 소프트웨어대학 동문을 위한 서비스',
     images: [SOCIAL_PREVIEW_IMAGE],
-    title: '동문 네트워크',
+    title: '크자회(CCSSAA)',
   },
   other: {
     ...getTraceData(), // Sentry 오류 로그 추적
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

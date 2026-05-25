@@ -11,6 +11,7 @@ import {
 } from '@/entities/post';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { createPost } from '../../api';
 
@@ -34,8 +35,8 @@ export const useCreatePostMutation = () => {
         router.push(`/feed/${data.id}`);
       });
     },
-    onError: () => {
-      toast.error('게시글 작성에 실패했어요.');
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '게시글 작성에 실패했어요.'));
     },
   });
 };

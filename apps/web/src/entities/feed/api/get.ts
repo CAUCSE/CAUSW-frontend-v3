@@ -1,20 +1,28 @@
 import { API } from '@/shared/api';
+import { createQueryString, withQuery } from '@/shared/utils';
 
+import { BOARDS_API_PREFIX } from '../config';
 import {
   type GetWritableBoardListResponseDto,
   type GetAvailableBoardListResponseDto,
+  type GetAvailableBoardListQuery,
 } from '../model';
 
-export const getAvailableBoards = async () => {
-  const response = await API.get<GetAvailableBoardListResponseDto>(
-    '/api/v2/boards/available',
+export const getAvailableBoards = async (
+  query: GetAvailableBoardListQuery = {},
+) => {
+  const url = withQuery(
+    `${BOARDS_API_PREFIX}/available`,
+    createQueryString(query),
   );
+
+  const response = await API.get<GetAvailableBoardListResponseDto>(url);
   return response;
 };
 
 export const getWritableBoards = async () => {
   const response = await API.get<GetWritableBoardListResponseDto>(
-    '/api/v2/boards/writable',
+    `${BOARDS_API_PREFIX}/writable`,
   );
   return response;
 };

@@ -19,6 +19,7 @@ import {
 
 import { ConfirmModal } from '@/shared/ui';
 
+import { FEED_CONTENT_MAX_LINE } from '../../config';
 import { usePostListItem } from '../../model';
 
 interface FeedListitemProps {
@@ -35,7 +36,8 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
     submitDelete,
   } = usePostMenuActions(post.postId);
 
-  const { handleCardClick, handleCardKeyDown } = usePostListItem();
+  const { handleCardClick, handleCardKeyDown, isExpanded, handleExpand } =
+    usePostListItem();
 
   return (
     <VStack className="relative" id={post.postId}>
@@ -61,6 +63,10 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
           images={post.postImageUrls}
           enableImageViewer={false}
           isHtml={post.isCrawled}
+          isCollapsed={!isExpanded}
+          onExpand={handleExpand}
+          showExpandButton
+          maxLines={FEED_CONTENT_MAX_LINE}
         />
         <PostFooter
           numLike={post.numLike}
