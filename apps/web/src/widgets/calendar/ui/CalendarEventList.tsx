@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import {
   CaldendarIconColored,
   Calendar,
@@ -33,6 +35,8 @@ import {
 import { TAB_OPTIONS } from '../model';
 
 export function CalendarEventList() {
+  const router = useRouter();
+
   const [selectedTab, setSelectedTab] = useState('ALL');
 
   const { viewMonth, setViewMonth, scheduleApiParams } = useCalendarMonth();
@@ -59,6 +63,14 @@ export function CalendarEventList() {
           defaultMonth={viewMonth}
           onPrevMonth={setViewMonth}
           onNextMonth={setViewMonth}
+          onEventClick={(event) => {
+            const targetPostId = schedulesItems.find(
+              (target) => target.id == event.id,
+            )?.targetPostId;
+            if (targetPostId != undefined) {
+              router.push(`${ROUTES.FEED}/${targetPostId}`);
+            }
+          }}
         />
 
         <VStack className="gap-6">
