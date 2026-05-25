@@ -9,7 +9,7 @@
 	<key>CAUSWGoogleServerClientID</key>
 	<string>1086770319771-hp040om1msg7r4o25u895b1pos47jkjt.apps.googleusercontent.com</string>
 	<key>CAUSWKakaoNativeAppKey</key>
-	<string>4535709d7c684cff31a42bb2b522eed9</string>
+	<string>0d6f887e12de1e823fc6d021e90da922</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -33,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao4535709d7c684cff31a42bb2b522eed9</string>
+				<string>kakao0d6f887e12de1e823fc6d021e90da922</string>
 				<string>com.googleusercontent.apps.1086770319771-cnj8h70c5lc29ljijcaif27cnb93lq1e</string>
 			</array>
 		</dict>
