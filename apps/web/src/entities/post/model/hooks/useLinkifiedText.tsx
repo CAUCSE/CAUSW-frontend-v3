@@ -45,12 +45,12 @@ export const useLinkifiedText = ({
       const { cleanUrl, trailingPunctuation } = trimTrailingPunctuation(part);
 
       return (
-        <Fragment key={`${part}-${index}`}>
+        <Fragment key={index}>
           <a
             href={normalizeHref(cleanUrl)}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline"
+            className="text-blue-600 underline"
           >
             {cleanUrl}
           </a>
