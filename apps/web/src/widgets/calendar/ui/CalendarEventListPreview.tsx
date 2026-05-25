@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 //TODO : NoDataView ui확인필요 (@영현님 : NoDataView 일반화 해주신다고 했음)
 import {
@@ -26,6 +27,8 @@ import { checkIsUpcoming, formatDateRangeDash } from '@/shared/lib';
 import { EventCard, NoDataView, SuspenseView } from '@/shared/ui';
 
 export function CalendarEventListPreview() {
+  const router = useRouter();
+
   const { viewMonth, setViewMonth, scheduleApiParams, currentMonth } =
     useCalendarMonth();
 
@@ -48,6 +51,14 @@ export function CalendarEventListPreview() {
           defaultMonth={viewMonth}
           onPrevMonth={setViewMonth}
           onNextMonth={setViewMonth}
+          onEventClick={(event) => {
+            const targetPostId = schedulesItems.find(
+              (target) => target.id == event.id,
+            )?.targetPostId;
+            if (targetPostId != undefined) {
+              router.push(`${ROUTES.FEED}/${targetPostId}`);
+            }
+          }}
         />
       </Flex>
 
