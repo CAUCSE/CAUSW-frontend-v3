@@ -19,7 +19,7 @@ export const FeedMainServerComponent = async () => {
     },
   });
 
-  await queryClient.prefetchQuery(boardQueryOptions.available());
+  await queryClient.prefetchQuery(boardQueryOptions.available({ isTab: true }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

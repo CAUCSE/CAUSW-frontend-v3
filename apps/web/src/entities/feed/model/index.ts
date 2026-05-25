@@ -3,6 +3,7 @@ export type {
   Board,
   GetAvailableBoardListResponseDto,
   GetWritableBoardListResponseDto,
+  GetAvailableBoardListQuery,
 } from './types';
 export {
   useFeedSearchKeyword,

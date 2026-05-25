@@ -11,7 +11,7 @@ import { useBreakpoint } from '@/shared/hooks';
 import { FEED_LIST_TAB, FEED_LIST_TAB_SEARCH_PARAM_KEY } from '../../config';
 
 export const useFeedMain = () => {
-  const { data } = useGetAvailableBoards();
+  const { data } = useGetAvailableBoards({ isTab: true });
 
   const router = useRouter();
   const pathname = usePathname();

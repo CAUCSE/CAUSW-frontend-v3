@@ -4,6 +4,12 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { boardQueryOptions } from '../../config';
 
-export const useGetAvailableBoards = () => {
-  return useSuspenseQuery(boardQueryOptions.available());
+interface UseGetAvailableBoardsProps {
+  isTab?: boolean;
+}
+
+export const useGetAvailableBoards = ({
+  isTab = false,
+}: UseGetAvailableBoardsProps) => {
+  return useSuspenseQuery(boardQueryOptions.available({ isTab }));
 };
