@@ -1,6 +1,6 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import Script from 'next/script';
 
@@ -49,6 +49,13 @@ export const metadata: Metadata = {
   other: {
     ...getTraceData(), // Sentry 오류 로그 추적
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
