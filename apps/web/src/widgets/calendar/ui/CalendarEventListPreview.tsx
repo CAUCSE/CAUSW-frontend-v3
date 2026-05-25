@@ -52,7 +52,12 @@ export function CalendarEventListPreview() {
           onPrevMonth={setViewMonth}
           onNextMonth={setViewMonth}
           onEventClick={(event) => {
-            router.push(`${ROUTES.FEED}/${event.id}`);
+            const targetPostId = schedulesItems.find(
+              (target) => target.id == event.id,
+            )?.targetPostId;
+            if (targetPostId != undefined) {
+              router.push(`${ROUTES.FEED}/${targetPostId}`);
+            }
           }}
         />
       </Flex>
