@@ -1,7 +1,8 @@
-import { Avatar, Flex, HStack, OfficialColored, Text } from '@causw/cds';
+import { Flex, HStack, OfficialColored, Text } from '@causw/cds';
 
-import { formatRelativeTime, getProfileImageUrl } from '@/shared/lib';
+import { formatRelativeTime } from '@/shared/lib';
 import { type ProfileImageValue } from '@/shared/types';
+import { ProfileAvatar } from '@/shared/ui';
 
 import { type PostAction } from '../config';
 
@@ -32,18 +33,17 @@ export const PostHeader = ({
   onAction,
   hideActionMenu = false,
 }: PostHeaderProps) => {
-  const profileImageUrl = profileImage
-    ? getProfileImageUrl({
-        profileImageType: profileImage.profileImageType,
-        profileImageUrl: profileImage.profileImageUrl,
-        width: 40,
-      })
-    : '';
-
   return (
     <Flex as="header" gap="none" align="center">
       <HStack gap="sm" align="center" className="flex-1 gap-2.5">
-        <Avatar size={40} src={profileImageUrl} className="shrink-0" />
+        {profileImage ? (
+          <ProfileAvatar
+            profileImageType={profileImage.profileImageType}
+            profileImageUrl={profileImage.profileImageUrl}
+            size={40}
+            className="shrink-0"
+          />
+        ) : null}
 
         <HStack gap="sm" align="center">
           <HStack gap="xs" align="center">

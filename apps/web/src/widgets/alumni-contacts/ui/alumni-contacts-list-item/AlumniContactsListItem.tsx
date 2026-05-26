@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 
-import { Avatar, ChevronRight, HStack, Text, VStack } from '@causw/cds';
+import { ChevronRight, HStack, Text, VStack } from '@causw/cds';
 
 import {
   type GetAlumniContactsQuery,
   type GetPaginatedAlumniContactsResponseDto,
 } from '@/entities/alumni-contacts';
 
-import { getProfileImageUrl } from '@/shared/lib';
+import { ProfileAvatar } from '@/shared/ui';
 
 type AlumniContactsListItem =
   GetPaginatedAlumniContactsResponseDto['content'][number];
@@ -28,12 +28,6 @@ export const AlumniContactsListItem = ({
   query,
   onNavigate,
 }: AlumniContactsListItemProps) => {
-  const profileImageUrl = getProfileImageUrl({
-    profileImageType: item.profileImage.profileImageType,
-    profileImageUrl: item.profileImage.profileImageUrl,
-    width: 64,
-  });
-
   return (
     <li id={item.id}>
       <Link
@@ -42,7 +36,12 @@ export const AlumniContactsListItem = ({
         className="flex h-27.5 min-w-0 rounded-md bg-white px-4"
       >
         <HStack className="min-w-0 grow gap-5" align="center">
-          <Avatar src={profileImageUrl} size={64} className="shrink-0" />
+          <ProfileAvatar
+            profileImageType={item.profileImage.profileImageType}
+            profileImageUrl={item.profileImage.profileImageUrl}
+            size={64}
+            className="shrink-0"
+          />
           <VStack gap="xs" className="min-w-0 grow" justify="center">
             <VStack className="gap-0.5">
               <Text
