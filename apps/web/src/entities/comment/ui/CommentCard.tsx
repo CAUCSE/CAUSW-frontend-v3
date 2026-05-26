@@ -1,10 +1,9 @@
 import { type ReactNode } from 'react';
 
-import { Avatar, Heart, HStack, VStack, Text } from '@causw/cds';
+import { Heart, HStack, VStack, Text } from '@causw/cds';
 
-import { getProfileImageUrl } from '@/shared/lib';
 import { type ProfileImageValue } from '@/shared/types';
-import { IconCountButton } from '@/shared/ui';
+import { IconCountButton, ProfileAvatar } from '@/shared/ui';
 
 interface CommentCardProps {
   author: string;
@@ -37,20 +36,13 @@ export const CommentCard = ({
 }: CommentCardProps) => {
   const isInactive = isDeleted || isBlocked;
 
-  const profileImageUrl = profileImage
-    ? getProfileImageUrl({
-        profileImageType: profileImage.profileImageType,
-        profileImageUrl: profileImage.profileImageUrl,
-        width: 36,
-      })
-    : '';
-
   return (
     <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
       <HStack align={isInactive ? 'center' : 'start'} className="gap-3">
-        <Avatar
+        <ProfileAvatar
+          profileImageType={profileImage.profileImageType}
+          profileImageUrl={profileImage.profileImageUrl}
           size={36}
-          src={profileImageUrl}
           className="my-1 shrink-0"
           isRestricted={isBlocked}
         />

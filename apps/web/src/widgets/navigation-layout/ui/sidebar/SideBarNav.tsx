@@ -8,7 +8,6 @@ import { LogoutConfirmModal } from '@/widgets/auth';
 
 import { useGetMeQuery, useLogout } from '@/features/auth';
 
-import { getProfileImageUrl } from '@/shared/lib';
 import { QueryErrorBoundary } from '@/shared/ui';
 
 import {
@@ -30,14 +29,6 @@ export function SidebarNav({ selected }: SidebarNavProps) {
   const { data: user, isLoading } = useGetMeQuery();
   const logout = useLogout();
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-
-  const profileImageUrl = user?.profileImage
-    ? getProfileImageUrl({
-        profileImageType: user.profileImage.profileImageType,
-        profileImageUrl: user.profileImage.profileImageUrl,
-        width: 44,
-      })
-    : '';
 
   return (
     <Sidebar selected={selected}>
@@ -86,7 +77,8 @@ export function SidebarNav({ selected }: SidebarNavProps) {
         )}
         {user && !isLoading && (
           <FooterProfile
-            img={profileImageUrl}
+            profileImageType={user.profileImage.profileImageType}
+            profileImageUrl={user.profileImage.profileImageUrl}
             name={user.name}
             email={user.email}
             onLogout={() => setLogoutModalOpen(true)}

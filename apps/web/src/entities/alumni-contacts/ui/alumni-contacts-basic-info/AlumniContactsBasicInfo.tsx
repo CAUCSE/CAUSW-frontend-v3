@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Avatar, HStack, Text, VStack } from '@causw/cds';
+import { HStack, Text, VStack } from '@causw/cds';
 
-import { getProfileImageUrl } from '@/shared/lib';
+import { ProfileAvatar } from '@/shared/ui';
 
 import { type GetAlumniContactsDetailResponseDto } from '../../model';
 
@@ -20,18 +20,12 @@ export const AlumniContactsBasicInfo = ({
   profileImage,
 }: AlumniContactsBasicInfoProps) => {
   const userInfo = [admissionYear, academicStatus].filter((item) => item);
-  const profileImageUrl = profileImage
-    ? getProfileImageUrl({
-        profileImageType: profileImage.profileImageType,
-        profileImageUrl: profileImage.profileImageUrl,
-        width: 80,
-      })
-    : '';
 
   return (
     <>
-      <Avatar
-        src={profileImageUrl}
+      <ProfileAvatar
+        profileImageType={profileImage.profileImageType}
+        profileImageUrl={profileImage.profileImageUrl}
         size={80}
         className="[&>span]:md:rounded-[32px]"
       />
