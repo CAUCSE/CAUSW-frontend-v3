@@ -2,16 +2,26 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { Box, Flex, Dropdown, Menu, Avatar } from '@causw/cds';
+import { Box, Flex, Dropdown, Menu } from '@causw/cds';
+
+import type { UserProfileImageType } from '@/shared/types';
+import { ProfileAvatar } from '@/shared/ui';
 
 type Props = {
-  img: string;
+  profileImageType: UserProfileImageType;
+  profileImageUrl?: string | null;
   name: string;
   email: string;
   onLogout: () => void;
 };
 
-export function FooterProfile({ img, name, email, onLogout }: Props) {
+export function FooterProfile({
+  profileImageType,
+  profileImageUrl,
+  name,
+  email,
+  onLogout,
+}: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const isSettingRoute = pathname?.startsWith('/setting');
@@ -30,7 +40,11 @@ export function FooterProfile({ img, name, email, onLogout }: Props) {
     >
       <Flex align="center" className="gap-3">
         <div className="shrink-0">
-          <Avatar size={44} src={img} />
+          <ProfileAvatar
+            profileImageType={profileImageType}
+            profileImageUrl={profileImageUrl}
+            size={44}
+          />
         </div>
         <Box className="min-w-0 flex-1">
           <Box className="typo-subtitle-16-bold truncate text-gray-700">
