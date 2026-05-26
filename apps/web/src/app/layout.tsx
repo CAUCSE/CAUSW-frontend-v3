@@ -65,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`antialiased`}>
+      <body className="antialiased select-none md:select-text">
         <MSWComponent>
           <QueryProviderWithDevtools>
             <Toaster />
