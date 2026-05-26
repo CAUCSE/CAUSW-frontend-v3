@@ -1,15 +1,18 @@
 'use client';
 
+import { type ComponentProps } from 'react';
+
 import { Avatar } from '@causw/cds';
 
 import { getProfileImageUrl } from '../../lib';
 import type { UserProfileImageType } from '../../types';
 
-interface ProfileAvatarProps {
+type BaseAvatarProps = Omit<ComponentProps<typeof Avatar>, 'size' | 'src'>;
+
+interface ProfileAvatarProps extends BaseAvatarProps {
   profileImageType: UserProfileImageType;
   profileImageUrl?: string | null;
   size: number;
-  className?: string;
 }
 
 export const ProfileAvatar = ({
