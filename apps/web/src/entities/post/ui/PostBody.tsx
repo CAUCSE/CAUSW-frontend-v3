@@ -91,7 +91,7 @@ export const PostBody = ({
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             suppressHydrationWarning
             style={collapseStyles}
-            className="break-all [&_a]:break-all [&_img]:h-auto [&_img]:max-w-full"
+            className="break-all [&_a]:break-all [&_a]:text-blue-600 [&_a]:underline [&_img]:h-auto [&_img]:max-w-full"
           />
         ) : (
           <Text
