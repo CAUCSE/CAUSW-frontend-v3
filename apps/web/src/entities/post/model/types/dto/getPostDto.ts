@@ -10,13 +10,11 @@ export interface GetPostResponseDto {
   fileUrlList: string[];
   numComment: number;
   numLike: number;
-  numFavorite: number;
   voteId?: string;
   isAnonymous: boolean;
   isCrawled: boolean;
   isOwner: boolean;
   isPostLike: boolean;
-  isPostFavorite: boolean;
   updatable: boolean;
   deletable: boolean;
   isOfficial: boolean;
