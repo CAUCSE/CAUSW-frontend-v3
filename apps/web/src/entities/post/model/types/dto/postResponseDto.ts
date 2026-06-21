@@ -7,4 +7,5 @@ export type PostResponseDto = Omit<
   postId: string;
   postImageUrls: string[];
   writerNickname: string;
+  isPostFavorite: boolean;
 };
