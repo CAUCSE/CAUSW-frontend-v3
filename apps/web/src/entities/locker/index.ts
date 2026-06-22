@@ -2,7 +2,8 @@ export {
   MyLockerInfoServerComponentSection,
   MyLockerInfoLoadingViewSection,
   LockerAvailabilitySummary,
-  LockerApplicationPeriodSection,
+  LockerApplicationPeriodSectionServerComponent,
+  LockerApplicationPeriodSectionLoadingView,
 } from './ui';
 export { lockerQueryKeys, lockerQueryOptions } from './config';
 export {
