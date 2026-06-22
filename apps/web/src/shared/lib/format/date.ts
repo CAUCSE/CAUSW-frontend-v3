@@ -213,3 +213,27 @@ export const formatDateTimeToMinute = (dateTime?: string | null): string => {
   }
   return dateTime.replace('T', ' ').slice(0, 16);
 };
+
+/**
+ * ISO 형식의 날짜와 시간을 한국식 오전/오후 표기로 표시합니다.
+ *
+ * @returns 예: "2026-04-24 오후 09:00"
+ */
+export const formatDateTimeToKRTime = (dateTime?: string | null): string => {
+  if (!dateTime) {
+    return '';
+  }
+
+  const parts = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).formatToParts(new Date(dateTime));
+  const getPart = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? '';
+
+  return `${getPart('year')}-${getPart('month')}-${getPart('day')} ${getPart('dayPeriod')} ${getPart('hour')}:${getPart('minute')}`;
+};
