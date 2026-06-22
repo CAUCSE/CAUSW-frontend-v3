@@ -9,6 +9,11 @@ interface LockerLocationInfoProps {
 }
 
 export const LockerLocationInfo = ({ floor }: LockerLocationInfoProps) => {
+  const availabilityRatio =
+    floor.totalCount > 0
+      ? Math.min(Math.max(floor.availableCount / floor.totalCount, 0), 1)
+      : 0;
+
   return (
     <VStack gap="md" className="rounded-md bg-white p-4">
       <HStack justify="between" align="center">
@@ -24,7 +29,7 @@ export const LockerLocationInfo = ({ floor }: LockerLocationInfoProps) => {
           <div
             className="absolute top-0 left-0 h-full rounded-full bg-blue-700"
             style={{
-              width: `${(floor.availableCount / floor.totalCount) * 100}%`,
+              width: `${availabilityRatio * 100}%`,
             }}
           />
         </div>
