@@ -231,6 +231,7 @@ export const formatDateTimeToKRTime = (dateTime?: string | null): string => {
     hour: '2-digit',
     minute: '2-digit',
     hour12: true,
+    timeZone: 'Asia/Seoul',
   }).formatToParts(new Date(dateTime));
   const getPart = (type: Intl.DateTimeFormatPartTypes) =>
     parts.find((part) => part.type === type)?.value ?? '';
