@@ -1,0 +1,1 @@
+export { LockerLocationsInfoSection } from './LockerLocationsInfoSection';
