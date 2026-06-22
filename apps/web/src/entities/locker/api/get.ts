@@ -19,3 +19,11 @@ export const getLockerLocations = async () => {
 
   return data;
 };
+
+export const getLockerApplicationPeriod = async () => {
+  const data = await API.get<GetLockerLocationsResponseDto>(
+    `${LOCKER_API_PREFIX}/period-status`,
+  );
+
+  return data;
+};

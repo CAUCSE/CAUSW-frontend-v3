@@ -2,7 +2,11 @@ import { queryOptions } from '@tanstack/react-query';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
-import { getLockerLocations, getMyLocker } from '../../api';
+import {
+  getLockerApplicationPeriod,
+  getLockerLocations,
+  getMyLocker,
+} from '../../api';
 import { lockerQueryKeys } from '../query-key';
 
 export const lockerQueryOptions = {
@@ -17,6 +21,13 @@ export const lockerQueryOptions = {
     queryOptions({
       queryKey: lockerQueryKeys.lockerLocations(),
       queryFn: getLockerLocations,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
+    }),
+  lockerApplicationPeriod: () =>
+    queryOptions({
+      queryKey: lockerQueryKeys.lockerApplicationPeriod(),
+      queryFn: getLockerApplicationPeriod,
       staleTime: QUERY_STALE_TIME.DEFAULT,
       throwOnError: true,
     }),

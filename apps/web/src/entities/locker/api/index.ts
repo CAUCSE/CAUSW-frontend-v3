@@ -1,1 +1,5 @@
-export { getMyLocker, getLockerLocations } from './get';
+export {
+  getMyLocker,
+  getLockerLocations,
+  getLockerApplicationPeriod,
+} from './get';
