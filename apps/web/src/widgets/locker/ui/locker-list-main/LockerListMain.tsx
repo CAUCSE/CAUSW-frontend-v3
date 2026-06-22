@@ -19,7 +19,12 @@ import {
 export const LockerListMain = () => {
   return (
     <VStack gap="none" className="px-5">
-      <Text typography="title-22-bold" textColor="gray-700" className="pl-1">
+      <Text
+        typography="title-22-bold"
+        textColor="gray-700"
+        className="pl-1"
+        as="h1"
+      >
         사물함 목록
       </Text>
       <Spacer size={4} />

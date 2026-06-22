@@ -17,7 +17,7 @@ export const LockerLocationInfo = ({ floor }: LockerLocationInfoProps) => {
   return (
     <VStack gap="md" className="rounded-md bg-white p-4">
       <HStack justify="between" align="center">
-        <Text typography="subtitle-18-bold" textColor="gray-700">
+        <Text typography="subtitle-18-bold" textColor="gray-700" as="h2">
           {floor.floorName}
         </Text>
         <Text typography="subtitle-18-bold" textColor="gray-700">
