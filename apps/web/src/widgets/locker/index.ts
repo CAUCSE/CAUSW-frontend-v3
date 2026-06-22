@@ -1,1 +1,0 @@
-export { LockerPageWidget } from './ui';

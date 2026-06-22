@@ -1,1 +1,0 @@
-export { lockerQueryOptions } from './lockerQueryOptions';

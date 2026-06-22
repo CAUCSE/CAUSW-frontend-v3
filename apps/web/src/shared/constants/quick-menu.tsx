@@ -1,7 +1,7 @@
-import { CafeteriaColored, FlagColored, LockerColored } from '@causw/cds';
+import { CafeteriaColored, FlagColored } from '@causw/cds';
 
 import { COPY } from './copy';
-import { EXTERNAL_ROUTES, ROUTES } from './routes';
+import { EXTERNAL_ROUTES } from './routes';
 
 export const QUICK_MENU_ITEMS = [
   {
@@ -13,10 +13,5 @@ export const QUICK_MENU_ITEMS = [
     label: COPY.QUICK_MENU_CAFETERIA,
     icon: <CafeteriaColored size={24} />,
     href: EXTERNAL_ROUTES.CAU_CAFETERIA,
-  },
-  {
-    label: COPY.QUICK_MENU_LOCKER,
-    icon: <LockerColored size={24} />,
-    href: ROUTES.LOCKER,
   },
 ];
