@@ -1,4 +1,4 @@
 export {
-  MyLockerInfoServerComponent,
-  MyLockerInfoLoadingView,
-} from './my-locker-info';
+  MyLockerInfoServerComponentSection,
+  MyLockerInfoLoadingViewSection,
+} from './my-locker-info-section';

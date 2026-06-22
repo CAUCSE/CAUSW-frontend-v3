@@ -1,6 +1,6 @@
-import { HStack, Skeleton, Text } from '@causw/cds';
+import { HStack, Text } from '@causw/cds';
 
-export const MyLockerInfoLoadingView = () => {
+export const MyLockerInfoEmptyViewSection = () => {
   return (
     <HStack
       justify="between"
@@ -10,7 +10,9 @@ export const MyLockerInfoLoadingView = () => {
       <Text typography="body-16-medium" textColor="gray-500">
         현재 사물함
       </Text>
-      <Skeleton height={26} width={58} />
+      <Text typography="subtitle-16-bold" textColor="gray-700">
+        없음
+      </Text>
     </HStack>
   );
 };

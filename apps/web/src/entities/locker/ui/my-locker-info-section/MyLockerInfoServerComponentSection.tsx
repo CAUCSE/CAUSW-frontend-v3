@@ -8,9 +8,9 @@ import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import { lockerQueryOptions } from '../../config';
 
-import { MyLockerInfo } from './MyLockerInfo';
+import { MyLockerInfoSection } from './MyLockerInfoSection';
 
-export const MyLockerInfoServerComponent = async () => {
+export const MyLockerInfoServerComponentSection = async () => {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -23,7 +23,7 @@ export const MyLockerInfoServerComponent = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MyLockerInfo />
+      <MyLockerInfoSection />
     </HydrationBoundary>
   );
 };

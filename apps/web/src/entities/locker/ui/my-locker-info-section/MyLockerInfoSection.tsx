@@ -8,17 +8,21 @@ import { formatDateTimeToMinute } from '@/shared/lib';
 
 import { lockerQueryOptions } from '../../config';
 
-import { MyLockerInfoEmptyView } from './MyLockerInfoEmptyView';
+import { MyLockerInfoEmptyViewSection } from './MyLockerInfoEmptyViewSection';
 
-export const MyLockerInfo = () => {
+export const MyLockerInfoSection = () => {
   const { data: myLocker } = useSuspenseQuery(lockerQueryOptions.myLocker());
 
   if (!myLocker.hasLocker) {
-    return <MyLockerInfoEmptyView />;
+    return <MyLockerInfoEmptyViewSection />;
   }
 
   return (
-    <VStack gap="none" className="gap-5 rounded-lg bg-white px-5 py-4">
+    <VStack
+      gap="none"
+      className="gap-5 rounded-lg bg-white px-5 py-4"
+      as="section"
+    >
       <HStack justify="between" align="center">
         <Text typography="body-16-medium" textColor="gray-500">
           현재 사물함
