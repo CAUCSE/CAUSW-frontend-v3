@@ -200,3 +200,16 @@ export const formatTimeDifference = (time: string) => {
 
   return `${years}년 전`;
 };
+
+/**
+ * ISO 형식의 날짜와 시간을 분 단위까지 표시합니다.
+ *
+ * @param dateTime "YYYY-MM-DDTHH:mm:ss" 형식 문자열
+ * @returns 예: "2026-09-01 12:17"
+ */
+export const formatDateTimeToMinute = (dateTime?: string | null): string => {
+  if (!dateTime) {
+    return '';
+  }
+  return dateTime.replace('T', ' ').slice(0, 16);
+};
