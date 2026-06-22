@@ -23,7 +23,9 @@ export const LockerLocationsInfoSection = () => {
         totalCount={lockerLocations.summary.totalCount}
       />
       {lockerLocations.floors
-        .sort((a, b) => a.floorName.localeCompare(b.floorName))
+        .toSorted((a, b) =>
+          a.floorName.localeCompare(b.floorName, 'ko-KR', { numeric: true }),
+        )
         .map((floor) => {
           return <LockerLocationInfo key={floor.locationId} floor={floor} />;
         })}
