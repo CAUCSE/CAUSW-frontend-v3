@@ -1,9 +1,10 @@
 import { API } from '@/shared/api';
 
 import { LOCKER_API_PREFIX } from '../config';
-import {
-  type GetLockerLocationsResponseDto,
-  type GetMyLockerResponseDto,
+import type {
+  GetLockerAppicationPeriodResponseDto,
+  GetLockerLocationsResponseDto,
+  GetMyLockerResponseDto,
 } from '../types';
 
 export const getMyLocker = async () => {
@@ -21,7 +22,7 @@ export const getLockerLocations = async () => {
 };
 
 export const getLockerApplicationPeriod = async () => {
-  const data = await API.get<GetLockerLocationsResponseDto>(
+  const data = await API.get<GetLockerAppicationPeriodResponseDto>(
     `${LOCKER_API_PREFIX}/period-status`,
   );
 
