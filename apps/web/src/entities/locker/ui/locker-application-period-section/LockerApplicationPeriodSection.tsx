@@ -13,6 +13,12 @@ export const LockerApplicationPeriodSection = () => {
     lockerQueryOptions.lockerApplicationPeriod(),
   );
 
+  const startAt = lockerApplicationPeriod.startAt
+    ? formatDateTimeToKRTime(lockerApplicationPeriod.startAt)
+    : '-';
+  const endAt = lockerApplicationPeriod.endAt
+    ? formatDateTimeToKRTime(lockerApplicationPeriod.endAt)
+    : '-';
   return (
     <VStack gap="none" className="gap-2.5">
       <HStack gap="xs" align="center" className="px-1">
@@ -24,7 +30,7 @@ export const LockerApplicationPeriodSection = () => {
       <VStack className="rounded-lg bg-white px-5 py-4">
         <HStack align="center" justify="between">
           <Text typography="subtitle-16-bold" textColor="gray-700">
-            {formatDateTimeToKRTime(lockerApplicationPeriod.startAt)}
+            {startAt}
           </Text>
           <Text typography="body-16-medium" textColor="gray-500">
             부터
@@ -32,7 +38,7 @@ export const LockerApplicationPeriodSection = () => {
         </HStack>
         <HStack align="center" justify="between">
           <Text typography="subtitle-16-bold" textColor="gray-700">
-            {formatDateTimeToKRTime(lockerApplicationPeriod.endAt)}
+            {endAt}
           </Text>
           <Text typography="body-16-medium" textColor="gray-500">
             까지

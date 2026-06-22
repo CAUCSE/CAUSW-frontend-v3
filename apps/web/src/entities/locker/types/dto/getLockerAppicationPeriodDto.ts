@@ -1,5 +1,5 @@
 export interface GetLockerAppicationPeriodResponseDto {
   phase: 'READY' | 'APPLY' | 'EXTEND' | 'CLOSED';
-  startAt: string;
-  endAt: string;
+  startAt: string | null;
+  endAt: string | null;
 }
