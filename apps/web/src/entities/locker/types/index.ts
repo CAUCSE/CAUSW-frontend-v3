@@ -1,1 +1,4 @@
-export { type GetMyLockerResponseDto } from './dto';
+export type {
+  GetMyLockerResponseDto,
+  GetLockerLocationsResponseDto,
+} from './dto';
