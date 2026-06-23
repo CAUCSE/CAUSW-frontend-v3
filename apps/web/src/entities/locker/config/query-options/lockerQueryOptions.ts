@@ -4,9 +4,11 @@ import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import {
   getLockerApplicationPeriod,
+  getLockerLocation,
   getLockerLocations,
   getMyLocker,
 } from '../../api';
+import { type GetLockerLocationParam } from '../../types';
 import { lockerQueryKeys } from '../query-key';
 
 export const lockerQueryOptions = {
@@ -28,6 +30,13 @@ export const lockerQueryOptions = {
     queryOptions({
       queryKey: lockerQueryKeys.lockerApplicationPeriod(),
       queryFn: getLockerApplicationPeriod,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
+    }),
+  lockerLocation: (param: GetLockerLocationParam) =>
+    queryOptions({
+      queryKey: lockerQueryKeys.lockerLocation(param),
+      queryFn: () => getLockerLocation(param),
       staleTime: QUERY_STALE_TIME.DEFAULT,
       throwOnError: true,
     }),
