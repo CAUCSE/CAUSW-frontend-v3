@@ -7,3 +7,4 @@ export {
   LockerApplicationPeriodSectionServerComponent,
   LockerApplicationPeriodSectionLoadingView,
 } from './locker-application-period-section';
+export { LockerStatusLegend } from './locker-status-legend';
