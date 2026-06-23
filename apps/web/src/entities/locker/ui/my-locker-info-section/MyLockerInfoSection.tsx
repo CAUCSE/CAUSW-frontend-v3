@@ -10,8 +10,18 @@ import { lockerQueryOptions } from '../../config';
 
 import { MyLockerInfoEmptyViewSection } from './MyLockerInfoEmptyViewSection';
 
-export const MyLockerInfoSection = () => {
+interface MyLockerInfoSectionProps {
+  hideWhenEmpty?: boolean;
+}
+
+export const MyLockerInfoSection = ({
+  hideWhenEmpty = false,
+}: MyLockerInfoSectionProps) => {
   const { data: myLocker } = useSuspenseQuery(lockerQueryOptions.myLocker());
+
+  if (hideWhenEmpty && !myLocker.hasLocker) {
+    return null;
+  }
 
   if (!myLocker.hasLocker) {
     return <MyLockerInfoEmptyViewSection />;
