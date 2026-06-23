@@ -1,1 +1,1 @@
-export { OpenLockerApplicationButton } from './ui';
+export { OpenLockerApplicationButton, LockerSelectButton } from './ui';
