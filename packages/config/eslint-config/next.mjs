@@ -175,8 +175,12 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  // Next.js intercepting routes ((.), (..), (...))와 병렬 라우트(@slot)는
+  // check-file의 NEXT_JS_APP_ROUTER_CASE 패턴이 충분히 지원하지 않으므로
+  // (intercepting 미지원, 병렬 라우트는 @kebab-case만 허용) 규칙을 끈다.
+  // 라우트 그룹 (group)은 '('+문자로 시작하므로 '\\(.*'에 매칭되지 않는다.
   {
-    files: ['**/\\(\\.\\)feed/**'],
+    files: ['**/\\(.*\\)/**', '**/@*/**'],
     rules: {
       'check-file/folder-naming-convention': 'off',
     },
