@@ -6,12 +6,16 @@ import { type GetLockerLocationResponseDto } from '@/entities/locker';
 
 interface LockerSelectionGridProps {
   lockers: GetLockerLocationResponseDto['lockers'];
+  canChangeLockerState?: boolean;
+  hasLocker?: boolean;
   selectedLockerId: string | null;
   onSelectLocker: (lockerId: string) => void;
 }
 
 export const LockerSelectionGrid = ({
   lockers,
+  canChangeLockerState = false,
+  hasLocker = false,
   selectedLockerId,
   onSelectLocker,
 }: LockerSelectionGridProps) => {
@@ -25,6 +29,8 @@ export const LockerSelectionGrid = ({
           <LockerSelectButton
             key={locker.lockerId}
             locker={locker}
+            canChangeLockerState={canChangeLockerState}
+            hasLocker={hasLocker}
             isSelected={selectedLockerId === locker.lockerId}
             onClick={() => onSelectLocker(locker.lockerId)}
           />
