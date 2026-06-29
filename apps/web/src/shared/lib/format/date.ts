@@ -211,7 +211,20 @@ export const formatDateTimeToMinute = (dateTime?: string | null): string => {
   if (!dateTime) {
     return '';
   }
-  return dateTime.replace('T', ' ').slice(0, 16);
+
+  try {
+    const date = new Date(dateTime);
+    return new Intl.DateTimeFormat('sv-SE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Asia/Seoul',
+    }).format(date);
+  } catch {
+    return '';
+  }
 };
 
 /**
