@@ -1,1 +1,5 @@
-export { LockerListHeader, LockerListMain, LockerApplyModal } from './ui';
+export {
+  LockerListHeader,
+  LockerListMain,
+  LockerApplyModalWrapper,
+} from './ui';

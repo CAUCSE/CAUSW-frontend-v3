@@ -1,1 +1,1 @@
-export { LockerApplyModal } from './LockerApplyModal';
+export { LockerApplyModalWrapper } from './LockerApplyModalWrapper';
