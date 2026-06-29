@@ -30,6 +30,7 @@ export const useLockerApplication = ({
     queries: [
       {
         ...lockerQueryOptions.lockerLocation({ locationId }),
+        retry: 1,
       },
       {
         ...lockerQueryOptions.myLocker(),
