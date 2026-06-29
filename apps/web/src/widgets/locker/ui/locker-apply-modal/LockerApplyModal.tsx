@@ -1,6 +1,6 @@
 'use client';
 
-import { Dialog, mergeStyles, VStack } from '@causw/cds';
+import { Dialog, VStack } from '@causw/cds';
 
 import {
   LockerAvailabilitySummary,
@@ -10,6 +10,7 @@ import {
 
 import { useBreakpoint } from '@/shared/hooks';
 
+import { lockerApplyModalDefaultCss } from '../../config';
 import { useLockerApplication } from '../../model';
 import { LockerApplyModalActionButtons } from '../locker-apply-modal-action-buttons';
 import { LockerApplyModalHeader } from '../locker-apply-modal-header';
@@ -47,11 +48,7 @@ export const LockerApplyModal = ({ locationId }: LockerApplyModalProps) => {
           e.preventDefault();
           handleCloseModal(false);
         }}
-        className={mergeStyles(
-          'flex flex-col overflow-hidden bg-gray-100 md:h-187.5 md:w-142 lg:w-175',
-          isMobileSize &&
-            'animate-none! transition-none! data-[state=closed]:animate-none! data-[state=open]:animate-none!',
-        )}
+        className={lockerApplyModalDefaultCss(isMobileSize)}
       >
         <Dialog.Title className="sr-only">사물함 신청하기</Dialog.Title>
         <Dialog.Description className="sr-only">
