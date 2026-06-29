@@ -27,14 +27,12 @@ export const LockerApplyModalActionButtons = ({
   handleReturnLocker,
   handleExtendLocker,
 }: LockerApplyModalActionButtonsProps) => {
-  const canChangeLockerState = canApply || canExtend;
-
-  if (!myLocker.hasLocker || !canChangeLockerState) {
+  if (!myLocker.hasLocker) {
     return (
       <CTAButton
         color="dark"
         className="w-full"
-        disabled={!selectedLockerId}
+        disabled={!selectedLockerId || !canApply}
         onClick={handleRegisterLocker}
       >
         신청하기

@@ -71,8 +71,10 @@ export const LockerApplyModal = ({ locationId }: LockerApplyModalProps) => {
               lockers={lockerLocation.lockers}
               hasLocker={myLocker.hasLocker}
               canChangeLockerState={
-                lockerLocation.currentPolicy.canApply ||
-                lockerLocation.currentPolicy.canExtend
+                myLocker.hasLocker
+                  ? lockerLocation.currentPolicy.canApply ||
+                    lockerLocation.currentPolicy.canExtend
+                  : lockerLocation.currentPolicy.canApply
               }
               selectedLockerId={selectedLockerId}
               onSelectLocker={selectLocker}
