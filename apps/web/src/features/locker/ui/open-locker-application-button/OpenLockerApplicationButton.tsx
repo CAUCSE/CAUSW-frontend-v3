@@ -23,9 +23,7 @@ export const OpenLockerApplicationButton = ({
     <CTAButton
       color="blue"
       className="w-full"
-      onClick={() => {
-        handleClickOpenLockerApplication();
-      }}
+      onClick={handleClickOpenLockerApplication}
     >
       사물함 신청하기
     </CTAButton>
