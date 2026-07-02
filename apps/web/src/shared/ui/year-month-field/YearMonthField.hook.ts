@@ -45,6 +45,7 @@ export const useYearMonthField = ({
   const isMonthEditingRef = useRef(false);
   const isYearComposingRef = useRef(false);
   const isMonthComposingRef = useRef(false);
+  const lastSectionSelectAtRef = useRef(0);
 
   const yearDisplayText = formatYear(year);
   const monthDisplayText = formatMonth(month);
@@ -92,6 +93,7 @@ export const useYearMonthField = ({
     event: FocusEvent<HTMLInputElement>,
     section: YearMonthSection,
   ) => {
+    lastSectionSelectAtRef.current = Date.now();
     setActiveSection(section);
 
     if (section === YEAR_MONTH_SECTION.YEAR) {
@@ -105,6 +107,7 @@ export const useYearMonthField = ({
 
   // 이미 focus된 섹션을 다시 클릭해도 부분 커서가 생기지 않고 전체 선택을 유지한다.
   const handleSectionClick = (event: MouseEvent<HTMLInputElement>) => {
+    lastSectionSelectAtRef.current = Date.now();
     event.currentTarget.select();
   };
 
@@ -113,9 +116,13 @@ export const useYearMonthField = ({
     event.preventDefault();
   };
 
-  // 모바일에서 길게 누를 때 텍스트 선택 메뉴가 뜨지 않도록 context menu 기본 동작을 막는다.
+  // 모바일에서 단순 tap 직후 선택 메뉴가 뜨는 경우만 막고, long press 메뉴는 허용한다.
   const handleContextMenu = (event: MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+    const elapsedTimeAfterSelect = Date.now() - lastSectionSelectAtRef.current;
+
+    if (elapsedTimeAfterSelect < 400) {
+      event.preventDefault();
+    }
   };
 
   // input이 아닌 wrapper 영역을 클릭하면 기본 진입점인 연도 섹션으로 focus를 보낸다.
@@ -127,7 +134,9 @@ export const useYearMonthField = ({
       return;
     }
 
-    focusSection(yearInputRef.current, YEAR_MONTH_SECTION.YEAR);
+    focusSection(yearInputRef.current, YEAR_MONTH_SECTION.YEAR, {
+      isUserTap: true,
+    });
   };
 
   // 연도와 월 input 바깥으로 focus가 완전히 빠질 때만 활성 섹션 표시를 제거한다.
@@ -146,7 +155,14 @@ export const useYearMonthField = ({
   const focusSection = (
     element: HTMLInputElement | null,
     section: YearMonthSection,
+    options?: {
+      isUserTap?: boolean;
+    },
   ) => {
+    if (options?.isUserTap) {
+      lastSectionSelectAtRef.current = Date.now();
+    }
+
     setActiveSection(section);
 
     if (section === YEAR_MONTH_SECTION.YEAR) {
