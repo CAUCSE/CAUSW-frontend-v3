@@ -83,6 +83,7 @@ export const LockerApplyModal = ({ locationId }: LockerApplyModalProps) => {
           <LockerApplyModalActionButtons
             myLocker={myLocker}
             selectedLockerId={selectedLockerId}
+            isExtended={myLocker.isExtended ?? false}
             canApply={lockerLocation.currentPolicy.canApply}
             canExtend={lockerLocation.currentPolicy.canExtend}
             expiredAt={lockerLocation.currentPolicy.expireDate}

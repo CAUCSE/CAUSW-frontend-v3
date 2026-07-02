@@ -3,4 +3,5 @@ export interface GetMyLockerResponseDto {
   lockerId: string | null;
   displayName: string | null;
   expiredAt: string | null;
+  isExtended: boolean | null;
 }

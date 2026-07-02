@@ -9,6 +9,7 @@ import { LockerExtensionDialog } from '../locker-extension-dialog';
 interface LockerApplyModalActionButtonsProps {
   myLocker: GetMyLockerResponseDto;
   selectedLockerId: string | null;
+  isExtended?: boolean;
   canApply?: boolean;
   canExtend?: boolean;
   expiredAt: string | null;
@@ -20,6 +21,7 @@ interface LockerApplyModalActionButtonsProps {
 export const LockerApplyModalActionButtons = ({
   myLocker,
   selectedLockerId,
+  isExtended = false,
   canApply = false,
   canExtend = false,
   expiredAt,
@@ -49,11 +51,13 @@ export const LockerApplyModalActionButtons = ({
       >
         반납하기
       </CTAButton>
-      <LockerExtensionDialog
-        handleExtendLocker={() => handleExtendLocker(myLocker.lockerId)}
-        expiredAt={expiredAt ?? ''}
-        disabled={!canExtend}
-      />
+      {!isExtended && (
+        <LockerExtensionDialog
+          handleExtendLocker={() => handleExtendLocker(myLocker.lockerId)}
+          expiredAt={expiredAt ?? ''}
+          disabled={!canExtend}
+        />
+      )}
     </HStack>
   );
 };
