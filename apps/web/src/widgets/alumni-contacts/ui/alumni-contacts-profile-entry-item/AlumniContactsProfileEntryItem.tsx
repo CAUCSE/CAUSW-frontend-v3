@@ -65,11 +65,15 @@ export const AlumniContactsProfileEntryItem = ({
         <Text typography="body-16-regular" textColor="gray-700">
           {description}
         </Text>
-        <Text typography="body-14-regular" textColor="gray-400">
-          {startYear}년{startMonth}월 -{' '}
+        <Text
+          typography="body-14-regular"
+          textColor="gray-400"
+          className="whitespace-pre-wrap"
+        >
+          {startYear}년 {startMonth}월 -{' '}
           {isNil(endYear) || isNil(endMonth)
             ? currentLabel
-            : `${endYear}년${endMonth}월`}
+            : `${endYear}년 ${endMonth}월`}
         </Text>
       </VStack>
       <AlumniContactsProfileEntryEditDialog
