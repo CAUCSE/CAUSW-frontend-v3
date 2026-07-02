@@ -24,13 +24,41 @@ import { type AlumniContactsProfileEntryType } from '../../config';
 import { createAlumniContactsProfileEntry } from '../createAlumniContactsProfileEntry';
 import { sortAlumniContactsProfileEntry } from '../sortAlumniContactsProfileEntry';
 
-const createDate = (startYear?: number | null, startMonth?: number | null) => {
-  if (isNil(startYear) || isNil(startMonth)) {
+const MIN_YEAR = 1900;
+
+const formatYearMonthValue = (value?: number | null) =>
+  isNil(value) ? '' : String(value);
+
+const parseYearMonth = (year: string, month: string) => {
+  if (year.length !== 4 || month === '') {
     return undefined;
   }
 
-  return new Date(startYear, startMonth - 1);
+  const yearNumber = Number(year);
+  const monthNumber = Number(month);
+  const currentYear = new Date().getFullYear();
+
+  if (
+    !Number.isInteger(yearNumber) ||
+    !Number.isInteger(monthNumber) ||
+    yearNumber < MIN_YEAR ||
+    yearNumber > currentYear ||
+    monthNumber < 1 ||
+    monthNumber > 12
+  ) {
+    return undefined;
+  }
+
+  return {
+    year: yearNumber,
+    month: monthNumber,
+  };
 };
+
+const compareYearMonth = (
+  a: { year: number; month: number },
+  b: { year: number; month: number },
+) => a.year - b.year || a.month - b.month;
 
 interface UseAlumniContactsProfileEntryEditDialogProps {
   fieldIndex: number;
@@ -58,26 +86,66 @@ export const useAlumniContactsProfileEntryEditDialog = ({
     currentProfileEntry.description,
   );
 
-  const [currentStartDate, setCurrentStartDate] = useState<Date | undefined>(
-    createDate(currentProfileEntry.startYear, currentProfileEntry.startMonth),
+  const [currentStartYear, setCurrentStartYear] = useState<string>(
+    formatYearMonthValue(currentProfileEntry.startYear),
   );
-
-  const [currentEndDate, setCurrentEndDate] = useState<Date | undefined>(
-    createDate(currentProfileEntry.endYear, currentProfileEntry.endMonth),
+  const [currentStartMonth, setCurrentStartMonth] = useState<string>(
+    formatYearMonthValue(currentProfileEntry.startMonth),
+  );
+  const [currentEndYear, setCurrentEndYear] = useState<string>(
+    formatYearMonthValue(currentProfileEntry.endYear),
+  );
+  const [currentEndMonth, setCurrentEndMonth] = useState<string>(
+    formatYearMonthValue(currentProfileEntry.endMonth),
   );
 
   const [isCurrent, setIsCurrent] = useState<boolean>(
     isNil(currentProfileEntry.endYear) || isNil(currentProfileEntry.endMonth),
   );
 
-  const canSave = useMemo(() => {
-    if (isCurrent) {
-      return currentFieldValue.trim() !== '' && currentStartDate;
+  const saveButtonPayload = useMemo(() => {
+    const startYearMonth = parseYearMonth(currentStartYear, currentStartMonth);
+    const endYearMonth = parseYearMonth(currentEndYear, currentEndMonth);
+
+    if (!startYearMonth) {
+      return undefined;
     }
-    return (
-      currentFieldValue.trim() !== '' && currentStartDate && currentEndDate
-    );
-  }, [currentFieldValue, currentStartDate, currentEndDate, isCurrent]);
+
+    if (isCurrent) {
+      return {
+        entry: currentFieldValue,
+        isCurrent,
+        startYear: startYearMonth.year,
+        startMonth: startYearMonth.month,
+        endYear: null,
+        endMonth: null,
+      };
+    }
+
+    if (!endYearMonth || compareYearMonth(startYearMonth, endYearMonth) > 0) {
+      return undefined;
+    }
+
+    return {
+      entry: currentFieldValue,
+      isCurrent,
+      startYear: startYearMonth.year,
+      startMonth: startYearMonth.month,
+      endYear: endYearMonth.year,
+      endMonth: endYearMonth.month,
+    };
+  }, [
+    currentFieldValue,
+    currentStartYear,
+    currentStartMonth,
+    currentEndYear,
+    currentEndMonth,
+    isCurrent,
+  ]);
+
+  const canSave = useMemo(() => {
+    return currentFieldValue.trim() !== '' && Boolean(saveButtonPayload);
+  }, [currentFieldValue, saveButtonPayload]);
 
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const isComposingRef = useRef<boolean>(false);
@@ -85,15 +153,12 @@ export const useAlumniContactsProfileEntryEditDialog = ({
   useEffect(() => {
     const initializeFieldValue = () => {
       setCurrentFieldValue(currentProfileEntry.description);
-      setCurrentStartDate(
-        createDate(
-          currentProfileEntry.startYear,
-          currentProfileEntry.startMonth,
-        ),
+      setCurrentStartYear(formatYearMonthValue(currentProfileEntry.startYear));
+      setCurrentStartMonth(
+        formatYearMonthValue(currentProfileEntry.startMonth),
       );
-      setCurrentEndDate(
-        createDate(currentProfileEntry.endYear, currentProfileEntry.endMonth),
-      );
+      setCurrentEndYear(formatYearMonthValue(currentProfileEntry.endYear));
+      setCurrentEndMonth(formatYearMonthValue(currentProfileEntry.endMonth));
       setIsCurrent(
         isNil(currentProfileEntry.endYear) ||
           isNil(currentProfileEntry.endMonth),
@@ -144,18 +209,20 @@ export const useAlumniContactsProfileEntryEditDialog = ({
     }
   };
 
-  const handleStartDateChange = (date: Date) => {
-    if (currentEndDate && date > currentEndDate) {
-      setCurrentEndDate(date);
-    }
-    setCurrentStartDate(date);
+  const handleStartYearChange = (year: string) => {
+    setCurrentStartYear(year);
   };
 
-  const handleEndDateChange = (date: Date) => {
-    if (currentStartDate && date < currentStartDate) {
-      setCurrentStartDate(date);
-    }
-    setCurrentEndDate(date);
+  const handleStartMonthChange = (month: string) => {
+    setCurrentStartMonth(month);
+  };
+
+  const handleEndYearChange = (year: string) => {
+    setCurrentEndYear(year);
+  };
+
+  const handleEndMonthChange = (month: string) => {
+    setCurrentEndMonth(month);
   };
 
   const handleToggleChange = (checked: boolean) => {
@@ -163,7 +230,7 @@ export const useAlumniContactsProfileEntryEditDialog = ({
   };
 
   const handleClickSaveButton = () => {
-    if (!canSave || !currentStartDate) {
+    if (!canSave || !saveButtonPayload) {
       return;
     }
 
@@ -173,10 +240,12 @@ export const useAlumniContactsProfileEntryEditDialog = ({
 
     const updateProfileEntry = createAlumniContactsProfileEntry({
       id: currentProfileEntry.id,
-      entry: currentFieldValue,
-      isCurrent,
-      startDate: currentStartDate,
-      endDate: currentEndDate,
+      entry: saveButtonPayload.entry,
+      isCurrent: saveButtonPayload.isCurrent,
+      startYear: saveButtonPayload.startYear,
+      startMonth: saveButtonPayload.startMonth,
+      endYear: saveButtonPayload.endYear,
+      endMonth: saveButtonPayload.endMonth,
     });
 
     const newProfileEntrySet = [
@@ -196,8 +265,10 @@ export const useAlumniContactsProfileEntryEditDialog = ({
   return {
     isOpen,
     currentFieldValue,
-    currentStartDate,
-    currentEndDate,
+    currentStartYear,
+    currentStartMonth,
+    currentEndYear,
+    currentEndMonth,
     isCurrent,
     canSave,
     saveButtonRef,
@@ -208,8 +279,10 @@ export const useAlumniContactsProfileEntryEditDialog = ({
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
-    handleStartDateChange,
-    handleEndDateChange,
+    handleStartYearChange,
+    handleStartMonthChange,
+    handleEndYearChange,
+    handleEndMonthChange,
     handleToggleChange,
     handleClickSaveButton,
     handleClickDeleteButton,

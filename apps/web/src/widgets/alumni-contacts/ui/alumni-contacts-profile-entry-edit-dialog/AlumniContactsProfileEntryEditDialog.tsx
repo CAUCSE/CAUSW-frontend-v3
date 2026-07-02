@@ -13,8 +13,9 @@ import {
 import {
   AlumniContactsFieldEditButton,
   AlumniContactsProfileEntryCurrentToggle,
-  AlumniContactsProfileEntryDatePicker,
 } from '@/features/alumni-contacts';
+
+import { YearMonthField } from '@/shared/ui';
 
 import { type AlumniContactsProfileEntryType } from '../../config';
 import { useAlumniContactsProfileEntryEditDialog } from '../../model';
@@ -43,8 +44,10 @@ export const AlumniContactsProfileEntryEditDialog = ({
   const {
     isOpen,
     currentFieldValue,
-    currentStartDate,
-    currentEndDate,
+    currentStartYear,
+    currentStartMonth,
+    currentEndYear,
+    currentEndMonth,
     isCurrent,
     canSave,
     saveButtonRef,
@@ -55,8 +58,10 @@ export const AlumniContactsProfileEntryEditDialog = ({
     handleCompositionStart,
     handleCompositionEnd,
     handleEnterPress,
-    handleStartDateChange,
-    handleEndDateChange,
+    handleStartYearChange,
+    handleStartMonthChange,
+    handleEndYearChange,
+    handleEndMonthChange,
     handleToggleChange,
     handleClickSaveButton,
     handleClickDeleteButton,
@@ -110,17 +115,23 @@ export const AlumniContactsProfileEntryEditDialog = ({
             <Text typography="subtitle-18-bold" textColor="gray-700">
               기간
             </Text>
-            <HStack gap="sm" className="items-center">
-              <AlumniContactsProfileEntryDatePicker
-                date={currentStartDate}
-                onDateChange={handleStartDateChange}
+            <HStack className="flex-1 items-center" gap="sm">
+              <YearMonthField
+                className="flex-1"
+                year={currentStartYear}
+                month={currentStartMonth}
+                onYearChange={handleStartYearChange}
+                onMonthChange={handleStartMonthChange}
               />
               {!isCurrent && (
                 <>
                   <div className="h-px w-2 shrink-0 bg-gray-300" />
-                  <AlumniContactsProfileEntryDatePicker
-                    date={currentEndDate}
-                    onDateChange={handleEndDateChange}
+                  <YearMonthField
+                    className="flex-1"
+                    year={currentEndYear}
+                    month={currentEndMonth}
+                    onYearChange={handleEndYearChange}
+                    onMonthChange={handleEndMonthChange}
                   />
                 </>
               )}

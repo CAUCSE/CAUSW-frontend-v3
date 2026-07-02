@@ -10,12 +10,20 @@ import {
   VStack,
 } from '@causw/cds';
 
-import {
-  AlumniContactsProfileEntryCurrentToggle,
-  AlumniContactsProfileEntryDatePicker,
-} from '@/features/alumni-contacts';
+import { AlumniContactsProfileEntryCurrentToggle } from '@/features/alumni-contacts';
+
+import { YearMonthField } from '@/shared/ui';
 
 import { useAlumniContactsProfileEntryAddDialog } from '../../model';
+
+export interface AlumniContactsProfileEntryAddPayload {
+  entry: string;
+  isCurrent: boolean;
+  startYear: number;
+  startMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
+}
 
 interface AlumniContactsProfileEntryAddDialogProps {
   isOpen: boolean;
@@ -25,12 +33,7 @@ interface AlumniContactsProfileEntryAddDialogProps {
   placeholder: string;
   maxLength?: number;
   toggleLabel: string;
-  onClickAddButton?: (
-    entry: string,
-    isCurrent: boolean,
-    startDate?: Date,
-    endDate?: Date,
-  ) => void;
+  onClickAddButton?: (entry: AlumniContactsProfileEntryAddPayload) => void;
 }
 
 export const AlumniContactsProfileEntryAddDialog = ({
@@ -45,10 +48,13 @@ export const AlumniContactsProfileEntryAddDialog = ({
 }: AlumniContactsProfileEntryAddDialogProps) => {
   const {
     newEntry,
-    startDate,
-    endDate,
+    startYear,
+    startMonth,
+    endYear,
+    endMonth,
     isCurrent,
     canAdd,
+    addButtonPayload,
     addButtonRef,
     handleInitialFocus,
     handleOpenChange,
@@ -56,8 +62,10 @@ export const AlumniContactsProfileEntryAddDialog = ({
     handleEntryEnterPress,
     handleCompositionStart,
     handleCompositionEnd,
-    handleStartDateChange,
-    handleEndDateChange,
+    handleStartYearChange,
+    handleStartMonthChange,
+    handleEndYearChange,
+    handleEndMonthChange,
     handleToggleChange,
   } = useAlumniContactsProfileEntryAddDialog({
     maxLength,
@@ -102,17 +110,23 @@ export const AlumniContactsProfileEntryAddDialog = ({
           <Text typography="subtitle-18-bold" textColor="gray-700">
             기간
           </Text>
-          <HStack gap="sm" className="items-center">
-            <AlumniContactsProfileEntryDatePicker
-              date={startDate}
-              onDateChange={handleStartDateChange}
+          <HStack className="flex-1 items-center" gap="sm">
+            <YearMonthField
+              className="flex-1"
+              year={startYear}
+              month={startMonth}
+              onYearChange={handleStartYearChange}
+              onMonthChange={handleStartMonthChange}
             />
             {!isCurrent && (
               <>
                 <div className="h-px w-2 shrink-0 bg-gray-300" />
-                <AlumniContactsProfileEntryDatePicker
-                  date={endDate}
-                  onDateChange={handleEndDateChange}
+                <YearMonthField
+                  className="flex-1"
+                  year={endYear}
+                  month={endMonth}
+                  onYearChange={handleEndYearChange}
+                  onMonthChange={handleEndMonthChange}
                 />
               </>
             )}
@@ -126,9 +140,13 @@ export const AlumniContactsProfileEntryAddDialog = ({
         <Dialog.Footer>
           <Dialog.Close
             asChild
-            onClick={() =>
-              onClickAddButton?.(newEntry, isCurrent, startDate, endDate)
-            }
+            onClick={() => {
+              if (!addButtonPayload) {
+                return;
+              }
+
+              onClickAddButton?.(addButtonPayload);
+            }}
           >
             <Button
               className="h-13 w-full rounded-md bg-gray-700 text-white hover:bg-gray-800! disabled:bg-gray-200! disabled:[&_span]:text-gray-300!"
