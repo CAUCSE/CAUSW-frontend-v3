@@ -243,7 +243,12 @@ export const useYearMonthField = ({
       return;
     }
 
-    if (event.key.length === 1) {
+    if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
       event.preventDefault();
     }
   };
@@ -303,7 +308,12 @@ export const useYearMonthField = ({
       return;
     }
 
-    if (event.key.length === 1) {
+    if (
+      event.key.length === 1 &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
       event.preventDefault();
     }
   };
