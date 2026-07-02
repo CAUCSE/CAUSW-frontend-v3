@@ -31,6 +31,7 @@ export const YearMonthField = ({
     handleSectionFocus,
     handleSectionClick,
     handleSectionMouseUp,
+    handleContextMenu,
     handleWrapperClick,
     handleSectionBlur,
     handleYearKeyDown,
@@ -50,10 +51,11 @@ export const YearMonthField = ({
       justify="between"
       align="center"
       className={mergeStyles(
-        'w-fit shrink-0 cursor-pointer rounded-lg bg-gray-100 px-4 py-3',
+        'w-fit shrink-0 cursor-pointer rounded-lg bg-gray-100 px-4 py-3 [-webkit-touch-callout:none]',
         className,
       )}
       onClick={handleWrapperClick}
+      onContextMenu={handleContextMenu}
     >
       <HStack gap="none" align="center">
         <span
@@ -72,7 +74,7 @@ export const YearMonthField = ({
             inputMode="numeric"
             maxLength={4}
             className={mergeStyles(
-              'absolute inset-0 w-full min-w-0 bg-transparent p-0 text-center caret-transparent outline-none selection:bg-blue-200',
+              'absolute inset-0 w-full min-w-0 bg-transparent p-0 text-center caret-transparent outline-none [-webkit-touch-callout:none] selection:bg-blue-200',
               yearDisplayText === 'YYYY' ? 'text-gray-400' : 'text-gray-700',
             )}
             ref={yearInputRef}
@@ -82,6 +84,7 @@ export const YearMonthField = ({
             onBlur={handleSectionBlur}
             onClick={handleSectionClick}
             onMouseUp={handleSectionMouseUp}
+            onContextMenu={handleContextMenu}
             onKeyDown={handleYearKeyDown}
             onCompositionStart={() =>
               handleCompositionStart(YEAR_MONTH_SECTION.YEAR)
@@ -117,7 +120,7 @@ export const YearMonthField = ({
             inputMode="numeric"
             maxLength={2}
             className={mergeStyles(
-              'absolute inset-0 w-full min-w-0 bg-transparent p-0 text-center caret-transparent outline-none selection:bg-blue-200',
+              'absolute inset-0 w-full min-w-0 bg-transparent p-0 text-center caret-transparent outline-none [-webkit-touch-callout:none] selection:bg-blue-200',
               monthDisplayText === 'MM' ? 'text-gray-400' : 'text-gray-700',
             )}
             ref={monthInputRef}
@@ -127,6 +130,7 @@ export const YearMonthField = ({
             onBlur={handleSectionBlur}
             onClick={handleSectionClick}
             onMouseUp={handleSectionMouseUp}
+            onContextMenu={handleContextMenu}
             onKeyDown={handleMonthKeyDown}
             onCompositionStart={() =>
               handleCompositionStart(YEAR_MONTH_SECTION.MONTH)

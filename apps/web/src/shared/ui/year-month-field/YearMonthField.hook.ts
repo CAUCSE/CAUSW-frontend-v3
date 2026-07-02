@@ -113,6 +113,11 @@ export const useYearMonthField = ({
     event.preventDefault();
   };
 
+  // 모바일에서 길게 누를 때 텍스트 선택 메뉴가 뜨지 않도록 context menu 기본 동작을 막는다.
+  const handleContextMenu = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+  };
+
   // input이 아닌 wrapper 영역을 클릭하면 기본 진입점인 연도 섹션으로 focus를 보낸다.
   const handleWrapperClick = (event: MouseEvent<HTMLElement>) => {
     if (
@@ -298,6 +303,7 @@ export const useYearMonthField = ({
     handleSectionFocus,
     handleSectionClick,
     handleSectionMouseUp,
+    handleContextMenu,
     handleWrapperClick,
     handleSectionBlur,
     handleYearKeyDown,
