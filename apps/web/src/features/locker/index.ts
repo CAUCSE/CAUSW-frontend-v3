@@ -1,2 +1,2 @@
-export { useLockerControl } from './model';
-export { LockerActionPanel, LockerApplyButton } from './ui';
+export { OpenLockerApplicationButton, LockerSelectButton } from './ui';
+export { lockerMutationOptions } from './model';

@@ -1,2 +1,2 @@
-export * from './LockerActionPanel';
-export * from './LockerApplyButton';
+export { OpenLockerApplicationButton } from './open-locker-application-button';
+export { LockerSelectButton } from './locker-select-button';

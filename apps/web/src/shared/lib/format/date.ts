@@ -200,3 +200,54 @@ export const formatTimeDifference = (time: string) => {
 
   return `${years}년 전`;
 };
+
+/**
+ * ISO 형식의 날짜와 시간을 분 단위까지 표시합니다.
+ *
+ * @param dateTime "YYYY-MM-DDTHH:mm:ss" 형식 문자열
+ * @returns 예: "2026-09-01 12:17"
+ */
+export const formatDateTimeToMinute = (dateTime?: string | null): string => {
+  if (!dateTime) {
+    return '';
+  }
+
+  try {
+    const date = new Date(dateTime);
+    return new Intl.DateTimeFormat('sv-SE', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Asia/Seoul',
+    }).format(date);
+  } catch {
+    return '';
+  }
+};
+
+/**
+ * ISO 형식의 날짜와 시간을 한국식 오전/오후 표기로 표시합니다.
+ *
+ * @returns 예: "2026-04-24 오후 09:00"
+ */
+export const formatDateTimeToKRTime = (dateTime?: string | null): string => {
+  if (!dateTime) {
+    return '';
+  }
+
+  const parts = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'Asia/Seoul',
+  }).formatToParts(new Date(dateTime));
+  const getPart = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((part) => part.type === type)?.value ?? '';
+
+  return `${getPart('year')}-${getPart('month')}-${getPart('day')} ${getPart('dayPeriod')} ${getPart('hour')}:${getPart('minute')}`;
+};

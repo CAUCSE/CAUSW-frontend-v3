@@ -1,5 +1,3 @@
-export * from './FloorSummaryCard';
-export * from './LockerInfoCard';
-export * from './LockerNoticeCard';
-export * from './LockerPageWidget';
-export * from './LockerSelectionOverlay';
+export { LockerListHeader } from './locker-list-header';
+export { LockerListMain } from './locker-list-main';
+export { LockerApplyModalWrapper } from './locker-apply-modal';

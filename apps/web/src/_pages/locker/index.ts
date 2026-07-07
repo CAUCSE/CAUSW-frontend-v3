@@ -1,1 +1,1 @@
-export * from './LockerListPage';
+export { LockerListPage } from './LockerListPage';

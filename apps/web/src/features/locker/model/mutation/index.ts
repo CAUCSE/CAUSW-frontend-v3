@@ -1,0 +1,1 @@
+export { lockerMutationOptions } from './mutationOptions';

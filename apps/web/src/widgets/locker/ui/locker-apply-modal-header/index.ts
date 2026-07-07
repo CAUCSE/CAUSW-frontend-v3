@@ -1,0 +1,1 @@
+export { LockerApplyModalHeader } from './LockerApplyModalHeader';

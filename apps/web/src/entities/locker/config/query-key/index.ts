@@ -1,1 +1,1 @@
-export * from './lockerQueryKey';
+export { lockerQueryKeys } from './lockerQueryKeys';

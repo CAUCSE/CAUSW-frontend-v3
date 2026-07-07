@@ -1,1 +1,7 @@
-export * from './lockerTypes';
+export type {
+  GetMyLockerResponseDto,
+  GetLockerLocationsResponseDto,
+  GetLockerAppicationPeriodResponseDto,
+  GetLockerLocationResponseDto,
+} from './dto';
+export type { GetLockerLocationParam } from './param';

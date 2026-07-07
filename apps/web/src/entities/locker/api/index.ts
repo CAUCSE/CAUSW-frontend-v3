@@ -1,2 +1,6 @@
-export * from './get';
-export * from './post';
+export {
+  getMyLocker,
+  getLockerLocations,
+  getLockerApplicationPeriod,
+  getLockerLocation,
+} from './get';
