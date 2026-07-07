@@ -13,7 +13,7 @@ import { useBreakpoint } from '@/shared/hooks';
 
 import { lockerApplyModalDefaultCss } from '../../config';
 
-const INVALID_LOCKER_LOCATION_ID_ERROR_CODE = 'LOCKER_404_001';
+const INVALID_LOCKER_LOCATION_ID_ERROR_CODE = 'LOCKER_404_002';
 
 export const LockerApplyModalErrorFallback = ({
   error,
