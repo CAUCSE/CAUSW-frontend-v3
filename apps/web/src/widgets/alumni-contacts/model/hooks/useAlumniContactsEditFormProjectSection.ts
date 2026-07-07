@@ -13,6 +13,15 @@ import {
 import { createAlumniContactsProfileEntry } from '../createAlumniContactsProfileEntry';
 import { sortAlumniContactsProfileEntry } from '../sortAlumniContactsProfileEntry';
 
+interface AlumniContactsProfileEntryAddPayload {
+  entry: string;
+  isCurrent: boolean;
+  startYear: number;
+  startMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
+}
+
 export const useAlumniContactsEditFormProjectSection = () => {
   const { control, getValues } = useFormContext<AlumniContactsEditForm>();
 
@@ -34,16 +43,14 @@ export const useAlumniContactsEditFormProjectSection = () => {
     setIsOpen(open);
   };
 
-  const handleClickAddProject = (
-    entry: string,
-    isCurrent: boolean,
-    startDate?: Date,
-    endDate?: Date,
-  ) => {
-    if (!startDate) {
-      return;
-    }
-
+  const handleClickAddProject = ({
+    entry,
+    isCurrent,
+    startYear,
+    startMonth,
+    endYear,
+    endMonth,
+  }: AlumniContactsProfileEntryAddPayload) => {
     const currentProject = getValues(
       ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_PROJECT,
     );
@@ -51,8 +58,10 @@ export const useAlumniContactsEditFormProjectSection = () => {
     const newProject = createAlumniContactsProfileEntry({
       entry,
       isCurrent,
-      startDate,
-      endDate,
+      startYear,
+      startMonth,
+      endYear,
+      endMonth,
     });
 
     const newProjectList = [...currentProject, newProject].sort(

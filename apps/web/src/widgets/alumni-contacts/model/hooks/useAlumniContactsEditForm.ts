@@ -22,6 +22,8 @@ import {
 
 import { toast } from '@/shared/model';
 
+import { sortAlumniContactsProfileEntry } from '../sortAlumniContactsProfileEntry';
+
 export const useAlumniContactsEditForm = () => {
   const router = useRouter();
 
@@ -52,6 +54,12 @@ export const useAlumniContactsEditForm = () => {
     resolver: zodResolver(alumniContactsEditSchema),
     defaultValues: {
       ...myAlumniContacts,
+      userCareer: [...myAlumniContacts.userCareer].sort(
+        sortAlumniContactsProfileEntry,
+      ),
+      userProject: [...myAlumniContacts.userProject].sort(
+        sortAlumniContactsProfileEntry,
+      ),
     },
   });
 

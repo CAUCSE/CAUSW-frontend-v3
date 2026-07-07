@@ -13,6 +13,15 @@ import {
 import { createAlumniContactsProfileEntry } from '../createAlumniContactsProfileEntry';
 import { sortAlumniContactsProfileEntry } from '../sortAlumniContactsProfileEntry';
 
+interface AlumniContactsProfileEntryAddPayload {
+  entry: string;
+  isCurrent: boolean;
+  startYear: number;
+  startMonth: number;
+  endYear: number | null;
+  endMonth: number | null;
+}
+
 export const useAlumniContactsEditFormCareerSection = () => {
   const { control, getValues } = useFormContext<AlumniContactsEditForm>();
   const { replace } = useFieldArray({
@@ -34,16 +43,14 @@ export const useAlumniContactsEditFormCareerSection = () => {
     setIsOpen(open);
   };
 
-  const handleClickAddCareer = (
-    entry: string,
-    isCurrent: boolean,
-    startDate?: Date,
-    endDate?: Date,
-  ) => {
-    if (!startDate) {
-      return;
-    }
-
+  const handleClickAddCareer = ({
+    entry,
+    isCurrent,
+    startYear,
+    startMonth,
+    endYear,
+    endMonth,
+  }: AlumniContactsProfileEntryAddPayload) => {
     const currentCareer = getValues(
       ALUMNI_CONTACTS_EDIT_FORM_FIELD.USER_CAREER,
     );
@@ -51,8 +58,10 @@ export const useAlumniContactsEditFormCareerSection = () => {
     const newCareer = createAlumniContactsProfileEntry({
       entry,
       isCurrent,
-      startDate,
-      endDate,
+      startYear,
+      startMonth,
+      endYear,
+      endMonth,
     });
 
     const newCareerList = [...currentCareer, newCareer].sort(

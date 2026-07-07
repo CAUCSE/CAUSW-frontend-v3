@@ -2,19 +2,23 @@ export const createAlumniContactsProfileEntry = ({
   id,
   entry,
   isCurrent,
-  startDate,
-  endDate,
+  startYear,
+  startMonth,
+  endYear,
+  endMonth,
 }: {
   id?: string;
   entry: string;
   isCurrent: boolean;
-  startDate: Date;
-  endDate?: Date;
+  startYear: number;
+  startMonth: number;
+  endYear?: number | null;
+  endMonth?: number | null;
 }) => ({
   id,
   description: entry,
-  startYear: startDate.getFullYear(),
-  startMonth: startDate.getMonth() + 1,
-  endYear: isCurrent ? null : (endDate?.getFullYear() ?? null),
-  endMonth: isCurrent ? null : endDate ? endDate.getMonth() + 1 : null,
+  startYear,
+  startMonth,
+  endYear: isCurrent ? null : (endYear ?? null),
+  endMonth: isCurrent ? null : (endMonth ?? null),
 });
