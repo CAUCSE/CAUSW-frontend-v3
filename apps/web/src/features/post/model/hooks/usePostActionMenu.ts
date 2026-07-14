@@ -43,11 +43,10 @@ export const usePostActionMenu = () => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (isDraggingRef.current) {
-      return;
+    if (!isDraggingRef.current) {
+      setIsOpen((prev) => !prev);
     }
 
-    setIsOpen((prev) => !prev);
     resetPointerInfo();
   };
 
