@@ -1,10 +1,11 @@
 'use client';
 
-import { type MouseEvent, useState } from 'react';
+import { type MouseEvent } from 'react';
 
 import { Dropdown, Menu } from '@causw/cds';
 
 import { type PostAction } from '../config';
+import { usePostActionMenu } from '../model';
 
 interface PostActionMenuProps {
   isMine: boolean;
@@ -12,7 +13,15 @@ interface PostActionMenuProps {
 }
 
 export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const {
+    isOpen,
+    setIsOpen,
+    handlePointerDown,
+    handlePointerMove,
+    handleTriggerClick,
+    handlePointerCancel,
+    handlePointerUp,
+  } = usePostActionMenu();
 
   const handleMenuAction = (
     event: MouseEvent<HTMLDivElement>,
@@ -26,7 +35,16 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
   return (
     <Dropdown open={isOpen} onOpenChange={setIsOpen}>
       <Dropdown.Trigger asChild>
-        <button className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100">
+        <button
+          type="button"
+          aria-label="게시글 메뉴 열기"
+          className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerCancel={handlePointerCancel}
+          onPointerUp={handlePointerUp}
+          onClick={handleTriggerClick}
+        >
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
