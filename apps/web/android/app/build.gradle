@@ -93,7 +93,7 @@ if (localPropertiesFile.exists()) {
         }
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-oprimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
