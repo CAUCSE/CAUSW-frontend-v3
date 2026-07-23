@@ -61,7 +61,7 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
         <PostBody
           content={post.content}
           images={post.postImageUrls}
-          enableImageViewer={false}
+          enableImageViewer={true}
           isHtml={post.isCrawled}
           isCollapsed={!isExpanded}
           onExpand={handleExpand}
