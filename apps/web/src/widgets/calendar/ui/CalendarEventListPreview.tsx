@@ -40,6 +40,10 @@ export function CalendarEventListPreview() {
     .filter((item) => item.type !== 'HOLIDAY')
     .slice(0, 4);
 
+  const firstUpcomingIndex = previewItems.findIndex((item) =>
+    checkIsUpcoming(item.end),
+  );
+
   return (
     <VStack>
       {/* Desktop Calendar */}
@@ -71,16 +75,16 @@ export function CalendarEventListPreview() {
           />
 
           {previewItems.length > 0 ? (
-            previewItems.map((item: CalendarScheduleItem) => {
-              const upcomingStatus = checkIsUpcoming(item.end);
-
+            previewItems.map((item: CalendarScheduleItem, index: number) => {
               return (
                 <EventCard
                   key={item.id}
                   title={item.title}
                   icon={<CaldendarIconColored size={24} />}
                   iconBgClass={
-                    upcomingStatus ? 'bg-blue-gradient' : 'bg-blue-100'
+                    index === firstUpcomingIndex
+                      ? 'bg-blue-gradient'
+                      : 'bg-blue-100'
                   }
                   descriptions={[
                     formatDateRangeDash(item.start, item.end),
