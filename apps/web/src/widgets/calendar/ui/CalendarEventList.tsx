@@ -124,7 +124,7 @@ function ScheduleSection({
       <Text typography="subtitle-16-bold">{title}</Text>
       <VStack className="gap-3">
         {items.length > 0 ? (
-          items.map((item) => (
+          items.map((item, index) => (
             <EventCard
               key={item.id}
               link={
@@ -133,7 +133,9 @@ function ScheduleSection({
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={
-                isUpcomingSection ? 'bg-blue-gradient' : 'bg-gray-100'
+                isUpcomingSection && index === 0
+                  ? 'bg-blue-gradient'
+                  : 'bg-gray-100'
               }
               descriptions={[
                 formatDateRangeDash(item.start, item.end),
