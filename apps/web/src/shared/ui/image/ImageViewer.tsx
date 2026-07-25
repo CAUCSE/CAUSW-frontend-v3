@@ -2,6 +2,8 @@
 
 import * as React from 'react';
 
+import { createPortal } from 'react-dom';
+
 import Image from 'next/image';
 
 import { Close, ChevronLeft, ChevronRight } from '@causw/cds';
@@ -374,7 +376,7 @@ export const ImageViewer = ({
   const buttonClass =
     'flex items-center justify-center rounded-full bg-gray-800 text-gray-400';
 
-  return (
+  return createPortal(
     <div className="z-modal fixed inset-0 flex items-center justify-center">
       {/* 배경 */}
       <div className="absolute inset-0 bg-black" />
@@ -482,6 +484,7 @@ export const ImageViewer = ({
           </button>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
