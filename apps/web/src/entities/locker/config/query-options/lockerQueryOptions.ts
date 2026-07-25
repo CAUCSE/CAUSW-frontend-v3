@@ -1,32 +1,43 @@
 import { queryOptions } from '@tanstack/react-query';
 
+import { QUERY_STALE_TIME } from '@/shared/constants';
+
 import {
-  getLockerLocationDetail,
+  getLockerApplicationPeriod,
+  getLockerLocation,
   getLockerLocations,
-  getLockerPeriodStatus,
   getMyLocker,
 } from '../../api';
-import { lockerQueryKey } from '../query-key';
+import { type GetLockerLocationParam } from '../../types';
+import { lockerQueryKeys } from '../query-key';
 
 export const lockerQueryOptions = {
-  periodStatus: () =>
+  myLocker: () =>
     queryOptions({
-      queryKey: lockerQueryKey.periodStatus(),
-      queryFn: getLockerPeriodStatus,
-    }),
-  me: () =>
-    queryOptions({
-      queryKey: lockerQueryKey.me(),
+      queryKey: lockerQueryKeys.myLocker(),
       queryFn: getMyLocker,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
     }),
-  locations: () =>
+  lockerLocations: () =>
     queryOptions({
-      queryKey: lockerQueryKey.locations(),
+      queryKey: lockerQueryKeys.lockerLocations(),
       queryFn: getLockerLocations,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
     }),
-  location: (locationId: string) =>
+  lockerApplicationPeriod: () =>
     queryOptions({
-      queryKey: lockerQueryKey.location(locationId),
-      queryFn: () => getLockerLocationDetail(locationId),
+      queryKey: lockerQueryKeys.lockerApplicationPeriod(),
+      queryFn: getLockerApplicationPeriod,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
+    }),
+  lockerLocation: (param: GetLockerLocationParam) =>
+    queryOptions({
+      queryKey: lockerQueryKeys.lockerLocation(param),
+      queryFn: () => getLockerLocation(param),
+      staleTime: QUERY_STALE_TIME.DEFAULT,
+      throwOnError: true,
     }),
 };

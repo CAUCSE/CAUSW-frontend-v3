@@ -1,0 +1,1 @@
+export { LockerExtensionDialog } from './LockerExtensionDialog';

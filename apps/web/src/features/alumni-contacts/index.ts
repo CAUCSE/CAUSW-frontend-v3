@@ -13,7 +13,6 @@ export {
   AlumniContactsContactVisibilityDialogTrigger,
   AlumniContactsEditFormSnsItem,
   AlumniContactsSingleFieldAddButton,
-  AlumniContactsProfileEntryDatePicker,
   AlumniContactsProfileEntryCurrentToggle,
   AlumniContactsDescriptionTextArea,
   AlumniContactsContactVisibilityToggleButton,

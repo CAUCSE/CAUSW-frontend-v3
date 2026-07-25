@@ -375,14 +375,14 @@ export const ImageViewer = ({
     'flex items-center justify-center rounded-full bg-gray-800 text-gray-400';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="z-modal fixed inset-0 flex items-center justify-center">
       {/* 배경 */}
       <div className="absolute inset-0 bg-black" />
 
       {/* 닫기 버튼 - 좌상단 */}
       <button
         onClick={onClose}
-        className={`absolute top-16 left-4 z-50 h-8 w-8 md:top-11 md:left-11 md:h-11 md:w-11 ${buttonClass}`}
+        className={`absolute top-16 left-4 z-50 h-8 w-8 cursor-pointer md:top-11 md:left-11 md:h-11 md:w-11 ${buttonClass}`}
         aria-label="닫기"
       >
         <Close className="h-[1.125rem] w-[1.125rem] md:h-6 md:w-6" />
@@ -394,7 +394,7 @@ export const ImageViewer = ({
         {images.length > 1 && !isZoomed && currentIndex > 0 && (
           <button
             onClick={goToPrevious}
-            className={`absolute top-1/2 left-11 z-20 hidden h-11 w-11 -translate-y-1/2 md:flex ${buttonClass}`}
+            className={`absolute top-1/2 left-11 z-20 hidden h-11 w-11 -translate-y-1/2 cursor-pointer md:flex ${buttonClass}`}
             aria-label="이전 이미지"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -475,7 +475,7 @@ export const ImageViewer = ({
         {images.length > 1 && !isZoomed && currentIndex < images.length - 1 && (
           <button
             onClick={goToNext}
-            className={`absolute top-1/2 right-11 z-20 hidden h-11 w-11 -translate-y-1/2 md:flex ${buttonClass}`}
+            className={`absolute top-1/2 right-11 z-20 hidden h-11 w-11 -translate-y-1/2 cursor-pointer md:flex ${buttonClass}`}
             aria-label="다음 이미지"
           >
             <ChevronRight className="h-6 w-6" />

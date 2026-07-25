@@ -17,6 +17,10 @@ export const NOTIFICATION_TYPE = {
     type: 'SYSTEM',
     label: '시스템 알림',
   },
+  LOCKER: {
+    type: 'LOCKER',
+    label: '사물함 알림',
+  },
 } as const;
 
 export type NotificationType = ValueOf<typeof NOTIFICATION_TYPE>['type'];

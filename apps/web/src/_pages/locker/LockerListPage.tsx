@@ -1,19 +1,14 @@
-'use client';
+import { HStack, VStack } from '@causw/cds';
 
-import { LockerPageWidget } from '@/widgets/locker';
-
-import { ActionHeader } from '@/shared/ui';
+import { LockerListHeader, LockerListMain } from '@/widgets/locker';
 
 export const LockerListPage = () => {
   return (
-    <div className="min-h-full bg-gray-100">
-      <ActionHeader
-        background="gray"
-        className="tablet:mx-auto tablet:max-w-[900px] tablet:px-8"
-      >
-        <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
-      </ActionHeader>
-      <LockerPageWidget />
-    </div>
+    <HStack justify="center" className="w-full">
+      <VStack gap="sm" className="w-full max-w-[900px] pb-4 md:px-8 md:pt-6">
+        <LockerListHeader />
+        <LockerListMain />
+      </VStack>
+    </HStack>
   );
 };

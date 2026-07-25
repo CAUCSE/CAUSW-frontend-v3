@@ -5,6 +5,7 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
+import { sortAlumniContactsProfileEntry } from '../../model';
 import { AlumniContactsDetailInfoEmptyView } from '../alumni-contacts-detail-info-empty-view';
 
 interface AlumniContactProjectSectionProps {
@@ -17,9 +18,14 @@ export const AlumniContactProjectSection = ({
   if (userProject.length === 0) {
     return <AlumniContactsDetailInfoEmptyView />;
   }
+
+  const sortedUserProject = [...userProject].sort(
+    sortAlumniContactsProfileEntry,
+  );
+
   return (
     <VStack className="gap-5">
-      {userProject.map((project) => (
+      {sortedUserProject.map((project) => (
         <HStack key={project.id} className="items-center">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
             <DocumentColored size={24} />
@@ -28,7 +34,11 @@ export const AlumniContactProjectSection = ({
             <Text typography="body-16-regular" textColor="gray-700">
               {project.description}
             </Text>
-            <Text typography="body-14-regular" textColor="gray-400">
+            <Text
+              typography="body-14-regular"
+              textColor="gray-400"
+              className="whitespace-pre-wrap"
+            >
               {formatAlumniContactsPeriod(project)}
             </Text>
           </VStack>

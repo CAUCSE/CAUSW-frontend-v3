@@ -5,6 +5,7 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
+import { sortAlumniContactsProfileEntry } from '../../model';
 import { AlumniContactsDetailInfoEmptyView } from '../alumni-contacts-detail-info-empty-view';
 
 interface AlumniContactsCareerSectionProps {
@@ -18,9 +19,11 @@ export const AlumniContactsCareerSection = ({
     return <AlumniContactsDetailInfoEmptyView />;
   }
 
+  const sortedUserCareer = [...userCareer].sort(sortAlumniContactsProfileEntry);
+
   return (
     <VStack className="gap-5">
-      {userCareer.map((career) => (
+      {sortedUserCareer.map((career) => (
         <HStack key={career.id} className="items-center">
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
             <BuildingColored size={24} />

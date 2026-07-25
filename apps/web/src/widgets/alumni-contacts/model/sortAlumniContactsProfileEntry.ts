@@ -16,21 +16,18 @@ type AlumniContactsProfileEntry =
   | AlumniContactsCareerEntry
   | AlumniContactsProjectEntry;
 
-export const sortAlumniContactsProfileEntry = (
+const isCurrentEntry = (entry: AlumniContactsProfileEntry) =>
+  isNil(entry.endYear) || isNil(entry.endMonth);
+
+const compareStartDateDesc = (
+  a: AlumniContactsProfileEntry,
+  b: AlumniContactsProfileEntry,
+) => b.startYear - a.startYear || b.startMonth - a.startMonth;
+
+const compareEndDateDesc = (
   a: AlumniContactsProfileEntry,
   b: AlumniContactsProfileEntry,
 ) => {
-  // 둘다 현재 중인 경우
-  if (isNil(a.endYear) && isNil(b.endYear)) {
-    if (a.startYear === b.startYear) {
-      if (a.startMonth === b.startMonth) {
-        return a.description.localeCompare(b.description);
-      }
-      return b.startMonth - a.startMonth;
-    }
-    return b.startYear - a.startYear;
-  }
-
   if (isNil(a.endYear) || isNil(a.endMonth)) {
     return -1;
   }
@@ -39,17 +36,33 @@ export const sortAlumniContactsProfileEntry = (
     return 1;
   }
 
-  if (a.startYear === b.startYear) {
-    if (a.startMonth === b.startMonth) {
-      if (a.endYear === b.endYear) {
-        if (a.endMonth === b.endMonth) {
-          return a.description.localeCompare(b.description);
-        }
-        return b.endMonth - a.endMonth;
-      }
-      return b.endYear - a.endYear;
-    }
-    return b.startMonth - a.startMonth;
+  return b.endYear - a.endYear || b.endMonth - a.endMonth;
+};
+
+export const sortAlumniContactsProfileEntry = (
+  a: AlumniContactsProfileEntry,
+  b: AlumniContactsProfileEntry,
+) => {
+  const isCurrentA = isCurrentEntry(a);
+  const isCurrentB = isCurrentEntry(b);
+
+  if (isCurrentA && !isCurrentB) {
+    return -1;
   }
-  return b.startYear - a.startYear;
+
+  if (!isCurrentA && isCurrentB) {
+    return 1;
+  }
+
+  if (isCurrentA && isCurrentB) {
+    return (
+      compareStartDateDesc(a, b) || a.description.localeCompare(b.description)
+    );
+  }
+
+  return (
+    compareEndDateDesc(a, b) ||
+    compareStartDateDesc(a, b) ||
+    a.description.localeCompare(b.description)
+  );
 };
