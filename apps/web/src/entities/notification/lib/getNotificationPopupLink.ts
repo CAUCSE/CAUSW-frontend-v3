@@ -1,25 +1,31 @@
+import { ADMIN_BASE_URL } from '@/shared/config';
 import { ROUTES } from '@/shared/constants';
 
 import { type NotificationLatestResponse } from '../model';
-export function getNotificationPopupLink(data: NotificationLatestResponse) {
+export function getNotificationPopupLink(
+  data: Pick<
+    NotificationLatestResponse,
+    'noticeType' | 'targetId' | 'targetParentId'
+  >,
+) {
   const { noticeType, targetId, targetParentId } = data;
-  //TODO : 페이지 다 나오면 링크 수정
+
   switch (noticeType) {
-    case 'POST':
-    case 'COMMENT':
-      if (targetParentId) {
-        return `${ROUTES.FEED}/${targetParentId}/${targetId}`;
-      }
+    case 'COMMUNITY': // 커뮤니티 알림
+    case 'OFFICIAL': // 공식 계정 알림
       return `${ROUTES.FEED}/${targetId}`;
 
-    case 'CEREMONY_V2':
+    case 'CEREMONY_V2': // 경조사 알림
       return `${ROUTES.CEREMONY}/${targetId}`;
 
-    case 'BOARD':
-      return `${ROUTES.FEED}/${targetId}`;
+    // targetId가 있으면 경조사 신청 관련 관리자向 알림 → 관리자 페이지로 이동
+    case 'SYSTEM':
+      return targetId
+        ? `${ADMIN_BASE_URL}/events/${targetId}`
+        : ROUTES.NOTIFICATION;
 
-    case 'ADMISSION':
-      return `어디로..`;
+    case 'LOCKER': // 사물함 알림
+      return `${ROUTES.LOCKER}/${targetParentId}`;
 
     default:
       return ROUTES.NOTIFICATION;

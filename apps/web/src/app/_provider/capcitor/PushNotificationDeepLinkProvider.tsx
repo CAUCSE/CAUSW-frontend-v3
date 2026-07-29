@@ -26,13 +26,17 @@ export function PushNotificationDeepLinkProvider({
 
         if (!noticeType || !targetId) return;
 
-        router.push(
-          getNotificationPopupLink({
-            noticeType,
-            targetId,
-            targetParentId: targetParentId ?? '',
-          }),
-        );
+        const link = getNotificationPopupLink({
+          noticeType,
+          targetId,
+          targetParentId: targetParentId ?? '',
+        });
+
+        if (/^https?:\/\//.test(link)) {
+          window.location.href = link;
+        } else {
+          router.push(link);
+        }
       },
     );
 
