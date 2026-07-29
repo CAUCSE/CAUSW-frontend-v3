@@ -14,6 +14,7 @@ import {
   AuthRefreshProvider,
   ForceUpdateProvider,
   GlobalRoutingProvider,
+  PushNotificationDeepLinkProvider,
 } from './_provider';
 
 const SOCIAL_PREVIEW_IMAGE = '/images/social-preview.png';
@@ -71,7 +72,11 @@ export default function RootLayout({
             <Toaster />
             <ForceUpdateProvider>
               <AuthRefreshProvider>
-                <GlobalRoutingProvider>{children}</GlobalRoutingProvider>
+                <GlobalRoutingProvider>
+                  <PushNotificationDeepLinkProvider>
+                    {children}
+                  </PushNotificationDeepLinkProvider>
+                </GlobalRoutingProvider>
               </AuthRefreshProvider>
             </ForceUpdateProvider>
           </QueryProviderWithDevtools>
