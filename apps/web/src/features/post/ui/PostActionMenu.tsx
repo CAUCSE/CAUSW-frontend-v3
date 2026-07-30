@@ -13,44 +13,35 @@ interface PostActionMenuProps {
 }
 
 export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
-  const {
-    isOpen,
-    setIsOpen,
-    handlePointerDown,
-    handlePointerMove,
-    handleTriggerClick,
-    handlePointerCancel,
-    handlePointerUp,
-  } = usePostActionMenu();
-
+  const menu = usePostActionMenu();
   const handleMenuAction = (
     event: MouseEvent<HTMLDivElement>,
     action: PostAction,
   ) => {
     event.stopPropagation();
     onAction(action);
-    setIsOpen(false);
+    menu.setIsOpen(false);
   };
 
   return (
-    <Dropdown open={isOpen} onOpenChange={setIsOpen}>
+    <Dropdown open={menu.isOpen} onOpenChange={menu.setIsOpen}>
       <Dropdown.Trigger asChild>
         <button
           type="button"
           aria-label="게시글 메뉴 열기"
           className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerCancel={handlePointerCancel}
-          onPointerUp={handlePointerUp}
-          onClick={handleTriggerClick}
+          onPointerDown={menu.handlePointerDown}
+          onPointerMove={menu.handlePointerMove}
+          onPointerCancel={menu.handlePointerCancel}
+          onPointerUp={menu.handlePointerUp}
+          onClick={menu.handleTriggerClick}
         >
           <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
       <Dropdown.Content
         align="end"
-        onCloseAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(event) => event.preventDefault()}
       >
         {isMine ? (
           <>
@@ -76,7 +67,6 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
             >
               신고하기
             </Dropdown.Item>
-
             <Dropdown.Item
               color="red"
               onClick={(event) => handleMenuAction(event, 'block')}

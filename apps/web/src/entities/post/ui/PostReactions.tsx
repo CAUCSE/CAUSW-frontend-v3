@@ -1,15 +1,17 @@
-import { Button, Heart, HStack } from '@causw/cds';
+import { Button, Heart, HStack, Share } from '@causw/cds';
 
 interface PostReactionsProps {
   active: boolean;
   likeCount: number;
   onLikeClick: () => void;
+  onShareClick: () => void;
 }
 
 export const PostReactions = ({
   active,
   likeCount,
   onLikeClick,
+  onShareClick,
 }: PostReactionsProps) => {
   return (
     <HStack gap="sm">
@@ -17,10 +19,9 @@ export const PostReactions = ({
         <Heart size={16} color={active ? 'red-400' : 'gray-300'} />
         좋아요 {likeCount}
       </Button>
-      {/* TODO: 공유하기 기능 상세 스펙 구체화 후 활성화
       <Button color="gray" onClick={onShareClick}>
         <Share size={16} /> 공유하기
-      </Button> */}
+      </Button>
     </HStack>
   );
 };

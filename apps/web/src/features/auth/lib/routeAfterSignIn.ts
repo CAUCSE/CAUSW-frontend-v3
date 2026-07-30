@@ -2,6 +2,8 @@ import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import type { OnboardingStatus } from '@/entities/auth';
 
+import { consumePendingDestination } from '@/shared/lib';
+
 export const routeAfterSignIn = (
   router: AppRouterInstance,
   onboardingStatus: OnboardingStatus,
@@ -14,5 +16,10 @@ export const routeAfterSignIn = (
     TERMS_REQUIRED: '/home',
   } as const;
 
-  router.push(AUTH_ROUTE_MAP[onboardingStatus]);
+  if (onboardingStatus === 'ACTIVE') {
+    router.replace(consumePendingDestination() ?? '/home');
+    return;
+  }
+
+  router.replace(AUTH_ROUTE_MAP[onboardingStatus]);
 };

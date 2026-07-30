@@ -7,6 +7,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { useResetAlumniContactsFilter } from '@/entities/alumni-contacts';
 
+import { savePendingDestination } from '@/shared/lib';
 import { toast, useAuthStore } from '@/shared/model';
 
 export function GlobalRoutingProvider({ children }: PropsWithChildren) {
@@ -18,17 +19,16 @@ export function GlobalRoutingProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!authError) return;
-
     if (authError.errorType === 'token-expired') {
       toast.error(authError.message);
-
-      // TODO: 로그인 시 callbackUrl 활용한 라우팅 추가
-      const callbackUrl = encodeURIComponent(pathname ?? '/');
-      router.push(`/auth/sign-in?callbackUrl=${callbackUrl}`);
+      const destination = pathname ?? '/home';
+      savePendingDestination(destination);
+      router.replace(
+        `/auth/sign-in?callbackUrl=${encodeURIComponent(destination)}`,
+      );
     }
-
     clearAuthError();
-  }, [authError, router, pathname, clearAuthError]);
+  }, [authError, clearAuthError, pathname, router]);
 
   return <>{children}</>;
 }
