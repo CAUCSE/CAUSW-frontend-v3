@@ -1,3 +1,5 @@
+import { ADMIN_BASE_URL } from '@/shared/config';
+
 export const ROUTES = Object.freeze({
   NOTIFICATION: '/notification',
   LOCKER: '/locker',
@@ -9,6 +11,10 @@ export const ROUTES = Object.freeze({
   ALUMNI_CONTACTS: '/alumni-contacts',
   PROFILE: '/profile',
   SETTING: '/setting',
+} as const);
+
+export const ADMIN_ROUTES = Object.freeze({
+  EVENTS: (id: string) => `${ADMIN_BASE_URL}/events/${id}`,
 } as const);
 
 export const EXTERNAL_ROUTES = Object.freeze({

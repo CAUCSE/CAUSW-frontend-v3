@@ -7,6 +7,7 @@ import { Close, HStack, SpeakerColored, Text, VStack } from '@causw/cds';
 
 import {
   getNotificationPopupLink,
+  NOTIFICATION_LINK_TYPE,
   useLatestNotification,
 } from '@/entities/notification';
 
@@ -20,11 +21,15 @@ export function NotificationPopupCard() {
   if (!data || data.isRead) return null;
   if (isClosed) return null;
 
+  const link = getNotificationPopupLink(data);
+  const isExternalLink = link.type === NOTIFICATION_LINK_TYPE.EXTERNAL;
+
   return (
     <QueryErrorBoundary FallbackComponent={() => null}>
       <HStack className="w-full items-start justify-between rounded-2xl bg-white px-6 py-4">
         <Link
-          href={getNotificationPopupLink(data)}
+          href={isExternalLink ? link.url : link.path}
+          target={isExternalLink ? '_blank' : undefined}
           className="flex flex-1 items-center gap-5"
         >
           <SpeakerColored size={26} />

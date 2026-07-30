@@ -4,9 +4,13 @@ import { type PropsWithChildren, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { Browser } from '@capacitor/browser';
 import { PushNotifications } from '@capacitor/push-notifications';
 
-import { getNotificationPopupLink } from '@/entities/notification';
+import {
+  getNotificationPopupLink,
+  NOTIFICATION_LINK_TYPE,
+} from '@/entities/notification';
 
 import { isMobile } from '@/shared/utils';
 
@@ -24,7 +28,7 @@ export function PushNotificationDeepLinkProvider({
         const data = notification.data ?? {};
         const { noticeType, targetId, targetParentId } = data;
 
-        if (!noticeType || !targetId) return;
+        if (!noticeType) return;
 
         const link = getNotificationPopupLink({
           noticeType,
@@ -32,10 +36,10 @@ export function PushNotificationDeepLinkProvider({
           targetParentId: targetParentId ?? '',
         });
 
-        if (/^https?:\/\//.test(link)) {
-          window.location.href = link;
+        if (link.type === NOTIFICATION_LINK_TYPE.EXTERNAL) {
+          void Browser.open({ url: link.url });
         } else {
-          router.push(link);
+          router.push(link.path);
         }
       },
     );
