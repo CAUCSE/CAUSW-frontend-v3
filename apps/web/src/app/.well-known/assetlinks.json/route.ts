@@ -1,14 +1,30 @@
 export const dynamic = 'force-static';
 
+type AssetLink = {
+  relation: string[];
+  target: {
+    namespace: 'android_app';
+    package_name: string;
+    sha256_cert_fingerprints: string[];
+  };
+};
+
+const getAssetLinks = (): AssetLink[] => {
+  const value = process.env.ANDROID_ASSET_LINKS;
+  if (!value) return [];
+
+  try {
+    const assetLinks: unknown = JSON.parse(value);
+    return Array.isArray(assetLinks) ? (assetLinks as AssetLink[]) : [];
+  } catch {
+    return [];
+  }
+};
+
 export function GET() {
-  return Response.json([
-    {
-      relation: ['delegate_permission/common.handle_all_urls'],
-      target: {
-        namespace: 'android_app',
-        package_name: 'kr.co.causwv2.twa',
-        sha256_cert_fingerprints: ['업로드 키 지문', 'Play 앱 서명 키 지문'],
-      },
+  return Response.json(getAssetLinks(), {
+    headers: {
+      'Cache-Control': 'public, max-age=3600',
     },
-  ]);
+  });
 }

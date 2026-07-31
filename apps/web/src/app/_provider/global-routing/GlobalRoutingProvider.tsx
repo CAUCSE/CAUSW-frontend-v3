@@ -5,9 +5,10 @@ import type { PropsWithChildren } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
+import { savePendingDestination } from '@/features/auth';
+
 import { useResetAlumniContactsFilter } from '@/entities/alumni-contacts';
 
-import { savePendingDestination } from '@/shared/lib';
 import { toast, useAuthStore } from '@/shared/model';
 
 export function GlobalRoutingProvider({ children }: PropsWithChildren) {

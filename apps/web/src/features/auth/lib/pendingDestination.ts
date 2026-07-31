@@ -2,9 +2,6 @@ const ALLOWED_PREFIXES = ['/feed', '/home', '/notification', '/profile'];
 const PENDING_DESTINATION_KEY = 'causw:pending-destination';
 const PENDING_DESTINATION_TTL = 7 * 24 * 60 * 60 * 1000;
 
-export const postShareUrl = (postId: string) =>
-  `https://www.causw.co.kr/feed/${postId}`;
-
 export const safeCallbackUrl = (raw: string | null | undefined): string => {
   if (!raw) return '/home';
 

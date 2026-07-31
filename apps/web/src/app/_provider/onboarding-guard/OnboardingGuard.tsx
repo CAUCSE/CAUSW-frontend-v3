@@ -7,20 +7,21 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useAgreeTermsMutation } from '@/features/auth';
-import { useProfileImageEdit } from '@/features/setting';
-
-import { authQueryKey, authQueryOptions } from '@/entities/auth/config/query';
-import type {
-  OnboardingStatus,
-  TermsAgreementRequestDto,
-} from '@/entities/auth/model/types';
-
-import { useBreakpoint, useIsMounted } from '@/shared/hooks';
 import {
   consumePendingDestination,
   savePendingDestination,
-} from '@/shared/lib';
+  useAgreeTermsMutation,
+} from '@/features/auth';
+import { useProfileImageEdit } from '@/features/setting';
+
+import {
+  authQueryKey,
+  authQueryOptions,
+  type OnboardingStatus,
+  type TermsAgreementRequestDto,
+} from '@/entities/auth';
+
+import { useBreakpoint, useIsMounted } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
 const TermsBottomSheet = dynamic(

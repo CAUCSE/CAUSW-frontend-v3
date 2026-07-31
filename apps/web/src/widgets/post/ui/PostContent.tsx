@@ -6,10 +6,10 @@ import { BlockUserModal } from '@/features/block';
 import {
   POST_ACTION,
   PostHeader,
+  sharePost,
   usePostMenuActions,
   useTogglePostLikeMutation,
 } from '@/features/post';
-import { sharePost } from '@/features/post/lib/sharePost';
 import { ReportFlow } from '@/features/report';
 
 import {

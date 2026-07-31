@@ -7,20 +7,6 @@ export const isServer = typeof window === 'undefined';
 
 export type Platform = 'ios' | 'android' | 'web';
 
-const PATTERNS = [
-  /KAKAOTALK/i,
-  /Instagram/i,
-  /FBAN|FBAV/,
-  /NAVER\(inapp/i,
-  /Line\//,
-  /DaumApps/i,
-];
-export function detectInAppBrowser(userAgent: string) {
-  const isKakao = /KAKAOTALK/i.test(userAgent);
-  const isAny = PATTERNS.some((p) => p.test(userAgent));
-  return { isInAppBrowser: isAny, isKakao };
-}
-
 export const getPlatform = (): Platform => {
   if (!isClient) return 'web'; // 서버에서는 web으로 간주
   return Capacitor.getPlatform() as Platform;

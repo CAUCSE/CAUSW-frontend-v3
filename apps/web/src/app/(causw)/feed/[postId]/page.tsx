@@ -2,11 +2,36 @@ import type { Metadata } from 'next';
 
 import { PostDetailPage } from '@/_pages/feed';
 
+import { getPost, type GetPostResponseDto } from '@/entities/post';
+
 const stripHtml = (value: string) =>
   value
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+
+const createPostMetadata = (post: GetPostResponseDto): Metadata => {
+  const fallback = {
+    title: 'CAUSW 게시글',
+    description: 'CAUSW 커뮤니티 게시글입니다.',
+  };
+  const description =
+    stripHtml(post.content).slice(0, 160) || fallback.description;
+  const title = post.boardName ? `${post.boardName} | CAUSW` : fallback.title;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      images: post.fileUrlList[0]
+        ? [{ url: post.fileUrlList[0] }]
+        : [{ url: '/images/ccssaa-logo.png' }],
+    },
+  };
+};
 
 export async function generateMetadata({
   params,
@@ -20,44 +45,8 @@ export async function generateMetadata({
   };
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/v2/posts/${postId}`,
-      { next: { revalidate: 60 } },
-    );
-    if (!response.ok) return fallback;
-
-    const result = (await response.json()) as {
-      data?: {
-        boardName: string;
-        content: string;
-        fileUrlList?: string[];
-      };
-    };
-    const post = result.data;
-    if (!post) return fallback;
-    const metadataPost = post as {
-      boardName: string;
-      content: string;
-      fileUrlList?: string[];
-    };
-    const description =
-      stripHtml(metadataPost.content).slice(0, 160) || fallback.description;
-    const title = metadataPost.boardName
-      ? `${metadataPost.boardName} | CAUSW`
-      : fallback.title;
-
-    return {
-      title,
-      description,
-      openGraph: {
-        title,
-        description,
-        type: 'article',
-        images: metadataPost.fileUrlList?.[0]
-          ? [{ url: metadataPost.fileUrlList[0] }]
-          : [{ url: '/images/ccssaa-logo.png' }],
-      },
-    };
+    const post = await getPost(postId);
+    return createPostMetadata(post);
   } catch {
     return fallback;
   }

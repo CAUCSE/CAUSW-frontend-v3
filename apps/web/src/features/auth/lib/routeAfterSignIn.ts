@@ -2,7 +2,7 @@ import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import type { OnboardingStatus } from '@/entities/auth';
 
-import { consumePendingDestination } from '@/shared/lib';
+import { consumePendingDestination } from './pendingDestination';
 
 export const routeAfterSignIn = (
   router: AppRouterInstance,
