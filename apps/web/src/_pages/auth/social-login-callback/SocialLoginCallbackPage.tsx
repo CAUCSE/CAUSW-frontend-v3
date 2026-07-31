@@ -26,6 +26,14 @@ export const SocialLoginCallbackPage = () => {
 
     const error = searchParams.get('error');
     const message = searchParams.get('message');
+    const linkedProvider = searchParams.get('linked');
+
+    // 소셜 계정 연동 성공 처리
+    if (linkedProvider) {
+      toast.success('소셜 계정이 연동되었습니다.');
+      router.replace('/setting/privacy');
+      return;
+    }
 
     if (error) {
       toast.error(message ?? '잘못된 접근입니다.');

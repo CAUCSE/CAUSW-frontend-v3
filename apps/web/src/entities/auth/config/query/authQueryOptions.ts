@@ -4,6 +4,7 @@ import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import { getAdmissionState, getMyInfo } from '../../api';
 import { getTerms } from '../../api';
+import { getSocialAccountStatus } from '../../api';
 
 import { authQueryKey } from './authQueryKey';
 
@@ -24,5 +25,11 @@ export const authQueryOptions = {
     queryOptions({
       queryKey: authQueryKey.terms(),
       queryFn: getTerms,
+    }),
+  socialAccountStatus: () =>
+    queryOptions({
+      queryKey: authQueryKey.socialAccountStatus(),
+      queryFn: getSocialAccountStatus,
+      staleTime: QUERY_STALE_TIME.DEFAULT,
     }),
 };
