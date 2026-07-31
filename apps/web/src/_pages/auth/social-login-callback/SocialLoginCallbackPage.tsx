@@ -68,7 +68,7 @@ export const SocialLoginCallbackPage = () => {
     };
 
     void handleCallback();
-  }, [router, searchParams]);
+  }, [compareFCMToken, router, searchParams]);
 
   return (
     <Flex
