@@ -1,3 +1,5 @@
+import { type NotificationType } from '../../config/notificationType';
+
 export interface NotificationUnreadCntResponse {
   notificationLogCount: number;
 }
@@ -10,19 +12,6 @@ export interface NotificationLatestResponse {
   targetParentId: string;
   isRead: boolean;
 }
-export type NotificationType =
-  // v1
-  | 'POST'
-  | 'COMMENT'
-  | 'BOARD'
-  | 'ADMISSION'
-
-  // v2
-  | 'COMMUNITY' // 커뮤니티 알림
-  | 'OFFICIAL' // 공식 계정 알림
-  | 'SYSTEM' // 시스템 알림
-  | 'CEREMONY_V2' // 경조사 알림
-  | 'LOCKER'; // 사물함 알림
 
 export interface UpdateFCMTokenRequestDto {
   fcmToken: string;
