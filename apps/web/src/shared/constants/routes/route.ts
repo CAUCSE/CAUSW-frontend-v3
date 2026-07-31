@@ -14,7 +14,7 @@ export const ROUTES = Object.freeze({
 } as const);
 
 export const ADMIN_ROUTES = Object.freeze({
-  EVENTS: (id: string) => `${ADMIN_BASE_URL}/events/${id}`,
+  EVENTS: (id: string) => `${ADMIN_BASE_URL}/events/${id}`, // 관리자 경조사 페이지
 } as const);
 
 export const EXTERNAL_ROUTES = Object.freeze({

@@ -33,14 +33,16 @@ export function getNotificationPopupLink(
         path: `${ROUTES.CEREMONY}/${targetId}`,
       };
 
-    // targetId가 있으면 경조사 신청 관련 관리자向 알림 → 관리자 페이지로 이동
-    case 'SYSTEM':
+    case 'SYSTEM': // 시스템 알림
       return targetId
         ? {
             type: NOTIFICATION_LINK_TYPE.EXTERNAL,
             url: ADMIN_ROUTES.EVENTS(targetId),
           }
-        : { type: NOTIFICATION_LINK_TYPE.INTERNAL, path: ROUTES.NOTIFICATION };
+        : {
+            type: NOTIFICATION_LINK_TYPE.INTERNAL,
+            path: ROUTES.NOTIFICATION,
+          };
 
     case 'LOCKER': // 사물함 알림
       return {

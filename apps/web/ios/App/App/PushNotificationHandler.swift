@@ -22,8 +22,6 @@ final class PushNotificationHandler: NSObject, UNUserNotificationCenterDelegate 
     ) {
         let userInfo = notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
-        // handleApplicationNotifications가 false라 Capacitor가 델리게이트를 직접 못 맡으므로,
-        // 플러그인이 등록해둔 핸들러에 수동으로 전달해줘야 pushNotificationReceived JS 이벤트가 발생함
         _ = bridgeProvider()?.notificationRouter.pushNotificationHandler?.willPresent(notification: notification)
         completionHandler([.alert, .sound, .badge])
     }
@@ -35,7 +33,6 @@ final class PushNotificationHandler: NSObject, UNUserNotificationCenterDelegate 
     ) {
         let userInfo = response.notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
-        // 위와 동일한 이유로 수동 전달 — 이게 없으면 알림 탭 시 pushNotificationActionPerformed가 발생하지 않음
         bridgeProvider()?.notificationRouter.pushNotificationHandler?.didReceive(response: response)
         completionHandler()
     }
