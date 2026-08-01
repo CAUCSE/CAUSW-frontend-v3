@@ -1,27 +1,59 @@
-import { ROUTES } from '@/shared/constants';
+import { ADMIN_ROUTES, ROUTES } from '@/shared/constants';
 
 import { type NotificationLatestResponse } from '../model';
-export function getNotificationPopupLink(data: NotificationLatestResponse) {
+
+export const NOTIFICATION_LINK_TYPE = {
+  INTERNAL: 'internal',
+  EXTERNAL: 'external',
+} as const;
+
+export type NotificationLink =
+  | { type: typeof NOTIFICATION_LINK_TYPE.INTERNAL; path: string }
+  | { type: typeof NOTIFICATION_LINK_TYPE.EXTERNAL; url: string };
+
+export function getNotificationPopupLink(
+  data: Pick<
+    NotificationLatestResponse,
+    'noticeType' | 'targetId' | 'targetParentId'
+  >,
+): NotificationLink {
   const { noticeType, targetId, targetParentId } = data;
-  //TODO : 페이지 다 나오면 링크 수정
+
   switch (noticeType) {
-    case 'POST':
-    case 'COMMENT':
-      if (targetParentId) {
-        return `${ROUTES.FEED}/${targetParentId}/${targetId}`;
-      }
-      return `${ROUTES.FEED}/${targetId}`;
+    case 'COMMUNITY': // 커뮤니티 알림
+    case 'OFFICIAL': // 공식 계정 알림
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: `${ROUTES.FEED}/${targetId}`,
+      };
 
-    case 'CEREMONY_V2':
-      return `${ROUTES.CEREMONY}/${targetId}`;
+    case 'CEREMONY_V2': // 경조사 알림
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: `${ROUTES.CEREMONY}/${targetId}`,
+      };
 
-    case 'BOARD':
-      return `${ROUTES.FEED}/${targetId}`;
+    case 'SYSTEM': // 시스템 알림
+      return targetId
+        ? {
+            type: NOTIFICATION_LINK_TYPE.EXTERNAL,
+            url: ADMIN_ROUTES.EVENTS(targetId),
+          }
+        : {
+            type: NOTIFICATION_LINK_TYPE.INTERNAL,
+            path: ROUTES.NOTIFICATION,
+          };
 
-    case 'ADMISSION':
-      return `어디로..`;
+    case 'LOCKER': // 사물함 알림
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: `${ROUTES.LOCKER}/${targetParentId}`,
+      };
 
     default:
-      return ROUTES.NOTIFICATION;
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: ROUTES.NOTIFICATION,
+      };
   }
 }

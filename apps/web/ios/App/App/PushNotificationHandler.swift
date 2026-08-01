@@ -1,8 +1,15 @@
 import UIKit
+import Capacitor
 import FirebaseMessaging
 import UserNotifications
 
 final class PushNotificationHandler: NSObject, UNUserNotificationCenterDelegate {
+    private let bridgeProvider: () -> CAPBridgeProtocol?
+
+    init(bridgeProvider: @escaping () -> CAPBridgeProtocol? = { nil }) {
+        self.bridgeProvider = bridgeProvider
+    }
+
     func configure(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
         application.registerForRemoteNotifications()
@@ -15,6 +22,7 @@ final class PushNotificationHandler: NSObject, UNUserNotificationCenterDelegate 
     ) {
         let userInfo = notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
+        _ = bridgeProvider()?.notificationRouter.pushNotificationHandler?.willPresent(notification: notification)
         completionHandler([.alert, .sound, .badge])
     }
 
@@ -25,6 +33,7 @@ final class PushNotificationHandler: NSObject, UNUserNotificationCenterDelegate 
     ) {
         let userInfo = response.notification.request.content.userInfo
         Messaging.messaging().appDidReceiveMessage(userInfo)
+        bridgeProvider()?.notificationRouter.pushNotificationHandler?.didReceive(response: response)
         completionHandler()
     }
 

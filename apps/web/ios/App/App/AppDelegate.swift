@@ -39,7 +39,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }()
 
-    private let pushNotificationHandler = PushNotificationHandler()
+    private lazy var pushNotificationHandler: PushNotificationHandler = {
+        PushNotificationHandler(bridgeProvider: { [weak self] in
+            self?.bridgeViewController()?.bridge
+        })
+    }()
     private let launchOverlayCoordinator = LaunchOverlayCoordinator()
 
     func application(

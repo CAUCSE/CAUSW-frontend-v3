@@ -15,6 +15,7 @@ import {
   DeepLinkProvider,
   ForceUpdateProvider,
   GlobalRoutingProvider,
+  PushNotificationDeepLinkProvider,
 } from './_provider';
 
 const SOCIAL_PREVIEW_IMAGE = '/images/social-preview.png';
@@ -73,7 +74,9 @@ export default function RootLayout({
             <ForceUpdateProvider>
               <AuthRefreshProvider>
                 <GlobalRoutingProvider>
-                  <DeepLinkProvider>{children}</DeepLinkProvider>
+                  <PushNotificationDeepLinkProvider>
+                    <DeepLinkProvider>{children}</DeepLinkProvider>
+                  </PushNotificationDeepLinkProvider>
                 </GlobalRoutingProvider>
               </AuthRefreshProvider>
             </ForceUpdateProvider>
