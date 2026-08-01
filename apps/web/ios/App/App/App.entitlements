@@ -8,5 +8,11 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:www.causw.co.kr</string>
+		<string>applinks:causw.co.kr</string>
+		<string>applinks:dev.causw.co.kr</string>
+	</array>
 </dict>
 </plist>

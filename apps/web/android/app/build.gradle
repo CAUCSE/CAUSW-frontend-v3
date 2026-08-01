@@ -62,7 +62,8 @@ if (localPropertiesFile.exists()) {
             resValue "string", "google_server_client_id", googleServerClientId
             manifestPlaceholders = [
                 appLabel: "DEV-크자회",
-                kakaoScheme: kakaoSchemeDevRelease
+                kakaoScheme: kakaoSchemeDevRelease,
+                appLinkHost: "dev.causw.co.kr"
             ]
 
             versionCode 26
@@ -76,7 +77,8 @@ if (localPropertiesFile.exists()) {
             resValue "string", "google_server_client_id", googleServerClientId
             manifestPlaceholders = [
                 appLabel: "크자회(CCSSAA)",
-                kakaoScheme: kakaoSchemeProdRelease
+                kakaoScheme: kakaoSchemeProdRelease,
+                appLinkHost: "www.causw.co.kr"
             ]
 
             versionCode 20

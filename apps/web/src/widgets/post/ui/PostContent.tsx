@@ -6,6 +6,7 @@ import { BlockUserModal } from '@/features/block';
 import {
   POST_ACTION,
   PostHeader,
+  sharePost,
   usePostMenuActions,
   useTogglePostLikeMutation,
 } from '@/features/post';
@@ -17,6 +18,7 @@ import {
   PostReactions,
 } from '@/entities/post';
 
+import { toast } from '@/shared/model';
 import { ConfirmModal } from '@/shared/ui';
 
 interface PostContentProps {
@@ -38,6 +40,14 @@ export const PostContent = ({ post }: PostContentProps) => {
   const handleLikeClick = () => {
     if (isPending) return;
     toggleLike(!post.isPostLike);
+  };
+
+  const handleShareClick = () => {
+    void sharePost(post.id, `${post.boardName} | CAUSW`)
+      .then((result) => {
+        if (result === 'clipboard') toast.success('링크가 복사되었습니다.');
+      })
+      .catch(() => toast.error('공유에 실패했습니다.'));
   };
 
   return (
@@ -66,6 +76,7 @@ export const PostContent = ({ post }: PostContentProps) => {
         active={post.isPostLike}
         likeCount={post.numLike}
         onLikeClick={handleLikeClick}
+        onShareClick={handleShareClick}
       />
 
       <ReportFlow

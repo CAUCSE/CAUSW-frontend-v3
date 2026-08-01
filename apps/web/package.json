@@ -8,14 +8,14 @@
     "start": "next start",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "sync:ios:dev": "APP_ENV=dev DEVICE_ENV=ios npx cap sync ios",
-    "sync:ios:prod": "APP_ENV=prod DEVICE_ENV=ios npx cap sync ios",
-    "sync:android:dev": "APP_ENV=dev DEVICE_ENV=android npx cap sync android",
-    "sync:android:prod": "APP_ENV=prod DEVICE_ENV=android npx cap sync android",
-    "sync:ios:local-dev": "APP_ENV=local-dev DEVICE_ENV=ios npx cap sync ios",
-    "sync:ios:local-prod": "APP_ENV=local-prod DEVICE_ENV=ios npx cap sync ios",
-    "sync:android:local-dev": "APP_ENV=local-dev DEVICE_ENV=android npx cap sync android",
-    "sync:android:local-prod": "APP_ENV=local-prod DEVICE_ENV=android npx cap sync android"
+    "sync:ios:dev": "cross-env APP_ENV=dev DEVICE_ENV=ios cap sync ios",
+    "sync:ios:prod": "cross-env APP_ENV=prod DEVICE_ENV=ios cap sync ios",
+    "sync:android:dev": "cross-env APP_ENV=dev DEVICE_ENV=android cap sync android",
+    "sync:android:prod": "cross-env APP_ENV=prod DEVICE_ENV=android cap sync android",
+    "sync:ios:local-dev": "cross-env APP_ENV=local-dev DEVICE_ENV=ios cap sync ios",
+    "sync:ios:local-prod": "cross-env APP_ENV=local-prod DEVICE_ENV=ios cap sync ios",
+    "sync:android:local-dev": "cross-env APP_ENV=local-dev DEVICE_ENV=android cap sync android",
+    "sync:android:local-prod": "cross-env APP_ENV=local-prod DEVICE_ENV=android cap sync android"
   },
   "dependencies": {
     "@capacitor/app": "^7.1.1",
@@ -24,6 +24,7 @@
     "@capacitor/cli": "7.4.2",
     "@capacitor/core": "7.4.2",
     "@capacitor/push-notifications": "^7.0.4",
+    "@capacitor/share": "^7.0.4",
     "@capacitor/status-bar": "^7.0.4",
     "@causw/api-client": "workspace:*",
     "@causw/cds": "workspace:*",
@@ -58,6 +59,7 @@
     "@tanstack/react-query-devtools": "catalog:default",
     "@types/kakao-js-sdk": "^1.39.5",
     "autoprefixer": "catalog:default",
+    "cross-env": "^10.1.0",
     "msw": "^2.12.10"
   },
   "msw": {
