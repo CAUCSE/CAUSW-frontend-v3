@@ -2,9 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 
+import { Browser } from '@capacitor/browser';
+
 import {
+  getNotificationPopupLink,
+  NOTIFICATION_LINK_TYPE,
   type GetNotificationsResponseDto,
-  NOTIFICATION_TYPE,
 } from '@/entities/notification';
 
 import { usePatchNotificationReadStatus } from '../mutations';
@@ -20,17 +23,12 @@ export const useNotificationListItem = () => {
       changeNotificationReadStatus(notification.notificationLogId);
     }
 
-    if (
-      notification.noticeType === NOTIFICATION_TYPE.COMMUNITY.type ||
-      notification.noticeType === NOTIFICATION_TYPE.OFFICIAL.type
-    ) {
-      router.push(`/feed/${notification.targetId}`);
-      return;
-    }
+    const link = getNotificationPopupLink(notification);
 
-    if (notification.noticeType === NOTIFICATION_TYPE.CEREMONY_V2.type) {
-      router.push(`/ceremony/${notification.targetId}`);
-      return;
+    if (link.type === NOTIFICATION_LINK_TYPE.EXTERNAL) {
+      void Browser.open({ url: link.url });
+    } else {
+      router.push(link.path);
     }
   };
 

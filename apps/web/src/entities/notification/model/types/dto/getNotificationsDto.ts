@@ -1,7 +1,4 @@
-/**
- * 커뮤니티, 공식, 시스템, 경조사 알림
- */
-type NotificationType = 'COMMUNITY' | 'OFFICIAL' | 'SYSTEM' | 'CEREMONY_V2';
+import { type NotificationType } from '../../../config/notificationType';
 
 export interface GetNotificationsResponseDto {
   notificationLogId: string;
