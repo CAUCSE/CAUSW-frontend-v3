@@ -1,5 +1,5 @@
 const getWebOrigin = () => {
-  const configuredUrl = process.env.NEXT_PUBLIC_WEB_URL;
+  const configuredUrl = process.env.NEXT_PUBLIC_WEB_BASE_URL;
   if (configuredUrl) {
     try {
       return new URL(configuredUrl).origin;
