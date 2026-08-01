@@ -3,18 +3,23 @@
 import { useEffect, useMemo } from 'react';
 
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useAgreeTermsMutation } from '@/features/auth';
+import {
+  consumePendingDestination,
+  savePendingDestination,
+  useAgreeTermsMutation,
+} from '@/features/auth';
 import { useProfileImageEdit } from '@/features/setting';
 
-import { authQueryKey, authQueryOptions } from '@/entities/auth/config/query';
-import type {
-  OnboardingStatus,
-  TermsAgreementRequestDto,
-} from '@/entities/auth/model/types';
+import {
+  authQueryKey,
+  authQueryOptions,
+  type OnboardingStatus,
+  type TermsAgreementRequestDto,
+} from '@/entities/auth';
 
 import { useBreakpoint, useIsMounted } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
@@ -64,6 +69,7 @@ interface OnboardingGuardProps {
 export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
   const isMounted = useIsMounted();
   const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
   const { isMobileSize } = useBreakpoint();
   const { data: myInfo } = useQuery({
@@ -120,9 +126,16 @@ export const OnboardingGuard = ({ children }: OnboardingGuardProps) => {
 
   useEffect(() => {
     if (onboardingRedirectPath) {
+      savePendingDestination(pathname ?? '/home');
       router.replace(onboardingRedirectPath);
     }
-  }, [onboardingRedirectPath, router]);
+  }, [onboardingRedirectPath, pathname, router]);
+
+  useEffect(() => {
+    if (onboardingStatus !== 'ACTIVE') return;
+    const destination = consumePendingDestination();
+    if (destination) router.replace(destination);
+  }, [onboardingStatus, router]);
 
   return (
     <>

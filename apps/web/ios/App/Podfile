@@ -15,6 +15,7 @@ def capacitor_pods
   pod 'CapacitorAppLauncher', :path => '../../../../node_modules/.pnpm/@capacitor+app-launcher@7.0.4_@capacitor+core@7.4.2/node_modules/@capacitor/app-launcher'
   pod 'CapacitorBrowser', :path => '../../../../node_modules/.pnpm/@capacitor+browser@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/browser'
   pod 'CapacitorPushNotifications', :path => '../../../../node_modules/.pnpm/@capacitor+push-notifications@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/push-notifications'
+  pod 'CapacitorShare', :path => '../../../../node_modules/.pnpm/@capacitor+share@7.0.4_@capacitor+core@7.4.2/node_modules/@capacitor/share'
   pod 'CapacitorStatusBar', :path => '../../../../node_modules/.pnpm/@capacitor+status-bar@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/status-bar'
   pod 'CapacitorSecureStoragePlugin', :path => '../../../../node_modules/.pnpm/capacitor-secure-storage-plugin@0.12.0_@capacitor+core@7.4.2/node_modules/capacitor-secure-storage-plugin'
 end

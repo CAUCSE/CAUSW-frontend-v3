@@ -12,6 +12,7 @@ import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 import { MSWComponent } from './_mock';
 import {
   AuthRefreshProvider,
+  DeepLinkProvider,
   ForceUpdateProvider,
   GlobalRoutingProvider,
   PushNotificationDeepLinkProvider,
@@ -74,7 +75,7 @@ export default function RootLayout({
               <AuthRefreshProvider>
                 <GlobalRoutingProvider>
                   <PushNotificationDeepLinkProvider>
-                    {children}
+                    <DeepLinkProvider>{children}</DeepLinkProvider>
                   </PushNotificationDeepLinkProvider>
                 </GlobalRoutingProvider>
               </AuthRefreshProvider>

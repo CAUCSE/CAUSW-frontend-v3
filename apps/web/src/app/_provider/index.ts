@@ -4,4 +4,5 @@ export {
   ForceUpdateProvider,
   PushNotificationDeepLinkProvider,
 } from './capcitor';
+export { DeepLinkProvider } from './deep-link';
 export { OnboardingGuard } from './onboarding-guard';
