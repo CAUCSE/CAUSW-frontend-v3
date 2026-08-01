@@ -14,7 +14,7 @@ android {
 
         //firebase remote config에서 사용하므로, 변경 시 firebase remote config의 default value도 함께 변경해야 함.
         //dev & prod 공통
-        versionName "12.2.0"
+        versionName "12.1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
