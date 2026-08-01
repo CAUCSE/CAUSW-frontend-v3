@@ -24,6 +24,8 @@ PODS:
   - CapacitorSecureStoragePlugin (0.12.0):
     - Capacitor
     - SwiftKeychainWrapper
+  - CapacitorShare (7.0.4):
+    - Capacitor
   - CapacitorStatusBar (7.0.5):
     - Capacitor
   - Firebase/CoreOnly (11.15.0):
@@ -114,6 +116,7 @@ DEPENDENCIES:
   - "CapacitorCordova (from `../../../../node_modules/.pnpm/@capacitor+ios@7.4.2_@capacitor+core@7.4.2/node_modules/@capacitor/ios`)"
   - "CapacitorPushNotifications (from `../../../../node_modules/.pnpm/@capacitor+push-notifications@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/push-notifications`)"
   - "CapacitorSecureStoragePlugin (from `../../../../node_modules/.pnpm/capacitor-secure-storage-plugin@0.12.0_@capacitor+core@7.4.2/node_modules/capacitor-secure-storage-plugin`)"
+  - "CapacitorShare (from `../../../../node_modules/.pnpm/@capacitor+share@7.0.4_@capacitor+core@7.4.2/node_modules/@capacitor/share`)"
   - "CapacitorStatusBar (from `../../../../node_modules/.pnpm/@capacitor+status-bar@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/status-bar`)"
   - Firebase/Messaging
   - GoogleSignIn
@@ -157,6 +160,8 @@ EXTERNAL SOURCES:
     :path: "../../../../node_modules/.pnpm/@capacitor+push-notifications@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/push-notifications"
   CapacitorSecureStoragePlugin:
     :path: "../../../../node_modules/.pnpm/capacitor-secure-storage-plugin@0.12.0_@capacitor+core@7.4.2/node_modules/capacitor-secure-storage-plugin"
+  CapacitorShare:
+    :path: "../../../../node_modules/.pnpm/@capacitor+share@7.0.4_@capacitor+core@7.4.2/node_modules/@capacitor/share"
   CapacitorStatusBar:
     :path: "../../../../node_modules/.pnpm/@capacitor+status-bar@7.0.5_@capacitor+core@7.4.2/node_modules/@capacitor/status-bar"
 
@@ -171,6 +176,7 @@ SPEC CHECKSUMS:
   CapacitorCordova: 5e58d04631bc5094894ac106e2bf1da18a9e6151
   CapacitorPushNotifications: 2d8af7b97c3cf64cb3dc591ce28bc37ef00c1c0a
   CapacitorSecureStoragePlugin: 50de0808ad398aa401e00f9e58adf88c77cb3c25
+  CapacitorShare: 25f7fc5dd0e4edbde5d6801c6de5d14a8b450a41
   CapacitorStatusBar: 6de542f202c0dd3f9d0a73b240d4c9d3dddc49b4
   Firebase: d99ac19b909cd2c548339c2241ecd0d1599ab02e
   FirebaseCore: efb3893e5b94f32b86e331e3bd6dadf18b66568e
@@ -189,6 +195,6 @@ SPEC CHECKSUMS:
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
 
-PODFILE CHECKSUM: 7c9a73d7f29b8c6ff1c171f895ddb28a32cb368f
+PODFILE CHECKSUM: 1fc0dde2c26e5ed36a558fdf39a30a7a16f595c0
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0
