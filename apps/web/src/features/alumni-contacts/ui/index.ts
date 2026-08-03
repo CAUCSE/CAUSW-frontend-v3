@@ -5,7 +5,6 @@ export { AlumniContactsAcademicStatusFilterButton } from './alumni-contacts-acad
 export { AlumniContactsAcademicFilterSheetModalTrigger } from './alumni-contacts-academic-filter-sheet-modal-trigger';
 export { AlumniContactsAcademicStatusFilterChip } from './alumni-contacts-academic-status-filter-chip';
 export { AlumniContactsAdmissionYearFilterChip } from './alumni-contacts-admission-year-filter-chip';
-export { MyAlumniContactsButton } from './my-alumni-contacts-button';
 export { AlumniContactsContactActionButton } from './alumni-contacts-contact-action-button';
 export { MyAlumniContactsEditButton } from './my-alumni-contacts-edit-button';
 export { MyAlumniContactsSaveButton } from './my-alumni-contacts-save-button';

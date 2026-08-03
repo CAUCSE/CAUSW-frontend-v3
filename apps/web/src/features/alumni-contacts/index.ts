@@ -6,7 +6,6 @@ export {
   AlumniContactsAcademicFilterSheetModalTrigger,
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
-  MyAlumniContactsButton,
   AlumniContactsContactActionButton,
   MyAlumniContactsEditButton,
   MyAlumniContactsSaveButton,
