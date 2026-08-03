@@ -2,45 +2,37 @@
 
 import Link from 'next/link';
 
-import { ChevronRight, HStack, Text, VStack } from '@causw/cds';
+import { HStack, Text, VStack } from '@causw/cds';
 
-import {
-  type AlumniSummaryDto,
-  type GetAlumniContactsQuery,
-} from '@/entities/alumni-contacts';
+import { type AlumniSummaryDto } from '@/entities/alumni-contacts';
 
+import { ROUTES } from '@/shared/constants';
 import { ProfileAvatar } from '@/shared/ui';
 
-interface AlumniContactsListItemProps {
-  item: AlumniSummaryDto;
-  query: GetAlumniContactsQuery;
-  onNavigate: (
-    alumniContactsId: AlumniSummaryDto['id'],
-    query: GetAlumniContactsQuery,
-  ) => void;
+interface MyAlumniContactsSummaryCardProps {
+  myProfile: AlumniSummaryDto;
 }
 
-export const AlumniContactsListItem = ({
-  item,
-  query,
-  onNavigate,
-}: AlumniContactsListItemProps) => {
+export const MyAlumniContactsSummaryCard = ({
+  myProfile,
+}: MyAlumniContactsSummaryCardProps) => {
   return (
-    <li id={item.id}>
+    <li>
       <Link
-        href={`/alumni-contacts/${item.id}`}
-        onNavigate={() => onNavigate(item.id, query)}
+        href={ROUTES.PROFILE}
         className="flex min-w-0 rounded-md bg-white py-3"
       >
         <HStack gap="none" className="min-w-0 grow" align="center">
           <div className="align-center jusity-center relative flex shrink-0">
             <ProfileAvatar
-              profileImageType={item.profileImage?.profileImageType ?? 'UNSET'}
-              profileImageUrl={item.profileImage?.profileImageUrl}
+              profileImageType={
+                myProfile.profileImage?.profileImageType ?? 'UNSET'
+              }
+              profileImageUrl={myProfile.profileImage?.profileImageUrl}
               size={44}
               className="shrink-0"
             />
-            {item.isCoffeeChatAvailable && (
+            {myProfile.isCoffeeChatAvailable && (
               <span className="absolute right-0 bottom-0 size-3 rounded-full bg-green-400 ring-3 ring-white" />
             )}
           </div>
@@ -54,7 +46,7 @@ export const AlumniContactsListItem = ({
               textColor="gray-700"
               className="truncate"
             >
-              {item.name ?? '-'}
+              {myProfile.name ?? '-'}
             </Text>
             <HStack gap="sm" className="min-w-0 items-center">
               <Text
@@ -62,9 +54,9 @@ export const AlumniContactsListItem = ({
                 textColor="gray-400"
                 className="min-w-0 shrink-0"
               >
-                {item.admissionYear ?? '-'}
+                {myProfile.admissionYear ?? '-'}
               </Text>
-              {item.description && (
+              {myProfile.description && (
                 <HStack gap="sm" align="center">
                   <div className="h-2 w-px shrink-0 bg-gray-200" />
                   <Text
@@ -73,17 +65,12 @@ export const AlumniContactsListItem = ({
                     className="line-clamp-1"
                     as="p"
                   >
-                    {item.description}
+                    {myProfile.description}
                   </Text>
                 </HStack>
               )}
             </HStack>
           </VStack>
-          <ChevronRight
-            size={12}
-            color="gray-300"
-            className="shrink-0 self-center"
-          />
         </HStack>
       </Link>
     </li>

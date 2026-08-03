@@ -7,12 +7,12 @@ import { isEqual } from 'es-toolkit';
 
 import {
   ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY,
-  type GetPaginatedAlumniContactsResponseDto,
+  type AlumniSummaryDto,
   type GetAlumniContactsQuery,
 } from '@/entities/alumni-contacts';
 
 interface UseAlumniContactsScrollRestorationProps {
-  data?: GetPaginatedAlumniContactsResponseDto['content'];
+  data?: AlumniSummaryDto[];
   query: GetAlumniContactsQuery;
   enabled?: boolean;
   hasNextPage: boolean;

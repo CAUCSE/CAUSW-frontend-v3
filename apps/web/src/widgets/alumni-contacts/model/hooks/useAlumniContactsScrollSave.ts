@@ -2,15 +2,12 @@
 
 import {
   ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY,
-  type GetPaginatedAlumniContactsResponseDto,
+  type AlumniSummaryDto,
   type AlumniContactsScrollRestorationState,
   type GetAlumniContactsQuery,
 } from '@/entities/alumni-contacts';
 
 import { useSessionStorage } from '@/shared/hooks';
-
-type AlumniContactsListItem =
-  GetPaginatedAlumniContactsResponseDto['content'][number];
 
 export const useAlumniContactsScrollSave = () => {
   const [, setAlumniContactsScrollRestoration] =
@@ -26,7 +23,7 @@ export const useAlumniContactsScrollSave = () => {
     );
 
   const handleNavigateToAlumniContacts = (
-    alumniContactsId: AlumniContactsListItem['id'],
+    alumniContactsId: AlumniSummaryDto['id'],
     query: GetAlumniContactsQuery,
   ) => {
     setAlumniContactsScrollRestoration({
