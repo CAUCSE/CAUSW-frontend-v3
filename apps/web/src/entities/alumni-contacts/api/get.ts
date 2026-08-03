@@ -1,18 +1,21 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
-import { ALUMNI_CONTACTS_URL_PREFIX } from '../config';
+import {
+  ALUMNI_CONTACTS_SECTION_SIZE,
+  ALUMNI_CONTACTS_URL_PREFIX,
+} from '../config';
 import {
   type GetAlumniContactsDetailResponseDto,
   type GetAlumniContactsDetailParam,
   type GetAlumniContactsQuery,
-  type GetPaginatedAlumniContactsResponseDto,
+  type GetAlumniDirectoryResponseDto,
   type GetMyAlumniContactsResponseDto,
 } from '../model';
 
 export const getAlumniContacts = async (
   query: GetAlumniContactsQuery,
-  pageNum: number = 0,
+  cursor?: string,
 ) => {
   const queryString = new URLSearchParams();
 
@@ -22,11 +25,22 @@ export const getAlumniContacts = async (
     }
   });
 
-  queryString.append('pageNum', pageNum.toString());
+  queryString.append(
+    'coffeeChatSize',
+    ALUMNI_CONTACTS_SECTION_SIZE.COFFEE_CHAT.toString(),
+  );
+  queryString.append(
+    'allMembersSize',
+    ALUMNI_CONTACTS_SECTION_SIZE.ALL_MEMBERS.toString(),
+  );
+
+  if (cursor) {
+    queryString.append('cursor', cursor);
+  }
 
   const url = withQuery(ALUMNI_CONTACTS_URL_PREFIX, queryString.toString());
 
-  const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+  const response = await API.get<GetAlumniDirectoryResponseDto>(url);
 
   return response;
 };

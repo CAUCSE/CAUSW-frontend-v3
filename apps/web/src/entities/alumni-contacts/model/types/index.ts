@@ -1,6 +1,8 @@
 export type { GetAlumniContactsQuery } from './query';
 export type {
-  GetPaginatedAlumniContactsResponseDto,
+  AlumniSummaryDto,
+  AlumniDirectorySectionDto,
+  GetAlumniDirectoryResponseDto,
   GetAlumniContactsDetailResponseDto,
   GetMyAlumniContactsResponseDto,
 } from './dto';

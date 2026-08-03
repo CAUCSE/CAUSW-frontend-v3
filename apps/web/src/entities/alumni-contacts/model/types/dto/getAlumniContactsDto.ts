@@ -1,19 +1,33 @@
-import { type UserProfileImageType, type PaginationDto } from '@/shared/types';
+import { type AccountDepartment } from '@/entities/user';
+
+import { type UserProfileImageType } from '@/shared/types';
+
+import { type AlumniContactsSectionType } from '../../../config';
 
 interface ProfileImage {
   profileImageType: UserProfileImageType;
   profileImageUrl: string;
 }
 
-interface GetAlumniContactsResponseDto {
+export interface AlumniSummaryDto {
   id: string;
-  profileImage: ProfileImage;
-  name: string;
-  admissionYear: string;
+  profileImage: ProfileImage | null;
+  name: string | null;
+  admissionYear: string | null;
   academicStatus: string;
+  department: { code: AccountDepartment; name: string } | null;
   description: string | null;
+  isCoffeeChatAvailable: boolean;
 }
 
-export type GetPaginatedAlumniContactsResponseDto = PaginationDto<
-  GetAlumniContactsResponseDto[]
->;
+export interface AlumniDirectorySectionDto {
+  type: AlumniContactsSectionType;
+  items: AlumniSummaryDto[];
+  hasNext: boolean;
+}
+
+export interface GetAlumniDirectoryResponseDto {
+  myProfile: AlumniSummaryDto | null;
+  sections: AlumniDirectorySectionDto[];
+  nextCursor: string | null;
+}

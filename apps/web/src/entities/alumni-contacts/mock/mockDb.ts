@@ -1,4 +1,44 @@
-import { type GetAlumniContactsDetailResponseDto } from '../model';
+import {
+  type AlumniSummaryDto,
+  type GetAlumniContactsDetailResponseDto,
+} from '../model';
+
+export const myAlumniProfileMockDb: AlumniSummaryDto = {
+  id: 'my-user-info-id',
+  profileImage: { profileImageType: 'MALE_1', profileImageUrl: '' },
+  name: '내이름',
+  admissionYear: '20학번',
+  academicStatus: '재학생',
+  department: { code: 'SCHOOL_OF_SW', name: '소프트웨어학부' },
+  description: '내 동문수첩 소개글입니다.',
+  isCoffeeChatAvailable: true,
+};
+
+export const alumniDirectoryMockDb: AlumniSummaryDto[] = [
+  ...Array.from({ length: 3 }, (_, index) => ({
+    id: `coffee-chat-user-info-id-${index}`,
+    profileImage: {
+      profileImageType: 'FEMALE_1' as const,
+      profileImageUrl: '',
+    },
+    name: `커피챗 가능 동문 ${index + 1}`,
+    admissionYear: `${17 + index}학번`,
+    academicStatus: '졸업생',
+    department: { code: 'DEPT_OF_CSE' as const, name: '컴퓨터공학과' },
+    description: '커피챗 가능합니다. 편하게 연락주세요.',
+    isCoffeeChatAvailable: true,
+  })),
+  ...Array.from({ length: 25 }, (_, index) => ({
+    id: `general-user-info-id-${index}`,
+    profileImage: { profileImageType: 'MALE_2' as const, profileImageUrl: '' },
+    name: `동문 ${index + 1}`,
+    admissionYear: `${15 + (index % 10)}학번`,
+    academicStatus: index % 2 === 0 ? '졸업생' : '재학생',
+    department: { code: 'SCHOOL_OF_CSE' as const, name: '컴퓨터공학부' },
+    description: '동문 프로필입니다.',
+    isCoffeeChatAvailable: false,
+  })),
+];
 
 export const alumniContactsDetailMockDb: GetAlumniContactsDetailResponseDto = {
   id: '1',

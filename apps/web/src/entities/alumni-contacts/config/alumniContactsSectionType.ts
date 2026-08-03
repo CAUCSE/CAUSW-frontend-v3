@@ -1,0 +1,7 @@
+export const ALUMNI_CONTACTS_SECTION_TYPE = {
+  COFFEE_CHAT_AVAILABLE: 'COFFEE_CHAT_AVAILABLE',
+  ALL_MEMBERS: 'ALL_MEMBERS',
+} as const;
+
+export type AlumniContactsSectionType =
+  (typeof ALUMNI_CONTACTS_SECTION_TYPE)[keyof typeof ALUMNI_CONTACTS_SECTION_TYPE];
