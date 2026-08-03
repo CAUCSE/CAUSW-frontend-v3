@@ -1,5 +1,7 @@
 export {
   AlumniContactsFilterGroup,
+  AlumniContactsCollapsibleHeader,
+  AlumniContactsTab,
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,
   AlumniContactsHeader,
