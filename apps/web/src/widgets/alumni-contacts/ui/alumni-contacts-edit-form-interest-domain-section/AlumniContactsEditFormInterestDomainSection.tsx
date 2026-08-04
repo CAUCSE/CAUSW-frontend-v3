@@ -20,7 +20,12 @@ export const AlumniContactsEditFormInterestDomainSection = () => {
       {userInterestDomain.length > 0 && (
         <HStack gap="sm" className="overflow-x-auto">
           {userInterestDomain.map((interestDomain, idx) => (
-            <Chip key={interestDomain} size="md" color="lightgray">
+            <Chip
+              key={interestDomain}
+              size="sm"
+              color="lightgray"
+              className="items-center gap-1 px-2.5"
+            >
               <Text typography="body-14-semibold" textColor="gray-500">
                 {interestDomain}
               </Text>

@@ -14,7 +14,7 @@ export const AlumniContactsSingleFieldAddButton = ({
   return (
     <Button
       color="gray"
-      className="h-13 rounded-md"
+      className="h-12 rounded-md"
       onClick={onClick}
       type="button"
       disabled={disabled}
