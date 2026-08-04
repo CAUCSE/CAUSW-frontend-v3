@@ -63,7 +63,7 @@ const SettingPrivacyContent = () => {
   };
 
   return (
-    <VStack gap="md" className="w-full px-4">
+    <VStack gap="md" className="w-full px-4 pb-4">
       <Text typography="title-22-bold" textColor="gray-800">
         계정 정보 관리
       </Text>

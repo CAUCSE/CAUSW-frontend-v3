@@ -2,11 +2,15 @@
 
 import { Text, Toggle, VStack } from '@causw/cds';
 
+import { getSocialOauthUrl } from '@/features/auth';
+import {
+  useSocialAccountOAuthMutation,
+  useUnlinkSocialAccountMutation,
+} from '@/features/setting';
+
 import {
   useSocialAccountStatusSuspenseQuery,
-  useUnlinkSocialAccountMutation,
   type NativeSocialLoginProvider,
-  useSocialAccountOAuthMutation,
 } from '@/entities/auth';
 
 export const PrivacySocialSection = () => {
@@ -14,7 +18,6 @@ export const PrivacySocialSection = () => {
 
   const unlinkMutation = useUnlinkSocialAccountMutation();
   const oAuthMutation = useSocialAccountOAuthMutation();
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
   const SOCIAL_OAUTH_PROVIDER_KEY = 'social-oauth-provider';
 
   const handleToggle = (
@@ -26,9 +29,12 @@ export const PrivacySocialSection = () => {
         onSuccess: ({ linkToken }) => {
           sessionStorage.setItem(SOCIAL_OAUTH_PROVIDER_KEY, provider);
 
-          window.location.href = `${API_BASE_URL}/oauth2/authorization/${provider}?linkToken=${linkToken}`;
+          window.location.href = getSocialOauthUrl(provider, {
+            linkToken,
+          });
         },
       });
+
       return;
     }
 

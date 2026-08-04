@@ -2,7 +2,14 @@ import { type NativeSocialLoginProvider } from '@/entities/auth';
 
 import { BASE_URL, ENVIRONMENT } from '@/shared/config';
 
-export const getSocialOauthUrl = (provider: NativeSocialLoginProvider) => {
+interface GetSocialOauthUrlOptions {
+  linkToken?: string;
+}
+
+export const getSocialOauthUrl = (
+  provider: NativeSocialLoginProvider,
+  options?: GetSocialOauthUrlOptions,
+) => {
   const oauthUrl = new URL(`${BASE_URL}/oauth2/authorization/${provider}`);
 
   if (ENVIRONMENT === 'local') {
@@ -11,6 +18,10 @@ export const getSocialOauthUrl = (provider: NativeSocialLoginProvider) => {
 
   if (ENVIRONMENT === 'development') {
     oauthUrl.searchParams.set('env', 'dev');
+  }
+
+  if (options?.linkToken) {
+    oauthUrl.searchParams.set('linkToken', options.linkToken);
   }
 
   return oauthUrl.toString();
