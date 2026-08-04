@@ -23,6 +23,7 @@ export const AlumniContactsDetailHero = ({
           admissionYear={alumniContactsDetail.admissionYear}
           academicStatus={alumniContactsDetail.academicStatus}
           profileImage={alumniContactsDetail.profileImage}
+          isCoffeeChatAvailable={alumniContactsDetail.isCoffeeChatAvailable}
         />
         <AlumniContactsDescription
           description={alumniContactsDetail.description}

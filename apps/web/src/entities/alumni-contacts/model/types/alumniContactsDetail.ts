@@ -1,3 +1,5 @@
+import { type AccountDepartment } from '@/entities/user';
+
 import { type UserProfileImageType } from '@/shared/types';
 
 interface ProfileImage {
@@ -29,9 +31,11 @@ export interface AlumniContactsDetail {
   name: string;
   admissionYear: string;
   academicStatus: string;
+  department: { code: AccountDepartment; name: string } | null;
   description: string | null;
   phoneNumber: string;
   isPhoneNumberVisible: boolean;
+  isCoffeeChatAvailable: boolean;
   email: string;
   socialLinks: string[];
   userTechStack: string[];
