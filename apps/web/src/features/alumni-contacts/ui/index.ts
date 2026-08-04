@@ -14,4 +14,5 @@ export { AlumniContactsSingleFieldAddButton } from './alumni-contacts-single-fie
 export { AlumniContactsProfileEntryCurrentToggle } from './alumni-contacts-profile-entry-current-toggle';
 export { AlumniContactsDescriptionTextArea } from './alumni-contacts-description-text-area';
 export { AlumniContactsContactVisibilityToggleButton } from './alumni-contacts-contact-visibility-toggle-button';
+export { AlumniContactsCoffeeChatAvailableToggleButton } from './alumni-contacts-coffee-chat-available-toggle-button';
 export { AlumniContactsFieldEditButton } from './alumni-contacts-field-edit-button';

@@ -1,29 +1,15 @@
 'use client';
 
-import { HStack, Mail, Text, VStack } from '@causw/cds';
+import { VStack, Grid } from '@causw/cds';
 
 import {
+  AlumniContactsCoffeeChatAvailableToggleButton,
   AlumniContactsContactVisibilityToggleButton,
   AlumniContactsDescriptionTextArea,
 } from '@/features/alumni-contacts';
 
 import { AlumniContactsBasicInfo } from '@/entities/alumni-contacts';
 import { type GetMyAlumniContactsResponseDto } from '@/entities/alumni-contacts/model';
-
-interface AlumniContactsEmailProps {
-  email: string;
-}
-
-const AlumniContactsEmail = ({ email }: AlumniContactsEmailProps) => {
-  return (
-    <HStack className="items-center gap-1.5 rounded-sm bg-gray-100 px-3 py-2">
-      <Mail size={16} />
-      <Text typography="body-14-semibold" textColor="gray-500">
-        {email}
-      </Text>
-    </HStack>
-  );
-};
 
 interface AlumniContactsEditFormHeroProps {
   myAlumniContacts: GetMyAlumniContactsResponseDto;
@@ -33,19 +19,21 @@ export const AlumniContactsEditFormHero = ({
   myAlumniContacts,
 }: AlumniContactsEditFormHeroProps) => {
   return (
-    <VStack className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]">
-      <VStack className="gap-4 p-6">
+    <VStack className="bg-white md:rounded-t-lg md:border md:border-b-0 md:border-gray-200">
+      <VStack className="gap-4 p-4 pt-2 md:px-5 md:pt-7">
         <AlumniContactsBasicInfo
           name={myAlumniContacts.name}
           admissionYear={myAlumniContacts.admissionYear}
           academicStatus={myAlumniContacts.academicStatus}
+          department={myAlumniContacts.department}
           profileImage={myAlumniContacts.profileImage}
+          isCoffeeChatAvailable={myAlumniContacts.isCoffeeChatAvailable}
         />
         <AlumniContactsDescriptionTextArea />
-        <HStack gap="md" className="overflow-x-auto">
+        <Grid columns={2} gap="xs" className="overflow-x-auto">
+          <AlumniContactsCoffeeChatAvailableToggleButton />
           <AlumniContactsContactVisibilityToggleButton />
-          <AlumniContactsEmail email={myAlumniContacts.email} />
-        </HStack>
+        </Grid>
       </VStack>
     </VStack>
   );

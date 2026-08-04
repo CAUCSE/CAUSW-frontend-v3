@@ -4,4 +4,5 @@ export {
   useAlumniContactsSortFilter,
   useAlumniContactsDescriptionTextArea,
   useAlumniContactsContactVisibilityToggleButton,
+  useAlumniContactsCoffeeChatAvailableToggleButton,
 } from './hooks';
