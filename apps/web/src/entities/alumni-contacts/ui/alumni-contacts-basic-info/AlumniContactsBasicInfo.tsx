@@ -43,14 +43,18 @@ export const AlumniContactsBasicInfo = ({
         <Text typography="subtitle-18-bold" textColor="gray-800">
           {name}
         </Text>
-        <HStack gap="sm" className="items-center">
+        <HStack gap="sm" className="items-center overflow-x-auto">
           {userInfo.map((item, index) => (
             <React.Fragment key={`${item}-${index}`}>
-              <Text typography="body-16-regular" textColor="gray-400">
+              <Text
+                typography="body-16-regular"
+                textColor="gray-400"
+                className="shrink-0 whitespace-nowrap"
+              >
                 {item}
               </Text>
               {index < userInfo.length - 1 && (
-                <div className="h-2 w-px bg-gray-200" />
+                <div className="h-2 w-px shrink-0 bg-gray-200" />
               )}
             </React.Fragment>
           ))}
