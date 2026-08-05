@@ -30,8 +30,8 @@ export const AlumniContactProjectSection = ({
           <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
             <DocumentColored size={24} />
           </div>
-          <VStack gap="xs" className="min-w-0">
-            <Text typography="body-16-regular" textColor="gray-700">
+          <VStack gap="none" className="min-w-0">
+            <Text typography="body-15-medium" textColor="gray-700">
               {project.description}
             </Text>
             <Text

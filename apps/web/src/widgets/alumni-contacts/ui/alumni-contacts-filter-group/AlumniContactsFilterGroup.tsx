@@ -30,7 +30,7 @@ export const AlumniContactsFilterGroup = () => {
       <AlumniContactsSortFilterSelect />
       <div className="h-3 w-px shrink-0 bg-gray-300" />
       {filterActive ? (
-        <HStack gap="xs" className="overflow-x-auto">
+        <HStack gap="none" className="overflow-x-auto">
           <>
             {admissionYearFilterActive && (
               <AlumniContactsAdmissionYearFilterChip

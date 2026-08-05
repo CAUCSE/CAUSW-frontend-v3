@@ -76,7 +76,7 @@ const AlumniContactsList = ({
         <>
           <VStack gap="none">
             <AlumniContactsSectionLabel>내 동문수첩</AlumniContactsSectionLabel>
-            <ul className="grid grid-cols-1 md:grid-cols-2">
+            <ul className="grid grid-cols-1">
               <MyAlumniContactsSummaryCard myProfile={myProfile} />
             </ul>
           </VStack>

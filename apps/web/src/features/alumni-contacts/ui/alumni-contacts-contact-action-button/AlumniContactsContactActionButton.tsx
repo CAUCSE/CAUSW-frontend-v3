@@ -1,4 +1,4 @@
-import React, { type ComponentProps, type ReactNode } from 'react';
+import { type ComponentProps, type ReactNode } from 'react';
 
 import { CTAButton, Text } from '@causw/cds';
 
@@ -24,7 +24,7 @@ export const AlumniContactsContactActionButton = ({
       fullWidth
       className="h-9.5 px-3 py-2"
     >
-      {icon && <React.Fragment>{icon}</React.Fragment>}
+      {icon}
       <Text typography="body-14-semibold" textColor={textColor}>
         {label}
       </Text>
