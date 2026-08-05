@@ -29,12 +29,12 @@ export const AlumniContactsEtcLinkConfirmDialog = ({
   return (
     <Dialog>
       <Dialog.Trigger asChild>
-        <Button className="flex h-fit w-19.5 flex-col items-center gap-1.5 bg-transparent p-0 hover:bg-transparent!">
-          <div className="flex size-15 items-center justify-center rounded-xl bg-gray-100">
+        <Button className="flex h-fit w-16 shrink-0 flex-col items-center gap-1.5 bg-transparent p-0 hover:bg-transparent!">
+          <div className="flex size-12.5 items-center justify-center rounded-md bg-gray-100">
             <AlumniContactsSnsIcon snsType={snsType} />
           </div>
           <Text
-            typography="body-14-regular"
+            typography="caption-12-regular"
             textColor="gray-600"
             className="block w-full min-w-0 truncate text-center"
           >
