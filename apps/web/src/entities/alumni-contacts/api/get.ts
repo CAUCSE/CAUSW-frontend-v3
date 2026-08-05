@@ -1,10 +1,7 @@
 import { API } from '@/shared/api';
 import { withQuery } from '@/shared/utils';
 
-import {
-  ALUMNI_CONTACTS_SECTION_SIZE,
-  ALUMNI_CONTACTS_URL_PREFIX,
-} from '../config';
+import { ALUMNI_CONTACTS_URL_PREFIX } from '../config';
 import {
   type GetAlumniContactsDetailResponseDto,
   type GetAlumniContactsDetailParam,
@@ -25,20 +22,14 @@ export const getAlumniContacts = async (
     }
   });
 
-  queryString.append(
-    'coffeeChatSize',
-    ALUMNI_CONTACTS_SECTION_SIZE.COFFEE_CHAT.toString(),
-  );
-  queryString.append(
-    'allMembersSize',
-    ALUMNI_CONTACTS_SECTION_SIZE.ALL_MEMBERS.toString(),
-  );
-
   if (cursor) {
     queryString.append('cursor', cursor);
   }
 
-  const url = withQuery(ALUMNI_CONTACTS_URL_PREFIX, queryString.toString());
+  const url = withQuery(
+    `${ALUMNI_CONTACTS_URL_PREFIX}/list`,
+    queryString.toString(),
+  );
 
   const response = await API.get<GetAlumniDirectoryResponseDto>(url);
 

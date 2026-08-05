@@ -25,7 +25,6 @@ export {
   ALUMNI_CONTACTS_SCROLL_RESTORATION_STORAGE_KEY,
   ALUMNI_CONTACTS_SECTION_TYPE,
   type AlumniContactsSectionType,
-  ALUMNI_CONTACTS_SECTION_SIZE,
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,

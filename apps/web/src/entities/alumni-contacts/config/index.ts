@@ -41,4 +41,3 @@ export {
   ALUMNI_CONTACTS_SECTION_TYPE,
   type AlumniContactsSectionType,
 } from './alumniContactsSectionType';
-export { ALUMNI_CONTACTS_SECTION_SIZE } from './alumniContactsSectionSize';

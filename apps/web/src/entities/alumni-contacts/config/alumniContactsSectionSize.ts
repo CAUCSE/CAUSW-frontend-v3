@@ -1,4 +1,0 @@
-export const ALUMNI_CONTACTS_SECTION_SIZE = {
-  COFFEE_CHAT: 10,
-  ALL_MEMBERS: 10,
-} as const;
