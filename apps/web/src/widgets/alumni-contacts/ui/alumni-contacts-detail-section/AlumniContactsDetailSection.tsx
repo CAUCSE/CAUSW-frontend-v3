@@ -26,13 +26,13 @@ export const AlumniContactsDetailSection = ({
   return (
     <VStack
       as="section"
-      className="flex-1 gap-7 bg-white px-6 py-4 md:rounded-b-lg"
+      className="grow gap-5 bg-white p-5 pt-0 pb-15 md:rounded-b-lg md:border md:border-t-0 md:border-gray-200 md:pb-5"
     >
       <AlumniContactsDetailSectionTabs
         selectedTab={selectedTab}
         handleClickCategoryTab={handleClickCategoryTab}
       />
-      <VStack className="gap-8">
+      <VStack className="gap-6">
         {Object.keys(ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL).map(
           (key, idx) => (
             <React.Fragment key={key}>

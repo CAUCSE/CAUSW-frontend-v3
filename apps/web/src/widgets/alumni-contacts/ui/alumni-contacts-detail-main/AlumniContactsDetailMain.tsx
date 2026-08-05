@@ -2,8 +2,6 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { VStack } from '@causw/cds';
-
 import { alumniContactsQueryOptions } from '@/entities/alumni-contacts';
 
 import { AlumniContactsDetailHero } from '../alumni-contacts-detail-hero';
@@ -21,9 +19,7 @@ export const AlumniContactsDetailMain = ({
 
   return (
     <>
-      <VStack className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]">
-        <AlumniContactsDetailHero alumniContactsDetail={alumniContactsDetail} />
-      </VStack>
+      <AlumniContactsDetailHero alumniContactsDetail={alumniContactsDetail} />
       <AlumniContactsDetailSection
         alumniContactsDetail={alumniContactsDetail}
       />

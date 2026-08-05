@@ -1,13 +1,34 @@
-import { Skeleton, VStack } from '@causw/cds';
+import { HStack, Skeleton, VStack, Grid } from '@causw/cds';
 
 export const AlumniContactsDetailMainLoadingView = () => {
   return (
-    <VStack className="h-screen gap-4 bg-[linear-gradient(180deg,#4C688F_0%,#1E2E3F_410px,#fff_410px,#fff_100%)] p-6">
-      <Skeleton height={80} width={80} className="rounded-lg" />
-      <VStack className="gap-2">
-        <Skeleton height={38} width={62} />
-        <Skeleton height={24} width={200} />
+    <>
+      <VStack className="bg-white md:rounded-t-lg md:border md:border-b-0 md:border-gray-200">
+        <VStack gap="lg" className="p-4 pt-2 md:px-5 md:pt-7">
+          <VStack gap="md">
+            <HStack gap="md" className="items-center">
+              <Skeleton height={64} width={64} className="rounded-lg" />
+              <VStack gap="sm">
+                <Skeleton height={24} width={120} />
+                <Skeleton height={18} width={180} />
+              </VStack>
+            </HStack>
+            <Skeleton height={18} width={320} />
+          </VStack>
+          <Grid columns={2} gap="sm">
+            <Skeleton height={48} className="rounded-md" />
+            <Skeleton height={48} className="rounded-md" />
+          </Grid>
+        </VStack>
       </VStack>
-    </VStack>
+      <VStack className="grow bg-white px-6 py-4 md:rounded-b-lg md:border md:border-t-0 md:border-gray-200">
+        <Skeleton
+          height="100%"
+          width="100%"
+          minHeight={400}
+          className="rounded-lg"
+        />
+      </VStack>
+    </>
   );
 };

@@ -12,7 +12,7 @@ export const AlumniContactsDescription = ({
   return (
     <Text
       typography="body-16-regular"
-      textColor="white"
+      textColor="gray-700"
       className="whitespace-pre-wrap"
     >
       {description}
