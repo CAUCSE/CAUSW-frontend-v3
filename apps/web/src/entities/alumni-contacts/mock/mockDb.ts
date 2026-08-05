@@ -50,7 +50,7 @@ export const alumniContactsDetailMockDb: GetAlumniContactsDetailResponseDto = {
   name: '관리자',
   admissionYear: '20학번',
   academicStatus: '재학생',
-  department: { code: 'SCHOOL_OF_SW', name: '소프트웨어학부' },
+  departmentDescription: '소프트웨어학부',
   description: 'ios 앱 개발 중입니다\n열심히 공부하고 있어요.',
   phoneNumber: '010-1234-5674',
   isCoffeeChatAvailable: true,

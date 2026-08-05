@@ -22,6 +22,7 @@ export const AlumniContactsDetailHero = ({
           name={alumniContactsDetail.name}
           admissionYear={alumniContactsDetail.admissionYear}
           academicStatus={alumniContactsDetail.academicStatus}
+          departmentLabel={alumniContactsDetail.departmentDescription}
           profileImage={alumniContactsDetail.profileImage}
           isCoffeeChatAvailable={alumniContactsDetail.isCoffeeChatAvailable}
         />

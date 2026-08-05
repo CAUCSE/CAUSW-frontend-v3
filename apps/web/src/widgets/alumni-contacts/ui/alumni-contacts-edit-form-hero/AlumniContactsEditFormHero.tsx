@@ -25,7 +25,7 @@ export const AlumniContactsEditFormHero = ({
           name={myAlumniContacts.name}
           admissionYear={myAlumniContacts.admissionYear}
           academicStatus={myAlumniContacts.academicStatus}
-          department={myAlumniContacts.department}
+          departmentLabel={myAlumniContacts.departmentDescription}
           profileImage={myAlumniContacts.profileImage}
           isCoffeeChatAvailable={myAlumniContacts.isCoffeeChatAvailable}
         />
