@@ -7,6 +7,7 @@ import {
 import { alumniContactsQueryOptions } from '@/entities/alumni-contacts';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
+import { QueryErrorBoundary } from '@/shared/ui';
 
 import { AlumniContactsEditForm } from './AlumniContactsEditForm';
 
@@ -22,7 +23,9 @@ export const AlumniContactsEditFormServerComponent = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <AlumniContactsEditForm />
+      <QueryErrorBoundary fallbackMessage="프로필 정보를 불러오지 못했습니다.">
+        <AlumniContactsEditForm />
+      </QueryErrorBoundary>
     </HydrationBoundary>
   );
 };

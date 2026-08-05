@@ -32,10 +32,11 @@ export const getHandler = [
       });
     },
   ),
-  // TODO: 백엔드가 GET /api/v2/users-info 커서 계약을 배포하면 passthrough()로 전환
   mswHttp.get<GetAlumniDirectoryResponseDto>(
-    ALUMNI_CONTACTS_URL_PREFIX,
+    `${ALUMNI_CONTACTS_URL_PREFIX}/list`,
     ({ request }) => {
+      return passthrough();
+
       const url = new URL(request.url);
       const cursor = url.searchParams.get('cursor');
       const keyword = url.searchParams.get('keyword');
