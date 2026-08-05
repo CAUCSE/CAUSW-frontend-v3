@@ -15,3 +15,5 @@ export { MyAlumniContactsMainLoadingView } from './my-alumni-contacts-main';
 export { AlumniContactsEditFormServerComponent } from './alumni-contacts-edit-form';
 export { AlumniContactsEditFormLoadingView } from './alumni-contacts-edit-form';
 export { MyAlumniContactsSummaryCard } from './my-alumni-contacts-summary-card';
+export { AlumniContactsHeroActions } from './alumni-contacts-hero-actions';
+export { AlumniContactsContactBottomSheet } from './alumni-contacts-contact-bottom-sheet';

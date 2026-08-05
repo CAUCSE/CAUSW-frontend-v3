@@ -16,6 +16,7 @@ export {
   useAlumniContactsProfileEntryEditDialog,
   useAlumniContactsScrollRestoration,
   useAlumniContactsScrollSave,
+  useAlumniContactsHeroActions,
 } from './hooks';
 export { sortAlumniContactsProfileEntry } from './sortAlumniContactsProfileEntry';
 export { createAlumniContactsProfileEntry } from './createAlumniContactsProfileEntry';

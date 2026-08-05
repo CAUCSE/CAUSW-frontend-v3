@@ -1,0 +1,1 @@
+export { shareAlumniContactsProfile } from './shareAlumniContactsProfile';

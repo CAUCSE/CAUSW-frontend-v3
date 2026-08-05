@@ -4,7 +4,10 @@ import { Button, Eye, EyeOff, Text } from '@causw/cds';
 
 import { useAlumniContactsCoffeeChatAvailableToggleButton } from '../../model';
 
-// TODO: 커피챗 가능 여부 변경 API 확정되면 클릭 핸들러 연결
+// TODO: 커피챗 토글 기능
+// 행사 기간 중에는 관리자가 멘토에 한해 커피챗 가능 여부를 강제 설정하고
+// 일반 유저는 직접 변경할 수 없는 정책 — 행사 종료 후 일반 유저 self-toggle이
+// 열리면 그때 클릭 핸들러/API 연동
 export const AlumniContactsCoffeeChatAvailableToggleButton = () => {
   const { isCoffeeChatAvailable } =
     useAlumniContactsCoffeeChatAvailableToggleButton();
@@ -25,7 +28,7 @@ export const AlumniContactsCoffeeChatAvailableToggleButton = () => {
       color="gray"
       className="items-center px-3 py-2"
       // onClick={}
-      disabled // TODO: 커피챗 가능 여부 변경 API 확정되면 disabled 제거
+      disabled // 행사 기간 중 정책상 비활성화 (위 주석 참고)
       type="button"
     >
       {VisibilityIcon}

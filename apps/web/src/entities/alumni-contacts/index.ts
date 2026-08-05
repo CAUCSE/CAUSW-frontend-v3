@@ -52,6 +52,7 @@ export {
   AlumniContactsSnsIcon,
 } from './ui';
 export {
+  alumniContactsShareUrl,
   AlumniContactsFilterSearchParam,
   checkAlumniContactsFilterSearchParamValidation,
   formatAlumniContactsPeriod,

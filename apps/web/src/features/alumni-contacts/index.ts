@@ -7,7 +7,7 @@ export {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
   AlumniContactsContactActionButton,
-  MyAlumniContactsEditButton,
+  AlumniContactsContactActionItem,
   MyAlumniContactsSaveButton,
   AlumniContactsContactVisibilityDialogTrigger,
   AlumniContactsEditFormSnsItem,
@@ -19,3 +19,4 @@ export {
   AlumniContactsFieldEditButton,
 } from './ui';
 export { putMyAlumniContacts } from './api';
+export { shareAlumniContactsProfile } from './lib';
