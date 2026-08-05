@@ -1,12 +1,17 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Grid } from '@causw/cds';
 
 import { AlumniContactsContactActionButton } from '@/features/alumni-contacts';
 
 import { type GetAlumniContactsDetailResponseDto } from '@/entities/alumni-contacts';
 
-import { useAlumniContactsHeroActions } from '../../model';
+import {
+  useAlumniContactsContactBottomSheet,
+  useAlumniContactsShare,
+} from '../../model';
 import { AlumniContactsContactBottomSheet } from '../alumni-contacts-contact-bottom-sheet';
 
 interface AlumniContactsHeroActionsProps {
@@ -28,20 +33,20 @@ export const AlumniContactsHeroActions = ({
   email,
   isMine = false,
 }: AlumniContactsHeroActionsProps) => {
+  const router = useRouter();
+  const { handleClickShare } = useAlumniContactsShare(alumniContactsId, name);
   const {
-    isContactBottomSheetOpen,
-    setIsContactBottomSheetOpen,
+    isOpen: isContactBottomSheetOpen,
+    setIsOpen: setIsContactBottomSheetOpen,
     handleClickContact,
-    handleClickEditProfile,
-    handleClickShare,
-  } = useAlumniContactsHeroActions(alumniContactsId, name);
+  } = useAlumniContactsContactBottomSheet();
 
   if (isMine) {
     return (
       <Grid columns={2} gap="xs" className="w-full overflow-x-auto">
         <AlumniContactsContactActionButton
           label="프로필편집"
-          onClick={handleClickEditProfile}
+          onClick={() => router.push('/profile/edit')}
         />
         <AlumniContactsContactActionButton
           label="프로필 공유"

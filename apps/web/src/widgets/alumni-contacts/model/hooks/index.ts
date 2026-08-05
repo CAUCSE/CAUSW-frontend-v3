@@ -15,4 +15,5 @@ export { useAlumniContactsSingleFieldEditDialog } from './useAlumniContactsSingl
 export { useAlumniContactsProfileEntryEditDialog } from './useAlumniContactsProfileEntryEditDialog';
 export { useAlumniContactsScrollRestoration } from './useAlumniContactsScrollRestoration';
 export { useAlumniContactsScrollSave } from './useAlumniContactsScrollSave';
-export { useAlumniContactsHeroActions } from './useAlumniContactsHeroActions';
+export { useAlumniContactsShare } from './useAlumniContactsShare';
+export { useAlumniContactsContactBottomSheet } from './useAlumniContactsContactBottomSheet';

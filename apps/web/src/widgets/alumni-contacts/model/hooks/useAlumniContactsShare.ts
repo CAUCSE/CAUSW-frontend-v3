@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import { usePathname, useRouter } from 'next/navigation';
 
 import { shareAlumniContactsProfile } from '@/features/alumni-contacts';
@@ -9,22 +7,12 @@ import { shareAlumniContactsProfile } from '@/features/alumni-contacts';
 import { toast } from '@/shared/model';
 import { TokenManager } from '@/shared/storage';
 
-export const useAlumniContactsHeroActions = (
+export const useAlumniContactsShare = (
   alumniContactsId: string,
   name: string,
 ) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [isContactBottomSheetOpen, setIsContactBottomSheetOpen] =
-    useState(false);
-
-  const handleClickContact = () => {
-    setIsContactBottomSheetOpen(true);
-  };
-
-  const handleClickEditProfile = () => {
-    router.push('/profile/edit');
-  };
 
   const handleClickShare = async () => {
     const accessToken = await TokenManager.getAccessToken();
@@ -44,10 +32,6 @@ export const useAlumniContactsHeroActions = (
   };
 
   return {
-    isContactBottomSheetOpen,
-    setIsContactBottomSheetOpen,
-    handleClickContact,
-    handleClickEditProfile,
     handleClickShare,
   };
 };
