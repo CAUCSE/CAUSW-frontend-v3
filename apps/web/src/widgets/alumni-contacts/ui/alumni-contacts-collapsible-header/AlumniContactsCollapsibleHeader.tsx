@@ -11,12 +11,12 @@ export const AlumniContactsCollapsibleHeader = ({
 
   return (
     <div
-      className={`grid overflow-hidden transition-[grid-template-rows] duration-200 ease-out ${
+      className={`-mx-2 grid overflow-hidden px-2 transition-[grid-template-rows] duration-200 ease-out ${
         isSearchFilterVisible ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
       }`}
     >
       <div
-        className={`flex min-h-0 flex-col gap-3 p-1 transition-opacity duration-150 ease-out ${
+        className={`flex min-h-0 flex-col gap-3 py-1 transition-opacity duration-150 ease-out ${
           isSearchFilterVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >
