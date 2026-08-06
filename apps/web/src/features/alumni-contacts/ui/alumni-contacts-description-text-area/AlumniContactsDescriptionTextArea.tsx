@@ -15,7 +15,7 @@ export const AlumniContactsDescriptionTextArea = () => {
         placeholder="소개글을 작성해주세요."
         resize={false}
         maxLength={ALUMNI_CONTACTS_EDIT_FORM_MAX_LENGTH.DESCRIPTION}
-        className="min-h-0 grow text-gray-700 caret-gray-500 placeholder:text-gray-300"
+        className="typo-body-15-regular! min-h-0 grow text-gray-700 caret-gray-500 placeholder:text-gray-300"
         value={field.value ?? ''}
         onChange={handleTextAreaChange}
         onBlur={field.onBlur}

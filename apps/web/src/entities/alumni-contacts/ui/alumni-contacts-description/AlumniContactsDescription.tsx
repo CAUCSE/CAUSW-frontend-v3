@@ -11,7 +11,7 @@ export const AlumniContactsDescription = ({
 }: AlumniContactsDescriptionProps) => {
   return (
     <Text
-      typography="body-16-regular"
+      typography="body-15-regular"
       textColor="gray-700"
       className="whitespace-pre-wrap"
     >

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { HStack, Text, VStack } from '@causw/cds';
+import { ChevronRight, HStack, Text, VStack } from '@causw/cds';
 
 import { type AlumniSummaryDto } from '@/entities/alumni-contacts';
 
@@ -71,6 +71,11 @@ export const MyAlumniContactsSummaryCard = ({
               )}
             </HStack>
           </VStack>
+          <ChevronRight
+            size={12}
+            color="gray-300"
+            className="shrink-0 self-center"
+          />
         </HStack>
       </Link>
     </li>

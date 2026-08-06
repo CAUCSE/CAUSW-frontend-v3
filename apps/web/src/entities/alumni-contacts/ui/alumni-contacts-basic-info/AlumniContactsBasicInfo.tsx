@@ -47,7 +47,7 @@ export const AlumniContactsBasicInfo = ({
           {userInfo.map((item, index) => (
             <React.Fragment key={`${item}-${index}`}>
               <Text
-                typography="body-16-regular"
+                typography="body-14-regular"
                 textColor="gray-400"
                 className="shrink-0 whitespace-nowrap"
               >
