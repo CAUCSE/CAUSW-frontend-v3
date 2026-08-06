@@ -1,8 +1,11 @@
 import { HStack, Skeleton, VStack, Grid } from '@causw/cds';
 
+import { AlumniContactsHeader } from '../alumni-contacts-header';
+
 export const AlumniContactsEditFormLoadingView = () => {
   return (
     <>
+      <AlumniContactsHeader />
       <VStack className="bg-white md:rounded-t-lg md:border md:border-b-0 md:border-gray-200">
         <VStack gap="lg" className="p-4 pt-2 md:px-5 md:pt-7">
           <VStack gap="md">
