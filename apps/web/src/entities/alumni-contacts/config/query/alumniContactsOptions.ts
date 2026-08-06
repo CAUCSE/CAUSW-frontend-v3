@@ -19,9 +19,8 @@ export const alumniContactsQueryOptions = {
     infiniteQueryOptions({
       queryKey: alumniContactsQueryKeys.list(query),
       queryFn: ({ pageParam }) => getAlumniContacts(query, pageParam),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) =>
-        lastPage.hasNext ? lastPage.currentPage + 1 : undefined,
+      initialPageParam: undefined as string | undefined,
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       staleTime: QUERY_STALE_TIME.NONE,
       gcTime: QUERY_GC_TIME.LONG,
       throwOnError: true,

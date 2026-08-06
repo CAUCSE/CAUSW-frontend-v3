@@ -21,9 +21,9 @@ export const AlumniContactsEditFormTechStackSection = () => {
         {userTechStack.map((techStack, idx) => (
           <Chip
             key={techStack}
-            size="md"
+            size="sm"
             color="lightgray"
-            className="items-center"
+            className="items-center gap-1 px-2.5"
           >
             <Text typography="body-14-semibold" textColor="gray-500">
               {techStack}

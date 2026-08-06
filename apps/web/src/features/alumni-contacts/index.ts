@@ -6,9 +6,8 @@ export {
   AlumniContactsAcademicFilterSheetModalTrigger,
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
-  MyAlumniContactsButton,
   AlumniContactsContactActionButton,
-  MyAlumniContactsEditButton,
+  AlumniContactsContactActionItem,
   MyAlumniContactsSaveButton,
   AlumniContactsContactVisibilityDialogTrigger,
   AlumniContactsEditFormSnsItem,
@@ -16,6 +15,8 @@ export {
   AlumniContactsProfileEntryCurrentToggle,
   AlumniContactsDescriptionTextArea,
   AlumniContactsContactVisibilityToggleButton,
+  AlumniContactsCoffeeChatAvailableToggleButton,
   AlumniContactsFieldEditButton,
 } from './ui';
 export { putMyAlumniContacts } from './api';
+export { shareAlumniContactsProfile } from './lib';

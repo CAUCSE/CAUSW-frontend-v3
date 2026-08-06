@@ -1,29 +1,26 @@
 'use client';
 
-import { HStack, Mail, Text, VStack } from '@causw/cds';
+import { useState } from 'react';
+
+import { useQueryClient } from '@tanstack/react-query';
+
+import { VStack, Grid } from '@causw/cds';
+
+import { ProfileImageEditDialog } from '@/widgets/setting';
 
 import {
+  // AlumniContactsCoffeeChatAvailableToggleButton,
   AlumniContactsContactVisibilityToggleButton,
   AlumniContactsDescriptionTextArea,
 } from '@/features/alumni-contacts';
+import { useProfileImageEdit } from '@/features/setting';
 
-import { AlumniContactsBasicInfo } from '@/entities/alumni-contacts';
+import {
+  AlumniContactsBasicInfo,
+  alumniContactsQueryKeys,
+} from '@/entities/alumni-contacts';
 import { type GetMyAlumniContactsResponseDto } from '@/entities/alumni-contacts/model';
-
-interface AlumniContactsEmailProps {
-  email: string;
-}
-
-const AlumniContactsEmail = ({ email }: AlumniContactsEmailProps) => {
-  return (
-    <HStack className="items-center gap-1.5 rounded-sm bg-gray-100 px-3 py-2">
-      <Mail size={16} />
-      <Text typography="body-14-semibold" textColor="gray-500">
-        {email}
-      </Text>
-    </HStack>
-  );
-};
+import { useMyInfoSuspenseQuery } from '@/entities/auth';
 
 interface AlumniContactsEditFormHeroProps {
   myAlumniContacts: GetMyAlumniContactsResponseDto;
@@ -32,21 +29,49 @@ interface AlumniContactsEditFormHeroProps {
 export const AlumniContactsEditFormHero = ({
   myAlumniContacts,
 }: AlumniContactsEditFormHeroProps) => {
+  const queryClient = useQueryClient();
+  const { data: myInfo } = useMyInfoSuspenseQuery();
+  const [isProfileImageDialogOpen, setIsProfileImageDialogOpen] =
+    useState(false);
+  const { currentProfileImage, handleSubmitProfileImage } = useProfileImageEdit(
+    {
+      myInfo,
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: alumniContactsQueryKeys.my(),
+        });
+      },
+    },
+  );
+
   return (
-    <VStack className="bg-linear-to-b from-[#4C688F] to-[#1E2E3F]">
-      <VStack className="gap-4 p-6">
+    <VStack className="bg-white md:rounded-t-lg md:border md:border-b-0 md:border-gray-200">
+      <VStack className="gap-4 p-4 pt-2 md:px-5 md:pt-7">
         <AlumniContactsBasicInfo
           name={myAlumniContacts.name}
           admissionYear={myAlumniContacts.admissionYear}
           academicStatus={myAlumniContacts.academicStatus}
+          departmentLabel={myAlumniContacts.departmentDescription}
           profileImage={myAlumniContacts.profileImage}
+          isCoffeeChatAvailable={myAlumniContacts.isCoffeeChatAvailable}
+          onClickEditPhoto={() => setIsProfileImageDialogOpen(true)}
         />
         <AlumniContactsDescriptionTextArea />
-        <HStack gap="md" className="overflow-x-auto">
+        {/* TODO: 커피챗 행사 기간 이후 노출 예정 */}
+        {/* <Grid columns={2} gap="xs" className="overflow-x-auto">
+          <AlumniContactsCoffeeChatAvailableToggleButton /> */}
+        <Grid columns={1} gap="xs" className="overflow-x-auto">
           <AlumniContactsContactVisibilityToggleButton />
-          <AlumniContactsEmail email={myAlumniContacts.email} />
-        </HStack>
+        </Grid>
       </VStack>
+      {isProfileImageDialogOpen && (
+        <ProfileImageEditDialog
+          open={isProfileImageDialogOpen}
+          onOpenChange={setIsProfileImageDialogOpen}
+          initialValue={currentProfileImage}
+          onSubmit={handleSubmitProfileImage}
+        />
+      )}
     </VStack>
   );
 };

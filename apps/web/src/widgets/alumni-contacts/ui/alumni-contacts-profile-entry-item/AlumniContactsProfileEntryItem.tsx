@@ -61,8 +61,8 @@ export const AlumniContactsProfileEntryItem = ({
       <HStack className="size-10 shrink-0 items-center justify-center rounded-md bg-gray-100">
         <Icon size={24} />
       </HStack>
-      <VStack gap="xs" className="flex-1">
-        <Text typography="body-16-regular" textColor="gray-700">
+      <VStack gap="none" className="flex-1">
+        <Text typography="body-15-medium" textColor="gray-700">
           {description}
         </Text>
         <Text

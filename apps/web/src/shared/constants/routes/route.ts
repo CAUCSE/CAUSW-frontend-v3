@@ -9,6 +9,7 @@ export const ROUTES = Object.freeze({
   FEED: '/feed',
   REGISTER_FEED: '/feed/write',
   ALUMNI_CONTACTS: '/alumni-contacts',
+  COMMUNITY: '/community',
   PROFILE: '/profile',
   SETTING: '/setting',
 } as const);

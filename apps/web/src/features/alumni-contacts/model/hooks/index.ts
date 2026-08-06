@@ -3,3 +3,4 @@ export { useAlumniContactsAcademicStatusFilterButton } from './useAlumniContacts
 export { useAlumniContactsSortFilter } from './useAlumniContactsSortFilter';
 export { useAlumniContactsDescriptionTextArea } from './useAlumniContactsDescriptionTextArea';
 export { useAlumniContactsContactVisibilityToggleButton } from './useAlumniContactsContactVisibilityToggleButton';
+export { useAlumniContactsCoffeeChatAvailableToggleButton } from './useAlumniContactsCoffeeChatAvailableToggleButton';

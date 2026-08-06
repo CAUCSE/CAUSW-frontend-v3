@@ -65,6 +65,10 @@
     @apply font-sans text-sm leading-normal font-medium;
   }
 
+  .typo-body-15-regular {
+    @apply font-regular font-sans text-sm leading-normal;
+  }
+
   .typo-body-14-semibold {
     @apply font-sans text-xs leading-normal font-semibold;
   }

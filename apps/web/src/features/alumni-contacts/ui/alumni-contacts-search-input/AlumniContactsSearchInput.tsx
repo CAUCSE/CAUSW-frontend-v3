@@ -28,7 +28,7 @@ export const AlumniContactsSearchInput = () => {
       }
       placeholder="이름, 직업, 경력으로 검색"
       ref={handleInitialFocus}
-      className="placeholder:typo-body-16-regular text-gray-400 [&>span]:flex [&>span]:items-center"
+      className="placeholder:typo-body-16-regular bg-gray-100 px-4 py-2.5 text-gray-400 [&>span]:flex [&>span]:items-center"
       value={keyword ?? ''}
       onChange={handleTextInputChange}
     />

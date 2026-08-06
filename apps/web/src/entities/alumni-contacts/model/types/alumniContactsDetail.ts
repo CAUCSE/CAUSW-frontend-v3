@@ -29,9 +29,11 @@ export interface AlumniContactsDetail {
   name: string;
   admissionYear: string;
   academicStatus: string;
+  departmentDescription: string;
   description: string | null;
   phoneNumber: string;
   isPhoneNumberVisible: boolean;
+  isCoffeeChatAvailable: boolean;
   email: string;
   socialLinks: string[];
   userTechStack: string[];

@@ -6,27 +6,37 @@ import {
   type GetAlumniContactsDetailResponseDto,
   type GetAlumniContactsDetailParam,
   type GetAlumniContactsQuery,
-  type GetPaginatedAlumniContactsResponseDto,
+  type GetAlumniDirectoryResponseDto,
   type GetMyAlumniContactsResponseDto,
 } from '../model';
 
 export const getAlumniContacts = async (
   query: GetAlumniContactsQuery,
-  pageNum: number = 0,
+  cursor?: string,
 ) => {
   const queryString = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      queryString.append(key, value);
+    if (!value) return;
+
+    if (Array.isArray(value)) {
+      value.forEach((item) => queryString.append(key, String(item)));
+      return;
     }
+
+    queryString.append(key, String(value));
   });
 
-  queryString.append('pageNum', pageNum.toString());
+  if (cursor) {
+    queryString.append('cursor', cursor);
+  }
 
-  const url = withQuery(ALUMNI_CONTACTS_URL_PREFIX, queryString.toString());
+  const url = withQuery(
+    `${ALUMNI_CONTACTS_URL_PREFIX}/list`,
+    queryString.toString(),
+  );
 
-  const response = await API.get<GetPaginatedAlumniContactsResponseDto>(url);
+  const response = await API.get<GetAlumniDirectoryResponseDto>(url);
 
   return response;
 };

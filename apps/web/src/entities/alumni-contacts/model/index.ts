@@ -1,11 +1,17 @@
-export { AlumniContactsAcademicFilterSheetModalContext } from './contexts';
+export {
+  AlumniContactsAcademicFilterSheetModalContext,
+  AlumniContactsScrollVisibilityContext,
+} from './contexts';
 export {
   useAlumniContactsAcademicFilterSheetModalContext,
+  useAlumniContactsScrollVisibilityContext,
   useResetAlumniContactsFilter,
   useWatchAlumniContactsEditFormField,
 } from './hooks';
 export type {
-  GetPaginatedAlumniContactsResponseDto,
+  AlumniSummaryDto,
+  AlumniDirectorySectionDto,
+  GetAlumniDirectoryResponseDto,
   GetAlumniContactsDetailResponseDto,
   GetAlumniContactsQuery,
   GetAlumniContactsDetailParam,
