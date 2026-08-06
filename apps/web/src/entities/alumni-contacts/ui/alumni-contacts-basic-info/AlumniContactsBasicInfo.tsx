@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HStack, Text, VStack, Flex } from '@causw/cds';
+import { HStack, Text, VStack, Flex, Pen } from '@causw/cds';
 
 import { ProfileAvatar } from '@/shared/ui';
 
@@ -13,6 +13,7 @@ interface AlumniContactsBasicInfoProps {
   departmentLabel?: GetAlumniContactsDetailResponseDto['departmentDescription'];
   profileImage: GetAlumniContactsDetailResponseDto['profileImage'];
   isCoffeeChatAvailable: GetAlumniContactsDetailResponseDto['isCoffeeChatAvailable'];
+  onClickEditPhoto?: () => void;
 }
 
 export const AlumniContactsBasicInfo = ({
@@ -22,6 +23,7 @@ export const AlumniContactsBasicInfo = ({
   departmentLabel,
   profileImage,
   isCoffeeChatAvailable,
+  onClickEditPhoto,
 }: AlumniContactsBasicInfoProps) => {
   const userInfo = [admissionYear, departmentLabel, academicStatus].filter(
     (item) => item,
@@ -35,8 +37,18 @@ export const AlumniContactsBasicInfo = ({
           profileImageUrl={profileImage.profileImageUrl}
           size={64}
         />
-        {isCoffeeChatAvailable && (
-          <span className="absolute right-[0.188rem] bottom-[0.188rem] size-2.5 rounded-full bg-green-400 ring-3 ring-white" />
+        {onClickEditPhoto ? (
+          <button
+            type="button"
+            onClick={onClickEditPhoto}
+            className="absolute right-0 bottom-0 flex size-5 cursor-pointer items-center justify-center rounded-full bg-gray-700 p-1.25"
+          >
+            <Pen size={10} color="white" />
+          </button>
+        ) : (
+          isCoffeeChatAvailable && (
+            <span className="absolute right-[0.188rem] bottom-[0.188rem] size-2.5 rounded-full bg-green-400 ring-3 ring-white" />
+          )
         )}
       </Flex>
       <VStack gap="none">

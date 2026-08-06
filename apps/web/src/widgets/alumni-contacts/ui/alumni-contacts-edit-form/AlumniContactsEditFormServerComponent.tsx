@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query';
 
 import { alumniContactsQueryOptions } from '@/entities/alumni-contacts';
+import { authQueryOptions } from '@/entities/auth';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 import { QueryErrorBoundary } from '@/shared/ui';
@@ -19,7 +20,10 @@ export const AlumniContactsEditFormServerComponent = async () => {
       },
     },
   });
-  await queryClient.prefetchQuery(alumniContactsQueryOptions.my());
+  await Promise.all([
+    queryClient.prefetchQuery(alumniContactsQueryOptions.my()),
+    queryClient.prefetchQuery(authQueryOptions.me()),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
