@@ -1,8 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { useAlumniContactsScrollVisibilityContext } from '@/entities/alumni-contacts';
+
+import { useIsomorphicLayoutEffect } from '@/shared/hooks';
 
 const SCROLL_DIRECTION_THRESHOLD = 4;
 // 헤더 접힘/펼침 CSS 트랜지션(duration-200)이 끝날 때까지 재판정을 잠궈서,
@@ -18,7 +20,7 @@ export const useAlumniContactsListScrollTop = () => {
   const { setIsSearchFilterVisible } =
     useAlumniContactsScrollVisibilityContext();
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const handleScroll = () => {
       const currentScrollTop = scrollTarget?.scrollTop ?? 0;
       setShowScrollToTopButton(currentScrollTop > 1);
