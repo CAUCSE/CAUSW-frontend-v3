@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { ChevronRight, HStack, Text, VStack } from '@causw/cds';
+import { ChevronRight, Flex, HStack, Text, VStack } from '@causw/cds';
 
 import { type AlumniSummaryDto } from '@/entities/alumni-contacts';
 
@@ -23,7 +23,7 @@ export const MyAlumniContactsSummaryCard = ({
         className="flex min-w-0 rounded-md bg-white py-3"
       >
         <HStack gap="none" className="min-w-0 grow" align="center">
-          <div className="align-center jusity-center relative flex shrink-0">
+          <Flex align="center" justify="center" className="relative shrink-0">
             <ProfileAvatar
               profileImageType={
                 myProfile.profileImage?.profileImageType ?? 'UNSET'
@@ -35,7 +35,7 @@ export const MyAlumniContactsSummaryCard = ({
             {myProfile.isCoffeeChatAvailable && (
               <span className="absolute right-0 bottom-0 size-3 rounded-full bg-green-400 ring-3 ring-white" />
             )}
-          </div>
+          </Flex>
           <VStack
             gap="none"
             className="min-w-0 grow pr-3 pl-4"

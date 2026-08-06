@@ -17,9 +17,14 @@ export const getAlumniContacts = async (
   const queryString = new URLSearchParams();
 
   Object.entries(query).forEach(([key, value]) => {
-    if (value) {
-      queryString.append(key, value);
+    if (!value) return;
+
+    if (Array.isArray(value)) {
+      value.forEach((item) => queryString.append(key, String(item)));
+      return;
     }
+
+    queryString.append(key, String(value));
   });
 
   if (cursor) {

@@ -1,5 +1,3 @@
-import { type AccountDepartment } from '@/entities/user';
-
 import { type UserProfileImageType } from '@/shared/types';
 
 import { type AlumniContactsSectionType } from '../../../config';
@@ -15,7 +13,6 @@ export interface AlumniSummaryDto {
   name: string | null;
   admissionYear: string | null;
   academicStatus: string;
-  department: { code: AccountDepartment; name: string } | null;
   description: string | null;
   isCoffeeChatAvailable: boolean;
 }
