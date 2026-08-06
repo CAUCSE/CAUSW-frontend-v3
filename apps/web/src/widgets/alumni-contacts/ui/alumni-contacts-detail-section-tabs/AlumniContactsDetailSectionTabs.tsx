@@ -15,7 +15,7 @@ export const AlumniContactsDetailSectionTabs = ({
   handleClickCategoryTab,
 }: AlumniContactsDetailSectionTabsProps) => {
   return (
-    <HStack className="sticky top-[57.6px] z-100 -mx-5 gap-5 overflow-x-auto border-b border-gray-100 bg-white px-5">
+    <HStack className="sticky top-14 z-100 -mx-5 gap-5 overflow-x-auto border-b border-gray-100 bg-white px-5">
       {Object.entries(ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL).map(
         ([key, value]) => {
           const isSelected = selectedTab === key;
