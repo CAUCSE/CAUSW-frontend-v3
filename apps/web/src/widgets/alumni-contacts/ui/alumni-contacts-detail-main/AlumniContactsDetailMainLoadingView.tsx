@@ -13,7 +13,7 @@ export const AlumniContactsDetailMainLoadingView = () => {
                 <Skeleton height={18} width={180} />
               </VStack>
             </HStack>
-            <Skeleton height={18} width={320} />
+            <Skeleton height={18} width="100%" maxWidth={320} />
           </VStack>
           <Grid columns={2} gap="sm">
             <Skeleton height={48} className="rounded-md" />
