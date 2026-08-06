@@ -2,7 +2,7 @@
 
 import { Call, HStack, Mail, Message } from '@causw/cds';
 
-import { AlumniContactsContactActionButton } from '@/features/alumni-contacts';
+import { AlumniContactsContactActionItem } from '@/features/alumni-contacts';
 
 import {
   ALUMNI_CONTACTS_CONTACT_ACTION_TYPE,
@@ -31,24 +31,24 @@ export const AlumniContactsContactActions = ({
   } = ALUMNI_CONTACTS_CONTACT_ACTION_TYPE;
 
   return (
-    <HStack gap="sm" className="w-full overflow-x-auto">
+    <HStack gap="lg" justify="center" className="w-full overflow-x-auto">
       {isPhoneNumberVisible && (
         <>
-          <AlumniContactsContactActionButton
-            icon={<Call size={16} />}
+          <AlumniContactsContactActionItem
+            icon={<Call size={20} color="gray-600" />}
             label="전화"
             onClick={() => handleClickContactActionButton(call, phoneNumber)}
           />
-          <AlumniContactsContactActionButton
-            icon={<Message size={16} />}
-            label="문자"
+          <AlumniContactsContactActionItem
+            icon={<Message size={20} color="gray-600" />}
+            label="메시지"
             onClick={() => handleClickContactActionButton(message, phoneNumber)}
           />
         </>
       )}
-      <AlumniContactsContactActionButton
-        icon={<Mail size={16} />}
-        label={email}
+      <AlumniContactsContactActionItem
+        icon={<Mail size={20} color="gray-600" />}
+        label="이메일"
         onClick={() => handleClickContactActionButton(emailType, email)}
       />
     </HStack>

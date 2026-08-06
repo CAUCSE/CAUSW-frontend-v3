@@ -32,7 +32,7 @@ export const AlumniContactsDetailInfoSection = ({
             categoryRef.current[idx] = el;
           }
         }}
-        typography="subtitle-18-bold"
+        typography="body-15-semibold"
         textColor="gray-700"
       >
         {ALUMNI_CONTACTS_DETAIL_SECTION_TAB_LABEL[tabType]}

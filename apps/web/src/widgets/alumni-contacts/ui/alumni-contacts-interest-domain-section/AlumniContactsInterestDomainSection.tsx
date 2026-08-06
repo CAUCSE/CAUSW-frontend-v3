@@ -17,7 +17,7 @@ export const AlumniContactsInterestDomainSection = ({
   return (
     <HStack gap="sm" className="overflow-x-auto">
       {userInterestDomain.map((domain) => (
-        <Chip key={domain} size="md" color="lightgray">
+        <Chip key={domain} size="sm" color="lightgray" className="px-2.5">
           {domain}
         </Chip>
       ))}

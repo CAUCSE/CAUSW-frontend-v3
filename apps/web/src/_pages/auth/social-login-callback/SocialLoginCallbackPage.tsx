@@ -19,6 +19,7 @@ export const SocialLoginCallbackPage = () => {
   const searchParams = useSearchParams();
   const handledRef = useRef(false);
   const { compareFCMToken } = usePushNotification();
+  const SOCIAL_OAUTH_PROVIDER_KEY = 'social-oauth-provider';
 
   useEffect(() => {
     if (handledRef.current) return;
@@ -26,10 +27,28 @@ export const SocialLoginCallbackPage = () => {
 
     const error = searchParams.get('error');
     const message = searchParams.get('message');
+    const linkedProvider = searchParams.get('linked');
+    const linkingProvider = sessionStorage.getItem(SOCIAL_OAUTH_PROVIDER_KEY);
+
+    if (linkedProvider) {
+      sessionStorage.removeItem(SOCIAL_OAUTH_PROVIDER_KEY);
+
+      toast.success('소셜 계정이 연동되었습니다.');
+      router.replace('/setting/privacy');
+      return;
+    }
 
     if (error) {
+      const isSocialAccountLink = Boolean(linkingProvider);
+
+      sessionStorage.removeItem(SOCIAL_OAUTH_PROVIDER_KEY);
+
       toast.error(message ?? '잘못된 접근입니다.');
-      router.replace('/auth/sign-in');
+
+      router.replace(
+        isSocialAccountLink ? '/setting/privacy' : '/auth/sign-in',
+      );
+
       return;
     }
 
@@ -60,7 +79,7 @@ export const SocialLoginCallbackPage = () => {
     };
 
     void handleCallback();
-  }, [router, searchParams]);
+  }, [compareFCMToken, router, searchParams]);
 
   return (
     <Flex

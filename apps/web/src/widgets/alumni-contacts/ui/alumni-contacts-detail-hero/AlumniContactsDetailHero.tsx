@@ -6,33 +6,43 @@ import {
   type GetAlumniContactsDetailResponseDto,
 } from '@/entities/alumni-contacts';
 
-import { AlumniContactsContactActions } from '../alumni-contacts-contact-actions';
+import { AlumniContactsHeroActions } from '../alumni-contacts-hero-actions';
 
 interface AlumniContactsDetailHeroProps {
   alumniContactsDetail: GetAlumniContactsDetailResponseDto;
+  isMine?: boolean;
 }
 
 export const AlumniContactsDetailHero = ({
   alumniContactsDetail,
+  isMine,
 }: AlumniContactsDetailHeroProps) => {
   return (
-    <VStack gap="lg" className="my-6 w-full shrink-0 px-6" as="section">
-      <VStack>
-        <AlumniContactsBasicInfo
+    <VStack className="bg-white md:rounded-t-lg md:border md:border-b-0 md:border-gray-200">
+      <VStack gap="md" className="p-4 pt-2 md:px-5 md:pt-7" as="section">
+        <VStack>
+          <AlumniContactsBasicInfo
+            name={alumniContactsDetail.name}
+            admissionYear={alumniContactsDetail.admissionYear}
+            academicStatus={alumniContactsDetail.academicStatus}
+            departmentLabel={alumniContactsDetail.departmentDescription}
+            profileImage={alumniContactsDetail.profileImage}
+            isCoffeeChatAvailable={alumniContactsDetail.isCoffeeChatAvailable}
+          />
+          <AlumniContactsDescription
+            description={alumniContactsDetail.description}
+          />
+        </VStack>
+        <AlumniContactsHeroActions
+          alumniContactsId={alumniContactsDetail.id}
           name={alumniContactsDetail.name}
-          admissionYear={alumniContactsDetail.admissionYear}
-          academicStatus={alumniContactsDetail.academicStatus}
-          profileImage={alumniContactsDetail.profileImage}
-        />
-        <AlumniContactsDescription
-          description={alumniContactsDetail.description}
+          isCoffeeChatAvailable={alumniContactsDetail.isCoffeeChatAvailable}
+          isPhoneNumberVisible={alumniContactsDetail.isPhoneNumberVisible}
+          phoneNumber={alumniContactsDetail.phoneNumber}
+          email={alumniContactsDetail.email}
+          isMine={isMine}
         />
       </VStack>
-      <AlumniContactsContactActions
-        isPhoneNumberVisible={alumniContactsDetail.isPhoneNumberVisible}
-        phoneNumber={alumniContactsDetail.phoneNumber}
-        email={alumniContactsDetail.email}
-      />
     </VStack>
   );
 };

@@ -1,5 +1,7 @@
 export {
   AlumniContactsFilterGroup,
+  AlumniContactsCollapsibleHeader,
+  AlumniContactsTab,
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,
   AlumniContactsHeader,
@@ -11,4 +13,6 @@ export {
   MyAlumniContactsMainLoadingView,
   AlumniContactsEditFormServerComponent,
   AlumniContactsEditFormLoadingView,
+  AlumniContactsHeroActions,
+  AlumniContactsContactBottomSheet,
 } from './ui';

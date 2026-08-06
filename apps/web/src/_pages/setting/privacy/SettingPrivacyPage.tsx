@@ -12,8 +12,7 @@ import {
   PrivacyActionSection,
   PrivacyBasicInfoSection,
   PrivacyEnrollmentStatusSection,
-  // TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외)
-  // PrivacySocialSection,
+  PrivacySocialSection,
 } from '@/widgets/setting';
 
 import { useLogout } from '@/features/auth';
@@ -64,7 +63,7 @@ const SettingPrivacyContent = () => {
   };
 
   return (
-    <VStack gap="md" className="w-full px-4">
+    <VStack gap="md" className="w-full px-4 pb-4">
       <Text typography="title-22-bold" textColor="gray-800">
         계정 정보 관리
       </Text>
@@ -92,8 +91,7 @@ const SettingPrivacyContent = () => {
         onChangeStatus={handleChangeStatus}
       />
 
-      {/* TODO: SNS 연동 API 준비 후 노출 (첫 배포 제외) */}
-      {/* <PrivacySocialSection /> */}
+      <PrivacySocialSection />
 
       <PrivacyActionSection
         actions={[

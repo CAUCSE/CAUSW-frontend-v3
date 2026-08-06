@@ -76,6 +76,6 @@ export const AlumniContactsSnsIcon = ({
     case ALUMNI_CONTACTS_SNS_TYPE.POPL:
       return <PoplLogo size={24} />;
     default:
-      return <LinkIcon size={24} />;
+      return <LinkIcon size={24} color="gray-500" />;
   }
 };

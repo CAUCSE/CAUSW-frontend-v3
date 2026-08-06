@@ -18,7 +18,7 @@ export const AlumniContactsTechStackSection = ({
   return (
     <HStack gap="sm" className="overflow-x-auto">
       {userTechStack.map((techStack) => (
-        <Chip key={techStack} size="md" color="lightgray">
+        <Chip key={techStack} size="sm" color="lightgray" className="px-2.5">
           {techStack}
         </Chip>
       ))}

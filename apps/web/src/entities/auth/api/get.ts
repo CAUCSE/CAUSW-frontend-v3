@@ -7,6 +7,7 @@ import {
   type CheckPhoneDuplicateRequestDto,
   type UserResponseDto,
   type TermResponseDto,
+  type SocialAccountStatusResponseDto,
 } from '../model/types';
 
 export const getAdmissionState = async () => {
@@ -33,4 +34,10 @@ export const checkNicknameDuplicate = async (
 ) => {
   const query = new URLSearchParams({ nickname: params.nickname });
   return API.get<null>(`${USER_API_PREFIX}/check-nickname?${query}`);
+};
+
+export const getSocialAccountStatus = async () => {
+  return API.get<SocialAccountStatusResponseDto>(
+    '/api/v2/users/me/social-accounts',
+  );
 };

@@ -20,7 +20,12 @@ export const AlumniContactsEditFormInterestTechSection = () => {
       {userInterestTech.length > 0 && (
         <HStack gap="sm" className="overflow-x-auto">
           {userInterestTech.map((interestTech, idx) => (
-            <Chip key={interestTech} size="md" color="lightgray">
+            <Chip
+              key={interestTech}
+              size="sm"
+              color="lightgray"
+              className="items-center gap-1 px-2.5"
+            >
               <Text typography="body-14-semibold" textColor="gray-500">
                 {interestTech}
               </Text>

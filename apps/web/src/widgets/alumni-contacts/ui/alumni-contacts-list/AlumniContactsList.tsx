@@ -6,13 +6,14 @@ import { useSearchParams } from 'next/navigation';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { PullToRefresh } from '@causw/cds';
+import { PullToRefresh, Text, VStack, Grid } from '@causw/cds';
 
 import {
+  ALUMNI_CONTACTS_SECTION_TYPE,
   AlumniContactsFilterSearchParam,
   alumniContactsQueryOptions,
+  type AlumniSummaryDto,
   type GetAlumniContactsQuery,
-  type GetPaginatedAlumniContactsResponseDto,
 } from '@/entities/alumni-contacts';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
@@ -24,25 +25,37 @@ import {
   useAlumniContactsScrollSave,
 } from '../../model';
 import { AlumniContactsListItem } from '../alumni-contacts-list-item';
+import { MyAlumniContactsSummaryCard } from '../my-alumni-contacts-summary-card';
 
 import { AlumniContactsListEmptyView } from './AlumniContactsListEmptyView';
 import { AlumniContactsListLoadingView } from './AlumniContactsListLoadingView';
 
-type AlumniContactsListItem =
-  GetPaginatedAlumniContactsResponseDto['content'][number];
-
 interface AlumniContactsListProps {
-  data?: AlumniContactsListItem[];
+  myProfile: AlumniSummaryDto | null;
+  coffeeChat: AlumniSummaryDto[];
+  allMembers: AlumniSummaryDto[];
   query: GetAlumniContactsQuery;
   isLoading: boolean;
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
-  ref: Ref<HTMLUListElement>;
+  ref: Ref<HTMLDivElement>;
 }
 
+const AlumniContactsSectionLabel = ({ children }: { children: string }) => (
+  <Text typography="body-14-regular" textColor="gray-400" className="px-1">
+    {children}
+  </Text>
+);
+
+const AlumniContactsSectionDivider = () => (
+  <div className="h-px w-full shrink-0 bg-gray-100" />
+);
+
 const AlumniContactsList = ({
-  data,
+  myProfile,
+  coffeeChat,
+  allMembers,
   query,
   isLoading,
   isFetchingNextPage,
@@ -52,30 +65,79 @@ const AlumniContactsList = ({
 }: AlumniContactsListProps) => {
   const { handleNavigateToAlumniContacts } = useAlumniContactsScrollSave();
 
+  const isAllMembersEmpty = coffeeChat.length === 0 && allMembers.length === 0;
+
   return (
-    <ul
-      className="grid min-h-0 flex-1 grid-cols-1 content-start gap-4 overflow-y-auto md:grid-cols-2"
+    <div
+      className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pt-4"
       ref={ref}
     >
-      {data?.map((item) => (
-        <AlumniContactsListItem
-          key={item.id}
-          item={item}
-          query={query}
-          onNavigate={handleNavigateToAlumniContacts}
-        />
-      ))}
-      {!isLoading && !isFetchingNextPage && hasNextPage && (
-        <div ref={targetRef} className="h-3 w-full" />
+      {myProfile && (
+        <>
+          <VStack gap="none">
+            <AlumniContactsSectionLabel>내 동문수첩</AlumniContactsSectionLabel>
+            <ul className="grid grid-cols-1">
+              <MyAlumniContactsSummaryCard myProfile={myProfile} />
+            </ul>
+          </VStack>
+          <AlumniContactsSectionDivider />
+        </>
       )}
-      {isLoading ||
-        (isFetchingNextPage && (
-          <div className="col-span-1 flex w-full justify-center md:col-span-2">
-            <SuspenseView />
-          </div>
-        ))}
-      <li className="col-span-1 h-1 md:col-span-2" />
-    </ul>
+
+      {coffeeChat.length > 0 && (
+        <>
+          <VStack gap="none">
+            <AlumniContactsSectionLabel>커피챗 가능</AlumniContactsSectionLabel>
+            <Grid
+              as="ul"
+              gap="none"
+              className="grid-cols-1 gap-x-4 md:grid-cols-2"
+            >
+              {coffeeChat.map((item) => (
+                <AlumniContactsListItem
+                  key={item.id}
+                  item={item}
+                  query={query}
+                  onNavigate={handleNavigateToAlumniContacts}
+                />
+              ))}
+            </Grid>
+          </VStack>
+          <AlumniContactsSectionDivider />
+        </>
+      )}
+
+      <VStack gap="none">
+        <AlumniContactsSectionLabel>전체 동문</AlumniContactsSectionLabel>
+        {isAllMembersEmpty ? (
+          <AlumniContactsListEmptyView />
+        ) : (
+          <Grid
+            as="ul"
+            gap="none"
+            className="grid-cols-1 gap-x-4 md:grid-cols-2"
+          >
+            {allMembers.map((item) => (
+              <AlumniContactsListItem
+                key={item.id}
+                item={item}
+                query={query}
+                onNavigate={handleNavigateToAlumniContacts}
+              />
+            ))}
+            {!isLoading && !isFetchingNextPage && hasNextPage && (
+              <div ref={targetRef} className="h-3 w-full" />
+            )}
+            {(isLoading || isFetchingNextPage) && (
+              <div className="col-span-1 flex w-full justify-center md:col-span-2">
+                <SuspenseView />
+              </div>
+            )}
+            <li className="col-span-1 h-1 md:col-span-2" />
+          </Grid>
+        )}
+      </VStack>
+    </div>
   );
 };
 
@@ -97,7 +159,24 @@ export const AlumniContactsListWrapper = () => {
     refetch,
   } = useInfiniteQuery({
     ...alumniContactsQueryOptions.list(query),
-    select: (data) => data.pages.flatMap((page) => page.content),
+    select: (data) => ({
+      myProfile: data.pages[0]?.myProfile ?? null,
+      coffeeChat: data.pages.flatMap(
+        (page) =>
+          page.sections.find(
+            (section) =>
+              section.type ===
+              ALUMNI_CONTACTS_SECTION_TYPE.COFFEE_CHAT_AVAILABLE,
+          )?.items ?? [],
+      ),
+      allMembers: data.pages.flatMap(
+        (page) =>
+          page.sections.find(
+            (section) =>
+              section.type === ALUMNI_CONTACTS_SECTION_TYPE.ALL_MEMBERS,
+          )?.items ?? [],
+      ),
+    }),
   });
 
   const { targetRef } = useInfiniteScroll({
@@ -117,20 +196,22 @@ export const AlumniContactsListWrapper = () => {
   } = useAlumniContactsListScrollTop();
 
   const { isScrollRestoring } = useAlumniContactsScrollRestoration({
-    data,
+    data: data ? [...data.coffeeChat, ...data.allMembers] : undefined,
     query,
     enabled: isSuccess,
     hasNextPage,
     fetchNextPage,
   });
 
-  if (!data || data?.length === 0) {
-    return <AlumniContactsListEmptyView />;
+  if (!data) {
+    return <AlumniContactsListLoadingView />;
   }
 
   if (isScrollRestoring) {
     return <AlumniContactsListLoadingView />;
   }
+
+  const { myProfile, coffeeChat, allMembers } = data;
 
   if (isMobileSize) {
     return (
@@ -142,7 +223,9 @@ export const AlumniContactsListWrapper = () => {
           }}
         >
           <AlumniContactsList
-            data={data}
+            myProfile={myProfile}
+            coffeeChat={coffeeChat}
+            allMembers={allMembers}
             query={query}
             isLoading={isLoading}
             isFetchingNextPage={isFetchingNextPage}
@@ -161,7 +244,9 @@ export const AlumniContactsListWrapper = () => {
   return (
     <>
       <AlumniContactsList
-        data={data}
+        myProfile={myProfile}
+        coffeeChat={coffeeChat}
+        allMembers={allMembers}
         query={query}
         isLoading={isLoading}
         isFetchingNextPage={isFetchingNextPage}

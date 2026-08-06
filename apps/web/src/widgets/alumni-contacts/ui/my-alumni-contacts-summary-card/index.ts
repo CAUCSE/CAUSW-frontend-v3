@@ -1,0 +1,1 @@
+export { MyAlumniContactsSummaryCard } from './MyAlumniContactsSummaryCard';

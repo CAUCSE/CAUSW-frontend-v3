@@ -14,10 +14,7 @@ export const AlumniContactsEditForm = () => {
     useAlumniContactsEditForm();
   return (
     <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit}
-        className="flex w-full flex-col bg-[#4C688F] pt-4 md:rounded-t-lg md:rounded-b-xl"
-      >
+      <form onSubmit={handleSubmit} className="flex w-full flex-col">
         <AlumniContactsHeader action={<MyAlumniContactsSaveButton />} />
         <AlumniContactsEditFormHero myAlumniContacts={myAlumniContacts} />
         <AlumniContactsEditFormDetailSection />

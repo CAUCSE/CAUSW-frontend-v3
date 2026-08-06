@@ -1,4 +1,41 @@
-import { type GetAlumniContactsDetailResponseDto } from '../model';
+import {
+  type AlumniSummaryDto,
+  type GetAlumniContactsDetailResponseDto,
+} from '../model';
+
+export const myAlumniProfileMockDb: AlumniSummaryDto = {
+  id: 'my-user-info-id',
+  profileImage: { profileImageType: 'MALE_1', profileImageUrl: '' },
+  name: '내이름',
+  admissionYear: '20학번',
+  academicStatus: '재학생',
+  description: '내 동문수첩 소개글입니다.',
+  isCoffeeChatAvailable: true,
+};
+
+export const alumniDirectoryMockDb: AlumniSummaryDto[] = [
+  ...Array.from({ length: 3 }, (_, index) => ({
+    id: `coffee-chat-user-info-id-${index}`,
+    profileImage: {
+      profileImageType: 'FEMALE_1' as const,
+      profileImageUrl: '',
+    },
+    name: `커피챗 가능 동문 ${index + 1}`,
+    admissionYear: `${17 + index}학번`,
+    academicStatus: '졸업생',
+    description: '커피챗 가능합니다. 편하게 연락주세요.',
+    isCoffeeChatAvailable: true,
+  })),
+  ...Array.from({ length: 25 }, (_, index) => ({
+    id: `general-user-info-id-${index}`,
+    profileImage: { profileImageType: 'MALE_2' as const, profileImageUrl: '' },
+    name: `동문 ${index + 1}`,
+    admissionYear: `${15 + (index % 10)}학번`,
+    academicStatus: index % 2 === 0 ? '졸업생' : '재학생',
+    description: '동문 프로필입니다.',
+    isCoffeeChatAvailable: false,
+  })),
+];
 
 export const alumniContactsDetailMockDb: GetAlumniContactsDetailResponseDto = {
   id: '1',
@@ -10,8 +47,10 @@ export const alumniContactsDetailMockDb: GetAlumniContactsDetailResponseDto = {
   name: '관리자',
   admissionYear: '20학번',
   academicStatus: '재학생',
+  departmentDescription: '소프트웨어학부',
   description: 'ios 앱 개발 중입니다\n열심히 공부하고 있어요.',
   phoneNumber: '010-1234-5674',
+  isCoffeeChatAvailable: true,
   isPhoneNumberVisible: true,
   email: 'admin@cau.ac.kr',
   socialLinks: [

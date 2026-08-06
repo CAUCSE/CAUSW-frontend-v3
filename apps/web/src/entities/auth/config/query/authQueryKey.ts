@@ -7,4 +7,5 @@ export const authQueryKey = {
     [...authQueryKey.all, 'check-phone-duplicate', phoneNumber] as const,
   checkNicknameDuplicate: (nickname: string) =>
     [...authQueryKey.all, 'check-nickname-duplicate', nickname] as const,
+  socialAccountStatus: () => [...authQueryKey.all, 'social-accounts'] as const,
 };

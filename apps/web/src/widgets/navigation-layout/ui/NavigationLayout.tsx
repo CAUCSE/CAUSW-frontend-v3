@@ -6,7 +6,12 @@ import { usePathname } from 'next/navigation';
 
 import { mergeStyles } from '@causw/cds';
 
-import { isBottomNavVisible, pickBottomNavKey, pickSidebarKey } from '../model';
+import {
+  isBottomNavVisible,
+  isWhiteBackgroundPage,
+  pickBottomNavKey,
+  pickSidebarKey,
+} from '../model';
 
 import { BottomNav } from './BottomNav';
 import { SidebarNav } from './sidebar';
@@ -16,6 +21,7 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const sidebarSelected = pickSidebarKey(pathname);
   const showBottomNav = isBottomNavVisible(pathname);
   const bottomSelected = pickBottomNavKey(pathname);
+  const whiteBackground = isWhiteBackgroundPage(pathname);
 
   return (
     <div className="flex h-screen">
@@ -28,7 +34,8 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       <main
         id="main-scroll-container"
         className={mergeStyles(
-          'min-h-0 flex-1 overflow-y-auto overscroll-y-contain bg-gray-100',
+          'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
+          whiteBackground ? 'bg-white' : 'bg-gray-100',
           showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
         )}
       >
