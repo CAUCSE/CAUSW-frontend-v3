@@ -45,7 +45,7 @@ export const AlumniContactsHeroActions = ({
     return (
       <Grid columns={2} gap="xs" className="w-full overflow-x-auto">
         <AlumniContactsContactActionButton
-          label="프로필편집"
+          label="프로필 편집"
           onClick={() => router.push('/profile/edit')}
         />
         <AlumniContactsContactActionButton

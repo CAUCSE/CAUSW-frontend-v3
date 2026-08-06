@@ -3,7 +3,7 @@
 import { VStack, Grid } from '@causw/cds';
 
 import {
-  AlumniContactsCoffeeChatAvailableToggleButton,
+  // AlumniContactsCoffeeChatAvailableToggleButton,
   AlumniContactsContactVisibilityToggleButton,
   AlumniContactsDescriptionTextArea,
 } from '@/features/alumni-contacts';
@@ -30,8 +30,10 @@ export const AlumniContactsEditFormHero = ({
           isCoffeeChatAvailable={myAlumniContacts.isCoffeeChatAvailable}
         />
         <AlumniContactsDescriptionTextArea />
-        <Grid columns={2} gap="xs" className="overflow-x-auto">
-          <AlumniContactsCoffeeChatAvailableToggleButton />
+        {/* TODO: 커피챗 행사 기간 이후 노출 예정 */}
+        {/* <Grid columns={2} gap="xs" className="overflow-x-auto">
+          <AlumniContactsCoffeeChatAvailableToggleButton /> */}
+        <Grid columns={1} gap="xs" className="overflow-x-auto">
           <AlumniContactsContactVisibilityToggleButton />
         </Grid>
       </VStack>
