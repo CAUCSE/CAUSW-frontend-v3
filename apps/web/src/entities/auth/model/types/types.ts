@@ -240,3 +240,25 @@ export interface StepCardData {
  * 가능한 액션 타입
  */
 export type EnrollmentAction = 'submit' | 'edit' | 'resubmit';
+
+/*소셜 계정 연동 현황*/
+export interface SocialAccountStatusResponseDto {
+  google: boolean;
+  kakao: boolean;
+  apple: boolean;
+}
+
+/* 네이티브 앱 소셜 계정 연동 요청
+   - 카카오: accessToken 사용
+   - 구글/애플: idToken 사용
+*/
+export interface NativeSocialAccountLinkRequestDto {
+  provider: NativeSocialLoginProvider;
+  accessToken: string | null;
+  idToken: string | null;
+}
+
+/*OAuth 소셜 계정 연동 초기화 응답*/
+export interface SocialAccountOAuthInitResponseDto {
+  linkToken: string;
+}
