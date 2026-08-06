@@ -13,6 +13,7 @@ export function GET() {
               { '/': '/.well-known/*', exclude: true },
               { '/': '/feed/*' },
               { '/': '/notification*' },
+              { '/': '/alumni-contacts/*' },
             ],
           },
         ],
