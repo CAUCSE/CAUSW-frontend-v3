@@ -39,6 +39,7 @@ export const AlumniContactsHeroActions = ({
     isOpen: isContactBottomSheetOpen,
     setIsOpen: setIsContactBottomSheetOpen,
     handleClickContact,
+    handleClickCoffeeChat,
   } = useAlumniContactsContactBottomSheet();
 
   if (isMine) {
@@ -66,7 +67,7 @@ export const AlumniContactsHeroActions = ({
         {isCoffeeChatAvailable && (
           <AlumniContactsContactActionButton
             label="커피챗"
-            onClick={handleClickContact}
+            onClick={handleClickCoffeeChat}
             color="dark"
             textColor="white"
           />
