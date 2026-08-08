@@ -1,4 +1,11 @@
-const ALLOWED_PREFIXES = ['/feed', '/home', '/notification', '/profile'];
+const ALLOWED_PREFIXES = [
+  '/feed',
+  '/home',
+  '/notification',
+  '/profile',
+  '/ceremony',
+  '/locker',
+];
 const PENDING_DESTINATION_KEY = 'causw:pending-destination';
 const PENDING_DESTINATION_TTL = 7 * 24 * 60 * 60 * 1000;
 
