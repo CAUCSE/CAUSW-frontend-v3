@@ -21,4 +21,6 @@ export const ADMIN_ROUTES = Object.freeze({
 export const EXTERNAL_ROUTES = Object.freeze({
   CAU_MEETINGROOM: 'https://cse.cau.ac.kr/sub05/sub0504_cal.php',
   CAU_CAFETERIA: 'https://mportal.cau.ac.kr/main.do',
+  ALUMNI_CONTACTS_COFFEE_CHAT_FORM:
+    'https://docs.google.com/forms/d/e/1FAIpQLSekWfrPfsouO4kUpsIH5dbJQL9MuUHqSsckONUQghrSwo8nOQ/viewform',
 } as const);

@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { TokenManager } from '@/shared/storage';
 import { isMobile } from '@/shared/utils';
 
+import { consumePendingDestination } from '../../lib';
+
 export const useRestoreMobileAuth = () => {
   const router = useRouter();
 
@@ -20,7 +22,7 @@ export const useRestoreMobileAuth = () => {
       const refreshToken = await TokenManager.getRefreshToken();
 
       if (accessToken && refreshToken) {
-        router.replace('/home');
+        router.replace(consumePendingDestination() ?? '/home');
         return;
       }
     };

@@ -1,4 +1,11 @@
+import { ENVIRONMENT } from '@/shared/config';
+
 export const dynamic = 'force-static';
+
+const APP_ID =
+  ENVIRONMENT === 'production'
+    ? 'U294A2ABLV.kr.co.causw'
+    : 'U294A2ABLV.kr.co.causw.dev';
 
 export function GET() {
   return Response.json(
@@ -6,7 +13,7 @@ export function GET() {
       applinks: {
         details: [
           {
-            appIDs: ['U294A2ABLV.kr.co.causw', 'U294A2ABLV.kr.co.causw.dev'],
+            appIDs: [APP_ID],
             components: [
               { '/': '/api/*', exclude: true },
               { '/': '/auth/*', exclude: true },
@@ -14,6 +21,8 @@ export function GET() {
               { '/': '/feed/*' },
               { '/': '/notification*' },
               { '/': '/alumni-contacts/*' },
+              { '/': '/ceremony/*' },
+              { '/': '/locker/*' },
             ],
           },
         ],

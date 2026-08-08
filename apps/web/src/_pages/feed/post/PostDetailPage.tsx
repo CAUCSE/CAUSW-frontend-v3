@@ -1,9 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { PostDetailSection } from '@/widgets/post';
 
+import { ROUTES } from '@/shared/constants';
 import { useBreakpoint } from '@/shared/hooks';
 import {
   ActionHeader,
@@ -13,14 +12,12 @@ import {
 } from '@/shared/ui';
 
 export const PostDetailPage = ({ postId }: { postId: string }) => {
-  const router = useRouter();
-
   const { isMobileSize } = useBreakpoint();
 
   return (
     <div className="mx-auto flex h-screen max-w-225 flex-col md:px-8 md:py-6">
       <ActionHeader background={isMobileSize ? 'white' : 'gray'}>
-        <ActionHeader.BackButton onClick={() => router.back()}>
+        <ActionHeader.BackButton fallbackHref={ROUTES.FEED}>
           뒤로
         </ActionHeader.BackButton>
       </ActionHeader>
