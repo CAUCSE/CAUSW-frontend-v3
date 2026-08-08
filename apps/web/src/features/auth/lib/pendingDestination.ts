@@ -5,6 +5,7 @@ const ALLOWED_PREFIXES = [
   '/profile',
   '/ceremony',
   '/locker',
+  '/alumni-contacts',
 ];
 const PENDING_DESTINATION_KEY = 'causw:pending-destination';
 const PENDING_DESTINATION_TTL = 7 * 24 * 60 * 60 * 1000;
