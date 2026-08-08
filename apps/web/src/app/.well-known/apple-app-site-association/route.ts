@@ -14,6 +14,8 @@ export function GET() {
               { '/': '/feed/*' },
               { '/': '/notification*' },
               { '/': '/alumni-contacts/*' },
+              { '/': '/ceremony/*' },
+              { '/': '/locker/*' },
             ],
           },
         ],

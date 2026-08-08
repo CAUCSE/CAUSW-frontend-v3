@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { Browser } from '@capacitor/browser';
 import { PushNotifications } from '@capacitor/push-notifications';
 
+import { savePendingDestination } from '@/features/auth';
+
 import {
   getNotificationPopupLink,
   NOTIFICATION_LINK_TYPE,
@@ -39,6 +41,7 @@ export function PushNotificationDeepLinkProvider({
         if (link.type === NOTIFICATION_LINK_TYPE.EXTERNAL) {
           void Browser.open({ url: link.url });
         } else {
+          savePendingDestination(link.path);
           router.push(link.path);
         }
       },
