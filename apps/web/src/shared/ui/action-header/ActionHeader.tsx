@@ -15,6 +15,7 @@ import {
 interface BackButtonProps
   extends ComponentProps<'button'>, ActionHeaderVariants {
   children?: React.ReactNode;
+  fallbackHref?: string;
 }
 
 const BackButton = ({
@@ -22,6 +23,7 @@ const BackButton = ({
   className,
   onClick,
   type,
+  fallbackHref,
   ...props
 }: BackButtonProps) => {
   const router = useRouter();
@@ -39,6 +41,11 @@ const BackButton = ({
       onClick={(event) => {
         if (onClick) {
           onClick(event);
+          return;
+        }
+
+        if (fallbackHref) {
+          router.push(fallbackHref);
           return;
         }
 

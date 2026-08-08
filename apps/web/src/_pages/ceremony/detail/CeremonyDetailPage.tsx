@@ -1,15 +1,15 @@
 'use client';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
 import { CeremonyDetailContainer } from '@/widgets/ceremony';
 
 import type { CeremonyDetailContext } from '@/entities/ceremony';
 
+import { ROUTES } from '@/shared/constants';
 import { ActionHeader } from '@/shared/ui';
 
 export const CeremonyDetailPage = () => {
-  const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const rawContext = searchParams.get('context');
@@ -18,7 +18,7 @@ export const CeremonyDetailPage = () => {
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
       <ActionHeader background="gray">
-        <ActionHeader.BackButton onClick={() => router.back()}>
+        <ActionHeader.BackButton fallbackHref={ROUTES.CEREMONY}>
           뒤로
         </ActionHeader.BackButton>
       </ActionHeader>

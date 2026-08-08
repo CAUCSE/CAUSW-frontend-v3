@@ -8,6 +8,8 @@ import {
   AlumniContactsHeader,
 } from '@/widgets/alumni-contacts';
 
+import { ROUTES } from '@/shared/constants';
+
 interface AlumniContactsDetailPageProps {
   alumniContactsId: string;
 }
@@ -18,7 +20,7 @@ export const AlumniContactsDetailPage = ({
   return (
     <div className="flex min-h-full w-full justify-center">
       <VStack className="min-h-full w-full max-w-225 gap-0 md:px-5 md:pb-5">
-        <AlumniContactsHeader />
+        <AlumniContactsHeader fallbackHref={ROUTES.ALUMNI_CONTACTS} />
         <Suspense fallback={<AlumniContactsDetailMainLoadingView />}>
           <AlumniContactsDetailMainServerComponent
             alumniContactsId={alumniContactsId}
