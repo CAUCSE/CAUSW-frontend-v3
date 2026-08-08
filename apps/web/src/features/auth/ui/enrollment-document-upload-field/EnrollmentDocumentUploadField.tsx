@@ -47,12 +47,15 @@ export const EnrollmentDocumentUploadField = () => {
         </Text>
 
         <div className="relative flex min-h-[140px] flex-col overflow-hidden rounded-xl bg-white p-4">
-          <textarea
-            placeholder="내용을 입력해주세요."
-            className="flex-1 resize-none bg-transparent font-sans text-sm text-gray-800 placeholder-gray-400 outline-none"
-            maxLength={500}
-            {...register(ENROLLMENT_VERIFICATION_FORM_FIELD.content)}
-          />
+          {/* iOS 포커스 확대 방지: 1rem + scale(0.9375)로 15px 유지 */}
+          <div className="flex-1 overflow-hidden">
+            <textarea
+              placeholder="내용을 입력해주세요."
+              className="block h-[106.6667%] w-[106.6667%] origin-top-left scale-[0.9375] resize-none bg-transparent font-sans text-base text-gray-800 placeholder-gray-400 outline-none"
+              maxLength={500}
+              {...register(ENROLLMENT_VERIFICATION_FORM_FIELD.content)}
+            />
+          </div>
 
           <div className="mt-2">
             <ImageUploadField
