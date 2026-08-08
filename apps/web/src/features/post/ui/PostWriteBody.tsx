@@ -36,14 +36,6 @@ export const PostWriteBody = ({
     setContent(value);
   };
 
-  useEffect(() => {
-    const el = textareaRef.current;
-    if (!el) return;
-
-    el.style.height = 'auto';
-    el.style.height = `${el.scrollHeight}px`;
-  }, [content]);
-
   // 모달 진입 시 텍스트 끝에 포커스
   useEffect(() => {
     const el = textareaRef.current;
@@ -80,8 +72,8 @@ export const PostWriteBody = ({
         </Chip>
       )}
 
-      <VStack gap="lg" className="mx-5 my-4">
-        <TextArea className="p-0 ring-0 focus-within:ring-0">
+      <VStack gap="lg" className="mx-5 my-4 min-h-0 flex-1">
+        <TextArea className="flex-1 p-0 ring-0 focus-within:ring-0">
           <TextArea.Input
             ref={textareaRef}
             value={content}
@@ -89,7 +81,7 @@ export const PostWriteBody = ({
             resize={false}
             placeholder="내용을 입력해주세요."
             rows={1}
-            className="min-h-0"
+            className="h-full min-h-0"
           />
         </TextArea>
 
