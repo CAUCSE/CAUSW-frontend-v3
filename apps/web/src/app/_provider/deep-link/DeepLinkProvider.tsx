@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 
 import { App } from '@capacitor/app';
 
+import { savePendingDestination } from '@/features/auth';
+
 import { isMobile } from '@/shared/utils';
 
 import { toInternalPath } from './toInternalPath';
@@ -19,7 +21,9 @@ export function DeepLinkProvider({ children }: PropsWithChildren) {
 
     const routeFromUrl = (url: string) => {
       const path = toInternalPath(url);
-      if (path) router.replace(path);
+      if (!path) return;
+      savePendingDestination(path);
+      router.replace(path);
     };
 
     const listenerPromise = App.addListener('appUrlOpen', ({ url }) => {
