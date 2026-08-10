@@ -1,0 +1,1 @@
+export { sharePost } from './sharePost';
