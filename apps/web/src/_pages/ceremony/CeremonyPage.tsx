@@ -59,7 +59,7 @@ export const CeremonyPage = () => {
         </ActionHeader.ActionButton>
       </ActionHeader>
 
-      <div className="mx-auto w-full max-w-[900px]">
+      <div className="mx-auto w-full max-w-225">
         <CeremonyListView
           filter={filter}
           onFilterChange={setFilter}
