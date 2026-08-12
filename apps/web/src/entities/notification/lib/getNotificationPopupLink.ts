@@ -34,21 +34,27 @@ export function getNotificationPopupLink(
       };
 
     case 'SYSTEM': // 시스템 알림
-      return targetId
-        ? {
-            type: NOTIFICATION_LINK_TYPE.EXTERNAL,
-            url: ADMIN_ROUTES.EVENTS(targetId),
-          }
-        : {
-            type: NOTIFICATION_LINK_TYPE.INTERNAL,
-            path: ROUTES.NOTIFICATION,
-          };
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: ROUTES.NOTIFICATION,
+      };
 
     case 'LOCKER': // 사물함 알림
       return {
         type: NOTIFICATION_LINK_TYPE.INTERNAL,
         path: `${ROUTES.LOCKER}/${targetParentId}`,
       };
+
+    case 'ADMIN': // 관리자 알림 (재학인증 요청 / 경조사 신청)
+      return targetId
+        ? {
+            type: NOTIFICATION_LINK_TYPE.EXTERNAL,
+            url: ADMIN_ROUTES.EVENTS(targetId), // 경조사 신청 알림
+          }
+        : {
+            type: NOTIFICATION_LINK_TYPE.EXTERNAL,
+            url: ADMIN_ROUTES.PENDING_USERS, // 재학인증 요청 알림
+          };
 
     default:
       return {
