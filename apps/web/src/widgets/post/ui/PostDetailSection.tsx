@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-import { Stack } from '@causw/cds';
+import { Stack, PullToRefresh } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
@@ -17,7 +17,7 @@ interface PostDetailSectionProps {
 }
 
 export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
-  const { data: post } = usePostQuery(postId);
+  const { data: post, refetch } = usePostQuery(postId);
   const { data: comments } = useCommentsQuery({ postId });
 
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
@@ -32,28 +32,34 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
 
   return (
     <>
-      <Stack
-        gap="none"
-        className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
+      <PullToRefresh
+        className="ptrtest"
+        onRefresh={async () => {
+          await refetch();
         }}
       >
-        <PostContent post={post} />
-        <CommentList
-          countComment={post.numComment}
-          comments={comments.content}
-          onReply={handleReply}
+        <Stack
+          gap="none"
+          className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          <PostContent post={post} />
+          <CommentList
+            countComment={post.numComment}
+            comments={comments.content}
+            onReply={handleReply}
+          />
+        </Stack>
+        <CommentForm
+          postId={postId}
+          replyTarget={replyTarget}
+          onCancelReply={() => setReplyTarget(null)}
+          inputRef={inputRef}
         />
-      </Stack>
-
-      <CommentForm
-        postId={postId}
-        replyTarget={replyTarget}
-        onCancelReply={() => setReplyTarget(null)}
-        inputRef={inputRef}
-      />
+      </PullToRefresh>
     </>
   );
 };
