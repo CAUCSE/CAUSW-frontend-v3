@@ -6,11 +6,11 @@ import { BlockUserModal } from '@/features/block';
 import {
   POST_ACTION,
   PostHeader,
+  sharePost,
   usePostMenuActions,
   useTogglePostLikeMutation,
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
-import { sharePost } from '@/features/share-post';
 
 import {
   type GetPostResponseDto,

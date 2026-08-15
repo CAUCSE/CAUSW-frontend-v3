@@ -8,10 +8,9 @@ import { useRouter } from 'next/navigation';
 import { App } from '@capacitor/app';
 
 import { savePendingDestination } from '@/features/auth';
+import { toInternalPath } from '@/features/deep-link';
 
 import { isMobile } from '@/shared/utils';
-
-import { toInternalPath } from './toInternalPath';
 
 export function DeepLinkProvider({ children }: PropsWithChildren) {
   const router = useRouter();
