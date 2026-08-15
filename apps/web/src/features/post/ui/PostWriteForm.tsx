@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormProvider } from 'react-hook-form';
 
@@ -23,6 +23,13 @@ import { PostBoardSelector } from './PostBoardSelector';
 import { PostWriteBody } from './PostWriteBody';
 import { PostWriteFooter } from './PostWriteFooter';
 import { PostWriteHeader } from './PostWriteHeader';
+
+declare global {
+  interface Window {
+    __androidBackHandler?: () => boolean;
+    __postWriteConfirmBack?: () => void;
+  }
+}
 
 interface PostWriteFormProps {
   onClose: (isDirty: boolean) => void;
@@ -110,13 +117,72 @@ export const PostWriteForm = ({
     setSelectorOpen(false);
   };
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (selectorOpen) {
       setSelectorOpen(false);
     } else {
       onClose(isDirty);
     }
-  };
+  }, [selectorOpen, isDirty, onClose]);
+
+  useEffect(() => {
+    const allowBackRef = { current: false };
+
+    // 브라우저 뒤로가기를 감지하기 위한 guard history 생성
+    // React StrictMode에서 effect가 두 번 실행되어도 중복 생성되지 않도록 체크
+    if (!window.history.state?.postWriteGuard) {
+      window.history.pushState(
+        {
+          ...window.history.state,
+          postWriteGuard: true,
+        },
+        '',
+        window.location.href,
+      );
+    }
+
+    const handleBrowserBack = () => {
+      // 사용자가 모달에서 실제로 나가기를 선택한 경우
+      if (allowBackRef.current) {
+        allowBackRef.current = false;
+        return;
+      }
+
+      // 브라우저 뒤로가기로 빠져나가지 않도록 guard 복구
+      window.history.pushState(
+        {
+          ...window.history.state,
+          postWriteGuard: true,
+        },
+        '',
+        window.location.href,
+      );
+
+      handleBack();
+    };
+
+    // Android 하드웨어 뒤로가기
+    window.__androidBackHandler = () => {
+      handleBack();
+      return true;
+    };
+
+    // 실제로 글쓰기 페이지를 빠져나갈 때 사용
+    window.__postWriteConfirmBack = () => {
+      allowBackRef.current = true;
+
+      window.history.go(-2);
+    };
+
+    window.addEventListener('popstate', handleBrowserBack);
+
+    return () => {
+      window.removeEventListener('popstate', handleBrowserBack);
+
+      delete window.__androidBackHandler;
+      delete window.__postWriteConfirmBack;
+    };
+  }, [handleBack]);
 
   useEffect(() => {
     if (boards.length === 1 && !currentBoardId) {
