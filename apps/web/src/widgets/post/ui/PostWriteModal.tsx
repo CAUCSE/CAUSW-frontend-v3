@@ -22,6 +22,14 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
     if (isDirty) {
       setIsCancelConfirmOpen(true);
     } else {
+      closePostWrite();
+    }
+  };
+
+  const closePostWrite = () => {
+    if (window.__postWriteConfirmBack) {
+      window.__postWriteConfirmBack();
+    } else {
       router.back();
     }
   };
@@ -67,7 +75,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
         }
         open={isCancelConfirmOpen}
         onOpenChange={setIsCancelConfirmOpen}
-        onConfirm={() => router.back()}
+        onConfirm={closePostWrite}
         titleTypo="subtitle-16-bold"
       />
     </>

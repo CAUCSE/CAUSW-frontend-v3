@@ -74,6 +74,9 @@ const config: CapacitorConfig = {
     flavor: isDevFlavor ? 'dev' : 'prod',
   },
   plugins: {
+    App: {
+      disableBackButtonHandler: true,
+    },
     StatusBar: {
       style: 'LIGHT_CONTENT',
       backgroundColor: '#ffffff',
