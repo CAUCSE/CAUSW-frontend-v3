@@ -1,35 +1,7 @@
-import { ROUTES } from '@/shared/constants';
+import { safeCallbackUrl } from '@/shared/lib';
 
-const ALLOWED_PREFIXES = Object.values(ROUTES);
 const PENDING_DESTINATION_KEY = 'causw:pending-destination';
 const PENDING_DESTINATION_TTL = 7 * 24 * 60 * 60 * 1000;
-
-export const safeCallbackUrl = (raw: string | null | undefined): string => {
-  if (!raw) return '/home';
-
-  let value = raw;
-  for (let index = 0; index < 2; index += 1) {
-    try {
-      value = decodeURIComponent(value);
-    } catch {
-      return '/home';
-    }
-  }
-
-  if (
-    !value.startsWith('/') ||
-    value.startsWith('//') ||
-    value.includes('\\') ||
-    /[\r\n]/.test(value) ||
-    value.startsWith('/auth')
-  ) {
-    return '/home';
-  }
-
-  return ALLOWED_PREFIXES.some((prefix) => value.startsWith(prefix))
-    ? value
-    : '/home';
-};
 
 export const savePendingDestination = (path: string) => {
   const safePath = safeCallbackUrl(path);

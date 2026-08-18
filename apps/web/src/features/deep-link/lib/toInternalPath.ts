@@ -1,4 +1,4 @@
-import { safeCallbackUrl } from '@/features/auth';
+import { safeCallbackUrl } from '@/shared/lib';
 
 const ALLOWED_HOSTS = new Set(
   (process.env.NEXT_PUBLIC_DEEP_LINK_ALLOWED_HOSTS ?? '')
