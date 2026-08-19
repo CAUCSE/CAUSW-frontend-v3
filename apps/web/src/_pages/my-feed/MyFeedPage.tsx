@@ -11,7 +11,7 @@ interface MyFeedPageProps {
 export const MyFeedPage = ({ view }: MyFeedPageProps) => {
   return (
     <HStack className="size-full min-h-0 justify-center overflow-hidden">
-      <div className="flex h-full min-h-0 w-full max-w-225 min-w-0 flex-col overflow-hidden md:px-8 md:py-6">
+      <div className="flex h-full min-h-0 w-full max-w-225 min-w-0 flex-col overflow-hidden md:p-5 md:pt-0">
         <MyFeedHeader />
         <MyFeedMain myFeedView={view} />
       </div>
