@@ -1,10 +1,12 @@
 'use client';
 
-import { Tab, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { FEED_LIST_TAB } from '../../config';
+import { useFeedViewMode } from '@/entities/feed';
+
 import { useFeedMain } from '../../model';
 import { FeedListWrapper } from '../feed-list';
+import { FeedListToolbar } from '../feed-list-toolbar';
 
 export const FeedMain = () => {
   const {
@@ -15,22 +17,17 @@ export const FeedMain = () => {
     handleTabChange,
   } = useFeedMain();
 
+  const { feedViewMode, setFeedViewMode } = useFeedViewMode();
+
   return (
-    <VStack gap="md" className="min-h-0 flex-1">
-      <Tab.Root
-        variant="chip"
-        value={selectedTab}
-        onValueChange={handleTabChange}
-      >
-        <Tab.List className="px-5 md:px-0">
-          <Tab.TabItem value={FEED_LIST_TAB.ALL}>전체</Tab.TabItem>
-          {boards.map((board) => (
-            <Tab.TabItem key={board.id} value={board.id}>
-              {board.name}
-            </Tab.TabItem>
-          ))}
-        </Tab.List>
-      </Tab.Root>
+    <VStack gap="none" className="min-h-0 flex-1">
+      <FeedListToolbar
+        feedViewMode={feedViewMode}
+        onFeedViewModeChange={setFeedViewMode}
+        boards={boards}
+        selectedTab={selectedTab}
+        onSelectedTabChange={handleTabChange}
+      />
       <FeedListWrapper boardIds={filteredBoardIds} ref={feedListRef} />
     </VStack>
   );

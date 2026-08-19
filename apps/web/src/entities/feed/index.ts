@@ -11,12 +11,16 @@ export {
   type MyFeedView,
   isMyFeedView,
   normalizeMyFeedView,
+  FEED_VIEW_MODE,
+  FEED_VIEW_MODE_LABEL,
+  type FeedViewMode,
 } from './config';
 export {
   useGetAvailableBoards,
   useGetWritableBoards,
   useFeedSearchKeyword,
   useMyFeedView,
+  useFeedViewMode,
   useFeedSearchPendingKeywordContext,
   useGetFeedScrollRestorationStorageKey,
   type Board,
