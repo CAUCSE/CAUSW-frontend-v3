@@ -1,4 +1,4 @@
-import { MyFeedPage } from '@/_pages/setting';
+import { MyFeedPage } from '@/_pages/my-feed';
 
 import { normalizeMyFeedView } from '@/entities/feed';
 

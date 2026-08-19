@@ -12,6 +12,7 @@ export const ROUTES = Object.freeze({
   COMMUNITY: '/community',
   PROFILE: '/profile',
   SETTING: '/setting',
+  MY_FEED: '/my-feed',
 } as const);
 
 export const ADMIN_ROUTES = Object.freeze({
