@@ -13,15 +13,14 @@ interface FeedViewModeToggleProps {
   onChange: (value: FeedViewMode) => void;
 }
 
-const FEED_VIEW_MODE_OPTIONS: FeedViewMode[] = [
-  FEED_VIEW_MODE.COMPACT,
-  FEED_VIEW_MODE.CARD,
-];
+const FEED_VIEW_MODE_OPTIONS = Object.values(FEED_VIEW_MODE);
 
 export const FeedViewModeToggle = ({
   value,
   onChange,
 }: FeedViewModeToggleProps) => {
+  const TriggerIcon = FEED_VIEW_MODE_ICON[value];
+
   return (
     <Dropdown>
       <Dropdown.Trigger asChild>
@@ -31,7 +30,7 @@ export const FeedViewModeToggle = ({
           suppressHydrationWarning
           className="flex shrink-0 cursor-pointer items-center gap-1 py-1 pr-0.5 pl-1.5"
         >
-          <OutlineListThreeIcon />
+          <TriggerIcon />
           <ArrowDown size={14} color="gray-500" />
         </button>
       </Dropdown.Trigger>
