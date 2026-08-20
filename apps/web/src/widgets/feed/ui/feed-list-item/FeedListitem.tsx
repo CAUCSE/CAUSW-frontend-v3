@@ -1,32 +1,35 @@
 'use client';
 
-import { VStack } from '@causw/cds';
+import { Box, VStack } from '@causw/cds';
 
 import { BlockUserModal } from '@/features/block';
 import {
   POST_ACTION,
   PostActionMenu,
-  PostHeader,
   usePostMenuActions,
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import {
-  PostBody,
-  PostFooter,
-  type GetPostsResponseDto,
-} from '@/entities/post';
+import { FEED_VIEW_MODE, type FeedViewMode } from '@/entities/feed';
+import { type GetPostsResponseDto } from '@/entities/post';
 
 import { ConfirmModal } from '@/shared/ui';
 
-import { FEED_CONTENT_MAX_LINE } from '../../config';
 import { usePostListItem } from '../../model';
+import { FeedListitemCardContent } from '../feed-list-item-card-content';
+import { FeedListitemCompactContent } from '../feed-list-item-compact-content';
+
+type Post = GetPostsResponseDto['posts'][number];
 
 interface FeedListitemProps {
-  post: GetPostsResponseDto['posts'][number];
+  post: Post;
+  viewMode?: FeedViewMode;
 }
 
-export const FeedListitem = ({ post }: FeedListitemProps) => {
+export const FeedListitem = ({
+  post,
+  viewMode = FEED_VIEW_MODE.CARD,
+}: FeedListitemProps) => {
   const {
     activeModal,
     handleAction: handleMenuAction,
@@ -39,43 +42,33 @@ export const FeedListitem = ({ post }: FeedListitemProps) => {
   const { handleCardClick, handleCardKeyDown, isExpanded, handleExpand } =
     usePostListItem();
 
+  const isCompact = viewMode === FEED_VIEW_MODE.COMPACT;
+
   return (
     <VStack className="relative" id={post.postId}>
-      <VStack
-        gap="sm"
-        className="cursor-pointer rounded-lg bg-white p-4"
+      <Box
+        className="cursor-pointer rounded-lg bg-white"
         role="link"
         tabIndex={0}
         onClick={(event) => handleCardClick(event, post.postId)}
         onKeyDown={(event) => handleCardKeyDown(event, post.postId)}
       >
-        <PostHeader
-          authorName={post.writerNickname}
-          createdAt={post.createdAt}
-          profileImage={post.writerProfileImage}
-          isOfficial={post.isOfficial}
-          isMine={post.isOwner}
-          onAction={handleMenuAction}
-          hideActionMenu
-        />
-        <PostBody
-          content={post.content}
-          images={post.postImageUrls}
-          enableImageViewer={true}
-          isHtml={post.isCrawled}
-          isCollapsed={!isExpanded}
-          onExpand={handleExpand}
-          showExpandButton
-          maxLines={FEED_CONTENT_MAX_LINE}
-        />
-        <PostFooter
-          numLike={post.numLike}
-          numComment={post.numComment}
-          isPostLike={post.isPostLike}
-        />
-      </VStack>
+        {isCompact ? (
+          <FeedListitemCompactContent
+            post={post}
+            onMenuAction={handleMenuAction}
+          />
+        ) : (
+          <FeedListitemCardContent
+            post={post}
+            isExpanded={isExpanded}
+            onExpand={handleExpand}
+            onMenuAction={handleMenuAction}
+          />
+        )}
+      </Box>
       {/* a태그 > button태그 문제로 인해 메뉴 버튼을 따로 빼서 처리함 */}
-      <div className="absolute top-6.5 right-5">
+      <div className="absolute top-0 right-0">
         <PostActionMenu isMine={post.isOwner} onAction={handleMenuAction} />
       </div>
       <BlockUserModal

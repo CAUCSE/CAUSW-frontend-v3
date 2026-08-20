@@ -8,7 +8,7 @@ import { PullToRefresh } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
-import { type Board } from '@/entities/feed';
+import { type Board, useFeedViewMode } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
@@ -24,6 +24,8 @@ interface FeedListWrapperProps {
 }
 
 export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
+  const { feedViewMode } = useFeedViewMode();
+
   const {
     data: posts,
     isLoading,
@@ -72,6 +74,7 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
             hasNextPage={hasNextPage}
             targetRef={targetRef}
             ref={ref}
+            viewMode={feedViewMode}
           />
         </PullToRefresh>
         <PostWriteFloatingActionButton />
@@ -86,6 +89,7 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
       hasNextPage={hasNextPage}
       targetRef={targetRef}
       ref={ref}
+      viewMode={feedViewMode}
     />
   );
 };

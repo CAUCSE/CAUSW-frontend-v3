@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react';
 
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import { VStack } from '@causw/cds';
+import { Separator, VStack } from '@causw/cds';
 
-import { useMyFeedView } from '@/entities/feed';
+import { useFeedViewMode, useMyFeedView } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
@@ -21,6 +21,7 @@ const MY_FEED_LIST_DEFAULT_SIZE = 20;
 
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
+  const { feedViewMode } = useFeedViewMode();
 
   const { data, isFetchingNextPage, isSuccess, hasNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery({
@@ -65,9 +66,10 @@ export const MyFeedList = () => {
       as="ul"
       ref={myFeedListRef}
     >
-      {data?.map((post) => (
+      {data?.map((post, index) => (
         <li key={post.postId}>
-          <FeedListitem post={post} />
+          <FeedListitem post={post} viewMode={feedViewMode} />
+          {index < data.length - 1 && <Separator orientation="horizontal" />}
         </li>
       ))}
       {!isFetchingNextPage && hasNextPage && (

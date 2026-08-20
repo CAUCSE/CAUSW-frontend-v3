@@ -2,9 +2,13 @@
 
 import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 
-import { VStack } from '@causw/cds';
+import { Separator, VStack } from '@causw/cds';
 
-import { boardQueryOptions, useFeedSearchKeyword } from '@/entities/feed';
+import {
+  boardQueryOptions,
+  useFeedSearchKeyword,
+  useFeedViewMode,
+} from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
@@ -17,6 +21,7 @@ import { FeedSearchResultListEmptyView } from './FeedSearchResultListEmptyView';
 
 export const FeedSearchResultList = () => {
   const { feedSearchKeyword } = useFeedSearchKeyword();
+  const { feedViewMode } = useFeedViewMode();
 
   const { data: boardIds } = useSuspenseQuery({
     ...boardQueryOptions.available(),
@@ -70,9 +75,10 @@ export const FeedSearchResultList = () => {
       className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       as="ul"
     >
-      {posts?.map((post) => (
+      {posts?.map((post, index) => (
         <li key={post.postId}>
-          <FeedListitem post={post} />
+          <FeedListitem post={post} viewMode={feedViewMode} />
+          {index < posts.length - 1 && <Separator orientation="horizontal" />}
         </li>
       ))}
       {!isFetchingNextPage && hasNextPage && (
