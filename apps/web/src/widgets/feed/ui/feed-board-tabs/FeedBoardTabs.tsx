@@ -25,7 +25,7 @@ export const FeedBoardTabs = ({
       <Tab.List className="gap-1">
         <Tab.TabItem
           value={FEED_LIST_TAB.ALL}
-          className="rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
+          className="typo-body-14-semibold! rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
         >
           전체
         </Tab.TabItem>
@@ -33,7 +33,7 @@ export const FeedBoardTabs = ({
           <Tab.TabItem
             key={board.id}
             value={board.id}
-            className="rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
+            className="typo-body-14-semibold! rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
           >
             {board.name}
           </Tab.TabItem>
