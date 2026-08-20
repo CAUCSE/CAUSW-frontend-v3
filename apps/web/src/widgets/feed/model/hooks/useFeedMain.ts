@@ -4,13 +4,13 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useGetAvailableBoards } from '@/entities/feed';
-
 import {
   FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
   FEED_LIST_TAB,
   FEED_LIST_TAB_SEARCH_PARAM_KEY,
-} from '../../config';
+} from '@/widgets/post-list';
+
+import { useGetAvailableBoards } from '@/entities/feed';
 
 export const useFeedMain = () => {
   const { data } = useGetAvailableBoards({ isTab: true });

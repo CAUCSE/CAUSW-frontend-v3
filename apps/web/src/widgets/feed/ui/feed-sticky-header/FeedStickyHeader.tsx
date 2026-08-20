@@ -4,15 +4,18 @@ import { Suspense } from 'react';
 
 import { mergeStyles, VStack } from '@causw/cds';
 
+import {
+  FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  FeedListToolbar,
+} from '@/widgets/post-list';
+
 import { useFeedViewMode } from '@/entities/feed';
 
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui';
 
-import { FEED_LIST_SCROLL_CONTAINER_CLASS_NAME } from '../../config';
 import { useFeedMain } from '../../model';
 import { FeedHeader } from '../feed-header';
-import { FeedListToolbar } from '../feed-list-toolbar';
 
 export const FeedStickyHeader = () => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({

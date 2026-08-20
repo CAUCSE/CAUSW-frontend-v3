@@ -6,14 +6,13 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { Separator, VStack } from '@causw/cds';
 
+import { FeedListitem, useFeedScrollRestoration } from '@/widgets/post-list';
+
 import { useFeedViewMode, useMyFeedView } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
-
-import { useFeedScrollRestoration } from '../../model';
-import { FeedListitem } from '../feed-list-item';
 
 import { MyFeedListEmptyView } from './MyFeedListEmptyView';
 

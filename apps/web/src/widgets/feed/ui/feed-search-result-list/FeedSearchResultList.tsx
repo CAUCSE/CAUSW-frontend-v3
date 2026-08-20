@@ -4,6 +4,8 @@ import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import { Separator, VStack } from '@causw/cds';
 
+import { FeedListitem, useFeedScrollRestoration } from '@/widgets/post-list';
+
 import {
   boardQueryOptions,
   useFeedSearchKeyword,
@@ -13,9 +15,6 @@ import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
-
-import { useFeedScrollRestoration } from '../../model';
-import { FeedListitem } from '../feed-list-item';
 
 import { FeedSearchResultListEmptyView } from './FeedSearchResultListEmptyView';
 

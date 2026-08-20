@@ -1,7 +1,8 @@
 'use client';
 
+import { FeedListWrapper } from '@/widgets/post-list';
+
 import { useFeedMain } from '../../model';
-import { FeedListWrapper } from '../feed-list';
 
 export const FeedMain = () => {
   const { filteredBoardIds } = useFeedMain();
