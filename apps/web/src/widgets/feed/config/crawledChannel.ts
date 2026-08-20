@@ -21,17 +21,9 @@ export const CRAWLED_CHANNEL_LABEL: Record<CrawledChannel, string> = {
   [CRAWLED_CHANNEL.CAU_NOTICE]: '중앙대학교 공지',
 };
 
-// 드롭다운 트리거(닫힌 상태)에서만 '전체'를 '채널 전체'로 표시
 export const CRAWLED_CHANNEL_TRIGGER_LABEL: Record<CrawledChannel, string> = {
   ...CRAWLED_CHANNEL_LABEL,
   [CRAWLED_CHANNEL.ALL]: '채널 전체',
 };
 
-export const CRAWLED_CHANNEL_OPTIONS: CrawledChannel[] = [
-  CRAWLED_CHANNEL.ALL,
-  CRAWLED_CHANNEL.SW_STUDENT_COUNCIL,
-  CRAWLED_CHANNEL.SW_DEPARTMENT,
-  CRAWLED_CHANNEL.CCSSAA,
-  CRAWLED_CHANNEL.SW_EDUCATION_CENTER,
-  CRAWLED_CHANNEL.CAU_NOTICE,
-];
+export const CRAWLED_CHANNEL_OPTIONS = Object.values(CRAWLED_CHANNEL);
