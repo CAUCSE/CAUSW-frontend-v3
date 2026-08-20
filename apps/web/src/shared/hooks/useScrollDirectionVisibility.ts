@@ -29,20 +29,7 @@ export const useScrollDirectionVisibility = ({
   const lastToggleTimeRef = useRef(0);
 
   useEffect(() => {
-    const handleScroll = (event: Event) => {
-      const target = event.target;
-      const isWindowScroll = target === document;
-      const isContainerScroll =
-        !!containerClassName &&
-        target instanceof HTMLElement &&
-        target.classList.contains(containerClassName);
-
-      if (!isWindowScroll && !isContainerScroll) return;
-
-      const currentScrollTop = isWindowScroll
-        ? window.scrollY
-        : (target as HTMLElement).scrollTop;
-
+    const applyScrollTop = (currentScrollTop: number) => {
       setIsScrolled(currentScrollTop > 1);
 
       const delta = currentScrollTop - lastScrollTopRef.current;
@@ -62,6 +49,28 @@ export const useScrollDirectionVisibility = ({
 
       lastScrollTopRef.current = currentScrollTop;
     };
+
+    const handleScroll = (event: Event) => {
+      const target = event.target;
+      const isWindowScroll = target === document;
+      const isContainerScroll =
+        !!containerClassName &&
+        target instanceof HTMLElement &&
+        target.classList.contains(containerClassName);
+
+      if (!isWindowScroll && !isContainerScroll) return;
+
+      applyScrollTop(
+        isWindowScroll ? window.scrollY : (target as HTMLElement).scrollTop,
+      );
+    };
+
+    const initialContainer = containerClassName
+      ? document.querySelector<HTMLElement>(`.${containerClassName}`)
+      : null;
+    applyScrollTop(
+      initialContainer ? initialContainer.scrollTop : window.scrollY,
+    );
 
     document.addEventListener('scroll', handleScroll, {
       capture: true,
