@@ -1,10 +1,10 @@
-export const getScrollContainer = (): HTMLElement | null => {
-  const container = document.querySelector<HTMLElement>(
-    '#main-scroll-container',
-  );
+import { MEDIA_QUERIES } from '../constants';
 
-  if (container && container.scrollHeight > container.clientHeight) {
-    return container;
+export const getScrollContainer = (): HTMLElement | null => {
+  const isMobile = window.matchMedia(MEDIA_QUERIES.mobile).matches;
+
+  if (isMobile) {
+    return document.querySelector<HTMLElement>('#main-scroll-container');
   }
 
   return document.scrollingElement as HTMLElement | null;
