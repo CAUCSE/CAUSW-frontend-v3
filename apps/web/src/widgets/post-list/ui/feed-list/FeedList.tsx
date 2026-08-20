@@ -2,14 +2,14 @@
 
 import { type RefObject } from 'react';
 
-import { Separator, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
 import { type FeedViewMode } from '@/entities/feed';
 import { type GetPostsResponseDto } from '@/entities/post';
 
 import { SuspenseView } from '@/shared/ui';
 
-import { FeedListitem } from '../feed-list-item';
+import { PostListItems } from '../post-list-items';
 
 import { FeedListEmptyView } from './FeedListEmptyView';
 
@@ -38,14 +38,11 @@ export const FeedList = ({
       className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-3 md:overflow-visible md:px-0"
       as="ul"
     >
-      {posts?.map((post, index) => (
-        <li key={post.postId}>
-          <FeedListitem post={post} viewMode={viewMode} />
-          {index < posts.length - 1 && (
-            <Separator orientation="horizontal" className="my-4 bg-gray-100" />
-          )}
-        </li>
-      ))}
+      <PostListItems
+        posts={posts}
+        viewMode={viewMode}
+        separatorClassName="my-4 bg-gray-100"
+      />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

@@ -4,9 +4,9 @@ import { useEffect, useRef } from 'react';
 
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import { Separator, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { FeedListitem, useFeedScrollRestoration } from '@/widgets/post-list';
+import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
 
 import { useFeedViewMode, useMyFeedView } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
@@ -65,12 +65,7 @@ export const MyFeedList = () => {
       as="ul"
       ref={myFeedListRef}
     >
-      {data?.map((post, index) => (
-        <li key={post.postId}>
-          <FeedListitem post={post} viewMode={feedViewMode} />
-          {index < data.length - 1 && <Separator orientation="horizontal" />}
-        </li>
-      ))}
+      <PostListItems posts={data} viewMode={feedViewMode} />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

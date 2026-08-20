@@ -2,9 +2,9 @@
 
 import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 
-import { Separator, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
-import { FeedListitem, useFeedScrollRestoration } from '@/widgets/post-list';
+import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
 
 import {
   boardQueryOptions,
@@ -74,12 +74,7 @@ export const FeedSearchResultList = () => {
       className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       as="ul"
     >
-      {posts?.map((post, index) => (
-        <li key={post.postId}>
-          <FeedListitem post={post} viewMode={feedViewMode} />
-          {index < posts.length - 1 && <Separator orientation="horizontal" />}
-        </li>
-      ))}
+      <PostListItems posts={posts} viewMode={feedViewMode} />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}
