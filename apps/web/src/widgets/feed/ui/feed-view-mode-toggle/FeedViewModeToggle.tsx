@@ -44,10 +44,7 @@ export const FeedViewModeToggle = ({
             <Dropdown.Item
               key={option}
               className="w-full rounded-none px-4 py-2"
-              onSelect={(event) => {
-                event.preventDefault?.();
-                onChange(option);
-              }}
+              onSelect={() => onChange(option)}
             >
               <HStack align="center" className="gap-2">
                 <OptionIcon />

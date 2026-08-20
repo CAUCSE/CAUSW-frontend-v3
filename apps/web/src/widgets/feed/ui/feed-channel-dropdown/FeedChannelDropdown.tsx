@@ -41,10 +41,7 @@ export const FeedChannelDropdown = ({
             <Dropdown.Item
               key={channel}
               className="rounded-none px-4 py-2"
-              onSelect={(event) => {
-                event.preventDefault?.();
-                onChange(channel);
-              }}
+              onSelect={() => onChange(channel)}
             >
               <HStack align="center" className="w-full gap-2">
                 <Text
