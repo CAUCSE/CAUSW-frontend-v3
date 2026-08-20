@@ -22,7 +22,7 @@ export const FeedBoardTabs = ({
       onValueChange={onValueChange}
       className="min-w-0 flex-1"
     >
-      <Tab.List className="gap-1">
+      <Tab.List className="-mr-4 gap-1 pr-4 md:-mr-5 md:pr-5">
         <Tab.TabItem
           value={FEED_LIST_TAB.ALL}
           className="typo-body-14-semibold! rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
