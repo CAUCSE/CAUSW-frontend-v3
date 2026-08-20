@@ -28,9 +28,7 @@ export {
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
-  AlumniContactsScrollVisibilityContext,
   useAlumniContactsAcademicFilterSheetModalContext,
-  useAlumniContactsScrollVisibilityContext,
   useResetAlumniContactsFilter,
   type AlumniSummaryDto,
   type AlumniDirectorySectionDto,
@@ -45,7 +43,6 @@ export {
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,
-  AlumniContactsScrollVisibilityProvider,
   AlumniContactsBasicInfo,
   AlumniContactsDescription,
   AlumniContactsSnsLink,
