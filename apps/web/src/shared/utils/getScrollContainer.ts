@@ -1,3 +1,11 @@
 export const getScrollContainer = (): HTMLElement | null => {
-  return document.querySelector('#main-scroll-container');
+  const container = document.querySelector<HTMLElement>(
+    '#main-scroll-container',
+  );
+
+  if (container && container.scrollHeight > container.clientHeight) {
+    return container;
+  }
+
+  return document.scrollingElement as HTMLElement | null;
 };
