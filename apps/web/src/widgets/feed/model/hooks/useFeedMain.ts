@@ -1,14 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useGetAvailableBoards } from '@/entities/feed';
 
-import { useBreakpoint } from '@/shared/hooks';
-
-import { FEED_LIST_TAB, FEED_LIST_TAB_SEARCH_PARAM_KEY } from '../../config';
+import {
+  FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  FEED_LIST_TAB,
+  FEED_LIST_TAB_SEARCH_PARAM_KEY,
+} from '../../config';
 
 export const useFeedMain = () => {
   const { data } = useGetAvailableBoards({ isTab: true });
@@ -16,8 +18,6 @@ export const useFeedMain = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-
-  const { isMobileSize } = useBreakpoint();
 
   const getValidSelectedTab = useCallback(
     (tab: string | null) => {
@@ -35,8 +35,6 @@ export const useFeedMain = () => {
   const selectedTab = getValidSelectedTab(
     searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB),
   );
-
-  const feedListRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
     const tab = searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB);
@@ -61,25 +59,15 @@ export const useFeedMain = () => {
   }, [selectedTab, data.boards]);
 
   const initializeScroll = () => {
-    const feedList = feedListRef.current;
-    if (!feedList) {
-      return;
-    }
+    // 모바일은 PullToRefresh의 스크롤 컨테이너가, 데스크톱은 문서(window)가 스크롤 대상
+    const scrollContainer = document.querySelector(
+      `.${FEED_LIST_SCROLL_CONTAINER_CLASS_NAME}`,
+    );
 
-    // 모바일일 때는 PullToRefresh 컴포넌트의 스크롤 컨테이너를 스크롤 시킴
-    if (isMobileSize) {
-      const scrollContainer = feedList.closest('.feed-list-scroll-container');
-
-      scrollContainer?.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    } else {
-      feedList.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-    }
+    (scrollContainer ?? window).scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const handleTabChange = (value: string) => {
@@ -97,7 +85,6 @@ export const useFeedMain = () => {
 
   return {
     data: data.boards,
-    feedListRef,
     selectedTab,
     filteredBoardIds,
     handleTabChange,

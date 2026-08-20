@@ -18,7 +18,6 @@ interface FeedListProps {
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
-  ref: RefObject<HTMLUListElement | null>;
   viewMode: FeedViewMode;
 }
 
@@ -27,7 +26,6 @@ export const FeedList = ({
   isFetchingNextPage,
   hasNextPage,
   targetRef,
-  ref,
   viewMode,
 }: FeedListProps) => {
   if (!posts || posts.length === 0) {
@@ -37,8 +35,7 @@ export const FeedList = ({
   return (
     <VStack
       gap="none"
-      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-3 md:px-0"
-      ref={ref}
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-3 md:overflow-visible md:px-0"
       as="ul"
     >
       {posts?.map((post, index) => (

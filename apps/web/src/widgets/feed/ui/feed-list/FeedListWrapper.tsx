@@ -1,7 +1,5 @@
 'use client';
 
-import { type RefObject } from 'react';
-
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { PullToRefresh } from '@causw/cds';
@@ -14,16 +12,16 @@ import { postQueryOptions } from '@/entities/post';
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
+import { FEED_LIST_SCROLL_CONTAINER_CLASS_NAME } from '../../config';
 import { useFeedScrollRestoration } from '../../model';
 
 import { FeedList } from './FeedList';
 
 interface FeedListWrapperProps {
   boardIds: Board['id'][];
-  ref: RefObject<HTMLUListElement | null>;
 }
 
-export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
+export const FeedListWrapper = ({ boardIds }: FeedListWrapperProps) => {
   const { feedViewMode } = useFeedViewMode();
 
   const {
@@ -63,7 +61,7 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
     return (
       <>
         <PullToRefresh
-          className="feed-list-scroll-container min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden"
+          className={`${FEED_LIST_SCROLL_CONTAINER_CLASS_NAME} min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden`}
           onRefresh={async () => {
             await refetch();
           }}
@@ -73,7 +71,6 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}
             targetRef={targetRef}
-            ref={ref}
             viewMode={feedViewMode}
           />
         </PullToRefresh>
@@ -88,7 +85,6 @@ export const FeedListWrapper = ({ boardIds, ref }: FeedListWrapperProps) => {
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}
       targetRef={targetRef}
-      ref={ref}
       viewMode={feedViewMode}
     />
   );
