@@ -24,7 +24,7 @@ export const PostListItems = ({
   return (
     <>
       {posts.map((post, index) => (
-        <li key={post.postId}>
+        <li key={post.postId} className="min-w-0">
           <FeedListitem post={post} viewMode={viewMode} />
           {index < posts.length - 1 && (
             <Separator
