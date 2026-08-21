@@ -6,7 +6,11 @@ export {
   FeedViewModeToggle,
   PostListItems,
 } from './ui';
-export { usePostListItem, useFeedScrollRestoration } from './model';
+export {
+  usePostListItem,
+  useFeedScrollRestoration,
+  useBoardTabSelection,
+} from './model';
 export {
   FEED_LIST_TAB,
   type FeedListTab,

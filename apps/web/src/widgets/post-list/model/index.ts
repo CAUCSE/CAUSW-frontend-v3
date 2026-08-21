@@ -1,1 +1,5 @@
-export { usePostListItem, useFeedScrollRestoration } from './hooks';
+export {
+  usePostListItem,
+  useFeedScrollRestoration,
+  useBoardTabSelection,
+} from './hooks';
