@@ -23,6 +23,7 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
     label: '동문수첩',
     icon: <Contacts size={18} />,
     href: `${ROUTES.ALUMNI_CONTACTS}`,
+    activeHrefs: [`${ROUTES.COMMUNITY}`],
   },
   {
     key: 'profile',
@@ -57,6 +58,7 @@ export const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
     label: '동문수첩',
     icon: <Contacts />,
     href: `${ROUTES.ALUMNI_CONTACTS}`,
+    activeHrefs: [`${ROUTES.COMMUNITY}`],
   },
   {
     key: 'setting',

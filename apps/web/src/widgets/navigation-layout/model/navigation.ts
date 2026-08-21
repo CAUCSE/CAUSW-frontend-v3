@@ -9,17 +9,26 @@ function matchPathname(pathname: string, href: string) {
 }
 
 export function pickSidebarKey(pathname: string): SidebarKey | undefined {
-  const sorted = [...SIDEBAR_ITEMS].sort(
-    (a, b) => b.href.length - a.href.length,
+  const candidates = SIDEBAR_ITEMS.flatMap((it) =>
+    [it.href, ...(it.activeHrefs ?? [])].map((href) => ({
+      key: it.key,
+      href,
+    })),
   );
-  return sorted.find((it) => matchPathname(pathname, it.href))?.key;
+  const sorted = candidates.sort((a, b) => b.href.length - a.href.length);
+  return sorted.find((candidate) => matchPathname(pathname, candidate.href))
+    ?.key;
 }
 export function isBottomNavVisible(pathname: string) {
-  return BOTTOM_NAV_ITEMS.some((it) => pathname === it.href);
+  return BOTTOM_NAV_ITEMS.some((it) =>
+    [it.href, ...(it.activeHrefs ?? [])].some((href) => pathname === href),
+  );
 }
 
 export function pickBottomNavKey(pathname: string): BottomNavKey {
-  const found = BOTTOM_NAV_ITEMS.find((it) => pathname === it.href);
+  const found = BOTTOM_NAV_ITEMS.find((it) =>
+    [it.href, ...(it.activeHrefs ?? [])].some((href) => pathname === href),
+  );
   return (found?.key ?? 'home') as BottomNavKey;
 }
 
