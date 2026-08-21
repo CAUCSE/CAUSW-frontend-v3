@@ -4,9 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 final class SafeAreaInsetsManager {
     private final View rootView;
@@ -22,35 +20,32 @@ final class SafeAreaInsetsManager {
             return;
         }
         ViewCompat.setOnApplyWindowInsetsListener(rootView, (view, windowInsets) -> {
-            Insets insets = windowInsets.getInsets(
-                WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout()
-            );
-            applyInsetsToWebViewFrame(insets);
+            applyEdgeToEdgeWebViewFrame();
             return windowInsets;
         });
         ViewCompat.requestApplyInsets(rootView);
     }
 
-    private void applyInsetsToWebViewFrame(Insets insets) {
+    private void applyEdgeToEdgeWebViewFrame() {
         if (webView == null) {
             return;
         }
 
+        webView.setPadding(0, 0, 0, 0);
         ViewGroup.LayoutParams lp = webView.getLayoutParams();
         if (!(lp instanceof ViewGroup.MarginLayoutParams)) {
-            webView.setPadding(insets.left, insets.top, insets.right, insets.bottom);
             return;
         }
 
         ViewGroup.MarginLayoutParams marginLp = (ViewGroup.MarginLayoutParams) lp;
-        if (marginLp.leftMargin == insets.left
-            && marginLp.topMargin == insets.top
-            && marginLp.rightMargin == insets.right
-            && marginLp.bottomMargin == insets.bottom) {
+        if (marginLp.leftMargin == 0
+            && marginLp.topMargin == 0
+            && marginLp.rightMargin == 0
+            && marginLp.bottomMargin == 0) {
             return;
         }
 
-        marginLp.setMargins(insets.left, insets.top, insets.right, insets.bottom);
+        marginLp.setMargins(0, 0, 0, 0);
         webView.setLayoutParams(marginLp);
     }
 }

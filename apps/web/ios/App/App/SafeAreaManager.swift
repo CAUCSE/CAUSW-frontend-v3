@@ -4,7 +4,7 @@ import Capacitor
 final class SafeAreaManager {
     private var didDetachWebViewConstraints = false
     private var safeAreaRecalcWorkItem: DispatchWorkItem?
-    private var webViewSafeAreaConstraints: [NSLayoutConstraint] = []
+    private var webViewEdgeToEdgeConstraints: [NSLayoutConstraint] = []
 
     private let bridgeViewControllerProvider: () -> CAPBridgeViewController?
 
@@ -32,7 +32,7 @@ final class SafeAreaManager {
             detachWebViewConstraints(webView)
             didDetachWebViewConstraints = true
         }
-        installSafeAreaConstraintsIfNeeded(webView)
+        installEdgeToEdgeConstraintsIfNeeded(webView)
     }
 
     func startSafeAreaRecalculationCycle() {
@@ -53,7 +53,7 @@ final class SafeAreaManager {
             }
 
             bridgeViewController.view.layoutIfNeeded()
-            self.installSafeAreaConstraintsIfNeeded(webView)
+            self.installEdgeToEdgeConstraintsIfNeeded(webView)
             let hasValidBounds = bridgeViewController.view.bounds.width > 0
                 && bridgeViewController.view.bounds.height > 0
             let insets = bridgeViewController.view.safeAreaInsets
@@ -90,19 +90,18 @@ final class SafeAreaManager {
         NSLayoutConstraint.deactivate(relatedConstraints)
     }
 
-    private func installSafeAreaConstraintsIfNeeded(_ webView: UIView) {
-        if !webViewSafeAreaConstraints.isEmpty {
+    private func installEdgeToEdgeConstraintsIfNeeded(_ webView: UIView) {
+        if !webViewEdgeToEdgeConstraints.isEmpty {
             return
         }
         guard let superview = webView.superview else { return }
-        let guide = superview.safeAreaLayoutGuide
-        webViewSafeAreaConstraints = [
-            webView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: guide.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+        webViewEdgeToEdgeConstraints = [
+            webView.leadingAnchor.constraint(equalTo: superview.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: superview.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: superview.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
         ]
-        NSLayoutConstraint.activate(webViewSafeAreaConstraints)
+        NSLayoutConstraint.activate(webViewEdgeToEdgeConstraints)
     }
 
     private struct SafeAreaSnapshot: Equatable {

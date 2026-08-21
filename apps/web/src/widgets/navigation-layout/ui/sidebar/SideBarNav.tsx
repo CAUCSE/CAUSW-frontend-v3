@@ -1,12 +1,4 @@
-'use client';
-
-import { useState } from 'react';
-
-import { VStack, Sidebar, Skeleton } from '@causw/cds';
-
-import { LogoutConfirmModal } from '@/widgets/auth';
-
-import { useGetMeQuery, useLogout } from '@/features/auth';
+import { VStack } from '@causw/cds';
 
 import { QueryErrorBoundary } from '@/shared/ui';
 
@@ -15,10 +7,8 @@ import {
   SIDEBAR_MAIN_ITEMS,
   type SidebarKey,
 } from '../../model';
-import { FooterProfile } from '../FooterProfile';
 
 import { NotificationItem } from './NotificationItem';
-import { SideBarHeader } from './SidebarHeader';
 import { SidebarMenuItem } from './SidebarMenuItem';
 
 type SidebarNavProps = {
@@ -26,71 +16,54 @@ type SidebarNavProps = {
 };
 
 export function SidebarNav({ selected }: SidebarNavProps) {
-  const { data: user, isLoading } = useGetMeQuery();
-  const logout = useLogout();
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-
   return (
-    <Sidebar selected={selected}>
-      {/* HEADER */}
-      <Sidebar.Header>
-        <SideBarHeader />
-      </Sidebar.Header>
-
-      {/* CONTENT */}
-      <Sidebar.Content>
-        <div className="flex h-full flex-col">
-          <VStack gap="sm">
-            {SIDEBAR_MAIN_ITEMS.map((item) => (
-              <SidebarMenuItem item={item} key={item.key} />
-            ))}
-          </VStack>
-
-          <VStack gap="sm" className="mt-auto pt-2">
-            {SIDEBAR_BOTTOM_ITEMS.map((item) => {
-              if (item.key === 'notifications') {
-                return (
-                  <QueryErrorBoundary
-                    key={item.key}
-                    FallbackComponent={() => (
-                      <SidebarMenuItem
-                        item={item}
-                        showDot={true}
-                        badgeCount="!"
-                      />
-                    )}
-                  >
-                    <NotificationItem item={item} />
-                  </QueryErrorBoundary>
-                );
-              }
-              return <SidebarMenuItem item={item} key={item.key} />;
-            })}
-          </VStack>
-        </div>
-      </Sidebar.Content>
-
-      {/* FOOTER */}
-      <Sidebar.Footer>
-        {isLoading && (
-          <Skeleton tone="neutral" width={227} height={60}></Skeleton>
-        )}
-        {user && !isLoading && (
-          <FooterProfile
-            profileImageType={user.profileImage.profileImageType}
-            profileImageUrl={user.profileImage.profileImageUrl}
-            name={user.name}
-            email={user.email}
-            onLogout={() => setLogoutModalOpen(true)}
+    <nav
+      aria-label="주요 내비게이션"
+      className="flex h-[1000px] w-[68px] shrink-0 flex-col items-start gap-8 border-r border-gray-100 bg-white px-3 pt-[120px]"
+    >
+      <VStack gap="xl" className="items-start">
+        {SIDEBAR_MAIN_ITEMS.map((item) => (
+          <SidebarMenuItem
+            item={item}
+            key={item.key}
+            selected={selected === item.key}
           />
-        )}
+        ))}
+      </VStack>
 
-        <LogoutConfirmModal
-          open={logoutModalOpen}
-          onOpenChange={setLogoutModalOpen}
-          onConfirm={logout}
-        />
-      </Sidebar.Footer>
-    </Sidebar>
+      <div className="w-full border-t border-gray-100" />
+
+      <VStack gap="xl" className="items-start">
+        {SIDEBAR_BOTTOM_ITEMS.map((item) => {
+          if (item.key === 'notifications') {
+            return (
+              <QueryErrorBoundary
+                key={item.key}
+                FallbackComponent={() => (
+                  <SidebarMenuItem
+                    item={item}
+                    selected={selected === item.key}
+                    showDot
+                  />
+                )}
+              >
+                <NotificationItem
+                  item={item}
+                  selected={selected === item.key}
+                />
+              </QueryErrorBoundary>
+            );
+          }
+
+          return (
+            <SidebarMenuItem
+              item={item}
+              key={item.key}
+              selected={selected === item.key}
+            />
+          );
+        })}
+      </VStack>
+    </nav>
   );
 }

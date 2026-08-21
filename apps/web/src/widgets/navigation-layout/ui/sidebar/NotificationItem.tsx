@@ -4,17 +4,21 @@ import { type SidebarItem } from '../../model';
 
 import { SidebarMenuItem } from './SidebarMenuItem';
 
-export function NotificationItem({ item }: { item: SidebarItem }) {
+export function NotificationItem({
+  item,
+  selected,
+}: {
+  item: SidebarItem;
+  selected: boolean;
+}) {
   const { data } = useUnreadNotificationCnt();
 
   const notificationCount = data?.notificationLogCount ?? 0;
-  const unreadCnt = notificationCount > 9 ? '9+' : notificationCount;
-
   return (
     <SidebarMenuItem
       item={item}
+      selected={selected}
       showDot={notificationCount > 0}
-      badgeCount={unreadCnt}
     />
   );
 }

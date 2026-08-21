@@ -1,4 +1,4 @@
-import { Bell, Board, Book, Contacts, Home, Pen, Setting } from '@causw/cds';
+import { Bell, Board, Contacts, Home, Setting } from '@causw/cds';
 
 import { ROUTES } from '@/shared/constants';
 
@@ -8,15 +8,9 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
   { key: 'home', label: '홈', icon: <Home />, href: '/home' },
   {
     key: 'feed',
-    label: '커뮤니티',
+    label: '소식',
     icon: <Board size={18} />,
     href: `${ROUTES.FEED}`,
-  },
-  {
-    key: 'write',
-    label: '글쓰기',
-    icon: <Pen size={18} />,
-    href: `${ROUTES.REGISTER_FEED}`,
   },
   {
     key: 'alumni-contacts',
@@ -26,8 +20,8 @@ export const SIDEBAR_MAIN_ITEMS: SidebarItem[] = [
   },
   {
     key: 'profile',
-    label: '내 동문수첩',
-    icon: <Book size={18} />,
+    label: '내 정보',
+    icon: <Setting size={18} />,
     href: `${ROUTES.PROFILE}`,
   },
 ];
@@ -51,7 +45,7 @@ export const SIDEBAR_ITEMS = [...SIDEBAR_MAIN_ITEMS, ...SIDEBAR_BOTTOM_ITEMS];
 
 export const BOTTOM_NAV_ITEMS: BottomNavItem[] = [
   { key: 'home', label: '홈', icon: <Home />, href: `${ROUTES.HOME}` },
-  { key: 'feed', label: '커뮤니티', icon: <Board />, href: `${ROUTES.FEED}` },
+  { key: 'feed', label: '소식', icon: <Board />, href: `${ROUTES.FEED}` },
   {
     key: 'alumni-contacts',
     label: '동문수첩',
