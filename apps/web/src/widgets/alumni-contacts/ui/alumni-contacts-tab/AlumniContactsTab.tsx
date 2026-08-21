@@ -37,7 +37,7 @@ export const AlumniContactsTab = () => {
     >
       <Tab.List>
         <Tab.TabItem value={ALUMNI_CONTACTS_TAB.ALUMNI}>동문수첩</Tab.TabItem>
-        {/* <Tab.TabItem value={ALUMNI_CONTACTS_TAB.COMMUNITY}>소통</Tab.TabItem> */}
+        <Tab.TabItem value={ALUMNI_CONTACTS_TAB.COMMUNITY}>소통</Tab.TabItem>
       </Tab.List>
     </Tab.Root>
   );
