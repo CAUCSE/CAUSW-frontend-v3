@@ -47,14 +47,14 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
           <>
             <Dropdown.Item
               onClick={(event) => handleMenuAction(event, 'edit')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               수정하기
             </Dropdown.Item>
             <Dropdown.Item
               color="red"
               onClick={(event) => handleMenuAction(event, 'delete')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               삭제하기
             </Dropdown.Item>
@@ -63,14 +63,14 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
           <>
             <Dropdown.Item
               onClick={(event) => handleMenuAction(event, 'report')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               신고하기
             </Dropdown.Item>
             <Dropdown.Item
               color="red"
               onClick={(event) => handleMenuAction(event, 'block')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               차단하기
             </Dropdown.Item>
