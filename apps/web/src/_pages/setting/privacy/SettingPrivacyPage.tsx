@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { Text, VStack } from '@causw/cds';
 
-import { LogoutConfirmModal } from '@/widgets/auth';
+import { LogoutConfirmModal, WithdrawConfirmModal } from '@/widgets/auth';
 import {
   PRIVACY_ACTION_TYPE,
   PhoneNumberChangeNoticeModal,
@@ -15,7 +17,8 @@ import {
   PrivacySocialSection,
 } from '@/widgets/setting';
 
-import { useLogout } from '@/features/auth';
+import { resetAuthAndRouteToSignIn, useLogout } from '@/features/auth';
+import { useWithdrawMeMutation } from '@/features/setting';
 
 import {
   ACCOUNT_DEPARTMENT_LABEL,
@@ -45,17 +48,25 @@ export const SettingPrivacyPage = () => {
   );
 };
 
-/*
-  TODO: 회원탈퇴 API 준비 후 구현
-*/
 const SettingPrivacyContent = () => {
+  const router = useRouter();
   const { data: account } = useMyAccountSuspenseQuery();
   const logout = useLogout();
+  const withdrawMutation = useWithdrawMeMutation({
+    onSuccess: () => {
+      resetAuthAndRouteToSignIn(router);
+    },
+  });
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [phoneNoticeOpen, setPhoneNoticeOpen] = useState(false);
+  const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
 
   const handleChangePhoneNumber = () => {
     setPhoneNoticeOpen(true);
+  };
+
+  const handleWithdraw = () => {
+    withdrawMutation.mutate();
   };
 
   const handleChangeStatus = () => {
@@ -99,6 +110,10 @@ const SettingPrivacyContent = () => {
             type: PRIVACY_ACTION_TYPE.LOGOUT,
             onClick: () => setLogoutModalOpen(true),
           },
+          {
+            type: PRIVACY_ACTION_TYPE.WITHDRAW,
+            onClick: () => setWithdrawModalOpen(true),
+          },
         ]}
       />
 
@@ -111,6 +126,12 @@ const SettingPrivacyContent = () => {
       <PhoneNumberChangeNoticeModal
         open={phoneNoticeOpen}
         onOpenChange={setPhoneNoticeOpen}
+      />
+
+      <WithdrawConfirmModal
+        open={withdrawModalOpen}
+        onOpenChange={setWithdrawModalOpen}
+        onConfirm={handleWithdraw}
       />
     </VStack>
   );
