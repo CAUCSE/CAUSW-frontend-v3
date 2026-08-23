@@ -1,4 +1,4 @@
-﻿export * from './useBreakpoint';
+export * from './useBreakpoint';
 export * from './useCountdownTimer';
 export * from './useDebounce';
 export * from './useFetchNextOnScroll';
@@ -10,4 +10,5 @@ export * from './useLocalStorage';
 export * from './useEventListener';
 export * from './useEventCallback';
 export * from './useIsomorphicLayoutEffect';
+export * from './useNativeBackGuard';
 export * from './useSessionStorage';

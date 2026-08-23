@@ -8,7 +8,7 @@ import { Dialog, mergeStyles } from '@causw/cds';
 
 import { PostEditForm, PostWriteForm } from '@/features/post';
 
-import { useBreakpoint } from '@/shared/hooks';
+import { confirmNativeBackGuard, useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
 export const PostWriteModal = ({ postId }: { postId?: string }) => {
@@ -27,11 +27,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
   };
 
   const closePostWrite = () => {
-    if (window.__postWriteConfirmBack) {
-      window.__postWriteConfirmBack();
-    } else {
-      router.back();
-    }
+    confirmNativeBackGuard(() => router.back());
   };
 
   return (
