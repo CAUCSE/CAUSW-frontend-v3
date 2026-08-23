@@ -17,11 +17,6 @@ import { QueryErrorBoundary } from '@/shared/ui';
 
 import { useCommunityMain } from '../../model';
 
-/**
- * 소통 탭 상단 고정 영역.
- * 동문수첩/소통 전환 탭은 데이터 로딩/에러와 무관하게 항상 노출되고,
- * 게시판 목록에 의존하는 툴바만 자체 Suspense로 분리되어 스크롤 방향에 따라 접힌다.
- */
 export const CommunityStickyHeader = () => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({
     containerClassName: FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,

@@ -13,18 +13,9 @@ import {
 } from '../../config';
 
 interface UseBoardTabSelectionOptions {
-  /**
-   * '전체' 탭에서 게시판 id 목록을 명시적으로 전달할지 여부.
-   * 피드는 빈 배열을 보내 서버가 읽기 가능한 전체 게시판을 조회하게 하고,
-   * 소통 탭처럼 부분집합만 다루는 화면은 true로 두어 해당 게시판들만 조회한다.
-   */
   includeAllBoardIds?: boolean;
 }
 
-/**
- * URL(?tab=) 기반으로 게시판 탭 선택 상태를 관리하는 훅.
- * 전달받은 boards 목록에 없는 탭 값은 '전체'로 정규화한다.
- */
 export const useBoardTabSelection = (
   boards: Board[],
   { includeAllBoardIds = false }: UseBoardTabSelectionOptions = {},

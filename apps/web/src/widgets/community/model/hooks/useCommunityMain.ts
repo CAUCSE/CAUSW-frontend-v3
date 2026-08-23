@@ -17,7 +17,6 @@ export const useCommunityMain = () => {
     [data.boards],
   );
 
-  // '전체' 탭에서도 소통 게시판들만 조회하도록 게시판 id를 명시적으로 전달
   const { selectedTab, filteredBoardIds, handleTabChange } =
     useBoardTabSelection(communityBoards, { includeAllBoardIds: true });
 
