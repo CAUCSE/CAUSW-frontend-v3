@@ -4,6 +4,6 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { postQueryOptions } from '../../config';
 
-export const PostDetailSectionRefetch = (postId: string) => {
-  return useSuspenseQuery(postQueryOptions.detail(postId));
+export const usePostDetailSectionRefetch = (postId: string) => {
+  return useSuspenseQuery(postQueryOptions.refetch(postId));
 };
