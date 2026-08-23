@@ -17,6 +17,7 @@ export { BOARDS_API_PREFIX } from './boardApiPrefix';
 export {
   FEED_VIEW_MODE,
   FEED_VIEW_MODE_LABEL,
+  FEED_VIEW_MODE_OPTIONS,
   type FeedViewMode,
 } from './feedViewMode';
 export { FEED_VIEW_MODE_STORAGE_KEY } from './feedViewModeStorageKey';

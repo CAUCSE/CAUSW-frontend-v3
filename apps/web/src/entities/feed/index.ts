@@ -13,6 +13,7 @@ export {
   normalizeMyFeedView,
   FEED_VIEW_MODE,
   FEED_VIEW_MODE_LABEL,
+  FEED_VIEW_MODE_OPTIONS,
   type FeedViewMode,
 } from './config';
 export {

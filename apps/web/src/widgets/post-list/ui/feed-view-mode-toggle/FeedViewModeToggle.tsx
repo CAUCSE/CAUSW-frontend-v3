@@ -3,17 +3,17 @@
 import { ArrowDown, Check, Dropdown, HStack, Text } from '@causw/cds';
 
 import {
-  FEED_VIEW_MODE,
   FEED_VIEW_MODE_LABEL,
+  FEED_VIEW_MODE_OPTIONS,
   type FeedViewMode,
 } from '@/entities/feed';
+
+import { FEED_VIEW_MODE_ICON } from '../../config';
 
 interface FeedViewModeToggleProps {
   value: FeedViewMode;
   onChange: (value: FeedViewMode) => void;
 }
-
-const FEED_VIEW_MODE_OPTIONS = Object.values(FEED_VIEW_MODE);
 
 export const FeedViewModeToggle = ({
   value,
@@ -30,7 +30,7 @@ export const FeedViewModeToggle = ({
           suppressHydrationWarning
           className="flex shrink-0 cursor-pointer items-center gap-1 py-1 pr-0.5 pl-1.5"
         >
-          <TriggerIcon />
+          <TriggerIcon size={12} color="gray-500" />
           <ArrowDown size={14} color="gray-500" />
         </button>
       </Dropdown.Trigger>
@@ -46,7 +46,10 @@ export const FeedViewModeToggle = ({
               onSelect={() => onChange(option)}
             >
               <HStack align="center" className="gap-2">
-                <OptionIcon />
+                <OptionIcon
+                  size={12}
+                  color={isSelectedViewMode ? 'gray-800' : 'gray-500'}
+                />
                 <Text
                   typography={
                     isSelectedViewMode ? 'body-15-semibold' : 'body-15-regular'
@@ -63,69 +66,4 @@ export const FeedViewModeToggle = ({
       </Dropdown.Content>
     </Dropdown>
   );
-};
-
-// TODO: cds/icons 반영 후 수정 필요
-const OutlineListThreeIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-  >
-    <g clipPath="url(#clip0_12433_107619)">
-      <rect x="1" y="1" width="10" height="10" rx="1.5" stroke="#6A7282" />
-      <line
-        x1="1.15015"
-        y1="4.47156"
-        x2="10.85"
-        y2="4.47156"
-        stroke="#6A7282"
-      />
-      <line
-        x1="1.15015"
-        y1="7.53986"
-        x2="10.85"
-        y2="7.53986"
-        stroke="#6A7282"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_12433_107619">
-        <rect width="12" height="12" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
-const OutlineListTwoIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
-    viewBox="0 0 12 12"
-    fill="none"
-  >
-    <g clipPath="url(#clip0_12398_106582)">
-      <rect x="1" y="1" width="10" height="10" rx="1.5" stroke="#6A7282" />
-      <line
-        x1="1.15015"
-        y1="6.02431"
-        x2="10.85"
-        y2="6.02431"
-        stroke="#6A7282"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_12398_106582">
-        <rect width="12" height="12" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
-const FEED_VIEW_MODE_ICON: Record<FeedViewMode, () => React.JSX.Element> = {
-  [FEED_VIEW_MODE.COMPACT]: OutlineListThreeIcon,
-  [FEED_VIEW_MODE.CARD]: OutlineListTwoIcon,
 };

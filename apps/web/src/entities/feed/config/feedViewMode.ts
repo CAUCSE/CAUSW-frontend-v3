@@ -11,3 +11,5 @@ export const FEED_VIEW_MODE_LABEL: Record<FeedViewMode, string> = {
   [FEED_VIEW_MODE.COMPACT]: '축약형',
   [FEED_VIEW_MODE.CARD]: '카드형',
 };
+
+export const FEED_VIEW_MODE_OPTIONS = Object.values(FEED_VIEW_MODE);

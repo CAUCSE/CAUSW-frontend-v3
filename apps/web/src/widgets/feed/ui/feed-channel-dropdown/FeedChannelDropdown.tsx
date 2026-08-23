@@ -33,7 +33,7 @@ export const FeedChannelDropdown = ({
           <ArrowDown size={14} color="gray-500" />
         </button>
       </Dropdown.Trigger>
-      <Dropdown.Content align="start" className="-translate-x-1">
+      <Dropdown.Content align="start" className="min-w-45 -translate-x-1">
         {CRAWLED_CHANNEL_OPTIONS.map((channel) => {
           const isSelectedChannel = value === channel;
 
