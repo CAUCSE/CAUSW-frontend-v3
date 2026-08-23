@@ -16,7 +16,7 @@ interface useAlumniContactsAcademicFilterSheetModalProps {
 export const useAlumniContactsAcademicFilterSheetModal = ({
   setIsOpen,
 }: useAlumniContactsAcademicFilterSheetModalProps) => {
-  const { startAdmissionYear, endAdmissionYear, academicStatus } =
+  const { startAdmissionYear, endAdmissionYear, academicStatus, department } =
     useAlumniContactsAcademicFilterSheetModalContext();
 
   const router = useRouter();
@@ -45,12 +45,20 @@ export const useAlumniContactsAcademicFilterSheetModal = ({
         ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS,
         academicStatus.join(','),
       );
+    } else {
+      params.delete(ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS);
+    }
+    if (department && department.length > 0) {
+      params.set(ALUMNI_CONTACTS_FILTER.DEPARTMENT, department.join(','));
+    } else {
+      params.delete(ALUMNI_CONTACTS_FILTER.DEPARTMENT);
     }
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }, [
     startAdmissionYear,
     endAdmissionYear,
     academicStatus,
+    department,
     searchParams,
     router,
     pathname,

@@ -3,6 +3,7 @@ export {
   AlumniContactsSortFilterSelect,
   AlumniContactsAdmissionYearFilterSelect,
   AlumniContactsAcademicStatusFilterButton,
+  AlumniContactsDepartmentFilterButton,
   AlumniContactsAcademicFilterSheetModalTrigger,
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,

@@ -29,7 +29,10 @@ export const AlumniContactsFilterGroup = () => {
     <HStack className="shrink-0 items-center gap-3 overflow-x-auto">
       <AlumniContactsSortFilterSelect />
       <div className="h-3 w-px shrink-0 bg-gray-300" />
-      {filterActive ? (
+      <AlumniContactsAcademicFilterSheetModalProvider>
+        <AlumniContactsAcademicFilterSheetModal />
+      </AlumniContactsAcademicFilterSheetModalProvider>
+      {filterActive && (
         <HStack gap="none" className="overflow-x-auto">
           <>
             {admissionYearFilterActive && (
@@ -49,10 +52,6 @@ export const AlumniContactsFilterGroup = () => {
               ))}
           </>
         </HStack>
-      ) : (
-        <AlumniContactsAcademicFilterSheetModalProvider>
-          <AlumniContactsAcademicFilterSheetModal />
-        </AlumniContactsAcademicFilterSheetModalProvider>
       )}
     </HStack>
   );

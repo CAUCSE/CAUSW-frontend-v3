@@ -1,6 +1,7 @@
 export {
   useAlumniContactsSearchInput,
   useAlumniContactsAcademicStatusFilterButton,
+  useAlumniContactsDepartmentFilterButton,
   useAlumniContactsSortFilter,
   useAlumniContactsDescriptionTextArea,
   useAlumniContactsContactVisibilityToggleButton,

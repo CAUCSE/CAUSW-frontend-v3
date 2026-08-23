@@ -4,9 +4,11 @@ import { z } from 'zod';
 import {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
   ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
+  ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION,
   ALUMNI_CONTACTS_FILTER,
   ALUMNI_CONTACTS_SORT_FILTER_OPTION,
   type AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsDepartmentFilterOption,
   type AlumniContactsSortFilterOption,
 } from '../config';
 
@@ -45,6 +47,20 @@ export const AlumniContactsFilterSearchParam = z
       .transform((value) => {
         return value.split(',') as AlumniContactsAcademicStatusFilterOption[];
       })
+      .optional(),
+    department: z
+      .string()
+      .refine((value) => {
+        const departments = value.split(',');
+        return departments.every((department) =>
+          Object.values(ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION).some(
+            (option) => option.value === department,
+          ),
+        );
+      })
+      .transform(
+        (value) => value.split(',') as AlumniContactsDepartmentFilterOption[],
+      )
       .optional(),
     sortType: z
       .enum(
