@@ -1,6 +1,5 @@
-import { Flex, HStack, OfficialColored, Text } from '@causw/cds';
+import { Flex, HStack, Text } from '@causw/cds';
 
-import { formatRelativeTime } from '@/shared/lib';
 import { type ProfileImageValue } from '@/shared/types';
 import { ProfileAvatar } from '@/shared/ui';
 
@@ -10,9 +9,7 @@ import { PostActionMenu } from './PostActionMenu';
 
 interface PostHeaderProps {
   authorName: string;
-  createdAt: string;
   profileImage?: ProfileImageValue;
-  isOfficial?: boolean;
   isMine: boolean;
   onAction: (action: PostAction) => void;
   hideActionMenu?: boolean;
@@ -26,39 +23,26 @@ interface PostHeaderProps {
  */
 export const PostHeader = ({
   authorName,
-  createdAt,
   profileImage,
-  isOfficial = false,
   isMine,
   onAction,
   hideActionMenu = false,
 }: PostHeaderProps) => {
   return (
     <Flex as="header" gap="none" align="center">
-      <HStack gap="sm" align="center" className="flex-1 gap-2.5">
+      <HStack align="center" className="flex-1 gap-1.5">
         {profileImage ? (
           <ProfileAvatar
             profileImageType={profileImage.profileImageType}
             profileImageUrl={profileImage.profileImageUrl}
-            size={40}
+            size={20}
             className="shrink-0"
           />
         ) : null}
 
-        <HStack gap="sm" align="center">
-          <HStack gap="xs" align="center">
-            <Text typography="subtitle-16-bold" textColor="gray-800">
-              {authorName}
-            </Text>
-            {isOfficial && <OfficialColored size={12} />}
-          </HStack>
-
-          <Text typography="body-16-regular" textColor="gray-500">
-            <span suppressHydrationWarning>
-              {formatRelativeTime(createdAt)}
-            </span>
-          </Text>
-        </HStack>
+        <Text typography="body-14-semibold" textColor="gray-900">
+          {authorName}
+        </Text>
       </HStack>
 
       {!hideActionMenu && (
