@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import { BellOutline, HStack, Search } from '@causw/cds';
+import { HStack, Search } from '@causw/cds';
 
 import { ROUTES } from '@/shared/constants';
 
@@ -26,9 +26,9 @@ export const FeedHeader = () => {
         onChange={setSelectedChannel}
       />
       <HStack gap="lg" align="center">
-        <Link href={ROUTES.NOTIFICATION} aria-label="알림">
+        {/* <Link href={ROUTES.NOTIFICATION} aria-label="알림">
           <BellOutline size={20} color="gray-600" />
-        </Link>
+        </Link> */}
         <Link href={ROUTES.FEED_SEARCH} aria-label="검색">
           <Search size={20} color="gray-600" />
         </Link>
