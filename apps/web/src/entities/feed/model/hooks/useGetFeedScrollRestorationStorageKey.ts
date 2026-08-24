@@ -22,6 +22,10 @@ export const useGetFeedScrollRestorationStorageKey = () => {
       return FEED_SCROLL_RESTORATION_STORAGE_KEY.MY_FEED;
     }
 
+    if (pathname.includes('/community')) {
+      return FEED_SCROLL_RESTORATION_STORAGE_KEY.COMMUNITY;
+    }
+
     return '';
   }, [pathname]);
 

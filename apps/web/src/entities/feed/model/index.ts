@@ -8,6 +8,7 @@ export type {
 export {
   useFeedSearchKeyword,
   useMyFeedView,
+  useFeedViewMode,
   useFeedSearchPendingKeywordContext,
   useGetFeedScrollRestorationStorageKey,
 } from './hooks';
