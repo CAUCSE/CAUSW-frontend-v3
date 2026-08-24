@@ -15,6 +15,8 @@ export {
   FEED_VIEW_MODE_LABEL,
   FEED_VIEW_MODE_OPTIONS,
   type FeedViewMode,
+  BOARD_GROUP,
+  type BoardGroup,
 } from './config';
 export {
   useGetAvailableBoards,

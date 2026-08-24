@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { boardQueryOptions } from '@/entities/feed';
+import { BOARD_GROUP, boardQueryOptions } from '@/entities/feed';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
@@ -19,7 +19,9 @@ export const CommunityMainServerComponent = async () => {
     },
   });
 
-  await queryClient.prefetchQuery(boardQueryOptions.available({ isTab: true }));
+  await queryClient.prefetchQuery(
+    boardQueryOptions.available({ boardGroup: BOARD_GROUP.COMMUNITY }),
+  );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

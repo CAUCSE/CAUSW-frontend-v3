@@ -1,14 +1,20 @@
 'use client';
 
-import { useBoardTabSelection } from '@/widgets/post-list';
+import {
+  FEED_LIST_TAB_SEARCH_PARAM_KEY,
+  useBoardTabSelection,
+} from '@/widgets/post-list';
 
-import { useGetAvailableBoards } from '@/entities/feed';
+import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/feed';
 
 export const useFeedMain = () => {
-  const { data } = useGetAvailableBoards({ isTab: true });
+  const { data } = useGetAvailableBoards({ boardGroup: BOARD_GROUP.NOTICE });
 
   const { selectedTab, filteredBoardIds, handleTabChange } =
-    useBoardTabSelection(data.boards);
+    useBoardTabSelection({
+      boards: data.boards,
+      searchParamKey: FEED_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
+    });
 
   return {
     data: data.boards,

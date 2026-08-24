@@ -2,10 +2,13 @@
 
 import { Suspense } from 'react';
 
+import { noop } from 'es-toolkit';
+
 import { mergeStyles, VStack } from '@causw/cds';
 
 import {
   FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  FEED_LIST_TAB,
   FeedListToolbar,
 } from '@/widgets/post-list';
 
@@ -14,7 +17,6 @@ import { useFeedViewMode } from '@/entities/feed';
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui';
 
-import { useFeedMain } from '../../model';
 import { FeedHeader } from '../feed-header';
 
 export const FeedStickyHeader = () => {
@@ -33,7 +35,7 @@ export const FeedStickyHeader = () => {
       >
         <div
           className={mergeStyles(
-            'min-h-0 transition-opacity duration-150 ease-out',
+            'min-h-0 min-w-0 transition-opacity duration-150 ease-out',
             isToolbarVisible ? 'opacity-100' : 'opacity-0',
           )}
         >
@@ -49,16 +51,19 @@ export const FeedStickyHeader = () => {
 };
 
 const FeedToolbarSection = () => {
-  const { data: boards, selectedTab, handleTabChange } = useFeedMain();
   const { feedViewMode, setFeedViewMode } = useFeedViewMode();
 
   return (
     <FeedListToolbar
       feedViewMode={feedViewMode}
       onFeedViewModeChange={setFeedViewMode}
-      boards={boards}
-      selectedTab={selectedTab}
-      onSelectedTabChange={handleTabChange}
+      // 채널(게시판) 선택은 헤더 드롭다운이 담당한다.
+      // 칩 탭은 선택된 채널 내부의 세부 카테고리 축이라 채널 상태와 분리되어야 하며,
+      // 아직 해당 API가 없어 '전체'만 고정으로 노출한다.
+      // TODO: 세부 카테고리 API가 추가되면 목록과 선택 핸들러를 연결
+      boards={[]}
+      selectedTab={FEED_LIST_TAB.ALL}
+      onSelectedTabChange={noop}
     />
   );
 };
