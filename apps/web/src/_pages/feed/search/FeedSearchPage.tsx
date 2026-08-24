@@ -36,8 +36,8 @@ export const FeedSearchPage = async () => {
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <HStack className="size-full min-h-0 justify-center overflow-hidden">
-        <VStack className="min-h-0 w-full py-4 md:px-8 md:py-6 xl:w-225">
-          <VStack className="min-h-0 flex-1 gap-3">
+        <VStack className="min-h-0 w-full min-w-0 py-4 md:px-8 md:py-6 xl:w-225">
+          <VStack className="min-h-0 min-w-0 flex-1 gap-3">
             <FeedSearchPendingKeywordProvider>
               <FeedSearchHeader />
               <FeedRecentSearchKeywordSection />

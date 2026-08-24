@@ -66,7 +66,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
 
   // CDS Stack의 gap prop은 프리셋(xs~xl)에 없는 값이라 div 사용
   return (
-    <div className="flex flex-col gap-[1.375rem] px-5 pt-[0.5rem] pb-5">
+    <div className="mx-auto flex w-full max-w-225 flex-col gap-[1.375rem] px-5 pt-[0.5rem] pb-5">
       {/* 타이틀 행 */}
       <div className="flex items-start gap-[0.75rem]">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-[0.75rem] bg-white">
