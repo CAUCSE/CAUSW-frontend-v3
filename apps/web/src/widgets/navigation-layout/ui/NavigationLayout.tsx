@@ -8,7 +8,7 @@ import { mergeStyles } from '@causw/cds';
 
 import {
   isBottomNavVisible,
-  isWhiteBackgroundPage,
+  isGrayBackgroundPage,
   pickBottomNavKey,
   pickSidebarKey,
 } from '../model';
@@ -21,12 +21,13 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const sidebarSelected = pickSidebarKey(pathname);
   const showBottomNav = isBottomNavVisible(pathname);
   const bottomSelected = pickBottomNavKey(pathname);
-  const whiteBackground = isWhiteBackgroundPage(pathname);
+  const grayBackground = isGrayBackgroundPage(pathname);
 
   return (
-    <div className="flex h-screen">
-      {/* Desktop Sidebar */}
-      <div className="tablet:block hidden">
+    <div className="flex h-screen md:h-auto md:min-h-screen">
+      {/* Desktop Sidebar - 레이아웃 폭만 차지하는 spacer (실제 사이드바는 fixed로 별도 렌더링) */}
+      <div className="hidden md:block md:w-65 md:shrink-0" />
+      <div className="hidden md:fixed md:top-0 md:left-0 md:block md:h-screen">
         <SidebarNav selected={sidebarSelected} />
       </div>
 
@@ -34,8 +35,8 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
       <main
         id="main-scroll-container"
         className={mergeStyles(
-          'min-h-0 flex-1 overflow-y-auto overscroll-y-contain',
-          whiteBackground ? 'bg-white' : 'bg-gray-100',
+          'min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain md:overflow-visible md:overscroll-auto',
+          grayBackground ? 'bg-gray-100' : 'bg-white',
           showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
         )}
       >
