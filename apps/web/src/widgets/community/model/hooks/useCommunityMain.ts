@@ -10,7 +10,7 @@ export const useCommunityMain = () => {
   });
 
   const { selectedTab, filteredBoardIds, handleTabChange } =
-    useBoardTabSelection(data.boards, { includeAllBoardIds: true });
+    useBoardTabSelection({ boards: data.boards, includeAllBoardIds: true });
 
   return {
     data: data.boards,

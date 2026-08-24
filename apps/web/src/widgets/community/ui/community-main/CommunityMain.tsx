@@ -12,7 +12,7 @@ import { CommunityStickyHeader } from '../community-sticky-header';
 
 export const CommunityMain = () => {
   const { data: boards, filteredBoardIds } = useCommunityMain();
-  useNormalizeBoardTabParam(boards);
+  useNormalizeBoardTabParam({ boards });
 
   return (
     <>

@@ -10,9 +10,15 @@ import {
   FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
   FEED_LIST_TAB,
   FEED_LIST_TAB_SEARCH_PARAM_KEY,
+  type FeedListTabSearchParamKey,
 } from '../../config';
 
-interface UseBoardTabSelectionOptions {
+interface UseNormalizeBoardTabParamProps {
+  boards: Board[];
+  searchParamKey?: FeedListTabSearchParamKey;
+}
+
+interface UseBoardTabSelectionProps extends UseNormalizeBoardTabParamProps {
   includeAllBoardIds?: boolean;
 }
 
@@ -27,15 +33,19 @@ const getValidSelectedTab = (boards: Board[], tab: string | null) => {
 };
 
 /**
- * URL의 tab 쿼리 파라미터가 유효하지 않으면 'all'로 교정한다.
+ * URL의 게시판 탭 값이 실제 게시판에 존재하는지 확인하고,
+ * 유효하지 않으면 'all' 탭으로 변경한다.
  */
-export const useNormalizeBoardTabParam = (boards: Board[]) => {
+export const useNormalizeBoardTabParam = ({
+  boards,
+  searchParamKey = FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB,
+}: UseNormalizeBoardTabParamProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const tab = searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB);
+    const tab = searchParams.get(searchParamKey);
     const validTab = getValidSelectedTab(boards, tab);
 
     if (tab === validTab) {
@@ -43,22 +53,23 @@ export const useNormalizeBoardTabParam = (boards: Board[]) => {
     }
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB, validTab);
+    params.set(searchParamKey, validTab);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [boards, router, pathname, searchParams]);
+  }, [boards, searchParamKey, router, pathname, searchParams]);
 };
 
-export const useBoardTabSelection = (
-  boards: Board[],
-  { includeAllBoardIds = false }: UseBoardTabSelectionOptions = {},
-) => {
+export const useBoardTabSelection = ({
+  boards,
+  includeAllBoardIds = false,
+  searchParamKey = FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB,
+}: UseBoardTabSelectionProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const selectedTab = getValidSelectedTab(
     boards,
-    searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB),
+    searchParams.get(searchParamKey),
   );
 
   const filteredBoardIds = useMemo(() => {
@@ -85,11 +96,11 @@ export const useBoardTabSelection = (
   const handleTabChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    if (params.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB) === value) {
+    if (params.get(searchParamKey) === value) {
       return;
     }
 
-    params.set(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB, value);
+    params.set(searchParamKey, value);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
     initializeScroll();
