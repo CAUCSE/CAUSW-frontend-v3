@@ -1,10 +1,10 @@
-import type { Config } from 'dompurify';
-import DOMPurify from 'isomorphic-dompurify';
+import DOMPurify, { type Config } from 'dompurify';
 
 /**
  * 위험한 태그/속성만 제거하고 나머지 HTML 구조는 유지 (innerHTML로 렌더링할 때 사용)
  */
 export const sanitizeHtml = (html: string, options?: Config) => {
+  if (typeof window === 'undefined') return '';
   return DOMPurify.sanitize(html, options) as string;
 };
 
