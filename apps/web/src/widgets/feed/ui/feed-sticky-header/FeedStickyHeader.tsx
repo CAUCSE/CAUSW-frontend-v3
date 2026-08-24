@@ -35,7 +35,7 @@ export const FeedStickyHeader = () => {
       >
         <div
           className={mergeStyles(
-            'min-h-0 transition-opacity duration-150 ease-out',
+            'min-h-0 min-w-0 transition-opacity duration-150 ease-out',
             isToolbarVisible ? 'opacity-100' : 'opacity-0',
           )}
         >
