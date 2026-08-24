@@ -12,5 +12,8 @@ export const sanitizeHtml = (html: string, options?: Config) => {
  * 모든 태그를 제거하고 텍스트만 남김 (일반 텍스트로 렌더링할 때 사용)
  */
 export const stripHtml = (html: string) => {
-  return DOMPurify.sanitize(html, { ALLOWED_TAGS: [] }) as string;
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 };

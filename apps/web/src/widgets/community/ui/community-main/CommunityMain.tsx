@@ -1,11 +1,15 @@
 'use client';
 
-import { FeedListWrapper } from '@/widgets/post-list';
+import {
+  FeedListWrapper,
+  useNormalizeBoardTabParam,
+} from '@/widgets/post-list';
 
 import { useCommunityMain } from '../../model';
 
 export const CommunityMain = () => {
-  const { filteredBoardIds } = useCommunityMain();
+  const { data: boards, filteredBoardIds } = useCommunityMain();
+  useNormalizeBoardTabParam(boards);
 
   return <FeedListWrapper boardIds={filteredBoardIds} />;
 };

@@ -10,6 +10,7 @@ export {
   usePostListItem,
   useFeedScrollRestoration,
   useBoardTabSelection,
+  useNormalizeBoardTabParam,
 } from './model';
 export {
   FEED_LIST_TAB,

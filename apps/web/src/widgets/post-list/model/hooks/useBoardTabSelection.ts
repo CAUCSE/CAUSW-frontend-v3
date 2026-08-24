@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
@@ -16,34 +16,27 @@ interface UseBoardTabSelectionOptions {
   includeAllBoardIds?: boolean;
 }
 
-export const useBoardTabSelection = (
-  boards: Board[],
-  { includeAllBoardIds = false }: UseBoardTabSelectionOptions = {},
-) => {
+const getValidSelectedTab = (boards: Board[], tab: string | null) => {
+  if (
+    (tab && boards.some((board) => board.id === tab)) ||
+    tab === FEED_LIST_TAB.ALL
+  ) {
+    return tab;
+  }
+  return FEED_LIST_TAB.ALL;
+};
+
+/**
+ * URL의 tab 쿼리 파라미터가 유효하지 않으면 'all'로 교정한다.
+ */
+export const useNormalizeBoardTabParam = (boards: Board[]) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const getValidSelectedTab = useCallback(
-    (tab: string | null) => {
-      if (
-        (tab && boards.some((board) => board.id === tab)) ||
-        tab === FEED_LIST_TAB.ALL
-      ) {
-        return tab;
-      }
-      return FEED_LIST_TAB.ALL;
-    },
-    [boards],
-  );
-
-  const selectedTab = getValidSelectedTab(
-    searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB),
-  );
-
   useEffect(() => {
     const tab = searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB);
-    const validTab = getValidSelectedTab(tab);
+    const validTab = getValidSelectedTab(boards, tab);
 
     if (tab === validTab) {
       return;
@@ -52,7 +45,21 @@ export const useBoardTabSelection = (
     const params = new URLSearchParams(searchParams.toString());
     params.set(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB, validTab);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [getValidSelectedTab, router, pathname, searchParams]);
+  }, [boards, router, pathname, searchParams]);
+};
+
+export const useBoardTabSelection = (
+  boards: Board[],
+  { includeAllBoardIds = false }: UseBoardTabSelectionOptions = {},
+) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const selectedTab = getValidSelectedTab(
+    boards,
+    searchParams.get(FEED_LIST_TAB_SEARCH_PARAM_KEY.TAB),
+  );
 
   const filteredBoardIds = useMemo(() => {
     if (selectedTab === FEED_LIST_TAB.ALL) {
