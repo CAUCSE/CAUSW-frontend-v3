@@ -2,11 +2,15 @@
 
 import { useRouter } from 'next/navigation';
 
+import { LandingPage } from '@/_pages/landing';
+
 import { toast } from '@/shared/model';
 
 // TODO : capacitor 앱 테스트를 위한 임시 버튼 생성 -> 해당 페이지 생성 후에 삭제 필요
 export default function Page() {
   const router = useRouter();
+  return <LandingPage />;
+
   return (
     <div>
       <h1>동문 네트워크 - 재학생</h1>

@@ -20,12 +20,17 @@ export async function proxy(request: NextRequest) {
   const refreshToken = request.cookies.get(STORAGE_REFRESH_KEY)?.value ?? '';
   const { device } = userAgent(request);
 
-  if (pathname === '/') {
-    if (accessToken || refreshToken) {
-      return NextResponse.redirect(new URL('/home', request.url));
-    }
+  // if (pathname === '/') {
+  //   if (accessToken || refreshToken) {
+  //     return NextResponse.redirect(new URL('/home', request.url));
+  //   }
 
-    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+  //   return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+  // }
+
+  // 랜딩 페이지 접근 시 토큰 검사 x
+  if (pathname === '/') {
+    return NextResponse.next();
   }
 
   if (isAuthRoute(pathname)) {
