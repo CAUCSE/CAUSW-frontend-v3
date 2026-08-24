@@ -2,22 +2,32 @@
 
 import { ArrowDown, Check, Dropdown, HStack, Text } from '@causw/cds';
 
-import {
-  CRAWLED_CHANNEL_LABEL,
-  CRAWLED_CHANNEL_OPTIONS,
-  CRAWLED_CHANNEL_TRIGGER_LABEL,
-  type CrawledChannel,
-} from '../../config';
+import { FEED_LIST_TAB } from '@/widgets/post-list';
+
+import { type Board } from '@/entities/feed';
+
+const ALL_CHANNEL_LABEL = '전체';
+const ALL_CHANNEL_TRIGGER_LABEL = '채널 전체';
 
 interface FeedChannelDropdownProps {
-  value: CrawledChannel;
-  onChange: (value: CrawledChannel) => void;
+  boards: Board[];
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export const FeedChannelDropdown = ({
+  boards,
   value,
   onChange,
 }: FeedChannelDropdownProps) => {
+  const selectedBoard = boards.find((board) => board.id === value);
+  const triggerLabel = selectedBoard?.name ?? ALL_CHANNEL_TRIGGER_LABEL;
+
+  const channels = [
+    { id: FEED_LIST_TAB.ALL, name: ALL_CHANNEL_LABEL },
+    ...boards,
+  ];
+
   return (
     <Dropdown>
       <Dropdown.Trigger asChild>
@@ -28,20 +38,20 @@ export const FeedChannelDropdown = ({
           className="flex cursor-pointer items-center gap-2"
         >
           <Text typography="subtitle-18-bold" textColor="gray-700">
-            {CRAWLED_CHANNEL_TRIGGER_LABEL[value]}
+            {triggerLabel}
           </Text>
           <ArrowDown size={14} color="gray-500" />
         </button>
       </Dropdown.Trigger>
       <Dropdown.Content align="start" className="min-w-45 -translate-x-1">
-        {CRAWLED_CHANNEL_OPTIONS.map((channel) => {
-          const isSelectedChannel = value === channel;
+        {channels.map((channel) => {
+          const isSelectedChannel = value === channel.id;
 
           return (
             <Dropdown.Item
-              key={channel}
+              key={channel.id}
               className="rounded-none px-4 py-2"
-              onSelect={() => onChange(channel)}
+              onSelect={() => onChange(channel.id)}
             >
               <HStack align="center" className="w-full gap-2">
                 <Text
@@ -50,7 +60,7 @@ export const FeedChannelDropdown = ({
                   }
                   textColor={isSelectedChannel ? 'gray-800' : 'gray-500'}
                 >
-                  {CRAWLED_CHANNEL_LABEL[channel]}
+                  {channel.name}
                 </Text>
                 {isSelectedChannel && <Check size={10} color="gray-800" />}
               </HStack>

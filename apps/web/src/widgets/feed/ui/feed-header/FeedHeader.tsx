@@ -1,20 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-
 import Link from 'next/link';
 
-import { HStack, Search } from '@causw/cds';
+import { BellOutline, HStack, Search } from '@causw/cds';
 
 import { ROUTES } from '@/shared/constants';
 
-import { CRAWLED_CHANNEL, type CrawledChannel } from '../../config';
+import { useFeedMain } from '../../model';
 import { FeedChannelDropdown } from '../feed-channel-dropdown';
 
 export const FeedHeader = () => {
-  const [selectedChannel, setSelectedChannel] = useState<CrawledChannel>(
-    CRAWLED_CHANNEL.ALL,
-  );
+  const { data: boards, selectedTab, handleTabChange } = useFeedMain();
 
   return (
     <HStack
@@ -22,13 +18,14 @@ export const FeedHeader = () => {
       className="items-center justify-between px-5 py-2 md:px-0 md:pt-5"
     >
       <FeedChannelDropdown
-        value={selectedChannel}
-        onChange={setSelectedChannel}
+        boards={boards}
+        value={selectedTab}
+        onChange={handleTabChange}
       />
       <HStack gap="lg" align="center">
-        {/* <Link href={ROUTES.NOTIFICATION} aria-label="알림">
+        <Link href={ROUTES.NOTIFICATION} aria-label="알림">
           <BellOutline size={20} color="gray-600" />
-        </Link> */}
+        </Link>
         <Link href={ROUTES.FEED_SEARCH} aria-label="검색">
           <Search size={20} color="gray-600" />
         </Link>
