@@ -1,1 +1,0 @@
-export { CommunityStickyHeader } from './CommunityStickyHeader';

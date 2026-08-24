@@ -55,7 +55,9 @@ export const PostContent = ({ post }: PostContentProps) => {
       <VStack gap="sm">
         <PostHeader
           authorName={post.displayWriterNickname}
+          createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
+          isOfficial={post.isOfficial}
           isMine={post.isOwner}
           onAction={handleMenuAction}
         />

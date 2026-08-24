@@ -1,38 +1,27 @@
-'use client';
-
-import { useState } from 'react';
-
 import Link from 'next/link';
 
-import { HStack, Search } from '@causw/cds';
-
-import { ROUTES } from '@/shared/constants';
-
-import { CRAWLED_CHANNEL, type CrawledChannel } from '../../config';
-import { FeedChannelDropdown } from '../feed-channel-dropdown';
+import { HStack, Search, Text } from '@causw/cds';
 
 export const FeedHeader = () => {
-  const [selectedChannel, setSelectedChannel] = useState<CrawledChannel>(
-    CRAWLED_CHANNEL.ALL,
-  );
-
   return (
-    <HStack
-      as="header"
-      className="items-center justify-between px-5 py-2 md:px-0 md:pt-5"
-    >
-      <FeedChannelDropdown
-        value={selectedChannel}
-        onChange={setSelectedChannel}
-      />
-      <HStack gap="lg" align="center">
-        {/* <Link href={ROUTES.NOTIFICATION} aria-label="알림">
-          <BellOutline size={20} color="gray-600" />
-        </Link> */}
-        <Link href={ROUTES.FEED_SEARCH} aria-label="검색">
-          <Search size={20} color="gray-600" />
-        </Link>
-      </HStack>
+    <HStack as="header" className="items-center justify-between px-6 md:px-2">
+      <Text
+        typography="title-32-bold"
+        textColor="gray-700"
+        className="hidden md:block"
+      >
+        커뮤니티
+      </Text>
+      <Text
+        typography="title-22-bold"
+        textColor="gray-700"
+        className="block md:hidden"
+      >
+        커뮤니티
+      </Text>
+      <Link href="/feed/search">
+        <Search size={20} color="gray-700" />
+      </Link>
     </HStack>
   );
 };

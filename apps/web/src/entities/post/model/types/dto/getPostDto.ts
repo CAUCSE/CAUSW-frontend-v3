@@ -3,7 +3,6 @@ import { type ProfileImageValue } from '@/shared/types';
 /* 게시글 단일 조회 */
 export interface GetPostResponseDto {
   id: string;
-  title: string;
   content: string;
   isDeleted: boolean;
   displayWriterNickname: string;

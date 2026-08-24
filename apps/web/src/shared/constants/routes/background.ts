@@ -1,9 +1,0 @@
-import { ROUTES } from './route';
-
-export const GRAY_BACKGROUND_PATHS = [
-  ROUTES.HOME,
-  ROUTES.SETTING,
-  ROUTES.NOTIFICATION,
-  ROUTES.CEREMONY,
-  ROUTES.LOCKER,
-];

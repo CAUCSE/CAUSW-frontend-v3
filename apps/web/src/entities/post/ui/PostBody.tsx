@@ -17,7 +17,6 @@ import { useLinkifiedText } from '../model';
 import { PostImage } from './PostImage';
 
 interface PostBodyProps {
-  title?: string;
   content: string;
   images?: string[];
   enableImageViewer?: boolean;
@@ -46,7 +45,6 @@ interface PostBodyProps {
  * />
  */
 export const PostBody = ({
-  title,
   content,
   images = [],
   enableImageViewer = true,
@@ -82,24 +80,14 @@ export const PostBody = ({
   }, [content, isCollapsed, maxLines]);
 
   return (
-    <VStack gap="md" className="mt-2">
-      <VStack gap="none">
-        {title && (
-          <Text
-            typography="subtitle-16-bold"
-            textColor="gray-800"
-            className="break-all"
-          >
-            {title}
-          </Text>
-        )}
-
+    <VStack gap="md">
+      <VStack gap="sm" align="start">
         {isHtml ? (
           <Text
             ref={textRef as RefObject<HTMLDivElement>}
             as="div"
-            typography="body-15-regular"
-            textColor="gray-700"
+            typography="body-16-regular"
+            textColor="gray-800"
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
             suppressHydrationWarning
             style={collapseStyles}
@@ -109,8 +97,8 @@ export const PostBody = ({
           <Text
             ref={textRef as RefObject<HTMLParagraphElement>}
             as="p"
-            typography="body-15-regular"
-            textColor="gray-700"
+            typography="body-16-regular"
+            textColor="gray-800"
             className="break-all whitespace-pre-wrap"
             style={collapseStyles}
           >
@@ -119,7 +107,7 @@ export const PostBody = ({
         )}
 
         {showExpandButton && isCollapsed && isOverflowing && (
-          <button onClick={onExpand} className="mt-3 cursor-pointer self-start">
+          <button onClick={onExpand} className="cursor-pointer">
             <Text typography="body-14-regular" textColor="gray-400">
               더보기
             </Text>

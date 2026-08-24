@@ -9,11 +9,6 @@
   scrollbar-width: none;
 }
 
-html {
-  scrollbar-width: auto;
-  scrollbar-gutter: stable;
-}
-
 @layer utilities {
   /* Title variants */
   .typo-title-48-bold {
