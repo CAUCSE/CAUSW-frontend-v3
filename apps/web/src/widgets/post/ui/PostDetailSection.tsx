@@ -30,6 +30,13 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
     }, 0);
   };
 
+  const handleCommentClick = () => {
+    setReplyTarget(null);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
+  };
+
   return (
     <>
       <Stack
@@ -40,12 +47,8 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
           msOverflowStyle: 'none',
         }}
       >
-        <PostContent post={post} />
-        <CommentList
-          countComment={post.numComment}
-          comments={comments.content}
-          onReply={handleReply}
-        />
+        <PostContent post={post} onCommentClick={handleCommentClick} />
+        <CommentList comments={comments.content} onReply={handleReply} />
       </Stack>
 
       <CommentForm

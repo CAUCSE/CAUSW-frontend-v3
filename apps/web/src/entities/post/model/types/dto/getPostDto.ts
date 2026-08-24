@@ -11,6 +11,8 @@ export interface GetPostResponseDto {
   fileUrlList: string[];
   numComment: number;
   numLike: number;
+  view_count?: number;
+  viewCount?: number;
   voteId?: string;
   isAnonymous: boolean;
   isCrawled: boolean;
