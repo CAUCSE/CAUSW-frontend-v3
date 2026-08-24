@@ -5,6 +5,8 @@ import {
   useNormalizeBoardTabParam,
 } from '@/widgets/post-list';
 
+import { BOARD_GROUP } from '@/entities/feed';
+
 import { useFeedMain } from '../../model';
 import { FeedStickyHeader } from '../feed-sticky-header';
 
@@ -15,7 +17,10 @@ export const FeedMain = () => {
   return (
     <>
       <FeedStickyHeader />
-      <FeedListWrapper boardIds={filteredBoardIds} />
+      <FeedListWrapper
+        boardIds={filteredBoardIds}
+        boardGroup={BOARD_GROUP.NOTICE}
+      />
     </>
   );
 };

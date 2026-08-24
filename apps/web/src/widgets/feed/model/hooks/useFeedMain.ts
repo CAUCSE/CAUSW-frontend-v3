@@ -2,10 +2,10 @@
 
 import { useBoardTabSelection } from '@/widgets/post-list';
 
-import { useGetAvailableBoards } from '@/entities/feed';
+import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/feed';
 
 export const useFeedMain = () => {
-  const { data } = useGetAvailableBoards({ isTab: true });
+  const { data } = useGetAvailableBoards({ boardGroup: BOARD_GROUP.NOTICE });
 
   const { selectedTab, filteredBoardIds, handleTabChange } =
     useBoardTabSelection(data.boards);

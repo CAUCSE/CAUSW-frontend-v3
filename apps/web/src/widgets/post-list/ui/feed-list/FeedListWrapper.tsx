@@ -6,7 +6,7 @@ import { PullToRefresh } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
-import { type Board, useFeedViewMode } from '@/entities/feed';
+import { type Board, type BoardGroup, useFeedViewMode } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
@@ -19,9 +19,13 @@ import { FeedList } from './FeedList';
 
 interface FeedListWrapperProps {
   boardIds: Board['id'][];
+  boardGroup: BoardGroup;
 }
 
-export const FeedListWrapper = ({ boardIds }: FeedListWrapperProps) => {
+export const FeedListWrapper = ({
+  boardIds,
+  boardGroup,
+}: FeedListWrapperProps) => {
   const { feedViewMode } = useFeedViewMode();
 
   const {
@@ -33,7 +37,7 @@ export const FeedListWrapper = ({ boardIds }: FeedListWrapperProps) => {
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    ...postQueryOptions.list({ boardIds }),
+    ...postQueryOptions.list({ boardIds, boardGroup }),
     select: (data) => data.pages.flatMap((page) => page.posts),
   });
 

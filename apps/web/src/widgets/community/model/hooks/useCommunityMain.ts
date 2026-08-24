@@ -1,27 +1,19 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { useBoardTabSelection } from '@/widgets/post-list';
 
-import { useGetAvailableBoards } from '@/entities/feed';
-
-import { COMMUNITY_BOARD_NAMES } from '../../config';
+import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/feed';
 
 export const useCommunityMain = () => {
-  const { data } = useGetAvailableBoards({ isTab: true });
-
-  const communityBoards = useMemo(
-    () =>
-      data.boards.filter((board) => COMMUNITY_BOARD_NAMES.includes(board.name)),
-    [data.boards],
-  );
+  const { data } = useGetAvailableBoards({
+    boardGroup: BOARD_GROUP.COMMUNITY,
+  });
 
   const { selectedTab, filteredBoardIds, handleTabChange } =
-    useBoardTabSelection(communityBoards, { includeAllBoardIds: true });
+    useBoardTabSelection(data.boards, { includeAllBoardIds: true });
 
   return {
-    data: communityBoards,
+    data: data.boards,
     selectedTab,
     filteredBoardIds,
     handleTabChange,
