@@ -1,1 +1,0 @@
-export { useCommunityMain } from './hooks';

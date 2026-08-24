@@ -1,1 +1,0 @@
-export { FeedBoardTabs } from './FeedBoardTabs';

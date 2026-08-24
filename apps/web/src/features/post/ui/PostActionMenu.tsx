@@ -29,14 +29,14 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
         <button
           type="button"
           aria-label="게시글 메뉴 열기"
-          className="h-fit translate-x-1 -translate-y-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
+          className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
           onPointerDown={menu.handlePointerDown}
           onPointerMove={menu.handlePointerMove}
           onPointerCancel={menu.handlePointerCancel}
           onPointerUp={menu.handlePointerUp}
           onClick={menu.handleTriggerClick}
         >
-          <Menu size={20} color="gray-500" />
+          <Menu size={21} color="gray-500" />
         </button>
       </Dropdown.Trigger>
       <Dropdown.Content
@@ -47,14 +47,14 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
           <>
             <Dropdown.Item
               onClick={(event) => handleMenuAction(event, 'edit')}
-              className="justify-center rounded-none px-4 py-2 text-base font-bold"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
               수정하기
             </Dropdown.Item>
             <Dropdown.Item
               color="red"
               onClick={(event) => handleMenuAction(event, 'delete')}
-              className="justify-center rounded-none px-4 py-2 text-base font-bold"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
               삭제하기
             </Dropdown.Item>
@@ -63,14 +63,14 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
           <>
             <Dropdown.Item
               onClick={(event) => handleMenuAction(event, 'report')}
-              className="justify-center rounded-none px-4 py-2 text-base font-bold"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
               신고하기
             </Dropdown.Item>
             <Dropdown.Item
               color="red"
               onClick={(event) => handleMenuAction(event, 'block')}
-              className="justify-center rounded-none px-4 py-2 text-base font-bold"
+              className="justify-center px-10 py-2.5 text-base font-bold"
             >
               차단하기
             </Dropdown.Item>

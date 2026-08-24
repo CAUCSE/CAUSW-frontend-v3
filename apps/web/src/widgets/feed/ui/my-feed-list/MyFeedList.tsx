@@ -6,13 +6,14 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
-import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
-
-import { useFeedViewMode, useMyFeedView } from '@/entities/feed';
+import { useMyFeedView } from '@/entities/feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
+
+import { useFeedScrollRestoration } from '../../model';
+import { FeedListitem } from '../feed-list-item';
 
 import { MyFeedListEmptyView } from './MyFeedListEmptyView';
 
@@ -20,7 +21,6 @@ const MY_FEED_LIST_DEFAULT_SIZE = 20;
 
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
-  const { feedViewMode } = useFeedViewMode();
 
   const { data, isFetchingNextPage, isSuccess, hasNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery({
@@ -65,7 +65,11 @@ export const MyFeedList = () => {
       as="ul"
       ref={myFeedListRef}
     >
-      <PostListItems posts={data} viewMode={feedViewMode} />
+      {data?.map((post) => (
+        <li key={post.postId}>
+          <FeedListitem post={post} />
+        </li>
+      ))}
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

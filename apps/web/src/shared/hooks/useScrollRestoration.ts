@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from 'react';
 
-import { getScrollContainer } from '../utils';
+const SCROLL_CONTAINER_ID = 'main-scroll-container';
 
 export const useScrollRestoration = (storageKey: string) => {
   useEffect(() => {
@@ -11,7 +11,7 @@ export const useScrollRestoration = (storageKey: string) => {
 
     sessionStorage.removeItem(storageKey);
 
-    const container = getScrollContainer();
+    const container = document.getElementById(SCROLL_CONTAINER_ID);
     if (!container) return;
 
     requestAnimationFrame(() => {
@@ -20,7 +20,7 @@ export const useScrollRestoration = (storageKey: string) => {
   }, [storageKey]);
 
   const saveScrollPosition = useCallback(() => {
-    const container = getScrollContainer();
+    const container = document.getElementById(SCROLL_CONTAINER_ID);
     if (!container) return;
     sessionStorage.setItem(storageKey, String(container.scrollTop));
   }, [storageKey]);

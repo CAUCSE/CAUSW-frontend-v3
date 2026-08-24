@@ -1,1 +1,0 @@
-export { CommunityMainServerComponent } from './CommunityMainServerComponent';
