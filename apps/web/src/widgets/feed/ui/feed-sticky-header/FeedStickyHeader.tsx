@@ -31,7 +31,12 @@ export const FeedStickyHeader = () => {
           isToolbarVisible ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]',
         )}
       >
-        <div className="min-h-0">
+        <div
+          className={mergeStyles(
+            'min-h-0 transition-opacity duration-150 ease-out',
+            isToolbarVisible ? 'opacity-100' : 'opacity-0',
+          )}
+        >
           <QueryErrorBoundary FallbackComponent={() => null}>
             <Suspense fallback={null}>
               <FeedToolbarSection />
