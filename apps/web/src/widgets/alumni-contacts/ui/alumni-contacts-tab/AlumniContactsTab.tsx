@@ -33,11 +33,11 @@ export const AlumniContactsTab = () => {
       variant="plain"
       value={currentTab}
       onValueChange={handleTabChange}
-      className="px-1 py-2 md:px-0 md:pt-0"
+      className="px-1 py-2 md:pt-0"
     >
       <Tab.List>
         <Tab.TabItem value={ALUMNI_CONTACTS_TAB.ALUMNI}>동문수첩</Tab.TabItem>
-        <Tab.TabItem value={ALUMNI_CONTACTS_TAB.COMMUNITY}>소통</Tab.TabItem>
+        {/* <Tab.TabItem value={ALUMNI_CONTACTS_TAB.COMMUNITY}>소통</Tab.TabItem> */}
       </Tab.List>
     </Tab.Root>
   );

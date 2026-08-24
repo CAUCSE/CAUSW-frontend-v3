@@ -1,7 +1,7 @@
 import { type ActivityType } from '@/entities/setting';
 
-import { ROUTES } from '@/shared/constants';
+const MY_FEED_PATH = '/setting/my-feed';
 
 export const createMyFeedUrl = (view: ActivityType) => {
-  return `${ROUTES.MY_FEED}?view=${view}`;
+  return `${MY_FEED_PATH}?view=${view}`;
 };

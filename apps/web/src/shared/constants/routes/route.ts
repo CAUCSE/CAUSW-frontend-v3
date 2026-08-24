@@ -8,12 +8,10 @@ export const ROUTES = Object.freeze({
   CEREMONY: '/ceremony',
   FEED: '/feed',
   REGISTER_FEED: '/feed/write',
-  FEED_SEARCH: '/feed/search',
   ALUMNI_CONTACTS: '/alumni-contacts',
   COMMUNITY: '/community',
   PROFILE: '/profile',
   SETTING: '/setting',
-  MY_FEED: '/my-feed',
 } as const);
 
 export const ADMIN_ROUTES = Object.freeze({
