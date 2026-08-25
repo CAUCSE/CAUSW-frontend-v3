@@ -4,6 +4,7 @@ export type {
   GetAvailableBoardListResponseDto,
   GetWritableBoardListResponseDto,
   GetAvailableBoardListQuery,
+  GetWritableBoardListQuery,
 } from './types';
 export {
   useFeedSearchKeyword,

@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { reportComment } from '../../api/post';
 
@@ -14,8 +15,8 @@ export const useReportCommentMutation = () => {
       toast.success('신고가 접수되었어요');
     },
 
-    onError: () => {
-      toast.error('댓글 신고에 실패했어요.');
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '댓글 신고에 실패했어요.'));
     },
   });
 };
