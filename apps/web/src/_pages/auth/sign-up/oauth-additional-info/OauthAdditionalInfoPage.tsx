@@ -49,6 +49,12 @@ export const OauthAdditionalInfoPage = () => {
   const {
     methods,
     isSubmitEnabled,
+    isPhoneNumberFieldEnabled,
+    existingAccount,
+    isAccountLinkGuideDialogOpen,
+    openAccountLinkGuideDialog,
+    closeAccountLinkGuideDialog,
+    handleNameChange,
     handlePhoneNumberChange,
     handlePhoneNumberBlur,
     handleNicknameBlur,
@@ -103,6 +109,12 @@ export const OauthAdditionalInfoPage = () => {
 
           <OauthAdditionalInfoForm
             isSubmitEnabled={isSubmitEnabled}
+            isPhoneNumberFieldEnabled={isPhoneNumberFieldEnabled}
+            existingAccount={existingAccount}
+            isAccountLinkGuideDialogOpen={isAccountLinkGuideDialogOpen}
+            onOpenAccountLinkGuideDialog={openAccountLinkGuideDialog}
+            onCloseAccountLinkGuideDialog={closeAccountLinkGuideDialog}
+            onNameChange={handleNameChange}
             onPhoneNumberChange={handlePhoneNumberChange}
             onPhoneNumberBlur={handlePhoneNumberBlur}
             onNicknameBlur={handleNicknameBlur}
