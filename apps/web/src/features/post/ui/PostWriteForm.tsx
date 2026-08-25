@@ -217,7 +217,7 @@ export const PostWriteForm = ({
             setValue('vote', val, { shouldValidate: true, shouldDirty: true })
           }
           isEdit={isEdit}
-          hideBoardSelector={boards.length === 1}
+          hideBoardSelector={boards.length <= 1}
         />
 
         <Box className="m-5 mb-0">
