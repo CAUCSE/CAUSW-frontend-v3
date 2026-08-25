@@ -25,12 +25,14 @@ import {
   useMyAccountSuspenseQuery,
 } from '@/entities/user';
 
+import { removeNativeFCM } from '@/shared/storage/fcm/fcm-storage.mobile';
 import {
   ActionHeader,
   HydrationSuspense,
   QueryErrorBoundary,
   SuspenseView,
 } from '@/shared/ui';
+import { isMobile } from '@/shared/utils';
 
 export const SettingPrivacyPage = () => {
   return (
@@ -53,7 +55,8 @@ const SettingPrivacyContent = () => {
   const { data: account } = useMyAccountSuspenseQuery();
   const logout = useLogout();
   const withdrawMutation = useWithdrawMeMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      if (isMobile) await removeNativeFCM();
       resetAuthAndRouteToSignIn(router);
     },
   });
