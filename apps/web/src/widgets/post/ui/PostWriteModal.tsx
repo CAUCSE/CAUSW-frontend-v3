@@ -64,7 +64,9 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
               <PostEditForm postId={postId} onClose={handleRequestClose} />
             </Suspense>
           ) : (
-            <PostWriteForm onClose={handleRequestClose} />
+            <Suspense fallback={<SuspenseView />}>
+              <PostWriteForm onClose={handleRequestClose} />
+            </Suspense>
           )}
         </Dialog.Content>
       </Dialog>
