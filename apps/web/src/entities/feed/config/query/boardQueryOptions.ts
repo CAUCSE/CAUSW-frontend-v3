@@ -3,7 +3,10 @@ import { queryOptions } from '@tanstack/react-query';
 import { QUERY_STALE_TIME } from '@/shared/constants';
 
 import { getAvailableBoards, getWritableBoards } from '../../api';
-import { type GetAvailableBoardListQuery } from '../../model';
+import {
+  type GetWritableBoardListQuery,
+  type GetAvailableBoardListQuery,
+} from '../../model';
 
 import { boardQueryKeys } from './boardQueryKeys';
 
@@ -15,10 +18,10 @@ export const boardQueryOptions = {
       staleTime: QUERY_STALE_TIME.DEFAULT,
       throwOnError: true,
     }),
-  writable: () =>
+  writable: (query: GetWritableBoardListQuery = {}) =>
     queryOptions({
-      queryKey: boardQueryKeys.writable(),
-      queryFn: getWritableBoards,
+      queryKey: boardQueryKeys.writable(query),
+      queryFn: () => getWritableBoards(query),
       staleTime: QUERY_STALE_TIME.DEFAULT,
       throwOnError: true,
     }),

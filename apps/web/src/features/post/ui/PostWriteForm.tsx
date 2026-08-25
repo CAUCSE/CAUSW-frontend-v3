@@ -6,7 +6,7 @@ import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { type Board, useGetWritableBoards } from '@/entities/feed';
+import { BOARD_GROUP, type Board, useGetWritableBoards } from '@/entities/feed';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,
@@ -45,7 +45,9 @@ export const PostWriteForm = ({
   initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
-  const { data: boardData } = useGetWritableBoards();
+  const { data: boardData } = useGetWritableBoards({
+    boardGroup: BOARD_GROUP.NOTICE,
+  });
   const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
