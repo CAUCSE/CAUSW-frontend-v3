@@ -25,7 +25,7 @@ import {
   useMyAccountSuspenseQuery,
 } from '@/entities/user';
 
-import { removeNativeFCM } from '@/shared/storage/fcm/fcm-storage.mobile';
+import { removeNativeFCM } from '@/shared/storage';
 import {
   ActionHeader,
   HydrationSuspense,
