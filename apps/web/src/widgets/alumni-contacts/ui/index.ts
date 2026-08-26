@@ -1,6 +1,5 @@
 export { AlumniContactsFilterGroup } from './alumni-contacts-filter-group';
 export { AlumniContactsCollapsibleHeader } from './alumni-contacts-collapsible-header';
-export { AlumniContactsTab } from './alumni-contacts-tab';
 export {
   AlumniContactsListServerComponent,
   AlumniContactsListLoadingView,

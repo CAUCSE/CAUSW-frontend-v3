@@ -4,19 +4,15 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { Tab } from '@causw/cds';
 
+import {
+  ALUMNI_CONTACTS_TAB,
+  ALUMNI_CONTACTS_TAB_ROUTE,
+  type AlumniContactsTabType,
+} from '@/entities/alumni';
+
 import { ROUTES } from '@/shared/constants';
 
-const ALUMNI_CONTACTS_TAB = {
-  ALUMNI: 'alumni-contacts',
-  COMMUNITY: 'community',
-} as const;
-
-const ALUMNI_CONTACTS_TAB_ROUTE: Record<string, string> = {
-  [ALUMNI_CONTACTS_TAB.ALUMNI]: ROUTES.ALUMNI_CONTACTS,
-  [ALUMNI_CONTACTS_TAB.COMMUNITY]: ROUTES.COMMUNITY,
-};
-
-export const AlumniContactsTab = () => {
+export const AlumniContactsCommunityTab = () => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -25,7 +21,7 @@ export const AlumniContactsTab = () => {
     : ALUMNI_CONTACTS_TAB.ALUMNI;
 
   const handleTabChange = (value: string) => {
-    router.push(ALUMNI_CONTACTS_TAB_ROUTE[value]);
+    router.push(ALUMNI_CONTACTS_TAB_ROUTE[value as AlumniContactsTabType]);
   };
 
   return (
