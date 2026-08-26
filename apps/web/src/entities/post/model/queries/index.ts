@@ -1,2 +1,2 @@
 export * from './usePostQuery';
-export * from './postDetailSectionRefetch';
+export * from './usePostDetailSectionRefetch';
