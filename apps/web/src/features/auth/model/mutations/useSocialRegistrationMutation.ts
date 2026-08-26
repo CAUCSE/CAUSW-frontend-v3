@@ -2,41 +2,40 @@
 
 import { useRouter } from 'next/navigation';
 
-import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+
+import { ApiError } from '@causw/api-client';
 
 import { completeSocialRegistration } from '@/features/auth/api';
 
-import type {
-  AuthResponseDto,
-  SocialLoginAdditionalInfoRequestDto,
-} from '@/entities/auth';
+import { PHONE_NUMBER_DUPLICATED_ERROR_CODE } from '@/entities/auth';
 
 import { toast } from '@/shared/model';
 import { AuthOptionManager, TokenManager } from '@/shared/storage';
-import { extractErrorMessage, isMobile } from '@/shared/utils';
+import {
+  extractErrorMessage,
+  isMobile,
+  parseCustomErrorCode,
+} from '@/shared/utils';
 
 import { routeAfterSignIn } from '../../lib';
 
-type SocialRegistrationMutationOptions = Omit<
-  UseMutationOptions<
-    AuthResponseDto,
-    Error,
-    SocialLoginAdditionalInfoRequestDto
-  >,
-  'mutationFn'
->;
+interface SocialRegistrationMutationOptions {
+  onPhoneDuplicated?: () => void;
+}
 
-export const useSocialRegistrationMutation = (
-  options?: SocialRegistrationMutationOptions,
-) => {
+export const useSocialRegistrationMutation = ({
+  onPhoneDuplicated,
+}: SocialRegistrationMutationOptions = {}) => {
   const router = useRouter();
 
   return useMutation({
     mutationFn: completeSocialRegistration,
     onMutate: () => {
-      toast.loading('추가 정보를 저장하고 있어요...');
+      return { toastId: toast.loading('추가 정보를 저장하고 있어요...') };
     },
-    onSuccess: async (data: AuthResponseDto) => {
+    onSuccess: async (data, _variables, context) => {
+      toast.dismiss(context.toastId);
       if (isMobile) {
         await AuthOptionManager.setSessionPersist(true);
       }
@@ -45,7 +44,18 @@ export const useSocialRegistrationMutation = (
       toast.success('추가 정보 입력이 완료되었습니다.');
       routeAfterSignIn(router, data.onboardingStatus);
     },
-    onError: (error) => {
+    onError: (error, _variables, context) => {
+      if (context?.toastId) toast.dismiss(context.toastId);
+
+      if (
+        onPhoneDuplicated &&
+        error instanceof ApiError &&
+        parseCustomErrorCode(error) === PHONE_NUMBER_DUPLICATED_ERROR_CODE
+      ) {
+        onPhoneDuplicated();
+        return;
+      }
+
       toast.error(
         extractErrorMessage(
           error,
@@ -53,6 +63,5 @@ export const useSocialRegistrationMutation = (
         ),
       );
     },
-    ...options,
   });
 };
