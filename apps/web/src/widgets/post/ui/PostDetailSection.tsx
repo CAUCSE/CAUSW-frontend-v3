@@ -2,12 +2,14 @@
 
 import { useRef, useState } from 'react';
 
-import { Stack } from '@causw/cds';
+import { Stack, PullToRefresh } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
 import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
-import { usePostQuery } from '@/entities/post';
+import { usePostDetailSectionRefetch } from '@/entities/post';
+
+import { useBreakpoint } from '@/shared/hooks';
 
 import { CommentList } from './CommentList';
 import { PostContent } from './PostContent';
@@ -17,8 +19,10 @@ interface PostDetailSectionProps {
 }
 
 export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
-  const { data: post } = usePostQuery(postId);
+  const { data: post, refetch } = usePostDetailSectionRefetch(postId);
   const { data: comments } = useCommentsQuery({ postId });
+
+  const { isMobileSize } = useBreakpoint();
 
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
@@ -32,21 +36,47 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
 
   return (
     <>
-      <Stack
-        gap="none"
-        className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
-        style={{
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
-        <PostContent post={post} />
-        <CommentList
-          countComment={post.numComment}
-          comments={comments.content}
-          onReply={handleReply}
-        />
-      </Stack>
+      {isMobileSize && (
+        <PullToRefresh
+          onRefresh={async () => {
+            await refetch();
+          }}
+        >
+          <Stack
+            gap="none"
+            className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            <PostContent post={post} />
+            <CommentList
+              countComment={post.numComment}
+              comments={comments.content}
+              onReply={handleReply}
+            />
+          </Stack>
+        </PullToRefresh>
+      )}
+
+      {!isMobileSize && (
+        <Stack
+          gap="none"
+          className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+          }}
+        >
+          <PostContent post={post} />
+          <CommentList
+            countComment={post.numComment}
+            comments={comments.content}
+            onReply={handleReply}
+          />
+        </Stack>
+      )}
 
       <CommentForm
         postId={postId}
