@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-import { Stack } from '@causw/cds';
+import { Stack, VStack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
@@ -31,10 +31,13 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
   };
 
   return (
-    <>
+    <VStack
+      gap="none"
+      className="min-h-0 flex-1 overflow-hidden bg-white md:rounded-[1rem] md:border md:border-gray-200 md:pt-5"
+    >
       <Stack
         gap="none"
-        className="h-full overflow-scroll md:rounded-t-lg [&::-webkit-scrollbar]:hidden"
+        className="min-h-0 flex-1 overflow-scroll [&::-webkit-scrollbar]:hidden"
         style={{
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
@@ -56,6 +59,6 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
         onCancelReply={() => setReplyTarget(null)}
         inputRef={inputRef}
       />
-    </>
+    </VStack>
   );
 };

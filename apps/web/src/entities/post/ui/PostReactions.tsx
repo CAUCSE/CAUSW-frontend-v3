@@ -30,15 +30,17 @@ export const PostReactions = ({
         className="h-auto min-w-0 bg-transparent px-0 enabled:hover:bg-transparent enabled:active:bg-transparent enabled:data-[active]:bg-transparent"
         onClick={onLikeClick}
       >
-        <Heart size={20} color={active ? 'red-400' : 'gray-200'} />
-        {likeCount}
+        <Heart size={16} color={active ? 'red-400' : 'gray-200'} />
+        <Text typography="body-14-medium" textColor="gray-400">
+          {likeCount}
+        </Text>
       </Button>
       <Button
         color="white"
         className="h-auto min-w-0 bg-transparent px-0 enabled:hover:bg-transparent enabled:active:bg-transparent enabled:data-[active]:bg-transparent"
         onClick={onCommentClick}
       >
-        <Comment size={20} color="gray-200" />
+        <Comment size={16} color="gray-200" />
         <Text typography="body-14-medium" textColor="gray-400">
           {commentCount}
         </Text>

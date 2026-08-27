@@ -16,10 +16,7 @@ export const CommentList = ({ comments, onReply }: CommentListProps) => {
     <VStack
       as="section"
       gap="none"
-      className={mergeStyles(
-        'flex h-fit flex-1 bg-white',
-        isEmpty ? 'pt-30' : 'pt-5',
-      )}
+      className={mergeStyles('flex h-fit flex-1 bg-white', isEmpty && 'pt-30')}
     >
       {comments.map((comment) => (
         <CommentItem key={comment.id} comment={comment} onReply={onReply} />

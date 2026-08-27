@@ -12,7 +12,7 @@ import {
 
 export const PostDetailPage = ({ postId }: { postId: string }) => {
   return (
-    <div className="mx-auto flex h-screen max-w-225 flex-col md:px-8 md:py-6">
+    <div className="mx-auto flex h-screen max-w-225 flex-col md:px-5 md:pb-5">
       <ActionHeader background="white">
         <ActionHeader.BackButton fallbackHref={ROUTES.FEED}>
           뒤로

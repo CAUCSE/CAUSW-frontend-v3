@@ -54,9 +54,9 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
   return (
     <VStack
       as="section"
-      className="gap-6 border-b-1 border-gray-200 bg-white px-5 py-4 md:p-5"
+      className="gap-4 border-b-1 border-gray-100 bg-white px-5 pb-4"
     >
-      <VStack gap="sm" className="border-b-1 border-gray-200 py-4">
+      <VStack gap="none">
         <PostHeader
           authorName={post.displayWriterNickname}
           profileImage={post.writerProfileImage}
