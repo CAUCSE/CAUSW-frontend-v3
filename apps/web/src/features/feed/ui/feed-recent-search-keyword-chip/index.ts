@@ -1,1 +1,0 @@
-export { FeedRecentSearchKeywordChip } from './FeedRecentSearchKeywordChip';

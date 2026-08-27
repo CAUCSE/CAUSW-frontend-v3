@@ -4,8 +4,7 @@ import { type RefObject } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { type FeedViewMode } from '@/entities/feed';
-import { type GetPostsResponseDto } from '@/entities/post';
+import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { SuspenseView } from '@/shared/ui';
 
@@ -18,7 +17,7 @@ interface FeedListProps {
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
-  viewMode: FeedViewMode;
+  viewMode: PostViewMode;
 }
 
 export const FeedList = ({

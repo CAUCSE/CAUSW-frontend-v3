@@ -11,6 +11,7 @@ export const ROUTES = Object.freeze({
   FEED_SEARCH: '/feed/search',
   ALUMNI_CONTACTS: '/alumni-contacts',
   COMMUNITY: '/community',
+  COMMUNITY_SEARCH: '/community/search',
   PROFILE: '/profile',
   SETTING: '/setting',
   MY_FEED: '/my-feed',

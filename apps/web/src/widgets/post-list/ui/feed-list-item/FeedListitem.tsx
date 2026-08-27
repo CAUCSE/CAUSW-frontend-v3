@@ -10,8 +10,11 @@ import {
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { FEED_VIEW_MODE, type FeedViewMode } from '@/entities/feed';
-import { type GetPostsResponseDto } from '@/entities/post';
+import {
+  POST_VIEW_MODE,
+  type PostViewMode,
+  type GetPostsResponseDto,
+} from '@/entities/post';
 
 import { ConfirmModal } from '@/shared/ui';
 
@@ -23,12 +26,12 @@ type Post = GetPostsResponseDto['posts'][number];
 
 interface FeedListitemProps {
   post: Post;
-  viewMode?: FeedViewMode;
+  viewMode?: PostViewMode;
 }
 
 export const FeedListitem = ({
   post,
-  viewMode = FEED_VIEW_MODE.CARD,
+  viewMode = POST_VIEW_MODE.CARD,
 }: FeedListitemProps) => {
   const {
     activeModal,
@@ -42,7 +45,7 @@ export const FeedListitem = ({
   const { handleCardClick, handleCardKeyDown, isExpanded, handleExpand } =
     usePostListItem();
 
-  const isCompact = viewMode === FEED_VIEW_MODE.COMPACT;
+  const isCompact = viewMode === POST_VIEW_MODE.COMPACT;
 
   return (
     <VStack className="relative" id={post.postId}>

@@ -1,17 +1,17 @@
-import { FeedListToolbar } from '@/widgets/post-list';
+import { PostListToolbar } from '@/widgets/post-list';
 
-import { useFeedViewMode } from '@/entities/feed';
+import { usePostViewMode } from '@/entities/post';
 
 import { useCommunityMain } from '../../model';
 
 export const CommunityToolbarSection = () => {
   const { data: boards, selectedTab, handleTabChange } = useCommunityMain();
-  const { feedViewMode, setFeedViewMode } = useFeedViewMode();
+  const { postViewMode, setPostViewMode } = usePostViewMode();
 
   return (
-    <FeedListToolbar
-      feedViewMode={feedViewMode}
-      onFeedViewModeChange={setFeedViewMode}
+    <PostListToolbar
+      postViewMode={postViewMode}
+      onPostViewModeChange={setPostViewMode}
       boards={boards}
       selectedTab={selectedTab}
       onSelectedTabChange={handleTabChange}

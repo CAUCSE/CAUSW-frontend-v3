@@ -1,13 +1,12 @@
 import { Separator } from '@causw/cds';
 
-import { type FeedViewMode } from '@/entities/feed';
-import { type GetPostsResponseDto } from '@/entities/post';
+import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { FeedListitem } from '../feed-list-item';
 
 interface PostListItemsProps {
   posts: GetPostsResponseDto['posts'];
-  viewMode: FeedViewMode;
+  viewMode: PostViewMode;
   /** 마지막 아이템을 제외하고 아이템 사이에 넣을 Separator의 className (미지정 시 Separator 기본 스타일) */
   separatorClassName?: string;
 }

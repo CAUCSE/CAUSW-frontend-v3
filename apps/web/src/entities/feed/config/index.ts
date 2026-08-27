@@ -1,10 +1,5 @@
 export { boardQueryKeys, boardQueryOptions } from './query';
 export {
-  FEED_RECENT_SEARCH_KEYWORD_STORAGE_KEY,
-  FEED_RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
-} from './feedRecentSearchKeywordStorageKey';
-export { FEED_SEARCH_KEYWORD_SEARCH_PARAM_KEY } from './feedSearchKeywordSearchParam';
-export {
   MY_FEED_VIEW_SEARCH_PARAM_KEY,
   MY_FEED_VIEW,
   MY_FEED_VIEW_LABEL,
@@ -15,10 +10,3 @@ export {
 export { FEED_SCROLL_RESTORATION_STORAGE_KEY } from './feedScrollRestorationStorageKey';
 export { BOARDS_API_PREFIX } from './boardApiPrefix';
 export { BOARD_GROUP, type BoardGroup } from './boardGroup';
-export {
-  FEED_VIEW_MODE,
-  FEED_VIEW_MODE_LABEL,
-  FEED_VIEW_MODE_OPTIONS,
-  type FeedViewMode,
-} from './feedViewMode';
-export { FEED_VIEW_MODE_STORAGE_KEY } from './feedViewModeStorageKey';

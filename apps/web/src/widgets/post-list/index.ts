@@ -1,9 +1,9 @@
 export {
   FeedListitem,
   FeedListWrapper,
-  FeedListToolbar,
+  PostListToolbar,
   FeedBoardTabs,
-  FeedViewModeToggle,
+  PostViewModeToggle,
   PostListItems,
 } from './ui';
 export {

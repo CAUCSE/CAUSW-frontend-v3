@@ -8,8 +8,8 @@ import { VStack } from '@causw/cds';
 
 import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
 
-import { useFeedViewMode, useMyFeedView } from '@/entities/feed';
-import { postQueryOptions } from '@/entities/post';
+import { useMyFeedView } from '@/entities/feed';
+import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
@@ -20,7 +20,7 @@ const MY_FEED_LIST_DEFAULT_SIZE = 20;
 
 export const MyFeedList = () => {
   const { myFeedView } = useMyFeedView();
-  const { feedViewMode } = useFeedViewMode();
+  const { postViewMode } = usePostViewMode();
 
   const { data, isFetchingNextPage, isSuccess, hasNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery({
@@ -65,7 +65,7 @@ export const MyFeedList = () => {
       as="ul"
       ref={myFeedListRef}
     >
-      <PostListItems posts={data} viewMode={feedViewMode} />
+      <PostListItems posts={data} viewMode={postViewMode} />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

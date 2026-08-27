@@ -9,10 +9,10 @@ import { mergeStyles, VStack } from '@causw/cds';
 import {
   FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
   FEED_LIST_TAB,
-  FeedListToolbar,
+  PostListToolbar,
 } from '@/widgets/post-list';
 
-import { useFeedViewMode } from '@/entities/feed';
+import { usePostViewMode } from '@/entities/post';
 
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui';
@@ -51,12 +51,12 @@ export const FeedStickyHeader = () => {
 };
 
 const FeedToolbarSection = () => {
-  const { feedViewMode, setFeedViewMode } = useFeedViewMode();
+  const { postViewMode, setPostViewMode } = usePostViewMode();
 
   return (
-    <FeedListToolbar
-      feedViewMode={feedViewMode}
-      onFeedViewModeChange={setFeedViewMode}
+    <PostListToolbar
+      postViewMode={postViewMode}
+      onPostViewModeChange={setPostViewMode}
       // 채널(게시판) 선택은 헤더 드롭다운이 담당한다.
       // 칩 탭은 선택된 채널 내부의 세부 카테고리 축이라 채널 상태와 분리되어야 하며,
       // 아직 해당 API가 없어 '전체'만 고정으로 노출한다.

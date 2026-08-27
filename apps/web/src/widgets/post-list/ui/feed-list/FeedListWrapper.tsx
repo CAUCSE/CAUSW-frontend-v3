@@ -6,8 +6,8 @@ import { PullToRefresh } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
-import { type Board, type BoardGroup, useFeedViewMode } from '@/entities/feed';
-import { postQueryOptions } from '@/entities/post';
+import { type Board, type BoardGroup } from '@/entities/feed';
+import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
@@ -26,7 +26,7 @@ export const FeedListWrapper = ({
   boardIds,
   boardGroup,
 }: FeedListWrapperProps) => {
-  const { feedViewMode } = useFeedViewMode();
+  const { postViewMode } = usePostViewMode();
 
   const {
     data: posts,
@@ -75,7 +75,7 @@ export const FeedListWrapper = ({
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}
             targetRef={targetRef}
-            viewMode={feedViewMode}
+            viewMode={postViewMode}
           />
         </PullToRefresh>
         <PostWriteFloatingActionButton />
@@ -89,7 +89,7 @@ export const FeedListWrapper = ({
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}
       targetRef={targetRef}
-      viewMode={feedViewMode}
+      viewMode={postViewMode}
     />
   );
 };
