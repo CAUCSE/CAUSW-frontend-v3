@@ -20,7 +20,7 @@ export const LatestSystemNoticeContent = ({ notice }: NoticeContentProps) => {
         <LatestSystemNoticeHeader
           authorName={notice.authorName}
           createdAt={notice.createdAt}
-          //profileImage={}
+          //profileImage={} 사용 여부 불확실
           isOfficial={true}
         />
         <LatestSystemNoticeBody
