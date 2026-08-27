@@ -78,7 +78,7 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
         active={post.isPostLike}
         likeCount={post.numLike}
         commentCount={post.numComment}
-        viewCount={post.view_count ?? post.viewCount ?? 0}
+        viewCount={post.viewCount}
         createdAt={post.createdAt}
         onLikeClick={handleLikeClick}
         onCommentClick={onCommentClick}

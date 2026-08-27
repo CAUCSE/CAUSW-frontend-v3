@@ -23,15 +23,8 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
   const [replyTarget, setReplyTarget] = useState<ReplyTarget>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleReply = (target: ReplyTarget) => {
+  const handleFocusCommentInput = (target: ReplyTarget) => {
     setReplyTarget(target);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
-  };
-
-  const handleCommentClick = () => {
-    setReplyTarget(null);
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
@@ -47,8 +40,14 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
           msOverflowStyle: 'none',
         }}
       >
-        <PostContent post={post} onCommentClick={handleCommentClick} />
-        <CommentList comments={comments.content} onReply={handleReply} />
+        <PostContent
+          post={post}
+          onCommentClick={() => handleFocusCommentInput(null)}
+        />
+        <CommentList
+          comments={comments.content}
+          onReply={handleFocusCommentInput}
+        />
       </Stack>
 
       <CommentForm
