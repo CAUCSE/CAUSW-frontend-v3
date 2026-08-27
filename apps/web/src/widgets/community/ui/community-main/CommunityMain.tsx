@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  FeedListWrapper,
+  PostListWrapper,
   useNormalizeBoardTabParam,
 } from '@/widgets/post-list';
 
@@ -17,7 +17,7 @@ export const CommunityMain = () => {
   return (
     <>
       <CommunityStickyHeader />
-      <FeedListWrapper
+      <PostListWrapper
         boardIds={filteredBoardIds}
         boardGroup={BOARD_GROUP.COMMUNITY}
       />

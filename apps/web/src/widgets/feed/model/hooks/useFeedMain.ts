@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  FEED_LIST_TAB_SEARCH_PARAM_KEY,
+  POST_LIST_TAB_SEARCH_PARAM_KEY,
   useBoardTabSelection,
 } from '@/widgets/post-list';
 
@@ -13,7 +13,7 @@ export const useFeedMain = () => {
   const { selectedTab, filteredBoardIds, handleTabChange } =
     useBoardTabSelection({
       boards: data.boards,
-      searchParamKey: FEED_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
+      searchParamKey: POST_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
     });
 
   return {

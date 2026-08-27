@@ -2,19 +2,19 @@ import { Tab } from '@causw/cds';
 
 import { type Board } from '@/entities/feed';
 
-import { FEED_LIST_TAB } from '../../config';
+import { POST_LIST_TAB } from '../../config';
 
-interface FeedBoardTabsProps {
+interface PostBoardTabsProps {
   boards: Board[];
   value: string;
   onValueChange: (value: string) => void;
 }
 
-export const FeedBoardTabs = ({
+export const PostBoardTabs = ({
   boards,
   value,
   onValueChange,
-}: FeedBoardTabsProps) => {
+}: PostBoardTabsProps) => {
   return (
     <Tab.Root
       variant="chip"
@@ -24,7 +24,7 @@ export const FeedBoardTabs = ({
     >
       <Tab.List className="-mr-4 gap-1 pr-4 md:-mr-5 md:pr-5">
         <Tab.TabItem
-          value={FEED_LIST_TAB.ALL}
+          value={POST_LIST_TAB.ALL}
           className="typo-body-14-semibold! rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400"
         >
           전체

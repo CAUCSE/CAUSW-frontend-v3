@@ -4,7 +4,11 @@ import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
-import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
+import {
+  POST_LIST_SCROLL_RESTORATION_STORAGE_KEY,
+  PostListItems,
+  usePostListScrollRestoration,
+} from '@/widgets/post-list';
 
 import { type BoardGroup, boardQueryOptions } from '@/entities/feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
@@ -57,7 +61,8 @@ export const SearchResultList = ({
     },
   });
 
-  useFeedScrollRestoration({
+  usePostListScrollRestoration({
+    storageKey: POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH,
     enabled: isSuccess,
     posts,
   });
@@ -84,7 +89,13 @@ export const SearchResultList = ({
       className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
       as="ul"
     >
-      <PostListItems posts={posts} viewMode={postViewMode} />
+      <PostListItems
+        posts={posts}
+        viewMode={postViewMode}
+        scrollRestorationStorageKey={
+          POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH
+        }
+      />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

@@ -1,6 +1,6 @@
-export { FeedListitem } from './feed-list-item';
-export { FeedListWrapper } from './feed-list';
+export { PostListItem } from './post-list-item';
+export { PostListWrapper } from './post-list-wrapper';
 export { PostListToolbar } from './post-list-toolbar';
-export { FeedBoardTabs } from './feed-board-tabs';
+export { PostBoardTabs } from './post-board-tabs';
 export { PostViewModeToggle } from './post-view-mode-toggle';
 export { PostListItems } from './post-list-items';

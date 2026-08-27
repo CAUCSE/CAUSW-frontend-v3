@@ -6,27 +6,35 @@ import { PullToRefresh } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
-import { type Board, type BoardGroup } from '@/entities/feed';
+import { BOARD_GROUP, type Board, type BoardGroup } from '@/entities/feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { SuspenseView } from '@/shared/ui';
 
-import { FEED_LIST_SCROLL_CONTAINER_CLASS_NAME } from '../../config';
-import { useFeedScrollRestoration } from '../../model';
+import {
+  POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  POST_LIST_SCROLL_RESTORATION_STORAGE_KEY,
+} from '../../config';
+import { usePostListScrollRestoration } from '../../model';
 
-import { FeedList } from './FeedList';
+import { PostList } from './PostList';
 
-interface FeedListWrapperProps {
+interface PostListWrapperProps {
   boardIds: Board['id'][];
   boardGroup: BoardGroup;
 }
 
-export const FeedListWrapper = ({
+export const PostListWrapper = ({
   boardIds,
   boardGroup,
-}: FeedListWrapperProps) => {
+}: PostListWrapperProps) => {
   const { postViewMode } = usePostViewMode();
+
+  const scrollRestorationStorageKey =
+    boardGroup === BOARD_GROUP.NOTICE
+      ? POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.NOTICE
+      : POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.COMMUNITY;
 
   const {
     data: posts,
@@ -50,7 +58,8 @@ export const FeedListWrapper = ({
     },
   });
 
-  useFeedScrollRestoration({
+  usePostListScrollRestoration({
+    storageKey: scrollRestorationStorageKey,
     enabled: isSuccess,
     posts,
   });
@@ -65,17 +74,18 @@ export const FeedListWrapper = ({
     return (
       <>
         <PullToRefresh
-          className={`${FEED_LIST_SCROLL_CONTAINER_CLASS_NAME} min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden`}
+          className={`${POST_LIST_SCROLL_CONTAINER_CLASS_NAME} min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden`}
           onRefresh={async () => {
             await refetch();
           }}
         >
-          <FeedList
+          <PostList
             posts={posts}
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}
             targetRef={targetRef}
             viewMode={postViewMode}
+            scrollRestorationStorageKey={scrollRestorationStorageKey}
           />
         </PullToRefresh>
         <PostWriteFloatingActionButton />
@@ -84,12 +94,13 @@ export const FeedListWrapper = ({
   }
 
   return (
-    <FeedList
+    <PostList
       posts={posts}
       isFetchingNextPage={isFetchingNextPage}
       hasNextPage={hasNextPage}
       targetRef={targetRef}
       viewMode={postViewMode}
+      scrollRestorationStorageKey={scrollRestorationStorageKey}
     />
   );
 };

@@ -2,37 +2,31 @@
 
 import { useEffect } from 'react';
 
-import { useGetFeedScrollRestorationStorageKey } from '@/entities/feed';
 import { type PostResponseDto } from '@/entities/post';
 
 import { useSessionStorage } from '@/shared/hooks';
 
-interface UseFeedScrollRestorationProps {
+import { type PostListScrollRestorationStorageKey } from '../../config';
+
+interface UsePostListScrollRestorationProps {
+  storageKey: PostListScrollRestorationStorageKey;
   enabled?: boolean;
   posts?: PostResponseDto[];
 }
 
-export const useFeedScrollRestoration = ({
+export const usePostListScrollRestoration = ({
+  storageKey,
   enabled = false,
   posts,
-}: UseFeedScrollRestorationProps) => {
-  const { feedScrollRestorationStorageKey } =
-    useGetFeedScrollRestorationStorageKey();
-
-  const [, , removeScrollRestoration] = useSessionStorage(
-    feedScrollRestorationStorageKey,
-    '',
-    {
-      initializeWithValue: false,
-    },
-  );
+}: UsePostListScrollRestorationProps) => {
+  const [, , removeScrollRestoration] = useSessionStorage(storageKey, '', {
+    initializeWithValue: false,
+  });
 
   useEffect(() => {
     if (!enabled || !posts) return;
 
-    const rawScrollRestorationTarget = sessionStorage.getItem(
-      feedScrollRestorationStorageKey,
-    );
+    const rawScrollRestorationTarget = sessionStorage.getItem(storageKey);
 
     const scrollRestorationTarget = rawScrollRestorationTarget
       ? JSON.parse(rawScrollRestorationTarget)
@@ -55,10 +49,5 @@ export const useFeedScrollRestoration = ({
 
       removeScrollRestoration();
     });
-  }, [
-    enabled,
-    removeScrollRestoration,
-    posts,
-    feedScrollRestorationStorageKey,
-  ]);
+  }, [enabled, removeScrollRestoration, posts, storageKey]);
 };

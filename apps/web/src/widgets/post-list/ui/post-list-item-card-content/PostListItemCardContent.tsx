@@ -1,22 +1,28 @@
 import { PostHeader, type PostAction } from '@/features/post';
 
 import {
-  PostCompactBody,
+  PostBody,
   PostFooter,
   type GetPostsResponseDto,
 } from '@/entities/post';
 
+import { POST_CONTENT_MAX_LINE } from '../../config';
+
 type Post = GetPostsResponseDto['posts'][number];
 
-interface FeedListitemCompactContentProps {
+interface PostListItemCardContentProps {
   post: Post;
+  isExpanded: boolean;
+  onExpand: () => void;
   onMenuAction: (action: PostAction) => void;
 }
 
-export const FeedListitemCompactContent = ({
+export const PostListItemCardContent = ({
   post,
+  isExpanded,
+  onExpand,
   onMenuAction,
-}: FeedListitemCompactContentProps) => {
+}: PostListItemCardContentProps) => {
   return (
     <>
       <PostHeader
@@ -26,11 +32,16 @@ export const FeedListitemCompactContent = ({
         onAction={onMenuAction}
         hideActionMenu
       />
-      <PostCompactBody
+      <PostBody
         title={post.title}
         content={post.content}
         images={post.postImageUrls}
+        enableImageViewer={true}
         isHtml={post.isCrawled}
+        isCollapsed={!isExpanded}
+        onExpand={onExpand}
+        showExpandButton
+        maxLines={POST_CONTENT_MAX_LINE}
       />
       <PostFooter
         numLike={post.numLike}

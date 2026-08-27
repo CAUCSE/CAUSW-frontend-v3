@@ -3,7 +3,7 @@ import { HStack } from '@causw/cds';
 import { type Board } from '@/entities/feed';
 import { type PostViewMode } from '@/entities/post';
 
-import { FeedBoardTabs } from '../feed-board-tabs';
+import { PostBoardTabs } from '../post-board-tabs';
 import { PostViewModeToggle } from '../post-view-mode-toggle';
 
 interface PostListToolbarProps {
@@ -28,7 +28,7 @@ export const PostListToolbar = ({
         onChange={onPostViewModeChange}
       />
       <div className="h-3 w-px shrink-0 bg-gray-300" />
-      <FeedBoardTabs
+      <PostBoardTabs
         boards={boards}
         value={selectedTab}
         onValueChange={onSelectedTabChange}

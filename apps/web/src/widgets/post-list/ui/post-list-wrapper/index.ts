@@ -1,0 +1,1 @@
+export { PostListWrapper } from './PostListWrapper';

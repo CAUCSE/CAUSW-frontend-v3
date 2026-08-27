@@ -4,24 +4,22 @@ import { useState, type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { useGetFeedScrollRestorationStorageKey } from '@/entities/feed';
 import { type PostResponseDto } from '@/entities/post';
 
 import { useSessionStorage } from '@/shared/hooks';
 
-export const usePostListItem = () => {
+import { type PostListScrollRestorationStorageKey } from '../../config';
+
+interface UsePostListItemProps {
+  storageKey: PostListScrollRestorationStorageKey;
+}
+
+export const usePostListItem = ({ storageKey }: UsePostListItemProps) => {
   const router = useRouter();
 
-  const { feedScrollRestorationStorageKey } =
-    useGetFeedScrollRestorationStorageKey();
-
-  const [, setScrollRestoration] = useSessionStorage(
-    feedScrollRestorationStorageKey,
-    '',
-    {
-      initializeWithValue: false,
-    },
-  );
+  const [, setScrollRestoration] = useSessionStorage(storageKey, '', {
+    initializeWithValue: false,
+  });
 
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 

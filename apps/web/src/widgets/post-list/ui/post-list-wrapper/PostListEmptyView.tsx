@@ -1,6 +1,6 @@
 import { CommentGrayColored, Text, VStack } from '@causw/cds';
 
-export const FeedListEmptyView = () => {
+export const PostListEmptyView = () => {
   return (
     <VStack gap="lg" align="center" className="h-full w-full pt-30">
       <CommentGrayColored size={56} />

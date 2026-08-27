@@ -8,27 +8,30 @@ import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { SuspenseView } from '@/shared/ui';
 
+import { type PostListScrollRestorationStorageKey } from '../../config';
 import { PostListItems } from '../post-list-items';
 
-import { FeedListEmptyView } from './FeedListEmptyView';
+import { PostListEmptyView } from './PostListEmptyView';
 
-interface FeedListProps {
+interface PostListProps {
   posts?: GetPostsResponseDto['posts'];
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
   viewMode: PostViewMode;
+  scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
 }
 
-export const FeedList = ({
+export const PostList = ({
   posts,
   isFetchingNextPage,
   hasNextPage,
   targetRef,
   viewMode,
-}: FeedListProps) => {
+  scrollRestorationStorageKey,
+}: PostListProps) => {
   if (!posts || posts.length === 0) {
-    return <FeedListEmptyView />;
+    return <PostListEmptyView />;
   }
 
   return (
@@ -40,6 +43,7 @@ export const FeedList = ({
       <PostListItems
         posts={posts}
         viewMode={viewMode}
+        scrollRestorationStorageKey={scrollRestorationStorageKey}
         separatorClassName="my-4 bg-gray-100"
       />
       {!isFetchingNextPage && hasNextPage && (

@@ -6,7 +6,11 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { VStack } from '@causw/cds';
 
-import { PostListItems, useFeedScrollRestoration } from '@/widgets/post-list';
+import {
+  POST_LIST_SCROLL_RESTORATION_STORAGE_KEY,
+  PostListItems,
+  usePostListScrollRestoration,
+} from '@/widgets/post-list';
 
 import { useMyFeedView } from '@/entities/feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
@@ -50,7 +54,8 @@ export const MyFeedList = () => {
     }
   }, [myFeedView]);
 
-  useFeedScrollRestoration({
+  usePostListScrollRestoration({
+    storageKey: POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.MY_FEED,
     enabled: isSuccess,
     posts: data,
   });
@@ -65,7 +70,13 @@ export const MyFeedList = () => {
       as="ul"
       ref={myFeedListRef}
     >
-      <PostListItems posts={data} viewMode={postViewMode} />
+      <PostListItems
+        posts={data}
+        viewMode={postViewMode}
+        scrollRestorationStorageKey={
+          POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.MY_FEED
+        }
+      />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}

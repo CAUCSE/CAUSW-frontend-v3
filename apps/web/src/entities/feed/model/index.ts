@@ -6,4 +6,4 @@ export type {
   GetAvailableBoardListQuery,
   GetWritableBoardListQuery,
 } from './types';
-export { useMyFeedView, useGetFeedScrollRestorationStorageKey } from './hooks';
+export { useMyFeedView } from './hooks';

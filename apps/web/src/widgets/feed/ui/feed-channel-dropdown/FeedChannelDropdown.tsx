@@ -2,7 +2,7 @@
 
 import { ArrowDown, Check, Dropdown, HStack, Text } from '@causw/cds';
 
-import { FEED_LIST_TAB } from '@/widgets/post-list';
+import { POST_LIST_TAB } from '@/widgets/post-list';
 
 import { type Board } from '@/entities/feed';
 
@@ -24,7 +24,7 @@ export const FeedChannelDropdown = ({
   const triggerLabel = selectedBoard?.name ?? ALL_CHANNEL_TRIGGER_LABEL;
 
   const channels = [
-    { id: FEED_LIST_TAB.ALL, name: ALL_CHANNEL_LABEL },
+    { id: POST_LIST_TAB.ALL, name: ALL_CHANNEL_LABEL },
     ...boards,
   ];
 

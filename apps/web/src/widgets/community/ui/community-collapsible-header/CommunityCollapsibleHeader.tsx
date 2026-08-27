@@ -4,13 +4,13 @@ import { type PropsWithChildren } from 'react';
 
 import { mergeStyles } from '@causw/cds';
 
-import { FEED_LIST_SCROLL_CONTAINER_CLASS_NAME } from '@/widgets/post-list';
+import { POST_LIST_SCROLL_CONTAINER_CLASS_NAME } from '@/widgets/post-list';
 
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 
 export const CommunityCollapsibleHeader = ({ children }: PropsWithChildren) => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({
-    containerClassName: FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+    containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
   });
 
   return (

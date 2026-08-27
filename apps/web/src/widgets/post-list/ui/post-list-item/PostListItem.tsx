@@ -18,21 +18,24 @@ import {
 
 import { ConfirmModal } from '@/shared/ui';
 
+import { type PostListScrollRestorationStorageKey } from '../../config';
 import { usePostListItem } from '../../model';
-import { FeedListitemCardContent } from '../feed-list-item-card-content';
-import { FeedListitemCompactContent } from '../feed-list-item-compact-content';
+import { PostListItemCardContent } from '../post-list-item-card-content';
+import { PostListItemCompactContent } from '../post-list-item-compact-content';
 
 type Post = GetPostsResponseDto['posts'][number];
 
-interface FeedListitemProps {
+interface PostListItemProps {
   post: Post;
   viewMode?: PostViewMode;
+  scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
 }
 
-export const FeedListitem = ({
+export const PostListItem = ({
   post,
   viewMode = POST_VIEW_MODE.CARD,
-}: FeedListitemProps) => {
+  scrollRestorationStorageKey,
+}: PostListItemProps) => {
   const {
     activeModal,
     handleAction: handleMenuAction,
@@ -43,7 +46,7 @@ export const FeedListitem = ({
   } = usePostMenuActions(post.postId);
 
   const { handleCardClick, handleCardKeyDown, isExpanded, handleExpand } =
-    usePostListItem();
+    usePostListItem({ storageKey: scrollRestorationStorageKey });
 
   const isCompact = viewMode === POST_VIEW_MODE.COMPACT;
 
@@ -57,12 +60,12 @@ export const FeedListitem = ({
         onKeyDown={(event) => handleCardKeyDown(event, post.postId)}
       >
         {isCompact ? (
-          <FeedListitemCompactContent
+          <PostListItemCompactContent
             post={post}
             onMenuAction={handleMenuAction}
           />
         ) : (
-          <FeedListitemCardContent
+          <PostListItemCardContent
             post={post}
             isExpanded={isExpanded}
             onExpand={handleExpand}

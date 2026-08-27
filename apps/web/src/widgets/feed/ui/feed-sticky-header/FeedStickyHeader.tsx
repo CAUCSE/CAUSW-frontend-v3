@@ -7,8 +7,8 @@ import { noop } from 'es-toolkit';
 import { mergeStyles, VStack } from '@causw/cds';
 
 import {
-  FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
-  FEED_LIST_TAB,
+  POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  POST_LIST_TAB,
   PostListToolbar,
 } from '@/widgets/post-list';
 
@@ -21,7 +21,7 @@ import { FeedHeader } from '../feed-header';
 
 export const FeedStickyHeader = () => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({
-    containerClassName: FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+    containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
   });
 
   return (
@@ -62,7 +62,7 @@ const FeedToolbarSection = () => {
       // 아직 해당 API가 없어 '전체'만 고정으로 노출한다.
       // TODO: 세부 카테고리 API가 추가되면 목록과 선택 핸들러를 연결
       boards={[]}
-      selectedTab={FEED_LIST_TAB.ALL}
+      selectedTab={POST_LIST_TAB.ALL}
       onSelectedTabChange={noop}
     />
   );

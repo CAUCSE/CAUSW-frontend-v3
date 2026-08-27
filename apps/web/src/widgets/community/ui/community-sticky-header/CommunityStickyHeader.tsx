@@ -17,7 +17,7 @@ import { CommunityToolbarSection } from '../community-toolbar-section';
 export const CommunityStickyHeader = () => {
   return (
     <VStack gap="none" className="z-sticky sticky top-0 bg-white md:pt-5">
-      <HStack justify="between" className="px-4 md:px-0">
+      <HStack align="center" justify="between" className="px-4 md:px-0">
         <AlumniContactsCommunityTab />
         <Link href={ROUTES.COMMUNITY_SEARCH} aria-label="검색">
           <Search size={20} color="gray-600" />

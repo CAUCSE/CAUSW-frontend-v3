@@ -15,7 +15,6 @@ export {
   useGetAvailableBoards,
   useGetWritableBoards,
   useMyFeedView,
-  useGetFeedScrollRestorationStorageKey,
   type Board,
   type GetAvailableBoardListResponseDto,
 } from './model';
