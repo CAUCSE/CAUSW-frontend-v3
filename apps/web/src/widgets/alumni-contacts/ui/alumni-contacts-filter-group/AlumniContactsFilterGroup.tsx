@@ -5,6 +5,7 @@ import { HStack } from '@causw/cds';
 import {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
+  AlumniContactsDepartmentFilterChip,
   AlumniContactsSortFilterSelect,
 } from '@/features/alumni-contacts';
 
@@ -18,11 +19,14 @@ export const AlumniContactsFilterGroup = () => {
     filterActive,
     admissionYearFilterActive,
     academicStatusFilterActive,
+    departmentFilterActive,
     admissionYearStart,
     admissionYearEnd,
     academicStatus,
+    department,
     handleAcademicStatusFilterChipClick,
     handleAdmissionYearFilterChipClick,
+    handleDepartmentFilterChipClick,
   } = useAlumniContactsFilterGroup();
 
   return (
@@ -48,6 +52,16 @@ export const AlumniContactsFilterGroup = () => {
                   key={status}
                   status={status}
                   onClick={() => handleAcademicStatusFilterChipClick(status)}
+                />
+              ))}
+            {departmentFilterActive &&
+              department?.map((selectedDepartment) => (
+                <AlumniContactsDepartmentFilterChip
+                  key={selectedDepartment}
+                  department={selectedDepartment}
+                  onClick={() =>
+                    handleDepartmentFilterChipClick(selectedDepartment)
+                  }
                 />
               ))}
           </>
