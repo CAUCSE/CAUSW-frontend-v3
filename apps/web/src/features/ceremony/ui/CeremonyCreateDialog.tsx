@@ -58,7 +58,10 @@ export const CeremonyCreateDialog = ({
     enabled: open,
     guardKey: 'ceremonyCreateGuard',
     onBackAttempt: handleCloseAttempt,
-    onConfirmBack: handleConfirmClose,
+    onConfirmBack: () => {
+      window.history.back();
+      handleConfirmClose();
+    },
   });
 
   const handleDialogOpenChange = (nextOpen: boolean) => {
@@ -76,9 +79,7 @@ export const CeremonyCreateDialog = ({
       { dto, imageFiles: imageUpload.photoFiles },
       {
         onSuccess: () => {
-          form.resetForm();
-          imageUpload.resetImageUpload();
-          onOpenChange(false);
+          confirmNativeBackGuard(handleConfirmClose);
         },
       },
     );
