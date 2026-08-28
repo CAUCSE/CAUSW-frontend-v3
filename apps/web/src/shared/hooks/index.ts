@@ -5,6 +5,7 @@ export * from './useFetchNextOnScroll';
 export * from './useInfiniteScroll';
 export * from './useIsMounted';
 export * from './useScrollRestoration';
+export * from './useScrollDirectionVisibility';
 export * from './usePhoneNumberChangeHandler';
 export * from './useLocalStorage';
 export * from './useEventListener';
