@@ -37,6 +37,7 @@ export const PostListItemCompactContent = ({
         numComment={post.numComment}
         isPostLike={post.isPostLike}
         createdAt={post.createdAt}
+        viewCount={post.viewCount}
       />
     </>
   );

@@ -48,6 +48,7 @@ export const PostListItemCardContent = ({
         numComment={post.numComment}
         isPostLike={post.isPostLike}
         createdAt={post.createdAt}
+        viewCount={post.viewCount}
       />
     </>
   );

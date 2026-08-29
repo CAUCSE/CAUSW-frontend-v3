@@ -1,4 +1,4 @@
-import { Comment, Heart, HStack, Text } from '@causw/cds';
+import { Comment, Heart, HStack, Text, Eye } from '@causw/cds';
 
 import { formatRelativeTime } from '@/shared/lib/format/date';
 
@@ -9,6 +9,7 @@ interface PostFooterProps {
   numComment: GetPostResponseDto['numComment'];
   isPostLike?: boolean;
   createdAt: GetPostResponseDto['createdAt'];
+  viewCount: GetPostResponseDto['viewCount'];
 }
 
 export const PostFooter = ({
@@ -16,6 +17,7 @@ export const PostFooter = ({
   numComment,
   isPostLike = false,
   createdAt,
+  viewCount,
 }: PostFooterProps) => {
   return (
     <HStack align="center" justify="between" className="mt-4">
@@ -31,6 +33,13 @@ export const PostFooter = ({
           <Comment size={16} color="gray-200" />
           <Text typography="body-14-medium" textColor="gray-400">
             {numComment}
+          </Text>
+        </HStack>
+
+        <HStack className="gap-1.5" align="center">
+          <Eye size={16} color="gray-200" />
+          <Text typography="body-14-medium" textColor="gray-400">
+            {viewCount}
           </Text>
         </HStack>
       </HStack>
