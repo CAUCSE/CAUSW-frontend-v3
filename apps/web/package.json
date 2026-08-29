@@ -39,6 +39,7 @@
     "firebase": "^12.11.0",
     "import-in-the-middle": "^2.0.6",
     "js-cookie": "^3.0.7",
+    "motion": "^13.1.1",
     "next": "catalog:default",
     "react": "catalog:default",
     "react-dom": "catalog:default",
