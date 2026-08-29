@@ -10,6 +10,7 @@ import {
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
+import { type BoardGroup } from '@/entities/feed';
 import {
   POST_VIEW_MODE,
   type PostViewMode,
@@ -29,12 +30,14 @@ interface PostListItemProps {
   post: Post;
   viewMode?: PostViewMode;
   scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
+  boardGroup: BoardGroup;
 }
 
 export const PostListItem = ({
   post,
   viewMode = POST_VIEW_MODE.CARD,
   scrollRestorationStorageKey,
+  boardGroup,
 }: PostListItemProps) => {
   const {
     activeModal,
@@ -43,10 +46,10 @@ export const PostListItem = ({
     submitReport,
     submitBlock,
     submitDelete,
-  } = usePostMenuActions(post.postId);
+  } = usePostMenuActions(post.postId, boardGroup);
 
   const { handleCardClick, handleCardKeyDown, isExpanded, handleExpand } =
-    usePostListItem({ storageKey: scrollRestorationStorageKey });
+    usePostListItem({ storageKey: scrollRestorationStorageKey, boardGroup });
 
   const isCompact = viewMode === POST_VIEW_MODE.COMPACT;
 

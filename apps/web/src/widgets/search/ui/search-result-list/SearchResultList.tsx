@@ -11,7 +11,11 @@ import {
 } from '@/widgets/post-list';
 
 import { type BoardGroup, boardQueryOptions } from '@/entities/feed';
-import { postQueryOptions, usePostViewMode } from '@/entities/post';
+import {
+  getPostWritePath,
+  postQueryOptions,
+  usePostViewMode,
+} from '@/entities/post';
 import { useSearchKeyword } from '@/entities/search';
 
 import { useInfiniteScroll } from '@/shared/hooks';
@@ -21,13 +25,9 @@ import { SearchResultListEmptyView } from './SearchResultListEmptyView';
 
 interface SearchResultListProps {
   boardGroup: BoardGroup;
-  writeHref?: string;
 }
 
-export const SearchResultList = ({
-  boardGroup,
-  writeHref,
-}: SearchResultListProps) => {
+export const SearchResultList = ({ boardGroup }: SearchResultListProps) => {
   const { searchKeyword } = useSearchKeyword();
   const { postViewMode } = usePostViewMode();
 
@@ -79,14 +79,14 @@ export const SearchResultList = ({
     return (
       <SearchResultListEmptyView
         keyword={searchKeyword}
-        writeHref={writeHref}
+        writeHref={getPostWritePath(boardGroup)}
       />
     );
   }
 
   return (
     <VStack
-      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-4 md:px-0"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-2 pt-4 md:overflow-visible"
       as="ul"
     >
       <PostListItems
@@ -95,6 +95,7 @@ export const SearchResultList = ({
         scrollRestorationStorageKey={
           POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH
         }
+        boardGroup={boardGroup}
       />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />

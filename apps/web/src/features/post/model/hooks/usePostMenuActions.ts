@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useBlockUserByPostMutation } from '@/features/block';
 import { useReportPostMutation } from '@/features/report';
 
+import { type BoardGroup } from '@/entities/feed';
+import { getPostEditPath } from '@/entities/post';
 import { type ReportReason } from '@/entities/report';
 
 import { type PostAction } from '../../config';
@@ -14,7 +16,7 @@ import { useDeletePostMutation } from '../mutations';
 
 type ActiveModalType = PostAction | null;
 
-export const usePostMenuActions = (postId: string) => {
+export const usePostMenuActions = (postId: string, boardGroup: BoardGroup) => {
   const router = useRouter();
 
   const [activeModal, setActiveModal] = useState<ActiveModalType>(null);
@@ -31,7 +33,7 @@ export const usePostMenuActions = (postId: string) => {
         setActiveModal(action);
         break;
       case 'edit':
-        router.push(`/feed/${postId}/edit`);
+        router.push(getPostEditPath(boardGroup, postId));
         break;
     }
   };

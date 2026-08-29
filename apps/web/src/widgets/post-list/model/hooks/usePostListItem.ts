@@ -4,7 +4,8 @@ import { useState, type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { type PostResponseDto } from '@/entities/post';
+import { type BoardGroup } from '@/entities/feed';
+import { getPostDetailPath, type PostResponseDto } from '@/entities/post';
 
 import { useSessionStorage } from '@/shared/hooks';
 
@@ -12,9 +13,13 @@ import { type PostListScrollRestorationStorageKey } from '../../config';
 
 interface UsePostListItemProps {
   storageKey: PostListScrollRestorationStorageKey;
+  boardGroup: BoardGroup;
 }
 
-export const usePostListItem = ({ storageKey }: UsePostListItemProps) => {
+export const usePostListItem = ({
+  storageKey,
+  boardGroup,
+}: UsePostListItemProps) => {
   const router = useRouter();
 
   const [, setScrollRestoration] = useSessionStorage(storageKey, '', {
@@ -29,7 +34,7 @@ export const usePostListItem = ({ storageKey }: UsePostListItemProps) => {
 
   const moveToPost = (postId: PostResponseDto['postId']) => {
     setScrollRestoration(postId);
-    router.push(`/feed/${postId}`);
+    router.push(getPostDetailPath(boardGroup, postId));
   };
 
   const handleCardClick = (

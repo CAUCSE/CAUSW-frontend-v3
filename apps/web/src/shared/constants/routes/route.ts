@@ -1,19 +1,25 @@
 import { ADMIN_BASE_URL } from '@/shared/config';
 
 export const ROUTES = Object.freeze({
-  NOTIFICATION: '/notification',
-  LOCKER: '/locker',
+  /** 홈 */
   HOME: '/home',
   SCHEDULE: '/home/calendar',
+  LOCKER: '/locker',
   CEREMONY: '/ceremony',
+  NOTIFICATION: '/notification',
+  /** 소식 */
   FEED: '/feed',
   REGISTER_FEED: '/feed/write',
   FEED_SEARCH: '/feed/search',
+  /** 동문수첩 */
   ALUMNI_CONTACTS: '/alumni-contacts',
+  /** 소통 */
   COMMUNITY: '/community',
+  REGISTER_COMMUNITY: '/community/write',
   COMMUNITY_SEARCH: '/community/search',
-  PROFILE: '/profile',
+  /** 설정 */
   SETTING: '/setting',
+  PROFILE: '/profile',
   MY_FEED: '/my-feed',
 } as const);
 

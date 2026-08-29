@@ -1,5 +1,6 @@
 import { Separator } from '@causw/cds';
 
+import { type BoardGroup } from '@/entities/feed';
 import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { type PostListScrollRestorationStorageKey } from '../../config';
@@ -9,6 +10,7 @@ interface PostListItemsProps {
   posts: GetPostsResponseDto['posts'];
   viewMode: PostViewMode;
   scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
+  boardGroup: BoardGroup;
   /** 마지막 아이템을 제외하고 아이템 사이에 넣을 Separator의 className (미지정 시 Separator 기본 스타일) */
   separatorClassName?: string;
 }
@@ -21,6 +23,7 @@ export const PostListItems = ({
   posts,
   viewMode,
   scrollRestorationStorageKey,
+  boardGroup,
   separatorClassName,
 }: PostListItemsProps) => {
   return (
@@ -31,6 +34,7 @@ export const PostListItems = ({
             post={post}
             viewMode={viewMode}
             scrollRestorationStorageKey={scrollRestorationStorageKey}
+            boardGroup={boardGroup}
           />
           {index < posts.length - 1 && (
             <Separator

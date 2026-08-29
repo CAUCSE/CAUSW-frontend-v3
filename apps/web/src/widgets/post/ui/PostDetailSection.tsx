@@ -7,6 +7,7 @@ import { Stack, VStack } from '@causw/cds';
 import { CommentForm } from '@/features/comment';
 
 import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
+import { type BoardGroup } from '@/entities/feed';
 import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';
@@ -14,9 +15,13 @@ import { PostContent } from './PostContent';
 
 interface PostDetailSectionProps {
   postId: string;
+  boardGroup: BoardGroup;
 }
 
-export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
+export const PostDetailSection = ({
+  postId,
+  boardGroup,
+}: PostDetailSectionProps) => {
   const { data: post } = usePostQuery(postId);
   const { data: comments } = useCommentsQuery({ postId });
 
@@ -45,6 +50,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
       >
         <PostContent
           post={post}
+          boardGroup={boardGroup}
           onCommentClick={() => handleFocusCommentInput(null)}
         />
         <CommentList

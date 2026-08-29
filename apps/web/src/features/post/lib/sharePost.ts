@@ -1,5 +1,6 @@
 import { Share } from '@capacitor/share';
 
+import { type BoardGroup } from '@/entities/feed';
 import { postShareUrl } from '@/entities/post';
 
 import { isMobile } from '@/shared/utils';
@@ -25,8 +26,12 @@ const isShareCancelledError = (error: unknown) => {
   return /cancelled|canceled|dismissed/i.test(getErrorMessage(error));
 };
 
-export const sharePost = async (postId: string, title: string) => {
-  const url = postShareUrl(postId);
+export const sharePost = async (
+  boardGroup: BoardGroup,
+  postId: string,
+  title: string,
+) => {
+  const url = postShareUrl(boardGroup, postId);
 
   if (isMobile) {
     try {
