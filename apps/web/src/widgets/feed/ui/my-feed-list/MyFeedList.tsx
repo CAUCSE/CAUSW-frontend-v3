@@ -12,7 +12,7 @@ import {
   usePostListScrollRestoration,
 } from '@/widgets/post-list';
 
-import { useMyFeedView } from '@/entities/feed';
+import { BOARD_GROUP, useMyFeedView } from '@/entities/feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';
@@ -66,7 +66,7 @@ export const MyFeedList = () => {
 
   return (
     <VStack
-      className="h-0 min-h-0 w-full max-w-full min-w-0 flex-1 overflow-y-auto px-4 py-2"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-y-auto px-5 py-4 md:overflow-visible"
       as="ul"
       ref={myFeedListRef}
     >
@@ -76,6 +76,7 @@ export const MyFeedList = () => {
         scrollRestorationStorageKey={
           POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.MY_FEED
         }
+        boardGroup={BOARD_GROUP.COMMUNITY}
       />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />

@@ -18,12 +18,8 @@ export const SearchHeader = ({
   placeholder,
 }: SearchHeaderProps) => {
   return (
-    <VStack gap="xs">
-      <ActionHeader
-        isSticky={false}
-        className="px-5 md:px-0"
-        background="white"
-      >
+    <VStack gap="none" className="z-sticky sticky top-0 gap-0.5 bg-white">
+      <ActionHeader isSticky={false} className="px-5 py-4" background="white">
         <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
       </ActionHeader>
       <SearchInput boardGroup={boardGroup} placeholder={placeholder} />

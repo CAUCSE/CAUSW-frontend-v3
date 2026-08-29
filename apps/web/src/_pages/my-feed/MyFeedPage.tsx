@@ -1,6 +1,6 @@
-import { HStack } from '@causw/cds';
+import { HStack, VStack } from '@causw/cds';
 
-import { MyFeedHeader, MyFeedMain } from '@/widgets/feed';
+import { MyFeedHeader, MyFeedListToolbar, MyFeedMain } from '@/widgets/feed';
 
 import { type MyFeedView } from '@/entities/feed';
 
@@ -10,9 +10,12 @@ interface MyFeedPageProps {
 
 export const MyFeedPage = ({ view }: MyFeedPageProps) => {
   return (
-    <HStack className="size-full min-h-0 justify-center overflow-hidden">
-      <div className="flex h-full min-h-0 w-full max-w-225 min-w-0 flex-col overflow-hidden md:p-5 md:pt-0">
-        <MyFeedHeader />
+    <HStack className="size-full min-h-0 justify-center overflow-hidden md:overflow-visible">
+      <div className="flex h-full min-h-0 w-full max-w-225 min-w-0 flex-col">
+        <VStack gap="none" className="z-sticky sticky top-0 shrink-0 bg-white">
+          <MyFeedHeader />
+          <MyFeedListToolbar />
+        </VStack>
         <MyFeedMain myFeedView={view} />
       </div>
     </HStack>
