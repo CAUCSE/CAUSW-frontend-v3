@@ -88,7 +88,7 @@ export const PostBody = ({
           <Text
             typography="subtitle-16-bold"
             textColor="gray-800"
-            className="break-all"
+            className="mb-1 break-all"
           >
             {title}
           </Text>

@@ -64,6 +64,7 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
           onAction={handleMenuAction}
         />
         <PostBody
+          title={post.title}
           content={post.content}
           images={post.fileUrlList}
           isHtml={post.isCrawled}
