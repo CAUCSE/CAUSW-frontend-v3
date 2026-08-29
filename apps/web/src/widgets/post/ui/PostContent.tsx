@@ -16,6 +16,7 @@ import { type BoardGroup } from '@/entities/feed';
 import {
   type GetPostResponseDto,
   PostBody,
+  PostOriginalLinkAndAttachedFiles,
   PostReactions,
 } from '@/entities/post';
 
@@ -70,9 +71,15 @@ export const PostContent = ({
           onAction={handleMenuAction}
         />
         <PostBody
+          title={post.title}
           content={post.content}
           images={post.fileUrlList}
           isHtml={post.isCrawled}
+        />
+        <PostOriginalLinkAndAttachedFiles
+          originalWriter={post.displayWriterNickname}
+          originalUrl={post.originalNoticeUrl}
+          attachedFiles={post.crawledAttachments}
         />
       </VStack>
 
