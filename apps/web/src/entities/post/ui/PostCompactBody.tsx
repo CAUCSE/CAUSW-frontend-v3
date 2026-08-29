@@ -3,7 +3,7 @@ import { HStack, Text, VStack } from '@causw/cds';
 import { stripHtml } from '@/shared/lib/sanitizer';
 
 interface PostCompactBodyProps {
-  title: string;
+  title: string | null;
   content: string;
   images?: string[];
   isHtml?: boolean;
@@ -21,7 +21,7 @@ export const PostCompactBody = ({
   return (
     <HStack gap="sm" justify="between" className="mt-1.5 mb-2">
       <VStack gap="none" className="min-w-0 flex-1">
-        {title && (
+        {title?.trim() && (
           <Text
             typography="body-15-semibold"
             textColor="gray-800"
