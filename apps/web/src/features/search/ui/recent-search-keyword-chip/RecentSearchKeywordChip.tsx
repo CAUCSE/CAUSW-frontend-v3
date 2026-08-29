@@ -26,10 +26,11 @@ export const RecentSearchKeywordChip = ({
   return (
     <div className="relative">
       <Button
-        className="h-fit w-fit p-0"
+        color="white"
+        className="h-fit w-fit rounded-md p-0"
         onClick={handleClickRecentSearchKeyword}
       >
-        <Chip size="md" color="white" className="cursor-pointer pr-8">
+        <Chip size="md" color="lightgray" className="cursor-pointer pr-8">
           {keyword}
         </Chip>
       </Button>

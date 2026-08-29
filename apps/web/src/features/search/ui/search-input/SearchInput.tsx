@@ -39,7 +39,7 @@ export const SearchInput = ({
         )
       }
       placeholder={placeholder}
-      className="mx-5 md:mx-0 [&>span]:flex [&>span]:items-center"
+      className="placeholder:typo-body-16-regular mx-4 mb-2 bg-gray-100 px-4 py-2.5 text-gray-400 [&>span]:flex [&>span]:items-center"
       value={currentKeyword}
       onChange={handleTextInputChange}
       onCompositionStart={handleCompositionStart}
