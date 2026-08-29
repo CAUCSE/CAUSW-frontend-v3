@@ -22,20 +22,23 @@ export const MyFeedViewTab = () => {
   };
 
   return (
-    <div className="shrink-0 px-5 py-2">
-      <Tab.Root
-        variant="chip"
-        value={myFeedView}
-        onValueChange={handleTabChange}
-      >
-        <Tab.List>
-          {Object.entries(MY_FEED_VIEW).map(([key, value]) => (
-            <Tab.TabItem key={key} value={value}>
-              {MY_FEED_VIEW_LABEL[value]}
-            </Tab.TabItem>
-          ))}
-        </Tab.List>
-      </Tab.Root>
-    </div>
+    <Tab.Root
+      variant="chip"
+      value={myFeedView}
+      onValueChange={handleTabChange}
+      className="shrink-0"
+    >
+      <Tab.List className="gap-1 overflow-visible">
+        {Object.entries(MY_FEED_VIEW).map(([key, value]) => (
+          <Tab.TabItem
+            key={key}
+            value={value}
+            className="typo-body-14-semibold rounded-md px-2.5 py-1 aria-[selected=false]:text-gray-400 aria-[selected=false]:hover:bg-gray-200 aria-[selected=false]:active:bg-gray-200"
+          >
+            {MY_FEED_VIEW_LABEL[value]}
+          </Tab.TabItem>
+        ))}
+      </Tab.List>
+    </Tab.Root>
   );
 };

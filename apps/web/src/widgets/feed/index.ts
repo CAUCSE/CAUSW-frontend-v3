@@ -3,4 +3,5 @@
   FeedMainServerComponent,
   MyFeedHeader,
   MyFeedMain,
+  MyFeedListToolbar,
 } from './ui';
