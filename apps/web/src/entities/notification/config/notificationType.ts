@@ -17,6 +17,10 @@ export const NOTIFICATION_TYPE = {
     type: 'SYSTEM',
     label: '시스템 알림',
   },
+  SYSTEM_NOTICE: {
+    type: 'SYSTEM_NOTICE',
+    label: '시스템 공지',
+  },
   LOCKER: {
     type: 'LOCKER',
     label: '사물함 알림',
