@@ -2,9 +2,13 @@
 
 import { Fragment, useCallback, useMemo } from 'react';
 
-import { POST_LINKIFIED_REGEX } from '@/entities/post/config';
+const LINKIFIED_TEXT_REGEX = {
+  URL_SPLIT: /(https?:\/\/[^\s]+|www\.[^\s]+)/g,
+  URL_TEST: /^(https?:\/\/[^\s]+|www\.[^\s]+)$/,
+  TRAILING_PUNCTUATION: /[.,!?;:]+$/,
+};
 
-const { URL_SPLIT, URL_TEST, TRAILING_PUNCTUATION } = POST_LINKIFIED_REGEX;
+const { URL_SPLIT, URL_TEST, TRAILING_PUNCTUATION } = LINKIFIED_TEXT_REGEX;
 interface UseLinkifiedTextProps {
   content: string;
   isHtml: boolean;

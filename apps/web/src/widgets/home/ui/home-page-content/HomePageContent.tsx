@@ -34,9 +34,9 @@ export function HomePageContent() {
       </div>
 
       <VStack className="desktop:gap-6 gap-4">
-        <div>
+        <Suspense fallback={null}>
           <LatestSystemNoticePopupCard />
-        </div>
+        </Suspense>
 
         {isAlumni && (
           <div className="desktop:block hidden">

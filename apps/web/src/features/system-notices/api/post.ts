@@ -1,6 +1,6 @@
-import { API } from '@/shared/api';
+import { SYSTEM_NOTICES_END_POINT_PREFIX } from '@/entities/system-notices';
 
-import { SYSTEM_NOTICES_END_POINT_PREFIX } from '../config';
+import { API } from '@/shared/api';
 
 export const updateSystemNoticesIsRead = async (id: string) => {
   const URI = `${SYSTEM_NOTICES_END_POINT_PREFIX}/${id}/read`;

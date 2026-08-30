@@ -1,3 +1,3 @@
-export * from './LatestSystemNoticeContent';
-export * from './LatestSystemNoticeDetailSection';
 export * from './LatestSystemNoticePopupCard';
+export * from './SystemNoticeContent';
+export * from './SystemNoticeDetailSection';

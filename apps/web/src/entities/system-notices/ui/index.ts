@@ -1,1 +1,1 @@
-export * from './LatestSystemNoticeBody';
+export * from './SystemNoticeBody';

@@ -1,1 +1,1 @@
-export * from './LatestSystemNoticePage';
+export * from './SystemNoticeDetailPage';

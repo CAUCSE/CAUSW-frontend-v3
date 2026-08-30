@@ -1,36 +1,21 @@
 import { Flex, HStack, OfficialColored, Text } from '@causw/cds';
 
 import { formatRelativeTime } from '@/shared/lib';
-//import { type ProfileImageValue } from '@/shared/types'; 현재 미사용
-//import { ProfileAvatar } from '@/shared/ui'; 현재 미사용
 
-interface LatestSystemNoticeHeaderProps {
+interface SystemNoticeHeaderProps {
   authorName: string;
   createdAt: string;
-  //profileImage?: ProfileImageValue; 현재 미사용
-  isOfficial?: boolean; // 공식 마크 사용 여부 불확실
+  isOfficial?: boolean;
 }
 
-export const LatestSystemNoticeHeader = ({
+export const SystemNoticeHeader = ({
   authorName,
   createdAt,
-  //profileImage, 현재 미사용
-  isOfficial = false, // 공식 마크 사용 여부 불확실
-}: LatestSystemNoticeHeaderProps) => {
+  isOfficial = false,
+}: SystemNoticeHeaderProps) => {
   return (
     <Flex as="header" gap="none" align="center">
       <HStack gap="sm" align="center" className="flex-1 gap-2.5">
-        {/* 현재 미사용
-        {profileImage ? (
-          <ProfileAvatar
-            profileImageType={profileImage.profileImageType}
-            profileImageUrl={profileImage.profileImageUrl}
-            size={40}
-            className="shrink-0"
-          />
-        ) : null}
-        */}
-
         <HStack gap="sm" align="center">
           <HStack gap="xs" align="center">
             <Text typography="subtitle-16-bold" textColor="gray-800">

@@ -1,9 +1,8 @@
 'use client';
 
-import { LatestSystemNoticeDetailSection } from '@/widgets/system-notices';
+import { SystemNoticeDetailSection } from '@/widgets/system-notices';
 
 import { ROUTES } from '@/shared/constants';
-import { useBreakpoint } from '@/shared/hooks';
 import {
   ActionHeader,
   HydrationSuspense,
@@ -11,12 +10,10 @@ import {
   SuspenseView,
 } from '@/shared/ui';
 
-export const LatestSystemNoticePage = () => {
-  const { isMobileSize } = useBreakpoint();
-
+export const SystemNoticeDetailPage = () => {
   return (
     <div className="mx-auto flex h-screen max-w-225 flex-col md:px-8 md:py-6">
-      <ActionHeader background={isMobileSize ? 'white' : 'gray'}>
+      <ActionHeader background="white">
         <ActionHeader.BackButton fallbackHref={ROUTES.HOME}>
           뒤로
         </ActionHeader.BackButton>
@@ -24,7 +21,7 @@ export const LatestSystemNoticePage = () => {
 
       <QueryErrorBoundary fallbackMessage="시스템 공지를 불러오지 못했어요.">
         <HydrationSuspense fallback={<SuspenseView />}>
-          <LatestSystemNoticeDetailSection />
+          <SystemNoticeDetailSection />
         </HydrationSuspense>
       </QueryErrorBoundary>
     </div>
