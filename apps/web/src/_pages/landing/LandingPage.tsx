@@ -1,16 +1,15 @@
 import { Button, Text, VStack } from '@causw/cds';
 
 import {
+  LandingAlumniConnection,
+  LandingClosingCTA,
   LandingFeatures,
+  LandingFooter,
   LandingHero,
   LandingProblem,
 } from '@/widgets/landing';
 
-import { ScrollReveal } from '@/shared/ui';
-
 export const LandingPage = () => {
-  const LandingContents = [LandingHero, LandingProblem, LandingFeatures];
-
   return (
     <VStack className="min-h-full w-full items-center">
       <VStack className="desktop:gap-70 max-w-desktop tablet:px-10 relative w-full items-center gap-40 px-5">
@@ -24,11 +23,12 @@ export const LandingPage = () => {
             </Text>
           </Button>
         </header>
-        {LandingContents.map((Content) => (
-          <ScrollReveal key={Content.name} className="w-full">
-            <Content />
-          </ScrollReveal>
-        ))}
+        <LandingHero />
+        <LandingProblem />
+        <LandingFeatures />
+        <LandingAlumniConnection />
+        <LandingClosingCTA />
+        <LandingFooter />
       </VStack>
     </VStack>
   );
