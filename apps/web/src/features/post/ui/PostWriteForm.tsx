@@ -6,7 +6,11 @@ import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { BOARD_GROUP, type Board, useGetWritableBoards } from '@/entities/feed';
+import {
+  type Board,
+  type BoardGroup,
+  useGetWritableBoards,
+} from '@/entities/feed';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,
@@ -27,6 +31,7 @@ import { PostWriteHeader } from './PostWriteHeader';
 
 interface PostWriteFormProps {
   onClose: (isDirty: boolean) => void;
+  boardGroup: BoardGroup;
   postId?: string;
   initialData?: Partial<PostCreateFormValues>;
   initialImages?: string[];
@@ -34,19 +39,18 @@ interface PostWriteFormProps {
 
 export const PostWriteForm = ({
   onClose,
+  boardGroup,
   postId,
   initialData,
   initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
-  const { data: boardData } = useGetWritableBoards({
-    boardGroup: BOARD_GROUP.NOTICE,
-  });
+  const { data: boardData } = useGetWritableBoards({ boardGroup });
   const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
   const { mutate: createPost, isPending: isCreatePostPending } =
-    useCreatePostMutation();
+    useCreatePostMutation(boardGroup);
   const { mutate: updatePost, isPending: isUpdatePostPending } =
     useUpdatePostMutation();
 

@@ -89,20 +89,23 @@ export const PostListWrapper = ({
             boardGroup={boardGroup}
           />
         </PullToRefresh>
-        <PostWriteFloatingActionButton />
+        <PostWriteFloatingActionButton boardGroup={boardGroup} />
       </>
     );
   }
 
   return (
-    <PostList
-      posts={posts}
-      isFetchingNextPage={isFetchingNextPage}
-      hasNextPage={hasNextPage}
-      targetRef={targetRef}
-      viewMode={postViewMode}
-      scrollRestorationStorageKey={scrollRestorationStorageKey}
-      boardGroup={boardGroup}
-    />
+    <>
+      <PostList
+        posts={posts}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        targetRef={targetRef}
+        viewMode={postViewMode}
+        scrollRestorationStorageKey={scrollRestorationStorageKey}
+        boardGroup={boardGroup}
+      />
+      <PostWriteFloatingActionButton boardGroup={boardGroup} />
+    </>
   );
 };
