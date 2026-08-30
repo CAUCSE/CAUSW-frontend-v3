@@ -4,11 +4,13 @@ import { motion } from 'motion/react';
 
 interface ScrollRevealProps extends PropsWithChildren {
   playOnce?: boolean;
+  className?: string;
 }
 
 export function ScrollReveal({
   children,
   playOnce = false,
+  className,
 }: ScrollRevealProps) {
   return (
     <motion.div
@@ -24,6 +26,7 @@ export function ScrollReveal({
         amount: 0.2,
         once: playOnce,
       }}
+      className={className}
     >
       {children}
     </motion.div>

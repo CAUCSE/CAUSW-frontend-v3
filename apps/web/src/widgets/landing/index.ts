@@ -1,1 +1,1 @@
-export { LandingHero } from './ui';
+export { LandingHero, LandingProblem, LandingFeatures } from './ui';
