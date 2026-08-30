@@ -62,18 +62,36 @@ export const useAlumniContactsDetailSection = () => {
       return;
     }
 
+    const scrollEventTarget: EventTarget = isMobile
+      ? scrollContainer
+      : document;
+
     let settled = false;
-    const done = () => {
+    const finish = () => {
       if (settled) return;
       settled = true;
       window.clearTimeout(fallbackTimer);
-      scrollContainer.removeEventListener('scrollend', done);
+      scrollEventTarget.removeEventListener('scrollend', onScrollEnd);
       releaseIfCurrent();
+    };
+    const onScrollEnd = (event: Event) => {
+      if (
+        !isMobile &&
+        event.target !== document &&
+        event.target !== scrollContainer
+      ) {
+        return;
+      }
+      finish();
     };
 
     /* scrollend 이벤트가 발생하지 않을 경우 탭 동기화를 위한 타이머 */
-    const fallbackTimer = window.setTimeout(done, TAB_SYNC_FALLBACK_TIMER);
-    scrollContainer.addEventListener('scrollend', done, { passive: true });
+    const fallbackTimer = window.setTimeout(finish, TAB_SYNC_FALLBACK_TIMER);
+    scrollEventTarget.addEventListener(
+      'scrollend',
+      onScrollEnd as EventListener,
+      { passive: true },
+    );
   };
 
   const handleClickCategoryTab = (key: AlumniContactsDetailSectionTabType) => {
@@ -101,6 +119,9 @@ export const useAlumniContactsDetailSection = () => {
   };
 
   useEffect(() => {
+    const scrollContainer = getScrollContainer();
+    if (!scrollContainer) return;
+
     const changeSelectedTab = () => {
       if (skipScrollSyncRef.current) return;
 
@@ -113,12 +134,30 @@ export const useAlumniContactsDetailSection = () => {
         }
       });
     };
-    const scrollContainer = getScrollContainer();
 
-    scrollContainer?.addEventListener('scroll', changeSelectedTab);
+    if (isMobile) {
+      scrollContainer.addEventListener('scroll', changeSelectedTab);
+      return () => {
+        scrollContainer.removeEventListener('scroll', changeSelectedTab);
+      };
+    }
+
+    const handleDocumentScroll = (event: Event) => {
+      if (event.target !== document && event.target !== scrollContainer) {
+        return;
+      }
+      changeSelectedTab();
+    };
+
+    document.addEventListener('scroll', handleDocumentScroll, {
+      capture: true,
+      passive: true,
+    });
 
     return () => {
-      scrollContainer?.removeEventListener('scroll', changeSelectedTab);
+      document.removeEventListener('scroll', handleDocumentScroll, {
+        capture: true,
+      });
     };
   }, []);
 

@@ -8,15 +8,18 @@ export const ROUTES = Object.freeze({
   CEREMONY: '/ceremony',
   FEED: '/feed',
   REGISTER_FEED: '/feed/write',
+  FEED_SEARCH: '/feed/search',
   ALUMNI_CONTACTS: '/alumni-contacts',
   COMMUNITY: '/community',
   PROFILE: '/profile',
   SETTING: '/setting',
+  MY_FEED: '/my-feed',
   SYSTEM_NOTICES: '/system-notices',
 } as const);
 
 export const ADMIN_ROUTES = Object.freeze({
   EVENTS: (id: string) => `${ADMIN_BASE_URL}/events/${id}`, // 관리자 경조사 페이지
+  PENDING_USERS: `${ADMIN_BASE_URL}/users/pending`, // 재학인증 요청 대기 목록
 } as const);
 
 export const EXTERNAL_ROUTES = Object.freeze({

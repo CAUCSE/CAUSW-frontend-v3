@@ -1,3 +1,5 @@
+import { type BoardGroup } from '../../../config';
+
 export interface GetAvailableBoardListQuery {
-  isTab?: boolean;
+  boardGroup?: BoardGroup;
 }

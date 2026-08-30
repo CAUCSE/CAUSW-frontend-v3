@@ -59,14 +59,16 @@ export const CeremonyPage = () => {
         </ActionHeader.ActionButton>
       </ActionHeader>
 
-      <CeremonyListView
-        filter={filter}
-        onFilterChange={setFilter}
-        myStateFilter={myStateFilter}
-        onMyStateFilterChange={setMyStateFilter}
-        onItemClick={handleItemClick}
-        onMyItemClick={handleMyItemClick}
-      />
+      <div className="mx-auto w-full max-w-225">
+        <CeremonyListView
+          filter={filter}
+          onFilterChange={setFilter}
+          myStateFilter={myStateFilter}
+          onMyStateFilterChange={setMyStateFilter}
+          onItemClick={handleItemClick}
+          onMyItemClick={handleMyItemClick}
+        />
+      </div>
 
       <div className="fixed right-[1rem] bottom-[2.75rem]">
         <FloatingActionButton

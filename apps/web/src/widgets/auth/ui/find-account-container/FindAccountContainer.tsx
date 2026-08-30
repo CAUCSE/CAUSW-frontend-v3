@@ -11,7 +11,12 @@ import {
   useFindEmailMutation,
 } from '@/features/auth';
 
-import type { EmailFindResponse, FindEmailFormData } from '@/entities/auth';
+import {
+  hasFindEmailResult,
+  normalizeFindEmailRequest,
+  type EmailFindResponse,
+  type FindEmailFormData,
+} from '@/entities/auth';
 
 import { FindEmailNotFound } from '../find-email-not-found';
 import { FindEmailResult } from '../find-email-result';
@@ -34,19 +39,6 @@ interface FindAccountContainerProps {
   onViewChange: (view: FindAccountView) => void;
 }
 
-const normalizeFindEmailFormData = (formData: FindEmailFormData) => ({
-  name: formData.name.replace(/\s/g, ''),
-  phoneNumber: formData.phoneNumber.trim(),
-});
-
-const hasFindEmailResult = (
-  data: EmailFindResponse | null | undefined,
-): data is EmailFindResponse => {
-  if (!data) return false;
-
-  return !!data.email?.trim() || (data.socialAccounts?.length ?? 0) > 0;
-};
-
 export const FindAccountContainer = ({
   view,
   onViewChange,
@@ -65,7 +57,7 @@ export const FindAccountContainer = ({
   };
 
   const handleFindEmail = (formData: FindEmailFormData) => {
-    const normalizedFormData = normalizeFindEmailFormData(formData);
+    const normalizedFormData = normalizeFindEmailRequest(formData);
 
     findEmailMutation.mutate(normalizedFormData, {
       onSuccess: (data) => {

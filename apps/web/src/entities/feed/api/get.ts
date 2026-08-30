@@ -6,6 +6,7 @@ import {
   type GetWritableBoardListResponseDto,
   type GetAvailableBoardListResponseDto,
   type GetAvailableBoardListQuery,
+  type GetWritableBoardListQuery,
 } from '../model';
 
 export const getAvailableBoards = async (
@@ -20,9 +21,14 @@ export const getAvailableBoards = async (
   return response;
 };
 
-export const getWritableBoards = async () => {
-  const response = await API.get<GetWritableBoardListResponseDto>(
+export const getWritableBoards = async (
+  query: GetWritableBoardListQuery = {},
+) => {
+  const url = withQuery(
     `${BOARDS_API_PREFIX}/writable`,
+    createQueryString(query),
   );
+
+  const response = await API.get<GetWritableBoardListResponseDto>(url);
   return response;
 };

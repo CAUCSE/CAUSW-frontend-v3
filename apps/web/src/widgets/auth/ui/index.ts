@@ -32,3 +32,4 @@ export {
   type FindAccountView,
 } from './find-account-container';
 export { TemporaryPasswordIssued } from './temporary-password-issued';
+export { WithdrawConfirmModal } from './withdraw-confirm-modal';

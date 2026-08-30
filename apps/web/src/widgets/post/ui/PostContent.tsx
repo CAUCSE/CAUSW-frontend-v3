@@ -23,9 +23,10 @@ import { ConfirmModal } from '@/shared/ui';
 
 interface PostContentProps {
   post: GetPostResponseDto;
+  onCommentClick: () => void;
 }
 
-export const PostContent = ({ post }: PostContentProps) => {
+export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
   const {
     activeModal,
     handleAction: handleMenuAction,
@@ -51,17 +52,19 @@ export const PostContent = ({ post }: PostContentProps) => {
   };
 
   return (
-    <VStack as="section" className="gap-6 bg-white px-5 py-2 md:p-5">
-      <VStack gap="sm">
+    <VStack
+      as="section"
+      className="gap-4 border-b-1 border-gray-100 bg-white px-5 pb-4"
+    >
+      <VStack gap="none">
         <PostHeader
           authorName={post.displayWriterNickname}
-          createdAt={post.createdAt}
           profileImage={post.writerProfileImage}
-          isOfficial={post.isOfficial}
           isMine={post.isOwner}
           onAction={handleMenuAction}
         />
         <PostBody
+          title={post.title}
           content={post.content}
           images={post.fileUrlList}
           isHtml={post.isCrawled}
@@ -75,7 +78,11 @@ export const PostContent = ({ post }: PostContentProps) => {
       <PostReactions
         active={post.isPostLike}
         likeCount={post.numLike}
+        commentCount={post.numComment}
+        viewCount={post.viewCount}
+        createdAt={post.createdAt}
         onLikeClick={handleLikeClick}
+        onCommentClick={onCommentClick}
         onShareClick={handleShareClick}
       />
 

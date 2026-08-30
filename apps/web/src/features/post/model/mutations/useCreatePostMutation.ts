@@ -10,6 +10,7 @@ import {
   type PostCreateResponseDto,
 } from '@/entities/post';
 
+import { confirmNativeBackGuard } from '@/shared/hooks';
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
@@ -30,7 +31,7 @@ export const useCreatePostMutation = () => {
       toast.success('게시글이 작성되었어요.');
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
 
-      router.back();
+      confirmNativeBackGuard(() => router.back());
       requestAnimationFrame(() => {
         router.push(`/feed/${data.id}`);
       });

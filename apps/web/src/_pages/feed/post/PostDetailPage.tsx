@@ -3,7 +3,6 @@
 import { PostDetailSection } from '@/widgets/post';
 
 import { ROUTES } from '@/shared/constants';
-import { useBreakpoint } from '@/shared/hooks';
 import {
   ActionHeader,
   HydrationSuspense,
@@ -12,11 +11,9 @@ import {
 } from '@/shared/ui';
 
 export const PostDetailPage = ({ postId }: { postId: string }) => {
-  const { isMobileSize } = useBreakpoint();
-
   return (
-    <div className="mx-auto flex h-screen max-w-225 flex-col md:px-8 md:py-6">
-      <ActionHeader background={isMobileSize ? 'white' : 'gray'}>
+    <div className="mx-auto flex h-screen max-w-225 flex-col md:px-5 md:pb-5">
+      <ActionHeader background="white">
         <ActionHeader.BackButton fallbackHref={ROUTES.FEED}>
           뒤로
         </ActionHeader.BackButton>

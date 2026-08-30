@@ -8,7 +8,7 @@ import { Dialog, mergeStyles } from '@causw/cds';
 
 import { PostEditForm, PostWriteForm } from '@/features/post';
 
-import { useBreakpoint } from '@/shared/hooks';
+import { confirmNativeBackGuard, useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
 export const PostWriteModal = ({ postId }: { postId?: string }) => {
@@ -22,8 +22,12 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
     if (isDirty) {
       setIsCancelConfirmOpen(true);
     } else {
-      router.back();
+      closePostWrite();
     }
+  };
+
+  const closePostWrite = () => {
+    confirmNativeBackGuard(() => router.back());
   };
 
   return (
@@ -56,7 +60,9 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
               <PostEditForm postId={postId} onClose={handleRequestClose} />
             </Suspense>
           ) : (
-            <PostWriteForm onClose={handleRequestClose} />
+            <Suspense fallback={<SuspenseView />}>
+              <PostWriteForm onClose={handleRequestClose} />
+            </Suspense>
           )}
         </Dialog.Content>
       </Dialog>
@@ -67,7 +73,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
         }
         open={isCancelConfirmOpen}
         onOpenChange={setIsCancelConfirmOpen}
-        onConfirm={() => router.back()}
+        onConfirm={closePostWrite}
         titleTypo="subtitle-16-bold"
       />
     </>
