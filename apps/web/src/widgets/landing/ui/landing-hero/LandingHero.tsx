@@ -23,31 +23,14 @@ export const LandingHero = () => {
           as="h1"
           typography="title-24-bold"
           textColor="gray-800"
-          className="desktop:hidden whitespace-pre"
-        >
-          {'학부생과 동문을 잇는 \n 소프트웨어대학 동문회 앱, 크자회'}
-        </Text>
-        <Text
-          as="h1"
-          typography="title-48-bold"
-          textColor="gray-800"
-          className="desktop:block hidden whitespace-pre"
+          className="desktop:text-6xl! whitespace-pre"
         >
           {'학부생과 동문을 잇는 \n 소프트웨어대학 동문회 앱, 크자회'}
         </Text>
         <Text
           typography="body-15-medium"
           textColor="gray-500"
-          className="desktop:hidden whitespace-pre"
-        >
-          {
-            '선후배와 연결되고, 학부의 중요한 소식을 챙겨주는 \n 소프트웨어대학 동문회 공간이에요.'
-          }
-        </Text>
-        <Text
-          typography="body-16-medium"
-          textColor="gray-500"
-          className="desktop:block desktop:text-3xl! hidden whitespace-pre"
+          className="desktop:text-3xl! whitespace-pre"
         >
           {
             '선후배와 연결되고, 학부의 중요한 소식을 챙겨주는 \n 소프트웨어대학 동문회 공간이에요.'

@@ -1,1 +1,1 @@
-export { STORE_BADGE_LINKS } from './StoreBadgeLinks';
+export { STORE_BADGE_LINKS } from './storeBadgeLinks';
