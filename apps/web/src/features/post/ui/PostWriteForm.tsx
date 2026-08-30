@@ -57,6 +57,7 @@ export const PostWriteForm = ({
     setValue,
   } = form;
 
+  const currentTitle = watch('title');
   const currentContent = watch('content');
   const isAnonymous = watch('isAnonymous');
   const currentBoardId = watch('boardId');
@@ -146,6 +147,8 @@ export const PostWriteForm = ({
         <PostWriteBody
           onSelectorClick={() => setSelectorOpen(true)}
           selectedBoard={selectedBoard}
+          title={currentTitle}
+          setTitle={(val) => setValue('title', val, { shouldDirty: true })}
           content={currentContent}
           setContent={(val) =>
             setValue('content', val, {

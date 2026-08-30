@@ -8,7 +8,7 @@ export interface CrawledAttachment {
 /* 게시글 단일 조회 */
 export interface GetPostResponseDto {
   id: string;
-  title: string;
+  title: string | null;
   content: string;
   crawledAttachments?: CrawledAttachment[];
   originalNoticeUrl?: string;
