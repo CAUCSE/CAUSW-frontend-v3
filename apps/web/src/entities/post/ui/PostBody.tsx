@@ -17,7 +17,7 @@ import { useLinkifiedText } from '../model';
 import { PostImage } from './PostImage';
 
 interface PostBodyProps {
-  title?: string;
+  title?: string | null;
   content: string;
   images?: string[];
   enableImageViewer?: boolean;
@@ -84,11 +84,11 @@ export const PostBody = ({
   return (
     <VStack gap="md" className="mt-2">
       <VStack gap="none">
-        {title && (
+        {title?.trim() && (
           <Text
             typography="subtitle-16-bold"
             textColor="gray-800"
-            className="break-all"
+            className="mb-1 break-all"
           >
             {title}
           </Text>
