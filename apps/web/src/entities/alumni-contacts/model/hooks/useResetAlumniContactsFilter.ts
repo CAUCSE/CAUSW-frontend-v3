@@ -2,14 +2,13 @@
 
 import { useEffect, useRef } from 'react';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { ALUMNI_CONTACTS_FILTER } from '../../config';
 
 export const useResetAlumniContactsFilter = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const prevPathnameRef = useRef(pathname);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export const useResetAlumniContactsFilter = () => {
       !pathname.startsWith('/alumni-contacts');
 
     if (isLeavingAlumniContacts) {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(window.location.search);
       Object.values(ALUMNI_CONTACTS_FILTER).forEach((filter) => {
         params.delete(filter);
       });
@@ -28,5 +27,5 @@ export const useResetAlumniContactsFilter = () => {
     }
 
     prevPathnameRef.current = pathname;
-  }, [pathname, router, searchParams]);
+  }, [pathname, router]);
 };
