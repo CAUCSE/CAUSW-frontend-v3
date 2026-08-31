@@ -60,5 +60,6 @@ export {
   formatAlumniContactsPeriod,
   getAlumniContactSnsType,
   getValidAlumniContactsSocialLinkUrl,
+  normalizeAlumniContactsDepartments,
 } from './lib';
 export { alumniContactsHandler } from './mock';

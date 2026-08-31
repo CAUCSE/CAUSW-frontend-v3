@@ -1,17 +1,16 @@
-export type AlumniContactsDepartmentFilterOption =
-  | 'DEPT_OF_AI'
-  | 'SCHOOL_OF_SW'
-  | 'SCHOOL_OF_CSE'
-  | 'DEPT_OF_CSE'
-  | 'DEPT_OF_CS';
+import {
+  ACCOUNT_DEPARTMENT_LABEL,
+  type AccountDepartment,
+} from '@/entities/user';
 
-export const ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION: Record<
+export type AlumniContactsDepartmentFilterOption = AccountDepartment;
+
+export const ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION = Object.fromEntries(
+  Object.entries(ACCOUNT_DEPARTMENT_LABEL).map(([value, label]) => {
+    const department = value as AlumniContactsDepartmentFilterOption;
+    return [department, { label, value: department }];
+  }),
+) as Record<
   AlumniContactsDepartmentFilterOption,
   { label: string; value: AlumniContactsDepartmentFilterOption }
-> = {
-  DEPT_OF_AI: { label: 'AI학과', value: 'DEPT_OF_AI' },
-  SCHOOL_OF_SW: { label: '소프트웨어학부', value: 'SCHOOL_OF_SW' },
-  SCHOOL_OF_CSE: { label: '컴퓨터공학부', value: 'SCHOOL_OF_CSE' },
-  DEPT_OF_CSE: { label: '컴퓨터공학과', value: 'DEPT_OF_CSE' },
-  DEPT_OF_CS: { label: '전산학과', value: 'DEPT_OF_CS' },
-};
+>;

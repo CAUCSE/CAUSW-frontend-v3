@@ -12,6 +12,8 @@ import {
   type AlumniContactsSortFilterOption,
 } from '../config';
 
+import { normalizeAlumniContactsDepartments } from './normalizeAlumniContactsDepartments';
+
 const admissionYearSchema = z
   .string()
   .regex(/^\d+$/)
@@ -58,8 +60,10 @@ export const AlumniContactsFilterSearchParam = z
           ),
         );
       })
-      .transform(
-        (value) => value.split(',') as AlumniContactsDepartmentFilterOption[],
+      .transform((value) =>
+        normalizeAlumniContactsDepartments(
+          value.split(',') as AlumniContactsDepartmentFilterOption[],
+        ),
       )
       .optional(),
     sortType: z
