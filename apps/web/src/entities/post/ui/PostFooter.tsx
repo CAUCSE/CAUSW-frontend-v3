@@ -1,6 +1,6 @@
 import { Comment, Heart, HStack, Text, Eye } from '@causw/cds';
 
-import { formatRelativeTime } from '@/shared/lib/format/date';
+import { formatRelativeTime } from '@/shared/lib/format';
 
 import { type GetPostResponseDto } from '../model';
 
