@@ -6,6 +6,8 @@ import Link from 'next/link';
 
 import { HStack, Search, VStack } from '@causw/cds';
 
+import { PostListToolbarLoadingView } from '@/widgets/post-list';
+
 import { AlumniContactsCommunityTab } from '@/features/alumni';
 
 import { ROUTES } from '@/shared/constants';
@@ -26,7 +28,7 @@ export const CommunityStickyHeader = () => {
 
       <CommunityCollapsibleHeader>
         <QueryErrorBoundary FallbackComponent={() => null}>
-          <Suspense fallback={null}>
+          <Suspense fallback={<PostListToolbarLoadingView />}>
             <CommunityToolbarSection />
           </Suspense>
         </QueryErrorBoundary>

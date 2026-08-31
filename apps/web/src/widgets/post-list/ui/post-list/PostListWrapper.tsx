@@ -10,7 +10,6 @@ import { BOARD_GROUP, type Board, type BoardGroup } from '@/entities/board';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
-import { SuspenseView } from '@/shared/ui';
 
 import {
   POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
@@ -19,6 +18,7 @@ import {
 import { usePostListScrollRestoration } from '../../model';
 
 import { PostList } from './PostList';
+import { PostListLoadingView } from './PostListLoadingView';
 
 interface PostListWrapperProps {
   boardIds: Board['id'][];
@@ -67,7 +67,7 @@ export const PostListWrapper = ({
   const { isMobileSize } = useBreakpoint();
 
   if (isLoading) {
-    return <SuspenseView />;
+    return <PostListLoadingView />;
   }
 
   if (isMobileSize) {

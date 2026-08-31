@@ -9,7 +9,6 @@ import {
 import { BOARD_GROUP } from '@/entities/board';
 
 import { useFeedMain } from '../../model';
-import { FeedStickyHeader } from '../feed-sticky-header';
 
 export const FeedMain = () => {
   const { data: boards, filteredBoardIds } = useFeedMain();
@@ -19,12 +18,9 @@ export const FeedMain = () => {
   });
 
   return (
-    <>
-      <FeedStickyHeader />
-      <PostListWrapper
-        boardIds={filteredBoardIds}
-        boardGroup={BOARD_GROUP.NOTICE}
-      />
-    </>
+    <PostListWrapper
+      boardIds={filteredBoardIds}
+      boardGroup={BOARD_GROUP.NOTICE}
+    />
   );
 };

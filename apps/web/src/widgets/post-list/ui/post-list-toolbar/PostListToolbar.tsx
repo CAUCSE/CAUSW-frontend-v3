@@ -1,3 +1,5 @@
+'use client';
+
 import { HStack } from '@causw/cds';
 
 import { type Board } from '@/entities/board';

@@ -1,5 +1,7 @@
 import { HStack, Skeleton, VStack, Grid } from '@causw/cds';
 
+const ALUMNI_CONTACTS_DETAIL_LIST_SKELETON_ITEM_COUNT = 5;
+
 export const AlumniContactsDetailMainLoadingView = () => {
   return (
     <>
@@ -21,13 +23,17 @@ export const AlumniContactsDetailMainLoadingView = () => {
           </Grid>
         </VStack>
       </VStack>
-      <VStack className="grow bg-white px-6 py-4 md:rounded-b-lg md:border md:border-t-0 md:border-gray-200">
-        <Skeleton
-          height="100%"
-          width="100%"
-          minHeight={400}
-          className="rounded-lg"
-        />
+      <VStack className="grow bg-white px-4 py-4 md:rounded-b-lg md:border md:border-t-0 md:border-gray-200 md:px-5">
+        {Array.from({
+          length: ALUMNI_CONTACTS_DETAIL_LIST_SKELETON_ITEM_COUNT,
+        }).map((_, index) => (
+          <Skeleton
+            key={index}
+            width="100%"
+            height={145}
+            className="rounded-md"
+          />
+        ))}
       </VStack>
     </>
   );

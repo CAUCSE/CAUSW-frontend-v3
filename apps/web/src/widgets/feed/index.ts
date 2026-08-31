@@ -1,1 +1,1 @@
-export { FeedHeader, FeedMainServerComponent } from './ui';
+export { FeedHeader, FeedMainServerComponent, FeedStickyHeader } from './ui';

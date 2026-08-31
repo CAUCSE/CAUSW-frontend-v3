@@ -1,3 +1,5 @@
+'use client';
+
 import { Tab } from '@causw/cds';
 
 import { type Board } from '@/entities/board';
