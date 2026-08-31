@@ -1,1 +1,1 @@
-export * from './LatestSystemNoticeHeader';
+export { LatestSystemNoticeHeader } from './latest-system-notice-header';

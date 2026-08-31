@@ -1,0 +1,1 @@
+export { LatestSystemNoticeContent } from './LatestSystemNoticeContent';

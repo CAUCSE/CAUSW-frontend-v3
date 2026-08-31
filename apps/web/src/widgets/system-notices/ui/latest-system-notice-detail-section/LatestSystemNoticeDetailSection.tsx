@@ -8,7 +8,9 @@ import { useMarkSystemNoticeAsRead } from '@/features/system-notices';
 
 import { useSystemNoticeLatest } from '@/entities/system-notices';
 
-import { LatestSystemNoticeContent } from './LatestSystemNoticeContent';
+import { LatestSystemNoticeContent } from '../latest-system-notice-content';
+
+import { LatestSystemNoticeDetailSectionEmptyView } from './LatestSystemNoticeDetailSectionEmptyView';
 
 export const LatestSystemNoticeDetailSection = () => {
   const { data: notice } = useSystemNoticeLatest();
@@ -16,6 +18,7 @@ export const LatestSystemNoticeDetailSection = () => {
   const markedNoticeIdRef = useRef<string | null>(null);
 
   useEffect(() => {
+    if (!notice.id) return;
     if (notice.isRead) return;
     if (markedNoticeIdRef.current === notice.id) return;
 
@@ -26,6 +29,10 @@ export const LatestSystemNoticeDetailSection = () => {
       },
     });
   }, [notice.id, notice.isRead, markAsRead]);
+
+  if (!notice.id) {
+    return <LatestSystemNoticeDetailSectionEmptyView />;
+  }
 
   return (
     <VStack
