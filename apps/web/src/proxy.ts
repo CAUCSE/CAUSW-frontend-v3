@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, userAgent } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 import {
@@ -18,6 +18,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get(STORAGE_ACCESS_KEY)?.value ?? '';
   const refreshToken = request.cookies.get(STORAGE_REFRESH_KEY)?.value ?? '';
+  const { device } = userAgent(request);
   const isCapacitor =
     request.headers.get('user-agent')?.includes('CAUSWCapacitor') ?? false;
 
@@ -41,6 +42,10 @@ export async function proxy(request: NextRequest) {
   const cookieOptions =
     await AuthOptionManager.getCookieOptionsInMiddleware(request);
 
+  //  기기 타입이 모바일(또는 태블릿)이면 토큰 검사 없이 바로 통과
+  if (device.type === 'mobile' || device.type === 'tablet') {
+    return NextResponse.next();
+  }
   if (!accessToken && !refreshToken) {
     return NextResponse.redirect(new URL('/auth/sign-in', request.url));
   }
