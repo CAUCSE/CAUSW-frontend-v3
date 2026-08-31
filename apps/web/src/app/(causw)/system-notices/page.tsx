@@ -1,5 +1,5 @@
-import { SystemNoticeDetailPage } from '@/_pages/system-notices';
+import { LatestSystemNoticePage } from '@/_pages/system-notices';
 
 export default function Page() {
-  return <SystemNoticeDetailPage />;
+  return <LatestSystemNoticePage />;
 }
