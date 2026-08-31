@@ -1,4 +1,4 @@
-import { PostDetailPage } from '@/_pages/feed';
+import { FeedPostDetailPage } from '@/_pages/feed';
 
 export default async function Page({
   params,
@@ -7,5 +7,5 @@ export default async function Page({
 }) {
   const { postId } = await params;
 
-  return <PostDetailPage postId={postId} />;
+  return <FeedPostDetailPage postId={postId} />;
 }

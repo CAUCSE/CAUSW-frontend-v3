@@ -1,1 +1,1 @@
-export * from './PostWritePage';
+export * from './CommunityPostWritePage';

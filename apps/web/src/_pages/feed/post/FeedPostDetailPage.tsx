@@ -12,21 +12,18 @@ import {
   SuspenseView,
 } from '@/shared/ui';
 
-export const PostDetailPage = ({ postId }: { postId: string }) => {
+export const FeedPostDetailPage = ({ postId }: { postId: string }) => {
   return (
     <div className="mx-auto flex h-screen max-w-225 flex-col md:px-5 md:pb-5">
       <ActionHeader background="white">
-        <ActionHeader.BackButton fallbackHref={ROUTES.COMMUNITY}>
+        <ActionHeader.BackButton fallbackHref={ROUTES.FEED}>
           뒤로
         </ActionHeader.BackButton>
       </ActionHeader>
 
       <QueryErrorBoundary fallbackMessage="게시글을 불러오지 못했어요.">
         <HydrationSuspense fallback={<SuspenseView />}>
-          <PostDetailSection
-            postId={postId}
-            boardGroup={BOARD_GROUP.COMMUNITY}
-          />
+          <PostDetailSection postId={postId} boardGroup={BOARD_GROUP.NOTICE} />
         </HydrationSuspense>
       </QueryErrorBoundary>
     </div>

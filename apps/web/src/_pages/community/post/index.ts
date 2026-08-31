@@ -1,1 +1,1 @@
-export * from './PostDetailPage';
+export * from './CommunityPostDetailPage';
