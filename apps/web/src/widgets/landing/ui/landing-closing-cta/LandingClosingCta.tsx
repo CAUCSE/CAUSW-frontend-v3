@@ -4,7 +4,7 @@ import { Text, VStack } from '@causw/cds';
 
 import { ScrollReveal } from '@/shared/ui';
 
-import { LandingStoreCTA } from '../landing-store-cta/LadingStoreCTA';
+import { LandingStoreCTA } from '../landing-store-cta';
 
 export const LandingClosingCTA = () => {
   return (
@@ -33,7 +33,7 @@ export const LandingClosingCTA = () => {
             웹으로도 크자회를 이용할 수 있어요.
           </Text>
         </VStack>
-        <LandingStoreCTA />
+        <LandingStoreCTA placement="closing_cta" />
       </VStack>
     </ScrollReveal>
   );

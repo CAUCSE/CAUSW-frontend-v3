@@ -37,7 +37,7 @@ export const LandingHero = () => {
           }
         </Text>
       </VStack>
-      <LandingStoreCTA />
+      <LandingStoreCTA placement="hero" />
     </VStack>
   );
 };

@@ -1,6 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Text } from '@causw/cds';
+
+import { trackLandingEvent } from '@/features/landing';
 
 export const LandingHeader = () => {
   return (
@@ -10,6 +14,11 @@ export const LandingHeader = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="rounded-sm bg-gray-700 px-3 py-2 hover:bg-gray-700!"
+        onClick={() =>
+          trackLandingEvent('landing_website_click', {
+            placement: 'header',
+          })
+        }
       >
         <Text typography="body-14-medium" textColor="white" className="w-25.5">
           웹 사이트 이용하기
