@@ -1,0 +1,1 @@
+export { LatestSystemNoticeFooter } from './LatestSystemNoticeFooter';

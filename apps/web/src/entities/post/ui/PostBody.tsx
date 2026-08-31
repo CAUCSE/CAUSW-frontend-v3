@@ -10,9 +10,8 @@ import {
 
 import { Text, VStack } from '@causw/cds';
 
+import { useLinkifiedText } from '@/shared/hooks';
 import { sanitizeHtml } from '@/shared/lib/sanitizer';
-
-import { useLinkifiedText } from '../model';
 
 import { PostImage } from './PostImage';
 

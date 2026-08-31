@@ -21,6 +21,7 @@ export const ROUTES = Object.freeze({
   SETTING: '/setting',
   PROFILE: '/profile',
   MY_FEED: '/my-feed',
+  SYSTEM_NOTICES: '/system-notices',
 } as const);
 
 export const ADMIN_ROUTES = Object.freeze({
