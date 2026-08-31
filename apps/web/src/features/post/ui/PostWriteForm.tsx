@@ -20,7 +20,6 @@ import {
 import { useNativeBackGuard } from '@/shared/hooks';
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
-// import { createEmptyVote } from '../lib';
 import { mapPostCreateFormToDto, mapPostUpdateFormToDto } from '../lib/mappers';
 import { useCreatePostMutation, useUpdatePostMutation } from '../model';
 
@@ -181,15 +180,6 @@ export const PostWriteForm = ({
         <Dialog.Footer>
           <PostWriteFooter
             onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
-            // TODO: 투표 기능 API 구현/연동 완료 시 주석 해제
-            // onClickVote={() => {
-            //   if (!currentVote) {
-            //     setValue('vote', createEmptyVote(), {
-            //       shouldValidate: true,
-            //       shouldDirty: true,
-            //     });
-            //   }
-            // }}
             isAnonymous={isAnonymous}
             onChangeAnonymous={(val) =>
               setValue('isAnonymous', val, { shouldDirty: true })
