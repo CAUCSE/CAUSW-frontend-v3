@@ -1,4 +1,4 @@
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 
 import { getPostDetailPath } from './postDetailPath';
 

@@ -4,7 +4,7 @@ import { useState, type KeyboardEvent, type MouseEvent } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { getPostDetailPath, type PostResponseDto } from '@/entities/post';
 
 import { useSessionStorage } from '@/shared/hooks';

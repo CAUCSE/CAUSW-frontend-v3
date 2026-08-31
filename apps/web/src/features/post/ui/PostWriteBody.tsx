@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 import { type VoteWriteValue } from '@/entities/post';
 
 import { VoteField } from './VoteField';

@@ -1,6 +1,6 @@
 'use client';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { usePostQuery } from '@/entities/post';
 
 import { PostWriteForm } from './PostWriteForm';

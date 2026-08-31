@@ -6,7 +6,7 @@ import {
   useNormalizeBoardTabParam,
 } from '@/widgets/post-list';
 
-import { BOARD_GROUP } from '@/entities/feed';
+import { BOARD_GROUP } from '@/entities/board';
 
 import { useFeedMain } from '../../model';
 import { FeedStickyHeader } from '../feed-sticky-header';

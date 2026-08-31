@@ -4,7 +4,7 @@ import { VStack } from '@causw/cds';
 
 import { SearchInput } from '@/features/search';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 
 import { ActionHeader } from '@/shared/ui';
 

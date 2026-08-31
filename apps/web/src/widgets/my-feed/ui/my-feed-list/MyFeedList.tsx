@@ -12,7 +12,8 @@ import {
   usePostListScrollRestoration,
 } from '@/widgets/post-list';
 
-import { BOARD_GROUP, useMyFeedView } from '@/entities/feed';
+import { BOARD_GROUP } from '@/entities/board';
+import { useMyFeedView } from '@/entities/my-feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useInfiniteScroll } from '@/shared/hooks';

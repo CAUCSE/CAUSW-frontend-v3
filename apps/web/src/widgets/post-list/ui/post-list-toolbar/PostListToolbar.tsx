@@ -1,6 +1,6 @@
 import { HStack } from '@causw/cds';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 import { type PostViewMode } from '@/entities/post';
 
 import { PostBoardTabs } from '../post-board-tabs';

@@ -4,7 +4,7 @@ import { type RefObject } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { SuspenseView } from '@/shared/ui';

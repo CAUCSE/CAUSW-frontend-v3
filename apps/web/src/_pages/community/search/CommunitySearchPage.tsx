@@ -14,7 +14,7 @@ import {
   SearchResultList,
 } from '@/widgets/search';
 
-import { BOARD_GROUP, boardQueryOptions } from '@/entities/feed';
+import { BOARD_GROUP, boardQueryOptions } from '@/entities/board';
 import { SearchPendingKeywordProvider } from '@/entities/search';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';

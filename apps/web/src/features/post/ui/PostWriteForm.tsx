@@ -10,7 +10,7 @@ import {
   type Board,
   type BoardGroup,
   useGetWritableBoards,
-} from '@/entities/feed';
+} from '@/entities/board';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,

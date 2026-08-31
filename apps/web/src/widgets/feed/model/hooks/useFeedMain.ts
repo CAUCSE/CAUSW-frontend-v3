@@ -5,7 +5,7 @@ import {
   useBoardTabSelection,
 } from '@/widgets/post-list';
 
-import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/feed';
+import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/board';
 
 export const useFeedMain = () => {
   const { data } = useGetAvailableBoards({ boardGroup: BOARD_GROUP.NOTICE });

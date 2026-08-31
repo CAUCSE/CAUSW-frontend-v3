@@ -1,4 +1,4 @@
-import { BOARD_GROUP, type BoardGroup } from '@/entities/feed';
+import { BOARD_GROUP, type BoardGroup } from '@/entities/board';
 
 import { ROUTES } from '@/shared/constants';
 

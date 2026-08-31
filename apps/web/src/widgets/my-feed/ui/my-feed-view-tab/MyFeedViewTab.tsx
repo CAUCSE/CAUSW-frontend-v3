@@ -8,7 +8,7 @@ import {
   MY_FEED_VIEW_LABEL,
   type MyFeedView,
   useMyFeedView,
-} from '@/entities/feed';
+} from '@/entities/my-feed';
 
 export const MyFeedViewTab = () => {
   const { myFeedView, setMyFeedView } = useMyFeedView();

@@ -1,6 +1,6 @@
 import { CommentGrayColored, Text, VStack } from '@causw/cds';
 
-import { MY_FEED_VIEW_LABEL, type MyFeedView } from '@/entities/feed';
+import { MY_FEED_VIEW_LABEL, type MyFeedView } from '@/entities/my-feed';
 
 interface MyFeedListEmptyViewProps {
   myFeedView: MyFeedView;

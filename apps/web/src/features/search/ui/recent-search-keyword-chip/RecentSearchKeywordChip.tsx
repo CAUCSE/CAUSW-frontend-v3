@@ -2,7 +2,7 @@
 
 import { Button, Chip, Close } from '@causw/cds';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 
 import { useRecentSearchKeywordChip } from '../../model';
 

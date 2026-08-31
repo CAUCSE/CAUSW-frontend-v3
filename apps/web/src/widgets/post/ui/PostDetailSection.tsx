@@ -6,8 +6,8 @@ import { Stack, VStack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
+import { type BoardGroup } from '@/entities/board';
 import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
-import { type BoardGroup } from '@/entities/feed';
 import { usePostQuery } from '@/entities/post';
 
 import { CommentList } from './CommentList';

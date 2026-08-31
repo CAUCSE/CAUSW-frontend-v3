@@ -4,7 +4,7 @@ import { Button, HStack, Text, VStack } from '@causw/cds';
 
 import { RecentSearchKeywordChip } from '@/features/search';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import {
   useSearchKeyword,
   useSearchPendingKeywordContext,

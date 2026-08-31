@@ -2,7 +2,7 @@
 
 import { PostDetailSection } from '@/widgets/post';
 
-import { BOARD_GROUP } from '@/entities/feed';
+import { BOARD_GROUP } from '@/entities/board';
 
 import { ROUTES } from '@/shared/constants';
 import {

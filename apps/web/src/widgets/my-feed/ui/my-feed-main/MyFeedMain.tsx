@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { MY_FEED_VIEW_LABEL, type MyFeedView } from '@/entities/feed';
+import { MY_FEED_VIEW_LABEL, type MyFeedView } from '@/entities/my-feed';
 
 import { QueryErrorBoundary, SuspenseView } from '@/shared/ui';
 

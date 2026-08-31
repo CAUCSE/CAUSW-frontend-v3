@@ -4,7 +4,7 @@ import { ArrowDown, Check, Dropdown, HStack, Text } from '@causw/cds';
 
 import { POST_LIST_TAB } from '@/widgets/post-list';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 
 const ALL_CHANNEL_LABEL = '전체';
 const ALL_CHANNEL_TRIGGER_LABEL = '채널 전체';

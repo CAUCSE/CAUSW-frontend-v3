@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import { FloatingActionButton, Plus, Text } from '@causw/cds';
 
-import { useGetWritableBoards, type BoardGroup } from '@/entities/feed';
+import { useGetWritableBoards, type BoardGroup } from '@/entities/board';
 import { getPostWritePath } from '@/entities/post';
 
 interface PostWriteFloatingActionButtonProps {

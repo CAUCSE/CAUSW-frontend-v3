@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useBlockUserByPostMutation } from '@/features/block';
 import { useReportPostMutation } from '@/features/report';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { getPostEditPath } from '@/entities/post';
 import { type ReportReason } from '@/entities/report';
 

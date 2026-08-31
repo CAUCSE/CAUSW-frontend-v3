@@ -2,7 +2,7 @@
 
 import { Button, CloseFilled, Search, TextInput } from '@causw/cds';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 
 import { useSearchInput } from '../../model';
 

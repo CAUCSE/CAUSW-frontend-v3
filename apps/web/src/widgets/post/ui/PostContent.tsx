@@ -12,7 +12,7 @@ import {
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import {
   type GetPostResponseDto,
   PostBody,

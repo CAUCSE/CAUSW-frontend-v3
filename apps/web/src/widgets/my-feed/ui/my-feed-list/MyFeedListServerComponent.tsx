@@ -6,7 +6,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { type MyFeedView } from '@/entities/feed';
+import { type MyFeedView } from '@/entities/my-feed';
 import { postQueryOptions } from '@/entities/post';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';

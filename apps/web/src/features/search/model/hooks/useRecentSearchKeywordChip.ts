@@ -2,7 +2,7 @@
 
 import { type MouseEvent } from 'react';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import {
   RECENT_SEARCH_KEYWORD_STORAGE_INITIAL_VALUE,
   getRecentSearchKeywordStorageKey,

@@ -10,7 +10,7 @@ import {
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import {
   POST_VIEW_MODE,
   type PostViewMode,

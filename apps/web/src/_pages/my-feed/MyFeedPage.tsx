@@ -1,8 +1,8 @@
 import { HStack, VStack } from '@causw/cds';
 
-import { MyFeedHeader, MyFeedListToolbar, MyFeedMain } from '@/widgets/feed';
+import { MyFeedHeader, MyFeedListToolbar, MyFeedMain } from '@/widgets/my-feed';
 
-import { type MyFeedView } from '@/entities/feed';
+import { type MyFeedView } from '@/entities/my-feed';
 
 interface MyFeedPageProps {
   view: MyFeedView;

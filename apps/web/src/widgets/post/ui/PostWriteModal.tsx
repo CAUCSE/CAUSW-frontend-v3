@@ -8,7 +8,7 @@ import { Dialog, mergeStyles } from '@causw/cds';
 
 import { PostEditForm, PostWriteForm } from '@/features/post';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 
 import { confirmNativeBackGuard, useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';

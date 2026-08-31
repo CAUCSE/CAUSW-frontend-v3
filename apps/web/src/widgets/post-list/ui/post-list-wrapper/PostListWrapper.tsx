@@ -6,7 +6,7 @@ import { PullToRefresh } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
-import { BOARD_GROUP, type Board, type BoardGroup } from '@/entities/feed';
+import { BOARD_GROUP, type Board, type BoardGroup } from '@/entities/board';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';

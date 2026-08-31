@@ -1,6 +1,6 @@
 import { Tab } from '@causw/cds';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 
 import { POST_LIST_TAB } from '../../config';
 

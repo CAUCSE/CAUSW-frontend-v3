@@ -6,4 +6,3 @@ export type {
   GetAvailableBoardListQuery,
   GetWritableBoardListQuery,
 } from './types';
-export { useMyFeedView } from './hooks';

@@ -1,4 +1,4 @@
-import { type Board, type BoardGroup } from '@/entities/feed';
+import { type Board, type BoardGroup } from '@/entities/board';
 
 export interface GetPostsQuery {
   boardIds: Board['id'][];

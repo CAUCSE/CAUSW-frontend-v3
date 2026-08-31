@@ -10,7 +10,7 @@ import {
   usePostListScrollRestoration,
 } from '@/widgets/post-list';
 
-import { type BoardGroup, boardQueryOptions } from '@/entities/feed';
+import { type BoardGroup, boardQueryOptions } from '@/entities/board';
 import {
   getPostWritePath,
   postQueryOptions,

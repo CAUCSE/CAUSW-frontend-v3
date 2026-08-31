@@ -1,6 +1,6 @@
 import { Separator } from '@causw/cds';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { type PostListScrollRestorationStorageKey } from '../../config';

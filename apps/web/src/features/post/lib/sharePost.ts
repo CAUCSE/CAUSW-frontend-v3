@@ -1,6 +1,6 @@
 import { Share } from '@capacitor/share';
 
-import { type BoardGroup } from '@/entities/feed';
+import { type BoardGroup } from '@/entities/board';
 import { postShareUrl } from '@/entities/post';
 
 import { isMobile } from '@/shared/utils';

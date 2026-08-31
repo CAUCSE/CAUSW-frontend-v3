@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 
 import {
   POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
