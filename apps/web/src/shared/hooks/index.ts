@@ -13,3 +13,4 @@ export * from './useEventCallback';
 export * from './useIsomorphicLayoutEffect';
 export * from './useNativeBackGuard';
 export * from './useSessionStorage';
+export * from './useLinkifiedText';

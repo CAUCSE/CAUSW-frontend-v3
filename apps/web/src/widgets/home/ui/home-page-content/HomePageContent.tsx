@@ -9,10 +9,8 @@ import {
   CeremonyListPreview,
   CeremonyRegisterBanner,
 } from '@/widgets/ceremony';
-import {
-  NotificationMobileHeader,
-  // NotificationPopupCard,
-} from '@/widgets/notification';
+import { NotificationMobileHeader } from '@/widgets/notification';
+import { LatestSystemNoticePopupCard } from '@/widgets/system-notices';
 import { UserGreetingHeader } from '@/widgets/user';
 
 import { useMyInfoSuspenseQuery } from '@/entities/auth';
@@ -36,6 +34,10 @@ export function HomePageContent() {
       </div>
 
       <VStack className="desktop:gap-6 gap-4">
+        <Suspense fallback={null}>
+          <LatestSystemNoticePopupCard />
+        </Suspense>
+
         {isAlumni && (
           <div className="desktop:block hidden">
             <CeremonyRegisterBanner />
