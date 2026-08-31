@@ -5,4 +5,5 @@ export {
   LandingAlumniConnection,
   LandingClosingCTA,
   LandingFooter,
+  LandingHeader,
 } from './ui';

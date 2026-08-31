@@ -4,3 +4,4 @@ export { LandingFeatures } from './landing-features';
 export { LandingAlumniConnection } from './landing-alumni-connection';
 export { LandingClosingCTA } from './landing-closing-cta';
 export { LandingFooter } from './landing-footer';
+export { LandingHeader } from './landing-header';

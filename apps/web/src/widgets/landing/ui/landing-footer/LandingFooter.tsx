@@ -8,7 +8,7 @@ export const LandingFooter = () => {
       <VStack className="flex-1 gap-3">
         <Image
           src="/images/ccssaa-logo.png"
-          alt="CCSSAA"
+          alt="CCSSAA Logo"
           width={90}
           height={14}
         />
@@ -28,7 +28,7 @@ export const LandingFooter = () => {
       >
         <Image
           src="/images/landing/brand/instagram.svg"
-          alt=""
+          alt="CCSSAA Instagram Link"
           width={24}
           height={24}
         />

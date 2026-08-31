@@ -9,7 +9,7 @@ export const LANDING_PROBLEM_CARDS = [
     image: '/images/landing/problem/problem-missed-notice.png',
     imageAlt: '마감된 공지 화면',
     title: '마감이 지났거나, 직전에 발견한 공지',
-    description: '모두들 한 번쯤은 있으실 거에요',
+    description: '모두들 한 번쯤은 있으실 거에요.',
   },
   {
     image: '/images/landing/problem/problem-hard-to-find-information.png',
