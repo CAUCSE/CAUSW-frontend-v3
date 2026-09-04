@@ -11,7 +11,7 @@ export const LANDING_FEATURE_CARDS = [
     imageAlt: '크자회에서 확인하는 공지',
     title: '흩어진 정보를 크자회 하나로',
     description:
-      '소프트웨어대학의 모든 공지 · 행사 · 학사일정을\n하나로 모았어요.',
+      '소프트웨어대학과 동문회에서 전하는\n다양한 공지를 한 번에 확인할 수 있어요.',
   },
   {
     image: '/images/landing/features/feature-push-alert.png',
