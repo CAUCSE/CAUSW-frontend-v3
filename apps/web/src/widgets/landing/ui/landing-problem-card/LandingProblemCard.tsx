@@ -28,7 +28,7 @@ export const LandingProblemCard = ({
       </div>
       <VStack className="w-full" gap="xs">
         <Text
-          className="desktop:block hidden"
+          className="desktop:block hidden whitespace-pre"
           typography="title-22-bold"
           textColor="gray-800"
         >
