@@ -19,4 +19,3 @@ export * from './header';
 export * from './profile-avatar';
 export * from './scroll-top-button';
 export { YearMonthField } from './year-month-field';
-export { ScrollReveal } from './motions';

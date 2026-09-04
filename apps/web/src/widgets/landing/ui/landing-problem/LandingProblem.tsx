@@ -1,9 +1,8 @@
 import { Text, VStack } from '@causw/cds';
 
-import { ScrollReveal } from '@/shared/ui';
-
 import { LANDING_PROBLEM_CARDS } from '../../config';
 import { LandingProblemCard } from '../landing-problem-card';
+import { ScrollReveal } from '../scroll-reveal';
 
 export const LandingProblem = () => {
   return (

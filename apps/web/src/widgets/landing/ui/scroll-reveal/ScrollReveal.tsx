@@ -9,11 +9,11 @@ interface ScrollRevealProps extends PropsWithChildren {
   className?: string;
 }
 
-export function ScrollReveal({
+export const ScrollReveal = ({
   children,
   playOnce = false,
   className,
-}: ScrollRevealProps) {
+}: ScrollRevealProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -33,4 +33,4 @@ export function ScrollReveal({
       {children}
     </motion.div>
   );
-}
+};

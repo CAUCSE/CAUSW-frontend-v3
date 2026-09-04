@@ -5,3 +5,4 @@ export { LandingAlumniConnection } from './landing-alumni-connection';
 export { LandingClosingCTA } from './landing-closing-cta';
 export { LandingFooter } from './landing-footer';
 export { LandingHeader } from './landing-header';
+export { ScrollReveal } from './scroll-reveal';

@@ -2,9 +2,8 @@ import Image from 'next/image';
 
 import { Text, VStack } from '@causw/cds';
 
-import { ScrollReveal } from '@/shared/ui';
-
 import { LandingStoreCTA } from '../landing-store-cta';
+import { ScrollReveal } from '../scroll-reveal';
 
 export const LandingClosingCTA = () => {
   return (

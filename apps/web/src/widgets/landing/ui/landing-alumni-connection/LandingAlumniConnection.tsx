@@ -1,9 +1,8 @@
 import { Text, VStack } from '@causw/cds';
 
-import { ScrollReveal } from '@/shared/ui';
-
 import { LANDING_ALUMNI_CONNECTION_CARDS } from '../../config';
 import { LandingAlumniConnectionCard } from '../landing-alumni-connection-card';
+import { ScrollReveal } from '../scroll-reveal';
 
 export const LandingAlumniConnection = () => {
   return (

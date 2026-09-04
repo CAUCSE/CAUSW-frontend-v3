@@ -1,9 +1,8 @@
 import { Text, VStack } from '@causw/cds';
 
-import { ScrollReveal } from '@/shared/ui';
-
 import { LANDING_FEATURE_CARDS } from '../../config';
 import { LandingFeatureCard } from '../landing-feature-card/LandingFeatureCard';
+import { ScrollReveal } from '../scroll-reveal';
 
 export const LandingFeatures = () => {
   return (
