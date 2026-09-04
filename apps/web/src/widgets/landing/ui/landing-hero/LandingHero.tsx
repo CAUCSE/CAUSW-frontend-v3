@@ -7,7 +7,7 @@ import { LandingStoreCTA } from '../landing-store-cta';
 export const LandingHero = () => {
   return (
     <VStack as="section" className="mt-30 w-full items-center" gap="lg">
-      <div className="desktop:h-90 relative flex h-[197.82px] w-full items-start justify-center overflow-hidden rounded-2xl bg-linear-to-b from-[#F5F6F8] to-[#E2EFFF]">
+      <div className="desktop:h-90 relative flex h-49.5 w-full items-start justify-center overflow-hidden rounded-2xl bg-linear-to-b from-[#F5F6F8] to-[#E2EFFF]">
         <Image
           src="/images/landing/hero/hero-app-preview.png"
           alt="크자회 앱 미리보기"
