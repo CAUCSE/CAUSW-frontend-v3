@@ -12,9 +12,9 @@ declare global {
   }
 }
 
-export function trackLandingEvent(
+export const trackLandingEvent = (
   eventName: LandingEventName,
   eventParameters: Record<string, string>,
-) {
+) => {
   window.gtag?.('event', eventName, eventParameters);
-}
+};
