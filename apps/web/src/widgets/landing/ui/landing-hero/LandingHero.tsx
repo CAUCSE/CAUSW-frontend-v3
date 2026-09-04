@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { Text, VStack } from '@causw/cds';
 
-import { LandingStoreCTA } from '../landing-store-cta/LadingStoreCTA';
+import { LandingStoreCTA } from '../landing-store-cta';
 
 export const LandingHero = () => {
   return (

@@ -1,1 +1,1 @@
-export { LandingStoreCTA } from './LadingStoreCTA';
+export { LandingStoreCTA } from './LandingStoreCTA';

@@ -10,7 +10,7 @@ export const LandingHeader = () => {
   return (
     <header className="max-w-desktop fixed top-0 z-10 flex h-14 w-full items-center justify-end bg-white px-2.25">
       <Link
-        href="./auth/sign-in"
+        href="/auth/sign-in"
         target="_blank"
         rel="noopener noreferrer"
         className="rounded-sm bg-gray-700 px-3 py-2 hover:bg-gray-700!"
