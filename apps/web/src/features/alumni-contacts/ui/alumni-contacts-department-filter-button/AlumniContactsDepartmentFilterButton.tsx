@@ -20,12 +20,11 @@ export const AlumniContactsDepartmentFilterButton = ({
   });
 
   return (
-    <Button className="h-fit w-fit rounded-md p-0">
+    <Button className="h-fit w-fit rounded-md p-0" onClick={handleClick}>
       <Chip
         size="md"
         color={isSelected ? 'darkgray' : 'lightgray'}
         className="cursor-pointer"
-        onClick={handleClick}
       >
         {label}
       </Chip>
