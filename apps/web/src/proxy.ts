@@ -19,13 +19,21 @@ export async function proxy(request: NextRequest) {
   const accessToken = request.cookies.get(STORAGE_ACCESS_KEY)?.value ?? '';
   const refreshToken = request.cookies.get(STORAGE_REFRESH_KEY)?.value ?? '';
   const { device } = userAgent(request);
+  const isCapacitor =
+    request.headers.get('user-agent')?.includes('CAUSWCapacitor') ?? false;
 
   if (pathname === '/') {
     if (accessToken || refreshToken) {
       return NextResponse.redirect(new URL('/home', request.url));
     }
 
-    return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+    // Capacitor 앱은 기존 루트 진입 흐름을 유지한다.
+    if (isCapacitor) {
+      return NextResponse.redirect(new URL('/auth/sign-in', request.url));
+    }
+
+    // 비로그인 웹 사용자는 랜딩 페이지에 접근한다.
+    return NextResponse.next();
   }
 
   if (isAuthRoute(pathname)) {

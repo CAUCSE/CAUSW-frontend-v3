@@ -1,28 +1,51 @@
-'use client';
+import type { Metadata } from 'next';
 
-import { useRouter } from 'next/navigation';
+import { LandingPage } from '@/_pages/landing';
 
-import { toast } from '@/shared/model';
+import { LANDING_METADATA, SITE_URL } from '@/shared/config';
 
-// TODO : capacitor 앱 테스트를 위한 임시 버튼 생성 -> 해당 페이지 생성 후에 삭제 필요
+export const metadata: Metadata = {
+  title: LANDING_METADATA.title,
+  description: LANDING_METADATA.description,
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@id': `${SITE_URL}/#website`,
+      '@type': 'WebSite',
+      inLanguage: 'ko-KR',
+      name: '크자회(CCSSAA)',
+      url: SITE_URL,
+    },
+    {
+      '@id': `${SITE_URL}/#organization`,
+      '@type': 'Organization',
+      logo: `${SITE_URL}/images/ccssaa-logo.png`,
+      name: '중앙대학교 ICT 위원회',
+      url: SITE_URL,
+    },
+  ],
+};
+
 export default function Page() {
-  const router = useRouter();
   return (
-    <div>
-      <h1>동문 네트워크 - 재학생</h1>
-      <button
-        onClick={() => router.push('/auth/sign-in/email')}
-        className="h-30 w-60 rounded-xl bg-yellow-300"
-      >
-        /home으로 이동
-      </button>
-
-      <button
-        onClick={() => toast.success('신고가 접수되었어요', { duration: 5000 })} // duration 디폴트는 3000
-        className="h-30 w-60 rounded-xl bg-green-300"
-      >
-        Success Toast
-      </button>
-    </div>
+    <>
+      <LandingPage />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, '\\u003c'),
+        }}
+      />
+    </>
   );
 }
