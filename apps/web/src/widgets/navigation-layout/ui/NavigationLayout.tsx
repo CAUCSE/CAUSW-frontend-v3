@@ -25,8 +25,8 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen md:h-auto md:min-h-screen">
-      {/* Desktop Sidebar - 레이아웃 폭만 차지하는 spacer (실제 사이드바는 fixed로 별도 렌더링) */}
-      <div className="hidden md:block md:w-65 md:shrink-0" />
+      {/* Desktop Sidebar - 레이아웃 폭만 차지하는 spacer (실제 사이드바는 fixed로 별도 렌더링, CDS Sidebar 폭 64px) */}
+      <div className="hidden md:block md:w-16 md:shrink-0" />
       <div className="hidden md:fixed md:top-0 md:left-0 md:block md:h-screen">
         <SidebarNav selected={sidebarSelected} />
       </div>
