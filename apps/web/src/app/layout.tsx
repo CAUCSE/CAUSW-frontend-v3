@@ -66,6 +66,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  // 하단 홈 인디케이터 영역까지 뷰포트를 확장. safe-area 여백은 env(safe-area-inset-bottom)으로 처리
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({

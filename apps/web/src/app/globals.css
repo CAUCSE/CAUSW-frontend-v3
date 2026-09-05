@@ -14,6 +14,16 @@ html {
   scrollbar-gutter: stable;
 }
 
+:root {
+  /*
+   * 모바일 하단 네비(CDS BottomNavigation 알약) 위로 콘텐츠와 플로팅 요소가 확보해야 할 최소 거리.
+   * = 알약 하단 오프셋 max(16px, safe-area) + 알약 높이 56px + 여백 16px
+   */
+  --mobile-nav-clearance: calc(
+    max(1rem, env(safe-area-inset-bottom, 0px)) + 4.5rem
+  );
+}
+
 @layer utilities {
   /* Title variants */
   .typo-title-48-bold {
