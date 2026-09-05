@@ -1,6 +1,6 @@
 import { MyFeedPage } from '@/_pages/my-feed';
 
-import { normalizeMyFeedView } from '@/entities/feed';
+import { normalizeMyFeedView } from '@/entities/my-feed';
 
 import { type NextSearchParams } from '@/shared/types';
 

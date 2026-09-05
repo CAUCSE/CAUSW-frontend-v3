@@ -1,0 +1,1 @@
+export { useMyFeedView } from './hooks';

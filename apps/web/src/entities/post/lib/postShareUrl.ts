@@ -1,3 +1,7 @@
+import { type BoardGroup } from '@/entities/board';
+
+import { getPostDetailPath } from './postDetailPath';
+
 const getWebOrigin = () => {
   const configuredUrl = process.env.NEXT_PUBLIC_WEB_BASE_URL;
   if (configuredUrl) {
@@ -11,8 +15,8 @@ const getWebOrigin = () => {
   return typeof window === 'undefined' ? null : window.location.origin;
 };
 
-export const postShareUrl = (postId: string) => {
-  const path = `/feed/${encodeURIComponent(postId)}`;
+export const postShareUrl = (boardGroup: BoardGroup, postId: string) => {
+  const path = getPostDetailPath(boardGroup, postId);
   const origin = getWebOrigin();
 
   return origin ? new URL(path, origin).toString() : path;

@@ -1,6 +1,6 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 
-import { MY_FEED_VIEW, type MyFeedView } from '@/entities/feed';
+import { MY_FEED_VIEW, type MyFeedView } from '@/entities/my-feed';
 
 import { QUERY_GC_TIME, QUERY_STALE_TIME } from '@/shared/constants';
 

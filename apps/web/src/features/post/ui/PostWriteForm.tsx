@@ -6,7 +6,11 @@ import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { BOARD_GROUP, type Board, useGetWritableBoards } from '@/entities/feed';
+import {
+  type Board,
+  type BoardGroup,
+  useGetWritableBoards,
+} from '@/entities/board';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,
@@ -16,7 +20,6 @@ import {
 import { useNativeBackGuard } from '@/shared/hooks';
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
-// import { createEmptyVote } from '../lib';
 import { mapPostCreateFormToDto, mapPostUpdateFormToDto } from '../lib/mappers';
 import { useCreatePostMutation, useUpdatePostMutation } from '../model';
 
@@ -27,6 +30,7 @@ import { PostWriteHeader } from './PostWriteHeader';
 
 interface PostWriteFormProps {
   onClose: (isDirty: boolean) => void;
+  boardGroup: BoardGroup;
   postId?: string;
   initialData?: Partial<PostCreateFormValues>;
   initialImages?: string[];
@@ -34,19 +38,18 @@ interface PostWriteFormProps {
 
 export const PostWriteForm = ({
   onClose,
+  boardGroup,
   postId,
   initialData,
   initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
-  const { data: boardData } = useGetWritableBoards({
-    boardGroup: BOARD_GROUP.NOTICE,
-  });
+  const { data: boardData } = useGetWritableBoards({ boardGroup });
   const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
   const { mutate: createPost, isPending: isCreatePostPending } =
-    useCreatePostMutation();
+    useCreatePostMutation(boardGroup);
   const { mutate: updatePost, isPending: isUpdatePostPending } =
     useUpdatePostMutation();
 
@@ -177,15 +180,6 @@ export const PostWriteForm = ({
         <Dialog.Footer>
           <PostWriteFooter
             onClickPhoto={() => imageUploadRef.current?.openFilePicker()}
-            // TODO: 투표 기능 API 구현/연동 완료 시 주석 해제
-            // onClickVote={() => {
-            //   if (!currentVote) {
-            //     setValue('vote', createEmptyVote(), {
-            //       shouldValidate: true,
-            //       shouldDirty: true,
-            //     });
-            //   }
-            // }}
             isAnonymous={isAnonymous}
             onChangeAnonymous={(val) =>
               setValue('isAnonymous', val, { shouldDirty: true })

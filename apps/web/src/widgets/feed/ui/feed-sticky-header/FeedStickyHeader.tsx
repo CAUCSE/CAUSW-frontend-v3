@@ -7,12 +7,12 @@ import { noop } from 'es-toolkit';
 import { mergeStyles, VStack } from '@causw/cds';
 
 import {
-  FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
-  FEED_LIST_TAB,
-  FeedListToolbar,
+  POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  POST_LIST_TAB,
+  PostListToolbar,
 } from '@/widgets/post-list';
 
-import { useFeedViewMode } from '@/entities/feed';
+import { usePostViewMode } from '@/entities/post';
 
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui';
@@ -21,7 +21,7 @@ import { FeedHeader } from '../feed-header';
 
 export const FeedStickyHeader = () => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({
-    containerClassName: FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+    containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
   });
 
   return (
@@ -51,18 +51,18 @@ export const FeedStickyHeader = () => {
 };
 
 const FeedToolbarSection = () => {
-  const { feedViewMode, setFeedViewMode } = useFeedViewMode();
+  const { postViewMode, setPostViewMode } = usePostViewMode();
 
   return (
-    <FeedListToolbar
-      feedViewMode={feedViewMode}
-      onFeedViewModeChange={setFeedViewMode}
+    <PostListToolbar
+      postViewMode={postViewMode}
+      onPostViewModeChange={setPostViewMode}
       // 채널(게시판) 선택은 헤더 드롭다운이 담당한다.
       // 칩 탭은 선택된 채널 내부의 세부 카테고리 축이라 채널 상태와 분리되어야 하며,
       // 아직 해당 API가 없어 '전체'만 고정으로 노출한다.
       // TODO: 세부 카테고리 API가 추가되면 목록과 선택 핸들러를 연결
       boards={[]}
-      selectedTab={FEED_LIST_TAB.ALL}
+      selectedTab={POST_LIST_TAB.ALL}
       onSelectedTabChange={noop}
     />
   );

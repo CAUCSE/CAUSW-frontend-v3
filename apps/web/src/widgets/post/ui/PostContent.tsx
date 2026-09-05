@@ -12,9 +12,11 @@ import {
 } from '@/features/post';
 import { ReportFlow } from '@/features/report';
 
+import { type BoardGroup } from '@/entities/board';
 import {
   type GetPostResponseDto,
   PostBody,
+  PostOriginalLinkAndAttachedFiles,
   PostReactions,
 } from '@/entities/post';
 
@@ -23,10 +25,15 @@ import { ConfirmModal } from '@/shared/ui';
 
 interface PostContentProps {
   post: GetPostResponseDto;
+  boardGroup: BoardGroup;
   onCommentClick: () => void;
 }
 
-export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
+export const PostContent = ({
+  post,
+  boardGroup,
+  onCommentClick,
+}: PostContentProps) => {
   const {
     activeModal,
     handleAction: handleMenuAction,
@@ -34,7 +41,7 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
     submitReport,
     submitBlock,
     submitDelete,
-  } = usePostMenuActions(post.id);
+  } = usePostMenuActions(post.id, boardGroup);
 
   const { mutate: toggleLike, isPending } = useTogglePostLikeMutation(post.id);
 
@@ -44,7 +51,7 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
   };
 
   const handleShareClick = () => {
-    void sharePost(post.id, `${post.boardName} | CAUSW`)
+    void sharePost(boardGroup, post.id, `${post.boardName} | CAUSW`)
       .then((result) => {
         if (result === 'clipboard') toast.success('링크가 복사되었습니다.');
       })
@@ -68,6 +75,11 @@ export const PostContent = ({ post, onCommentClick }: PostContentProps) => {
           content={post.content}
           images={post.fileUrlList}
           isHtml={post.isCrawled}
+        />
+        <PostOriginalLinkAndAttachedFiles
+          originalWriter={post.displayWriterNickname}
+          originalUrl={post.originalNoticeUrl}
+          attachedFiles={post.crawledAttachments}
         />
       </VStack>
 

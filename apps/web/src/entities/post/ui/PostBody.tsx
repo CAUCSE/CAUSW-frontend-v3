@@ -127,7 +127,11 @@ export const PostBody = ({
       </VStack>
 
       {images.length > 0 && (
-        <PostImage images={images} enableViewer={enableImageViewer} />
+        <PostImage
+          images={images}
+          enableViewer={enableImageViewer}
+          sliderClassName="-mr-5 pr-5"
+        />
       )}
     </VStack>
   );

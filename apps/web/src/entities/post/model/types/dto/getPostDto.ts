@@ -1,10 +1,17 @@
 import { type ProfileImageValue } from '@/shared/types';
 
+export interface CrawledAttachment {
+  url: string;
+  name: string;
+}
+
 /* 게시글 단일 조회 */
 export interface GetPostResponseDto {
   id: string;
   title: string | null;
   content: string;
+  crawledAttachments?: CrawledAttachment[];
+  originalNoticeUrl?: string;
   isDeleted: boolean;
   displayWriterNickname: string;
   writerProfileImage: ProfileImageValue;

@@ -1,1 +1,1 @@
-export { CommunityMainServerComponent } from './ui';
+export { CommunityMainServerComponent, CommunityStickyHeader } from './ui';

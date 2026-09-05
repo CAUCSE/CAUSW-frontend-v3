@@ -1,9 +1,1 @@
-﻿export {
-  FeedHeader,
-  FeedMainServerComponent,
-  FeedSearchHeader,
-  FeedRecentSearchKeywordSection,
-  FeedSearchResultList,
-  MyFeedHeader,
-  MyFeedMain,
-} from './ui';
+export { FeedHeader, FeedMainServerComponent, FeedStickyHeader } from './ui';

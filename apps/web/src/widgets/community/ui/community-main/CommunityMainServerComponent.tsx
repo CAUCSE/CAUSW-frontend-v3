@@ -4,7 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { BOARD_GROUP, boardQueryOptions } from '@/entities/feed';
+import { BOARD_GROUP, boardQueryOptions } from '@/entities/board';
 
 import { QUERY_STALE_TIME } from '@/shared/constants';
 

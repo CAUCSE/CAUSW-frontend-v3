@@ -1,0 +1,55 @@
+import { PostHeader, type PostAction } from '@/features/post';
+
+import {
+  PostBody,
+  PostFooter,
+  type GetPostsResponseDto,
+} from '@/entities/post';
+
+import { POST_CONTENT_MAX_LINE } from '../../config';
+
+type Post = GetPostsResponseDto['posts'][number];
+
+interface PostListItemCardContentProps {
+  post: Post;
+  isExpanded: boolean;
+  onExpand: () => void;
+  onMenuAction: (action: PostAction) => void;
+}
+
+export const PostListItemCardContent = ({
+  post,
+  isExpanded,
+  onExpand,
+  onMenuAction,
+}: PostListItemCardContentProps) => {
+  return (
+    <>
+      <PostHeader
+        authorName={post.writerNickname}
+        profileImage={post.writerProfileImage}
+        isMine={post.isOwner}
+        onAction={onMenuAction}
+        hideActionMenu
+      />
+      <PostBody
+        title={post.title}
+        content={post.content}
+        images={post.postImageUrls}
+        enableImageViewer={true}
+        isHtml={post.isCrawled}
+        isCollapsed={!isExpanded}
+        onExpand={onExpand}
+        showExpandButton
+        maxLines={POST_CONTENT_MAX_LINE}
+      />
+      <PostFooter
+        numLike={post.numLike}
+        numComment={post.numComment}
+        isPostLike={post.isPostLike}
+        createdAt={post.createdAt}
+        viewCount={post.viewCount}
+      />
+    </>
+  );
+};

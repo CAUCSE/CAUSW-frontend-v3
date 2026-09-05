@@ -9,9 +9,14 @@ import { ImageSlider, ImageViewer } from '@/shared/ui';
 interface PostImageProps {
   images: string[];
   enableViewer?: boolean;
+  sliderClassName?: string;
 }
 
-export const PostImage = ({ images, enableViewer = true }: PostImageProps) => {
+export const PostImage = ({
+  images,
+  enableViewer = true,
+  sliderClassName,
+}: PostImageProps) => {
   const [viewerState, setViewerState] = useState({
     isOpen: false,
     activeIndex: 0,
@@ -38,6 +43,7 @@ export const PostImage = ({ images, enableViewer = true }: PostImageProps) => {
       <ImageSlider
         images={images}
         onImageClick={enableViewer ? handleImageClick : undefined}
+        className={sliderClassName}
       />
 
       {enableViewer && viewerState.isOpen && (

@@ -1,30 +1,26 @@
 'use client';
 
 import {
-  FEED_LIST_TAB_SEARCH_PARAM_KEY,
-  FeedListWrapper,
+  POST_LIST_TAB_SEARCH_PARAM_KEY,
+  PostListWrapper,
   useNormalizeBoardTabParam,
 } from '@/widgets/post-list';
 
-import { BOARD_GROUP } from '@/entities/feed';
+import { BOARD_GROUP } from '@/entities/board';
 
 import { useFeedMain } from '../../model';
-import { FeedStickyHeader } from '../feed-sticky-header';
 
 export const FeedMain = () => {
   const { data: boards, filteredBoardIds } = useFeedMain();
   useNormalizeBoardTabParam({
     boards,
-    searchParamKey: FEED_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
+    searchParamKey: POST_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
   });
 
   return (
-    <>
-      <FeedStickyHeader />
-      <FeedListWrapper
-        boardIds={filteredBoardIds}
-        boardGroup={BOARD_GROUP.NOTICE}
-      />
-    </>
+    <PostListWrapper
+      boardIds={filteredBoardIds}
+      boardGroup={BOARD_GROUP.NOTICE}
+    />
   );
 };

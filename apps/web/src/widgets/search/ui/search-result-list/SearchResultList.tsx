@@ -1,0 +1,106 @@
+'use client';
+
+import { useInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
+
+import { VStack } from '@causw/cds';
+
+import {
+  POST_LIST_SCROLL_RESTORATION_STORAGE_KEY,
+  PostListItems,
+  usePostListScrollRestoration,
+} from '@/widgets/post-list';
+
+import { type BoardGroup, boardQueryOptions } from '@/entities/board';
+import {
+  getPostWritePath,
+  postQueryOptions,
+  usePostViewMode,
+} from '@/entities/post';
+import { useSearchKeyword } from '@/entities/search';
+
+import { useInfiniteScroll } from '@/shared/hooks';
+import { SuspenseView } from '@/shared/ui';
+
+import { SearchResultListEmptyView } from './SearchResultListEmptyView';
+
+interface SearchResultListProps {
+  boardGroup: BoardGroup;
+}
+
+export const SearchResultList = ({ boardGroup }: SearchResultListProps) => {
+  const { searchKeyword } = useSearchKeyword();
+  const { postViewMode } = usePostViewMode();
+
+  const { data: boardIds } = useSuspenseQuery({
+    ...boardQueryOptions.available({ boardGroup }),
+    select: (data) => data.boards.map((board) => board.id),
+  });
+
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    ...postQueryOptions.list({
+      boardIds,
+      keyword: searchKeyword,
+    }),
+    select: (data) => data.pages.flatMap((page) => page.posts),
+    enabled: !!searchKeyword,
+  });
+
+  const { targetRef } = useInfiniteScroll({
+    intersectionCallback: (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+  });
+
+  usePostListScrollRestoration({
+    storageKey: POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH,
+    enabled: isSuccess,
+    posts,
+  });
+
+  if (!searchKeyword) {
+    return null;
+  }
+
+  if (isLoading) {
+    return <SuspenseView />;
+  }
+
+  if (!posts || posts.length === 0) {
+    return (
+      <SearchResultListEmptyView
+        keyword={searchKeyword}
+        writeHref={getPostWritePath(boardGroup)}
+      />
+    );
+  }
+
+  return (
+    <VStack
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-2 pt-4 md:overflow-visible"
+      as="ul"
+    >
+      <PostListItems
+        posts={posts}
+        viewMode={postViewMode}
+        scrollRestorationStorageKey={
+          POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH
+        }
+        boardGroup={boardGroup}
+      />
+      {!isFetchingNextPage && hasNextPage && (
+        <div ref={targetRef} className="h-3 w-full shrink-0" />
+      )}
+      {isFetchingNextPage && <SuspenseView />}
+    </VStack>
+  );
+};

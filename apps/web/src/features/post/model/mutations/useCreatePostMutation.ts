@@ -4,7 +4,9 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { type BoardGroup } from '@/entities/board';
 import {
+  getPostDetailPath,
   postQueryKeys,
   type PostCreateRequestDto,
   type PostCreateResponseDto,
@@ -21,7 +23,7 @@ interface CreatePostParams {
   images: File[];
 }
 
-export const useCreatePostMutation = () => {
+export const useCreatePostMutation = (boardGroup: BoardGroup) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -33,7 +35,7 @@ export const useCreatePostMutation = () => {
 
       confirmNativeBackGuard(() => router.back());
       requestAnimationFrame(() => {
-        router.push(`/feed/${data.id}`);
+        router.push(getPostDetailPath(boardGroup, data.id));
       });
     },
     onError: (error) => {
