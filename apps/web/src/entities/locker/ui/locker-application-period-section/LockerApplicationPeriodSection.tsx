@@ -6,7 +6,11 @@ import { HStack, Info, Text, VStack } from '@causw/cds';
 
 import { formatDateTimeToKRTime } from '@/shared/lib';
 
-import { lockerQueryOptions } from '../../config';
+import {
+  DEFAULT_LOCKER_APPLICATION_PERIOD_TITLE,
+  LOCKER_APPLICATION_PERIOD_TITLE,
+  lockerQueryOptions,
+} from '../../config';
 
 export const LockerApplicationPeriodSection = () => {
   const { data: lockerApplicationPeriod } = useSuspenseQuery(
@@ -24,7 +28,8 @@ export const LockerApplicationPeriodSection = () => {
       <HStack gap="xs" align="center" className="px-1">
         <Info color="gray-400" size={16} />
         <Text typography="subtitle-16-bold" textColor="gray-700">
-          사물함 신청 기간 안내
+          {LOCKER_APPLICATION_PERIOD_TITLE[lockerApplicationPeriod.phase] ??
+            DEFAULT_LOCKER_APPLICATION_PERIOD_TITLE}
         </Text>
       </HStack>
       <VStack className="rounded-lg bg-white px-5 py-4">

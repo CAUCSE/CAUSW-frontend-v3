@@ -71,6 +71,7 @@ export function CalendarEventList() {
               router.push(`${ROUTES.FEED}/${targetPostId}`);
             }
           }}
+          className="min-w-60"
         />
 
         <VStack className="gap-6">
