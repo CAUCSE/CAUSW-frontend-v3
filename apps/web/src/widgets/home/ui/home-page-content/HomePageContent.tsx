@@ -22,7 +22,7 @@ export function HomePageContent() {
   const isAlumni = myInfo.academicStatus === 'GRADUATED';
 
   return (
-    <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 mx-auto w-full gap-2 px-4 pb-[2.125rem]">
+    <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 tablet:pb-[2.125rem] mx-auto w-full gap-2 px-4 pb-(--mobile-nav-clearance)">
       <div className="tablet:hidden sticky top-0 z-10">
         <NotificationMobileHeader />
       </div>
