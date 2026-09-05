@@ -97,6 +97,10 @@ html {
   .typo-caption-12-regular {
     @apply text-2xs font-regular font-sans leading-normal;
   }
+
+  .typo-caption-11-semibold {
+    @apply text-3xs font-sans leading-normal font-semibold;
+  }
 }
 
 @theme {
