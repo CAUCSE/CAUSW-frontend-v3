@@ -1,5 +1,7 @@
+import type { LockerApplicationPhase } from '../../config';
+
 export interface GetLockerAppicationPeriodResponseDto {
-  phase: 'READY' | 'APPLY' | 'EXTEND' | 'CLOSED';
+  phase: LockerApplicationPhase;
   startAt: string | null;
   endAt: string | null;
 }

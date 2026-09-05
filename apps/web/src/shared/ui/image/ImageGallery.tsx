@@ -8,7 +8,7 @@ import { ImageSlider } from './ImageSlider';
 import { ImageViewer } from './ImageViewer';
 
 interface ImageGalleryProps {
-  images: string[];
+  images?: string[] | null;
   enableViewer?: boolean;
 }
 
