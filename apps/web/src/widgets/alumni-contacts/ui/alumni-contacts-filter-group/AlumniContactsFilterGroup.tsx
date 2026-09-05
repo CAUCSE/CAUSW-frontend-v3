@@ -5,6 +5,7 @@ import { HStack } from '@causw/cds';
 import {
   AlumniContactsAcademicStatusFilterChip,
   AlumniContactsAdmissionYearFilterChip,
+  AlumniContactsDepartmentFilterChip,
   AlumniContactsSortFilterSelect,
 } from '@/features/alumni-contacts';
 
@@ -18,18 +19,24 @@ export const AlumniContactsFilterGroup = () => {
     filterActive,
     admissionYearFilterActive,
     academicStatusFilterActive,
+    departmentFilterActive,
     admissionYearStart,
     admissionYearEnd,
     academicStatus,
+    department,
     handleAcademicStatusFilterChipClick,
     handleAdmissionYearFilterChipClick,
+    handleDepartmentFilterChipClick,
   } = useAlumniContactsFilterGroup();
 
   return (
     <HStack className="shrink-0 items-center gap-3 overflow-x-auto">
       <AlumniContactsSortFilterSelect />
       <div className="h-3 w-px shrink-0 bg-gray-300" />
-      {filterActive ? (
+      <AlumniContactsAcademicFilterSheetModalProvider>
+        <AlumniContactsAcademicFilterSheetModal />
+      </AlumniContactsAcademicFilterSheetModalProvider>
+      {filterActive && (
         <HStack gap="none" className="overflow-x-auto">
           <>
             {admissionYearFilterActive && (
@@ -47,12 +54,18 @@ export const AlumniContactsFilterGroup = () => {
                   onClick={() => handleAcademicStatusFilterChipClick(status)}
                 />
               ))}
+            {departmentFilterActive &&
+              department?.map((selectedDepartment) => (
+                <AlumniContactsDepartmentFilterChip
+                  key={selectedDepartment}
+                  department={selectedDepartment}
+                  onClick={() =>
+                    handleDepartmentFilterChipClick(selectedDepartment)
+                  }
+                />
+              ))}
           </>
         </HStack>
-      ) : (
-        <AlumniContactsAcademicFilterSheetModalProvider>
-          <AlumniContactsAcademicFilterSheetModal />
-        </AlumniContactsAcademicFilterSheetModalProvider>
       )}
     </HStack>
   );

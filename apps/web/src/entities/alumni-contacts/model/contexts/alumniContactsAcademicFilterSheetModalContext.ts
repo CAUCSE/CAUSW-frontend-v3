@@ -2,12 +2,16 @@
 
 import { createContext } from 'react';
 
-import { type AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
+import {
+  type AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsDepartmentFilterOption,
+} from '@/entities/alumni-contacts/config';
 
 interface AlumniContactsAcademicFilterSheetModalState {
   startAdmissionYear: number | null;
   endAdmissionYear: number | null;
   academicStatus: AlumniContactsAcademicStatusFilterOption[] | null;
+  department: AlumniContactsDepartmentFilterOption[] | null;
 }
 
 interface AlumniContactsAcademicFilterSheetModalAction {
@@ -16,10 +20,14 @@ interface AlumniContactsAcademicFilterSheetModalAction {
   setAcademicStatus: (
     academicStatus: AlumniContactsAcademicStatusFilterOption[] | null,
   ) => void;
+  setDepartment: (
+    department: AlumniContactsDepartmentFilterOption[] | null,
+  ) => void;
   initialize: (
     startAdmissionYear: number | null,
     endAdmissionYear: number | null,
     academicStatus: AlumniContactsAcademicStatusFilterOption[] | null,
+    department: AlumniContactsDepartmentFilterOption[] | null,
   ) => void;
   reset: () => void;
 }
@@ -33,9 +41,11 @@ export const AlumniContactsAcademicFilterSheetModalContext =
     startAdmissionYear: null,
     endAdmissionYear: null,
     academicStatus: null,
+    department: null,
     setStartAdmissionYear: () => {},
     setEndAdmissionYear: () => {},
     setAcademicStatus: () => {},
+    setDepartment: () => {},
     initialize: () => {},
     reset: () => {},
   });

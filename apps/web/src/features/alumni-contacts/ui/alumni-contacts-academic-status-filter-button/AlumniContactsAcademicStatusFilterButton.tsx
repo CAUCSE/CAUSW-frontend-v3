@@ -10,7 +10,7 @@ import {
 } from '@/entities/alumni-contacts';
 
 interface AlumniContactsAcademicStatusFilterButtonProps {
-  status: AlumniContactsAcademicStatusFilterOption;
+  status: AlumniContactsAcademicStatusFilterOption | null;
 }
 
 export const AlumniContactsAcademicStatusFilterButton = ({
@@ -27,7 +27,9 @@ export const AlumniContactsAcademicStatusFilterButton = ({
         className="cursor-pointer"
         onClick={handleClick}
       >
-        {ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION[status].label}
+        {status
+          ? ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION[status].label
+          : '전체'}
       </Chip>
     </Button>
   );
