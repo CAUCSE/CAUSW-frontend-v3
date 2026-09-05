@@ -49,7 +49,7 @@ export const CeremonyPage = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-gray-100">
+    <div className="relative flex min-h-full flex-col bg-gray-100 md:min-h-screen">
       <ActionHeader background="gray">
         <ActionHeader.BackButton>뒤로</ActionHeader.BackButton>
         <ActionHeader.ActionButton
@@ -70,7 +70,7 @@ export const CeremonyPage = () => {
         />
       </div>
 
-      <div className="fixed right-[1rem] bottom-[2.75rem]">
+      <div className="fixed right-[1rem] bottom-[calc(2.75rem+var(--safe-area-inset-bottom))]">
         <FloatingActionButton
           className="bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
           onClick={() => setIsCreateOpen(true)}

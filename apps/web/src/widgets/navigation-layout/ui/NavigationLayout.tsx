@@ -37,7 +37,9 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
         className={mergeStyles(
           'min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain md:overflow-visible md:overscroll-auto',
           grayBackground ? 'bg-gray-100' : 'bg-white',
-          showBottomNav ? 'pb-(--mobile-nav-clearance) md:pb-0' : 'pb-0',
+          showBottomNav
+            ? 'pb-(--mobile-nav-clearance) md:pb-0'
+            : 'pb-(--safe-area-inset-bottom) md:pb-0',
         )}
       >
         {children}
