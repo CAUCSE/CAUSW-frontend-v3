@@ -6,8 +6,8 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@causw/core": "^0.0.34",
-    "@causw/design-system": "^0.0.38",
+    "@causw/core": "^0.0.35",
+    "@causw/design-system": "^0.0.39",
     "@causw/icons": "^1.0.11",
     "@causw/tokens": "^0.0.14"
   }
