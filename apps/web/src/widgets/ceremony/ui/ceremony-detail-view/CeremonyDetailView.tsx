@@ -38,7 +38,8 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
   } = detail;
 
   const showApplicant = applicant !== subject;
-  const hasContentSection = Boolean(content) || attachedImageUrlList.length > 0;
+  const hasContentSection =
+    Boolean(content) || (attachedImageUrlList?.length ?? 0) > 0;
   const linkHref = link
     ? /^https?:\/\//i.test(link)
       ? link
