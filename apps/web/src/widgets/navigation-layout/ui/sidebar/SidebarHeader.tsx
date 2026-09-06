@@ -6,7 +6,7 @@ export function SideBarHeader() {
   return (
     <Flex align="center" justify="start" className="px-4">
       <Image
-        src="/images/ccssaa-logo.png"
+        src="/images/brand/ccssaa-logo.png"
         alt="CCSSAA 로고"
         width={112}
         height={17}

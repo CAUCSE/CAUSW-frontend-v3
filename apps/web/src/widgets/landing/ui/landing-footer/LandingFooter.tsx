@@ -7,7 +7,7 @@ export const LandingFooter = () => {
     <footer className="flex h-26 w-full items-end justify-between pb-10">
       <VStack className="flex-1 gap-3">
         <Image
-          src="/images/ccssaa-logo.png"
+          src="/images/brand/ccssaa-logo.png"
           alt="CCSSAA Logo"
           width={90}
           height={14}
