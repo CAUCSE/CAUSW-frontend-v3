@@ -14,7 +14,7 @@ export const AppleLoginButton = ({
       type="button"
       {...props}
       className={mergeStyles(
-        'w-full cursor-pointer rounded-[10px] bg-[#000000] py-3.5 transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
+        'h-12 w-full cursor-pointer rounded-[10px] bg-[#000000] py-3.5 transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
     >
