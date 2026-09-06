@@ -101,7 +101,7 @@ export interface CeremonyDetailResponse {
   contact: string | null;
   link: string | null;
   isSetAll: boolean | null;
-  targetAdmissionYears: string[] | null;
+  targetAdmissionYears: number[] | null;
   state: CeremonyState | null;
   note: string | null;
 }
