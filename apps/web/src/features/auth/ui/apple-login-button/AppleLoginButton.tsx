@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 
-import { AppleLogo, Flex, mergeStyles } from '@causw/cds';
+import { AppleLogo, Flex, mergeStyles, Text } from '@causw/cds';
 type AppleLoginButtonProps = ComponentProps<'button'>;
 
 export const AppleLoginButton = ({
@@ -14,13 +14,15 @@ export const AppleLoginButton = ({
       type="button"
       {...props}
       className={mergeStyles(
-        'typo-body-15-semibold h-[54px] w-full cursor-pointer rounded-md bg-[#000000] px-6 text-white transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
+        'w-full cursor-pointer rounded-[10px] bg-[#000000] py-3.5 transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
     >
       <Flex gap="sm" align="center" justify="center" className="w-full">
         <AppleLogo size={16} />
-        <span>Apple로 시작하기</span>
+        <Text typography="body-14-medium" textColor="white">
+          Apple로 시작하기
+        </Text>
       </Flex>
     </button>
   );

@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 
-import { Flex, KakaoTalkBlackLogo, mergeStyles } from '@causw/cds';
+import { Flex, KakaoTalkBlackLogo, mergeStyles, Text } from '@causw/cds';
 type KakaoLoginButtonProps = ComponentProps<'button'>;
 
 export const KakaoLoginButton = ({
@@ -14,13 +14,15 @@ export const KakaoLoginButton = ({
       type="button"
       {...props}
       className={mergeStyles(
-        'typo-body-15-semibold h-[54px] w-full cursor-pointer rounded-md bg-[#FEE500] px-6 text-[#000000] transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
+        'w-full cursor-pointer rounded-[10px] bg-[#FEE500] py-3.5 transition-all duration-200 hover:enabled:opacity-80 active:enabled:opacity-80 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
     >
       <Flex gap="sm" align="center" justify="center" className="w-full">
         <KakaoTalkBlackLogo size={16} />
-        <span>Kakao로 시작하기</span>
+        <Text typography="body-14-medium" textColor="black">
+          카카오로 시작하기
+        </Text>
       </Flex>
     </button>
   );
