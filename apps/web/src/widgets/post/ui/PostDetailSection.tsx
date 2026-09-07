@@ -19,8 +19,8 @@ interface PostDetailSectionProps {
 }
 
 export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
-  const { data: post, refetch } = usePostDetailSectionRefetch(postId);
-  const { data: comments } = useCommentsQuery({ postId });
+  const { data: post, refetch: postRefetch } = usePostRefetch(postId);
+  const { data: comments, refetch: commentsRefetch } = useCommentsRefetch({ postId });
 
   const { isMobileSize } = useBreakpoint();
 
@@ -39,7 +39,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
       {isMobileSize && (
         <PullToRefresh
           onRefresh={async () => {
-            await refetch();
+            await Promise.all([postRefetch(), commentsRefetch()]);
           }}
         >
           <Stack
