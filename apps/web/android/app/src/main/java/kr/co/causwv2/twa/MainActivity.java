@@ -175,6 +175,9 @@ public class MainActivity extends BridgeActivity {
         if (backPressHandler != null) {
             backPressHandler.cleanup();
         }
+        if (safeAreaInsetsManager != null) {
+            safeAreaInsetsManager.cleanup();
+        }
     }
 
     private void observeFirstContentDraw(WebView targetWebView) {

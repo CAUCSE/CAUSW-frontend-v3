@@ -76,7 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    // 안드로이드 네이티브가 documentElement에 --safe-area-inset-bottom을 주입한다
+    <html lang="ko" suppressHydrationWarning>
       <body className="antialiased select-none md:select-text">
         <MSWComponent>
           <QueryProviderWithDevtools>
