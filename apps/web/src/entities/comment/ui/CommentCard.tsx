@@ -7,6 +7,7 @@ import { IconCountButton, ProfileAvatar } from '@/shared/ui';
 
 interface CommentCardProps {
   author: string;
+  admissionYear: number;
   profileImage: ProfileImageValue;
   content: string;
   time: string;
@@ -22,6 +23,7 @@ interface CommentCardProps {
 
 export const CommentCard = ({
   author,
+  admissionYear,
   profileImage,
   content,
   time,
@@ -56,12 +58,17 @@ export const CommentCard = ({
           <VStack className="w-full gap-3">
             <VStack gap="none">
               <HStack align="center" justify="between">
-                <HStack gap="sm" align="center">
+                <HStack
+                  gap="sm"
+                  align="center"
+                  justify="center"
+                  className="px-1"
+                >
                   <Text typography="body-15-semibold" textColor="gray-800">
                     {author}
                   </Text>
-                  <Text typography="body-15-regular" textColor="gray-500">
-                    {time}
+                  <Text typography="body-14-regular" textColor="gray-400">
+                    {String(admissionYear).slice(-2)}학번
                   </Text>
                 </HStack>
 
@@ -76,7 +83,14 @@ export const CommentCard = ({
               </Text>
             </VStack>
 
-            <HStack align="center" justify={isReply ? 'end' : 'between'}>
+            <HStack align="center" className="w-full gap-3">
+              <IconCountButton
+                icon={<Heart />}
+                count={likeCount}
+                active={isLiked}
+                onClick={onLikeClick}
+              />
+
               {!isReply && (
                 <button
                   type="button"
@@ -89,12 +103,9 @@ export const CommentCard = ({
                 </button>
               )}
 
-              <IconCountButton
-                icon={<Heart />}
-                count={likeCount}
-                active={isLiked}
-                onClick={onLikeClick}
-              />
+              <Text typography="body-14-regular" textColor="gray-400">
+                {time}
+              </Text>
             </HStack>
           </VStack>
         )}
