@@ -48,6 +48,19 @@ export const useFeedSearchInput = () => {
     updateFeedSearchKeyword();
   }, [feedSearchKeyword, clearPendingSearchKeyword]);
 
+  useEffect(() => {
+    const trimmedCurrentKeyword = currentKeyword.trim();
+
+    if (trimmedCurrentKeyword.length === 0) {
+      return;
+    }
+
+    setTimeout(() => {
+      setFeedSearchKeyword(trimmedCurrentKeyword);
+      setPendingSearchKeyword(trimmedCurrentKeyword);
+    }, 500);
+  }, [currentKeyword, setFeedSearchKeyword, setPendingSearchKeyword]);
+
   const handleInitialFocus = useCallback((element: HTMLInputElement | null) => {
     element?.focus();
   }, []);
@@ -89,15 +102,14 @@ export const useFeedSearchInput = () => {
       setPendingSearchKeyword(trimmedCurrentKeyword);
 
       setRecentSearchKeywords((prev) => [
+        ...prev.slice(0, 9),
         trimmedCurrentKeyword,
-        ...prev.filter((k) => k !== trimmedCurrentKeyword).slice(0, 9),
       ]);
     }
   };
 
   const handleClearKeyword = () => {
     setCurrentKeyword('');
-    removeFeedSearchKeyword();
     clearPendingSearchKeyword();
   };
 

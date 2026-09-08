@@ -46,7 +46,7 @@ export const FeedSearchResultList = () => {
   const { targetRef } = useInfiniteScroll({
     intersectionCallback: (entries) => {
       const [entry] = entries;
-      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      if (entry.isIntersecting && hasNextPage && isFetchingNextPage) {
         fetchNextPage();
       }
     },
@@ -75,7 +75,7 @@ export const FeedSearchResultList = () => {
       as="ul"
     >
       <PostListItems posts={posts} viewMode={feedViewMode} />
-      {!isFetchingNextPage && hasNextPage && (
+      {isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />
       )}
       {isFetchingNextPage && <SuspenseView />}
