@@ -66,6 +66,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  // 하단 홈 인디케이터 영역까지 뷰포트를 확장. safe-area 여백은 env(safe-area-inset-bottom)으로 처리
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -74,7 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    // 안드로이드 네이티브가 documentElement에 --safe-area-inset-bottom을 주입한다
+    <html lang="ko" suppressHydrationWarning>
       <body className="antialiased select-none md:select-text">
         <MSWComponent>
           <QueryProviderWithDevtools>

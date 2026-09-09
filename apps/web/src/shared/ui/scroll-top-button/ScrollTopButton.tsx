@@ -32,7 +32,7 @@ export const ScrollTopButton = ({
   return (
     <FloatingActionButton
       className={mergeStyles(
-        'shadow-blur fixed right-4 bottom-18 size-11.5 border-gray-200 bg-gray-50 p-3.5 text-gray-500 hover:border-gray-300 hover:bg-gray-200 md:right-8 md:bottom-12',
+        'shadow-blur fixed right-4 bottom-(--mobile-nav-clearance) size-11.5 border-gray-200 bg-gray-50 p-3.5 text-gray-500 hover:border-gray-300 hover:bg-gray-200 md:right-8 md:bottom-12',
         className,
       )}
       onClick={onClick}

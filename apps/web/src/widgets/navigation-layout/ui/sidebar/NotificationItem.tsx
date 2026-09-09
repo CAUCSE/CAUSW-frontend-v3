@@ -4,17 +4,21 @@ import { type SidebarItem } from '../../model';
 
 import { SidebarMenuItem } from './SidebarMenuItem';
 
-export function NotificationItem({ item }: { item: SidebarItem }) {
-  const { data } = useUnreadNotificationCnt();
+const MAX_DISPLAY_COUNT = 9;
 
-  const notificationCount = data?.notificationLogCount ?? 0;
-  const unreadCnt = notificationCount > 9 ? '9+' : notificationCount;
+const formatUnreadCount = (unreadCount: number) =>
+  unreadCount > MAX_DISPLAY_COUNT ? `${MAX_DISPLAY_COUNT}+` : unreadCount;
+
+export const NotificationItem = ({ item }: { item: SidebarItem }) => {
+  const { data } = useUnreadNotificationCnt();
+  const unreadCount = data?.notificationLogCount ?? 0;
 
   return (
     <SidebarMenuItem
       item={item}
-      showDot={notificationCount > 0}
-      badgeCount={unreadCnt}
+      badgeContent={
+        unreadCount > 0 ? formatUnreadCount(unreadCount) : undefined
+      }
     />
   );
-}
+};

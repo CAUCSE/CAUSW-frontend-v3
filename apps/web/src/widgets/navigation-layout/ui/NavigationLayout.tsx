@@ -25,8 +25,8 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen md:h-auto md:min-h-screen">
-      {/* Desktop Sidebar - 레이아웃 폭만 차지하는 spacer (실제 사이드바는 fixed로 별도 렌더링) */}
-      <div className="hidden md:block md:w-65 md:shrink-0" />
+      {/* Desktop Sidebar - 레이아웃 폭만 차지하는 spacer (실제 사이드바는 fixed로 별도 렌더링, CDS Sidebar 폭 64px) */}
+      <div className="hidden md:block md:w-16 md:shrink-0" />
       <div className="hidden md:fixed md:top-0 md:left-0 md:block md:h-screen">
         <SidebarNav selected={sidebarSelected} />
       </div>
@@ -37,7 +37,9 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
         className={mergeStyles(
           'min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain md:overflow-visible md:overscroll-auto',
           grayBackground ? 'bg-gray-100' : 'bg-white',
-          showBottomNav ? 'pb-14 md:pb-0' : 'pb-0',
+          // 하단 네비 페이지는 자체 스크롤 컨테이너(피드, 동문수첩)가 있을 수 있어
+          // 여백을 main이 아니라 각 페이지의 스크롤 콘텐츠 끝에 둔다 (--mobile-nav-clearance)
+          showBottomNav ? 'pb-0' : 'pb-(--safe-area-inset-bottom) md:pb-0',
         )}
       >
         {children}

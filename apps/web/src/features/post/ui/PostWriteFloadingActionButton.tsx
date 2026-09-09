@@ -12,7 +12,7 @@ export const PostWriteFloatingActionButton = () => {
   };
   return (
     <FloatingActionButton
-      className="fixed right-4 bottom-18.5 items-center gap-1 border border-gray-200 bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
+      className="fixed right-4 bottom-(--mobile-nav-clearance) items-center gap-1 border border-gray-200 bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
       onClick={handleClick}
     >
       <Plus size={16} color="gray-500" />

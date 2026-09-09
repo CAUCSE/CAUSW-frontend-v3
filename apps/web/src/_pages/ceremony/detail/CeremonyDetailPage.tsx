@@ -16,7 +16,7 @@ export const CeremonyDetailPage = () => {
   const context: CeremonyDetailContext = rawContext === 'my' ? 'my' : 'general';
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100">
+    <div className="flex min-h-full flex-col bg-gray-100 md:min-h-screen">
       <ActionHeader background="gray">
         <ActionHeader.BackButton fallbackHref={ROUTES.CEREMONY}>
           뒤로

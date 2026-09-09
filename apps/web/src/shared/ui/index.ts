@@ -8,7 +8,6 @@ export * from './form';
 export * from './responsive';
 export * from './emphasis';
 export * from './StatusDot';
-export * from './CountBadge';
 export * from './form-section';
 export * from './EventCard';
 export * from './action-header';
