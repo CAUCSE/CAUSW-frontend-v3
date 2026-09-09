@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { LandingPage } from '@/_pages/landing';
+import { LandingNativeAppGuard, LandingPage } from '@/_pages/landing';
 
 import { LANDING_METADATA, SITE_URL } from '@/shared/config';
 
@@ -39,6 +39,7 @@ const structuredData = {
 export default function Page() {
   return (
     <>
+      <LandingNativeAppGuard />
       <LandingPage />
       <script
         type="application/ld+json"
