@@ -15,17 +15,29 @@ export const AlumniContactsAcademicFilterSheetModalTrigger = ({
 
   return (
     <HStack gap="none" className="typo-body-15-medium items-center gap-0">
-      <Button onClick={handleClick} color="white" className="h-fit w-fit p-0">
+      <Button
+        onClick={handleClick}
+        color="white"
+        className="h-fit w-fit p-0 enabled:hover:bg-white enabled:active:bg-white enabled:data-active:bg-white"
+      >
         <Chip color="white" size="sm" className="cursor-pointer gap-1">
           학번 <ArrowDown size={12} color="gray-400" />
         </Chip>
       </Button>
-      <Button onClick={handleClick} color="white" className="h-fit w-fit p-0">
+      <Button
+        onClick={handleClick}
+        color="white"
+        className="h-fit w-fit p-0 enabled:hover:bg-white enabled:active:bg-white enabled:data-active:bg-white"
+      >
         <Chip color="white" size="sm" className="cursor-pointer gap-1">
           학과(부) <ArrowDown size={12} color="gray-400" />
         </Chip>
       </Button>
-      <Button onClick={handleClick} color="white" className="h-fit w-fit p-0">
+      <Button
+        onClick={handleClick}
+        color="white"
+        className="h-fit w-fit p-0 enabled:hover:bg-white enabled:active:bg-white enabled:data-active:bg-white"
+      >
         <Chip color="white" size="sm" className="cursor-pointer gap-1">
           학적 상태 <ArrowDown size={12} color="gray-400" />
         </Chip>
