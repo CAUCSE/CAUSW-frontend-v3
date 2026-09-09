@@ -29,7 +29,7 @@ const structuredData = {
     {
       '@id': `${SITE_URL}/#organization`,
       '@type': 'Organization',
-      logo: `${SITE_URL}/images/ccssaa-logo.png`,
+      logo: `${SITE_URL}/images/brand/ccssaa-logo.png`,
       name: '중앙대학교 ICT 위원회',
       url: SITE_URL,
     },
