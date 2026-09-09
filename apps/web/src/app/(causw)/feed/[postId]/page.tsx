@@ -24,7 +24,7 @@ const createPostMetadata = (post: GetPostResponseDto): Metadata => {
       type: 'article',
       images: post.fileUrlList[0]
         ? [{ url: post.fileUrlList[0] }]
-        : [{ url: '/images/ccssaa-logo.png' }],
+        : [{ url: '/images/brand/ccssaa-logo.png' }],
     },
   };
 };
