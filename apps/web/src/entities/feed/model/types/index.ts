@@ -3,4 +3,7 @@ export type {
   GetAvailableBoardListResponseDto,
   GetWritableBoardListResponseDto,
 } from './dto';
-export type { GetAvailableBoardListQuery } from './query';
+export type {
+  GetAvailableBoardListQuery,
+  GetWritableBoardListQuery,
+} from './query';

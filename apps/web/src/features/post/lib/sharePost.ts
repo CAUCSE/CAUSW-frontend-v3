@@ -4,13 +4,25 @@ import { postShareUrl } from '@/entities/post';
 
 import { isMobile } from '@/shared/utils';
 
+const getErrorMessage = (error: unknown) => {
+  if (typeof error === 'string') return error;
+
+  if (
+    error &&
+    typeof error === 'object' &&
+    'message' in error &&
+    typeof error.message === 'string'
+  ) {
+    return error.message;
+  }
+
+  return '';
+};
+
 const isShareCancelledError = (error: unknown) => {
   if (error instanceof DOMException && error.name === 'AbortError') return true;
 
-  return (
-    error instanceof Error &&
-    /cancelled|canceled|dismissed/i.test(error.message)
-  );
+  return /cancelled|canceled|dismissed/i.test(getErrorMessage(error));
 };
 
 export const sharePost = async (postId: string, title: string) => {
@@ -31,9 +43,7 @@ export const sharePost = async (postId: string, title: string) => {
       await navigator.share({ title, url });
       return 'web-share' as const;
     } catch (error) {
-      if (isShareCancelledError(error)) {
-        return 'cancelled' as const;
-      }
+      if (isShareCancelledError(error)) return 'cancelled' as const;
     }
   }
 

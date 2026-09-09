@@ -4,7 +4,11 @@ import { FormProvider } from 'react-hook-form';
 
 import { Dialog } from '@causw/cds';
 
-import { useBreakpoint } from '@/shared/hooks';
+import {
+  confirmNativeBackGuard,
+  useBreakpoint,
+  useNativeBackGuard,
+} from '@/shared/hooks';
 import { ActionHeader } from '@/shared/ui';
 
 import {
@@ -50,6 +54,16 @@ export const CeremonyCreateDialog = ({
     onOpenChange(false);
   };
 
+  useNativeBackGuard({
+    enabled: open,
+    guardKey: 'ceremonyCreateGuard',
+    onBackAttempt: handleCloseAttempt,
+    onConfirmBack: () => {
+      window.history.back();
+      handleConfirmClose();
+    },
+  });
+
   const handleDialogOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {
       handleCloseAttempt();
@@ -65,9 +79,7 @@ export const CeremonyCreateDialog = ({
       { dto, imageFiles: imageUpload.photoFiles },
       {
         onSuccess: () => {
-          form.resetForm();
-          imageUpload.resetImageUpload();
-          onOpenChange(false);
+          confirmNativeBackGuard(handleConfirmClose);
         },
       },
     );
@@ -134,7 +146,7 @@ export const CeremonyCreateDialog = ({
         <CloseConfirmModal
           open={form.showCloseConfirm}
           onOpenChange={form.setShowCloseConfirm}
-          onConfirm={handleConfirmClose}
+          onConfirm={() => confirmNativeBackGuard(handleConfirmClose)}
         />
       </Dialog>
     </FormProvider>

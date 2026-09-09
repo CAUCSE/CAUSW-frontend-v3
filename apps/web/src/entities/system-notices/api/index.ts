@@ -1,0 +1,1 @@
+export { getSystemNoticeLatest } from './get';

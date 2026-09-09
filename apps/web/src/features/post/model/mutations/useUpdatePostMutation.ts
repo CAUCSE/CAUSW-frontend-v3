@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { postQueryKeys, type PostUpdateRequestDto } from '@/entities/post';
 
+import { confirmNativeBackGuard } from '@/shared/hooks';
 import { toast } from '@/shared/model';
 
 import { updatePost } from '../../api';
@@ -25,7 +26,7 @@ export const useUpdatePostMutation = () => {
       updatePost(postId, request, images),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
-      router.back();
+      confirmNativeBackGuard(() => router.back());
     },
     onError: () => {
       toast.error('게시글 수정에 실패했어요.');

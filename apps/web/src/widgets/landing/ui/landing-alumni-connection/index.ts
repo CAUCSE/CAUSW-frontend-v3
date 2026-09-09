@@ -1,0 +1,1 @@
+export { LandingAlumniConnection } from './LandingAlumniConnection';

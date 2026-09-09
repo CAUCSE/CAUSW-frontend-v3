@@ -18,6 +18,7 @@ export const voteWriteValueSchema = z.object({
 
 export const postCreateSchema = z
   .object({
+    title: z.string(),
     content: z.string().min(1, '내용을 입력해주세요.'),
     boardId: z.string().min(1, '주제를 선택해주세요'),
     images: z.custom<File[]>(),
@@ -54,6 +55,7 @@ export const usePostCreateForm = (
   return useForm<PostCreateFormValues>({
     resolver: zodResolver(postCreateSchema),
     defaultValues: {
+      title: '',
       content: '',
       boardId: '',
       images: [],

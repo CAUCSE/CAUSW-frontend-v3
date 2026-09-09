@@ -2,7 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
-import { ArrowDown, Chip, mergeStyles, TextArea, VStack } from '@causw/cds';
+import {
+  ArrowDown,
+  Chip,
+  mergeStyles,
+  TextArea,
+  TextInput,
+  VStack,
+} from '@causw/cds';
 
 import { type Board } from '@/entities/feed';
 import { type VoteWriteValue } from '@/entities/post';
@@ -12,6 +19,8 @@ import { VoteField } from './VoteField';
 interface PostWriteBodyProps {
   onSelectorClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   selectedBoard: Board | null;
+  title: string;
+  setTitle: (title: string) => void;
   content: string;
   setContent: (content: string) => void;
   vote: VoteWriteValue | null;
@@ -23,6 +32,8 @@ interface PostWriteBodyProps {
 export const PostWriteBody = ({
   onSelectorClick,
   selectedBoard,
+  title,
+  setTitle,
   content,
   setContent,
   vote,
@@ -72,18 +83,30 @@ export const PostWriteBody = ({
         </Chip>
       )}
 
-      <VStack gap="lg" className="mx-5 my-4 min-h-0 flex-1">
-        <TextArea className="flex-1 p-0 ring-0 focus-within:ring-0">
-          <TextArea.Input
-            ref={textareaRef}
-            value={content}
-            onChange={(e) => handleChange(e.target.value)}
-            resize={false}
-            placeholder="내용을 입력해주세요."
-            rows={1}
-            className="h-full min-h-0"
+      <VStack gap="lg" className="mx-5 my-2 min-h-0 flex-1">
+        <VStack gap="md" className="min-h-0 flex-1">
+          <TextInput
+            variant="underline"
+            typography="subtitle-18-bold"
+            textColor="gray-800"
+            className="shrink-0 border-gray-200"
+            placeholder="(선택) 제목을 입력해주세요."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-        </TextArea>
+
+          <TextArea className="flex-1 p-0 ring-0 focus-within:ring-0">
+            <TextArea.Input
+              ref={textareaRef}
+              value={content}
+              onChange={(e) => handleChange(e.target.value)}
+              resize={false}
+              placeholder="내용을 입력해주세요."
+              rows={1}
+              className="h-full min-h-0"
+            />
+          </TextArea>
+        </VStack>
 
         {vote && (
           <VoteField

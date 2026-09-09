@@ -4,6 +4,7 @@ import { Text, Toggle, VStack } from '@causw/cds';
 
 import { getSocialOauthUrl } from '@/features/auth';
 import {
+  useLinkSocialAccountNativeMutation,
   useSocialAccountOAuthMutation,
   useUnlinkSocialAccountMutation,
 } from '@/features/setting';
@@ -13,11 +14,14 @@ import {
   type NativeSocialLoginProvider,
 } from '@/entities/auth';
 
+import { isMobile } from '@/shared/utils';
+
 export const PrivacySocialSection = () => {
   const { data: socialAccountStatus } = useSocialAccountStatusSuspenseQuery();
 
   const unlinkMutation = useUnlinkSocialAccountMutation();
   const oAuthMutation = useSocialAccountOAuthMutation();
+  const linkNativeMutation = useLinkSocialAccountNativeMutation();
   const SOCIAL_OAUTH_PROVIDER_KEY = 'social-oauth-provider';
 
   const handleToggle = (
@@ -25,6 +29,11 @@ export const PrivacySocialSection = () => {
     checked: boolean,
   ) => {
     if (checked) {
+      if (isMobile) {
+        linkNativeMutation.mutate(provider);
+        return;
+      }
+
       oAuthMutation.mutate(provider, {
         onSuccess: ({ linkToken }) => {
           sessionStorage.setItem(SOCIAL_OAUTH_PROVIDER_KEY, provider);
@@ -41,7 +50,10 @@ export const PrivacySocialSection = () => {
     unlinkMutation.mutate(provider);
   };
 
-  const isPending = oAuthMutation.isPending || unlinkMutation.isPending;
+  const isPending =
+    oAuthMutation.isPending ||
+    unlinkMutation.isPending ||
+    linkNativeMutation.isPending;
 
   return (
     <VStack className="gap-5 rounded-2xl bg-white p-5">

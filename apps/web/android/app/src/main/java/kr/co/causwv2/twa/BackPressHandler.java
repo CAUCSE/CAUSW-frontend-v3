@@ -23,6 +23,15 @@ final class BackPressHandler {
     private static final String GO_BACK_SCRIPT =
         "(function(){ window.history.back(); return true; })();";
 
+    private static final String WEB_BACK_HANDLER_SCRIPT =
+        "(function(){"
+        + "if (typeof window.__androidBackHandler === 'function') {"
+        + "window.__androidBackHandler();"
+        + "return true;"
+        + "}"
+        + "return false;"
+        + "})();";
+
     private final Activity activity;
     private final WebView webView;
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -41,24 +50,34 @@ final class BackPressHandler {
     }
 
     void handleBackPress() {
-        if (webView != null && webView.canGoBack()) {
+        if (webView == null) {
+            handleExitBackPress();
+            return;
+        }
+
+        webView.evaluateJavascript(WEB_BACK_HANDLER_SCRIPT, handled -> {
+            if ("true".equals(handled)) {
+                return;
+            }
+
+            handleDefaultBackPress();
+        });
+    }
+
+    private void handleDefaultBackPress() {
+        if (webView.canGoBack()) {
             webView.goBack();
             return;
         }
 
-        if (webView != null) {
-            webView.evaluateJavascript(BACK_STATE_SCRIPT, value -> {
-                if (shouldNavigateBack(value)) {
-                    webView.evaluateJavascript(GO_BACK_SCRIPT, null);
-                    return;
-                }
+        webView.evaluateJavascript(BACK_STATE_SCRIPT, value -> {
+            if (shouldNavigateBack(value)) {
+                webView.evaluateJavascript(GO_BACK_SCRIPT, null);
+                return;
+            }
 
-                handleExitBackPress();
-            });
-            return;
-        }
-
-        handleExitBackPress();
+            handleExitBackPress();
+        });
     }
 
     void cleanup() {

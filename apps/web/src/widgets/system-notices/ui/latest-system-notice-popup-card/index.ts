@@ -1,0 +1,1 @@
+export { LatestSystemNoticePopupCard } from './LatestSystemNoticePopupCard';

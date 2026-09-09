@@ -1,6 +1,6 @@
 'use client';
 
-import { type Ref, type RefObject } from 'react';
+import { type RefObject } from 'react';
 
 import { useSearchParams } from 'next/navigation';
 
@@ -19,6 +19,7 @@ import {
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 import { ScrollTopButton, SuspenseView } from '@/shared/ui';
 
+import { ALUMNI_CONTACTS_SCROLL_CONTAINER_CLASS_NAME } from '../../config';
 import {
   useAlumniContactsListScrollTop,
   useAlumniContactsScrollRestoration,
@@ -39,7 +40,6 @@ interface AlumniContactsListProps {
   isFetchingNextPage: boolean;
   hasNextPage: boolean;
   targetRef: RefObject<HTMLDivElement | null>;
-  ref: Ref<HTMLDivElement>;
 }
 
 const AlumniContactsSectionLabel = ({ children }: { children: string }) => (
@@ -61,17 +61,13 @@ const AlumniContactsList = ({
   isFetchingNextPage,
   hasNextPage,
   targetRef,
-  ref,
 }: AlumniContactsListProps) => {
   const { handleNavigateToAlumniContacts } = useAlumniContactsScrollSave();
 
   const isAllMembersEmpty = coffeeChat.length === 0 && allMembers.length === 0;
 
   return (
-    <div
-      className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pt-4"
-      ref={ref}
-    >
+    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pt-4 md:overflow-visible">
       {myProfile && (
         <>
           <VStack gap="none">
@@ -188,12 +184,8 @@ export const AlumniContactsListWrapper = () => {
     },
   });
 
-  const {
-    setDesktopScrollTargetRef,
-    setMobileScrollTargetRef,
-    showScrollToTopButton,
-    handleClickScrollTop,
-  } = useAlumniContactsListScrollTop();
+  const { showScrollToTopButton, handleClickScrollTop } =
+    useAlumniContactsListScrollTop();
 
   const { isScrollRestoring } = useAlumniContactsScrollRestoration({
     data: data ? [...data.coffeeChat, ...data.allMembers] : undefined,
@@ -217,7 +209,7 @@ export const AlumniContactsListWrapper = () => {
     return (
       <>
         <PullToRefresh
-          className="alumni-contacts-scroll-container min-h-0 flex-1"
+          className={`${ALUMNI_CONTACTS_SCROLL_CONTAINER_CLASS_NAME} min-h-0 flex-1`}
           onRefresh={async () => {
             await refetch();
           }}
@@ -231,7 +223,6 @@ export const AlumniContactsListWrapper = () => {
             isFetchingNextPage={isFetchingNextPage}
             hasNextPage={hasNextPage}
             targetRef={targetRef}
-            ref={setMobileScrollTargetRef}
           />
         </PullToRefresh>
         {showScrollToTopButton && (
@@ -252,7 +243,6 @@ export const AlumniContactsListWrapper = () => {
         isFetchingNextPage={isFetchingNextPage}
         hasNextPage={hasNextPage}
         targetRef={targetRef}
-        ref={setDesktopScrollTargetRef}
       />
       {showScrollToTopButton && (
         <ScrollTopButton onClick={handleClickScrollTop} />

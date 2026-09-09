@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.core.view.WindowCompat;
 
@@ -68,6 +69,7 @@ public class MainActivity extends BridgeActivity {
         }
 
         backPressHandler = new BackPressHandler(this, webView);
+        setupBackPressDispatcher();
     }
 
     @Override
@@ -143,11 +145,28 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onBackPressed() {
+        handleBackPress();
+    }
+
+    private void setupBackPressDispatcher() {
+        getOnBackPressedDispatcher().addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    handleBackPress();
+                }
+            }
+        );
+    }
+
+    private void handleBackPress() {
         if (backPressHandler != null) {
             backPressHandler.handleBackPress();
             return;
         }
-        super.onBackPressed();
+
+        finish();
     }
 
     @Override

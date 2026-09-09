@@ -44,7 +44,7 @@ const BackButton = ({
           return;
         }
 
-        if (fallbackHref) {
+        if (fallbackHref && window.history.length <= 1) {
           router.push(fallbackHref);
           return;
         }

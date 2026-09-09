@@ -17,6 +17,7 @@ export const PostEditForm = ({ postId, onClose }: PostEditFormProps) => {
       onClose={onClose}
       postId={postId}
       initialData={{
+        title: post.title ?? '',
         content: post.content,
         boardId: post.boardId,
         isAnonymous: post.isAnonymous,

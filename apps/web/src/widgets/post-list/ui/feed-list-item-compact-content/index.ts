@@ -1,0 +1,1 @@
+export { FeedListitemCompactContent } from './FeedListitemCompactContent';

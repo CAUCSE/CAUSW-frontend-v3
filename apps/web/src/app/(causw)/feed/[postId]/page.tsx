@@ -4,19 +4,15 @@ import { PostDetailPage } from '@/_pages/feed';
 
 import { getPost, type GetPostResponseDto } from '@/entities/post';
 
-const stripHtml = (value: string) =>
-  value
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+import { stripHtml } from '@/shared/lib/sanitizer';
 
 const createPostMetadata = (post: GetPostResponseDto): Metadata => {
   const fallback = {
     title: 'CAUSW 게시글',
     description: 'CAUSW 커뮤니티 게시글입니다.',
   };
-  const description =
-    stripHtml(post.content).slice(0, 160) || fallback.description;
+  const plainTextContent = stripHtml(post.content).replace(/\s+/g, ' ').trim();
+  const description = plainTextContent.slice(0, 160) || fallback.description;
   const title = post.boardName ? `${post.boardName} | CAUSW` : fallback.title;
 
   return {

@@ -3,6 +3,7 @@
 import { type PropsWithChildren, Suspense, use } from 'react';
 
 import { ENVIRONMENT } from '@/shared/config';
+import { isProduction } from '@/shared/utils';
 
 declare global {
   interface ImportMeta {
@@ -47,6 +48,10 @@ const MSWPromise = ({ children }: PropsWithChildren) => {
 };
 
 export const MSWComponent = ({ children }: PropsWithChildren) => {
+  if (isProduction) {
+    return <>{children}</>;
+  }
+
   return (
     <Suspense fallback={null}>
       <MSWPromise>{children}</MSWPromise>

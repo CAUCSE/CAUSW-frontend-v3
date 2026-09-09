@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { commentKeys, type GetCommentsResponseDto } from '@/entities/comment';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { likeReply, unlikeReply } from '../../api';
 
@@ -66,8 +67,10 @@ export const useToggleReplyLikeMutation = (postId: string, replyId: string) => {
       return { previous };
     },
 
-    onError: (_err, _variables, context) => {
-      toast.error('대댓글 좋아요 처리에 실패했어요.');
+    onError: (error, _variables, context) => {
+      toast.error(
+        extractErrorMessage(error, '대댓글 좋아요 처리에 실패했어요.'),
+      );
       if (context?.previous) {
         queryClient.setQueryData(commentKeys.list(postId, 0), context.previous);
       }

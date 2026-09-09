@@ -2,8 +2,14 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { boardQueryOptions } from '../../config';
+import { type BoardGroup, boardQueryOptions } from '../../config';
 
-export const useGetWritableBoards = () => {
-  return useSuspenseQuery(boardQueryOptions.writable());
+interface UseGetWritableBoardsProps {
+  boardGroup?: BoardGroup;
+}
+
+export const useGetWritableBoards = ({
+  boardGroup,
+}: UseGetWritableBoardsProps = {}) => {
+  return useSuspenseQuery(boardQueryOptions.writable({ boardGroup }));
 };

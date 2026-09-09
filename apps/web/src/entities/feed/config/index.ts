@@ -14,3 +14,11 @@ export {
 } from './myFeedView';
 export { FEED_SCROLL_RESTORATION_STORAGE_KEY } from './feedScrollRestorationStorageKey';
 export { BOARDS_API_PREFIX } from './boardApiPrefix';
+export { BOARD_GROUP, type BoardGroup } from './boardGroup';
+export {
+  FEED_VIEW_MODE,
+  FEED_VIEW_MODE_LABEL,
+  FEED_VIEW_MODE_OPTIONS,
+  type FeedViewMode,
+} from './feedViewMode';
+export { FEED_VIEW_MODE_STORAGE_KEY } from './feedViewModeStorageKey';

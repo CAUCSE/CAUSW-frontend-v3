@@ -1,27 +1,35 @@
+'use client';
+
 import Link from 'next/link';
 
-import { HStack, Search, Text } from '@causw/cds';
+import { BellOutline, HStack, Search } from '@causw/cds';
+
+import { ROUTES } from '@/shared/constants';
+
+import { useFeedMain } from '../../model';
+import { FeedChannelDropdown } from '../feed-channel-dropdown';
 
 export const FeedHeader = () => {
+  const { data: boards, selectedTab, handleTabChange } = useFeedMain();
+
   return (
-    <HStack as="header" className="items-center justify-between px-6 md:px-2">
-      <Text
-        typography="title-32-bold"
-        textColor="gray-700"
-        className="hidden md:block"
-      >
-        커뮤니티
-      </Text>
-      <Text
-        typography="title-22-bold"
-        textColor="gray-700"
-        className="block md:hidden"
-      >
-        커뮤니티
-      </Text>
-      <Link href="/feed/search">
-        <Search size={20} color="gray-700" />
-      </Link>
+    <HStack
+      as="header"
+      className="items-center justify-between px-5 py-2 md:px-0 md:pt-5"
+    >
+      <FeedChannelDropdown
+        boards={boards}
+        value={selectedTab}
+        onChange={handleTabChange}
+      />
+      <HStack gap="lg" align="center">
+        <Link href={ROUTES.NOTIFICATION} aria-label="알림">
+          <BellOutline size={20} color="gray-600" />
+        </Link>
+        <Link href={ROUTES.FEED_SEARCH} aria-label="검색">
+          <Search size={20} color="gray-600" />
+        </Link>
+      </HStack>
     </HStack>
   );
 };

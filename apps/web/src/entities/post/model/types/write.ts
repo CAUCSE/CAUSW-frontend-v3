@@ -6,6 +6,7 @@ export interface PostMetaImage {
 }
 
 export interface PostCreateRequestDto {
+  title: string;
   content: string;
   boardId: string;
   isAnonymous: boolean;
@@ -14,6 +15,7 @@ export interface PostCreateRequestDto {
 
 export interface PostCreateResponseDto {
   id: string;
+  title: string | null;
   content: string;
   fileUrlList: string[];
   isAnonymous: boolean;

@@ -1,18 +1,19 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormProvider } from 'react-hook-form';
 
 import { Box, Dialog, VStack } from '@causw/cds';
 
-import { type Board, useGetWritableBoards } from '@/entities/feed';
+import { BOARD_GROUP, type Board, useGetWritableBoards } from '@/entities/feed';
 import {
   type PostCreateFormValues,
   type PostUpdateFormValues,
   usePostCreateForm,
 } from '@/entities/post';
 
+import { useNativeBackGuard } from '@/shared/hooks';
 import { ImageUploadField, type ImageUploadFieldRef } from '@/shared/ui';
 
 // import { createEmptyVote } from '../lib';
@@ -38,7 +39,9 @@ export const PostWriteForm = ({
   initialImages = [],
 }: PostWriteFormProps) => {
   const isEdit = !!postId;
-  const { data: boardData } = useGetWritableBoards();
+  const { data: boardData } = useGetWritableBoards({
+    boardGroup: BOARD_GROUP.NOTICE,
+  });
   const boards = useMemo(() => boardData?.boards ?? [], [boardData?.boards]);
 
   const form = usePostCreateForm(initialData);
@@ -54,6 +57,7 @@ export const PostWriteForm = ({
     setValue,
   } = form;
 
+  const currentTitle = watch('title');
   const currentContent = watch('content');
   const isAnonymous = watch('isAnonymous');
   const currentBoardId = watch('boardId');
@@ -110,13 +114,19 @@ export const PostWriteForm = ({
     setSelectorOpen(false);
   };
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (selectorOpen) {
       setSelectorOpen(false);
     } else {
       onClose(isDirty);
     }
-  };
+  }, [selectorOpen, isDirty, onClose]);
+
+  useNativeBackGuard({
+    guardKey: 'postWriteGuard',
+    onBackAttempt: handleBack,
+    onConfirmBack: () => window.history.go(-2),
+  });
 
   useEffect(() => {
     if (boards.length === 1 && !currentBoardId) {
@@ -137,6 +147,8 @@ export const PostWriteForm = ({
         <PostWriteBody
           onSelectorClick={() => setSelectorOpen(true)}
           selectedBoard={selectedBoard}
+          title={currentTitle}
+          setTitle={(val) => setValue('title', val, { shouldDirty: true })}
           content={currentContent}
           setContent={(val) =>
             setValue('content', val, {
@@ -149,7 +161,7 @@ export const PostWriteForm = ({
             setValue('vote', val, { shouldValidate: true, shouldDirty: true })
           }
           isEdit={isEdit}
-          hideBoardSelector={boards.length === 1}
+          hideBoardSelector={boards.length <= 1}
         />
 
         <Box className="m-5 mb-0">

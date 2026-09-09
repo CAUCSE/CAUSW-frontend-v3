@@ -53,13 +53,13 @@ export const CommentForm = ({
   };
 
   return (
-    <Stack gap="none" className="rounded-b-lg bg-white">
+    <Stack gap="none" className="bg-white">
       <ReplyIndicator replyTarget={replyTarget} onCancel={onCancelReply} />
 
       <HStack
         gap="sm"
         align="start"
-        className="m-3 rounded-lg bg-gray-100 px-4 py-3"
+        className="m-3 rounded-[0.75rem] bg-gray-100 px-4 py-3"
       >
         <Checkbox
           checked={isAnonymous}
