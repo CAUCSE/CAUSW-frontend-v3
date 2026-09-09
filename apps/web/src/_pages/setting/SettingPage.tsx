@@ -18,7 +18,7 @@ export const SettingPage = () => {
     <VStack
       align="center"
       gap="md"
-      className="w-full px-5 py-7 md:px-0 md:py-0"
+      className="w-full px-5 py-7 pb-(--mobile-nav-clearance) md:px-0 md:py-0 md:pb-0"
     >
       <Suspense fallback={<SettingProfileImageSectionSkeleton />}>
         <SettingProfileImageSectionServerComponent />

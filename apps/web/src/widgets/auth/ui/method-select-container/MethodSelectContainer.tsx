@@ -9,11 +9,8 @@ export const MethodSelectContainer = ({
 }: MethodSelectContainerProps) => {
   return (
     <>
-      <Flex justify="center" className="min-h-screen bg-gray-100">
-        <Flex
-          gap="none"
-          className="w-[600px] flex-col px-4 py-20 md:justify-center"
-        >
+      <Flex justify="center" className="min-h-screen bg-white">
+        <Flex gap="none" className="w-90 flex-col justify-center">
           {children}
         </Flex>
       </Flex>

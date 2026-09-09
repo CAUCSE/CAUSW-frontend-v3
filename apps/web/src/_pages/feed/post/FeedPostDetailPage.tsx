@@ -14,7 +14,7 @@ import {
 
 export const FeedPostDetailPage = ({ postId }: { postId: string }) => {
   return (
-    <div className="mx-auto flex h-screen max-w-225 flex-col md:px-5 md:pb-5">
+    <div className="mx-auto flex h-full max-w-225 flex-col md:h-screen md:px-5 md:pb-5">
       <ActionHeader background="white">
         <ActionHeader.BackButton fallbackHref={ROUTES.FEED}>
           뒤로

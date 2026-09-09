@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 
 import Link from 'next/link';
 
-import { HStack, Separator, Text } from '@causw/cds';
+import { HStack, mergeStyles, Separator, Text } from '@causw/cds';
 
 import { QUICK_MENU_ITEMS } from '@/shared/constants';
 
@@ -21,7 +21,8 @@ export function QuickMenu() {
             {item.icon}
             <Text
               typography="body-14-medium"
-              className={BUTTON_TEXT_HOVER_STYLES}
+              className={mergeStyles(BUTTON_TEXT_HOVER_STYLES, 'break-keep')}
+              align="center"
             >
               {item.label}
             </Text>

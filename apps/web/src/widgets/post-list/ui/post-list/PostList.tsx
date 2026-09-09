@@ -40,7 +40,7 @@ export const PostList = ({
   return (
     <VStack
       gap="none"
-      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-3 md:overflow-visible md:px-0"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-5 py-3 pb-(--mobile-nav-clearance) md:overflow-visible md:px-0 md:pb-3"
       as="ul"
     >
       <PostListItems

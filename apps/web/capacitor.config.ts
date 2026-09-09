@@ -60,6 +60,8 @@ const config: CapacitorConfig = {
   appId: currentEnv.appId,
   appName: currentEnv.appName,
   webDir: 'out',
+  // 모바일 브라우저와 Capacitor WebView를 서버에서 구분하기 위한 식별자
+  appendUserAgent: 'CAUSWCapacitor',
   server: {
     url: currentEnv[deviceEnv],
     cleartext: currentEnv.cleartext,

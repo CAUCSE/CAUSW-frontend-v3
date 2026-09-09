@@ -1,21 +1,19 @@
 import type { ComponentProps } from 'react';
 
-import { type CTAButton, Text } from '@causw/cds';
+import { Text } from '@causw/cds';
 
-type EmailLoginButtonProps = ComponentProps<typeof CTAButton>;
+type EmailLoginButtonProps = ComponentProps<'button'>;
 
-export const EmailLoginButton = ({
-  children,
-  ...props
-}: EmailLoginButtonProps) => {
+export const EmailLoginButton = ({ ...props }: EmailLoginButtonProps) => {
   return (
-    <Text
-      textColor="gray-500"
-      typography="body-15-medium"
-      className="mt-1 cursor-pointer text-center"
-      {...props}
-    >
-      {children ?? '이메일로 시작하기'}
-    </Text>
+    <button {...props} className="mt-2 cursor-pointer">
+      <Text
+        textColor="gray-500"
+        typography="body-14-medium"
+        className="text-center"
+      >
+        이메일로 시작하기
+      </Text>
+    </button>
   );
 };
