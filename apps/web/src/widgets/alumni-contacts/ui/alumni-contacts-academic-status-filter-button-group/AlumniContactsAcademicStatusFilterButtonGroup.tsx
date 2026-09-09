@@ -7,6 +7,7 @@ import { ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION } from '@/entities/alumni
 export const AlumniContactsAcademicStatusFilterButtonGroup = () => {
   return (
     <HStack className="items-center" gap="sm">
+      <AlumniContactsAcademicStatusFilterButton status={null} />
       {Object.values(ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION).map(
         (status) => (
           <AlumniContactsAcademicStatusFilterButton
