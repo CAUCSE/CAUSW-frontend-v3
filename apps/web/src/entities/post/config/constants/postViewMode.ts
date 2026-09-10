@@ -13,3 +13,5 @@ export const POST_VIEW_MODE_LABEL: Record<PostViewMode, string> = {
 };
 
 export const POST_VIEW_MODE_OPTIONS = Object.values(POST_VIEW_MODE);
+
+export const POST_VIEW_MODE_STORAGE_KEY = 'post-view-mode';

@@ -28,7 +28,7 @@ export async function AlumniContactsListPage({
 
   return (
     <div className="relative flex size-full justify-center bg-white">
-      <div className="flex w-full flex-col px-4 md:px-5 xl:w-225">
+      <div className="flex w-full max-w-225 flex-col px-4 md:px-5">
         <VStack className="min-h-0 flex-1 gap-0 md:gap-1">
           <VStack gap="none" className="z-sticky sticky top-0 bg-white md:pt-5">
             <AlumniContactsCommunityTab />

@@ -7,7 +7,11 @@ import { PullToRefresh } from '@causw/cds';
 import { PostWriteFloatingActionButton } from '@/features/post';
 
 import { BOARD_GROUP, type Board, type BoardGroup } from '@/entities/board';
-import { postQueryOptions, usePostViewMode } from '@/entities/post';
+import {
+  postQueryOptions,
+  usePostViewMode,
+  type PostCategory,
+} from '@/entities/post';
 
 import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
 
@@ -23,11 +27,13 @@ import { PostListLoadingView } from './PostListLoadingView';
 interface PostListWrapperProps {
   boardIds: Board['id'][];
   boardGroup: BoardGroup;
+  category?: PostCategory;
 }
 
 export const PostListWrapper = ({
   boardIds,
   boardGroup,
+  category,
 }: PostListWrapperProps) => {
   const { postViewMode } = usePostViewMode();
 
@@ -45,7 +51,7 @@ export const PostListWrapper = ({
     fetchNextPage,
     refetch,
   } = useInfiniteQuery({
-    ...postQueryOptions.list({ boardIds, boardGroup }),
+    ...postQueryOptions.list({ boardIds, boardGroup, category }),
     select: (data) => data.pages.flatMap((page) => page.posts),
   });
 

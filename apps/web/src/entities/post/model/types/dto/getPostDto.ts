@@ -1,5 +1,7 @@
 import { type ProfileImageValue } from '@/shared/types';
 
+import { type PostCategory } from '../../../config';
+
 export interface CrawledAttachment {
   url: string;
   name: string;
@@ -10,6 +12,7 @@ export interface GetPostResponseDto {
   id: string;
   title: string | null;
   content: string;
+  category: PostCategory | null;
   crawledAttachments?: CrawledAttachment[];
   originalNoticeUrl?: string;
   isDeleted: boolean;

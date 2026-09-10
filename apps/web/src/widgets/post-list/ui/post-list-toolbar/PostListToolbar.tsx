@@ -24,7 +24,11 @@ export const PostListToolbar = ({
   onSelectedTabChange,
 }: PostListToolbarProps) => {
   return (
-    <HStack align="center" gap="md" className="px-4 py-1 md:px-0">
+    <HStack
+      align="center"
+      gap="md"
+      className="min-w-0 overflow-x-auto px-4 py-1 md:px-0"
+    >
       <PostViewModeToggle
         value={postViewMode}
         onChange={onPostViewModeChange}

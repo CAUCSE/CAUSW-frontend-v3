@@ -3,7 +3,9 @@
 import {
   POST_LIST_TAB_SEARCH_PARAM_KEY,
   PostListWrapper,
+  useCategoryTabSelection,
   useNormalizeBoardTabParam,
+  useNormalizeCategoryTabParam,
 } from '@/widgets/post-list';
 
 import { BOARD_GROUP } from '@/entities/board';
@@ -17,10 +19,14 @@ export const FeedMain = () => {
     searchParamKey: POST_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
   });
 
+  useNormalizeCategoryTabParam();
+  const { selectedCategory } = useCategoryTabSelection();
+
   return (
     <PostListWrapper
       boardIds={filteredBoardIds}
       boardGroup={BOARD_GROUP.NOTICE}
+      category={selectedCategory}
     />
   );
 };

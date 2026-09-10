@@ -4,3 +4,7 @@ export {
   useBoardTabSelection,
   useNormalizeBoardTabParam,
 } from './useBoardTabSelection';
+export {
+  useCategoryTabSelection,
+  useNormalizeCategoryTabParam,
+} from './useCategoryTabSelection';

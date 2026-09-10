@@ -13,6 +13,8 @@ export {
   usePostListScrollRestoration,
   useBoardTabSelection,
   useNormalizeBoardTabParam,
+  useCategoryTabSelection,
+  useNormalizeCategoryTabParam,
 } from './model';
 export {
   POST_LIST_TAB,
