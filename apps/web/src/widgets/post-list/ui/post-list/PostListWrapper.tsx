@@ -1,6 +1,6 @@
 'use client';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { PullToRefresh } from '@causw/cds';
 
@@ -22,7 +22,6 @@ import {
 import { usePostListScrollRestoration } from '../../model';
 
 import { PostList } from './PostList';
-import { PostListLoadingView } from './PostListLoadingView';
 
 interface PostListWrapperProps {
   boardIds: Board['id'][];
@@ -44,13 +43,12 @@ export const PostListWrapper = ({
 
   const {
     data: posts,
-    isLoading,
     isSuccess,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
     refetch,
-  } = useInfiniteQuery({
+  } = useSuspenseInfiniteQuery({
     ...postQueryOptions.list({ boardIds, boardGroup, category }),
     select: (data) => data.pages.flatMap((page) => page.posts),
   });
@@ -71,10 +69,6 @@ export const PostListWrapper = ({
   });
 
   const { isMobileSize } = useBreakpoint();
-
-  if (isLoading) {
-    return <PostListLoadingView />;
-  }
 
   if (isMobileSize) {
     return (
