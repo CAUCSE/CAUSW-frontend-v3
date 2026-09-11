@@ -76,7 +76,7 @@ export const PostWriteBody = ({
               : '',
           )}
         >
-          <button onClick={onSelectorClick} disabled={isEdit}>
+          <button type="button" onClick={onSelectorClick} disabled={isEdit}>
             {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
             <ArrowDown size={14} color="gray-500" />
           </button>
