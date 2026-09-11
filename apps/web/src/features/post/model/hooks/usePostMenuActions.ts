@@ -41,7 +41,7 @@ export const usePostMenuActions = (postId: string, boardGroup: BoardGroup) => {
   const closeModal = () => setActiveModal(null);
 
   const submitDelete = () => {
-    deletePost(postId);
+    deletePost({ postId, boardGroup });
     closeModal();
   };
 
@@ -51,7 +51,7 @@ export const usePostMenuActions = (postId: string, boardGroup: BoardGroup) => {
   };
 
   const submitBlock = () => {
-    blockUser(postId);
+    blockUser({ postId, boardGroup });
     closeModal();
   };
 
