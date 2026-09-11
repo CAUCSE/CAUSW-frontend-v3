@@ -84,12 +84,15 @@ export const FeedListWrapper = ({
   }
 
   return (
-    <FeedList
-      posts={posts}
-      isFetchingNextPage={isFetchingNextPage}
-      hasNextPage={hasNextPage}
-      targetRef={targetRef}
-      viewMode={feedViewMode}
-    />
+    <>
+      <FeedList
+        posts={posts}
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        targetRef={targetRef}
+        viewMode={feedViewMode}
+      />
+      <PostWriteFloatingActionButton />
+    </>
   );
 };
