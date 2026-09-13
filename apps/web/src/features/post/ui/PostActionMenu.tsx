@@ -29,7 +29,7 @@ export const PostActionMenu = ({ isMine, onAction }: PostActionMenuProps) => {
         <button
           type="button"
           aria-label="게시글 메뉴 열기"
-          className="h-fit translate-x-1 -translate-y-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
+          className="h-fit translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100"
           onPointerDown={menu.handlePointerDown}
           onPointerMove={menu.handlePointerMove}
           onPointerCancel={menu.handlePointerCancel}

@@ -11,7 +11,7 @@ import {
   type Comment,
 } from '@/entities/comment';
 
-import { formatRelativeTime } from '@/shared/lib';
+import { formatTimeDifference } from '@/shared/lib';
 import { ConfirmModal } from '@/shared/ui';
 
 import { COMMENT_ACTION } from '../config';
@@ -53,9 +53,10 @@ export const CommentItem = ({ comment, onReply }: CommentItemProps) => {
         author={comment.displayWriterNickname}
         profileImage={comment.writerProfileImage}
         content={comment.content}
-        time={formatRelativeTime(comment.createdAt)}
+        time={formatTimeDifference(comment.createdAt)}
         isDeleted={comment.isDeleted}
         isBlocked={comment.isBlocked}
+        isOwner={comment.isOwner}
         isLiked={comment.isCommentLike}
         likeCount={comment.numLike}
         onLikeClick={handleLikeClick}

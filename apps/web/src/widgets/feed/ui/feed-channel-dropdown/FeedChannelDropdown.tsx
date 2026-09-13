@@ -36,7 +36,11 @@ export const FeedChannelDropdown = ({
           suppressHydrationWarning
           className="flex cursor-pointer items-center gap-2"
         >
-          <Text typography="subtitle-18-bold" textColor="gray-700">
+          <Text
+            typography="subtitle-18-bold"
+            textColor="gray-700"
+            className="whitespace-nowrap"
+          >
             {triggerLabel}
           </Text>
           <ArrowDown size={14} color="gray-500" />
