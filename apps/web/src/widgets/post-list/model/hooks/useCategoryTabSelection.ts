@@ -10,8 +10,12 @@ import { useNormalizeTabParam, useTabSelection } from './useTabSelection';
  * URL의 카테고리 탭 값이 노출 대상 카테고리에 존재하는지 확인하고,
  * 유효하지 않으면 'all' 탭으로 변경한다.
  */
-export const useNormalizeCategoryTabParam = () => {
-  useNormalizeTabParam({ validValues: POST_CATEGORY_FILTER_LIST });
+export const useNormalizeCategoryTabParam = ({
+  basePath,
+}: {
+  basePath: string;
+}) => {
+  useNormalizeTabParam({ validValues: POST_CATEGORY_FILTER_LIST, basePath });
 };
 
 export const useCategoryTabSelection = () => {
