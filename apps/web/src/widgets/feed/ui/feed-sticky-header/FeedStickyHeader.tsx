@@ -2,26 +2,37 @@
 
 import { Suspense } from 'react';
 
-import { noop } from 'es-toolkit';
-
 import { mergeStyles, VStack } from '@causw/cds';
 
 import {
-  FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
-  FEED_LIST_TAB,
-  FeedListToolbar,
+  POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  PostListToolbar,
+  useCategoryTabSelection,
 } from '@/widgets/post-list';
 
-import { useFeedViewMode } from '@/entities/feed';
+import {
+  POST_CATEGORY_FILTER_LIST,
+  POST_CATEGORY_LABEL,
+  usePostViewMode,
+} from '@/entities/post';
 
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 import { QueryErrorBoundary } from '@/shared/ui';
 
 import { FeedHeader } from '../feed-header';
 
+/**
+ * PostCategory를 Board 모양({id: category, name: label})으로 변환해
+ * PostBoardTabs에서 재사용하기 위한 목적
+ */
+const FEED_CATEGORY_TAB_ITEMS = POST_CATEGORY_FILTER_LIST.map((category) => ({
+  id: category,
+  name: POST_CATEGORY_LABEL[category],
+}));
+
 export const FeedStickyHeader = () => {
   const { isVisible: isToolbarVisible } = useScrollDirectionVisibility({
-    containerClassName: FEED_LIST_SCROLL_CONTAINER_CLASS_NAME,
+    containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
   });
 
   return (
@@ -51,19 +62,16 @@ export const FeedStickyHeader = () => {
 };
 
 const FeedToolbarSection = () => {
-  const { feedViewMode, setFeedViewMode } = useFeedViewMode();
+  const { postViewMode, setPostViewMode } = usePostViewMode();
+  const { selectedTab, handleTabChange } = useCategoryTabSelection();
 
   return (
-    <FeedListToolbar
-      feedViewMode={feedViewMode}
-      onFeedViewModeChange={setFeedViewMode}
-      // 채널(게시판) 선택은 헤더 드롭다운이 담당한다.
-      // 칩 탭은 선택된 채널 내부의 세부 카테고리 축이라 채널 상태와 분리되어야 하며,
-      // 아직 해당 API가 없어 '전체'만 고정으로 노출한다.
-      // TODO: 세부 카테고리 API가 추가되면 목록과 선택 핸들러를 연결
-      boards={[]}
-      selectedTab={FEED_LIST_TAB.ALL}
-      onSelectedTabChange={noop}
+    <PostListToolbar
+      postViewMode={postViewMode}
+      onPostViewModeChange={setPostViewMode}
+      boards={FEED_CATEGORY_TAB_ITEMS}
+      selectedTab={selectedTab}
+      onSelectedTabChange={handleTabChange}
     />
   );
 };

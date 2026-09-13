@@ -4,24 +4,31 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { BOARD_GROUP, type BoardGroup } from '@/entities/board';
 import {
   postQueryKeys,
   type GetPostResponseDto,
   type GetPostsResponseDto,
 } from '@/entities/post';
 
+import { ROUTES } from '@/shared/constants';
 import { toast } from '@/shared/model';
 
 import { deletePost } from '../../api';
+
+interface DeletePostVariables {
+  postId: string;
+  boardGroup: BoardGroup;
+}
 
 export const useDeletePostMutation = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (postId: string) => deletePost(postId),
+    mutationFn: ({ postId }: DeletePostVariables) => deletePost(postId),
 
-    onMutate: async (postId: string) => {
+    onMutate: async ({ postId }: DeletePostVariables) => {
       await queryClient.cancelQueries({
         queryKey: postQueryKeys.detail(postId),
       });
@@ -63,7 +70,7 @@ export const useDeletePostMutation = () => {
       return { previousDetail, previousLists };
     },
 
-    onError: (_error, postId, context) => {
+    onError: (_error, { postId }, context) => {
       toast.error('게시글 삭제에 실패했어요.');
 
       if (context?.previousDetail) {
@@ -82,13 +89,15 @@ export const useDeletePostMutation = () => {
       }
     },
 
-    onSuccess: (_data, postId) => {
+    onSuccess: (_data, { postId, boardGroup }) => {
       toast.success('게시글이 삭제되었어요.');
 
       const current = window.location.pathname;
 
       if (current.includes(postId)) {
-        router.replace('/feed');
+        router.replace(
+          boardGroup === BOARD_GROUP.COMMUNITY ? ROUTES.COMMUNITY : ROUTES.FEED,
+        );
       }
     },
 

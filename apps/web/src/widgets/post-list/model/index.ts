@@ -1,6 +1,8 @@
 export {
   usePostListItem,
-  useFeedScrollRestoration,
+  usePostListScrollRestoration,
   useBoardTabSelection,
   useNormalizeBoardTabParam,
+  useCategoryTabSelection,
+  useNormalizeCategoryTabParam,
 } from './hooks';

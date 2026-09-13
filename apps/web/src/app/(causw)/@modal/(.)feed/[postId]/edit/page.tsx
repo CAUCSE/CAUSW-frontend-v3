@@ -1,4 +1,4 @@
-import { PostEditPage } from '@/_pages/feed';
+import { FeedPostEditPage } from '@/_pages/feed';
 
 export default async function Page({
   params,
@@ -6,5 +6,5 @@ export default async function Page({
   params: Promise<{ postId: string }>;
 }) {
   const resolvedParams = await params;
-  return <PostEditPage postId={resolvedParams.postId} />;
+  return <FeedPostEditPage postId={resolvedParams.postId} />;
 }
