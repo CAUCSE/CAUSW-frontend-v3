@@ -24,6 +24,7 @@ export const mapPostCreateFormToDto = (
   newImageFiles: File[],
 ): PostCreateRequestDto => {
   return {
+    title: data.title.trim(),
     content: data.content,
     boardId: data.boardId,
     isAnonymous: data.isAnonymous,
@@ -53,6 +54,7 @@ export const mapPostUpdateFormToDto = (
   );
 
   return {
+    title: data.title.trim(),
     content: data.content,
     isAnonymous: data.isAnonymous,
     images: [...existingImages, ...newImages],

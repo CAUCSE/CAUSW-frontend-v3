@@ -20,7 +20,7 @@ export const SettingTermsPage = async () => {
   await queryClient.prefetchQuery(authQueryOptions.terms());
 
   return (
-    <VStack gap="sm" className="min-h-screen w-full pb-10">
+    <VStack gap="sm" className="min-h-full w-full pb-10 md:min-h-screen">
       <SettingTermsHeader />
       <VStack className="h-full w-full px-4">
         <HydrationBoundary state={dehydrate(queryClient)}>

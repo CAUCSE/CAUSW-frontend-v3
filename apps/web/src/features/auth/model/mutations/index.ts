@@ -5,6 +5,7 @@ export * from './useSocialRegistrationMutation';
 export * from './useSendEmailVerificationCodeMutation';
 export * from './useVerifyEmailVerificationCodeMutation';
 export * from './useFindEmailMutation';
+export * from './useExistingAccountLookupMutation';
 export * from './useSendPasswordResetCodeMutation';
 export * from './useVerifyPasswordResetCodeMutation';
 export * from './useSubmitAdmissionMutation';

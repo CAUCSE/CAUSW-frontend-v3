@@ -1,0 +1,1 @@
+export { RecentSearchKeywordChip } from './RecentSearchKeywordChip';

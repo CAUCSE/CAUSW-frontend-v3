@@ -1,18 +1,49 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import { useRouter } from 'next/navigation';
 
-import { FloatingActionButton, Plus, Text } from '@causw/cds';
+import { FloatingActionButton, Plus, Text, mergeStyles } from '@causw/cds';
 
-export const PostWriteFloatingActionButton = () => {
+import { useGetWritableBoards, type BoardGroup } from '@/entities/board';
+import { getPostWritePath } from '@/entities/post';
+
+interface PostWriteFloatingActionButtonProps {
+  boardGroup: BoardGroup;
+  className?: string;
+}
+
+export const PostWriteFloatingActionButton = (
+  props: PostWriteFloatingActionButtonProps,
+) => {
+  return (
+    <Suspense fallback={null}>
+      <PostWriteFloatingActionButtonInner {...props} />
+    </Suspense>
+  );
+};
+
+const PostWriteFloatingActionButtonInner = ({
+  boardGroup,
+  className,
+}: PostWriteFloatingActionButtonProps) => {
   const router = useRouter();
-
+  const { data } = useGetWritableBoards({ boardGroup });
   const handleClick = () => {
-    router.push('/feed/write');
+    router.push(getPostWritePath(boardGroup));
   };
+
+  if (!data.boards.length) {
+    return null;
+  }
+
   return (
     <FloatingActionButton
-      className="fixed right-4 bottom-18.5 items-center gap-1 border border-gray-200 bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
+      className={mergeStyles(
+        'fixed right-4 bottom-(--mobile-nav-clearance) items-center gap-1 border border-gray-200 bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)] transition-[bottom] duration-300 ease-out md:right-12 md:bottom-12',
+        className,
+      )}
       onClick={handleClick}
     >
       <Plus size={16} color="gray-500" />

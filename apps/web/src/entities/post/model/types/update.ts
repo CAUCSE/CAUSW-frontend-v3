@@ -9,6 +9,7 @@ export interface PostImageMeta {
 }
 
 export interface PostUpdateRequestDto {
+  title: string;
   content: string;
   isAnonymous: boolean;
   images: PostImageMeta[];
@@ -16,6 +17,7 @@ export interface PostUpdateRequestDto {
 
 export interface PostUpdateResponseDto {
   id: string;
+  title: string | null;
   content: string;
   writerId: string;
   fileUrlList: string[];

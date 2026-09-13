@@ -1,0 +1,1 @@
+export { CommunitySearchPage } from './CommunitySearchPage';

@@ -1,0 +1,1 @@
+export { LatestSystemNoticeBody } from './LatestSystemNoticeBody';

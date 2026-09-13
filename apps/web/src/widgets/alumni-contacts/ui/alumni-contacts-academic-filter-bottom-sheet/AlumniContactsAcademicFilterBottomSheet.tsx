@@ -1,4 +1,4 @@
-import { BottomSheet, CTAButton } from '@causw/cds';
+import { BottomSheet, CTAButton, HStack } from '@causw/cds';
 
 import { AlumniContactsAcademicFilterSheetModalMain } from '@/widgets/alumni-contacts/ui/alumni-contacts-academic-filter-sheet-modal-main';
 
@@ -13,28 +13,30 @@ export const AlumniContactsAcademicFilterBottomSheet = ({
   onOpenChange,
   onApply,
 }: AlumniContactsAcademicFilterBottomSheetProps) => {
+  const handleClose = () => onOpenChange(false);
+
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Content
-        className="items-center p-6"
+        className="items-center"
         aria-describedby={undefined}
       >
         <BottomSheet.Header
-          title="동문 수첩 학번, 재학 상태 필터 선택 바텀시트"
+          title="동문 수첩 필터 선택 바텀시트"
           className="sr-only"
         />
-        <BottomSheet.Body maxHeight={356} className="my-6">
+        <BottomSheet.Body maxHeight={460} className="mb-6">
           <AlumniContactsAcademicFilterSheetModalMain />
         </BottomSheet.Body>
         <BottomSheet.Footer className="p-0">
-          <CTAButton
-            color="dark"
-            className="typo-body-15-semibold"
-            fullWidth
-            onClick={onApply}
-          >
-            적용하기
-          </CTAButton>
+          <HStack gap="sm">
+            <CTAButton color="light" fullWidth onClick={handleClose}>
+              닫기
+            </CTAButton>
+            <CTAButton color="dark" fullWidth onClick={onApply}>
+              적용하기
+            </CTAButton>
+          </HStack>
         </BottomSheet.Footer>
       </BottomSheet.Content>
     </BottomSheet>

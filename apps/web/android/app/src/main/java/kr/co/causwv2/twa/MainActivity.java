@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.core.view.WindowCompat;
 
@@ -48,7 +49,7 @@ public class MainActivity extends BridgeActivity {
         rootView = findViewById(android.R.id.content);
         launchOverlay = createLaunchOverlay();
         overlayShownAtMs = SystemClock.elapsedRealtime();
-        safeAreaInsetsManager = new SafeAreaInsetsManager(rootView, webView);
+        safeAreaInsetsManager = new SafeAreaInsetsManager(rootView, webView, getBridge());
         safeAreaInsetsManager.setup();
 
         String kakaoNativeAppKey = getString(R.string.kakao_native_app_key);
@@ -68,6 +69,7 @@ public class MainActivity extends BridgeActivity {
         }
 
         backPressHandler = new BackPressHandler(this, webView);
+        setupBackPressDispatcher();
     }
 
     @Override
@@ -143,11 +145,28 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onBackPressed() {
+        handleBackPress();
+    }
+
+    private void setupBackPressDispatcher() {
+        getOnBackPressedDispatcher().addCallback(
+            this,
+            new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    handleBackPress();
+                }
+            }
+        );
+    }
+
+    private void handleBackPress() {
         if (backPressHandler != null) {
             backPressHandler.handleBackPress();
             return;
         }
-        super.onBackPressed();
+
+        finish();
     }
 
     @Override
@@ -155,6 +174,9 @@ public class MainActivity extends BridgeActivity {
         super.onDestroy();
         if (backPressHandler != null) {
             backPressHandler.cleanup();
+        }
+        if (safeAreaInsetsManager != null) {
+            safeAreaInsetsManager.cleanup();
         }
     }
 

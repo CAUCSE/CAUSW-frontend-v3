@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+.pnpm-store
 
 # testing
 coverage
@@ -45,3 +46,5 @@ next-env.d.ts
 mcp.json
 
 .claude
+
+PLAN.md

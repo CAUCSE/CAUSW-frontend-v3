@@ -9,10 +9,8 @@ import {
   CeremonyListPreview,
   CeremonyRegisterBanner,
 } from '@/widgets/ceremony';
-import {
-  NotificationMobileHeader,
-  // NotificationPopupCard,
-} from '@/widgets/notification';
+import { NotificationMobileHeader } from '@/widgets/notification';
+import { LatestSystemNoticePopupCard } from '@/widgets/system-notices';
 import { UserGreetingHeader } from '@/widgets/user';
 
 import { useMyInfoSuspenseQuery } from '@/entities/auth';
@@ -24,7 +22,7 @@ export function HomePageContent() {
   const isAlumni = myInfo.academicStatus === 'GRADUATED';
 
   return (
-    <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 mx-auto w-full gap-2 px-4 pb-[2.125rem]">
+    <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 tablet:pb-[2.125rem] mx-auto w-full gap-2 px-4 pb-(--mobile-nav-clearance)">
       <div className="tablet:hidden sticky top-0 z-10">
         <NotificationMobileHeader />
       </div>
@@ -36,6 +34,10 @@ export function HomePageContent() {
       </div>
 
       <VStack className="desktop:gap-6 gap-4">
+        <Suspense fallback={null}>
+          <LatestSystemNoticePopupCard />
+        </Suspense>
+
         {isAlumni && (
           <div className="desktop:block hidden">
             <CeremonyRegisterBanner />

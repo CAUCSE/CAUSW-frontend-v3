@@ -18,7 +18,7 @@ export function NotificationMobileHeader() {
       className="h-[45px] w-full bg-gray-100 px-1 py-2"
     >
       <Image
-        src="/images/ccssaa-logo.png"
+        src="/images/brand/ccssaa-logo.png"
         alt="CCSSAA 로고"
         width={112}
         height={17}

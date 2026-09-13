@@ -8,10 +8,17 @@ import { Dialog, mergeStyles } from '@causw/cds';
 
 import { PostEditForm, PostWriteForm } from '@/features/post';
 
-import { useBreakpoint } from '@/shared/hooks';
+import { type BoardGroup } from '@/entities/board';
+
+import { confirmNativeBackGuard, useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
-export const PostWriteModal = ({ postId }: { postId?: string }) => {
+interface PostWriteModalProps {
+  boardGroup: BoardGroup;
+  postId?: string;
+}
+
+export const PostWriteModal = ({ boardGroup, postId }: PostWriteModalProps) => {
   const router = useRouter();
 
   const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
@@ -22,8 +29,12 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
     if (isDirty) {
       setIsCancelConfirmOpen(true);
     } else {
-      router.back();
+      closePostWrite();
     }
+  };
+
+  const closePostWrite = () => {
+    confirmNativeBackGuard(() => router.back());
   };
 
   return (
@@ -53,10 +64,19 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
           </Dialog.Title>
           {postId ? (
             <Suspense fallback={<SuspenseView />}>
-              <PostEditForm postId={postId} onClose={handleRequestClose} />
+              <PostEditForm
+                postId={postId}
+                boardGroup={boardGroup}
+                onClose={handleRequestClose}
+              />
             </Suspense>
           ) : (
-            <PostWriteForm onClose={handleRequestClose} />
+            <Suspense fallback={<SuspenseView />}>
+              <PostWriteForm
+                boardGroup={boardGroup}
+                onClose={handleRequestClose}
+              />
+            </Suspense>
           )}
         </Dialog.Content>
       </Dialog>
@@ -67,7 +87,7 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
         }
         open={isCancelConfirmOpen}
         onOpenChange={setIsCancelConfirmOpen}
-        onConfirm={() => router.back()}
+        onConfirm={closePostWrite}
         titleTypo="subtitle-16-bold"
       />
     </>

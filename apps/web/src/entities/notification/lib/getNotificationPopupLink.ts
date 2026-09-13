@@ -33,6 +33,12 @@ export function getNotificationPopupLink(
         path: `${ROUTES.CEREMONY}/${targetId}`,
       };
 
+    case 'SYSTEM_NOTICE': // 시스템 공지 알림
+      return {
+        type: NOTIFICATION_LINK_TYPE.INTERNAL,
+        path: ROUTES.SYSTEM_NOTICES,
+      };
+
     case 'SYSTEM': // 시스템 알림
       return {
         type: NOTIFICATION_LINK_TYPE.INTERNAL,

@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import {
   ALUMNI_CONTACTS_FILTER,
   type AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsDepartmentFilterOption,
   useAlumniContactsAcademicFilterSheetModalContext,
 } from '@/entities/alumni-contacts';
 
@@ -28,6 +29,7 @@ export const useAlumniContactsAcademicFilterSheetModalTrigger = () => {
     const currentAcademicStatus = params.get(
       ALUMNI_CONTACTS_FILTER.ACADEMIC_STATUS,
     );
+    const currentDepartment = params.get(ALUMNI_CONTACTS_FILTER.DEPARTMENT);
     return {
       currentStartAdmissionYear: currentStartAdmissionYear
         ? Number(currentStartAdmissionYear)
@@ -40,6 +42,11 @@ export const useAlumniContactsAcademicFilterSheetModalTrigger = () => {
             ',',
           ) as AlumniContactsAcademicStatusFilterOption[])
         : null,
+      currentDepartment: currentDepartment
+        ? (currentDepartment.split(
+            ',',
+          ) as AlumniContactsDepartmentFilterOption[])
+        : null,
     };
   }, [searchParams]);
 
@@ -49,11 +56,13 @@ export const useAlumniContactsAcademicFilterSheetModalTrigger = () => {
       currentStartAdmissionYear,
       currentEndAdmissionYear,
       currentAcademicStatus,
+      currentDepartment,
     } = getCurrentFilterSearchParams();
     initialize(
       currentStartAdmissionYear,
       currentEndAdmissionYear,
       currentAcademicStatus,
+      currentDepartment,
     );
   }, [getCurrentFilterSearchParams, initialize]);
 

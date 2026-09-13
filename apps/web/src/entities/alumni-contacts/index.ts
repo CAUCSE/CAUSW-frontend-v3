@@ -3,6 +3,8 @@ export {
   type AlumniContactsSortFilterOption,
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
   type AlumniContactsAcademicStatusFilterOption,
+  ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION,
+  type AlumniContactsDepartmentFilterOption,
   ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER,
   ALUMNI_CONTACTS_FILTER,
   type AlumniContactsFilter,
@@ -28,9 +30,7 @@ export {
 } from './config';
 export {
   AlumniContactsAcademicFilterSheetModalContext,
-  AlumniContactsScrollVisibilityContext,
   useAlumniContactsAcademicFilterSheetModalContext,
-  useAlumniContactsScrollVisibilityContext,
   useResetAlumniContactsFilter,
   type AlumniSummaryDto,
   type AlumniDirectorySectionDto,
@@ -45,7 +45,6 @@ export {
 } from './model';
 export {
   AlumniContactsAcademicFilterSheetModalProvider,
-  AlumniContactsScrollVisibilityProvider,
   AlumniContactsBasicInfo,
   AlumniContactsDescription,
   AlumniContactsSnsLink,
@@ -58,5 +57,6 @@ export {
   formatAlumniContactsPeriod,
   getAlumniContactSnsType,
   getValidAlumniContactsSocialLinkUrl,
+  normalizeAlumniContactsDepartments,
 } from './lib';
 export { alumniContactsHandler } from './mock';

@@ -1,37 +1,26 @@
-import { VStack } from '@causw/cds';
+import { mergeStyles, VStack } from '@causw/cds';
 
-import { CommentEmptyState, CommentItem } from '@/features/comment';
+import { CommentItem } from '@/features/comment';
 
-import {
-  type Comment,
-  CommentHeader,
-  type ReplyTarget,
-} from '@/entities/comment';
+import { type Comment, type ReplyTarget } from '@/entities/comment';
 
 interface CommentListProps {
-  countComment: number;
   comments: Comment[];
   onReply: (target: ReplyTarget) => void;
 }
 
-export const CommentList = ({
-  countComment,
-  comments,
-  onReply,
-}: CommentListProps) => {
+export const CommentList = ({ comments, onReply }: CommentListProps) => {
   const isEmpty = comments.length === 0;
 
   return (
-    <VStack as="section" gap="none" className="flex h-fit flex-1 bg-white pt-5">
-      <CommentHeader count={countComment} />
-
-      {isEmpty ? (
-        <CommentEmptyState />
-      ) : (
-        comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} onReply={onReply} />
-        ))
-      )}
+    <VStack
+      as="section"
+      gap="none"
+      className={mergeStyles('flex h-fit flex-1 bg-white', isEmpty && 'pt-30')}
+    >
+      {comments.map((comment) => (
+        <CommentItem key={comment.id} comment={comment} onReply={onReply} />
+      ))}
     </VStack>
   );
 };

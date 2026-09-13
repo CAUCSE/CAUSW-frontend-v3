@@ -3,6 +3,7 @@ export const ALUMNI_CONTACTS_FILTER = {
   ADMISSION_YEAR_START: 'admissionYearStart',
   ADMISSION_YEAR_END: 'admissionYearEnd',
   ACADEMIC_STATUS: 'academicStatus',
+  DEPARTMENT: 'department',
   SORT_TYPE: 'sortType',
 } as const;
 

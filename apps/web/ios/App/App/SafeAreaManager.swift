@@ -96,11 +96,13 @@ final class SafeAreaManager {
         }
         guard let superview = webView.superview else { return }
         let guide = superview.safeAreaLayoutGuide
+        // 하단은 safe area가 아닌 화면 끝까지 확장한다.
+        // 홈 인디케이터 영역은 웹에서 viewport-fit=cover + env(safe-area-inset-bottom)으로 처리한다.
         webViewSafeAreaConstraints = [
             webView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
             webView.topAnchor.constraint(equalTo: guide.topAnchor),
-            webView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+            webView.bottomAnchor.constraint(equalTo: superview.bottomAnchor)
         ]
         NSLayoutConstraint.activate(webViewSafeAreaConstraints)
     }

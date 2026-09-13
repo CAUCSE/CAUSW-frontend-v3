@@ -5,7 +5,6 @@ export { getSocialOauthUrl } from './getSocialOauthUrl';
 export {
   clearPendingDestination,
   consumePendingDestination,
-  safeCallbackUrl,
   savePendingDestination,
 } from './pendingDestination';
 export * from './passwordResetContext';

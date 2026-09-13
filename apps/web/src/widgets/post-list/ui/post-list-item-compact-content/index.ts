@@ -1,0 +1,1 @@
+export { PostListItemCompactContent } from './PostListItemCompactContent';

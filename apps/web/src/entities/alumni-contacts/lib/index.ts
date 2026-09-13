@@ -4,3 +4,4 @@ export { checkAlumniContactsFilterSearchParamValidation } from './checkAlumniCon
 export { formatAlumniContactsPeriod } from './formatAlumniContactsPeriod';
 export { getAlumniContactSnsType } from './getAlumniContactSnsType';
 export { getValidAlumniContactsSocialLinkUrl } from './getValidAlumniContactsSocialLinkUrl';
+export { normalizeAlumniContactsDepartments } from './normalizeAlumniContactsDepartments';

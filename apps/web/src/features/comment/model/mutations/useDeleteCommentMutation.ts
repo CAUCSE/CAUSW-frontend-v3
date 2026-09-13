@@ -6,6 +6,7 @@ import { commentKeys, type GetCommentsResponseDto } from '@/entities/comment';
 import { postQueryKeys } from '@/entities/post';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { deleteComment } from '../../api';
 
@@ -67,8 +68,8 @@ export const useDeleteCommentMutation = (postId: string) => {
       return { previousComments };
     },
 
-    onError: (_err, _commentId, context) => {
-      toast.error('댓글 삭제에 실패했어요.');
+    onError: (error, _commentId, context) => {
+      toast.error(extractErrorMessage(error, '댓글 삭제에 실패했어요.'));
 
       if (context?.previousComments) {
         context.previousComments.forEach(([queryKey, oldData]) => {

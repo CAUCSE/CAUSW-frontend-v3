@@ -1,3 +1,5 @@
+import { type BoardGroup } from '@/entities/board';
+
 import { type GetPostResponseDto } from './getPostDto';
 
 export type PostResponseDto = Omit<
@@ -8,4 +10,5 @@ export type PostResponseDto = Omit<
   postImageUrls: string[];
   writerNickname: string;
   isPostFavorite: boolean;
+  boardGroup: BoardGroup;
 };

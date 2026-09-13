@@ -25,7 +25,7 @@ export const CommentActionMenu = ({
   return (
     <Dropdown open={isOpen} onOpenChange={setIsOpen}>
       <Dropdown.Trigger asChild>
-        <button className="translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100">
+        <button className="-my-1 translate-x-1 cursor-pointer rounded-sm p-1 transition-colors hover:bg-gray-100 active:bg-gray-100">
           <Menu size={20} color="gray-500" />
         </button>
       </Dropdown.Trigger>
@@ -37,7 +37,7 @@ export const CommentActionMenu = ({
           <Dropdown.Item
             color="red"
             onClick={() => handleMenuAction('delete')}
-            className="justify-center px-10 py-2.5 text-base font-bold"
+            className="justify-center rounded-none px-4 py-2 text-base font-bold"
           >
             삭제하기
           </Dropdown.Item>
@@ -45,7 +45,7 @@ export const CommentActionMenu = ({
           <>
             <Dropdown.Item
               onClick={() => handleMenuAction('report')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               신고하기
             </Dropdown.Item>
@@ -53,7 +53,7 @@ export const CommentActionMenu = ({
             <Dropdown.Item
               color="red"
               onClick={() => handleMenuAction('block')}
-              className="justify-center px-10 py-2.5 text-base font-bold"
+              className="justify-center rounded-none px-4 py-2 text-base font-bold"
             >
               차단하기
             </Dropdown.Item>

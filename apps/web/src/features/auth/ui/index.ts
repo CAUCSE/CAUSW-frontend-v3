@@ -10,6 +10,7 @@ export * from './enrollment-verification-major-field';
 export * from './enrollment-verification-name-field';
 export * from './enrollment-verification-state-field';
 export * from './enrollment-verification-student-id-field';
+export * from './account-link-guide-dialog';
 export * from './oauth-additional-info-name-field';
 export * from './oauth-additional-info-phone-number-field';
 export * from './oauth-additional-info-nickname-field';

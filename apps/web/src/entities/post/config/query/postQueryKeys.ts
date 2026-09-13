@@ -1,4 +1,4 @@
-import { type MyFeedView } from '@/entities/feed';
+import { type MyFeedView } from '@/entities/my-feed';
 
 import {
   type GetMyCommentedPostsQuery,

@@ -1,0 +1,1 @@
+export { PostBoardTabs } from './PostBoardTabs';

@@ -6,6 +6,10 @@ export {
   ALUMNI_CONTACTS_ACADEMIC_STATUS_FILTER_OPTION,
   type AlumniContactsAcademicStatusFilterOption,
 } from './alumniContactsAcademicStatusFilterOption';
+export {
+  ALUMNI_CONTACTS_DEPARTMENT_FILTER_OPTION,
+  type AlumniContactsDepartmentFilterOption,
+} from './alumniContactsDepartmentFilterOption';
 export { ALUMNI_CONTACTS_ADMISSION_YEAR_FILTER } from './alumniContactsAdmissionYearFilter';
 export {
   ALUMNI_CONTACTS_FILTER,

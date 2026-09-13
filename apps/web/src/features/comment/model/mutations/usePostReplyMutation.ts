@@ -8,6 +8,7 @@ import {
 } from '@/entities/comment';
 
 import { toast } from '@/shared/model';
+import { extractErrorMessage } from '@/shared/utils';
 
 import { createReply } from '../../api';
 
@@ -28,8 +29,8 @@ export const usePostReplyMutation = () => {
       });
     },
 
-    onError: () => {
-      toast.error('답글 작성에 실패했어요.');
+    onError: (error) => {
+      toast.error(extractErrorMessage(error, '답글 작성에 실패했어요.'));
     },
   });
 };

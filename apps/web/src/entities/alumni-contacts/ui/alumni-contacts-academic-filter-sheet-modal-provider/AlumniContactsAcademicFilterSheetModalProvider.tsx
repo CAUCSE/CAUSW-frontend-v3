@@ -2,7 +2,10 @@
 
 import { type PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
-import { type AlumniContactsAcademicStatusFilterOption } from '@/entities/alumni-contacts/config';
+import {
+  type AlumniContactsAcademicStatusFilterOption,
+  type AlumniContactsDepartmentFilterOption,
+} from '@/entities/alumni-contacts/config';
 import { AlumniContactsAcademicFilterSheetModalContext } from '@/entities/alumni-contacts/model';
 
 const DEFAULT_START_ADMISSION_YEAR = 1972;
@@ -17,16 +20,21 @@ export const AlumniContactsAcademicFilterSheetModalProvider = ({
   const [academicStatus, setAcademicStatus] = useState<
     AlumniContactsAcademicStatusFilterOption[] | null
   >(null);
+  const [department, setDepartment] = useState<
+    AlumniContactsDepartmentFilterOption[] | null
+  >(null);
 
   const initialize = useCallback(
     (
       startAdmissionYear: number | null,
       endAdmissionYear: number | null,
       academicStatus: AlumniContactsAcademicStatusFilterOption[] | null,
+      department: AlumniContactsDepartmentFilterOption[] | null,
     ) => {
       setStartAdmissionYear(startAdmissionYear ?? DEFAULT_START_ADMISSION_YEAR);
       setEndAdmissionYear(endAdmissionYear ?? DEFAULT_END_ADMISSION_YEAR);
       setAcademicStatus(academicStatus);
+      setDepartment(department);
     },
     [],
   );
@@ -35,6 +43,7 @@ export const AlumniContactsAcademicFilterSheetModalProvider = ({
     setStartAdmissionYear(null);
     setEndAdmissionYear(null);
     setAcademicStatus(null);
+    setDepartment(null);
   }, []);
 
   const value = useMemo(
@@ -42,9 +51,11 @@ export const AlumniContactsAcademicFilterSheetModalProvider = ({
       startAdmissionYear,
       endAdmissionYear,
       academicStatus,
+      department,
       setStartAdmissionYear,
       setEndAdmissionYear,
       setAcademicStatus,
+      setDepartment,
       initialize,
       reset,
     }),
@@ -52,9 +63,11 @@ export const AlumniContactsAcademicFilterSheetModalProvider = ({
       startAdmissionYear,
       endAdmissionYear,
       academicStatus,
+      department,
       setStartAdmissionYear,
       setEndAdmissionYear,
       setAcademicStatus,
+      setDepartment,
       initialize,
       reset,
     ],

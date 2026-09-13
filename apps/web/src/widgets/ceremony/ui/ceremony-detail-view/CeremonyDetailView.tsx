@@ -10,6 +10,7 @@ import {
 
 import { formatDateWithTime } from '@/shared/lib';
 import { toast } from '@/shared/model/toast';
+import { ImageGallery } from '@/shared/ui';
 
 import { KakaoMap } from './KakaoMap';
 
@@ -29,6 +30,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
     startTime,
     endTime,
     content,
+    attachedImageUrlList,
     address,
     detailedAddress,
     contact,
@@ -36,6 +38,8 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
   } = detail;
 
   const showApplicant = applicant !== subject;
+  const hasContentSection =
+    Boolean(content) || (attachedImageUrlList?.length ?? 0) > 0;
   const linkHref = link
     ? /^https?:\/\//i.test(link)
       ? link
@@ -66,7 +70,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
 
   // CDS Stack의 gap prop은 프리셋(xs~xl)에 없는 값이라 div 사용
   return (
-    <div className="flex flex-col gap-[1.375rem] px-5 pt-[0.5rem] pb-5">
+    <div className="mx-auto flex w-full max-w-225 flex-col gap-[1.375rem] px-5 pt-[0.5rem] pb-5">
       {/* 타이틀 행 */}
       <div className="flex items-start gap-[0.75rem]">
         <div className="flex size-10 shrink-0 items-center justify-center rounded-[0.75rem] bg-white">
@@ -99,7 +103,7 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
       </div>
 
       {/* 내용 섹션 */}
-      {content && (
+      {hasContentSection && (
         <div className="flex flex-col gap-[0.5rem]">
           <Text
             typography="subtitle-16-bold"
@@ -108,14 +112,17 @@ export const CeremonyDetailView = ({ detail }: CeremonyDetailViewProps) => {
           >
             내용
           </Text>
-          <div className="rounded-[0.75rem] bg-white p-5">
-            <Text
-              typography="body-16-regular"
-              textColor="gray-700"
-              className="wrap-break-word whitespace-pre-wrap"
-            >
-              {content}
-            </Text>
+          <div className="flex flex-col gap-4 rounded-[0.75rem] bg-white p-5">
+            {content && (
+              <Text
+                typography="body-16-regular"
+                textColor="gray-700"
+                className="wrap-break-word whitespace-pre-wrap"
+              >
+                {content}
+              </Text>
+            )}
+            <ImageGallery images={attachedImageUrlList} />
           </div>
         </div>
       )}

@@ -6,7 +6,11 @@ import Script from 'next/script';
 
 import { getTraceData } from '@causw/logger';
 
-import { CLARITY_PROJECT_ID, GA_MEASUREMENT_ID } from '@/shared/config';
+import {
+  CLARITY_PROJECT_ID,
+  GA_MEASUREMENT_ID,
+  SITE_URL,
+} from '@/shared/config';
 import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 
 import { MSWComponent } from './_mock';
@@ -21,7 +25,7 @@ import {
 const SOCIAL_PREVIEW_IMAGE = '/images/social-preview.png';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.causw.co.kr'),
+  metadataBase: new URL(SITE_URL),
   title: '크자회(CCSSAA)',
   description: '크자회, 중앙대학교 소프트웨어대학 동문을 위한 서비스',
   icons: {
@@ -48,6 +52,10 @@ export const metadata: Metadata = {
     images: [SOCIAL_PREVIEW_IMAGE],
     title: '크자회(CCSSAA)',
   },
+  robots: {
+    index: false,
+    follow: false,
+  },
   other: {
     ...getTraceData(), // Sentry 오류 로그 추적
   },
@@ -58,6 +66,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  // 하단 홈 인디케이터 영역까지 뷰포트를 확장. safe-area 여백은 env(safe-area-inset-bottom)으로 처리
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -66,7 +76,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    // 안드로이드 네이티브가 documentElement에 --safe-area-inset-bottom을 주입한다
+    <html lang="ko" suppressHydrationWarning>
       <body className="antialiased select-none md:select-text">
         <MSWComponent>
           <QueryProviderWithDevtools>

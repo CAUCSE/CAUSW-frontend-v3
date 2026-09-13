@@ -8,3 +8,5 @@ export {
   ENROLLMENT_VERIFICATION_DEPARTMENT_OPTIONS,
 } from './enrollment-verification-department';
 export { ENROLLMENT_VERIFICATION_FORM_FIELD } from './enrollment-verification-form';
+export { PHONE_NUMBER_DUPLICATED_ERROR_CODE } from './error-code';
+export { SOCIAL_PROVIDER_LABEL } from './social-provider';

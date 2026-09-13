@@ -1,37 +1,35 @@
 'use client';
 
-import { Tab, VStack } from '@causw/cds';
+import {
+  POST_LIST_TAB_SEARCH_PARAM_KEY,
+  PostListWrapper,
+  useCategoryTabSelection,
+  useNormalizeBoardTabParam,
+  useNormalizeCategoryTabParam,
+} from '@/widgets/post-list';
 
-import { FEED_LIST_TAB } from '../../config';
+import { BOARD_GROUP } from '@/entities/board';
+
+import { ROUTES } from '@/shared/constants';
+
 import { useFeedMain } from '../../model';
-import { FeedListWrapper } from '../feed-list';
 
 export const FeedMain = () => {
-  const {
-    data: boards,
-    feedListRef,
-    selectedTab,
-    filteredBoardIds,
-    handleTabChange,
-  } = useFeedMain();
+  const { data: boards, filteredBoardIds } = useFeedMain();
+  useNormalizeBoardTabParam({
+    boards,
+    searchParamKey: POST_LIST_TAB_SEARCH_PARAM_KEY.CHANNEL,
+    basePath: ROUTES.FEED,
+  });
+
+  useNormalizeCategoryTabParam({ basePath: ROUTES.FEED });
+  const { selectedCategory } = useCategoryTabSelection();
 
   return (
-    <VStack gap="md" className="min-h-0 flex-1">
-      <Tab.Root
-        variant="chip"
-        value={selectedTab}
-        onValueChange={handleTabChange}
-      >
-        <Tab.List className="px-5 md:px-0">
-          <Tab.TabItem value={FEED_LIST_TAB.ALL}>전체</Tab.TabItem>
-          {boards.map((board) => (
-            <Tab.TabItem key={board.id} value={board.id}>
-              {board.name}
-            </Tab.TabItem>
-          ))}
-        </Tab.List>
-      </Tab.Root>
-      <FeedListWrapper boardIds={filteredBoardIds} ref={feedListRef} />
-    </VStack>
+    <PostListWrapper
+      boardIds={filteredBoardIds}
+      boardGroup={BOARD_GROUP.NOTICE}
+      category={selectedCategory}
+    />
   );
 };

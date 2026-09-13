@@ -5,13 +5,13 @@ import type { MouseEventHandler } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Text, VStack } from '@causw/cds';
+import { VStack } from '@causw/cds';
 
 import {
   MethodSelectContainer,
   SessionKeepConfirmModal,
   SignInButtonsSkeleton,
-  SignInImageSection,
+  SignInHero,
 } from '@/widgets/auth';
 
 import {
@@ -43,7 +43,9 @@ export const SelectMethodPage = () => {
   useRestoreMobileAuth();
 
   const handleSocialLogin =
-    (provider: NativeSocialLoginProvider): MouseEventHandler<HTMLButtonElement> =>
+    (
+      provider: NativeSocialLoginProvider,
+    ): MouseEventHandler<HTMLButtonElement> =>
     () => {
       if (isMobile) {
         nativeSocialLoginFlowMutation.mutate({ provider });
@@ -66,32 +68,16 @@ export const SelectMethodPage = () => {
   return (
     <QueryClientClearProvider>
       <MethodSelectContainer>
-        <VStack className="gap-12 md:gap-20">
-          <VStack justify="center" align="center" className="w-full gap-8">
-            <SignInImageSection />
-
-            <Text
-              as="h1"
-              typography="title-22-bold"
-              textColor="gray-800"
-              className="text-center whitespace-pre-wrap"
-            >
-              함께하면 더 밝은 미래로,{'\n'}
-              우리들의 동문네트워크
-            </Text>
-          </VStack>
-
+        <VStack className="gap-8">
+          <SignInHero />
           {isMounted ? (
-            <VStack className="min-h-[252px] w-full gap-3">
+            <VStack className="min-h-63 w-full gap-2 px-4">
               <>
                 <KakaoLoginButton onClick={handleSocialLogin('kakao')} />
-
                 {!isAndroid && (
                   <AppleLoginButton onClick={handleSocialLogin('apple')} />
                 )}
-
                 <GoogleLoginButton onClick={handleSocialLogin('google')} />
-
                 <EmailLoginButton
                   onClick={() => router.push('/auth/sign-in/email')}
                 />

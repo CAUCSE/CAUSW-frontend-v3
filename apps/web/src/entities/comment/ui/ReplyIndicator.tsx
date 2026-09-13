@@ -1,5 +1,9 @@
 import { Close, HStack, Stack, Text } from '@causw/cds';
 
+import {
+  BACKEND_INACTIVE_WRITER_NICKNAME,
+  WITHDRAWN_AUTHOR_DISPLAY_NAME,
+} from '../config';
 import { type ReplyTarget } from '../model';
 
 interface ReplyIndicatorProps {
@@ -13,6 +17,12 @@ export const ReplyIndicator = ({
 }: ReplyIndicatorProps) => {
   if (!replyTarget) return null;
 
+  const isAuthorWithdrawn =
+    replyTarget.author === BACKEND_INACTIVE_WRITER_NICKNAME;
+  const displayReplyTargetAuthor = isAuthorWithdrawn
+    ? WITHDRAWN_AUTHOR_DISPLAY_NAME
+    : replyTarget.author;
+
   return (
     <HStack
       gap="none"
@@ -21,7 +31,7 @@ export const ReplyIndicator = ({
     >
       <Stack gap="none" className="w-full">
         <Text typography="body-15-regular" textColor="gray-400">
-          {replyTarget.author}님에게 답글을 남기는 중
+          {displayReplyTargetAuthor}님에게 답글을 남기는 중
         </Text>
         <Text
           typography="body-15-regular"

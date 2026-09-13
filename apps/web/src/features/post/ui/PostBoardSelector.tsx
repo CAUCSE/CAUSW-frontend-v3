@@ -2,7 +2,7 @@
 
 import { BottomSheet, Dialog, Text, VStack } from '@causw/cds';
 
-import { type Board, BoardChipList } from '@/entities/feed';
+import { type Board, BoardChipList } from '@/entities/board';
 
 import { useBreakpoint } from '@/shared/hooks';
 
@@ -26,10 +26,14 @@ export const PostBoardSelector = ({
   if (isMobileSize)
     return (
       <BottomSheet open={open} onOpenChange={onOpenChange}>
-        <BottomSheet.Content className="z-modal" aria-describedby={undefined}>
+        <BottomSheet.Content
+          className="z-modal"
+          overlayClassName="z-modal"
+          aria-describedby={undefined}
+        >
           <VStack gap="lg" align="start">
             <BottomSheet.Header title="게시글 주제를 선택해주세요." />
-            <BottomSheet.Body>
+            <BottomSheet.Body className="pb-4">
               <BoardChipList
                 boards={boards}
                 selectedBoard={selectedBoard}

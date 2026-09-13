@@ -4,12 +4,15 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { type BoardGroup } from '@/entities/board';
 import {
+  getPostDetailPath,
   postQueryKeys,
   type PostCreateRequestDto,
   type PostCreateResponseDto,
 } from '@/entities/post';
 
+import { confirmNativeBackGuard } from '@/shared/hooks';
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
@@ -20,7 +23,7 @@ interface CreatePostParams {
   images: File[];
 }
 
-export const useCreatePostMutation = () => {
+export const useCreatePostMutation = (boardGroup: BoardGroup) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -30,9 +33,9 @@ export const useCreatePostMutation = () => {
       toast.success('게시글이 작성되었어요.');
       queryClient.invalidateQueries({ queryKey: postQueryKeys.all });
 
-      router.back();
+      confirmNativeBackGuard(() => router.back());
       requestAnimationFrame(() => {
-        router.push(`/feed/${data.id}`);
+        router.push(getPostDetailPath(boardGroup, data.id));
       });
     },
     onError: (error) => {

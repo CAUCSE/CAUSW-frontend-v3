@@ -1,1 +1,0 @@
-export { FeedSearchHeader } from './FeedSearchHeader';

@@ -1,34 +1,30 @@
 import Link from 'next/link';
 
-import { HStack, Sidebar } from '@causw/cds';
-
-import { CountBadge, StatusDot } from '@/shared/ui';
+import { Sidebar } from '@causw/cds';
 
 import { type SidebarItem } from '../../model';
 
-export function SidebarMenuItem({
-  item,
-  showDot = false,
-  badgeCount = 0,
-}: {
+import { SidebarItemBadge } from './SidebarItemBadge';
+
+interface SidebarMenuItemProps {
   item: SidebarItem;
-  showDot?: boolean;
-  badgeCount?: number | string;
-}) {
-  return (
-    <Sidebar.Item value={item.key} asChild>
-      <Link href={item.href} className="block pr-2">
-        <HStack className="w-full cursor-pointer items-center gap-3.5">
-          <div className="relative">
-            {showDot && <StatusDot show={true} right={-2} top={-2} />}
-            <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
-          </div>
-
-          <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
-
-          {!!badgeCount && <CountBadge count={badgeCount} />}
-        </HStack>
-      </Link>
-    </Sidebar.Item>
-  );
+  /** 아이콘 우상단에 표시할 배지 내용. 없으면 배지를 렌더링하지 않는다 */
+  badgeContent?: number | string;
 }
+
+export const SidebarMenuItem = ({
+  item,
+  badgeContent,
+}: SidebarMenuItemProps) => (
+  <Sidebar.Item value={item.key} asChild>
+    <Link href={item.href}>
+      <span className="relative flex">
+        <Sidebar.ItemIcon asChild>{item.icon}</Sidebar.ItemIcon>
+        {badgeContent !== undefined && (
+          <SidebarItemBadge>{badgeContent}</SidebarItemBadge>
+        )}
+      </span>
+      <Sidebar.ItemText>{item.label}</Sidebar.ItemText>
+    </Link>
+  </Sidebar.Item>
+);
