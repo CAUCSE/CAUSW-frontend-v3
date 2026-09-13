@@ -66,7 +66,7 @@ export const MyFeedList = () => {
 
   return (
     <VStack
-      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-y-auto px-5 py-4 md:overflow-visible"
+      className="min-h-0 w-full max-w-full min-w-0 flex-1 overflow-y-auto px-5 py-4 pb-(--safe-area-inset-bottom) md:overflow-visible md:pb-4"
       as="ul"
       ref={myFeedListRef}
     >
