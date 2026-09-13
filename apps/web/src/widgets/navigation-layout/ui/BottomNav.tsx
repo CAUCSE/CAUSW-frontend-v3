@@ -1,12 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { BottomNavigation, mergeStyles } from '@causw/cds';
 
 import { ALUMNI_CONTACTS_SCROLL_CONTAINER_CLASS_NAME } from '@/widgets/alumni-contacts';
 import { POST_LIST_SCROLL_CONTAINER_CLASS_NAME } from '@/widgets/post-list';
 
+import { ROUTES } from '@/shared/constants';
 import { useScrollDirectionVisibility } from '@/shared/hooks';
 
 import { BOTTOM_NAV_ITEMS, type BottomNavKey } from '../model';
@@ -16,15 +18,23 @@ interface BottomNavProps {
 }
 
 export const BottomNav = ({ selected }: BottomNavProps) => {
-  // 하단 네비는 전역 컴포넌트라 여러 스크롤 컨테이너를 동시에 감시해야 함.
-  // 실제 렌더된 페이지의 컨테이너만 스크롤 이벤트를 받으므로, 나머지 훅은
-  // 항상 기본값(true)에 머물러 AND 연산으로 안전하게 합칠 수 있다.
+  // 하단 네비는 전역 컴포넌트라 페이지 이동에도 언마운트되지 않는다.
+  // 두 훅을 항상 같이 켜두면, 이전 페이지에서 숨겨졌던 상태가 남아
+  // 컨테이너가 없는 다른 페이지에서도 계속 숨겨진 채로 고정될 수 있어
+  // 현재 경로에 해당하는 훅만 enabled로 켜고 나머지는 기본 상태로 리셋한다.
+  const pathname = usePathname();
+  const isPostListRoute =
+    pathname === ROUTES.FEED || pathname === ROUTES.COMMUNITY;
+  const isAlumniContactsRoute = pathname === ROUTES.ALUMNI_CONTACTS;
+
   const { isVisible: isVisibleForPostList } = useScrollDirectionVisibility({
     containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+    enabled: isPostListRoute,
   });
   const { isVisible: isVisibleForAlumniContactsList } =
     useScrollDirectionVisibility({
       containerClassName: ALUMNI_CONTACTS_SCROLL_CONTAINER_CLASS_NAME,
+      enabled: isAlumniContactsRoute,
     });
   const isVisible = isVisibleForPostList && isVisibleForAlumniContactsList;
 
