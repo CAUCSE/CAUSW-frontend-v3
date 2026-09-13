@@ -6,7 +6,7 @@ import { AlumniContactsDepartmentFilterButtonGroup } from '../alumni-contacts-de
 
 export const AlumniContactsAcademicFilterSheetModalMain = () => {
   return (
-    <VStack>
+    <VStack gap="lg">
       <VStack className="gap-3">
         <Text typography="subtitle-16-bold">학번</Text>
         <AlumniContactsAdmissionYearFilterSelectGroup />
