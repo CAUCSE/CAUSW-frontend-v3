@@ -12,7 +12,6 @@ import {
   usePostListScrollRestoration,
 } from '@/widgets/post-list';
 
-import { BOARD_GROUP } from '@/entities/board';
 import { useMyFeedView } from '@/entities/my-feed';
 import { postQueryOptions, usePostViewMode } from '@/entities/post';
 
@@ -77,7 +76,6 @@ export const MyFeedList = () => {
         scrollRestorationStorageKey={
           POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.MY_FEED
         }
-        boardGroup={BOARD_GROUP.COMMUNITY}
       />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />

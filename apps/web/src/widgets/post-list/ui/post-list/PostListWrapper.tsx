@@ -86,7 +86,6 @@ export const PostListWrapper = ({
             targetRef={targetRef}
             viewMode={postViewMode}
             scrollRestorationStorageKey={scrollRestorationStorageKey}
-            boardGroup={boardGroup}
           />
         </PullToRefresh>
         <PostWriteFloatingActionButton boardGroup={boardGroup} />
@@ -103,7 +102,6 @@ export const PostListWrapper = ({
         targetRef={targetRef}
         viewMode={postViewMode}
         scrollRestorationStorageKey={scrollRestorationStorageKey}
-        boardGroup={boardGroup}
       />
       <PostWriteFloatingActionButton boardGroup={boardGroup} />
     </>
