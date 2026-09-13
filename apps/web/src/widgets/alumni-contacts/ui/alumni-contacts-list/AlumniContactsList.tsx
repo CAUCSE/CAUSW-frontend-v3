@@ -67,7 +67,7 @@ const AlumniContactsList = ({
   const isAllMembersEmpty = coffeeChat.length === 0 && allMembers.length === 0;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pt-4 md:overflow-visible">
+    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pt-4 pb-(--mobile-nav-clearance) md:overflow-visible md:pb-0">
       {myProfile && (
         <>
           <VStack gap="none">

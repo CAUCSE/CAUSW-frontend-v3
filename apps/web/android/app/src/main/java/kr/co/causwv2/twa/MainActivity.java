@@ -49,7 +49,7 @@ public class MainActivity extends BridgeActivity {
         rootView = findViewById(android.R.id.content);
         launchOverlay = createLaunchOverlay();
         overlayShownAtMs = SystemClock.elapsedRealtime();
-        safeAreaInsetsManager = new SafeAreaInsetsManager(rootView, webView);
+        safeAreaInsetsManager = new SafeAreaInsetsManager(rootView, webView, getBridge());
         safeAreaInsetsManager.setup();
 
         String kakaoNativeAppKey = getString(R.string.kakao_native_app_key);
@@ -174,6 +174,9 @@ public class MainActivity extends BridgeActivity {
         super.onDestroy();
         if (backPressHandler != null) {
             backPressHandler.cleanup();
+        }
+        if (safeAreaInsetsManager != null) {
+            safeAreaInsetsManager.cleanup();
         }
     }
 

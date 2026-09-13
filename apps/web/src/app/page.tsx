@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { LandingPage } from '@/_pages/landing';
+import { LandingNativeAppGuard, LandingPage } from '@/_pages/landing';
 
 import { LANDING_METADATA, SITE_URL } from '@/shared/config';
 
@@ -29,7 +29,7 @@ const structuredData = {
     {
       '@id': `${SITE_URL}/#organization`,
       '@type': 'Organization',
-      logo: `${SITE_URL}/images/ccssaa-logo.png`,
+      logo: `${SITE_URL}/images/brand/ccssaa-logo.png`,
       name: '중앙대학교 ICT 위원회',
       url: SITE_URL,
     },
@@ -39,6 +39,7 @@ const structuredData = {
 export default function Page() {
   return (
     <>
+      <LandingNativeAppGuard />
       <LandingPage />
       <script
         type="application/ld+json"

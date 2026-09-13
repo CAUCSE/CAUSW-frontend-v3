@@ -1,0 +1,1 @@
+export { useRecentSearchKeywordSection } from './hooks';

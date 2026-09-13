@@ -11,7 +11,7 @@ import {
   VStack,
 } from '@causw/cds';
 
-import { type Board } from '@/entities/feed';
+import { type Board } from '@/entities/board';
 import { type VoteWriteValue } from '@/entities/post';
 
 import { VoteField } from './VoteField';
@@ -76,7 +76,7 @@ export const PostWriteBody = ({
               : '',
           )}
         >
-          <button onClick={onSelectorClick} disabled={isEdit}>
+          <button type="button" onClick={onSelectorClick} disabled={isEdit}>
             {selectedBoard ? selectedBoard.name : '주제를 선택해주세요'}
             <ArrowDown size={14} color="gray-500" />
           </button>

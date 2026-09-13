@@ -14,6 +14,29 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* html의 scrollbar-gutter: stable 때문에 스크롤 잠금 후에도 스크롤바 자리가 남는다.
+ * Radix 오버레이(Dropdown, Select, Dialog, BottomSheet)의 스크롤 잠금(react-remove-scroll-bar)은
+ * 스크롤바가 사라진다고 가정하고 body에 margin-right를 넣어 보정하므로, 그 보정만 무효화한다.
+ * (안 하면 열릴 때마다 콘텐츠가 스크롤바 폭의 절반만큼 왼쪽으로 밀린다) */
+html body[data-scroll-locked] {
+  margin-right: 0 !important;
+}
+
+:root {
+  /*
+   * 하단 safe-area(iOS 홈 인디케이터 등). viewport-fit=cover 상태에서만 0보다 크다.
+   * Android WebView는 env()로 시스템 바 inset을 주지 않으므로, 네이티브가 이 변수를 덮어쓸 수 있도록 감싼다.
+   */
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  /*
+   * 모바일 하단 네비(CDS BottomNavigation 알약) 위로 콘텐츠와 플로팅 요소가 확보해야 할 최소 거리.
+   * = 알약 하단 오프셋 max(16px, safe-area) + 알약 높이 56px + 여백 16px
+   */
+  --mobile-nav-clearance: calc(
+    max(1rem, var(--safe-area-inset-bottom)) + 4.5rem
+  );
+}
+
 @layer utilities {
   /* Title variants */
   .typo-title-48-bold {
@@ -96,6 +119,10 @@ html {
 
   .typo-caption-12-regular {
     @apply text-2xs font-regular font-sans leading-normal;
+  }
+
+  .typo-caption-11-semibold {
+    @apply text-3xs font-sans leading-normal font-semibold;
   }
 }
 

@@ -2,7 +2,7 @@
 
 import { useBoardTabSelection } from '@/widgets/post-list';
 
-import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/feed';
+import { BOARD_GROUP, useGetAvailableBoards } from '@/entities/board';
 
 export const useCommunityMain = () => {
   const { data } = useGetAvailableBoards({

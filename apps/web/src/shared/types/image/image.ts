@@ -17,6 +17,7 @@ export interface ImageViewerProps {
 export interface ImageSliderProps {
   images: string[];
   onImageClick?: (index: number) => void;
+  className?: string;
 }
 
 // 이미지 업로드 필드

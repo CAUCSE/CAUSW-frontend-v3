@@ -1,5 +1,8 @@
+import Image from 'next/image';
+
 import { HStack, Text, VStack } from '@causw/cds';
 
+import { awsImageLoader } from '@/shared/lib';
 import { stripHtml } from '@/shared/lib/sanitizer';
 
 interface PostCompactBodyProps {
@@ -40,12 +43,16 @@ export const PostCompactBody = ({
       </VStack>
 
       {thumbnailUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={thumbnailUrl}
-          alt=""
-          className="h-12 w-12 shrink-0 rounded-sm object-cover"
-        />
+        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-sm">
+          <Image
+            loader={awsImageLoader}
+            src={thumbnailUrl}
+            alt=""
+            fill
+            sizes="3rem"
+            className="object-cover"
+          />
+        </div>
       )}
     </HStack>
   );

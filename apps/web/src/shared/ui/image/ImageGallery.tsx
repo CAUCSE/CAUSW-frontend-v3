@@ -10,6 +10,7 @@ import { ImageViewer } from './ImageViewer';
 interface ImageGalleryProps {
   images?: string[] | null;
   enableViewer?: boolean;
+  sliderClassName?: string;
 }
 
 /**
@@ -22,6 +23,7 @@ interface ImageGalleryProps {
 export const ImageGallery = ({
   images,
   enableViewer = true,
+  sliderClassName,
 }: ImageGalleryProps) => {
   const [viewerState, setViewerState] = useState({
     isOpen: false,
@@ -49,6 +51,7 @@ export const ImageGallery = ({
       <ImageSlider
         images={images}
         onImageClick={enableViewer ? handleImageClick : undefined}
+        className={sliderClassName}
       />
 
       {enableViewer && viewerState.isOpen && (

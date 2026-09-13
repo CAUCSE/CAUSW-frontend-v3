@@ -10,7 +10,7 @@ export const LandingClosingCTA = () => {
     <ScrollReveal className="w-full">
       <VStack as="section" className="desktop:gap-8 w-full items-center gap-6">
         <Image
-          src="/images/landing/brand/ccssww-profile.svg"
+          src="/images/brand/ccssaa-profile.svg"
           alt="크자회"
           width={56}
           height={56}

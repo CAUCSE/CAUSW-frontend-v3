@@ -1,12 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-
-import { VStack, Sidebar, Skeleton } from '@causw/cds';
-
-import { LogoutConfirmModal } from '@/widgets/auth';
-
-import { useGetMeQuery, useLogout } from '@/features/auth';
+import { Separator, Sidebar } from '@causw/cds';
 
 import { QueryErrorBoundary } from '@/shared/ui';
 
@@ -15,82 +9,37 @@ import {
   SIDEBAR_MAIN_ITEMS,
   type SidebarKey,
 } from '../../model';
-import { FooterProfile } from '../FooterProfile';
 
 import { NotificationItem } from './NotificationItem';
-import { SideBarHeader } from './SidebarHeader';
 import { SidebarMenuItem } from './SidebarMenuItem';
 
-type SidebarNavProps = {
+interface SidebarNavProps {
   selected?: SidebarKey;
-};
-
-export function SidebarNav({ selected }: SidebarNavProps) {
-  const { data: user, isLoading } = useGetMeQuery();
-  const logout = useLogout();
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-
-  return (
-    <Sidebar selected={selected}>
-      {/* HEADER */}
-      <Sidebar.Header>
-        <SideBarHeader />
-      </Sidebar.Header>
-
-      {/* CONTENT */}
-      <Sidebar.Content>
-        <div className="flex h-full flex-col">
-          <VStack gap="sm">
-            {SIDEBAR_MAIN_ITEMS.map((item) => (
-              <SidebarMenuItem item={item} key={item.key} />
-            ))}
-          </VStack>
-
-          <VStack gap="sm" className="mt-auto pt-2">
-            {SIDEBAR_BOTTOM_ITEMS.map((item) => {
-              if (item.key === 'notifications') {
-                return (
-                  <QueryErrorBoundary
-                    key={item.key}
-                    FallbackComponent={() => (
-                      <SidebarMenuItem
-                        item={item}
-                        showDot={true}
-                        badgeCount="!"
-                      />
-                    )}
-                  >
-                    <NotificationItem item={item} />
-                  </QueryErrorBoundary>
-                );
-              }
-              return <SidebarMenuItem item={item} key={item.key} />;
-            })}
-          </VStack>
-        </div>
-      </Sidebar.Content>
-
-      {/* FOOTER */}
-      <Sidebar.Footer>
-        {isLoading && (
-          <Skeleton tone="neutral" width={227} height={60}></Skeleton>
-        )}
-        {user && !isLoading && (
-          <FooterProfile
-            profileImageType={user.profileImage.profileImageType}
-            profileImageUrl={user.profileImage.profileImageUrl}
-            name={user.name}
-            email={user.email}
-            onLogout={() => setLogoutModalOpen(true)}
-          />
-        )}
-
-        <LogoutConfirmModal
-          open={logoutModalOpen}
-          onOpenChange={setLogoutModalOpen}
-          onConfirm={logout}
-        />
-      </Sidebar.Footer>
-    </Sidebar>
-  );
 }
+
+export const SidebarNav = ({ selected }: SidebarNavProps) => (
+  <Sidebar selected={selected}>
+    <Sidebar.Content>
+      {SIDEBAR_MAIN_ITEMS.map((item) => (
+        <SidebarMenuItem item={item} key={item.key} />
+      ))}
+
+      <Separator className="my-0" />
+
+      {SIDEBAR_BOTTOM_ITEMS.map((item) =>
+        item.key === 'notifications' ? (
+          <QueryErrorBoundary
+            key={item.key}
+            FallbackComponent={() => (
+              <SidebarMenuItem item={item} badgeContent="!" />
+            )}
+          >
+            <NotificationItem item={item} />
+          </QueryErrorBoundary>
+        ) : (
+          <SidebarMenuItem item={item} key={item.key} />
+        ),
+      )}
+    </Sidebar.Content>
+  </Sidebar>
+);

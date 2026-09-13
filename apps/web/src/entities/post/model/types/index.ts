@@ -2,6 +2,7 @@ export * from './detail';
 export * from './write';
 export * from './update';
 export type {
+  CrawledAttachment,
   GetPostsResponseDto,
   GetPostResponseDto,
   GetMyPostsResponseDto,

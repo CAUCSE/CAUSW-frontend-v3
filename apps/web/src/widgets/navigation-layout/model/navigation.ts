@@ -3,35 +3,37 @@ import { GRAY_BACKGROUND_PATHS } from '@/shared/constants';
 import { BOTTOM_NAV_ITEMS, SIDEBAR_ITEMS } from './navItems';
 import type { BottomNavKey, SidebarKey } from './types';
 
-function matchPathname(pathname: string, href: string) {
+const matchPathname = (pathname: string, href: string) => {
   if (href === '/') return pathname === '/';
   return pathname === href || pathname.startsWith(`${href}/`);
-}
+};
 
-export function pickSidebarKey(pathname: string): SidebarKey | undefined {
-  const candidates = SIDEBAR_ITEMS.flatMap((it) =>
-    [it.href, ...(it.activeHrefs ?? [])].map((href) => ({
-      key: it.key,
+export const pickSidebarKey = (pathname: string): SidebarKey | undefined => {
+  const candidates = SIDEBAR_ITEMS.flatMap((item) =>
+    [item.href, ...(item.activeHrefs ?? [])].map((href) => ({
+      key: item.key,
       href,
     })),
   );
-  const sorted = candidates.sort((a, b) => b.href.length - a.href.length);
-  return sorted.find((candidate) => matchPathname(pathname, candidate.href))
-    ?.key;
-}
-export function isBottomNavVisible(pathname: string) {
-  return BOTTOM_NAV_ITEMS.some((it) =>
-    [it.href, ...(it.activeHrefs ?? [])].some((href) => pathname === href),
+  const sortedByHrefLength = candidates.sort(
+    (a, b) => b.href.length - a.href.length,
   );
-}
+  return sortedByHrefLength.find((candidate) =>
+    matchPathname(pathname, candidate.href),
+  )?.key;
+};
 
-export function pickBottomNavKey(pathname: string): BottomNavKey {
-  const found = BOTTOM_NAV_ITEMS.find((it) =>
-    [it.href, ...(it.activeHrefs ?? [])].some((href) => pathname === href),
+export const isBottomNavVisible = (pathname: string) =>
+  BOTTOM_NAV_ITEMS.some((item) =>
+    [item.href, ...(item.activeHrefs ?? [])].some((href) => pathname === href),
   );
-  return (found?.key ?? 'home') as BottomNavKey;
-}
 
-export function isGrayBackgroundPage(pathname: string) {
-  return GRAY_BACKGROUND_PATHS.some((href) => matchPathname(pathname, href));
-}
+export const pickBottomNavKey = (pathname: string): BottomNavKey => {
+  const matchedItem = BOTTOM_NAV_ITEMS.find((item) =>
+    [item.href, ...(item.activeHrefs ?? [])].some((href) => pathname === href),
+  );
+  return matchedItem?.key ?? 'home';
+};
+
+export const isGrayBackgroundPage = (pathname: string) =>
+  GRAY_BACKGROUND_PATHS.some((href) => matchPathname(pathname, href));

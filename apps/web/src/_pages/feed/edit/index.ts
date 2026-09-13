@@ -1,1 +1,1 @@
-export * from './PostEditPage';
+export * from './FeedPostEditPage';

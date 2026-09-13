@@ -7,6 +7,7 @@ import { Stack, VStack } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
+import { type BoardGroup } from '@/entities/board';
 import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
 import { usePostDetailSectionRefetch } from '@/entities/post';
 
@@ -17,9 +18,10 @@ import { PostContent } from './PostContent';
 
 interface PostDetailSectionProps {
   postId: string;
+  boardGroup: BoardGroup;
 }
 
-export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
+export const PostDetailSection = ({ postId, boardGroup }: PostDetailSectionProps) => {
   const { data: post, refetch: postRefetch } = usePostRefetch(postId);
   const { data: comments, refetch: commentsRefetch } = useCommentsRefetch({ postId });
 
@@ -57,6 +59,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
           >
             <PostContent
               post={post}
+              boardGroup={boardGroup}
               onCommentClick={() => handleFocusCommentInput(null)}
             />
             <CommentList
@@ -78,6 +81,7 @@ export const PostDetailSection = ({ postId }: PostDetailSectionProps) => {
         >
           <PostContent
             post={post}
+            boardGroup={boardGroup}
             onCommentClick={() => handleFocusCommentInput(null)}
           />
           <CommentList

@@ -1,13 +1,16 @@
 import { Separator } from '@causw/cds';
 
-import { type FeedViewMode } from '@/entities/feed';
-import { type GetPostsResponseDto } from '@/entities/post';
+import { type BoardGroup } from '@/entities/board';
+import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
-import { FeedListitem } from '../feed-list-item';
+import { type PostListScrollRestorationStorageKey } from '../../config';
+import { PostListItem } from '../post-list-item';
 
 interface PostListItemsProps {
   posts: GetPostsResponseDto['posts'];
-  viewMode: FeedViewMode;
+  viewMode: PostViewMode;
+  scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
+  boardGroup: BoardGroup;
   /** 마지막 아이템을 제외하고 아이템 사이에 넣을 Separator의 className (미지정 시 Separator 기본 스타일) */
   separatorClassName?: string;
 }
@@ -19,13 +22,20 @@ interface PostListItemsProps {
 export const PostListItems = ({
   posts,
   viewMode,
+  scrollRestorationStorageKey,
+  boardGroup,
   separatorClassName,
 }: PostListItemsProps) => {
   return (
     <>
       {posts.map((post, index) => (
         <li key={post.postId} className="min-w-0">
-          <FeedListitem post={post} viewMode={viewMode} />
+          <PostListItem
+            post={post}
+            viewMode={viewMode}
+            scrollRestorationStorageKey={scrollRestorationStorageKey}
+            boardGroup={boardGroup}
+          />
           {index < posts.length - 1 && (
             <Separator
               orientation="horizontal"

@@ -8,10 +8,17 @@ import { Dialog, mergeStyles } from '@causw/cds';
 
 import { PostEditForm, PostWriteForm } from '@/features/post';
 
+import { type BoardGroup } from '@/entities/board';
+
 import { confirmNativeBackGuard, useBreakpoint } from '@/shared/hooks';
 import { ConfirmModal, SuspenseView } from '@/shared/ui';
 
-export const PostWriteModal = ({ postId }: { postId?: string }) => {
+interface PostWriteModalProps {
+  boardGroup: BoardGroup;
+  postId?: string;
+}
+
+export const PostWriteModal = ({ boardGroup, postId }: PostWriteModalProps) => {
   const router = useRouter();
 
   const [isCancelConfirmOpen, setIsCancelConfirmOpen] = useState(false);
@@ -57,11 +64,18 @@ export const PostWriteModal = ({ postId }: { postId?: string }) => {
           </Dialog.Title>
           {postId ? (
             <Suspense fallback={<SuspenseView />}>
-              <PostEditForm postId={postId} onClose={handleRequestClose} />
+              <PostEditForm
+                postId={postId}
+                boardGroup={boardGroup}
+                onClose={handleRequestClose}
+              />
             </Suspense>
           ) : (
             <Suspense fallback={<SuspenseView />}>
-              <PostWriteForm onClose={handleRequestClose} />
+              <PostWriteForm
+                boardGroup={boardGroup}
+                onClose={handleRequestClose}
+              />
             </Suspense>
           )}
         </Dialog.Content>
