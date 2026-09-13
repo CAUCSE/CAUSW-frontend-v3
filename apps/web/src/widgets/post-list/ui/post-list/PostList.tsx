@@ -4,7 +4,6 @@ import { type RefObject } from 'react';
 
 import { VStack } from '@causw/cds';
 
-import { type BoardGroup } from '@/entities/board';
 import { type GetPostsResponseDto, type PostViewMode } from '@/entities/post';
 
 import { SuspenseView } from '@/shared/ui';
@@ -21,7 +20,6 @@ interface PostListProps {
   targetRef: RefObject<HTMLDivElement | null>;
   viewMode: PostViewMode;
   scrollRestorationStorageKey: PostListScrollRestorationStorageKey;
-  boardGroup: BoardGroup;
 }
 
 export const PostList = ({
@@ -31,7 +29,6 @@ export const PostList = ({
   targetRef,
   viewMode,
   scrollRestorationStorageKey,
-  boardGroup,
 }: PostListProps) => {
   if (!posts || posts.length === 0) {
     return <PostListEmptyView />;
@@ -47,7 +44,6 @@ export const PostList = ({
         posts={posts}
         viewMode={viewMode}
         scrollRestorationStorageKey={scrollRestorationStorageKey}
-        boardGroup={boardGroup}
         separatorClassName="my-4 bg-gray-100"
       />
       {!isFetchingNextPage && hasNextPage && (

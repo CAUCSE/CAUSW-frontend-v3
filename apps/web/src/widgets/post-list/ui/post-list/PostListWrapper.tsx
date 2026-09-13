@@ -2,7 +2,7 @@
 
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
-import { PullToRefresh } from '@causw/cds';
+import { PullToRefresh, mergeStyles } from '@causw/cds';
 
 import { PostWriteFloatingActionButton } from '@/features/post';
 
@@ -13,7 +13,11 @@ import {
   type PostCategory,
 } from '@/entities/post';
 
-import { useBreakpoint, useInfiniteScroll } from '@/shared/hooks';
+import {
+  useBreakpoint,
+  useInfiniteScroll,
+  useScrollDirectionVisibility,
+} from '@/shared/hooks';
 
 import {
   POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
@@ -70,6 +74,10 @@ export const PostListWrapper = ({
 
   const { isMobileSize } = useBreakpoint();
 
+  const { isVisible: isBottomNavVisible } = useScrollDirectionVisibility({
+    containerClassName: POST_LIST_SCROLL_CONTAINER_CLASS_NAME,
+  });
+
   if (isMobileSize) {
     return (
       <>
@@ -86,10 +94,15 @@ export const PostListWrapper = ({
             targetRef={targetRef}
             viewMode={postViewMode}
             scrollRestorationStorageKey={scrollRestorationStorageKey}
-            boardGroup={boardGroup}
           />
         </PullToRefresh>
-        <PostWriteFloatingActionButton boardGroup={boardGroup} />
+        <PostWriteFloatingActionButton
+          boardGroup={boardGroup}
+          className={mergeStyles(
+            !isBottomNavVisible &&
+              'bottom-[max(1rem,var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))]',
+          )}
+        />
       </>
     );
   }
@@ -103,7 +116,6 @@ export const PostListWrapper = ({
         targetRef={targetRef}
         viewMode={postViewMode}
         scrollRestorationStorageKey={scrollRestorationStorageKey}
-        boardGroup={boardGroup}
       />
       <PostWriteFloatingActionButton boardGroup={boardGroup} />
     </>
