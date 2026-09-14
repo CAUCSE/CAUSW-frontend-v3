@@ -2,8 +2,7 @@
 
 import { useRef, useState } from 'react';
 
-import { Stack, PullToRefresh } from '@causw/cds';
-import { Stack, VStack } from '@causw/cds';
+import { Stack, VStack, PullToRefresh } from '@causw/cds';
 
 import { CommentForm } from '@/features/comment';
 
