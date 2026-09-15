@@ -4,6 +4,7 @@ import { type PropsWithChildren, useEffect } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
+import { App } from '@capacitor/app';
 import { Browser } from '@capacitor/browser';
 import { PushNotifications } from '@capacitor/push-notifications';
 
@@ -37,12 +38,12 @@ export function PushNotificationDeepLinkProvider({
         const { noticeType, targetId, targetParentId, notificationLogId } =
           data;
 
-        if (!noticeType) return;
-
         if (notificationLogId) {
           savePendingNotificationRead(notificationLogId);
           sendPendingNotificationReads();
         }
+
+        if (!noticeType) return;
 
         const link = getNotificationPopupLink({
           noticeType,
@@ -70,6 +71,25 @@ export function PushNotificationDeepLinkProvider({
 
     sendPendingNotificationReads();
   }, [pathname, sendPendingNotificationReads]);
+
+  // ADMIN 등 외부 브라우저로 열리는 알림은 앱 내부 경로가 바뀌지
+  // 않아 위 재시도가 안 걸리므로, 앱이 다시 포그라운드로 돌아올 때도 재시도한다.
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const listenerPromise = App.addListener(
+      'appStateChange',
+      ({ isActive }) => {
+        if (isActive) {
+          sendPendingNotificationReads();
+        }
+      },
+    );
+
+    return () => {
+      void listenerPromise.then((listener) => listener.remove());
+    };
+  }, [sendPendingNotificationReads]);
 
   return <>{children}</>;
 }

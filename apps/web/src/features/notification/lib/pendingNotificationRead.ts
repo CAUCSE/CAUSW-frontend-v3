@@ -1,10 +1,13 @@
 const PENDING_NOTIFICATION_READ_KEY = 'causw:pending-notification-read';
 const PENDING_NOTIFICATION_READ_TTL = 7 * 24 * 60 * 60 * 1000;
 const PENDING_NOTIFICATION_READ_MAX = 50;
+const PENDING_NOTIFICATION_READ_MAX_ATTEMPTS = 5;
 
 export interface PendingNotificationRead {
   id: string;
   savedAt: number;
+  /** 지금까지 실패한 횟수 */
+  attempts: number;
 }
 
 /** 저장된 항목 중 만료되지 않은 것만 반환한다. */
@@ -17,12 +20,17 @@ const readValidItems = (): PendingNotificationRead[] => {
     if (!Array.isArray(parsed)) return [];
 
     const now = Date.now();
-    return parsed.filter(
-      (item) =>
-        typeof item?.id === 'string' &&
-        typeof item?.savedAt === 'number' &&
-        now - item.savedAt <= PENDING_NOTIFICATION_READ_TTL,
-    );
+    return parsed
+      .filter(
+        (item) =>
+          typeof item?.id === 'string' &&
+          typeof item?.savedAt === 'number' &&
+          now - item.savedAt <= PENDING_NOTIFICATION_READ_TTL,
+      )
+      .map((item) => ({
+        ...item,
+        attempts: typeof item.attempts === 'number' ? item.attempts : 0,
+      }));
   } catch {
     return [];
   }
@@ -41,37 +49,42 @@ const writeItems = (items: PendingNotificationRead[]) => {
   );
 };
 
-/** 콜드 스타트로 푸시를 탭한 경우를 대비해 읽음 처리할 알림을 저장한다. */
+/** 콜드 스타트로 푸시를 탭한 경우를 대비해 읽음 처리할 알림을 큐에 저장한다. */
 export const savePendingNotificationRead = (id: string) => {
   if (!id) return;
 
   const items = readValidItems();
   if (items.some((item) => item.id === id)) return;
 
-  writeItems([...items, { id, savedAt: Date.now() }]);
+  writeItems([...items, { id, savedAt: Date.now(), attempts: 0 }]);
 };
 
-/** 대기 중인 읽음 처리 대상이 있는지만 확인한다. */
+/** 큐에 대기 중인 읽음 처리 대상 알림이 있는지 확인한다. */
 export const hasPendingNotificationReads = (): boolean =>
   readValidItems().length > 0;
 
-/** 읽음 처리를 시도할 대상을 모두 꺼내고 저장소를 비운다. */
-export const consumePendingNotificationReads =
-  (): PendingNotificationRead[] => {
-    const items = readValidItems();
-    writeItems([]);
-    return items;
-  };
+/** 큐에서 읽음 처리를 시도할 대상 알림을 조회한다. */
+export const getPendingNotificationReads = (): PendingNotificationRead[] =>
+  readValidItems();
 
-/** 읽음 처리에 실패한 대상을 다음 시도를 위해 되돌린다. */
-export const restorePendingNotificationReads = (
-  items: PendingNotificationRead[],
-) => {
-  if (items.length === 0) return;
+/** 읽음 처리에 성공한 대상 하나를 큐에서 제거한다. */
+export const removePendingNotificationRead = (id: string) => {
+  const items = readValidItems();
+  writeItems(items.filter((item) => item.id !== id));
+};
 
-  const stored = readValidItems();
-  const storedIds = new Set(stored.map((item) => item.id));
-  const restored = items.filter((item) => !storedIds.has(item.id));
+/**
+ * 읽음 처리에 실패한 대상 알림의 시도 횟수를 1 늘린다.
+ * 최대 시도 횟수를 넘기면 영구 실패로 보고 큐에서 제거한다.
+ */
+export const recordPendingNotificationReadFailure = (id: string) => {
+  const items = readValidItems();
 
-  writeItems([...restored, ...stored]);
+  const nextItems = items
+    .map((item) =>
+      item.id === id ? { ...item, attempts: item.attempts + 1 } : item,
+    )
+    .filter((item) => item.attempts < PENDING_NOTIFICATION_READ_MAX_ATTEMPTS);
+
+  writeItems(nextItems);
 };

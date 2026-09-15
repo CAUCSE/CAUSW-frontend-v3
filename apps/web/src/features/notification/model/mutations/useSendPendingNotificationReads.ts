@@ -2,17 +2,19 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { isApiError } from '@causw/api-client';
+
 import { notificationQueryKeys } from '@/entities/notification';
 
 import { TokenManager } from '@/shared/storage';
 
 import { patchNotificationReadStatus } from '../../api';
 import {
-  consumePendingNotificationReads,
+  getPendingNotificationReads,
   hasPendingNotificationReads,
-  restorePendingNotificationReads,
-  type PendingNotificationRead,
-} from '../../lib';
+  recordPendingNotificationReadFailure,
+  removePendingNotificationRead,
+} from '../../lib/pendingNotificationRead';
 
 export const useSendPendingNotificationReads = () => {
   const queryClient = useQueryClient();
@@ -24,20 +26,19 @@ export const useSendPendingNotificationReads = () => {
       const accessToken = await TokenManager.getAccessToken();
       if (!accessToken) return false;
 
-      const pendingReadNotifications = consumePendingNotificationReads();
-      const failedReads: PendingNotificationRead[] = [];
       let hasAnySucceeded = false;
 
-      for (const pendingRead of pendingReadNotifications) {
+      for (const pendingRead of getPendingNotificationReads()) {
         try {
           await patchNotificationReadStatus({ id: pendingRead.id });
+          removePendingNotificationRead(pendingRead.id);
           hasAnySucceeded = true;
-        } catch {
-          failedReads.push(pendingRead);
+        } catch (error) {
+          if (isApiError(error) && error.status !== undefined) {
+            recordPendingNotificationReadFailure(pendingRead.id);
+          }
         }
       }
-
-      restorePendingNotificationReads(failedReads);
 
       return hasAnySucceeded;
     },
