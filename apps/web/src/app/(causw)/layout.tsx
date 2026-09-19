@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { OnboardingGuard } from '@/app/_provider';
+import { MixpanelProvider, OnboardingGuard } from '@/app/_provider';
 
 import { NavigationLayout } from '@/widgets/navigation-layout';
 
@@ -16,8 +16,10 @@ export default function Layout({
   return (
     <NavigationLayout>
       <OnboardingGuard>
-        <React.Fragment key="children">{children}</React.Fragment>
-        <React.Fragment key="modal">{modal}</React.Fragment>
+        <MixpanelProvider>
+          <React.Fragment key="children">{children}</React.Fragment>
+          <React.Fragment key="modal">{modal}</React.Fragment>
+        </MixpanelProvider>
       </OnboardingGuard>
     </NavigationLayout>
   );

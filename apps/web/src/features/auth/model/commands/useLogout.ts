@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+import { resetMixpanelUser } from '@/shared/lib/analytics';
 import {
   AuthOptionManager,
   TokenManager,
@@ -20,6 +21,8 @@ export const useLogout = () => {
     const fcmToken = isMobile ? await getNativeFCM() : '';
 
     await signOutMutation.mutateAsync({ fcmToken }).catch(() => {});
+
+    resetMixpanelUser();
 
     await TokenManager.removeAccessToken();
     await TokenManager.removeRefreshToken();
