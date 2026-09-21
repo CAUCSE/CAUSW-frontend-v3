@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { resetMixpanelUser } from '@/shared/lib/analytics';
 import {
   AuthOptionManager,
@@ -15,6 +17,7 @@ import { useSignOutMutation } from '../mutations';
 
 export const useLogout = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const signOutMutation = useSignOutMutation();
 
   return async () => {
@@ -23,6 +26,7 @@ export const useLogout = () => {
     await signOutMutation.mutateAsync({ fcmToken }).catch(() => {});
 
     resetMixpanelUser();
+    queryClient.clear();
 
     await TokenManager.removeAccessToken();
     await TokenManager.removeRefreshToken();

@@ -2,7 +2,7 @@
 
 import mixpanel from 'mixpanel-browser';
 
-import { MIXPANEL_TOKEN } from '@/shared/config/env/mixpanel';
+import { ENVIRONMENT, MIXPANEL_TOKEN } from '@/shared/config';
 
 type MixpanelEvent =
   | { name: 'app_opened'; properties?: never }
@@ -33,7 +33,7 @@ const ensureInitialized = () => {
     autocapture: false,
     track_pageview: false,
     persistence: 'localStorage',
-    debug: process.env.NODE_ENV !== 'production',
+    debug: ENVIRONMENT !== 'production',
   });
   initialized = true;
   return true;
@@ -71,5 +71,6 @@ export const identifyMixpanelUser = (userId: string) => {
 export const resetMixpanelUser = () => {
   pendingEvents.length = 0;
   identifiedUserId = null;
+  appOpenedTracked = false;
   if (initialized) mixpanel.reset();
 };
