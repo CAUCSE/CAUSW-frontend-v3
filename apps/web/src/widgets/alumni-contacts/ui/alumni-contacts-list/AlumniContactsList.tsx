@@ -93,6 +93,7 @@ const AlumniContactsList = ({
                 <AlumniContactsListItem
                   key={item.id}
                   item={item}
+                  sectionName="coffeechat"
                   query={query}
                   onNavigate={handleNavigateToAlumniContacts}
                 />
@@ -117,6 +118,7 @@ const AlumniContactsList = ({
               <AlumniContactsListItem
                 key={item.id}
                 item={item}
+                sectionName="all"
                 query={query}
                 onNavigate={handleNavigateToAlumniContacts}
               />
