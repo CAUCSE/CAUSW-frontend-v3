@@ -7,6 +7,7 @@ import {
   type UpdateOfficialBoardNotificationRequest,
 } from '@/entities/notification';
 
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
@@ -79,6 +80,12 @@ export const useNotificationSettingsOptimisticMutations = () => {
   const officialBoardMutation = useMutation({
     mutationFn: (body: UpdateOfficialBoardNotificationRequest) =>
       updateOfficialBoardNotification(body),
+    onSuccess: (_data, { subscribed }) => {
+      trackMixpanelEvent({
+        name: 'feed_news_changed',
+        properties: { option_group: 'channel', is_enabled: subscribed },
+      });
+    },
     onMutate: async ({ boardId, subscribed }) => {
       await queryClient.cancelQueries({
         queryKey: notificationQueryKeys.settings(),
