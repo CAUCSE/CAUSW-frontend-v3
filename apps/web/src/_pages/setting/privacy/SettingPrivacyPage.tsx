@@ -8,6 +8,7 @@ import { Text, VStack } from '@causw/cds';
 
 import { LogoutConfirmModal, WithdrawConfirmModal } from '@/widgets/auth';
 import {
+  AcademicStateChangeDialog,
   PRIVACY_ACTION_TYPE,
   PhoneNumberChangeNoticeModal,
   PrivacyAcademicInfoSection,
@@ -61,6 +62,7 @@ const SettingPrivacyContent = () => {
     },
   });
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [academicStateChangeOpen, setAcademicStateChangeOpen] = useState(false);
   const [phoneNoticeOpen, setPhoneNoticeOpen] = useState(false);
   const [withdrawModalOpen, setWithdrawModalOpen] = useState(false);
 
@@ -73,7 +75,7 @@ const SettingPrivacyContent = () => {
   };
 
   const handleChangeStatus = () => {
-    // TODO: 학적 상태 변경 로직 연결
+    setAcademicStateChangeOpen(true);
   };
 
   return (
@@ -129,6 +131,12 @@ const SettingPrivacyContent = () => {
       <PhoneNumberChangeNoticeModal
         open={phoneNoticeOpen}
         onOpenChange={setPhoneNoticeOpen}
+      />
+
+      <AcademicStateChangeDialog
+        open={academicStateChangeOpen}
+        onOpenChange={setAcademicStateChangeOpen}
+        academicStatus={account.academicStatus}
       />
 
       <WithdrawConfirmModal

@@ -6,3 +6,5 @@ export * from './setting-terms-header';
 export * from './setting-terms-dialog';
 export * from './phone-number-change-notice-modal';
 export * from './profile-image-edit-dialog';
+export * from './academic-state-change-dialog';
+export * from './academic-state-change-form';
