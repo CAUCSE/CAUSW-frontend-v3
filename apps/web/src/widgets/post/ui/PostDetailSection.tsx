@@ -21,8 +21,8 @@ interface PostDetailSectionProps {
 }
 
 export const PostDetailSection = ({ postId, boardGroup }: PostDetailSectionProps) => {
-  const { data: post, refetch: postRefetch } = usePostRefetch(postId);
-  const { data: comments, refetch: commentsRefetch } = useCommentsRefetch({ postId });
+  const { data: post, refetch: postRefetch } = usePostQuery(postId);
+  const { data: comments, refetch: commentsRefetch } = useCommentsQuery({ postId });
 
   const { isMobileSize } = useBreakpoint();
 
