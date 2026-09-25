@@ -8,7 +8,7 @@ import { CommentForm } from '@/features/comment';
 
 import { type BoardGroup } from '@/entities/board';
 import { type ReplyTarget, useCommentsQuery } from '@/entities/comment';
-import { usePostDetailSectionRefetch } from '@/entities/post';
+import { usePostQuery } from '@/entities/post';
 
 import { useBreakpoint } from '@/shared/hooks';
 
