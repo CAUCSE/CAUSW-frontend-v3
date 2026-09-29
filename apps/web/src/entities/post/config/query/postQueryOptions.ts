@@ -27,12 +27,6 @@ export const postQueryOptions = {
       queryFn: () => getPost(postId),
       staleTime: QUERY_STALE_TIME.DEFAULT,
     }),
-  refetch: (postId: string) =>
-    queryOptions({
-      queryKey: postQueryKeys.detail(postId),
-      queryFn: () => getPost(postId),
-      staleTime: QUERY_STALE_TIME.NONE,
-    }),
   list: (query: GetPostsQuery) =>
     infiniteQueryOptions({
       queryKey: postQueryKeys.list(query),
