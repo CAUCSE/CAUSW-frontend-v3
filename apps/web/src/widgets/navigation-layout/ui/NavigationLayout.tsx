@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 
 import { mergeStyles } from '@causw/cds';
 
+import { ROUTES } from '@/shared/constants';
+
 import {
   isBottomNavVisible,
   isGrayBackgroundPage,
@@ -22,6 +24,9 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
   const showBottomNav = isBottomNavVisible(pathname);
   const bottomSelected = pickBottomNavKey(pathname);
   const grayBackground = isGrayBackgroundPage(pathname);
+  // my-feed는 하단 네비는 없지만 페이지 자신이 풀 높이 스크롤 컨테이너를 구성하므로,
+  // main이 아니라 MyFeedList 안쪽에서 safe-area 여백을 처리한다.
+  const managesOwnBottomInset = showBottomNav || pathname === ROUTES.MY_FEED;
 
   return (
     <div className="flex h-screen md:h-auto md:min-h-screen">
@@ -37,9 +42,12 @@ export function NavigationLayout({ children }: { children: React.ReactNode }) {
         className={mergeStyles(
           'min-h-0 min-w-0 flex-1 overflow-y-auto overscroll-y-contain md:overflow-visible md:overscroll-auto',
           grayBackground ? 'bg-gray-100' : 'bg-white',
-          // 하단 네비 페이지는 자체 스크롤 컨테이너(피드, 동문수첩)가 있을 수 있어
-          // 여백을 main이 아니라 각 페이지의 스크롤 콘텐츠 끝에 둔다 (--mobile-nav-clearance)
-          showBottomNav ? 'pb-0' : 'pb-(--safe-area-inset-bottom) md:pb-0',
+          // 자체 스크롤 컨테이너를 갖는 페이지(하단 네비 페이지, my-feed 등)는
+          // 여백을 main이 아니라 각 페이지의 스크롤 콘텐츠 끝에 둔다
+          // (하단 네비 페이지는 --mobile-nav-clearance, 그 외에는 --safe-area-inset-bottom)
+          managesOwnBottomInset
+            ? 'pb-0'
+            : 'pb-(--safe-area-inset-bottom) md:pb-0',
         )}
       >
         {children}

@@ -16,6 +16,10 @@ interface UseTabSelectionProps {
   searchParamKey?: PostListTabSearchParamKey;
 }
 
+interface UseNormalizeTabParamProps extends UseTabSelectionProps {
+  basePath: string;
+}
+
 const getValidSelectedTab = (validValues: string[], tab: string | null) => {
   if ((tab && validValues.includes(tab)) || tab === POST_LIST_TAB.ALL) {
     return tab;
@@ -29,12 +33,17 @@ const getValidSelectedTab = (validValues: string[], tab: string | null) => {
 export const useNormalizeTabParam = ({
   validValues,
   searchParamKey = POST_LIST_TAB_SEARCH_PARAM_KEY.TAB,
-}: UseTabSelectionProps) => {
+  basePath,
+}: UseNormalizeTabParamProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
+    if (pathname !== basePath) {
+      return;
+    }
+
     const tab = searchParams.get(searchParamKey);
     const validTab = getValidSelectedTab(validValues, tab);
 
@@ -45,7 +54,7 @@ export const useNormalizeTabParam = ({
     const params = new URLSearchParams(searchParams.toString());
     params.set(searchParamKey, validTab);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [validValues, searchParamKey, router, pathname, searchParams]);
+  }, [validValues, searchParamKey, basePath, router, pathname, searchParams]);
 };
 
 /**

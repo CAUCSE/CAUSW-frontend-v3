@@ -6,3 +6,4 @@ export {
 } from './capcitor';
 export { DeepLinkProvider } from './deep-link';
 export { OnboardingGuard } from './onboarding-guard';
+export { MixpanelProvider } from './mixpanel';

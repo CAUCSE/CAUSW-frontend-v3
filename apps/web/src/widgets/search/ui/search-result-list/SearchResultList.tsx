@@ -95,7 +95,6 @@ export const SearchResultList = ({ boardGroup }: SearchResultListProps) => {
         scrollRestorationStorageKey={
           POST_LIST_SCROLL_RESTORATION_STORAGE_KEY.SEARCH
         }
-        boardGroup={boardGroup}
       />
       {!isFetchingNextPage && hasNextPage && (
         <div ref={targetRef} className="h-3 w-full shrink-0" />

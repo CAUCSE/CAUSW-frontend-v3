@@ -7,11 +7,13 @@ import {
 
 import { BOARD_GROUP } from '@/entities/board';
 
+import { ROUTES } from '@/shared/constants';
+
 import { useCommunityMain } from '../../model';
 
 export const CommunityMain = () => {
   const { data: boards, filteredBoardIds } = useCommunityMain();
-  useNormalizeBoardTabParam({ boards });
+  useNormalizeBoardTabParam({ boards, basePath: ROUTES.COMMUNITY });
 
   return (
     <PostListWrapper

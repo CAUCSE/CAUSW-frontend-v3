@@ -42,7 +42,8 @@ export const usePostListItem = ({
     postId: PostResponseDto['postId'],
   ) => {
     const target = event.target as HTMLElement;
-    if (target.closest('a, button')) {
+    // 포탈로 렌더링된 요소(이미지 뷰어 등)의 클릭은 React 트리를 따라 버블링되므로 제외
+    if (!event.currentTarget.contains(target) || target.closest('a, button')) {
       return;
     }
 

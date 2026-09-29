@@ -7,6 +7,7 @@ import { ChevronRight, Flex, HStack, Text, VStack } from '@causw/cds';
 import { type AlumniSummaryDto } from '@/entities/alumni-contacts';
 
 import { ROUTES } from '@/shared/constants';
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
 import { ProfileAvatar } from '@/shared/ui';
 
 interface MyAlumniContactsSummaryCardProps {
@@ -20,6 +21,12 @@ export const MyAlumniContactsSummaryCard = ({
     <li>
       <Link
         href={ROUTES.PROFILE}
+        onClick={() =>
+          trackMixpanelEvent({
+            name: 'contact_clicked',
+            properties: { section_name: 'my' },
+          })
+        }
         className="flex min-w-0 rounded-md bg-white py-3"
       >
         <HStack gap="none" className="min-w-0 grow" align="center">

@@ -9,10 +9,12 @@ import {
   type GetAlumniContactsQuery,
 } from '@/entities/alumni-contacts';
 
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
 import { ProfileAvatar } from '@/shared/ui';
 
 interface AlumniContactsListItemProps {
   item: AlumniSummaryDto;
+  sectionName: 'coffeechat' | 'all';
   query: GetAlumniContactsQuery;
   onNavigate: (
     alumniContactsId: AlumniSummaryDto['id'],
@@ -22,6 +24,7 @@ interface AlumniContactsListItemProps {
 
 export const AlumniContactsListItem = ({
   item,
+  sectionName,
   query,
   onNavigate,
 }: AlumniContactsListItemProps) => {
@@ -29,6 +32,12 @@ export const AlumniContactsListItem = ({
     <li id={item.id}>
       <Link
         href={`/alumni-contacts/${item.id}`}
+        onClick={() =>
+          trackMixpanelEvent({
+            name: 'contact_clicked',
+            properties: { section_name: sectionName },
+          })
+        }
         onNavigate={() => onNavigate(item.id, query)}
         className="flex min-w-0 rounded-md bg-white py-3"
       >

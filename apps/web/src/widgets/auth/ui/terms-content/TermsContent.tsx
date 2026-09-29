@@ -107,7 +107,7 @@ export const TermsContent = ({
               </Checkbox>
               <Text
                 onClick={() => openTermsDetailDialog(term)}
-                className="ml-auto w-fit cursor-pointer"
+                className="ml-auto w-fit shrink-0 cursor-pointer"
                 typography="body-16-medium"
                 textColor="gray-400"
               >

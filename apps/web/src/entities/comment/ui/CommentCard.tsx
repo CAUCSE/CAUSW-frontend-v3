@@ -1,9 +1,16 @@
 import { type ReactNode } from 'react';
 
-import { Heart, HStack, VStack, Text } from '@causw/cds';
+import { Heart, HStack, VStack, Text, mergeStyles } from '@causw/cds';
 
 import { type ProfileImageValue } from '@/shared/types';
 import { IconCountButton, ProfileAvatar } from '@/shared/ui';
+
+import {
+  BACKEND_INACTIVE_WRITER_NICKNAME,
+  INACTIVE_MESSAGE,
+  UNKNOWN_AUTHOR,
+  WITHDRAWN_AUTHOR_DISPLAY_NAME,
+} from '../config';
 
 interface CommentCardProps {
   author: string;
@@ -13,6 +20,7 @@ interface CommentCardProps {
   isDeleted?: boolean;
   isBlocked?: boolean;
   isReply?: boolean;
+  isOwner?: boolean;
   menuSlot?: ReactNode;
   onReplyClick?: () => void;
   isLiked?: boolean;
@@ -28,6 +36,7 @@ export const CommentCard = ({
   isDeleted,
   isBlocked,
   isReply,
+  isOwner,
   menuSlot,
   onReplyClick,
   isLiked = false,
@@ -35,69 +44,96 @@ export const CommentCard = ({
   onLikeClick,
 }: CommentCardProps) => {
   const isInactive = isDeleted || isBlocked;
+  const isAuthorWithdrawn = author === BACKEND_INACTIVE_WRITER_NICKNAME;
+
+  const displayAuthor = isInactive
+    ? UNKNOWN_AUTHOR
+    : isAuthorWithdrawn
+      ? WITHDRAWN_AUTHOR_DISPLAY_NAME
+      : author;
+  const displayContent = isInactive
+    ? isDeleted
+      ? INACTIVE_MESSAGE.deleted
+      : INACTIVE_MESSAGE.blocked
+    : content;
 
   return (
-    <article className={`bg-white px-5 py-3 ${isReply && 'pl-12'}`}>
-      <HStack align={isInactive ? 'center' : 'start'} className="gap-3">
+    <article
+      className={mergeStyles('bg-white px-5 py-3', isReply ? 'pl-10' : '')}
+    >
+      <HStack gap="sm" align="start">
         <ProfileAvatar
           profileImageType={profileImage.profileImageType}
           profileImageUrl={profileImage.profileImageUrl}
-          size={36}
-          className="my-1 shrink-0"
-          isRestricted={isBlocked}
+          size={isReply ? 20 : 28}
+          className="shrink-0"
+          isRestricted={isInactive || isAuthorWithdrawn}
         />
-        {isInactive ? (
-          <VStack gap="none">
-            <Text typography="body-15-regular" textColor="gray-400">
-              {isDeleted ? '삭제된 댓글입니다' : '차단된 사용자의 댓글입니다'}
+        <VStack className="w-full gap-1.5">
+          <VStack className="gap-0.5">
+            <HStack align="center" justify="between">
+              <HStack align="center" className="gap-1.5">
+                <Text typography="body-14-semibold" textColor="gray-900">
+                  {displayAuthor}
+                </Text>
+                {/* TODO: 작성자 학번 추가 */}
+                {/* <Text typography="body-14-regular" textColor="gray-400">
+                  </Text> */}
+                {!isInactive && isOwner && (
+                  <Text
+                    typography="caption-12-semibold"
+                    textColor="blue-500"
+                    className="rounded-sm bg-blue-100 px-1"
+                  >
+                    작성자
+                  </Text>
+                )}
+              </HStack>
+              {!isInactive && menuSlot}
+            </HStack>
+
+            <Text
+              typography="body-15-regular"
+              textColor={isInactive ? 'gray-400' : 'gray-800'}
+              className="whitespace-pre-wrap"
+            >
+              {displayContent}
             </Text>
           </VStack>
-        ) : (
-          <VStack className="w-full gap-3">
-            <VStack gap="none">
-              <HStack align="center" justify="between">
-                <HStack gap="sm" align="center">
-                  <Text typography="body-15-semibold" textColor="gray-800">
-                    {author}
-                  </Text>
-                  <Text typography="body-15-regular" textColor="gray-500">
-                    {time}
-                  </Text>
-                </HStack>
 
-                {menuSlot}
-              </HStack>
-              <Text
-                typography="body-15-regular"
-                textColor="gray-800"
-                className="whitespace-pre-wrap"
-              >
-                {content}
-              </Text>
-            </VStack>
-
-            <HStack align="center" justify={isReply ? 'end' : 'between'}>
-              {!isReply && (
-                <button
-                  type="button"
-                  onClick={onReplyClick}
-                  className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
-                >
-                  <Text typography="body-14-medium" textColor="gray-400">
-                    답글달기
-                  </Text>
-                </button>
-              )}
-
+          {!isInactive && (
+            <HStack align="center" justify="start" className="gap-3">
               <IconCountButton
                 icon={<Heart />}
                 count={likeCount}
                 active={isLiked}
                 onClick={onLikeClick}
               />
+              {!isReply && (
+                <button
+                  type="button"
+                  onClick={onReplyClick}
+                  className="cursor-pointer transition-opacity hover:opacity-70 active:opacity-70"
+                >
+                  <Text
+                    typography="body-14-regular"
+                    textColor="gray-400"
+                    className="whitespace-nowrap"
+                  >
+                    답글달기
+                  </Text>
+                </button>
+              )}
+              <Text
+                typography="body-14-regular"
+                textColor="gray-400"
+                className="whitespace-nowrap"
+              >
+                {time}
+              </Text>
             </HStack>
-          </VStack>
-        )}
+          )}
+        </VStack>
       </HStack>
     </article>
   );

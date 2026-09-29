@@ -18,14 +18,14 @@ export const AlumniContactsAcademicFilterBottomSheet = ({
   return (
     <BottomSheet open={open} onOpenChange={onOpenChange}>
       <BottomSheet.Content
-        className="items-center p-6"
+        className="items-center"
         aria-describedby={undefined}
       >
         <BottomSheet.Header
           title="동문 수첩 필터 선택 바텀시트"
           className="sr-only"
         />
-        <BottomSheet.Body maxHeight={460} className="my-6">
+        <BottomSheet.Body maxHeight={460} className="mb-6">
           <AlumniContactsAcademicFilterSheetModalMain />
         </BottomSheet.Body>
         <BottomSheet.Footer className="p-0">

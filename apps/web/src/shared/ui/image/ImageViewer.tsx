@@ -352,6 +352,12 @@ export const ImageViewer = ({
     setIsPanning(false);
   };
 
+  // 배경(이미지 바깥 영역) 탭 시 닫기
+  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || isZoomed) return;
+    onClose();
+  };
+
   // 더블탭/클릭 줌
   const lastTapRef = React.useRef<number>(0);
   const handleDoubleTap = () => {
@@ -437,6 +443,7 @@ export const ImageViewer = ({
                   key={img}
                   className="flex h-full items-center justify-center p-4 md:p-8"
                   style={{ width: `${slidePercent}%` }}
+                  onClick={handleBackgroundClick}
                 >
                   <div
                     ref={isCurrent ? imageContainerRef : undefined}

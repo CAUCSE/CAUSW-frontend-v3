@@ -30,7 +30,11 @@ export const PostReactions = ({
         className="h-auto min-w-0 bg-transparent px-0 enabled:hover:bg-transparent enabled:active:bg-transparent enabled:data-[active]:bg-transparent"
         onClick={onLikeClick}
       >
-        <Heart size={16} color={active ? 'red-400' : 'gray-200'} />
+        <Heart
+          size={16}
+          color={active ? 'red-400' : 'gray-200'}
+          className="shrink-0"
+        />
         <Text typography="body-14-medium" textColor="gray-400">
           {likeCount}
         </Text>
@@ -40,13 +44,13 @@ export const PostReactions = ({
         className="h-auto min-w-0 bg-transparent px-0 enabled:hover:bg-transparent enabled:active:bg-transparent enabled:data-[active]:bg-transparent"
         onClick={onCommentClick}
       >
-        <Comment size={16} color="gray-200" />
+        <Comment size={16} color="gray-200" className="shrink-0" />
         <Text typography="body-14-medium" textColor="gray-400">
           {commentCount}
         </Text>
       </Button>
       <HStack className="gap-1.5" align="center">
-        <Eye size={20} color="gray-200" />
+        <Eye size={20} color="gray-200" className="shrink-0" />
         <Text typography="body-14-medium" textColor="gray-400">
           {viewCount}
         </Text>
@@ -56,7 +60,7 @@ export const PostReactions = ({
         className="h-auto min-w-0 bg-transparent px-0 enabled:hover:bg-transparent enabled:active:bg-transparent enabled:data-[active]:bg-transparent"
         onClick={onShareClick}
       >
-        <Share2 size={20} />
+        <Share2 size={20} className="shrink-0" />
       </Button>
       <Text
         typography="body-14-regular"

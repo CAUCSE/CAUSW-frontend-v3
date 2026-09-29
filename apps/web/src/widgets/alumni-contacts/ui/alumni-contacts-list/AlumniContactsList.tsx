@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { PullToRefresh, Text, VStack, Grid } from '@causw/cds';
+import { PullToRefresh, Text, VStack, Grid, mergeStyles } from '@causw/cds';
 
 import {
   ALUMNI_CONTACTS_SECTION_TYPE,
@@ -93,6 +93,7 @@ const AlumniContactsList = ({
                 <AlumniContactsListItem
                   key={item.id}
                   item={item}
+                  sectionName="coffeechat"
                   query={query}
                   onNavigate={handleNavigateToAlumniContacts}
                 />
@@ -117,6 +118,7 @@ const AlumniContactsList = ({
               <AlumniContactsListItem
                 key={item.id}
                 item={item}
+                sectionName="all"
                 query={query}
                 onNavigate={handleNavigateToAlumniContacts}
               />
@@ -184,7 +186,7 @@ export const AlumniContactsListWrapper = () => {
     },
   });
 
-  const { showScrollToTopButton, handleClickScrollTop } =
+  const { showScrollToTopButton, isBottomNavVisible, handleClickScrollTop } =
     useAlumniContactsListScrollTop();
 
   const { isScrollRestoring } = useAlumniContactsScrollRestoration({
@@ -226,7 +228,14 @@ export const AlumniContactsListWrapper = () => {
           />
         </PullToRefresh>
         {showScrollToTopButton && (
-          <ScrollTopButton onClick={handleClickScrollTop} />
+          <ScrollTopButton
+            onClick={handleClickScrollTop}
+            className={mergeStyles(
+              'transition-[bottom] duration-300 ease-out',
+              !isBottomNavVisible &&
+                'bottom-[max(1rem,var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))]',
+            )}
+          />
         )}
       </>
     );

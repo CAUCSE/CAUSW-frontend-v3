@@ -14,7 +14,7 @@ import {
   type ReplyTarget,
 } from '@/entities/comment';
 
-import { formatRelativeTime } from '@/shared/lib';
+import { formatTimeDifference } from '@/shared/lib';
 import { ConfirmModal } from '@/shared/ui';
 
 import { CommentActionMenu } from './CommentActionMenu';
@@ -54,9 +54,10 @@ export const ReplyItem = ({ postId, reply, onReply }: ReplyItemProps) => {
         author={reply.displayWriterNickname}
         profileImage={reply.writerProfileImage}
         content={reply.content}
-        time={formatRelativeTime(reply.createdAt)}
+        time={formatTimeDifference(reply.createdAt)}
         isDeleted={reply.isDeleted}
         isBlocked={reply.isBlocked}
+        isOwner={reply.isOwner}
         isLiked={reply.isChildCommentLike}
         likeCount={reply.numLike}
         onLikeClick={handleLikeClick}

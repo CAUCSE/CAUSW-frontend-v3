@@ -15,3 +15,4 @@ export {
   AlumniContactsHeroActions,
   AlumniContactsContactBottomSheet,
 } from './ui';
+export { ALUMNI_CONTACTS_SCROLL_CONTAINER_CLASS_NAME } from './config';

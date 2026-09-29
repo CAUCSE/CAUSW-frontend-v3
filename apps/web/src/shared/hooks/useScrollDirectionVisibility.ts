@@ -13,6 +13,12 @@ interface UseScrollDirectionVisibilityOptions {
   containerClassName?: string;
   directionThreshold?: number;
   toggleCooldownMs?: number;
+  /**
+   * false면 스크롤 이벤트를 감시하지 않고 항상 기본 상태(보임)를 유지한다.
+   * 여러 페이지에서 재사용되는 컴포넌트가 언마운트되지 않은 채 라우트만 바뀌는 경우,
+   * 이전 페이지에서 감춰졌던 상태가 그대로 남아 다른 페이지에서도 계속 숨겨지는 것을 막기 위함.
+   */
+  enabled?: boolean;
 }
 
 /**
@@ -22,6 +28,7 @@ export const useScrollDirectionVisibility = ({
   containerClassName,
   directionThreshold = DEFAULT_DIRECTION_THRESHOLD,
   toggleCooldownMs = DEFAULT_TOGGLE_COOLDOWN_MS,
+  enabled = true,
 }: UseScrollDirectionVisibilityOptions = {}) => {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,6 +36,13 @@ export const useScrollDirectionVisibility = ({
   const lastToggleTimeRef = useRef(0);
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    lastScrollTopRef.current = 0;
+    lastToggleTimeRef.current = 0;
+
     const applyScrollTop = (currentScrollTop: number) => {
       setIsScrolled(currentScrollTop > 1);
 
@@ -80,7 +94,7 @@ export const useScrollDirectionVisibility = ({
     return () => {
       document.removeEventListener('scroll', handleScroll, { capture: true });
     };
-  }, [containerClassName, directionThreshold, toggleCooldownMs]);
+  }, [containerClassName, directionThreshold, toggleCooldownMs, enabled]);
 
   const scrollToTop = () => {
     const container = containerClassName
@@ -95,5 +109,9 @@ export const useScrollDirectionVisibility = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return { isVisible, isScrolled, scrollToTop };
+  return {
+    isVisible: enabled ? isVisible : true,
+    isScrolled: enabled ? isScrolled : false,
+    scrollToTop,
+  };
 };

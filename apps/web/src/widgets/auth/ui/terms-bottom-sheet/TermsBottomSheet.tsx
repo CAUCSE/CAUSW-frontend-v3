@@ -28,8 +28,8 @@ export const TermsBottomSheet = ({
 }: TermsBottomSheetProps) => {
   return (
     <BottomSheet headerAlign="left" open={open} onOpenChange={onOpenChange}>
-      <BottomSheet.Header className="hidden" title="이용 약관 동의 여부" />
-      <BottomSheet.Content>
+      <BottomSheet.Content className="p-6">
+        <BottomSheet.Header className="hidden" title="이용 약관 동의 여부" />
         <Suspense fallback={<SuspenseView />}>
           <TermsContent
             onComplete={onComplete}

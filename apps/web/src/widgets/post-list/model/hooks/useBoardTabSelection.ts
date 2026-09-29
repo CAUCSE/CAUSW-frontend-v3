@@ -11,9 +11,12 @@ import { useNormalizeTabParam, useTabSelection } from './useTabSelection';
 interface UseNormalizeBoardTabParamProps {
   boards: Board[];
   searchParamKey?: PostListTabSearchParamKey;
+  basePath: string;
 }
 
-interface UseBoardTabSelectionProps extends UseNormalizeBoardTabParamProps {
+interface UseBoardTabSelectionProps {
+  boards: Board[];
+  searchParamKey?: PostListTabSearchParamKey;
   includeAllBoardIds?: boolean;
 }
 
@@ -24,10 +27,11 @@ interface UseBoardTabSelectionProps extends UseNormalizeBoardTabParamProps {
 export const useNormalizeBoardTabParam = ({
   boards,
   searchParamKey,
+  basePath,
 }: UseNormalizeBoardTabParamProps) => {
   const validValues = useMemo(() => boards.map((board) => board.id), [boards]);
 
-  useNormalizeTabParam({ validValues, searchParamKey });
+  useNormalizeTabParam({ validValues, searchParamKey, basePath });
 };
 
 export const useBoardTabSelection = ({

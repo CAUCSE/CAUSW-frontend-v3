@@ -23,6 +23,7 @@ export const ReasonSelectRadio = ({
       name="report-reason"
       value={value}
       onValueChange={(val) => onChange(val as ReportReason)}
+      className="gap-3!"
     >
       {entries.map(([key, option]) => (
         <Radio key={key} value={key}>
