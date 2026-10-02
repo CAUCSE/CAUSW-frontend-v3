@@ -3,8 +3,17 @@ import { z } from 'zod';
 import { ENROLLMENT_VERIFICATION_FORM_FIELD } from '@/entities/auth';
 import { ACADEMIC_STATE_CHANGE_STATUS } from '@/entities/setting/config';
 
-import { ACCEPTED_IMAGE_TYPES } from '@/shared/constants';
-import { nicknameSchema, passwordSchema } from '@/shared/model';
+import {
+  ACADEMIC_FORM_LIMITS,
+  ACCEPTED_IMAGE_TYPE_LIST,
+  IMAGE_TYPE_ERROR_MESSAGE,
+} from '@/shared/constants';
+import {
+  academicYearSchema,
+  academicImagesSchema,
+  nicknameSchema,
+  passwordSchema,
+} from '@/shared/model';
 
 export const passwordChangeFormSchema = z
   .object({
@@ -25,23 +34,6 @@ export const nicknameChangeFormSchema = z.object({
 
 export type NicknameChangeFormData = z.infer<typeof nicknameChangeFormSchema>;
 
-const MIN_GRADUATION_YEAR = 1950;
-const MAX_GRADUATION_YEAR = new Date().getFullYear();
-const ACCEPTED_IMAGE_TYPE_LIST = ACCEPTED_IMAGE_TYPES.split(',').map((type) =>
-  type.trim(),
-);
-
-const graduationYearSchema = z
-  .string()
-  .min(4, '졸업년도 4자리를 입력해주세요.')
-  .max(4, '졸업년도 4자리를 입력해주세요.')
-  .regex(/^\d{4}$/, '졸업년도는 숫자 4자리여야 합니다.')
-  .refine((value) => {
-    const year = Number(value);
-
-    return year >= MIN_GRADUATION_YEAR && year <= MAX_GRADUATION_YEAR;
-  }, `졸업년도는 ${MIN_GRADUATION_YEAR}년도부터 ${MAX_GRADUATION_YEAR}년도 사이여야 합니다.`);
-
 export const academicStateChangeFormSchema = z
   .object({
     [ENROLLMENT_VERIFICATION_FORM_FIELD.major]: z.string().optional(),
@@ -50,15 +42,16 @@ export const academicStateChangeFormSchema = z
     [ENROLLMENT_VERIFICATION_FORM_FIELD.studentId]: z.string().optional(),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.enrollmentState]: z
       .string()
-      .min(1, '학적 상태를 선택해주세요.'),
+      .min(1, '학적 상태를 선택해 주세요.'),
     [ENROLLMENT_VERIFICATION_FORM_FIELD.content]: z
       .string()
-      .max(500, '특이사항은 500자 이내로 입력해주세요.')
+      .max(
+        ACADEMIC_FORM_LIMITS.MAX_CONTENT_LENGTH,
+        `특이사항은 ${ACADEMIC_FORM_LIMITS.MAX_CONTENT_LENGTH}자 이내로 입력해 주세요.`,
+      )
       .optional(),
-    [ENROLLMENT_VERIFICATION_FORM_FIELD.images]: z
-      .array(z.instanceof(File))
-      .max(3, '이미지는 최대 3개까지 첨부할 수 있습니다.')
-      .optional(),
+    [ENROLLMENT_VERIFICATION_FORM_FIELD.images]:
+      academicImagesSchema.optional(),
   })
   .superRefine((data, ctx) => {
     const enrollmentState =
@@ -70,7 +63,7 @@ export const academicStateChangeFormSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: [ENROLLMENT_VERIFICATION_FORM_FIELD.images],
-          message: '재학 증명 서류를 첨부해주세요.',
+          message: '재학 증빙 서류를 업로드해 주세요.',
         });
       }
 
@@ -81,7 +74,7 @@ export const academicStateChangeFormSchema = z
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: [ENROLLMENT_VERIFICATION_FORM_FIELD.images],
-          message: 'JPG, JPEG, PNG, GIF, BMP 이미지 파일만 첨부할 수 있습니다.',
+          message: IMAGE_TYPE_ERROR_MESSAGE,
         });
       }
 
@@ -92,8 +85,8 @@ export const academicStateChangeFormSchema = z
       return;
     }
 
-    const result = graduationYearSchema.safeParse(
-      data[ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear],
+    const result = academicYearSchema('졸업 연도').safeParse(
+      data[ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear] ?? '',
     );
 
     if (result.success) return;

@@ -32,6 +32,7 @@ export interface ImageUploadFieldProps<T extends FieldValues> {
   initialImages?: string[];
   onInvalidTypeFile?: () => void;
   onInvalidSizeFile?: () => void;
+  onMaxFilesExceeded?: () => void;
   mapValue?: (value: {
     existingImages: string[];
     newImageFiles: File[];

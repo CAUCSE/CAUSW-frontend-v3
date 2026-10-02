@@ -12,3 +12,4 @@ export * from './contact';
 export * from './profile-image';
 export * from './time';
 export * from './toggle';
+export * from './academic';

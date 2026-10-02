@@ -2,12 +2,15 @@
 
 import { useFormContext, useWatch } from 'react-hook-form';
 
-import { Field, Flex, Text } from '@causw/cds';
+import { Text, TextArea } from '@causw/cds';
 
 import {
   ENROLLMENT_VERIFICATION_FORM_FIELD,
   type EnrollmentVerificationFormData,
 } from '@/entities/auth';
+
+import { ACADEMIC_FORM_LIMITS } from '@/shared/constants';
+import { FormSection } from '@/shared/ui';
 
 export const AcademicStateChangeNoteField = () => {
   const { register } = useFormContext<EnrollmentVerificationFormData>();
@@ -17,33 +20,34 @@ export const AcademicStateChangeNoteField = () => {
   const content = typeof watchedContent === 'string' ? watchedContent : '';
 
   return (
-    <Field className="flex flex-col gap-2">
-      <Flex align="center" gap="xs">
-        <Field.Label>유저 작성 특이사항</Field.Label>
-        <Text typography="body-14-medium" textColor="gray-500">
-          (선택)
-        </Text>
-      </Flex>
-      <div className="flex flex-col gap-2">
-        <div className="relative flex min-h-[128px] flex-col overflow-hidden rounded-xl bg-white p-4">
-          {/* iOS 포커스 확대 방지: 1rem + scale(0.9375)로 15px 유지 */}
-          <div className="flex-1 overflow-hidden pb-6">
-            <textarea
-              placeholder="특이사항을 작성해주세요."
-              className="block h-[106.6667%] w-[106.6667%] origin-top-left scale-[0.9375] resize-none bg-transparent font-sans text-base text-gray-800 placeholder-gray-400 outline-none"
-              maxLength={500}
-              {...register(ENROLLMENT_VERIFICATION_FORM_FIELD.content)}
-            />
-          </div>
-          <Text
-            typography="body-16-regular"
-            textColor="gray-400"
-            className="absolute right-4 bottom-4"
-          >
-            {content.length}/500
-          </Text>
+    <FormSection
+      title="유저 작성 특이사항"
+      optional
+      headerClassName="px-0"
+      titleClassName="cursor-pointer px-1"
+      optionalTextProps={{
+        typography: 'body-14-medium',
+        textColor: 'gray-500',
+      }}
+    >
+      <TextArea className="relative flex min-h-[128px] flex-col overflow-hidden focus-within:ring-0">
+        <div className="flex-1 overflow-hidden pb-6">
+          <TextArea.Input
+            placeholder="특이사항을 작성해 주세요."
+            className="caret-auto block h-full min-h-0 font-sans text-[16px] leading-[1.5] font-normal tracking-[-0.02em] text-gray-800"
+            resize={false}
+            maxLength={ACADEMIC_FORM_LIMITS.MAX_CONTENT_LENGTH}
+            {...register(ENROLLMENT_VERIFICATION_FORM_FIELD.content)}
+          />
         </div>
-      </div>
-    </Field>
+        <Text
+          typography="body-16-regular"
+          textColor="gray-400"
+          className="absolute right-4 bottom-4"
+        >
+          {content.length}/{ACADEMIC_FORM_LIMITS.MAX_CONTENT_LENGTH}
+        </Text>
+      </TextArea>
+    </FormSection>
   );
 };

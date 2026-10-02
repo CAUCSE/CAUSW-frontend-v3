@@ -26,8 +26,7 @@ import {
 } from '@/entities/setting';
 import { type AccountAcademicStatus } from '@/entities/user';
 
-import { ActionHeader } from '@/shared/ui';
-import { isMobile } from '@/shared/utils';
+import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
 export interface AcademicStateChangeFormProps {
   academicStatus: AccountAcademicStatus;
@@ -100,13 +99,13 @@ export const AcademicStateChangeForm = ({
         onSubmit={methods.handleSubmit(handleSubmit)}
         className="flex h-full w-full flex-col overflow-hidden"
       >
-        {isMobile && (
+        <MobileOnly className="shrink-0">
           <ActionHeader className="shrink-0">
             <ActionHeader.BackButton type="button" onClick={onCancel}>
               뒤로
             </ActionHeader.BackButton>
           </ActionHeader>
-        )}
+        </MobileOnly>
 
         <Flex
           justify="between"
@@ -116,7 +115,7 @@ export const AcademicStateChangeForm = ({
           <Text typography="title-22-bold" textColor="gray-800">
             학적 상태 변경
           </Text>
-          {!isMobile && (
+          <DesktopOnly>
             <button
               type="button"
               onClick={onCancel}
@@ -125,7 +124,7 @@ export const AcademicStateChangeForm = ({
             >
               <Close size={20} color="gray-600" />
             </button>
-          )}
+          </DesktopOnly>
         </Flex>
 
         <VStack className="min-h-0 flex-1 gap-6 overflow-y-auto px-4 pt-6 pb-10 md:px-2">
@@ -144,7 +143,7 @@ export const AcademicStateChangeForm = ({
             fullWidth
             disabled={isSubmitDisabled}
           >
-            신청하기
+            제출하기
           </CTAButton>
         </div>
       </form>

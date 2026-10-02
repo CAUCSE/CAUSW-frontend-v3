@@ -55,12 +55,12 @@ export const useAcademicRecordChangeMutation = (
       toast.loading('학적 상태 변경을 신청하고 있어요.');
       onMutate?.();
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: userQueryKey.account(),
-      });
+    onSuccess: () => {
       toast.success('학적 상태 변경 신청이 접수되었습니다.');
       onSuccess?.();
+      queryClient.invalidateQueries({
+        queryKey: userQueryKey.account(),
+      });
     },
     onError: (error) => {
       toast.error(
