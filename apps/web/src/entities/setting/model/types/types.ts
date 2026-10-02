@@ -19,3 +19,14 @@ export interface PasswordChangeRequest {
 export interface NicknameChangeRequest {
   nickname: string;
 }
+
+export interface AcademicRecordReturnRequest {
+  note?: string;
+  imageUuids?: string[];
+  imageFileList: File[];
+}
+
+export interface AcademicRecordGraduationRequest {
+  graduationYear: number;
+  description?: string;
+}

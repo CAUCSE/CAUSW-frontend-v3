@@ -1,0 +1,7 @@
+export const ACADEMIC_FORM_LIMITS = {
+  MIN_YEAR: 1950,
+  MAX_IMAGES: 3,
+  MAX_CONTENT_LENGTH: 500,
+} as const;
+
+export const ACADEMIC_IMAGE_COUNT_MESSAGE = `이미지는 최대 ${ACADEMIC_FORM_LIMITS.MAX_IMAGES}장까지 첨부할 수 있습니다.`;

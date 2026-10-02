@@ -25,6 +25,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     initialImages = [],
     onInvalidTypeFile,
     onInvalidSizeFile,
+    onMaxFilesExceeded,
     mapValue,
   }: Omit<ImageUploadFieldProps<T>, 'label' | 'errorMessage' | 'children'>,
   ref: React.ForwardedRef<ImageUploadFieldRef>,
@@ -87,7 +88,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
             newImageFiles: files,
           }) as Parameters<typeof setValue>[1],
       {
-        shouldValidate: files.length > 0,
+        shouldValidate: true,
         shouldDirty: true,
         shouldTouch: true,
       },
@@ -102,9 +103,14 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     const newPreviews: string[] = [];
     let hasInvalidTypeFile = false;
     let hasInvalidSizeFile = false;
+    let hasMaxFilesExceeded = false;
+    const currentFileCount = existingImages.length + files.length;
 
     for (const file of selectedFiles) {
-      if (files.length + validFiles.length >= maxFiles) break;
+      if (currentFileCount + validFiles.length >= maxFiles) {
+        hasMaxFilesExceeded = true;
+        break;
+      }
 
       if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) {
         hasInvalidSizeFile = true;
@@ -127,6 +133,10 @@ const ImageUploadFieldInner = <T extends FieldValues>(
 
     if (hasInvalidSizeFile) {
       onInvalidSizeFile?.();
+    }
+
+    if (hasMaxFilesExceeded) {
+      onMaxFilesExceeded?.();
     }
 
     setFiles((prev) => [...prev, ...validFiles]);
