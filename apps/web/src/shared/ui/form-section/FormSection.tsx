@@ -5,7 +5,7 @@ interface FormSectionProps {
   optional?: boolean;
   headerClassName?: string;
   titleClassName?: string;
-  optionalTextProps?: Pick<TextProps, 'typography' | 'textColor'>;
+  optionalTextProps?: Pick<TextProps<'span'>, 'typography' | 'textColor'>;
   children: React.ReactNode;
 }
 
