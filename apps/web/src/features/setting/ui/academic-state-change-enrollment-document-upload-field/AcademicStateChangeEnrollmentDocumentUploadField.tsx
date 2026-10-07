@@ -75,7 +75,7 @@ export const AcademicStateChangeEnrollmentDocumentUploadField = () => {
             />
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-transparent">
+          <div className="mt-4 flex">
             <input type="file" className="hidden" accept="image/*" />
             <Button
               type="button"

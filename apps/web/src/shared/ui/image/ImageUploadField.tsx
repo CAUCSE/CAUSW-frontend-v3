@@ -36,6 +36,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   const [files, setFiles] = React.useState<File[]>([]); // 새로 업로드할 이미지 파일 객체 목록
   const inputRef = React.useRef<HTMLInputElement>(null);
   const previewsRef = React.useRef<string[]>([]);
+  const hasChangedRef = React.useRef(false);
 
   // previewsRef를 최신 상태로 유지
   React.useEffect(() => {
@@ -57,6 +58,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   // resetTrigger 변경 시 초기화
   React.useEffect(() => {
     if (resetTrigger !== undefined) {
+      hasChangedRef.current = false;
       previews.forEach((url) => URL.revokeObjectURL(url));
       setPreviews(initialImages);
       setExistingImages(initialImages);
@@ -88,9 +90,9 @@ const ImageUploadFieldInner = <T extends FieldValues>(
             newImageFiles: files,
           }) as Parameters<typeof setValue>[1],
       {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
+        shouldValidate: hasChangedRef.current,
+        shouldDirty: hasChangedRef.current,
+        shouldTouch: hasChangedRef.current,
       },
     );
   }, [files, existingImages, name, setValue]);
@@ -139,8 +141,11 @@ const ImageUploadFieldInner = <T extends FieldValues>(
       onMaxFilesExceeded?.();
     }
 
-    setFiles((prev) => [...prev, ...validFiles]);
-    setPreviews((prev) => [...prev, ...newPreviews]);
+    if (validFiles.length > 0) {
+      hasChangedRef.current = true;
+      setFiles((prev) => [...prev, ...validFiles]);
+      setPreviews((prev) => [...prev, ...newPreviews]);
+    }
 
     if (inputRef.current) {
       inputRef.current.value = '';
@@ -148,11 +153,13 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   };
 
   const handleRemoveExisting = (index: number) => {
+    hasChangedRef.current = true;
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
     setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleRemoveNew = (index: number) => {
+    hasChangedRef.current = true;
     const previewIndex = existingImages.length + index;
 
     URL.revokeObjectURL(previews[previewIndex]);

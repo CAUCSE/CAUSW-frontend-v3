@@ -25,7 +25,6 @@ export const EnrollmentVerificationGraduationYearField = () => {
       label="졸업 연도"
       name={ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear}
       placeholder="졸업 연도를 입력해 주세요."
-      className="placeholder:font-sans placeholder:text-[16px] placeholder:leading-[1.5] placeholder:font-normal placeholder:tracking-[-0.02em] placeholder:text-gray-400"
     />
   );
 };
