@@ -22,9 +22,9 @@ export const EnrollmentVerificationGraduationYearField = () => {
 
   return (
     <RHFInput
-      label="졸업년도"
+      label="졸업 연도"
       name={ENROLLMENT_VERIFICATION_FORM_FIELD.graduationYear}
-      placeholder="졸업년도를 입력해주세요."
+      placeholder="졸업 연도를 입력해 주세요."
     />
   );
 };

@@ -25,6 +25,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     initialImages = [],
     onInvalidTypeFile,
     onInvalidSizeFile,
+    onMaxFilesExceeded,
     mapValue,
   }: Omit<ImageUploadFieldProps<T>, 'label' | 'errorMessage' | 'children'>,
   ref: React.ForwardedRef<ImageUploadFieldRef>,
@@ -35,6 +36,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   const [files, setFiles] = React.useState<File[]>([]); // 새로 업로드할 이미지 파일 객체 목록
   const inputRef = React.useRef<HTMLInputElement>(null);
   const previewsRef = React.useRef<string[]>([]);
+  const hasChangedRef = React.useRef(false);
 
   // previewsRef를 최신 상태로 유지
   React.useEffect(() => {
@@ -56,6 +58,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   // resetTrigger 변경 시 초기화
   React.useEffect(() => {
     if (resetTrigger !== undefined) {
+      hasChangedRef.current = false;
       previews.forEach((url) => URL.revokeObjectURL(url));
       setPreviews(initialImages);
       setExistingImages(initialImages);
@@ -87,9 +90,9 @@ const ImageUploadFieldInner = <T extends FieldValues>(
             newImageFiles: files,
           }) as Parameters<typeof setValue>[1],
       {
-        shouldValidate: files.length > 0,
-        shouldDirty: true,
-        shouldTouch: true,
+        shouldValidate: hasChangedRef.current,
+        shouldDirty: hasChangedRef.current,
+        shouldTouch: hasChangedRef.current,
       },
     );
   }, [files, existingImages, name, setValue]);
@@ -102,9 +105,14 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     const newPreviews: string[] = [];
     let hasInvalidTypeFile = false;
     let hasInvalidSizeFile = false;
+    let hasMaxFilesExceeded = false;
+    const currentFileCount = existingImages.length + files.length;
 
     for (const file of selectedFiles) {
-      if (files.length + validFiles.length >= maxFiles) break;
+      if (currentFileCount + validFiles.length >= maxFiles) {
+        hasMaxFilesExceeded = true;
+        break;
+      }
 
       if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) {
         hasInvalidSizeFile = true;
@@ -129,8 +137,15 @@ const ImageUploadFieldInner = <T extends FieldValues>(
       onInvalidSizeFile?.();
     }
 
-    setFiles((prev) => [...prev, ...validFiles]);
-    setPreviews((prev) => [...prev, ...newPreviews]);
+    if (hasMaxFilesExceeded) {
+      onMaxFilesExceeded?.();
+    }
+
+    if (validFiles.length > 0) {
+      hasChangedRef.current = true;
+      setFiles((prev) => [...prev, ...validFiles]);
+      setPreviews((prev) => [...prev, ...newPreviews]);
+    }
 
     if (inputRef.current) {
       inputRef.current.value = '';
@@ -138,11 +153,13 @@ const ImageUploadFieldInner = <T extends FieldValues>(
   };
 
   const handleRemoveExisting = (index: number) => {
+    hasChangedRef.current = true;
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
     setPreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleRemoveNew = (index: number) => {
+    hasChangedRef.current = true;
     const previewIndex = existingImages.length + index;
 
     URL.revokeObjectURL(previews[previewIndex]);

@@ -1,3 +1,4 @@
 export * from './form/schema';
 export * from './auth';
 export * from './toast';
+export * from './form/academicSchema';
