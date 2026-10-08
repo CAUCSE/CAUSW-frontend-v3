@@ -1,0 +1,1 @@
+export { notifyAppReady } from './notifyAppReady';
