@@ -146,6 +146,19 @@ export class TokenManager {
     }
   }
 
+  /**
+   * @description 콜드 스타트 시 proxy가 바로 '/home'으로 보내도록 쿠키를 복구.
+   */
+  static async restoreClientTokens(
+    accessToken: string,
+    refreshToken: string,
+  ): Promise<void> {
+    const cookieOptions = await AuthOptionManager.getClientCookieOptions(true);
+
+    await setClientATK(accessToken, cookieOptions);
+    await setClientRTK(refreshToken, cookieOptions);
+  }
+
   static async removeRefreshToken(): Promise<void> {
     if (isServer) {
       await removeServerRTK();

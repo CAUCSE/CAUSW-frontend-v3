@@ -5,6 +5,9 @@ import KakaoSDKCommon
 import WebKit
 
 private let minimumLaunchOverlayDisplayTime: TimeInterval = 0.25
+private let appReadyFallbackTimeout: TimeInterval = 3
+private let appReadyMessageHandlerName = "causwAppReady"
+private let signInPath = "/auth/sign-in"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -12,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var webViewLoadingObserver: NSKeyValueObservation?
     private var webViewProgressObserver: NSKeyValueObservation?
     private var hasCompletedInitialWebViewLoad = false
+    private var hasReceivedAppReady = false
+    private var hasCompletedLaunch = false
+    private var appReadyFallbackWorkItem: DispatchWorkItem?
 
     private lazy var safeAreaManager: SafeAreaManager = {
         SafeAreaManager(bridgeViewControllerProvider: { [weak self] in
@@ -45,6 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
     }()
     private let launchOverlayCoordinator = LaunchOverlayCoordinator()
+    private lazy var appReadyMessageHandler: AppReadyMessageHandler = {
+        AppReadyMessageHandler(onReady: { [weak self] in
+            self?.handleAppReady()
+        })
+    }()
 
     func application(
         _ application: UIApplication,
@@ -112,10 +123,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .black
         safeAreaManager.configureBridgeWebViewAppearance(backgroundColor: .black)
         socialLoginCoordinator.registerMessageHandlers()
+        registerAppReadyMessageHandler(for: webView)
+    }
+
+    private func registerAppReadyMessageHandler(for webView: WKWebView) {
+        let userContentController = webView.configuration.userContentController
+        userContentController.removeScriptMessageHandler(forName: appReadyMessageHandlerName)
+        userContentController.add(appReadyMessageHandler, name: appReadyMessageHandlerName)
     }
 
     private func observeInitialWebViewLoad(for webView: WKWebView) {
         hasCompletedInitialWebViewLoad = false
+        hasReceivedAppReady = false
+        hasCompletedLaunch = false
+        appReadyFallbackWorkItem?.cancel()
         webViewLoadingObserver?.invalidate()
         webViewProgressObserver?.invalidate()
 
@@ -126,12 +147,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard !webView.isLoading, webView.estimatedProgress >= 1 else { return }
 
             self.hasCompletedInitialWebViewLoad = true
-            self.window?.backgroundColor = .white
-            self.safeAreaManager.configureBridgeWebViewAppearance(backgroundColor: .white)
-            self.safeAreaManager.startSafeAreaRecalculationCycle()
-            self.launchOverlayCoordinator.dismissOverlay()
             self.webViewLoadingObserver?.invalidate()
             self.webViewProgressObserver?.invalidate()
+
+            if webView.url?.path != signInPath || self.hasReceivedAppReady {
+                self.completeLaunch()
+                return
+            }
+
+            // 로그인 화면은 인증 확인 신호까지 대기, 유실 대비 타임아웃
+            let fallbackWorkItem = DispatchWorkItem { [weak self] in
+                self?.completeLaunch()
+            }
+            self.appReadyFallbackWorkItem = fallbackWorkItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + appReadyFallbackTimeout, execute: fallbackWorkItem)
         }
 
         webViewLoadingObserver = webView.observe(\.isLoading, options: [.new]) { _, _ in
@@ -141,6 +170,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         webViewProgressObserver = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
             dismissIfReady()
         }
+    }
+
+    private func handleAppReady() {
+        hasReceivedAppReady = true
+        guard hasCompletedInitialWebViewLoad else { return }
+        completeLaunch()
+    }
+
+    private func completeLaunch() {
+        guard !hasCompletedLaunch else { return }
+        hasCompletedLaunch = true
+        appReadyFallbackWorkItem?.cancel()
+        appReadyFallbackWorkItem = nil
+
+        window?.backgroundColor = .white
+        safeAreaManager.configureBridgeWebViewAppearance(backgroundColor: .white)
+        safeAreaManager.startSafeAreaRecalculationCycle()
+        launchOverlayCoordinator.dismissOverlay()
     }
 
     private func isUnsupportedUpsideDownEvent(_ orientation: UIDeviceOrientation) -> Bool {
@@ -204,6 +251,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFailToRegisterForRemoteNotificationsWithError error: Error
     ) {
         pushNotificationHandler.didFailToRegisterForRemoteNotifications(with: error)
+    }
+}
+
+final class AppReadyMessageHandler: NSObject, WKScriptMessageHandler {
+    private let onReady: () -> Void
+
+    init(onReady: @escaping () -> Void) {
+        self.onReady = onReady
+    }
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        onReady()
     }
 }
 
