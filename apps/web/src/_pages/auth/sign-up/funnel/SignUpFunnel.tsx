@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { FormProvider } from 'react-hook-form';
 
@@ -14,6 +14,10 @@ import {
   useSignUpStepGuard,
 } from '@/features/auth';
 
+import {
+  registerMixpanelAuthMethod,
+  startMixpanelOnboarding,
+} from '@/shared/lib/analytics';
 import { ActionHeader, DesktopOnly, MobileOnly } from '@/shared/ui';
 
 import { AccountStep } from '../steps/AccountStep';
@@ -31,6 +35,7 @@ type SignUpFunnelProps = {
 };
 
 export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
+  const onboardingStartedTrackedRef = useRef(false);
   const funnel = useFunnel<SignUpStep>({
     id: 'sign-up',
     initial: {
@@ -47,6 +52,13 @@ export const SignUpFunnel = ({ initialStep }: SignUpFunnelProps) => {
     onResetToAccount: handleResetToAccount,
   });
   const { methods, handleSubmit } = useSignUpForm();
+
+  useEffect(() => {
+    if (onboardingStartedTrackedRef.current) return;
+    onboardingStartedTrackedRef.current = true;
+    registerMixpanelAuthMethod('email');
+    startMixpanelOnboarding();
+  }, []);
 
   return (
     <>

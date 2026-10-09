@@ -27,6 +27,10 @@ import {
 import type { NativeSocialLoginProvider } from '@/entities/auth';
 
 import { useIsMounted } from '@/shared/hooks';
+import {
+  selectMixpanelAuthMethod,
+  useTrackMixpanelView,
+} from '@/shared/lib/analytics';
 import { AuthOptionManager } from '@/shared/storage';
 import { QueryClientClearProvider } from '@/shared/ui';
 import { isAndroid, isMobile } from '@/shared/utils';
@@ -41,12 +45,15 @@ export const SelectMethodPage = () => {
   const [pendingProvider, setPendingProvider] =
     useState<DesktopSocialProvider | null>(null);
   useRestoreMobileAuth();
+  useTrackMixpanelView('auth_method_viewed');
 
   const handleSocialLogin =
     (
       provider: NativeSocialLoginProvider,
     ): MouseEventHandler<HTMLButtonElement> =>
     () => {
+      selectMixpanelAuthMethod(provider);
+
       if (isMobile) {
         nativeSocialLoginFlowMutation.mutate({ provider });
         return;
@@ -79,7 +86,10 @@ export const SelectMethodPage = () => {
                 )}
                 <GoogleLoginButton onClick={handleSocialLogin('google')} />
                 <EmailLoginButton
-                  onClick={() => router.push('/auth/sign-in/email')}
+                  onClick={() => {
+                    selectMixpanelAuthMethod('email');
+                    router.push('/auth/sign-in/email');
+                  }}
                 />
               </>
             </VStack>
