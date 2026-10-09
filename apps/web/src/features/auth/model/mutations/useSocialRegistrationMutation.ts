@@ -10,6 +10,7 @@ import { completeSocialRegistration } from '@/features/auth/api';
 
 import { PHONE_NUMBER_DUPLICATED_ERROR_CODE } from '@/entities/auth';
 
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
 import { toast } from '@/shared/model';
 import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import {
@@ -41,6 +42,7 @@ export const useSocialRegistrationMutation = ({
       }
       await TokenManager.setAccessToken(data.accessToken);
       await TokenManager.setRefreshToken(data.refreshToken);
+      trackMixpanelEvent({ name: 'profile_info_completed' });
       toast.success('추가 정보 입력이 완료되었습니다.');
       routeAfterSignIn(router, data.onboardingStatus);
     },

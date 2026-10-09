@@ -25,6 +25,7 @@ import {
 } from '@/entities/auth';
 
 import { useBreakpoint } from '@/shared/hooks';
+import { useTrackMixpanelView } from '@/shared/lib/analytics';
 import { SuspenseView } from '@/shared/ui';
 
 const TermsBottomSheet = dynamic(
@@ -54,6 +55,8 @@ export const InfoStep = ({ onNext }: { onNext: () => void }) => {
   } = useSignUpInfoStep();
 
   const [termsOpen, setTermsOpen] = useState(false);
+  useTrackMixpanelView('profile_info_viewed');
+
   const handleTermsComplete = () => {
     setTermsOpen(false);
     onNext();

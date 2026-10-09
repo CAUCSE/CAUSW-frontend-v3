@@ -10,6 +10,8 @@ import {
   useMyInfoSuspenseQuery,
 } from '@/entities/auth';
 
+import { useTrackMixpanelView } from '@/shared/lib/analytics';
+
 import { EnrollmentStepContainer } from '../enrollment-step-container';
 import { EnrollmentVerificationDialog } from '../enrollment-verification-dialog';
 
@@ -17,6 +19,7 @@ export const EnrollmentVerificationSectionContent = () => {
   const [open, setOpen] = useState(false);
   const { data: admissionData } = useMyAdmissionStateSuspenseQuery();
   const { data: myInfo } = useMyInfoSuspenseQuery();
+  useTrackMixpanelView('academic_verification_viewed');
 
   const actionHandlers: Record<EnrollmentAction, () => void> = {
     submit: () => setOpen(true),
