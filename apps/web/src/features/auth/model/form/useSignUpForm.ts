@@ -10,6 +10,7 @@ import { useSignUpMutation } from '@/features/auth';
 
 import { signUpSchema, type SignUpFormData } from '@/entities/auth';
 
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
 import { TokenManager } from '@/shared/storage';
 
 export const useSignUpForm = () => {
@@ -45,6 +46,7 @@ export const useSignUpForm = () => {
         onSuccess: async (response) => {
           await TokenManager.setAccessToken(response.accessToken);
           await TokenManager.setRefreshToken(response.refreshToken);
+          trackMixpanelEvent({ name: 'profile_info_completed' });
           router.replace('/auth/enrollment-verification');
         },
       },

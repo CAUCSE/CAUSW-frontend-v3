@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { Flex, Text } from '@causw/cds';
 
-import { routeAfterSignIn } from '@/features/auth';
+import { routeAfterSignIn, syncMixpanelAfterSignIn } from '@/features/auth';
 import { usePushNotification } from '@/features/notification';
 
 import { toast } from '@/shared/model';
@@ -71,6 +71,7 @@ export const SocialLoginCallbackPage = () => {
         await TokenManager.setAccessToken(accessToken);
         await TokenManager.setRefreshToken(newRefreshToken);
         await compareFCMToken();
+        syncMixpanelAfterSignIn(onboardingStatus);
         routeAfterSignIn(router, onboardingStatus);
       } catch {
         toast.error('잘못된 인증 정보입니다.');

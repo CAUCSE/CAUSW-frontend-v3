@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 
 import { nativeSocialLogin } from '@/features/auth/api/post/session';
-import { routeAfterSignIn } from '@/features/auth/lib';
+import { routeAfterSignIn, syncMixpanelAfterSignIn } from '@/features/auth/lib';
 import { usePushNotification } from '@/features/notification';
 
 import type {
@@ -61,6 +61,7 @@ export const useNativeSocialLoginFlowMutation = (
     await TokenManager.setAccessToken(data.accessToken);
     await TokenManager.setRefreshToken(data.refreshToken);
     await compareFCMToken();
+    syncMixpanelAfterSignIn(data.onboardingStatus);
     routeAfterSignIn(router, data.onboardingStatus);
     toast.success('로그인되었습니다.');
   };

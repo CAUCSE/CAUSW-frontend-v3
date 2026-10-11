@@ -13,11 +13,16 @@ import { Text, CTAButton, Flex, VStack, Separator, Checkbox } from '@causw/cds';
 
 import { AuthContainer } from '@/widgets/auth';
 
-import { routeAfterSignIn, useSignInMutation } from '@/features/auth';
+import {
+  routeAfterSignIn,
+  syncMixpanelAfterSignIn,
+  useSignInMutation,
+} from '@/features/auth';
 import { usePushNotification } from '@/features/notification';
 
 import { type SignInFormData, signInSchema } from '@/entities/auth';
 
+import { registerMixpanelAuthMethod } from '@/shared/lib/analytics';
 import { toast } from '@/shared/model';
 import { AuthOptionManager, TokenManager } from '@/shared/storage';
 import { ActionHeader, DesktopOnly, MobileOnly, RHFInput } from '@/shared/ui';
@@ -42,6 +47,7 @@ export const EmailLoginPage = () => {
       await TokenManager.setAccessToken(res.accessToken);
       await TokenManager.setRefreshToken(res.refreshToken);
 
+      syncMixpanelAfterSignIn(res.onboardingStatus);
       routeAfterSignIn(router, res.onboardingStatus);
       void compareFCMToken();
     },
@@ -51,6 +57,7 @@ export const EmailLoginPage = () => {
   });
 
   const onSubmit = (data: SignInFormData) => {
+    registerMixpanelAuthMethod('email');
     rememberMeRef.current = !!data.rememberMe;
     signInMutation.mutate({
       email: data.email,
