@@ -16,5 +16,5 @@ catalogs:
     '@tanstack/react-query': ^5.0.0
     '@tanstack/react-query-devtools': ^5.0.0
     zustand: ^5.0.0
-    zod: ^3.0.00
+    zod: ^4.6.6
     autoprefixer: ^10.4.0
