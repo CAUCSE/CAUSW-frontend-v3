@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type PropsWithChildren } from 'react';
+import { useEffect, type PropsWithChildren } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -8,37 +8,24 @@ import { useQuery } from '@tanstack/react-query';
 
 import { authQueryOptions } from '@/entities/auth';
 
-import { useIsMounted } from '@/shared/hooks';
 import {
   attachMixpanelOnboardingUser,
   identifyMixpanelUser,
   syncMixpanelAcademicStatus,
 } from '@/shared/lib/analytics';
-import { TokenManager } from '@/shared/storage';
 
 export const MixpanelProvider = ({ children }: PropsWithChildren) => {
-  const isMounted = useIsMounted();
   const pathname = usePathname();
-  const [hasAccessToken, setHasAccessToken] = useState(false);
   const { data: myInfo } = useQuery({
     ...authQueryOptions.me(),
-    enabled: isMounted && hasAccessToken,
-    retry: false,
+    // 인증 화면과 OnboardingGuard가 조회한 결과만 구독한다.
+    // 분석 로직에서 요청을 시작하면 로그아웃 중 토큰 갱신이 발생할 수 있다.
+    enabled: false,
   });
 
   useEffect(() => {
-    let cancelled = false;
-
-    void TokenManager.getAccessToken().then((accessToken) => {
-      if (!cancelled) setHasAccessToken(Boolean(accessToken));
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [pathname]);
-
-  useEffect(() => {
+    // 로그인 화면에는 이전 세션의 캐시가 잠시 남아 있을 수 있다.
+    if (pathname?.startsWith('/auth/sign-in')) return;
     if (!myInfo?.id) return;
     identifyMixpanelUser(myInfo.id);
     if (
@@ -55,7 +42,7 @@ export const MixpanelProvider = ({ children }: PropsWithChildren) => {
     ) {
       syncMixpanelAcademicStatus(myInfo.academicStatus);
     }
-  }, [myInfo?.academicStatus, myInfo?.id, myInfo?.onboardingStatus]);
+  }, [myInfo?.academicStatus, myInfo?.id, myInfo?.onboardingStatus, pathname]);
 
   return <>{children}</>;
 };

@@ -131,6 +131,13 @@ export const clearMixpanelAuthMethod = () => {
 
 export const startMixpanelOnboarding = () => {
   if (!ensureInitialized()) return;
+  const onboardingUserId = localStorage.getItem(ONBOARDING_USER_ID_KEY);
+  if (
+    onboardingUserId === UNIDENTIFIED_ONBOARDING_USER ||
+    (identifiedUserId && onboardingUserId === identifiedUserId)
+  ) {
+    return;
+  }
 
   markOnboardingInProgress();
   sendEvent({ name: 'onboarding_started' });

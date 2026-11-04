@@ -12,4 +12,3 @@ export * from './firebase';
 export * from './auth-cookie';
 export * from './auth-cookie.server';
 export { safeCallbackUrl } from './safeCallbackUrl';
-export * from './analytics';
