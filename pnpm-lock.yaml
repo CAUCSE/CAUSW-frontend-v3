@@ -31,8 +31,8 @@ catalogs:
       specifier: ^7.0.0
       version: 7.68.0
     zod:
-      specifier: ^3.0.00
-      version: 3.25.76
+      specifier: ^4.6.6
+      version: 4.6.7
     zustand:
       specifier: ^5.0.0
       version: 5.0.9
@@ -112,7 +112,7 @@ importers:
         version: 7.68.0(react@19.2.1)
       zod:
         specifier: catalog:default
-        version: 3.25.76
+        version: 4.6.7
       zustand:
         specifier: catalog:default
         version: 5.0.9(@types/react@19.2.8)(react@19.2.1)
@@ -221,7 +221,7 @@ importers:
         version: 3.2.2(tailwind-merge@3.5.0)(tailwindcss@4.1.18)
       zod:
         specifier: catalog:default
-        version: 3.25.76
+        version: 4.6.7
       zustand:
         specifier: catalog:default
         version: 5.0.9(@types/react@19.2.8)(react@19.2.1)
@@ -5049,11 +5049,11 @@ packages:
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
 
-  zod@3.25.76:
-    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
-
   zod@4.3.5:
     resolution: {integrity: sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==}
+
+  zod@4.6.7:
+    resolution: {integrity: sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg==}
 
   zustand@5.0.9:
     resolution: {integrity: sha512-ALBtUj0AfjJt3uNRQoL1tL2tMvj6Gp/6e39dnfT6uzpelGru8v1tPOGBzayOWbPJvujM8JojDk3E1LxeFisBNg==}
@@ -10381,9 +10381,9 @@ snapshots:
     dependencies:
       zod: 4.3.5
 
-  zod@3.25.76: {}
-
   zod@4.3.5: {}
+
+  zod@4.6.7: {}
 
   zustand@5.0.9(@types/react@19.2.8)(react@19.2.1):
     optionalDependencies:

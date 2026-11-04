@@ -14,7 +14,7 @@ export const checkAlumniContactsFilterSearchParamValidation = async (
     AlumniContactsFilterSearchParam.safeParse(params);
 
   if (!filterSearchParamsValidateResult.success) {
-    const failedFields = filterSearchParamsValidateResult.error.errors.map(
+    const failedFields = filterSearchParamsValidateResult.error.issues.map(
       (e) => e.path[0],
     );
     const newParams = new URLSearchParams(params as Record<string, string>);
