@@ -52,6 +52,7 @@ type MixpanelEvent =
 
 let initialized = false;
 let identifiedUserId: string | null = null;
+let lastSyncedAcademicStatus: MixpanelAcademicStatus | null = null;
 let appOpenedTracked = false;
 
 const ensureInitialized = () => {
@@ -148,6 +149,7 @@ export const identifyMixpanelUser = (userId: string) => {
   if (identifiedUserId !== userId) {
     mixpanel.identify(userId);
     identifiedUserId = userId;
+    lastSyncedAcademicStatus = null;
   }
 
   if (!appOpenedTracked) {
@@ -167,8 +169,11 @@ export const syncMixpanelAcademicStatus = (
   if (!ensureInitialized() || !identifiedUserId) return;
 
   const normalizedStatus = normalizeAcademicStatus(academicStatus);
+  if (lastSyncedAcademicStatus === normalizedStatus) return;
+
   mixpanel.register({ academic_status: normalizedStatus });
   mixpanel.people.set({ academic_status: normalizedStatus });
+  lastSyncedAcademicStatus = normalizedStatus;
 };
 
 export const trackMixpanelAcademicVerificationSubmitted = (
@@ -212,6 +217,7 @@ export const trackMixpanelHomeReached = ({
 
 export const resetMixpanelUser = () => {
   identifiedUserId = null;
+  lastSyncedAcademicStatus = null;
   appOpenedTracked = false;
   if (initialized) mixpanel.reset();
 };
