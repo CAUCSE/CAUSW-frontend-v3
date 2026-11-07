@@ -230,8 +230,8 @@ importers:
         specifier: 7.4.2
         version: 7.4.2(@capacitor/core@7.4.2)
       '@capacitor/ios':
-        specifier: 7.4.2
-        version: 7.4.2(@capacitor/core@7.4.2)
+        specifier: 7.6.9
+        version: 7.6.9(@capacitor/core@7.4.2)
       '@causw/eslint-config':
         specifier: workspace:*
         version: link:../../packages/config/eslint-config
@@ -436,10 +436,10 @@ packages:
   '@capacitor/core@7.4.2':
     resolution: {integrity: sha512-akCf9A1FUR8AWTtmgGjHEq6LmGsjA2U7igaJ9PxiCBfyxKqlDbuGHrlNdpvHEjV5tUPH3KYtkze6gtFcNKPU9A==}
 
-  '@capacitor/ios@7.4.2':
-    resolution: {integrity: sha512-Edd4aZ6IJi4O/7dJIsSIuuo6LXvVVP5V++0Vs1w5bWOGbGhWZXLF0lt0KGFgSUxTuyL6xURGUygkD6dCp35QAQ==}
+  '@capacitor/ios@7.6.9':
+    resolution: {integrity: sha512-LANP81TfwuJk1zq9EuF+J5AJK71rKDgXB5XD+VFJQHC7BxSH4Dsma6DSMyrjFT03jtqc/0JTMEfSMBE7go3ZjA==}
     peerDependencies:
-      '@capacitor/core': ^7.4.0
+      '@capacitor/core': ^7.6.0
 
   '@capacitor/push-notifications@7.0.5':
     resolution: {integrity: sha512-2tjbKGKp8kz3xcpGvqhuUL2Oh2nJSc7HynzdT5+vtn4qqER/v45HinL6WnOE+Q32/X5NtM/F3qEcQ3JQsyWTxg==}
@@ -5229,7 +5229,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@capacitor/ios@7.4.2(@capacitor/core@7.4.2)':
+  '@capacitor/ios@7.6.9(@capacitor/core@7.4.2)':
     dependencies:
       '@capacitor/core': 7.4.2
 
