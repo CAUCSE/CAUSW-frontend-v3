@@ -19,6 +19,7 @@ import {
 import type { TermsAgreementRequestDto } from '@/entities/auth';
 
 import { useBreakpoint } from '@/shared/hooks';
+import { useTrackMixpanelView } from '@/shared/lib/analytics';
 import {
   ActionHeader,
   DesktopOnly,
@@ -61,6 +62,10 @@ export const OauthAdditionalInfoPage = () => {
     setAgreedTermsIds,
     onSubmit,
   } = useOauthAdditionalInfoForm();
+  useTrackMixpanelView(
+    'profile_info_viewed',
+    data?.onboardingStatus === 'GUEST',
+  );
   const [termsOpen, setTermsOpen] = useState(false);
 
   useEffect(() => {

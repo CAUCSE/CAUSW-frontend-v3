@@ -12,6 +12,8 @@ import {
   type SignUpFormData,
 } from '@/entities/auth';
 
+import { trackMixpanelEvent } from '@/shared/lib/analytics';
+
 export const useSignUpEmailVerificationStep = (onNext: () => void) => {
   const { control } = useFormContext<SignUpFormData>();
   const email =
@@ -34,6 +36,7 @@ export const useSignUpEmailVerificationStep = (onNext: () => void) => {
       },
       {
         onSuccess: () => {
+          trackMixpanelEvent({ name: 'email_verification_completed' });
           onNext();
         },
       },

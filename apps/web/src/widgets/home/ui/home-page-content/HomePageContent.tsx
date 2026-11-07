@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { Skeleton, VStack } from '@causw/cds';
 
@@ -15,11 +15,27 @@ import { UserGreetingHeader } from '@/widgets/user';
 
 import { useMyInfoSuspenseQuery } from '@/entities/auth';
 
+import { trackMixpanelHomeReached } from '@/shared/lib/analytics';
 import { QuickMenu } from '@/shared/ui';
 
 export function HomePageContent() {
   const { data: myInfo } = useMyInfoSuspenseQuery();
   const isAlumni = myInfo.academicStatus === 'GRADUATED';
+
+  useEffect(() => {
+    if (myInfo.onboardingStatus !== 'ACTIVE') return;
+    if (
+      myInfo.academicStatus !== 'ENROLLED' &&
+      myInfo.academicStatus !== 'GRADUATED'
+    ) {
+      return;
+    }
+
+    trackMixpanelHomeReached({
+      userId: myInfo.id,
+      academicStatus: myInfo.academicStatus,
+    });
+  }, [myInfo.academicStatus, myInfo.id, myInfo.onboardingStatus]);
 
   return (
     <VStack className="tablet:gap-8 max-w-desktop tablet:px-8 tablet:pt-12 desktop:gap-6 tablet:pb-[2.125rem] mx-auto w-full gap-2 px-4 pb-(--mobile-nav-clearance)">

@@ -19,6 +19,7 @@ import {
   DeepLinkProvider,
   ForceUpdateProvider,
   GlobalRoutingProvider,
+  MixpanelProvider,
   PushNotificationDeepLinkProvider,
 } from './_provider';
 
@@ -81,16 +82,18 @@ export default function RootLayout({
       <body className="antialiased select-none md:select-text">
         <MSWComponent>
           <QueryProviderWithDevtools>
-            <Toaster />
-            <ForceUpdateProvider>
-              <AuthRefreshProvider>
-                <GlobalRoutingProvider>
-                  <PushNotificationDeepLinkProvider>
-                    <DeepLinkProvider>{children}</DeepLinkProvider>
-                  </PushNotificationDeepLinkProvider>
-                </GlobalRoutingProvider>
-              </AuthRefreshProvider>
-            </ForceUpdateProvider>
+            <MixpanelProvider>
+              <Toaster />
+              <ForceUpdateProvider>
+                <AuthRefreshProvider>
+                  <GlobalRoutingProvider>
+                    <PushNotificationDeepLinkProvider>
+                      <DeepLinkProvider>{children}</DeepLinkProvider>
+                    </PushNotificationDeepLinkProvider>
+                  </GlobalRoutingProvider>
+                </AuthRefreshProvider>
+              </ForceUpdateProvider>
+            </MixpanelProvider>
           </QueryProviderWithDevtools>
         </MSWComponent>
       </body>
