@@ -6,7 +6,7 @@ reviewers:
   - clue31415
   - fresh-woo
   - plamingo509
-numberOfReviewers: 2
+numberOfReviewers: 1
 useReviewGroups: false
 skipKeywords:
   - hotfix
