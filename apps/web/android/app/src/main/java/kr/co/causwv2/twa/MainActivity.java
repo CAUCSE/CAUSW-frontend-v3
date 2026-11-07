@@ -1,12 +1,15 @@
 package kr.co.causwv2.twa;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 
@@ -26,6 +29,8 @@ public class MainActivity extends BridgeActivity {
 
     private static final String SOCIAL_LOGIN_TAG = "SOCIAL_LOGIN";
     private static final long MIN_OVERLAY_DISPLAY_MS = 250L;
+    private static final long APP_READY_FALLBACK_MS = 3000L;
+    private static final String SIGN_IN_PATH = "/auth/sign-in";
 
     private SocialLoginCoordinator socialLoginCoordinator;
     private SafeAreaInsetsManager safeAreaInsetsManager;
@@ -34,6 +39,8 @@ public class MainActivity extends BridgeActivity {
     private View launchOverlay;
     private WebView webView;
     private boolean hasDismissedLaunchOverlay = false;
+    private boolean hasDrawnInitialContent = false;
+    private boolean hasReceivedAppReady = false;
     private long overlayShownAtMs = 0L;
 
     @Override
@@ -65,6 +72,7 @@ public class MainActivity extends BridgeActivity {
         if (webView != null) {
             webView.getSettings().setTextZoom(100);
             socialLoginCoordinator.registerJavascriptInterfaces(webView);
+            webView.addJavascriptInterface(new AppReadyBridge(), "CauswAppReadyBridge");
             observeFirstContentDraw(webView);
         }
 
@@ -170,6 +178,13 @@ public class MainActivity extends BridgeActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        // 디스크 기록 전 종료 시 쿠키 유실 방지
+        CookieManager.getInstance().flush();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (backPressHandler != null) {
@@ -200,10 +215,41 @@ public class MainActivity extends BridgeActivity {
                     }
 
                     removeThisListener(targetWebView, this);
-                    dismissLaunchOverlay();
+                    hasDrawnInitialContent = true;
+
+                    if (!needsAppReadySignal(targetWebView.getUrl()) || hasReceivedAppReady) {
+                        dismissLaunchOverlay();
+                        return true;
+                    }
+
+                    // 로그인 화면은 인증 확인 신호까지 대기, 유실 대비 타임아웃
+                    targetWebView.postDelayed(MainActivity.this::dismissLaunchOverlay, APP_READY_FALLBACK_MS);
                     return true;
                 }
             });
+    }
+
+    private boolean needsAppReadySignal(String url) {
+        if (url == null) {
+            return false;
+        }
+        // 구버전 WebView는 Capacitor가 리다이렉트를 대신 따라가 URL이 '/'로 남음
+        String path = Uri.parse(url).getPath();
+        return "/".equals(path) || SIGN_IN_PATH.equals(path);
+    }
+
+    private void handleAppReady() {
+        hasReceivedAppReady = true;
+        if (hasDrawnInitialContent) {
+            dismissLaunchOverlay();
+        }
+    }
+
+    private final class AppReadyBridge {
+        @JavascriptInterface
+        public void notifyReady() {
+            runOnUiThread(MainActivity.this::handleAppReady);
+        }
     }
 
     private void removeThisListener(WebView targetWebView, ViewTreeObserver.OnPreDrawListener listener) {
