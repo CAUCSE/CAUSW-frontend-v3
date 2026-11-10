@@ -10,3 +10,6 @@ numberOfReviewers: 1
 useReviewGroups: false
 skipKeywords:
   - hotfix
+filterLabels:
+  exclude:
+    - deployment
