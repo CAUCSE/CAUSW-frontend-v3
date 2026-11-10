@@ -137,13 +137,30 @@ export const PostWriteForm = ({
     }
   }, [boards, currentBoardId, setValue]);
 
+  const [visualViewPortHeight, setVisualViewPortHeight] = useState(
+    window.visualViewport?.height,
+  );
+
+  useEffect(() => {
+    const visualViewport = window.visualViewport;
+    const handleResize = () => {
+      setVisualViewPortHeight(visualViewport?.height);
+    };
+    visualViewport?.addEventListener('resize', handleResize);
+    handleResize();
+    return () => {
+      visualViewport?.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <FormProvider {...form}>
       <VStack
         as="form"
         onSubmit={handleSubmit(onSubmit)}
         gap="none"
-        className="h-full"
+        //className="h-full"
+        style={{ height: `${visualViewPortHeight}px` }}
       >
         <PostWriteHeader isSubmitActive={isValid} onBack={handleBack} />
 
