@@ -22,7 +22,7 @@ const resizeImage = async (file: File, maxSize: number): Promise<File> => {
 
   const workerCode = `
     self.onmessage = async (event) => {
-      const resizeScale = 0.9;
+      const resizeScale = 0.95;
       const { file, maxSize } = event.data;
       let original;
       let bitmap;
@@ -33,23 +33,36 @@ const resizeImage = async (file: File, maxSize: number): Promise<File> => {
           premultiplyAlpha: 'none',
         });
 
-        let width = original.width;
-        let height = original.height;
+        let baseWidth = original.width;
+        let baseHeight = original.height;
+        let width = baseWidth;
+        let height = baseHeight;
 
         original.close();
         original = null;
 
-        let resizeCount = 0;
+        let resizeCount = -1;
 
         while (true) {
           resizeCount = resizeCount + 1;
-          width = Math.max(1, Math.floor(width * (resizeScale ** resizeCount)));
-          height = Math.max(1, Math.floor(height * (resizeScale ** resizeCount)));
 
+          if (resizeCount == 0) {// 처음에 일정 사이즈로 줄이고 시작
+            if (baseWidth * baseHeight > 50 * 1000 * 1000) { //임의로 정한 값
+              const ratio = Math.sqrt((50 * 1000 * 1000) / (baseWidth * baseHeight));
+              baseWidth = baseWidth * ratio;
+              baseHeight = baseHeight * ratio;
+            }
+            width = baseWidth;
+            height = baseHeight;
+          } else {
+            width = Math.max(1, Math.floor(baseWidth * (resizeScale ** resizeCount)));
+            height = Math.max(1, Math.floor(baseHeight * (resizeScale ** resizeCount)));
+          }
+          
           bitmap = await createImageBitmap(file, {
             resizeWidth: width,
             resizeHeight: height,
-            resizeQuality: 'high',
+            resizeQuality: 'low',
             colorSpaceConversion: 'none',
             premultiplyAlpha: 'none',
           });
@@ -70,7 +83,7 @@ const resizeImage = async (file: File, maxSize: number): Promise<File> => {
           bitmap = null;
 
           const blob = await canvas.convertToBlob({ type: 'image/png' });
-
+          console.log(blob.size);
           if (blob.size <= maxSize) {
             self.postMessage({ blob });
             return;
