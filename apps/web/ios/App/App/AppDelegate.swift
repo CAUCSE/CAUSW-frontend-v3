@@ -150,7 +150,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.webViewLoadingObserver?.invalidate()
             self.webViewProgressObserver?.invalidate()
 
-            if webView.url?.path != signInPath || self.hasReceivedAppReady {
+            let path = webView.url?.path
+            let needsAppReadySignal = path == "/" || path == signInPath
+
+            if !needsAppReadySignal || self.hasReceivedAppReady {
                 self.completeLaunch()
                 return
             }
