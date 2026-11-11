@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -31,6 +34,7 @@ public class MainActivity extends BridgeActivity {
     private static final long MIN_OVERLAY_DISPLAY_MS = 250L;
     private static final long APP_READY_FALLBACK_MS = 3000L;
     private static final String SIGN_IN_PATH = "/auth/sign-in";
+    private static final int LAUNCH_LOGO_SIZE_DP = 288;
 
     private SocialLoginCoordinator socialLoginCoordinator;
     private SafeAreaInsetsManager safeAreaInsetsManager;
@@ -272,6 +276,23 @@ public class MainActivity extends BridgeActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         );
+
+        // 시스템 스플래시와 같은 로고를 이어서 표시
+        int logoSizePx = Math.round(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                LAUNCH_LOGO_SIZE_DP,
+                getResources().getDisplayMetrics()
+            )
+        );
+        ImageView logoView = new ImageView(this);
+        logoView.setImageResource(R.drawable.splash_logo);
+        logoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        overlay.addView(
+            logoView,
+            new FrameLayout.LayoutParams(logoSizePx, logoSizePx, Gravity.CENTER)
+        );
+
         ((ViewGroup) rootView).addView(overlay);
         return overlay;
     }
