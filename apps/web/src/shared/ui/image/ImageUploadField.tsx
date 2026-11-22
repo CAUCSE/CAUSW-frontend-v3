@@ -15,6 +15,133 @@ export interface ImageUploadFieldRef {
   openFilePicker: () => void;
 }
 
+const resizeImage = async (file: File, maxSize: number): Promise<File> => {
+  if (file.size <= maxSize) {
+    return file;
+  }
+
+  const workerCode = `
+    self.onmessage = async (event) => {
+      const resizeScale = 0.95;
+      const { file, maxSize } = event.data;
+      let original;
+      let bitmap;
+
+      try {
+        original = await createImageBitmap(file, {
+          colorSpaceConversion: 'none',
+          premultiplyAlpha: 'none',
+        });
+
+        let baseWidth = original.width;
+        let baseHeight = original.height;
+        let width = baseWidth;
+        let height = baseHeight;
+
+        original.close();
+        original = null;
+
+        let resizeCount = -1;
+
+        while (true) {
+          resizeCount = resizeCount + 1;
+
+          if (resizeCount == 0) {// 처음에 일정 사이즈로 줄이고 시작
+            if (baseWidth * baseHeight > 50 * 1000 * 1000) { //임의로 정한 값
+              const ratio = Math.sqrt((50 * 1000 * 1000) / (baseWidth * baseHeight));
+              baseWidth = baseWidth * ratio;
+              baseHeight = baseHeight * ratio;
+            }
+            width = baseWidth;
+            height = baseHeight;
+          } else {
+            width = Math.max(1, Math.floor(baseWidth * (resizeScale ** resizeCount)));
+            height = Math.max(1, Math.floor(baseHeight * (resizeScale ** resizeCount)));
+          }
+          
+          bitmap = await createImageBitmap(file, {
+            resizeWidth: width,
+            resizeHeight: height,
+            resizeQuality: 'low',
+            colorSpaceConversion: 'none',
+            premultiplyAlpha: 'none',
+          });
+
+          const canvas = new OffscreenCanvas(
+            bitmap.width,
+            bitmap.height,
+          );
+
+          const ctx = canvas.getContext('2d', {
+            alpha: true,
+            colorSpace: 'display-p3',
+          });
+
+          ctx.drawImage(bitmap, 0, 0);
+
+          bitmap.close();
+          bitmap = null;
+
+          const blob = await canvas.convertToBlob({ type: 'image/png' });
+          console.log(blob.size);
+          if (blob.size <= maxSize) {
+            self.postMessage({ blob });
+            return;
+          }
+        }
+      } catch (error) {
+        self.postMessage({
+          error: error instanceof Error
+            ? error.message
+            : 'image resize failed',
+        });
+      } finally {
+        original?.close();
+        bitmap?.close();
+      }
+    };
+  `;
+
+  const workerBlob = new Blob([workerCode], {
+    type: 'text/javascript',
+  });
+  const workerUrl = URL.createObjectURL(workerBlob);
+  const worker = new Worker(workerUrl);
+
+  URL.revokeObjectURL(workerUrl);
+
+  try {
+    const result = await new Promise<{
+      blob?: Blob;
+      error?: string;
+    }>((resolve, reject) => {
+      worker.onmessage = (event) => {
+        const data = event.data;
+
+        if (data.error) {
+          reject(new Error(data.error));
+        } else {
+          resolve(data);
+        }
+      };
+
+      worker.onerror = (event) => {
+        reject(new Error(event.message));
+      };
+
+      worker.postMessage({ file, maxSize });
+    });
+
+    if (!result.blob) {
+      throw new Error('worker returned no blob');
+    }
+
+    return new File([result.blob], `${file.name}.png`, { type: 'image/png' });
+  } finally {
+    worker.terminate();
+  }
+};
+
 const ImageUploadFieldInner = <T extends FieldValues>(
   {
     name,
@@ -94,7 +221,7 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     );
   }, [files, existingImages, name, setValue]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
     if (selectedFiles.length === 0) return;
 
@@ -106,19 +233,28 @@ const ImageUploadFieldInner = <T extends FieldValues>(
     for (const file of selectedFiles) {
       if (files.length + validFiles.length >= maxFiles) break;
 
-      if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) {
-        hasInvalidSizeFile = true;
-        continue;
-      }
-
       const ext = file.name.split('.').pop()?.toLowerCase();
       if (!ext || !IMAGE_UPLOAD_RULES.ALLOWED_EXTENSIONS.includes(ext)) {
         hasInvalidTypeFile = true;
         continue;
       }
 
-      validFiles.push(file);
-      newPreviews.push(URL.createObjectURL(file));
+      let resizedFile = file;
+
+      if (file.size > IMAGE_UPLOAD_RULES.MAX_FILE_SIZE) {
+        try {
+          resizedFile = await resizeImage(
+            file,
+            IMAGE_UPLOAD_RULES.MAX_FILE_SIZE,
+          );
+        } catch {
+          hasInvalidSizeFile = true;
+          continue;
+        }
+      }
+
+      validFiles.push(resizedFile);
+      newPreviews.push(URL.createObjectURL(resizedFile));
     }
 
     if (hasInvalidTypeFile) {
