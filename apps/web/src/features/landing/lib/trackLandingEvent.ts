@@ -1,20 +1,12 @@
 'use client';
 
-type LandingEventName = 'landing_store_click' | 'landing_website_click';
+import { trackGoogleAnalyticsEvent } from '@/shared/lib/analytics';
 
-declare global {
-  interface Window {
-    gtag?: (
-      command: 'event',
-      eventName: LandingEventName,
-      eventParameters: Record<string, string>,
-    ) => void;
-  }
-}
+type LandingEventName = 'landing_store_click' | 'landing_website_click';
 
 export const trackLandingEvent = (
   eventName: LandingEventName,
   eventParameters: Record<string, string>,
 ) => {
-  window.gtag?.('event', eventName, eventParameters);
+  trackGoogleAnalyticsEvent(eventName, eventParameters);
 };

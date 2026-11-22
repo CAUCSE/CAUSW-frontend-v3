@@ -4,7 +4,16 @@ import mixpanel from 'mixpanel-browser';
 
 import { ENVIRONMENT, MIXPANEL_TOKEN } from '@/shared/config';
 
+export type StickyBannerEventName =
+  | 'view_sticky_banner'
+  | 'click_sticky_banner_cta'
+  | 'click_sticky_banner_close';
+
 type MixpanelEvent =
+  | {
+      name: StickyBannerEventName;
+      properties: Record<string, string | boolean>;
+    }
   | { name: 'app_opened'; properties?: never }
   | {
       name: 'feed_viewed' | 'community_viewed';
@@ -40,7 +49,14 @@ const ensureInitialized = () => {
 };
 
 const sendEvent = ({ name, properties }: MixpanelEvent) => {
-  mixpanel.track(name, properties);
+  if (name === 'click_sticky_banner_cta') {
+    mixpanel.track(name, properties, {
+      transport: 'sendBeacon',
+      send_immediately: true,
+    });
+  } else {
+    mixpanel.track(name, properties);
+  }
 };
 
 /** Track only after identify, so a fast page render cannot create anonymous events. */
