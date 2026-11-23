@@ -8,6 +8,7 @@ import { createAdmission } from '@/features/auth/api';
 
 import { authQueryKey, type AdmissionCreateRequestDto } from '@/entities/auth';
 
+import { trackMixpanelAcademicVerificationSubmitted } from '@/shared/lib/analytics';
 import { toast } from '@/shared/model';
 import { extractErrorMessage } from '@/shared/utils';
 
@@ -32,10 +33,13 @@ export const useSubmitAdmissionMutation = (
       toast.loading('인증 서류를 제출하고 있어요...');
       onMutate?.();
     },
-    onSuccess: async () => {
+    onSuccess: async (_data, variables) => {
       await queryClient.invalidateQueries({
         queryKey: authQueryKey.admissionState(),
       });
+      trackMixpanelAcademicVerificationSubmitted(
+        variables.request.requestedAcademicStatus,
+      );
       toast.success('인증 신청이 접수되었습니다.');
       onSuccess?.();
     },
