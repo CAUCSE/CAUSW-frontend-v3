@@ -15,6 +15,7 @@ import { QueryProviderWithDevtools, Toaster } from '@/shared/ui';
 
 import { MSWComponent } from './_mock';
 import {
+  AppReadyProvider,
   AuthRefreshProvider,
   DeepLinkProvider,
   ForceUpdateProvider,
@@ -88,7 +89,9 @@ export default function RootLayout({
                 <AuthRefreshProvider>
                   <GlobalRoutingProvider>
                     <PushNotificationDeepLinkProvider>
-                      <DeepLinkProvider>{children}</DeepLinkProvider>
+                      <DeepLinkProvider>
+                        <AppReadyProvider>{children}</AppReadyProvider>
+                      </DeepLinkProvider>
                     </PushNotificationDeepLinkProvider>
                   </GlobalRoutingProvider>
                 </AuthRefreshProvider>
