@@ -16,6 +16,8 @@ import {
 
 import { scheduleTime } from '../model/schedule';
 
+import styles from './CalendarScheduleDialog.module.css';
+
 const COLOR_LINES = {
   gray: 'bg-gray-100',
   blue: 'bg-blue-200',
@@ -47,7 +49,7 @@ export function CalendarScheduleDialog({
     >
       <Dialog.Content
         aria-describedby={undefined}
-        className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)]! max-w-105! gap-6 overflow-y-auto rounded-xl p-4"
+        className={`${styles.content} max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)]! max-w-105! gap-6 overflow-y-auto rounded-xl p-4`}
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           triggerRef.current?.focus({ preventScroll: true });
