@@ -11,7 +11,6 @@ export * from './StatusDot';
 export * from './form-section';
 export * from './EventCard';
 export * from './action-header';
-export * from './QuickMenu';
 export * from './IconCountButton';
 export * from './modal';
 export * from './profile-avatar';

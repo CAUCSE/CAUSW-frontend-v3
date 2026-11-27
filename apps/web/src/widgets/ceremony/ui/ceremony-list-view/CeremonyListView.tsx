@@ -13,6 +13,8 @@ import { CeremonySectionsGroup } from '../ceremony-section/CeremonySectionConten
 import { MyCeremonyListView } from '../my-ceremony-list-view';
 
 interface CeremonyListViewProps {
+  tab: string;
+  onTabChange: (tab: string) => void;
   filter: CeremonyFilterType;
   onFilterChange: (filter: CeremonyFilterType) => void;
   myStateFilter: MyCeremonyStateFilter;
@@ -22,6 +24,8 @@ interface CeremonyListViewProps {
 }
 
 export const CeremonyListView = ({
+  tab,
+  onTabChange,
   filter,
   onFilterChange,
   myStateFilter,
@@ -32,7 +36,7 @@ export const CeremonyListView = ({
   const apiFilterType: CeremonyFilterTypeApi = FILTER_TYPE_API_MAP[filter];
 
   return (
-    <Tab variant="underline" defaultValue="all">
+    <Tab variant="underline" value={tab} onValueChange={onTabChange}>
       <Tab.List className="bg-gray-100 px-5">
         <Tab.TabItem value="all" className="px-0 py-2">
           전체 경조사

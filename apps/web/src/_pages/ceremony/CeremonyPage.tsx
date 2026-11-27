@@ -27,14 +27,24 @@ export const CeremonyPage = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(
     () => searchParams.get('create') === 'true',
   );
+  const activeTab = searchParams.get('tab') === 'mine' ? 'mine' : 'all';
   const [myStateFilter, setMyStateFilter] =
     useState<MyCeremonyStateFilter>('등록 완료');
 
+  const updateSearchParam = (key: string, value: string | null) => {
+    const params = new URLSearchParams(searchParams);
+    if (value === null) params.delete(key);
+    else params.set(key, value);
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, {
+      scroll: false,
+    });
+  };
+
   const handleOpenChange = (open: boolean) => {
     setIsCreateOpen(open);
-
     if (!open && searchParams.get('create') === 'true') {
-      router.replace(pathname);
+      updateSearchParam('create', null);
     }
   };
 
@@ -61,6 +71,10 @@ export const CeremonyPage = () => {
 
       <div className="mx-auto w-full max-w-225">
         <CeremonyListView
+          tab={activeTab}
+          onTabChange={(tab) =>
+            updateSearchParam('tab', tab === 'mine' ? tab : null)
+          }
           filter={filter}
           onFilterChange={setFilter}
           myStateFilter={myStateFilter}
@@ -73,7 +87,7 @@ export const CeremonyPage = () => {
       <div className="fixed right-[1rem] bottom-[calc(2.75rem+var(--safe-area-inset-bottom))]">
         <FloatingActionButton
           className="bg-gray-50 shadow-[0_0.25rem_0.25rem_rgba(0,0,0,0.04)]"
-          onClick={() => setIsCreateOpen(true)}
+          onClick={() => handleOpenChange(true)}
         >
           <HStack gap="xs" className="items-center">
             <Plus size={20} className="fill-gray-500" />

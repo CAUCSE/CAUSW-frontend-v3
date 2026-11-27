@@ -59,8 +59,9 @@ export const CeremonyCreateDialog = ({
     guardKey: 'ceremonyCreateGuard',
     onBackAttempt: handleCloseAttempt,
     onConfirmBack: () => {
+      // Close after the guard entry is popped so the page can safely update its URL.
+      window.addEventListener('popstate', handleConfirmClose, { once: true });
       window.history.back();
-      handleConfirmClose();
     },
   });
 

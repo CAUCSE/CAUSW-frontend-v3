@@ -11,8 +11,6 @@ export const ceremonyQueryKey = {
     [...ceremonyQueryKey.lists(), 'ongoing', type] as const,
   upcoming: (type: CeremonyFilterTypeApi) =>
     [...ceremonyQueryKey.lists(), 'upcoming', type] as const,
-  upcomingPreview: (type: CeremonyFilterTypeApi) =>
-    [...ceremonyQueryKey.lists(), 'upcoming-preview', type] as const,
   past: (type: CeremonyFilterTypeApi) =>
     [...ceremonyQueryKey.lists(), 'past', type] as const,
   my: (state: CeremonyState) =>
