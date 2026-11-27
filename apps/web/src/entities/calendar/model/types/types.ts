@@ -31,4 +31,3 @@ export const CALENDAR_EVENTS_TYPE_MAP: Record<CalendarScheduleType, string> = {
   STUDENT_COUNCIL: '집행부',
   HOLIDAY: '공휴일',
 };
-export type CalendarEventType = 'holiday' | 'event' | 'important';

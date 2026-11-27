@@ -12,21 +12,22 @@ import { ROUTES } from '@/shared/constants';
 export function LatestSystemNoticePopupCard() {
   const [isClosed, setIsClosed] = useState(false);
   const { data } = useSystemNoticeLatest();
-  if (!data?.id || data.isRead) return null;
-  if (isClosed) return null;
+  if (!data?.id || data.isRead || isClosed) return null;
+
   return (
-    <HStack className="w-full items-start justify-between rounded-2xl bg-white px-6 py-4">
+    <HStack className="mx-4 mb-2 items-start justify-between rounded-lg bg-gray-100 px-4 py-3">
       <Link
         href={ROUTES.SYSTEM_NOTICES}
-        target={undefined}
-        className="flex flex-1 items-center gap-5"
+        className="flex min-w-0 flex-1 items-center gap-5"
       >
         <SpeakerColored size={26} className="shrink-0" />
         <VStack className="items-start gap-0">
-          <Text typography="subtitle-16-bold">{'시스템 공지'}</Text>
+          <Text typography="subtitle-16-bold" textColor="gray-700">
+            새 알림
+          </Text>
           <Text
             typography="body-14-regular"
-            textColor="gray-400"
+            textColor="gray-500"
             className="line-clamp-1 break-all"
           >
             {data.title || data.content}
@@ -36,9 +37,10 @@ export function LatestSystemNoticePopupCard() {
       <button
         type="button"
         onClick={() => setIsClosed(true)}
-        className="cursor-pointer"
+        aria-label="알림 배너 닫기"
+        className="cursor-pointer rounded-sm p-1"
       >
-        <Close size={20} />
+        <Close size={20} color="gray-400" />
       </button>
     </HStack>
   );

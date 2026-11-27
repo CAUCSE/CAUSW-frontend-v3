@@ -1,5 +1,5 @@
 export {
-  NotificationMobileHeader,
+  NotificationBell,
   NotificationPopupCard,
   NotificationListActionHeader,
   NotificationListSectionServerComponent,

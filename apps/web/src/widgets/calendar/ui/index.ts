@@ -1,2 +1,2 @@
 export * from './CalendarEventList';
-export * from './CalendarEventListPreview';
+export * from './HomeCalendar';
