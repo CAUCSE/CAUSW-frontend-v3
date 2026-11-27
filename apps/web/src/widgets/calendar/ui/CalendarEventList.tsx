@@ -18,12 +18,13 @@ import {
 import {
   CALENDAR_EVENTS_TYPE_MAP,
   type CalendarScheduleItem,
+  getCalendarScheduleLink,
   transformToCalendarEvents,
   useCalendarMonth,
   useCalendarSchedules,
 } from '@/entities/calendar';
 
-import { COPY, ROUTES } from '@/shared/constants';
+import { COPY } from '@/shared/constants';
 import { checkIsUpcoming, formatDateRangeDash } from '@/shared/lib';
 import {
   ErrorView,
@@ -64,12 +65,11 @@ export function CalendarEventList() {
           onPrevMonth={setViewMonth}
           onNextMonth={setViewMonth}
           onEventClick={(event) => {
-            const targetPostId = schedulesItems.find(
+            const schedule = schedulesItems.find(
               (target) => target.id == event.id,
-            )?.targetPostId;
-            if (targetPostId != undefined) {
-              router.push(`${ROUTES.FEED}/${targetPostId}`);
-            }
+            );
+            const href = schedule && getCalendarScheduleLink(schedule);
+            if (href) router.push(href);
           }}
           className="min-w-60"
         />
@@ -128,9 +128,7 @@ function ScheduleSection({
           items.map((item, index) => (
             <EventCard
               key={item.id}
-              link={
-                item.targetPostId ? `${ROUTES.FEED}/${item.targetPostId}` : null
-              }
+              link={getCalendarScheduleLink(item)}
               title={item.title}
               icon={<CaldendarIconColored size={24} />}
               iconBgClass={

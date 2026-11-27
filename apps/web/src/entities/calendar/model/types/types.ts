@@ -5,6 +5,7 @@ export interface CalendarScheduleItem {
   start: string;
   end: string;
   targetPostId: string | null;
+  color?: 'gray' | 'blue' | 'orange' | 'red' | 'skyblue' | 'purple';
 }
 
 export interface CalendarScheduleResponse {
@@ -22,12 +23,14 @@ export type CalendarScheduleType =
   | 'DEPARTMENT'
   | 'CCSSAA'
   | 'STUDENT_COUNCIL'
-  | 'HOLIDAY';
+  | 'HOLIDAY'
+  | 'CEREMONY';
 
 export const CALENDAR_EVENTS_TYPE_MAP: Record<CalendarScheduleType, string> = {
   ACADEMIC: '학사',
   DEPARTMENT: '학부',
-  CCSSAA: '크자회',
-  STUDENT_COUNCIL: '집행부',
+  CCSSAA: 'CCSSAA',
+  STUDENT_COUNCIL: '학생회',
   HOLIDAY: '공휴일',
+  CEREMONY: '경조사',
 };

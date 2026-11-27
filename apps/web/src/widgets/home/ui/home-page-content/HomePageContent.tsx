@@ -24,6 +24,8 @@ export function HomePageContent() {
     <div className="tablet:px-5 tablet:pt-5 min-h-full bg-white">
       <div className="max-w-desktop tablet:pb-8 mx-auto w-full pb-(--mobile-nav-clearance)">
         <HomeCalendar
+          key={myInfo.id}
+          userId={myInfo.id}
           headerAction={<NotificationBell />}
           banner={
             <Suspense fallback={null}>
