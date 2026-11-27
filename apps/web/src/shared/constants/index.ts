@@ -4,7 +4,6 @@ export * from './image';
 export * from './breakpoints';
 export * from './copy';
 export * from './routes';
-export * from './quick-menu';
 export * from './auth/publicEndpoints';
 export * from './form';
 export * from './urls';

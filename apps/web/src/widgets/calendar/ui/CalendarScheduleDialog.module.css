@@ -1,0 +1,6 @@
+/* CDS Dialog renders its overlay immediately before the portaled content. */
+:global(div[data-state]):has(+ .content) {
+  background-color: rgb(0 0 0 / 50%);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}

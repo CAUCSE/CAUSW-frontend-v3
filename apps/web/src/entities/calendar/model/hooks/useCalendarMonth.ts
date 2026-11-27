@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 
-export function useCalendarMonth(initialDate = new Date()) {
+export function useCalendarMonth({
+  initialDate = new Date(),
+  includeAdjacentDays = false,
+} = {}) {
   const [viewMonth, setViewMonth] = useState(initialDate);
 
   const scheduleApiParams = useMemo(() => {
@@ -10,13 +13,17 @@ export function useCalendarMonth(initialDate = new Date()) {
       viewMonth.getMonth() + 1,
       0,
     );
+    if (includeAdjacentDays) {
+      firstDay.setDate(1 - firstDay.getDay());
+      lastDay.setDate(lastDay.getDate() + 6 - lastDay.getDay());
+    }
+
     return { from: firstDay, to: lastDay };
-  }, [viewMonth]);
+  }, [includeAdjacentDays, viewMonth]);
 
   return {
     viewMonth,
     setViewMonth,
     scheduleApiParams,
-    currentMonth: viewMonth.getMonth() + 1,
   };
 }
