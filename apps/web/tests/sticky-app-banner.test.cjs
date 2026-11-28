@@ -125,3 +125,73 @@ test('GA stays disabled without a measurement ID', () => {
   analytics.trackGoogleAnalyticsEvent('view_sticky_banner', {});
   assert.equal(window.dataLayer, undefined);
 });
+
+function loadMixpanel() {
+  const calls = [];
+  const mixpanelMock = {
+    init: () => {},
+    identify: (id) => calls.push(['identify', id]),
+    // vm 컨텍스트에서 만든 객체는 prototype 이 달라 deepEqual 이 실패하므로 일반 객체로 복사
+    track: (...args) =>
+      calls.push(['track', ...JSON.parse(JSON.stringify(args))]),
+    reset: () => {},
+  };
+  const analytics = loadSource(
+    'shared/lib/analytics/mixpanel.ts',
+    {
+      'mixpanel-browser': { __esModule: true, default: mixpanelMock },
+      '@/shared/config': { ENVIRONMENT: 'test', MIXPANEL_TOKEN: 'token' },
+    },
+    { window: {} },
+  );
+  return { analytics, calls };
+}
+
+test('Mixpanel sends the CTA click by beacon even before identify', () => {
+  const { analytics, calls } = loadMixpanel();
+  const properties = { os: 'ios', is_in_app: false };
+
+  analytics.trackMixpanelEvent({ name: 'view_sticky_banner', properties });
+  analytics.trackMixpanelEvent({ name: 'click_sticky_banner_cta', properties });
+
+  // 노출 이벤트는 identify 전까지 대기, CTA 클릭은 페이지 이탈 전에 즉시 전송
+  assert.deepEqual(calls, [
+    [
+      'track',
+      'click_sticky_banner_cta',
+      properties,
+      { transport: 'sendBeacon', send_immediately: true },
+    ],
+  ]);
+
+  analytics.identifyMixpanelUser('user-1');
+  assert.deepEqual(
+    calls.slice(1).map(([type, name]) => [type, name]),
+    [
+      ['identify', 'user-1'],
+      ['track', 'app_opened'],
+      ['track', 'view_sticky_banner'],
+    ],
+  );
+});
+
+test('Mixpanel uses beacon transport for the CTA click after identify too', () => {
+  const { analytics, calls } = loadMixpanel();
+  analytics.identifyMixpanelUser('user-1');
+  calls.length = 0;
+
+  analytics.trackMixpanelEvent({
+    name: 'click_sticky_banner_cta',
+    properties: { os: 'android', is_in_app: true },
+  });
+  analytics.trackMixpanelEvent({
+    name: 'click_sticky_banner_close',
+    properties: { os: 'android', is_in_app: true },
+  });
+
+  assert.deepEqual(calls[0][3], {
+    transport: 'sendBeacon',
+    send_immediately: true,
+  });
+  assert.equal(calls[1].length, 3);
+});

@@ -33,9 +33,13 @@ export const useStickyAppBanner = () => {
   const track = (eventName: StickyBannerEventName, store?: string) =>
     trackStickyAppBannerEvent(eventName, { ...environment, store });
 
-  // 노출 여부: 모바일 폭 + 웹(네이티브 앱 아님) + 숨김 기간 지남
+  // 노출 여부: 모바일 폭 + 웹(네이티브 앱 아님) + iOS/Android 판별됨 + 숨김 기간 지남
   useEffect(() => {
     const media = window.matchMedia(STICKY_APP_BANNER_MEDIA_QUERY);
+    const { os } = getBannerEnvironment(
+      navigator.userAgent,
+      navigator.maxTouchPoints,
+    );
     let timer: ReturnType<typeof setTimeout> | undefined;
     const refresh = () => {
       clearTimeout(timer);
@@ -52,7 +56,10 @@ export const useStickyAppBanner = () => {
       }
       const remaining = hiddenUntilRef.current - now;
       setVisible(
-        media.matches && !Capacitor.isNativePlatform() && remaining <= 0,
+        media.matches &&
+          !Capacitor.isNativePlatform() &&
+          os !== 'unknown' &&
+          remaining <= 0,
       );
       if (remaining > 0) timer = setTimeout(refresh, remaining);
     };
@@ -113,6 +120,7 @@ export const useStickyAppBanner = () => {
     return () =>
       document.removeEventListener('visibilitychange', recordImpression);
     //1회만 기록
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   const openHelp = () => setShowHelp(true);
