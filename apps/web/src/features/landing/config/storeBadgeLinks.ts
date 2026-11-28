@@ -1,13 +1,15 @@
+import { APP_STORE_URL, GOOGLE_PLAY_URL } from '@/shared/constants';
+
 export const STORE_BADGE_LINKS = [
   {
     id: 'app_store',
-    href: 'https://apps.apple.com/kr/app/크자회-ccssaa/id6747077765',
+    href: APP_STORE_URL,
     src: '/images/landing/store/app-store.svg',
     alt: 'App Store에서 다운로드',
   },
   {
     id: 'google_play',
-    href: 'https://play.google.com/store/apps/details?id=kr.co.causwv2.twa&hl=ko',
+    href: GOOGLE_PLAY_URL,
     src: '/images/landing/store/play-store.svg',
     alt: 'Google Play에서 다운로드',
   },

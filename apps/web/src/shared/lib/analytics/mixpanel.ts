@@ -4,7 +4,16 @@ import mixpanel from 'mixpanel-browser';
 
 import { ENVIRONMENT, MIXPANEL_TOKEN } from '@/shared/config';
 
+export type StickyBannerEventName =
+  | 'view_sticky_banner'
+  | 'click_sticky_banner_cta'
+  | 'click_sticky_banner_close';
+
 type MixpanelEvent =
+  | {
+      name: StickyBannerEventName;
+      properties: Record<string, string | boolean>;
+    }
   | { name: 'app_opened'; properties?: never }
   | {
       name: 'feed_viewed' | 'community_viewed';
@@ -39,14 +48,36 @@ const ensureInitialized = () => {
   return true;
 };
 
-const sendEvent = ({ name, properties }: MixpanelEvent) => {
+/**
+ * 페이지 이탈(외부 마켓 이동 등) 직전에 발생하는 이벤트.
+ * 큐에 쌓으면 이동과 함께 유실되므로 identify 전이라도 sendBeacon 으로 즉시 전송한다.
+ */
+const PAGE_LEAVE_EVENT_NAMES: ReadonlySet<MixpanelEvent['name']> = new Set([
+  'click_sticky_banner_cta',
+]);
+
+const isPageLeaveEvent = ({ name }: MixpanelEvent) =>
+  PAGE_LEAVE_EVENT_NAMES.has(name);
+
+const sendEvent = (event: MixpanelEvent) => {
+  const { name, properties } = event;
+  if (isPageLeaveEvent(event)) {
+    mixpanel.track(name, properties, {
+      transport: 'sendBeacon',
+      send_immediately: true,
+    });
+    return;
+  }
   mixpanel.track(name, properties);
 };
 
-/** Track only after identify, so a fast page render cannot create anonymous events. */
+/**
+ * Track only after identify, so a fast page render cannot create anonymous events.
+ * 단, 페이지 이탈 이벤트는 유실을 막기 위해 identify 전이면 익명으로 즉시 전송한다.
+ */
 export const trackMixpanelEvent = (event: MixpanelEvent) => {
   if (!ensureInitialized()) return;
-  if (!identifiedUserId) {
+  if (!identifiedUserId && !isPageLeaveEvent(event)) {
     pendingEvents.push(event);
     return;
   }

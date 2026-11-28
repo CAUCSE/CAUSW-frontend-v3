@@ -14,6 +14,13 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Keep the scroll container and its sticky headers below the app banner. */
+@media (width < 768px) {
+  .app-navigation-layout {
+    padding-top: var(--sticky-app-banner-height, 0px);
+  }
+}
+
 /* html의 scrollbar-gutter: stable 때문에 스크롤 잠금 후에도 스크롤바 자리가 남는다.
  * Radix 오버레이(Dropdown, Select, Dialog, BottomSheet)의 스크롤 잠금(react-remove-scroll-bar)은
  * 스크롤바가 사라진다고 가정하고 body에 margin-right를 넣어 보정하므로, 그 보정만 무효화한다.
